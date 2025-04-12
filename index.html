@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RPAS Operations Manual - Interactive</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
+h1, h2 { color: #2a4d69; }
+h2 { margin-top: 40px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+th, td { border: 1px solid #ccc; padding: 6px; text-align: left; vertical-align: top; }
+th { background-color: #dbe9f4; }
+input[type='checkbox'], input[type='text'], input[type='time'], input[type='date'] { font-size: 14px; }
+textarea { width: 100%; min-height: 40px; resize: vertical; }
+.toc a { display: block; padding: 4px 0; text-decoration: none; color: #0066cc; }
+button { margin: 10px 5px 20px 0; padding: 10px 15px; font-size: 14px; }
+.top-controls { margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<h1>RPAS Operations Procedures Manual (Interactive)</h1>
+<p>This tool allows you to select flight sections, track log details, and generate a flight report.</p>
+<h2 id="TOC">Table of Contents</h2>
+<h2 id="weatherLookup">Weather &amp; NOTAM Lookup</h2>
+<p>Launch these tools to check Weather, NOTAMs, TAF, GFA, and SkyVector tools.</p>
+<button onclick="window.open('https://www.checkwx.com/', '_blank')">Open CheckWX METAR/TAF</button>
+<div style="margin-top: 20px;">
+<button onclick="window.open('https://plan.navcanada.ca/wxrecall/', '_blank')">Open Nav Canada NOTAMs</button>
+<button onclick="window.open('https://flightplanning.navcanada.ca/Weather/Weather.aspx', '_blank')">Open Nav Canada GFA</button>
+<button onclick="window.open('https://skyvector.com/airports', '_blank')">Open SkyVector Airports</button>
+</div>
+<h3>Sections to Complete for This Flight</h3><form id="sectionSelection"><table><thead><tr><th>Include</th><th>Section</th></tr></thead><tbody>
+<tr><td><input name="section" type="checkbox" value="TOC"/></td><td><a href="#TOC">TOC</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="1.1 Basic Pre-Flight"/></td><td><a href="#1_1_Basic_Pre-Flight">1.1 Basic Pre-Flight</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="1.2 Advanced Pre-Flight"/></td><td><a href="#1_2_Advanced_Pre-Flight">1.2 Advanced Pre-Flight</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="1.3 Micro Pre-Flight"/></td><td><a href="#1_3_Micro_Pre-Flight">1.3 Micro Pre-Flight</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="2.0 Takeoff Procedures"/></td><td><a href="#2_0_Takeoff_Procedures">2.0 Takeoff Procedures</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="3.0 Landing Procedures"/></td><td><a href="#3_0_Landing_Procedures">3.0 Landing Procedures</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="4.1 General Emergencies"/></td><td><a href="#4_1_General_Emergencies">4.1 General Emergencies</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="4.2 Horizontal Fly Away"/></td><td><a href="#4_2_Horizontal_Fly_Away">4.2 Horizontal Fly Away</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="4.3 Vertical Fly Away"/></td><td><a href="#4_3_Vertical_Fly_Away">4.3 Vertical Fly Away</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="4.4 Important Phone Numbers"/></td><td><a href="#4_4_Important_Phone_Numbers">4.4 Important Phone Numbers</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="5.1 Basic Rules"/></td><td><a href="#5_1_Basic_Rules">5.1 Basic Rules</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="5.2 Advanced Rules"/></td><td><a href="#5_2_Advanced_Rules">5.2 Advanced Rules</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="6.0 SFOC Requirement"/></td><td><a href="#6_0_SFOC_Requirement">6.0 SFOC Requirement</a></td></tr>
+<tr><td><input name="section" type="checkbox" value="7.0 Visual Observer Duties"/></td><td><a href="#7_0_Visual_Observer_Duties">7.0 Visual Observer Duties</a></td></tr>
+</tbody></table></form>
+<div class="top-controls">
+<button onclick="completeSelectedSections()">Complete Selected Sections</button>
+</div>
+
+<h3>Flight Log Information</h3>
+<table>
+<thead><tr><th>Date</th><th>Time</th><th>Pilot(s) / Observer(s)</th><th>Flight Start</th><th>Flight End</th></tr></thead>
+<tbody><tr>
+<td><input id="logDate" type="date" value="2025-04-10"/></td>
+<td><input id="logTime" type="time"/></td>
+<td><input id="crewNames" placeholder="e.g. J. Smith / T. Doe" type="text"/></td>
+<td><input id="startTime" type="time"/></td>
+<td><input id="endTime" type="time"/></td>
+</tr></tbody>
+</table>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<button onclick="generateFinalReport()">Generate Final Report</button>
+<input id="filename" placeholder="Enter base filename..." style="margin-left:10px;" type="text"/>
+</div>
+<h2 id="TOC">TOC</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">Procedures</a></th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>1.3 Micro Preflight</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2.0 Takeoff Procedure</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3.0 Landing Procedure</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4.1 General Emergencies</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4.2 Horizontal Fly-Away</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4.3 Vertical Fly-Away</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4.4 Important Numbers</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5.1 Rules Basic</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5.2 Rules Advanced</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6.0 SFOC Requirements</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7.0 Visual Observer Duties</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="1_1_Basic_Pre-Flight">1.1 Basic Pre-Flight</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>1.1 Basic Pre-Flight</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>Basic Operations Pre-Flight Checklist</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Ensure flight will be 5.6 km (3 NM) away from airports or military aerodromes, and 1.9 km (1 NM) away from heliports.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ensure flight will not be in Controlled Airspace or Restricted Airspace.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Locate other aerodromes in flight area and ensure flight stays out of established flight patterns of those aerodromes.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ensure no impacting temporary aviation restrictions are in effect.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Check visually and audibly for nearby low-altitude air operations such as helicopters, seaplanes, hot air balloons, and ultra-light aircraft.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Take note of potential obstacles such as buildings, wires, trees, cell towers, wind turbines.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Check for and plan to stay clear of land-based airspace restrictions, including police activities, forest fires, or other natural disasters.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Check suitability of current weather and weather forecast for the duration of the operation.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Check that the Kp index is suitable for the flight (ideally less than 4).</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Check for and avoid potential dust or dirt clouds.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>11</td>
+<td>Determine the maximum safe range for the operation, based upon site details, current weather conditions, and battery charge.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>12</td>
+<td>Ensure bystanders are at least 30m away from aircraft at all times.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>13</td>
+<td>Ensure crew and other involved parties are aware of the flight and stand clear.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>14</td>
+<td>Stay at least 30m away from advertised events such as parades, sporting events, or outdoor concerts.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>15</td>
+<td>Check that drone is registered and registration number is on drone.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>16</td>
+<td>Check for damage, cracks, or other signs of potential failure.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>17</td>
+<td>Check propellers for cracks, deformation, or other wear.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>18</td>
+<td>Ensure drone and control unit batteries are sufficiently charged for the operation.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>19</td>
+<td>Check that propellers, propeller guards, and other removable items are secure, and items such as gimbal guards and lens covers are removed.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>20</td>
+<td>Ensure micro-SD card is installed for camera recording.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>21</td>
+<td>Ensure launch site is suitable for take-off (level, clear of debris, etc.).</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>22</td>
+<td>Confirm that pilot is certified for at least Basic Operations.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>23</td>
+<td>Confirm that all flight crew members are fit to perform: No alcohol within 12 hours, no cannabis for 28 days, no impairing drugs, not fatigued.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>24</td>
+<td>Ensure all flight crew members understand their roles, communication methods, emergency procedures, and emergency equipment.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>25</td>
+<td>Ensure any other people involved in the operation stay clear during takeoff/landing and do not interfere.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>26</td>
+<td>Confirm crew is aware of take-off, landing and back-up landing plan.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>27</td>
+<td>Ensure any special attributes of the flight are addressed (e.g., FPV, night flying).</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>28</td>
+<td>Ensure flight log is available.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="1_2_Advanced_Pre-Flight">1.2 Advanced Pre-Flight</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>1.2 Advanced Pre-Flight</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>Advanced Operations Pre-Flight Checklist</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>If flight will be nearer than 5.6 km (3 NM) away from airports, or 1.9 km from heliports, contact the operator and secure permission.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>If flight will be in Controlled or Restricted Airspace, confirm drone is accepted and obtain NAV CANADA RPAS Flight Authorization.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>If flight is near a military aerodrome, ensure an SFOC has been approved and permission secured.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Locate nearby aerodromes and stay out of their flight patterns.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Check for temporary aviation restrictions (NOTAMs).</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Visually and audibly check for low altitude aircraft.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Note potential obstacles: buildings, wires, trees, etc.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Avoid land-based airspace restrictions (police activity, fires, disasters).</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Check current and forecasted weather.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Ensure Kp index is suitable (less than 4).</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>11</td>
+<td>Avoid dust or dirt clouds.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>12</td>
+<td>Determine safe flight range based on weather and battery.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>13</td>
+<td>If flying between 5m and 30m from bystanders, drone must be approved for Near People.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>14</td>
+<td>If flying under 5m from bystanders, drone must be approved for Over People.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>15</td>
+<td>Ensure all involved parties are aware and stay clear.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>16</td>
+<td>If flying at an advertised event, an SFOC is required.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>17</td>
+<td>Drone must be registered and labeled.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>18</td>
+<td>Ensure drone is approved for controlled airspace or people operations.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>19</td>
+<td>Check for physical damage or wear.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>20</td>
+<td>Inspect propellers for issues.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>21</td>
+<td>Verify battery levels are sufficient.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>22</td>
+<td>Check all attachments are secure and camera guards removed.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>23</td>
+<td>Confirm SD card is installed.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>24</td>
+<td>Launch site must be level and clear.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>25</td>
+<td>Pilot must be certified for Advanced Operations or under supervision.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>26</td>
+<td>Crew must be fit (no alcohol in 12h, no cannabis in 28d, not fatigued).</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>27</td>
+<td>Crew must understand roles, communication, and emergency procedures.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>28</td>
+<td>All others must stay clear and not interfere.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>29</td>
+<td>Ensure crew knows takeoff, landing, and backup plans.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>30</td>
+<td>Address any special flight attributes (e.g., night flying, FPV).</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>31</td>
+<td>Ensure flight log is available.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="1_3_Micro_Pre-Flight">1.3 Micro Pre-Flight</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>1.3 Micro Pre-Flight</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>Micro Drones Pre-Flight Checklist</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>If flying near airports or heliports, fly below 30m AGL when possible.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>If flying in Controlled Airspace, fly below 30m AGL.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>If near military aerodrome, fly carefully and ideally below 30m AGL.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>If in CYR Class F Zone, obtain permission from controlling agency.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Avoid established aerodrome patterns.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Check for temporary flight restrictions (NOTAMs, apps).</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Visually and audibly monitor for other aircraft.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Watch for obstacles: buildings, wires, trees, etc.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Avoid restricted zones (e.g., emergencies, wildfires).</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Get landowner permission for takeoff/landing in parks.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>11</td>
+<td>Check weather and forecast.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>12</td>
+<td>Kp index should be under 4.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>13</td>
+<td>Avoid dusty environments.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>14</td>
+<td>Determine safe range based on site/weather/battery.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>15</td>
+<td>Keep bystanders clear during takeoff and landing.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>16</td>
+<td>Do not fly over crowds.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>17</td>
+<td>Ensure crew and involved parties are briefed.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>18</td>
+<td>Check for physical damage.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>19</td>
+<td>Inspect propellers.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>20</td>
+<td>Verify full battery charge.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>21</td>
+<td>Ensure attachments are secure and gimbal guards removed.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>22</td>
+<td>Install micro-SD card if recording.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>23</td>
+<td>Ensure clear, level launch site.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>24</td>
+<td>Crew must be unimpaired and rested.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>25</td>
+<td>Brief all crew on flight plan.</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="2_0_Takeoff_Procedures">2.0 Takeoff Procedures</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>2.0 Takeoff Procedures</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>Takeoff Procedures Checklist</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Confirm completion of pre-flight checklist</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Record beginning of flight log information</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Assemble control unit, display, and related gear</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Prepare drone for launch</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Activate control unit and display device</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Launch drone control app on phone or control</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Activate drone</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Initiate control unit and drone communication connection, and confirm proper linkage</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Ensure all control switches are correctly set for operation</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Check that firmware load for entire system are up to date and consistent</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>11</td>
+<td>Check that compass, IMU, and gimbal calibration are ok</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>12</td>
+<td>Ensure Return-to-Home parameters are correct for current operation</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>13</td>
+<td>Ensure sufficient GPS satellites are connected 
+(minimum 7)</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>14</td>
+<td>Perform final weather check</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>15</td>
+<td>Signal to crew and bystanders to stand clear for take-off</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>16</td>
+<td>Start camera recording</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>17</td>
+<td>Announce take-off and stand clear</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>18</td>
+<td>Activate take-off controls</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>19</td>
+<td>Allow drone to hover at low altitude to confirm stability</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>20</td>
+<td>Test controls to ensure full directional control</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="3_0_Landing_Procedures">3.0 Landing Procedures</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>3.0 Landing Procedures</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>Landing Procedures</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alert crew and bystanders of approaching aircraft</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ensure landing site is clear of debris and is suitable for landing</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Rotate drone to face away before final approach (natural control)</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ensure all crew and people are clear of landing site</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Ensure all bystanders are 30m away from landing site</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Land drone</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Turn off motors and camera</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Retrieve drone and inspect for damage</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Disassemble as required, apply gimbal guard and lens cover, stow gear</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Record flight in flight log</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="4_1_General_Emergencies">4.1 General Emergencies</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>4.1 General Emergencies</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>General Emergency Check List</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Administer first aid as appropriate</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Call 911 if required</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Stop flight operation</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Report serious injuries to Transportation Safety Board 
+(1-800-387-3557)</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Attempt to reconnect to drone 
+(antennae, moving closer, restarting controller/app)</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Record direction, speed, altitude, battery life of drone</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Use Emergency button in app to notify aerodromes/control towers</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Call Aviation Emergency Number: 
+1-877-992-6853 if threat to public safety</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Warn people in potential crash zone if possible</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Recover drone and inspect</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>11</td>
+<td>Investigate and log cause of incident</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>12</td>
+<td>Power cycle control station and reconnect to drone</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>13</td>
+<td>Check and log equipment malfunctions in maintenance log</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="4_2_Horizontal_Fly_Away">4.2 Horizontal Fly Away</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>4.2 Horizontal Fly Away</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>Horizontal Flyaway</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Attempt to reconnect to aircraft 
+(antennae, controller, app)</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Note Emergency button on Flight Timer screen of Drone Pilot Canada app</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Estimate RPA altitude, speed, direction, battery life</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Call aerodromes in direction of travel (nearest first)</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Call FIR Area Control Centre Emergency Number</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>If threat is imminent, call Aviation Emergency Number: 1-877-992-6853</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Use communication script when contacting aerodromes/emergency contacts</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="4_3_Vertical_Fly_Away">4.3 Vertical Fly Away</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>4.3 Vertical Fly Away</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>Vertical Flyaway</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Attempt to reconnect to aircraft 
+(antennae, controller, app)</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Note Emergency button in Drone Pilot Canada app</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Call FIR Area Control Centre Emergency Number</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>If FIR unreachable, call nearest airport with control tower</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>If threat is imminent, call Aviation Emergency Number: 
+1-877-992-6853</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Use communication script to provide drone info (altitude, speed, battery, direction)</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="4_4_Important_Phone_Numbers">4.4 Important Phone Numbers</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>4.4 Important Phone Numbers</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>Phone Numbers NavCan, emergencies</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>NAV CANADA FIR ACC – Vancouver</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>NAV CANADA FIR ACC – Edmonton</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>NAV CANADA FIR ACC – Toronto </td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>NAV CANADA FIR ACC – Montreal: 514-633-3365</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Aviation Emergency </td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Transportation Safety Board (Injury)</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7</td>
+<td></td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Add New Detail per Operation/Risk</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>9</td>
+<td></td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Pilot Cell Phone (Ron Treleaven)</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="5_1_Basic_Rules">5.1 Basic Rules</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>5.1 Basic Rules</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>Basic Flight Rules</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Drone must be &lt; 25 kg, registered, and labeled</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Pilot must pass Basic exam and be 14+ or supervised</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Maintain VLOS; FPV only with VO; night flight needs lights</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Stay 5.6 km from airports, 1.9 km from heliports, avoid patterns</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Avoid controlled/restricted airspace</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Stay 30m from bystanders; no overflight of people/events</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Max altitude: 122m or 30m above structures within 61m</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="5_2_Advanced_Rules">5.2 Advanced Rules</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>5.2 Advanced Rules</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>Advanced Flight Rules</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Drone must be &lt;25 kg, registered, and labeled</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Pilot must pass Advanced exam and be 16+ or supervised</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Maintain VLOS; FPV only with VO; night flight needs lights</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Can fly near airports/heliports with permission; DND requires SFOC</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>May fly in controlled/restricted airspace with approval and approved drone</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>May fly near/over people if using approved drone</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7</td>
+<td>No flying at advertised events; same altitude rules apply</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="6_0_SFOC_Requirement">6.0 SFOC Requirement</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>6.0 SFOC Requirement</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>Special Flight Operations Certificate</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Drone weighs &gt;25 kg </td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Flying beyond VLOS</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Pilot is not Canadian citizen or permanent resident</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Flying above max altitude without ATC approval</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Controlling &gt;5 RPAs from one station</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Flying at special/advertised event</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Carrying hazardous payload</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Flying within 3 NM of military aerodrome</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Minister-designated operations</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<h2 id="7_0_Visual_Observer_Duties">7.0 Visual Observer Duties</h2>
+<div class="top-controls">
+<button onclick="saveCSV()">Save Now</button>
+<a href="#TOC"><button>Back to TOC</button></a>
+<button onclick="window.close()">Exit Tool</button>
+</div>
+<table><thead><tr>
+<th><a href="#TOC">TOC</a></th>
+<th>7.0 Visual Observer Duties</th>
+<th>Completed</th><th>Comments</th></tr></thead><tbody>
+<tr>
+<td>No.</td>
+<td>Visual Observer Duties</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Assist Pilot In Command (PIC) by maintaining VLOS and detecting hazards</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Scan for aircraft, obstacles, people, and environmental threats</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Inform PIC if VLOS is lost or hazards arise</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Pass VLOS duties if temporarily distracted</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Know mission and hazard limits (e.g. wind, weather, people)</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Comply with PIC instructions; communicate effectively</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Remain sober, rested, and unimpaired</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Use unaided vision only during flight</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Cannot drive or operate vehicles while on VO duty</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Be familiar with RPAS regulations and aircraft limits</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+<tr>
+<td>11</td>
+<td>May support pre-flight, checklist, and ground crew duties</td>
+<td><input class="completed" type="checkbox"/></td>
+<td><textarea class="comment"></textarea></td>
+</tr>
+</tbody></table>
+<script>
+function completeSelectedSections() {
+    const checkboxes = document.querySelectorAll('input[name="section"]:checked');
+    const ids = Array.from(checkboxes).map(cb => {
+        const anchor = cb.parentElement.nextElementSibling.querySelector("a");
+        return anchor ? anchor.getAttribute("href").substring(1) : null;
+    }).filter(Boolean);
+
+    if (ids.length === 0) {
+        alert("Please select at least one section to complete.");
+        return;
+    }
+
+    let i = 0;
+    function scrollNext() {
+        if (i < ids.length) {
+            const el = document.getElementById(ids[i]);
+            if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "start" });
+                alert("Now complete section: " + ids[i].replace(/_/g, ' '));
+            }
+            i++;
+            setTimeout(scrollNext, 1000);
+        }
+    }
+    scrollNext();
+}
+</script>
+</body></html>
