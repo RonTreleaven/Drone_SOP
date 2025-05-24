@@ -1,0 +1,35 @@
+Field,Value
+Date,2025-05-22
+Pilot(s),Ron Treleaven
+Observer(s),N/A
+Start,14:00
+End,15:00
+Location,44.1116, -78.9186
+
+Section,Item,Checked
+"1.3 Micro Pre-Flight","Micro Drones Pre-Flight Checklist","Yes"
+"1.3 Micro Pre-Flight","If flying near airports or heliports, fly below 30 m AGL when possible.","No"
+"1.3 Micro Pre-Flight","If flying in Controlled Airspace, fly below 30 m AGL.","No"
+"1.3 Micro Pre-Flight","If near military aerodrome, fly carefully and ideally below 30 m AGL.","No"
+"1.3 Micro Pre-Flight","If in CYR Class F Zone, obtain permission from controlling agency.","No"
+"1.3 Micro Pre-Flight","Avoid established aerodrome patterns.","No"
+"1.3 Micro Pre-Flight","Check for temporary flight restrictions (NOTAMs, apps).","No"
+"1.3 Micro Pre-Flight","Visually and audibly monitor for other aircraft.","No"
+"1.3 Micro Pre-Flight","Watch for obstacles: buildings, wires, trees, etc.","No"
+"1.3 Micro Pre-Flight","Avoid restricted zones (e.g., emergencies, wildfires).","No"
+"1.3 Micro Pre-Flight","Get landowner permission for takeoff/landing in parks.","No"
+"1.3 Micro Pre-Flight","Check weather and forecast.","No"
+"1.3 Micro Pre-Flight","Ensure Kp index under 4.","No"
+"1.3 Micro Pre-Flight","Avoid dusty environments.","No"
+"1.3 Micro Pre-Flight","Determine safe range based on site/weather/battery.","No"
+"1.3 Micro Pre-Flight","Keep bystanders clear during take-off and landing.","No"
+"1.3 Micro Pre-Flight","Do not fly over crowds.","No"
+"1.3 Micro Pre-Flight","Ensure crew and involved parties are briefed.","No"
+"1.3 Micro Pre-Flight","Check for physical damage.","No"
+"1.3 Micro Pre-Flight","Inspect propellers.","No"
+"1.3 Micro Pre-Flight","Verify full battery charge.","No"
+"1.3 Micro Pre-Flight","Ensure attachments are secure and gimbal guards removed.","No"
+"1.3 Micro Pre-Flight","Install micro-SD card if recording.","No"
+"1.3 Micro Pre-Flight","Ensure clear, level launch site.","No"
+"1.3 Micro Pre-Flight","Crew must be unimpaired and rested.","No"
+"1.3 Micro Pre-Flight","Brief all crew on flight plan.","Yes"
