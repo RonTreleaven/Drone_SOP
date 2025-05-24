@@ -13,3 +13,6 @@ C:\users\Ron Treleaven\Drone_SOP\
 
 New repo structure to include .js and directory tree.
 
+new GitHub structures created and tested okay.
+
+![image-20250524100200582](../OneDrive/1_Drone/1_Procedures and Information/My Processes and Procedures/Web/Gv2_struct.png)
