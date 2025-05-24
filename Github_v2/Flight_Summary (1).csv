@@ -1,0 +1,19 @@
+Field,Value
+Date,2025-05-22
+Pilot(s),Ron Treleaven
+Observer(s),N/A
+Start Time,13:00
+End Time,14:00
+Location,44.1116, -78.9186
+
+Section,Item,Checked
+"6.0 SFOC Requirement","Special Flight Operations Certificate","Yes"
+"6.0 SFOC Requirement","Drone weighs > 25 kg","No"
+"6.0 SFOC Requirement","Flying beyond VLOS","No"
+"6.0 SFOC Requirement","Pilot is not Canadian citizen or permanent resident","No"
+"6.0 SFOC Requirement","Flying above max altitude without ATC approval","No"
+"6.0 SFOC Requirement","Controlling > 5 RPAs from one station","No"
+"6.0 SFOC Requirement","Flying at special/advertised event","No"
+"6.0 SFOC Requirement","Carrying hazardous payload","No"
+"6.0 SFOC Requirement","Flying within 3 NM of military aerodrome","No"
+"6.0 SFOC Requirement","Minister-designated operations","Yes"

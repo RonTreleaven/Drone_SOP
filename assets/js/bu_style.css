@@ -1,0 +1,180 @@
+/* ---- Section Selector (index.html) ---- */
+#section-selector label {
+  display: block;
+  margin: 0.5rem 0;
+  cursor: pointer;
+}
+#section-selector input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.1);
+  vertical-align: middle;
+}
+
+/* ---- Global ---- */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+               Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background: #f9f9f9;
+  color: #333;
+  line-height: 1.5;
+}
+
+body {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1, h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; border-bottom: 2px solid #ddd; padding-bottom: 0.25rem; }
+
+/* ---- Flight Log Table ---- */
+.flight-log-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+.flight-log-table th,
+.flight-log-table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+.flight-log-table thead th {
+  background: #e0f4ff;
+}
+
+/* ---- Checklist Pages ---- */
+.check-item {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+.check-item input[type="checkbox"] {
+  margin-right: 0.75rem;
+  transform: scale(1.1);
+}
+.check-item label { flex: 1; }
+
+/* ---- Button & Nav ---- */
+.top-nav {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+.top-nav a {
+  text-decoration: none;
+  color: #007acc;
+  margin: 0 0.5rem;
+}
+.top-nav a.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+button {
+  margin: 0.5rem 0.25rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  background: #007acc;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover:not(:disabled) { background: #005fa3; }
+
+/* ---- Print Styles ---- */
+@media print {
+  /* hide nav + interactive buttons */
+  .top-nav,
+  #export-csv,
+  #export-pdf,
+  #return-home {
+    display: none !important;
+  }
+  body {
+    margin: 1cm;
+    background: none;
+    color: #000;
+    max-width: none;
+  }
+  /* let browser paginate naturally */
+  h1 { font-size: 1.8em; }
+  h2 { font-size: 1.4em; }
+}
+/* ---- Site Header ---- */
+.site-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.site-logo {
+  height: 80px;
+  margin-right: 1rem;
+}
+
+.site-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: #007acc;
+  margin: 0;
+}
+
+/* ---- Main Content ---- */
+main {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* ---- Section Selector (index.html) ---- */
+#section-selector label {
+  display: block;
+  margin: 0.75rem 0;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+}
+#section-selector input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.1);
+  vertical-align: middle;
+}
+
+/* ---- Begin Button ---- */
+#begin-btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background: #007acc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+}
+#begin-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* ---- Responsive tweaks ---- */
+@media (max-width: 600px) {
+  .site-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .site-logo {
+    margin-bottom: 0.5rem;
+  }
+}

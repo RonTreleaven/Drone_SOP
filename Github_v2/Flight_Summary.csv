@@ -1,0 +1,37 @@
+Field,Value
+Date,2025-05-22
+Pilot(s),Ron Treleaven
+Observer(s),N/A
+Start Time,12:00
+End Time,13:00
+Location,44.1116, -78.9186
+
+Section,Item,Checked
+"1.1 Basic Pre-Flight","Basic Operations Pre-Flight Checklist","Yes"
+"1.1 Basic Pre-Flight","Ensure flight will be 5.6 km (3 NM) away from airports or military aerodromes, and 1.9 km (1 NM) away from heliports.","No"
+"1.1 Basic Pre-Flight","Ensure flight will not be in Controlled Airspace or Restricted Airspace.","No"
+"1.1 Basic Pre-Flight","Locate other aerodromes in flight area and ensure flight stays out of established flight patterns of those aerodromes.","No"
+"1.1 Basic Pre-Flight","Ensure no impacting temporary aviation restrictions are in effect.","No"
+"1.1 Basic Pre-Flight","Check visually and audibly for nearby low-altitude air operations such as helicopters, seaplanes, hot air balloons, and ultra-light aircraft.","No"
+"1.1 Basic Pre-Flight","Take note of potential obstacles such as buildings, wires, trees, cell towers, wind turbines.","No"
+"1.1 Basic Pre-Flight","Check suitability of current weather and weather forecast for the duration of the operation.","No"
+"1.1 Basic Pre-Flight","Check that the Kp index is suitable for the flight (ideally less than 4).","No"
+"1.1 Basic Pre-Flight","Check for and avoid potential dust or dirt clouds.","No"
+"1.1 Basic Pre-Flight","Determine the maximum safe range for the operation, based upon site details, current weather conditions, and battery charge.","No"
+"1.1 Basic Pre-Flight","Ensure bystanders are at least 30 m away from aircraft at all times.","No"
+"1.1 Basic Pre-Flight","Ensure crew and other involved parties are aware of the flight and stand clear.","No"
+"1.1 Basic Pre-Flight","Stay at least 30 m away from advertised events such as parades, sporting events, or outdoor concerts.","No"
+"1.1 Basic Pre-Flight","Check that drone is registered and registration number is on drone.","No"
+"1.1 Basic Pre-Flight","Check for damage, cracks, or other signs of potential failure.","No"
+"1.1 Basic Pre-Flight","Check propellers for cracks, deformation, or other wear.","No"
+"1.1 Basic Pre-Flight","Ensure drone and control unit batteries are sufficiently charged for the operation.","No"
+"1.1 Basic Pre-Flight","Check that propellers, propeller guards, and other removable items are secure, and items such as gimbal guards and lens covers are removed.","No"
+"1.1 Basic Pre-Flight","Ensure micro-SD card is installed for camera recording.","No"
+"1.1 Basic Pre-Flight","Ensure launch site is suitable for take-off (level, clear of debris, etc.).","No"
+"1.1 Basic Pre-Flight","Confirm that pilot is certified for at least Basic Operations.","No"
+"1.1 Basic Pre-Flight","Confirm that all flight crew members are fit to perform: no alcohol within 12 hours, no cannabis for 28 days, no impairing drugs, not fatigued.","No"
+"1.1 Basic Pre-Flight","Ensure all flight crew members understand their roles, communication methods, emergency procedures, and emergency equipment.","No"
+"1.1 Basic Pre-Flight","Ensure any other people involved in the operation stay clear during take-off/landing and do not interfere.","No"
+"1.1 Basic Pre-Flight","Confirm crew is aware of take-off, landing and back-up landing plan.","No"
+"1.1 Basic Pre-Flight","Ensure any special attributes of the flight are addressed (e.g., FPV, night flying).","No"
+"1.1 Basic Pre-Flight","Ensure flight log is available.","Yes"

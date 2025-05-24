@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flight Log</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <nav class="top-nav">
+    <a href="index.html">Home</a> |
+    <a href="tools.html" target="_blank" rel="noopener">Tools</a> |
+    <a href="flight-log.html" class="active">Flight Log</a> |
+    <a href="summary.html">Summary</a>
+  </nav>
+
+  <h1>Flight Log Information</h1>
+
+  <form id="flight-log-form">
+    <table class="flight-log-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Pilot Name(s)</th>
+          <th>Observer Name(s)</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Pilot Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="date"   id="flight-date"      required></td>
+          <td><input type="text"   id="flight-pilot"     placeholder="e.g. J. Smith"     required></td>
+          <td><input type="text"   id="flight-observers" placeholder="n/a"></td>
+          <td><input type="time"   id="flight-start"     required></td>
+          <td><input type="time"   id="flight-end"       required></td>
+          <td><input type="text"   id="flight-location"  placeholder="e.g. Field A (Lat,Long)" required></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="submit">Save Flight Log</button>
+  </form>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+

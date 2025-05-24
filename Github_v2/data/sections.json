@@ -1,0 +1,243 @@
+[
+  {
+    "id": "1_1_Basic_Pre-Flight",
+    "title": "1.1 Basic Pre-Flight",
+    "items": [
+      "Basic Operations Pre-Flight Checklist",
+      "Ensure flight will be 5.6 km (3 NM) away from airports or military aerodromes, and 1.9 km (1 NM) away from heliports.",
+      "Ensure flight will not be in Controlled Airspace or Restricted Airspace.",
+      "Locate other aerodromes in flight area and ensure flight stays out of established flight patterns of those aerodromes.",
+      "Ensure no impacting temporary aviation restrictions are in effect.",
+      "Check visually and audibly for nearby low-altitude air operations such as helicopters, seaplanes, hot air balloons, and ultra-light aircraft.",
+      "Take note of potential obstacles such as buildings, wires, trees, cell towers, wind turbines.",
+      "Check suitability of current weather and weather forecast for the duration of the operation.",
+      "Check that the Kp index is suitable for the flight (ideally less than 4).",
+      "Check for and avoid potential dust or dirt clouds.",
+      "Determine the maximum safe range for the operation, based upon site details, current weather conditions, and battery charge.",
+      "Ensure bystanders are at least 30 m away from aircraft at all times.",
+      "Ensure crew and other involved parties are aware of the flight and stand clear.",
+      "Stay at least 30 m away from advertised events such as parades, sporting events, or outdoor concerts.",
+      "Check that drone is registered and registration number is on drone.",
+      "Check for damage, cracks, or other signs of potential failure.",
+      "Check propellers for cracks, deformation, or other wear.",
+      "Ensure drone and control unit batteries are sufficiently charged for the operation.",
+      "Check that propellers, propeller guards, and other removable items are secure, and items such as gimbal guards and lens covers are removed.",
+      "Ensure micro-SD card is installed for camera recording.",
+      "Ensure launch site is suitable for take-off (level, clear of debris, etc.).",
+      "Confirm that pilot is certified for at least Basic Operations.",
+      "Confirm that all flight crew members are fit to perform: no alcohol within 12 hours, no cannabis for 28 days, no impairing drugs, not fatigued.",
+      "Ensure all flight crew members understand their roles, communication methods, emergency procedures, and emergency equipment.",
+      "Ensure any other people involved in the operation stay clear during take-off/landing and do not interfere.",
+      "Confirm crew is aware of take-off, landing and back-up landing plan.",
+      "Ensure any special attributes of the flight are addressed (e.g., FPV, night flying).",
+      "Ensure flight log is available."
+    ]
+  },
+  {
+    "id": "1_2_Advanced_Pre-Flight",
+    "title": "1.2 Advanced Pre-Flight",
+    "items": [
+      "Advanced Operations Pre-Flight Checklist",
+      "If flight will be nearer than 5.6 km (3 NM) away from airports, or 1.9 km from heliports, contact the operator and secure permission.",
+      "If flight will be in Controlled or Restricted Airspace, confirm drone is accepted and obtain NAV CANADA RPAS Flight Authorization.",
+      "If flight is near a military aerodrome, ensure an SFOC has been approved and permission secured.",
+      "Locate nearby aerodromes and stay out of their flight patterns.",
+      "Check for temporary aviation restrictions (NOTAMs).",
+      "Visually and audibly check for low-altitude aircraft.",
+      "Note potential obstacles: buildings, wires, trees, etc.",
+      "Avoid land-based airspace restrictions (police, fires, disasters).",
+      "Check current and forecasted weather.",
+      "Ensure Kp index is suitable (less than 4)."
+    ]
+  },
+  {
+    "id": "1_3_Micro_Pre-Flight",
+    "title": "1.3 Micro Pre-Flight",
+    "items": [
+      "Micro Drones Pre-Flight Checklist",
+      "If flying near airports or heliports, fly below 30 m AGL when possible.",
+      "If flying in Controlled Airspace, fly below 30 m AGL.",
+      "If near military aerodrome, fly carefully and ideally below 30 m AGL.",
+      "If in CYR Class F Zone, obtain permission from controlling agency.",
+      "Avoid established aerodrome patterns.",
+      "Check for temporary flight restrictions (NOTAMs, apps).",
+      "Visually and audibly monitor for other aircraft.",
+      "Watch for obstacles: buildings, wires, trees, etc.",
+      "Avoid restricted zones (e.g., emergencies, wildfires).",
+      "Get landowner permission for takeoff/landing in parks.",
+      "Check weather and forecast.",
+      "Ensure Kp index under 4.",
+      "Avoid dusty environments.",
+      "Determine safe range based on site/weather/battery.",
+      "Keep bystanders clear during take-off and landing.",
+      "Do not fly over crowds.",
+      "Ensure crew and involved parties are briefed.",
+      "Check for physical damage.",
+      "Inspect propellers.",
+      "Verify full battery charge.",
+      "Ensure attachments are secure and gimbal guards removed.",
+      "Install micro-SD card if recording.",
+      "Ensure clear, level launch site.",
+      "Crew must be unimpaired and rested.",
+      "Brief all crew on flight plan."
+    ]
+  },
+  {
+    "id": "2_0_Takeoff_Procedures",
+    "title": "2.0 Takeoff Procedures",
+    "items": [
+      "Takeoff Procedures Checklist",
+      "Confirm completion of pre-flight checklist.",
+      "Record beginning of flight log information.",
+      "Assemble control unit, display, and related gear.",
+      "Prepare drone for launch.",
+      "Activate control unit and display device.",
+      "Launch drone control app on phone or control.",
+      "Activate drone.",
+      "Initiate control unit and drone communication, confirm linkage.",
+      "Ensure all control switches are correctly set.",
+      "Check firmware loads are up to date and consistent.",
+      "Check compass, IMU, and gimbal calibration.",
+      "Ensure Return-to-Home parameters are correct.",
+      "Ensure sufficient GPS satellites (minimum 7).",
+      "Perform final weather check.",
+      "Signal crew and bystanders to stand clear for take-off.",
+      "Start camera recording.",
+      "Announce take-off and stand clear.",
+      "Activate take-off controls.",
+      "Allow drone to hover low to confirm stability.",
+      "Test controls to ensure full directional control."
+    ]
+  },
+  {
+    "id": "3_0_Landing_Procedures",
+    "title": "3.0 Landing Procedures",
+    "items": [
+      "Landing Procedures",
+      "Alert crew and bystanders of approaching aircraft.",
+      "Ensure landing site is clear of debris and suitable.",
+      "Rotate drone to face away before final approach.",
+      "Ensure all crew and people are clear of landing site.",
+      "Ensure all bystanders are 30 m away from landing site.",
+      "Land drone.",
+      "Turn off motors and camera.",
+      "Retrieve drone and inspect for damage.",
+      "Disassemble as required, apply gimbal guard and lens cover, stow gear.",
+      "Record flight in flight log."
+    ]
+  },
+  {
+    "id": "4_1_General_Emergencies",
+    "title": "4.1 General Emergencies",
+    "items": [
+      "General Emergency Check List",
+      "Administer first aid as appropriate.",
+      "Call 911 if required.",
+      "Secure the scene and ensure bystander safety.",
+      "Log incident details and notify operations lead."
+    ]
+  },
+  {
+    "id": "4_2_Horizontal_Fly_Away",
+    "title": "4.2 Horizontal Fly-Away",
+    "items": [
+      "Horizontal Flyaway",
+      "Attempt to reconnect to aircraft (antennae, controller, app).",
+      "Note Emergency button on Flight Timer screen of Drone Pilot Canada app.",
+      "Estimate RPA altitude, speed, direction, battery life.",
+      "Call aerodromes in direction of travel (nearest first).",
+      "Call FIR Area Control Centre Emergency Number.",
+      "If threat is imminent, call Aviation Emergency Number: 1-877-992-6853.",
+      "Use communication script when contacting aerodromes/emergency contacts."
+    ]
+  },
+  {
+    "id": "4_3_Vertical_Fly_Away",
+    "title": "4.3 Vertical Fly-Away",
+    "items": [
+      "Vertical Flyaway",
+      "Activate RTH or Emergency Stop function immediately.",
+      "Descend or ascend to regain control, as per drone manual.",
+      "Alert ATC/emergency services if in controlled airspace.",
+      "Log all actions and outcomes for post-flight review."
+    ]
+  },
+  {
+    "id": "4_4_Important_Phone_Numbers",
+    "title": "4.4 Important Phone Numbers",
+    "items": [
+      "Phone Numbers NavCan, emergencies",
+      "NAV CANADA FIR ACC – Vancouver: 604-586-4500",
+      "NAV CANADA FIR ACC – Edmonton: 780-890-8397",
+      "NAV CANADA FIR ACC – Toronto: 905-676-4509",
+      "NAV CANADA FIR ACC – Montreal: 514-633-3365",
+	  "Nav Canada FIR ACC - Gander: 709-651-5207",
+	  "Nav Canada FIR ACC - Moncton: 506-867-7173",
+	  "Nav Canada FIR ACC - Winnipeg: 204-983-8338",
+	  "Aviation Emergency : 1-877-992-6853",
+      "Transportation Safety Board (Injury)",
+      "Pilot Cell Phone (Ron Treleaven)",
+      "Add New Detail per Operation/Risk"
+    ]
+  },
+  {
+    "id": "5_1_Basic_Rules",
+    "title": "5.1 Basic Rules",
+    "items": [
+	  "Drone must be <25kg, Registered and labeled with PC Certificate #",
+	  "Pilot must pass Basic exam and be 14+ or supervised",
+	  "Maintain VLOS; FPV only with VO; night flight needs lights",
+	  "Stay 5.6 km from airports, 1.9 km from heliports, avoid patterns",
+	  "Avoid controlled/restricted airspace",
+	  "Stay 30m from bystanders; no overflight of people/events",
+	  "Max altitude: 122m or 30m above structures within 61m"
+	]
+  },
+  {
+    "id": "5_2_Advanced_Rules",
+    "title": "5.2 Advanced Rules",
+    "items": [
+	   "Drone must be <25 kg, registered, and labeled",
+	   "Pilot must pass Advanced exam and be 16+ or supervised",
+	   "Maintain VLOS; FPV only with VO; night flight needs lights",
+	   "Can fly near airports/heliports with permission; DND requires SFOC",
+	   "May fly in controlled/restricted airspace with approval and approved drone",
+	   "May fly near/over people if using approved drone",
+	   "No flying at advertised events (without SFOC); same altitude rules apply"
+	    ]
+  },
+  {
+    "id": "6_0_SFOC_Requirement",
+    "title": "6.0 SFOC Requirement",
+    "items": [
+      "Special Flight Operations Certificate",
+      "Drone weighs > 25 kg",
+      "Flying beyond VLOS",
+      "Pilot is not Canadian citizen or permanent resident",
+      "Flying above max altitude without ATC approval",
+      "Controlling > 5 RPAs from one station",
+      "Flying at special/advertised event",
+      "Carrying hazardous payload",
+      "Flying within 3 NM of military aerodrome",
+      "Minister-designated operations"
+    ]
+  },
+  {
+    "id": "7_0_Visual_Observer_Duties",
+    "title": "7.0 Visual Observer Duties",
+    "items": [
+      "Visual Observer Duties",
+      "Assist PIC by maintaining VLOS and detecting hazards.",
+      "Scan for aircraft, obstacles, people, and environmental threats.",
+      "Inform PIC if VLOS is lost or hazards arise.",
+      "Pass VLOS duties if temporarily distracted.",
+      "Know mission and hazard limits (e.g., wind, weather, people).",
+      "Comply with PIC instructions; communicate effectively.",
+      "Remain sober, rested, and unimpaired.",
+      "Use unaided vision only during flight.",
+      "Cannot drive or operate vehicles while on VO duty.",
+      "Be familiar with RPAS regulations and aircraft limits.",
+      "May support pre-flight, checklist, and ground crew duties."
+    ]
+  }
+]

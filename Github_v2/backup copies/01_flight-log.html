@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Drone SOP – Flight Log</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <nav class="top-nav">
+    <a href="index.html">Home</a> |
+    <a href="tools.html" target="_blank" rel="noopener">Tools</a> |
+    <a href="flight-log.html" class="active">Flight Log</a> |
+    <a href="summary.html">Summary</a>
+  </nav>
+
+  <h1>Flight Log Information</h1>
+
+  <form id="flight-log-form">
+    <div class="form-group">
+      <label for="flight-date">Date:</label>
+      <input type="date" id="flight-date" required>
+    </div>
+    <div class="form-group">
+      <label for="flight-pilot">Pilot Name(s):</label>
+      <input type="text" id="flight-pilot" placeholder="e.g. Ron Treleaven" required>
+    </div>
+    <div class="form-group">
+      <label for="flight-observers">Observer Name(s):</label>
+      <input type="text" id="flight-observers" placeholder="e.g. Jane Doe">
+    </div>
+    <div class="form-group">
+      <label for="flight-start">Start Time:</label>
+      <input type="time" id="flight-start" required>
+    </div>
+    <div class="form-group">
+      <label for="flight-end">End Time:</label>
+      <input type="time" id="flight-end" required>
+    </div>
+    <button type="submit" id="flight-log-save">Save Flight Log</button>
+  </form>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+/* assets/css/style.css */
+
+/* ---- Page Header (logo + title inline) ---- */
+.site-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.site-logo {
+  height: 50px;
+  margin-right: 1rem;
+}
+.page-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #007acc;
+  margin: 0;
+}
+
+/* ---- Section Selector (index.html) ---- */
+#section-selector label {
+  display: block;
+  margin: 0.5rem 0;
+  cursor: pointer;
+}
+#section-selector input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.1);
+  vertical-align: middle;
+}
+
+/* ---- Begin Button ---- */
+#begin-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background: #007acc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#begin-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* ---- Checklist Pages (sections/*.html) ---- */
+.check-item {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+.check-item input[type="checkbox"] {
+  margin-right: 0.75rem;
+  transform: scale(1.1);
+}
+.check-item label {
+  flex: 1;
+}
+
+/* ---- Navigation Buttons ---- */
+#prev-btn,
+#next-btn {
+  display: inline-block;
+  margin: 1.5rem 0.5rem 0 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  background: #007acc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#prev-btn:disabled,
+#next-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* ---- Flight Log Table ---- */
+.flight-log-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+.flight-log-table th,
+.flight-log-table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+.flight-log-table thead th {
+  background: #e0f4ff;
+}
+
+/* ---- Utility ---- */
+button:hover:not(:disabled) {
+  background: #005fa3;
+}
+
+/* ---- Global ---- */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+               Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background: #f9f9f9;
+  color: #333;
+  line-height: 1.5;
+}
+
+body {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1, h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.25rem;
+}
+
+/* ---- Print Styles ---- */
+@media print {
+  /* hide nav + interactive buttons in PDF */
+  .top-nav,
+  #export-csv,
+  #export-pdf,
+  #return-home {
+    display: none !important;
+  }
+
+  body {
+    margin: 1cm;
+    background: none;
+    color: #000;
+    max-width: none;
+  }
+
+  /* let browser paginate naturally */
+  h1 { font-size: 1.8em; }
+  h2 { font-size: 1.4em; }
+}
