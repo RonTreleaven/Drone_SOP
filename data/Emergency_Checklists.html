@@ -1,1087 +1,345 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
-<meta name=Generator content="Microsoft Word 15 (filtered)">
-<style>
-<!--
- /* Font Definitions */
- @font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"Calibri Light";
-	panose-1:2 15 3 2 2 2 4 3 2 4;}
- /* Style Definitions */
- p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:8.0pt;
-	margin-left:0in;
-	line-height:107%;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-h1
-	{mso-style-link:"Heading 1 Char";
-	margin-top:12.0pt;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:0in;
-	line-height:107%;
-	page-break-after:avoid;
-	font-size:16.0pt;
-	font-family:"Calibri Light",sans-serif;
-	color:#2F5496;
-	font-weight:normal;}
-h2
-	{mso-style-link:"Heading 2 Char";
-	margin-top:2.0pt;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:0in;
-	line-height:107%;
-	page-break-after:avoid;
-	font-size:13.0pt;
-	font-family:"Calibri Light",sans-serif;
-	color:#2F5496;
-	font-weight:normal;}
-p.MsoTitle, li.MsoTitle, div.MsoTitle
-	{mso-style-link:"Title Char";
-	margin:0in;
-	font-size:16.0pt;
-	font-family:"Calibri Light",sans-serif;
-	letter-spacing:-.5pt;
-	font-weight:bold;}
-p.MsoTitleCxSpFirst, li.MsoTitleCxSpFirst, div.MsoTitleCxSpFirst
-	{mso-style-link:"Title Char";
-	margin:0in;
-	font-size:16.0pt;
-	font-family:"Calibri Light",sans-serif;
-	letter-spacing:-.5pt;
-	font-weight:bold;}
-p.MsoTitleCxSpMiddle, li.MsoTitleCxSpMiddle, div.MsoTitleCxSpMiddle
-	{mso-style-link:"Title Char";
-	margin:0in;
-	font-size:16.0pt;
-	font-family:"Calibri Light",sans-serif;
-	letter-spacing:-.5pt;
-	font-weight:bold;}
-p.MsoTitleCxSpLast, li.MsoTitleCxSpLast, div.MsoTitleCxSpLast
-	{mso-style-link:"Title Char";
-	margin:0in;
-	font-size:16.0pt;
-	font-family:"Calibri Light",sans-serif;
-	letter-spacing:-.5pt;
-	font-weight:bold;}
-a:link, span.MsoHyperlink
-	{color:#0563C1;
-	text-decoration:underline;}
-p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:8.0pt;
-	margin-left:.5in;
-	line-height:107%;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:.5in;
-	line-height:107%;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:.5in;
-	line-height:107%;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:8.0pt;
-	margin-left:.5in;
-	line-height:107%;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.TitleChar
-	{mso-style-name:"Title Char";
-	mso-style-link:Title;
-	font-family:"Calibri Light",sans-serif;
-	letter-spacing:-.5pt;
-	font-weight:bold;}
-span.Heading1Char
-	{mso-style-name:"Heading 1 Char";
-	mso-style-link:"Heading 1";
-	font-family:"Calibri Light",sans-serif;
-	color:#2F5496;}
-span.Heading2Char
-	{mso-style-name:"Heading 2 Char";
-	mso-style-link:"Heading 2";
-	font-family:"Calibri Light",sans-serif;
-	color:#2F5496;}
-.MsoChpDefault
-	{font-family:"Calibri",sans-serif;}
-.MsoPapDefault
-	{margin-bottom:8.0pt;
-	line-height:107%;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
- /* List Definitions */
- ol
-	{margin-bottom:0in;}
-ul
-	{margin-bottom:0in;}
--->
-</style>
-
+  <meta charset="UTF-8">
+  <title>Emergency Procedure Checklists</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #2F5496;
+      margin-bottom: 30px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
+      padding: 24px 28px;
+    }
+    .card h2 {
+      color: #2F5496;
+      margin-top: 0;
+    }
+    ul, ol {
+      margin: 0 0 0 1.2em;
+      padding: 0;
+    }
+    .card ul {
+      list-style: disc;
+    }
+    .card ol {
+      list-style: decimal;
+    }
+    .contact-info {
+      margin-bottom: 24px;
+      background: #eaf1fb;
+      border-left: 4px solid #2F5496;
+      padding: 16px;
+      border-radius: 6px;
+    }
+    @media print {
+      body { background: #fff; }
+      .container { box-shadow: none; }
+      .card { page-break-inside: avoid; }
+    }
+  </style>
 </head>
-
-<body lang=EN-US link="#0563C1" vlink="#954F72" style='word-wrap:break-word'>
-
-<div class=WordSection1>
-
-<p class=MsoTitle align=center style='text-align:center'>Emergency Action Plan
-Template</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h1>Contact Information</h1>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h2>Pilot in Command</h2>
-
-<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
-margin-left:.5in;line-height:normal'>Contact Information</p>
-
-<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
-margin-left:.5in;line-height:normal'>Ron Treleaven</p>
-
-<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
-margin-left:.5in;line-height:normal'>(416) 317-3661</p>
-
-<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
-margin-left:.5in;line-height:normal'><a href="mailto:rontreleaven@gmail.com">rontreleaven@gmail.com</a></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h1>Flying Site Location<br>
-<br>
-</h1>
-
-<p class=MsoNormal>Address:
-___________________________________________________________</p>
-
-<p class=MsoNormal>GPS Coordinates: _________________N, _________________W</p>
-
-<p class=MsoNormal>Nearest Intersection:
-__________________________________________</p>
-
-<p class=MsoNormal>Directions to flying site from Intersection: </p>
-
-<table class=MsoTableGrid border=0 cellspacing=0 cellpadding=0
- style='border-collapse:collapse;border:none'>
- <tr style='height:.3in'>
-  <td width=623 valign=bottom style='width:467.5pt;border:none;border-bottom:
-  solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:.3in'>
-  <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>&nbsp;</p>
-  </td>
- </tr>
- <tr style='height:.3in'>
-  <td width=623 valign=bottom style='width:467.5pt;border:none;border-bottom:
-  solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:.3in'>
-  <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>&nbsp;</p>
-  </td>
- </tr>
- <tr style='height:.3in'>
-  <td width=623 valign=bottom style='width:467.5pt;border:none;border-bottom:
-  solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:.3in'>
-  <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>&nbsp;</p>
-  </td>
- </tr>
- <tr style='height:.3in'>
-  <td width=623 valign=bottom style='width:467.5pt;border:none;border-bottom:
-  solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:.3in'>
-  <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>&nbsp;</p>
-  </td>
- </tr>
- <tr style='height:.3in'>
-  <td width=623 valign=bottom style='width:467.5pt;border:none;border-bottom:
-  solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:.3in'>
-  <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>&nbsp;</p>
-  </td>
- </tr>
- <tr style='height:.3in'>
-  <td width=623 valign=bottom style='width:467.5pt;border:none;padding:0in 5.4pt 0in 5.4pt;
-  height:.3in'>
-  <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>&nbsp;</p>
-  </td>
- </tr>
-</table>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<span style='font-size:16.0pt;line-height:107%;font-family:"Calibri Light",sans-serif;
-color:#2F5496'><br clear=all style='page-break-before:always'>
-</span>
-
-<h1>&nbsp;</h1>
-
-<h1>Non-Participant Enters Flight Area<br>
-<br>
-</h1>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Maintain</b> visual contact with RPA</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Communicate</b> the situation to the Flight Crew</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Verify</b> </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check state of RPA (Status/Flight Mode)</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check location of RPA in flight area</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Take Actions</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Ground Crew</b> – Alert flight area, remove non-participant</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Visual Observer </b>– Monitor air traffic</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>PIC </b>– Pause flight operation and evaluate best course of
-action.</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Issues</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If non-participant is unable to be removed:  </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Stop flight operation until the issue is resolved:</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If non-participant blocks landing location:</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Locate suitable divert location</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Post-Incident</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Document incident</p>
-
-<p class=MsoListParagraphCxSpLast style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Evaluate crowd control measures</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<span style='font-size:11.0pt;line-height:107%;font-family:"Calibri",sans-serif'><br
-clear=all style='page-break-before:always'>
-</span>
-
-<p class=MsoNormal><span style='font-size:16.0pt;line-height:107%;font-family:
-"Calibri Light",sans-serif;color:#2F5496'>&nbsp;</span></p>
-
-<h1>Hazardous Weather Conditions<br>
-<br>
-</h1>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Maintain</b> visual contact with RPA</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Communicate</b> the situation to the Flight Crew</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Verify</b> </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check state of RPA (Status/Flight Mode)</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check RPA location/altitude </p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Take Actions</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Ground Crew</b> – Review weather forecast</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Visual Observer </b>– Monitor changing weather conditions</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>PIC </b>– Evaluate if conditions exceed safe operating
-requirements</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Issues</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If weather conditions are changing rapidly:  </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Maneuver the RPA to a safe divert location</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Land immediately</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Err on the side of caution: </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Maneuver the RPA closer to PIC to evaluate conditions</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Post-Incident</b></p>
-
-<p class=MsoListParagraphCxSpLast style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Document incident</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<span style='font-size:11.0pt;line-height:107%;font-family:"Calibri",sans-serif'><br
-clear=all style='page-break-before:always'>
-</span>
-
-<p class=MsoNormal><span style='font-size:16.0pt;line-height:107%;font-family:
-"Calibri Light",sans-serif;color:#2F5496'>&nbsp;</span></p>
-
-<h1>Low Battery or Status Error<br>
-<br>
-</h1>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Maintain</b> visual contact with RPA</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Communicate</b> the situation to the Flight Crew</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Verify</b> </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check state of RPA (Status/Flight Mode)</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check location of RPA in flight area</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Take Actions</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Ground Crew</b> – Alert flight area</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Visual Observer </b>– Monitor air traffic and contact ATC if
-necessary</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>PIC </b>– Determine safest landing location. Land as soon as
-possible.</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Issues</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If disoriented:  </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Use `Return to Home' to bring RPA back for landing</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Regain visual contact with RPA as soon as possible</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If strong winds prevent return flight:</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Use camera to locate suitable divert location</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Post-Incident</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Document incident</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Recovery telemetry logs</p>
-
-<p class=MsoListParagraphCxSpLast style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Inspect RPA and battery for physical signs of damage</p>
-
-<span style='font-size:11.0pt;line-height:107%;font-family:"Calibri",sans-serif'><br
-clear=all style='page-break-before:always'>
-</span>
-
-<p class=MsoNormal><span style='font-size:16.0pt;line-height:107%;font-family:
-"Calibri Light",sans-serif;color:#2F5496'>&nbsp;</span></p>
-
-<h1>Collision with Hazard<br>
-<br>
-</h1>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Maintain</b> visual contact with RPA</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Communicate</b> the situation to the Flight Crew</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Verify</b> </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check state of RPA (Status/Flight Mode)</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check RPA location/altitude </p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Take Actions</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Ground Crew</b> – Alert and clear flight area, prepare safety
-equipment</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Visual Observer </b>– Guide PIC around hazard</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>PIC </b>– Establish positive control and land immediately</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Issues</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If the RPA regains stability and control:  </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Maneuver the RPA to a safe divert location</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Land immediately</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If the RPA does not regain stability: </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Initiate manual motor shutdown</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Post-Incident</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Document incident</p>
-
-<p class=MsoListParagraphCxSpLast style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Inspect RPA and battery for physical signs of damage</p>
-
-<span style='font-size:11.0pt;line-height:107%;font-family:"Calibri",sans-serif'><br
-clear=all style='page-break-before:always'>
-</span>
-
-<p class=MsoNormal><span style='font-size:16.0pt;line-height:107%;font-family:
-"Calibri Light",sans-serif;color:#2F5496'>&nbsp;</span></p>
-
-<h1>Fly Away/Loss of GPS<br>
-<br>
-</h1>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Maintain</b> visual contact with RPA</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Communicate</b> the situation to the Flight Crew</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Verify</b> </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check state of RPA (Status/Flight Mode)</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check RPA location/altitude </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check transmitter/tablet status and control links</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Take Actions</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Ground Crew</b> – Alert and clear flight area, prepare safety
-equipment</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Visual Observer </b>– Monitor air traffic and contact ATC if
-necessary</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>PIC </b>– Follow RPA and attempt to re-establish
-connection/positive control</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Issues</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If control is active, and RPA is drifting or moving incorrectly: 
-</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Lower altitude and attempt to keep RPA stationary</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Try ‘Return to Home’ to bring RPA back for landing</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Try switching control to ‘manual’ or attitude control</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If control is active but RPA is not responding:</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Try switching control to ‘manual’ or attitude control</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If control is not active </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Assist Ground Crew in alerting and clearing flight area</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Post-Incident</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Document incident</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Recovery telemetry logs</p>
-
-<p class=MsoListParagraphCxSpLast style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Inspect RPA and battery for physical signs of damage</p>
-
-<span style='font-size:11.0pt;line-height:107%;font-family:"Calibri",sans-serif'><br
-clear=all style='page-break-before:always'>
-</span>
-
-<p class=MsoNormal><span style='font-size:16.0pt;line-height:107%;font-family:
-"Calibri Light",sans-serif;color:#2F5496'>&nbsp;</span></p>
-
-<h1>Lost Link<br>
-<br>
-</h1>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Maintain</b> visual contact with RPA</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Communicate</b> the situation to the Flight Crew</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Verify</b> </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check state of RPA (Status/Flight Mode)</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check RPA location/altitude </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check transmitter/tablet status and control links</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Take Actions</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Ground Crew</b> – Alert and clear flight area, prepare safety
-equipment</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Visual Observer </b>– Monitor air traffic and contact ATC if
-necessary</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>PIC </b>– Follow RPA and attempt to re-establish
-connection/positive control</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Issues</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If telemetry is active, but video feed has failed:  </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Lower altitude and attempt to keep RPA stationary</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Try ‘Return to Home’ to bring RPA back for landing</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Try switching control to ‘manual’ or attitude control</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If telemetry/control is not active </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Try restarting controller/tablet</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Adjust antennas and attempt to improve connection while following
-RPA</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Assist Ground Crew in alerting and clearing flight area</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Post-Incident</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Document incident</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Recovery telemetry logs</p>
-
-<p class=MsoListParagraphCxSpLast style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Inspect RPA and battery for physical signs of damage</p>
-
-<span style='font-size:11.0pt;line-height:107%;font-family:"Calibri",sans-serif'><br
-clear=all style='page-break-before:always'>
-</span>
-
-<p class=MsoNormal><span style='font-size:16.0pt;line-height:107%;font-family:
-"Calibri Light",sans-serif;color:#2F5496'>&nbsp;</span></p>
-
-<h1>In-Flight or Post-Flight Fire<br>
-<br>
-</h1>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Maintain</b> visual contact with RPA</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Communicate</b> the situation to the Flight Crew</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Verify</b> </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check state of RPA (Status/Flight Mode)</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check RPA location/altitude </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check transmitter/tablet status and control links</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Take Actions</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Ground Crew</b> – Alert and clear flight area, prepare safety
-equipment</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Visual Observer </b>– Be prepared to call emergency services</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>PIC </b>– Immediately terminate flight</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Issues</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If RPA sparks a ground fire:  </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Secure site and attempt to extinguish the fire with Ground Crew</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If unable to extinguish fire: </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Call emergency services</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Stop all fire suppression efforts and begin minimizing potential
-damage by clearing the area and removing other potential fire hazards</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>DO NOT COMPROMISE YOUR SAFETY</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Post-Incident</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Document incident</p>
-
-<p class=MsoListParagraphCxSpLast style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Contact PI and Designated Local Authority</p>
-
-<span style='font-size:11.0pt;line-height:107%;font-family:"Calibri",sans-serif'><br
-clear=all style='page-break-before:always'>
-</span>
-
-<p class=MsoNormal><span style='font-size:16.0pt;line-height:107%;font-family:
-"Calibri Light",sans-serif;color:#2F5496'>&nbsp;</span></p>
-
-<h1>Pilot Incapacitation<br>
-<br>
-</h1>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Ensure the PIC is IMMEDIATELY attended to</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Typically, the VO will be the closest person to the PIC</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Communicate</b> the situation to the Flight Crew</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Take Actions</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>VO to pause or stop flight operation, then resume attending to PIC</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Ground Crew must be prepared to call emergency services </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check transmitter/tablet status and control links</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Issues</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Call emergency services if there is a possibility that they
-may be needed</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If flight operation cannot be paused or stopped, initiate a
-manual termination, unless an alternative operator is available.</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>RESPONSE PRIORITIES:</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Avoid delaying emergency services to PIC</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Ensure RPA will not place additional persons at risk</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>Prevent the RPA from causing property damage</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>If able, land the RPA safely</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Post-Incident</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Document incident</p>
-
-<p class=MsoListParagraphCxSpLast style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Contact PI and Designated Local Authority</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<span style='font-size:11.0pt;line-height:107%;font-family:"Calibri",sans-serif'><br
-clear=all style='page-break-before:always'>
-</span>
-
-<p class=MsoNormal><span style='font-size:16.0pt;line-height:107%;font-family:
-"Calibri Light",sans-serif;color:#2F5496'>&nbsp;</span></p>
-
-<h1>Airspace Encroachment<br>
-<br>
-</h1>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Maintain</b> visual contact with RPA</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Communicate</b> the situation to the Flight Crew</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Verify</b> </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check state of RPA (Status/Flight Mode)</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Check location of RPA in flight area</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Take Actions</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Ground Crew</b> – Alert flight area, prepare for landing</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>Visual Observer </b>– Monitor air traffic and provide </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span><b>PIC </b>– Evaluate best course of action</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Issues</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If a collision is imminent:  </p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>PIC must take immediate evasive action</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If a collision is a strong possibility:</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>PIC must land or terminate the flight at the nearest divert or
-safe location</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If the encroachment is unsafe but not likely to result in a
-collision:</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>PIC must pause flight, reduce flight altitude and monitor the
-situation.</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>PIC may only resume flight operation when the hazard has passed</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>If the encroachment is noticeable, but not likely to cause a
-safety issue:</p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.5in;text-indent:-.25in'><span
-style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
-</span></span>PIC may continue flight operations</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><b>Post-Incident</b></p>
-
-<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Document incident</p>
-
-<p class=MsoListParagraphCxSpLast style='margin-left:1.0in;text-indent:-.25in'><span
-style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
-</span></span>Review See &amp; Avoid procedures</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-</div>
-
+<body>
+  <div class="container">
+    <h1>Emergency Procedure Checklists</h1>
+
+    <div class="contact-info">
+      <strong>Pilot in Command:</strong> Ron Treleaven<br>
+      <strong>Phone:</strong> (416) 317-3661<br>
+      <strong>Email:</strong> <a href="mailto:rontreleaven@gmail.com">rontreleaven@gmail.com</a>
+    </div>
+
+    <div class="card">
+      <h2>Hazardous Weather Conditions</h2>
+      <ul>
+        <li>Maintain visual contact with RPA</li>
+        <li>Communicate the situation to the Flight Crew</li>
+        <li>Verify:
+          <ul>
+            <li>Check state of RPA (Status/Flight Mode)</li>
+            <li>Check RPA location/altitude</li>
+          </ul>
+        </li>
+        <li>Take Actions:
+          <ul>
+            <li>Ground Crew: Review weather forecast</li>
+            <li>Visual Observer: Monitor changing weather conditions</li>
+            <li>PIC: Evaluate if conditions exceed safe operating requirements</li>
+          </ul>
+        </li>
+        <li>Issues:
+          <ul>
+            <li>If weather conditions are changing rapidly: Maneuver the RPA to a safe divert location, land immediately</li>
+            <li>Err on the side of caution: Maneuver the RPA closer to PIC to evaluate conditions</li>
+          </ul>
+        </li>
+        <li>Post-Incident:
+          <ul>
+            <li>Document incident</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Low Battery or Status Error</h2>
+      <ul>
+        <li>Maintain visual contact with RPA</li>
+        <li>Communicate the situation to the Flight Crew</li>
+        <li>Verify:
+          <ul>
+            <li>Check state of RPA (Status/Flight Mode)</li>
+            <li>Check location of RPA in flight area</li>
+          </ul>
+        </li>
+        <li>Take Actions:
+          <ul>
+            <li>Ground Crew: Alert flight area</li>
+            <li>Visual Observer: Monitor air traffic and contact ATC if necessary</li>
+            <li>PIC: Determine safest landing location. Land as soon as possible.</li>
+          </ul>
+        </li>
+        <li>Issues:
+          <ul>
+            <li>If disoriented: Use 'Return to Home' to bring RPA back for landing, regain visual contact as soon as possible</li>
+            <li>If strong winds prevent return flight: Use camera to locate suitable divert location</li>
+          </ul>
+        </li>
+        <li>Post-Incident:
+          <ul>
+            <li>Document incident</li>
+            <li>Recovery telemetry logs</li>
+            <li>Inspect RPA and battery for physical signs of damage</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Collision with Hazard</h2>
+      <ul>
+        <li>Maintain visual contact with RPA</li>
+        <li>Communicate the situation to the Flight Crew</li>
+        <li>Verify:
+          <ul>
+            <li>Check state of RPA (Status/Flight Mode)</li>
+            <li>Check RPA location/altitude</li>
+          </ul>
+        </li>
+        <li>Take Actions:
+          <ul>
+            <li>Ground Crew: Alert and clear flight area, prepare safety equipment</li>
+            <li>Visual Observer: Guide PIC around hazard</li>
+            <li>PIC: Establish positive control and land immediately</li>
+          </ul>
+        </li>
+        <li>Issues:
+          <ul>
+            <li>If the RPA regains stability and control: Maneuver to a safe divert location, land immediately</li>
+            <li>If the RPA does not regain stability: Initiate manual motor shutdown</li>
+          </ul>
+        </li>
+        <li>Post-Incident:
+          <ul>
+            <li>Document incident</li>
+            <li>Inspect RPA and battery for physical signs of damage</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Fly Away/Loss of GPS</h2>
+      <ul>
+        <li>Maintain visual contact with RPA</li>
+        <li>Communicate the situation to the Flight Crew</li>
+        <li>Verify:
+          <ul>
+            <li>Check state of RPA (Status/Flight Mode)</li>
+            <li>Check RPA location/altitude</li>
+            <li>Check transmitter/tablet status and control links</li>
+          </ul>
+        </li>
+        <li>Take Actions:
+          <ul>
+            <li>Ground Crew: Alert and clear flight area, prepare safety equipment</li>
+            <li>Visual Observer: Monitor air traffic and contact ATC if necessary</li>
+            <li>PIC: Follow RPA and attempt to re-establish connection/positive control</li>
+          </ul>
+        </li>
+        <li>Issues:
+          <ul>
+            <li>If control is active, and RPA is drifting or moving incorrectly: Lower altitude and attempt to keep RPA stationary, try 'Return to Home' to bring RPA back for landing, try switching control to 'manual' or attitude control</li>
+            <li>If control is active but RPA is not responding: Try switching control to 'manual' or attitude control</li>
+            <li>If control is not active: Assist Ground Crew in alerting and clearing flight area</li>
+          </ul>
+        </li>
+        <li>Post-Incident:
+          <ul>
+            <li>Document incident</li>
+            <li>Recovery telemetry logs</li>
+            <li>Inspect RPA and battery for physical signs of damage</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Lost Link</h2>
+      <ul>
+        <li>Maintain visual contact with RPA</li>
+        <li>Communicate the situation to the Flight Crew</li>
+        <li>Verify:
+          <ul>
+            <li>Check state of RPA (Status/Flight Mode)</li>
+            <li>Check RPA location/altitude</li>
+            <li>Check transmitter/tablet status and control links</li>
+          </ul>
+        </li>
+        <li>Take Actions:
+          <ul>
+            <li>Ground Crew: Alert and clear flight area, prepare safety equipment</li>
+            <li>Visual Observer: Monitor air traffic and contact ATC if necessary</li>
+            <li>PIC: Follow RPA and attempt to re-establish connection/positive control</li>
+          </ul>
+        </li>
+        <li>Issues:
+          <ul>
+            <li>If telemetry is active, but video feed has failed: Lower altitude and attempt to keep RPA stationary, try 'Return to Home' to bring RPA back for landing, try switching control to 'manual' or attitude control</li>
+            <li>If telemetry/control is not active: Try restarting controller/tablet, adjust antennas and attempt to improve connection while following RPA, assist Ground Crew in alerting and clearing flight area</li>
+          </ul>
+        </li>
+        <li>Post-Incident:
+          <ul>
+            <li>Document incident</li>
+            <li>Recovery telemetry logs</li>
+            <li>Inspect RPA and battery for physical signs of damage</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>In-Flight or Post-Flight Fire</h2>
+      <ul>
+        <li>Maintain visual contact with RPA</li>
+        <li>Communicate the situation to the Flight Crew</li>
+        <li>Verify:
+          <ul>
+            <li>Check state of RPA (Status/Flight Mode)</li>
+            <li>Check RPA location/altitude</li>
+            <li>Check transmitter/tablet status and control links</li>
+          </ul>
+        </li>
+        <li>Take Actions:
+          <ul>
+            <li>Ground Crew: Alert and clear flight area, prepare safety equipment</li>
+            <li>Visual Observer: Be prepared to call emergency services</li>
+            <li>PIC: Immediately terminate flight</li>
+          </ul>
+        </li>
+        <li>Issues:
+          <ul>
+            <li>If RPA sparks a ground fire: Secure site and attempt to extinguish the fire with Ground Crew</li>
+            <li>If unable to extinguish fire: Call emergency services, stop all fire suppression efforts and begin minimizing potential damage by clearing the area and removing other potential fire hazards</li>
+          </ul>
+        </li>
+        <li>Post-Incident:
+          <ul>
+            <li>Document incident</li>
+            <li>Contact PI and Designated Local Authority</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Pilot Incapacitation</h2>
+      <ul>
+        <li>Ensure the PIC is IMMEDIATELY attended to</li>
+        <li>Typically, the VO will be the closest person to the PIC</li>
+        <li>Communicate the situation to the Flight Crew</li>
+        <li>Take Actions:
+          <ul>
+            <li>VO to pause or stop flight operation, then resume attending to PIC</li>
+            <li>Ground Crew must be prepared to call emergency services</li>
+            <li>Check transmitter/tablet status and control links</li>
+          </ul>
+        </li>
+        <li>Issues:
+          <ul>
+            <li>Call emergency services if there is a possibility that they may be needed</li>
+            <li>If flight operation cannot be paused or stopped, initiate a manual termination, unless an alternative operator is available.</li>
+          </ul>
+        </li>
+        <li>RESPONSE PRIORITIES:
+          <ul>
+            <li>Avoid delaying emergency services to PIC</li>
+            <li>Ensure RPA will not place additional persons at risk</li>
+            <li>Prevent the RPA from causing property damage</li>
+            <li>If able, land the RPA safely</li>
+          </ul>
+        </li>
+        <li>Post-Incident:
+          <ul>
+            <li>Document incident</li>
+            <li>Contact PI and Designated Local Authority</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Airspace Encroachment</h2>
+      <ul>
+        <li>Maintain visual contact with RPA</li>
+        <li>Communicate the situation to the Flight Crew</li>
+        <li>Verify:
+          <ul>
+            <li>Check state of RPA (Status/Flight Mode)</li>
+            <li>Check location of RPA in flight area</li>
+          </ul>
+        </li>
+        <li>Take Actions:
+          <ul>
+            <li>Ground Crew: Alert flight area, prepare for landing</li>
+            <li>Visual Observer: Monitor air traffic and provide</li>
+            <li>PIC: Evaluate best course of action</li>
+          </ul>
+        </li>
+        <li>Issues:
+          <ul>
+            <li>If a collision is imminent: PIC must take immediate evasive action</li>
+            <li>If a collision is a strong possibility: PIC must land or terminate the flight at the nearest divert or safe location</li>
+            <li>If the encroachment is unsafe but not likely to result in a collision: PIC must pause flight, reduce flight altitude and monitor the situation. PIC may only resume flight operation when the hazard has passed</li>
+            <li>If the encroachment is noticeable, but not likely to cause a safety issue: PIC may continue flight operations</li>
+          </ul>
+        </li>
+        <li>Post-Incident:
+          <ul>
+            <li>Document incident</li>
+            <li>Review See & Avoid procedures</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+  </div>
 </body>
-
 </html>
