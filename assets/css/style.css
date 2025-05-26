@@ -168,8 +168,8 @@ main {
 #begin-btn:disabled {
   background: #cccccc;
   cursor: not-allowed;
-}
 
+}
 /* ---- Responsive tweaks ---- */
 @media (max-width: 600px) {
   .site-header {
@@ -180,3 +180,12 @@ main {
     margin-bottom: 0.5rem;
   }
 }
+.checklist {
+  list-style: none;
+  padding-left: 0;
+}
+.checklist li::before {
+  content: "✅";
+}
+}
+
