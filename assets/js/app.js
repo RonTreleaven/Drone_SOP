@@ -141,7 +141,11 @@ function renderSectionPage(sections) {
       window.location.href = `../sections/${selected[idx-1]}.html`
     );
   } else {
-    prevBtn.disabled = true;
+    prevBtn.disabled = false; //Enabe the button
+    prevBtn.textContent = '< Back to Index';
+    prevBtn.addEventListener('click', () =>
+      window.location.href = '../index.html'
+    );  
   }
 
   // Next or Flight Log
