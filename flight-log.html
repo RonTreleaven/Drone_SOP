@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flight Log</title>
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -34,7 +35,10 @@
       </thead>
       <tbody>
         <tr>
-          <td><input type="date"   id="flight-date"      required></td>
+          <td>
+            <label for="flight-date" class="visually-hidden">Flight Date</label>
+            <input type="date" id="flight-date" title="Flight Date" placeholder="YYYY-MM-DD" required>
+          </td>
           <td><input type="text"   id="flight-pilot"     placeholder="e.g. J. Smith"     required></td>
           <td><input type="text"   id="flight-observers" placeholder="n/a"></td>
           <td><input type="time"   id="flight-start"     required></td>
