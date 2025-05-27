@@ -38,9 +38,10 @@
             // Convert to DMS
             const latDMS = toDMS(latitude, true);
             const lonDMS = toDMS(longitude, false);
-            output.textContent =
-              `Latitude: ${latShort}, Longitude: ${lonShort}\n` +
-              `DMS: ${latDMS} ${lonDMS}`;
+            output.innerHTML
+              `DD : ${latShort}, ${longShort}<br>' +
+              'DMS: ${latDMS}, ${lonDMS}`;
+            
           },
           (error) => {
             switch (error.code) {
