@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capture Latitude and Longitude</title>
+</head>
+<body>
+  <h1>Get Your Location</h1>
+  <button id="getLocation">Get Latitude and Longitude</button>
+  <p id="output"></p>
+
+  <script>
+    document.getElementById('getLocation').addEventListener('click', () => {
+      const output = document.getElementById('output');
+
+      // Check if Geolocation is supported/enabled
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            output.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+          },
+          (error) => {
+            switch (error.code) {
+              case error.PERMISSION_DENIED:
+                output.textContent = "User denied the request for Geolocation.";
+                break;
+              case error.POSITION_UNAVAILABLE:
+                output.textContent = "Location information is unavailable.";
+                break;
+              case error.TIMEOUT:
+                output.textContent = "The request to get user location timed out.";
+                break;
+              default:
+                output.textContent = "An unknown error occurred.";
+                break;
+            }
+          }
+        );
+      } else {
+        output.textContent = "Geolocation is not supported by this browser.";
+      }
+    });
+  </script>
+</body>
+</html>
