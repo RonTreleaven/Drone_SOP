@@ -38,7 +38,7 @@
             // Convert to DMS
             const latDMS = toDMS(latitude, true);
             const lonDMS = toDMS(longitude, false);
-            output.innerHTML
+            output.innerHTML =
               `DD : ${latShort}, ${longShort}<br>' +
               'DMS: ${latDMS}, ${lonDMS}`;
             
