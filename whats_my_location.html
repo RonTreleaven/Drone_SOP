@@ -11,16 +11,36 @@
   <p id="output"></p>
 
   <script>
+    // Helper to convert decimal degrees to DMS string
+    function toDMS(deg, isLat) {
+      const abs = Math.abs(deg);
+      const d = Math.floor(abs);
+      const mFloat = (abs - d) * 60;
+      const m = Math.floor(mFloat);
+      const s = ((mFloat - m) * 60).toFixed(1);
+      const dir = isLat
+        ? (deg >= 0 ? "N" : "S")
+        : (deg >= 0 ? "E" : "W");
+      return `${d}°${m}'${s}"${dir}`;
+    }
+
     document.getElementById('getLocation').addEventListener('click', () => {
       const output = document.getElementById('output');
 
-      // Check if Geolocation is supported/enabled
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-            output.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+            // Round to 4 decimal places
+            const latShort = latitude.toFixed(4);
+            const lonShort = longitude.toFixed(4);
+            // Convert to DMS
+            const latDMS = toDMS(latitude, true);
+            const lonDMS = toDMS(longitude, false);
+            output.textContent =
+              `Latitude: ${latShort}, Longitude: ${lonShort}\n` +
+              `DMS: ${latDMS} ${lonDMS}`;
           },
           (error) => {
             switch (error.code) {
