@@ -29,6 +29,16 @@
   <button id="export-pdf">Download PDF</button>
 
   <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const dd = localStorage.getItem('pilotLocationDD');
+      const dms = localStorage.getItem('pilotLocationDMS');
+      if (dd && dms) {
+        document.getElementById('pilot-location-summary').innerHTML =
+          `<strong>Pilot Location:</strong><br>DD: ${dd}<br>DMS: ${dms}`;
+      }
+    });
+  </script>
 </body>
 </html>
 

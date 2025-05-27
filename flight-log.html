@@ -95,6 +95,9 @@
             if (locInput) {
               locInput.value = `${latShort}, ${lonShort}`;
             }
+            // Store in localStorage
+            localStorage.setItem('pilotLocationDD', `${latShort}, ${lonShort}`);
+            localStorage.setItem('pilotLocationDMS', `${latDMS}, ${lonDMS}`);
           },
           (error) => {
             switch (error.code) {
