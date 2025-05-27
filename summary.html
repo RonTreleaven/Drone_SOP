@@ -23,12 +23,75 @@
 
   <div id="summary-container"></div>
 
+  <!-- Quick Location Tool for Pilot -->
+  <div class="location-tool" style="margin-bottom:1.5em;">
+    <button type="button" id="getLocation">Get Your Latitude and Longitude</button>
+    <p id="output"></p>
+  </div>
+
   <!-- Export & navigation controls -->
   <button id="return-home">Return Home</button>
   <button id="export-csv">Download CSV</button>
   <button id="export-pdf">Download PDF</button>
 
   <script src="assets/js/app.js"></script>
+  <script>
+  // Helper to convert decimal degrees to DMS string
+  function toDMS(deg, isLat) {
+    const abs = Math.abs(deg);
+    const d = Math.floor(abs);
+    const mFloat = (abs - d) * 60;
+    const m = Math.floor(mFloat);
+    const s = ((mFloat - m) * 60).toFixed(1);
+    const dir = isLat
+      ? (deg >= 0 ? "N" : "S")
+      : (deg >= 0 ? "E" : "W");
+    return `${d}°${m}'${s}"${dir}`;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('getLocation');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const output = document.getElementById('output');
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            // Round to 4 decimal places
+            const latShort = latitude.toFixed(4);
+            const lonShort = longitude.toFixed(4);
+            // Convert to DMS
+            const latDMS = toDMS(latitude, true);
+            const lonDMS = toDMS(longitude, false);
+            output.innerHTML =
+              `DD: ${latShort}, ${lonShort}<br>` +
+              `DMS: ${latDMS}, ${lonDMS}`;
+          },
+          (error) => {
+            switch (error.code) {
+              case error.PERMISSION_DENIED:
+                output.textContent = "User denied the request for Geolocation.";
+                break;
+              case error.POSITION_UNAVAILABLE:
+                output.textContent = "Location information is unavailable.";
+                break;
+              case error.TIMEOUT:
+                output.textContent = "The request to get user location timed out.";
+                break;
+              default:
+                output.textContent = "An unknown error occurred.";
+                break;
+            }
+          }
+        );
+      } else {
+        output.textContent = "Geolocation is not supported by this browser.";
+      }
+    });
+  });
+  </script>
 </body>
 </html>
 
