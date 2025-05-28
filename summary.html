@@ -33,6 +33,7 @@
   <button id="return-home">Return Home</button>
   <button id="export-csv">Download CSV</button>
   <button id="export-pdf">Download PDF</button>
+  <button id="clear-data">Wipe/Clear All Data</button>
 
   <script src="assets/js/app.js"></script>
   <script>
@@ -47,7 +48,29 @@
         locationDiv.innerHTML = "<em>Pilot location not recorded in this session.</em>";
       }
     });
+
+    document.getElementById('clear-data').addEventListener('click', function() {
+      if (confirm('Are you sure you want to wipe/clear all data? This cannot be undone.')) {
+        // Remove all relevant localStorage keys
+        localStorage.removeItem('pilotLocationDD');
+        localStorage.removeItem('pilotLocationDMS');
+        localStorage.removeItem('flightDate');
+        localStorage.removeItem('flightPilot');
+        localStorage.removeItem('flightObservers');
+        localStorage.removeItem('flightStart');
+        localStorage.removeItem('flightEnd');
+        localStorage.removeItem('flightLocation');
+        localStorage.removeItem('selectedSections');
+        // Remove any section responses
+        Object.keys(localStorage).forEach(key => {
+          if (key.startsWith('responses_')) localStorage.removeItem(key);
+        });
+        // Optionally, reload the page or redirect to home
+        location.reload();
+      }
+    });
   </script>
+  
 </body>
 </html>
 
