@@ -33,7 +33,7 @@
   <button id="return-home">Return Home</button>
   <button id="export-csv">Download CSV</button>
   <button id="export-pdf">Download PDF</button>
-  <button id="clear-data">Wipe/Clear All Data</button>
+  <button id="clear-data">Clear Previous Inputs Data</button>
 
   <script src="assets/js/app.js"></script>
   <script>
@@ -61,6 +61,7 @@
         localStorage.removeItem('flightEnd');
         localStorage.removeItem('flightLocation');
         localStorage.removeItem('selectedSections');
+        localStorage.removeItem('flightLog');
         // Remove any section responses
         Object.keys(localStorage).forEach(key => {
           if (key.startsWith('responses_')) localStorage.removeItem(key);
