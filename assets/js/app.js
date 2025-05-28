@@ -265,4 +265,17 @@ function renderSummary(sections) {
   document.getElementById('return-home').addEventListener('click', () =>
     window.location.href = 'index.html'
   );
+
+  // Pilot Location (DD/DMS)
+  const dd = localStorage.getItem('pilotLocationDD');
+  const dms = localStorage.getItem('pilotLocationDMS');
+  const pilotLocDiv = document.getElementById('pilot-location-summary');
+  if (pilotLocDiv) {
+    if (dd && dms) {
+      pilotLocDiv.innerHTML =
+        `<strong>Pilot Location:</strong><br>DD: ${dd}<br>DMS: ${dms}`;
+    } else {
+      pilotLocDiv.innerHTML = "<em>Pilot location not recorded in this session.</em>";
+    }
+  }
 }
