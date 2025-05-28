@@ -39,7 +39,15 @@
   <script src="assets/js/app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('pilot-location-summary').innerHTML = "Hello from summary!";
+      const dd = localStorage.getItem('pilotLocationDD');
+      const dms = localStorage.getItem('pilotLocationDMS');
+      const locationDiv = document.getElementById('pilot-location-summary');
+      if (locationDiv && dd && dms) {
+        locationDiv.innerHTML =
+          `<strong>Pilot Location:</strong><br>DD: ${dd}<br>DMS: ${dms}`;
+      } else if (locationDiv) {
+        locationDiv.innerHTML = "<em>Pilot location not recorded in this session.</em>";
+      }
     });
   </script>
 </body>
