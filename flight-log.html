@@ -45,11 +45,26 @@
             <label for="flight-date" class="visually-hidden">Flight Date</label>
             <input type="date" id="flight-date" title="Flight Date" placeholder="YYYY-MM-DD" required>
           </td>
-          <td><input type="text"   id="flight-pilot"     placeholder="e.g. J. Smith"     required></td>
-          <td><input type="text"   id="flight-observers" placeholder="n/a"></td>
-          <td><input type="time"   id="flight-start"     required></td>
-          <td><input type="time"   id="flight-end"       required></td>
-          <td><input type="text"   id="flight-location"  placeholder="e.g. Field A (Lat,Long)" required></td>
+          <td>
+            <label for="flight-pilot" class="visually-hidden">Pilot Name(s)</label>
+            <input type="text" id="flight-pilot" title="Pilot Name(s)" placeholder="e.g. J. Smith" required>
+          </td>
+          <td>
+            <label for="flight-observers" class="visually-hidden">Observer Name(s)</label>
+            <input type="text" id="flight-observers" title="Observer Name(s)" placeholder="n/a">
+          </td>
+          <td>
+            <label for="flight-start" class="visually-hidden">Start Time</label>
+            <input type="time" id="flight-start" title="Start Time" required>
+          </td>
+          <td>
+            <label for="flight-end" class="visually-hidden">End Time</label>
+            <input type="time" id="flight-end" title="End Time" required>
+          </td>
+          <td>
+            <label for="flight-location" class="visually-hidden">Pilot Location</label>
+            <input type="text" id="flight-location" title="Pilot Location" placeholder="e.g. Field A (Lat,Long)" required>
+          </td>
         </tr>
       </tbody>
     </table>
