@@ -1,4 +1,5 @@
 /* ---- Section Selector (index.html) ---- */
+
 #section-selector label {
   display: block;
   margin: 0.5rem 0;
@@ -187,5 +188,7 @@ main {
 .checklist li::before {
   content: "✅";
 }
+.location-tool {
+  margin-bottom: 1.5em;
 }
 
