@@ -116,6 +116,7 @@ button:hover:not(:disabled) { background: #005fa3; }
 @media print {
   /* hide nav + interactive buttons */
   .top-nav,
+  #clear-data,
   #export-csv,
   #export-pdf,
   #return-home {
