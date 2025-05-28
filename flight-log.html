@@ -104,7 +104,9 @@
             const lonDMS = toDMS(longitude, false);
             output.innerHTML =
               `DD: ${latShort}, ${lonShort}<br>` +
-              `DMS: ${latDMS}, ${lonDMS}`;
+              `DMS: ${latDMS}, ${lonDMS}<br>` +
+               `<a href="https://maps.google.com/?q=${latShort},${lonShort}" target="_blank" rel="noopener">View on Google Maps</a>`
+               ;
             // Autofill the Pilot Location field
             const locInput = document.getElementById('flight-location');
             if (locInput) {
