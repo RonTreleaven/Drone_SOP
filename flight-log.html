@@ -23,7 +23,7 @@
 
   <!-- Quick Location Tool for Pilot -->
   <div class="location-tool">
-    <button type="button" id="getLocation">Get Your Latitude and Longitude</button>
+    <button type="button" id="getLocation">Get DD Lat/Long co-ords </button>
     <p id="output"></p>
   </div>
 
@@ -97,8 +97,8 @@
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
             // Round to 4 decimal places
-            const latShort = latitude.toFixed(4);
-            const lonShort = longitude.toFixed(4);
+            const latShort = latitude.toFixed(6);
+            const lonShort = longitude.toFixed(6);
             // Convert to DMS
             const latDMS = toDMS(latitude, true);
             const lonDMS = toDMS(longitude, false);
