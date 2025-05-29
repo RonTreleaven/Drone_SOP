@@ -249,4 +249,8 @@ main {
     content: attr(data-label);
   }
 }
+.alert-span {
+  color: red;
+  font-weight: bold;
+}
 
