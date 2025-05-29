@@ -192,10 +192,8 @@ main {
 .location-tool {
   margin-bottom: 1.5em;
 }
-
 img,
-.emergency-img,
-img {
+.emergency-img {
   max-width: 100%;
   height: auto;
   display: block;
@@ -203,7 +201,6 @@ img {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-
 .emergency-table {
   width: 100%;
   border-collapse: collapse;
@@ -256,8 +253,5 @@ img {
 .alert-span {
   color: red;
   font-weight: bold;
-}
-.underline {
-  text-decoration: underline;
 }
 
