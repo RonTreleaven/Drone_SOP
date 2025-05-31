@@ -1,5 +1,7 @@
 # Canadian Aerodromes Map (full version with filters + working pilot widget)
 # All-ASCII source
+## May 30, 2025 - modifications for better usability
+
 import pandas as pd, geopandas as gpd, folium
 from folium.plugins import FeatureGroupSubGroup, GroupedLayerControl, MarkerCluster
 
@@ -14,6 +16,7 @@ nm_to_m   = 1852
 zoom_init = 10
 
 # ===== 1. load airport csv =====
+##################################
 df = pd.read_csv("ca-airports.csv")
 df.rename(columns={"ident": "icao"}, inplace=True)
 df["latitude_deg"]  = pd.to_numeric(df["latitude_deg"],  errors="coerce")
