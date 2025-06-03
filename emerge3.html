@@ -11,6 +11,23 @@
       margin: 0;
       padding: 0;
     }
+    .top-nav {
+      background: #2F5496;
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 1.1em;
+      margin-bottom: 0;
+    }
+    .top-nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    .top-nav a.active, .top-nav a:hover {
+      text-decoration: underline;
+      font-weight: bold;
+    }
     .container {
       max-width: 900px;
       margin: 30px auto;
@@ -53,10 +70,16 @@
       body { background: #fff; }
       .container { box-shadow: none; }
       .card { page-break-inside: avoid; }
+      .top-nav { display: none; }
     }
   </style>
 </head>
 <body>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <a href="tools.html">Back to Tools</a> |
+    <a href="emerge3.html" class="active">Emergency Procedures</a>
+  </nav>
   <div class="container">
     <h1>Emergency Procedures and Checklists</h1>
     <div class="contact-info">
@@ -339,6 +362,28 @@
       </ol>
     </div>
 
+    <!-- Secondary Emergency Contacts Section -->
+    <h2>Secondary Emergency Contacts</h2>
+    <ul class="tools-list">
+      <li>
+        <a href="emergency-contacts.html" target="_blank" rel="noopener">
+          Emergency Contacts List
+        </a>
+        — Full list of emergency contacts.
+      </li>
+      <li>
+        <a href="https://www.tc.gc.ca/en/services/aviation/emergency-contacts.html" target="_blank" rel="noopener">
+          Transport Canada Emergency Contacts
+        </a>
+        — Official emergency contacts for aviation.
+      </li>
+      <li>
+        <a href="https://www.navcanada.ca/en/flight-planning/drone-flight-planning/how-to-report-a-flyaway-drone.aspx" target="_blank" rel="noopener">
+          NavCan Report Flyaway-Drone
+        </a>
+        — Emergency Number by FIR.
+      </li>
+    </ul>
   </div>
 </body>
 </html>
