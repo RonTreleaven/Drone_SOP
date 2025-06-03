@@ -279,3 +279,12 @@ function renderSummary(sections) {
     }
   }
 }
+
+// ─── COLLAPSIBLE CARDS FOR emerge3.html ───────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.card h2').forEach(header => {
+    header.addEventListener('click', () => {
+      header.parentElement.classList.toggle('collapsed');
+    });
+  });
+});

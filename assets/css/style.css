@@ -250,3 +250,23 @@ main {
   }
 }
 
+/* Collapsible card styles */
+.card.collapsed > .card-content {
+  display: none;
+}
+.card h2 {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+.card h2::after {
+  content: "▼";
+  font-size: 0.8em;
+  position: absolute;
+  right: 0.5em;
+  transition: transform 0.2s;
+}
+.card.collapsed h2::after {
+  transform: rotate(-90deg);
+}
+

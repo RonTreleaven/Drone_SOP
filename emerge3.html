@@ -48,6 +48,7 @@
     .card h2 {
       color: #2F5496;
       margin-top: 0;
+      cursor: pointer;
     }
     ul, ol {
       margin: 0 0 0 1.2em;
@@ -89,7 +90,7 @@
     </div>
 
     <!-- Moved Emergency Contacts section to top -->
-    <h2>Secondary Emergency Contacts</h2>
+    <h2>Additional Emergency Contacts</h2>
     <ul class="tools-list">
       <!--
       <li>
@@ -109,39 +110,42 @@
         <a href="https://www.navcanada.ca/en/flight-planning/drone-flight-planning/how-to-report-a-flyaway-drone.aspx" target="_blank" rel="noopener">
           NavCan Report Flyaway-Drone
         </a>
-        — Emergency Number by FIR.
+        — Emergency Number by FIR
       </li>
     </ul>
+    <br><br>
 
-    <div class="card">
+    <div class="card collapsed">
       <h2>Hazardous Weather Conditions</h2>
-      <p>Maintain visual contact with RPA and communicate the situation to the Flight Crew</p>
-      <ol>
-        <li>Verify:
-          <ul>
-            <li>Check state of RPA (Status/Flight Mode)</li>
-            <li>Check RPA location/altitude</li>
-          </ul>
-        </li>
-        <li>Take Actions:
-          <ul>
-            <li>Ground Crew: Review weather forecast</li>
-            <li>Visual Observer: Monitor changing weather conditions</li>
-            <li>PIC: Evaluate if conditions exceed safe operating requirements</li>
-          </ul>
-        </li>
-        <li>Issues:
-          <ul>
-            <li>If weather conditions are changing rapidly: Maneuver the RPA to a safe divert location, land immediately</li>
-            <li>Err on the side of caution: Maneuver the RPA closer to PIC to evaluate conditions</li>
-          </ul>
-        </li>
-        <li>Post-Incident:
-          <ul>
-            <li>Document incident</li>
-          </ul>
-        </li>
-      </ol>
+      <div class="card-content">
+        <p>Maintain visual contact with RPA and communicate the situation to the Flight Crew</p>
+        <ol>
+          <li>Verify:
+            <ul>
+              <li>Check state of RPA (Status/Flight Mode)</li>
+              <li>Check RPA location/altitude</li>
+            </ul>
+          </li>
+          <li>Take Actions:
+            <ul>
+              <li>Ground Crew: Review weather forecast</li>
+              <li>Visual Observer: Monitor changing weather conditions</li>
+              <li>PIC: Evaluate if conditions exceed safe operating requirements</li>
+            </ul>
+          </li>
+          <li>Issues:
+            <ul>
+              <li>If weather conditions are changing rapidly: Maneuver the RPA to a safe divert location, land immediately</li>
+              <li>Err on the side of caution: Maneuver the RPA closer to PIC to evaluate conditions</li>
+            </ul>
+          </li>
+          <li>Post-Incident:
+            <ul>
+              <li>Document incident</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
     </div>
 
     <div class="card">
@@ -387,6 +391,14 @@
       </ol>
     </div>
   </div>
+
+  <script>
+    document.querySelectorAll('.card h2').forEach(function(header) {
+      header.addEventListener('click', function() {
+        header.parentElement.classList.toggle('collapsed');
+      });
+    });
+  </script>
 </body>
 </html>
 
