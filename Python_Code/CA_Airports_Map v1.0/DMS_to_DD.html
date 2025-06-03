@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMS to DD Converter</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        label, input { display: block; margin: 10px 0; }
+        .output { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>DMS to Decimal Degrees (DD) Converter</h1>
+
+    <h2>Method 1: Enter DMS Components</h2>
+    <div style="border:1px solid #ccc; padding:10px; margin-bottom:20px;">
+        <h3>Latitude</h3>
+        <label>Degrees: <input type="number" id="latDeg"></label>
+        <label>Minutes: <input type="number" id="latMin"></label>
+        <label>Seconds: <input type="number" id="latSec"></label>
+        <label>Direction (N/S): <input type="text" id="latDir" maxlength="1"></label>
+
+        <h3>Longitude</h3>
+        <label>Degrees: <input type="number" id="lonDeg"></label>
+        <label>Minutes: <input type="number" id="lonMin"></label>
+        <label>Seconds: <input type="number" id="lonSec"></label>
+        <label>Direction (E/W): <input type="text" id="lonDir" maxlength="1"></label>
+
+        <button onclick="convertDMS()">Convert</button>
+    </div>
+
+    <h2>Method 2: Enter NOTAM String</h2>
+    <div style="border:1px solid #ccc; padding:10px;">
+        <label>NOTAM Lat/Lon (e.g., 435437N 0785615W):<br>
+            <input type="text" id="notamInput" style="width:300px">
+        </label>
+        <button onclick="convertNOTAM()">Convert</button>
+    </div>
+
+    <div class="output" id="output"></div>
+
+    <script>
+        function dmsToDecimal(degrees, minutes, seconds, direction) {
+            let decimal = Math.abs(degrees) + (minutes / 60) + (seconds / 3600);
+            if (direction === "S" || direction === "W") {
+                decimal *= -1;
+            }
+            return decimal;
+        }
+
+        function convertDMS() {
+            const latDeg = parseFloat(document.getElementById('latDeg').value);
+            const latMin = parseFloat(document.getElementById('latMin').value);
+            const latSec = parseFloat(document.getElementById('latSec').value);
+            const latDir = document.getElementById('latDir').value.toUpperCase();
+
+            const lonDeg = parseFloat(document.getElementById('lonDeg').value);
+            const lonMin = parseFloat(document.getElementById('lonMin').value);
+            const lonSec = parseFloat(document.getElementById('lonSec').value);
+            const lonDir = document.getElementById('lonDir').value.toUpperCase();
+
+            if (!["N", "S"].includes(latDir) || !["E", "W"].includes(lonDir)) {
+                alert("Invalid direction input.");
+                return;
+            }
+
+            const latDD = dmsToDecimal(latDeg, latMin, latSec, latDir);
+            const lonDD = dmsToDecimal(lonDeg, lonMin, lonSec, lonDir);
+
+            const latDMS = formatDMS(latDeg, latMin, latSec, latDir);
+            const lonDMS = formatDMS(lonDeg, lonMin, lonSec, lonDir);
+
+            showOutput(latDD, lonDD, latDMS, lonDMS);
+        }
+
+        function showOutput(latDD, lonDD, latDMS = null, lonDMS = null) {
+            const googleMapsUrl = `https://www.google.com/maps?q=${latDD},${lonDD}`;
+            let dmsBox = "";
+            if (latDMS && lonDMS) {
+                dmsBox = `<p><strong>DMS Decorated:</strong></p><input type="text" value="${latDMS} ${lonDMS}" readonly style="width:350px">`;
+            }
+            document.getElementById('output').innerHTML = `
+                <p><strong>Decimal Degrees:</strong></p>
+                <input type="text" value="${latDD.toFixed(6)}, ${lonDD.toFixed(6)}" readonly style="width:100%">
+                ${dmsBox}
+                <p><a href="${googleMapsUrl}" target="_blank">View on Google Maps</a></p>
+                <p><input type="text" value="${googleMapsUrl}" readonly style="width:100%"></p>
+            `;
+        }
+
+        // Helper to format DMS as 43°53'59.0"N
+        function formatDMS(deg, min, sec, dir) {
+            return `${deg}°${String(min).padStart(2, '0')}'${sec.toFixed(1).padStart(4, '0')}"${dir}`;
+        }
+
+        // Update convertNOTAM to use decorated DMS
+        function convertNOTAM() {
+            const input = document.getElementById('notamInput').value.trim().toUpperCase();
+            const regex = /(\d{2,3})(\d{2})(\d{2})([NS])\s*(\d{3})(\d{2})(\d{2})([EW])/;
+            const match = input.match(regex);
+            if (!match) {
+                alert("Invalid NOTAM format. Example: 435437N 0785615W");
+                return;
+            }
+            // Parse latitude
+            const latDeg = parseInt(match[1], 10);
+            const latMin = parseInt(match[2], 10);
+            const latSec = parseInt(match[3], 10);
+            const latDir = match[4];
+            // Parse longitude
+            const lonDeg = parseInt(match[5], 10);
+            const lonMin = parseInt(match[6], 10);
+            const lonSec = parseInt(match[7], 10);
+            const lonDir = match[8];
+
+            const latDD = dmsToDecimal(latDeg, latMin, latSec, latDir);
+            const lonDD = dmsToDecimal(lonDeg, lonMin, lonSec, lonDir);
+
+            const latDMS = formatDMS(latDeg, latMin, latSec, latDir);
+            const lonDMS = formatDMS(lonDeg, lonMin, lonSec, lonDir);
+
+            showOutput(latDD, lonDD, latDMS, lonDMS);
+        }
+    </script>
+</body>
+</html>

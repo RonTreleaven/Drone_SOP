@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_9cc7492903f443be7a57ace4d5ada94b {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+<script>
+window.onload = function() {
+  var map    = map_9cc7492903f443be7a57ace4d5ada94b;
+  var marker = marker_e608842ce18902f4b75c0ec5263a4eaa;
+  var c1     = circle_6b98352d7791274713a38a3678616c76;
+  var c3     = circle_09ac72dcf63e466f8a6695d213513ce5;
+
+  marker.dragging.enable();
+  marker.on('drag', function(e) {
+      var ll = e.target.getLatLng();
+      c1.setLatLng(ll); c3.setLatLng(ll);
+      document.getElementById('pLat').value = ll.lat.toFixed(6);
+      document.getElementById('pLon').value = ll.lng.toFixed(6);
+  });
+  marker.on('dragend', function(e) {
+      var ll = e.target.getLatLng();
+      c1.setLatLng(ll); c3.setLatLng(ll);
+      marker.setPopupContent("Pilot<br>Lat: "+ll.lat.toFixed(6)+"<br>Lon: "+ll.lng.toFixed(6));
+      document.getElementById('pLat').value = ll.lat.toFixed(6);
+      document.getElementById('pLon').value = ll.lng.toFixed(6);
+  });
+
+  var ctl = L.control({position:'bottomleft'});
+  ctl.onAdd = function() {
+      var d=L.DomUtil.create('div','pilot-input');
+      L.DomEvent.disableClickPropagation(d);
+      d.style.background='white'; d.style.padding='6px'; d.style.fontSize='14px';
+      d.style.boxShadow='0 0 4px rgba(0,0,0,0.3)';
+      d.innerHTML = 'Lat <input id="pLat" size="9" value="'+marker.getLatLng().lat.toFixed(6)+'"> Lon <input id="pLon" size="9" value="'+marker.getLatLng().lng.toFixed(6)+'"> <button id="upd">Update</button>';
+      return d;
+  };
+  ctl.addTo(map);
+
+  document.getElementById('upd').onclick = function() {
+      var lat = document.getElementById('pLat').value;
+      var lon = document.getElementById('pLon').value;
+      alert("To update the map, re-run the Python script and enter:\nLat: " + lat + "\nLon: " + lon);
+  };
+</script>
+    
+<script>
+window.addEventListener('load', function() {
+    // Sidebar container
+    var sidebar = document.createElement('div');
+    sidebar.id = "customSidebar";
+    sidebar.style.position = "absolute";
+    sidebar.style.top = "20px";
+    sidebar.style.right = "20px";
+    sidebar.style.left = "auto";
+    sidebar.style.width = "260px";
+    sidebar.style.background = "white";
+    sidebar.style.padding = "16px";
+    sidebar.style.boxShadow = "0 0 8px rgba(0,0,0,0.2)";
+    sidebar.style.zIndex = 1200;
+    sidebar.style.borderRadius = "8px";
+    sidebar.style.transition = "right 0.3s";
+    sidebar.style.fontSize = "15px";
+    sidebar.style.cursor = "move";
+
+    // Sidebar content
+    sidebar.innerHTML = `
+        <div id="sidebarHeader" style="display:flex;justify-content:space-between;align-items:center;cursor:move;">
+            <b>Controls</b>
+            <button id="hideSidebarBtn" style="font-size:16px;padding:2px 8px;">&times;</button>
+        </div>
+        <hr>
+        <label for="provSel"><b>Province:</b></label>
+        <select id="provSel" style="width:100%;margin-bottom:12px;"><option value="Alberta">Alberta</option><option value="British Columbia">British Columbia</option><option value="Manitoba">Manitoba</option><option value="New Brunswick">New Brunswick</option><option value="Newfoundland and Labrador">Newfoundland and Labrador</option><option value="Northwest Territories">Northwest Territories</option><option value="Nova Scotia">Nova Scotia</option><option value="Nunavut">Nunavut</option><option value="Ontario">Ontario</option><option value="Prince Edward Island">Prince Edward Island</option><option value="Quebec">Quebec</option><option value="Saskatchewan">Saskatchewan</option><option value="Yukon">Yukon</option></select>
+        <label for="typeSel"><b>Airport Types:</b></label>
+        <select id="typeSel" multiple size="6" style="width:100%;margin-bottom:12px;">
+            <option value="balloonport">balloonport</option><option value="closed">closed</option><option value="heliport">heliport</option><option value="large_airport">large_airport</option><option value="medium_airport">medium_airport</option><option value="seaplane_base">seaplane_base</option><option value="small_airport">small_airport</option>
+        </select>
+        <button id="clearTypesBtn" style="width:100%;margin-bottom:8px;">Clear All Types</button>
+        <button id="selectAllTypesBtn" style="width:100%;margin-bottom:8px;">Select All Types</button>
+    `;
+
+    document.body.appendChild(sidebar);
+
+    // Attach event handlers for type buttons
+    
+    function attachTypeHandlers() {
+        var clearBtn = document.getElementById('clearTypesBtn');
+        var selectBtn = document.getElementById('selectAllTypesBtn');
+        var typeSel = document.getElementById('typeSel');
+        if (clearBtn && typeSel) {
+            clearBtn.onclick = function() {
+                for (var i=0; i<typeSel.options.length; i++) {
+                    typeSel.options[i].selected = false;
+                }
+                var typeGroups = {"balloonport": "feature_group_10b910dc97bfa9a73205078d190fb5f4", "closed": "feature_group_70f599a3d5f112e80c0b71859e02957c", "heliport": "feature_group_2b498c718d71a0e810a00461a2c60b25", "large_airport": "feature_group_6e5a571f0c70e6614e8cb261f8ac4820", "medium_airport": "feature_group_eae6a55b5de30214caf3e4b60ed7fc7d", "seaplane_base": "feature_group_a1ec87596e77e05c545d2fd80f699f10", "small_airport": "feature_group_7f1931c5cd4e7e1bc907f16b917fc806"};
+                for (var t in typeGroups) {
+                    var layerName = typeGroups[t];
+                    var layer = window[layerName];
+                    if (layer) {
+                        map.removeLayer(layer);
+                    }
+                }
+                typeSel.dispatchEvent(new Event('change'));
+            };
+        }
+        if (selectBtn && typeSel) {
+            selectBtn.onclick = function() {
+                for (var i=0; i<typeSel.options.length; i++) {
+                    typeSel.options[i].selected = true;
+                }
+                typeSel.dispatchEvent(new Event('change'));
+            };
+        }
+    }
+
+    attachTypeHandlers();
+
+    // Toggle button (to show sidebar)
+    var toggleBtn = document.createElement('button');
+    toggleBtn.id = "showSidebarBtn";
+    toggleBtn.innerHTML = "☰ Controls";
+    toggleBtn.style.position = "absolute";
+    toggleBtn.style.bottom = "70px";
+    toggleBtn.style.left = "20px";
+    toggleBtn.style.right = "auto";
+    toggleBtn.style.zIndex = 1201;
+    toggleBtn.style.padding = "6px 14px";
+    toggleBtn.style.background = "#fff";
+    toggleBtn.style.border = "1px solid #888";
+    toggleBtn.style.borderRadius = "6px";
+    toggleBtn.style.cursor = "pointer";
+    toggleBtn.style.display = "none";
+    document.body.appendChild(toggleBtn);
+
+    // Hide sidebar
+    document.getElementById('hideSidebarBtn').onclick = function() {
+        sidebar.style.transition = "right 0.3s, left 0.3s, top 0.3s";
+        sidebar.style.right = "-300px";
+        sidebar.style.left = "auto";
+        toggleBtn.style.display = "block";
+    };
+    // Show sidebar
+    toggleBtn.onclick = function() {
+        sidebar.style.transition = "right 0.3s, left 0.3s, top 0.3s";
+        sidebar.style.top = "20px";
+        sidebar.style.right = "20px";
+        sidebar.style.left = "auto";
+        toggleBtn.style.display = "none";
+        attachTypeHandlers(); // Re-attach handlers in case DOM changed
+    };
+
+    // Drag functionality
+    var isDragging = false, dragOffsetX = 0, dragOffsetY = 0;
+    var header = document.getElementById('sidebarHeader');
+    header.onmousedown = function(e) {
+        isDragging = true;
+        dragOffsetX = e.clientX - sidebar.getBoundingClientRect().left;
+        dragOffsetY = e.clientY - sidebar.getBoundingClientRect().top;
+        document.body.style.userSelect = "none";
+    };
+    document.onmousemove = function(e) {
+        if (isDragging) {
+            sidebar.style.left = "auto";
+            sidebar.style.right = "auto";
+            sidebar.style.top = (e.clientY - dragOffsetY) + "px";
+            sidebar.style.left = (e.clientX - dragOffsetX) + "px";
+        }
+    };
+    document.onmouseup = function(e) {
+        isDragging = false;
+        document.body.style.userSelect = "";
+    };
+
+    // Set province selector to match the default province
+    document.getElementById('provSel').value = "Ontario";
+
+    // Province selector event (customize as needed)
+    document.getElementById('provSel').addEventListener('change', function(e) {
+        alert('Province change: implement your province switching logic here.');
+    });
+
+    // Listen for changes to the type selector and update marker layers
+    document.getElementById('typeSel').addEventListener('change', function() {
+        var selected = Array.from(this.selectedOptions).map(function(opt) { return opt.value; });
+        var typeGroups = {"balloonport": "feature_group_10b910dc97bfa9a73205078d190fb5f4", "closed": "feature_group_70f599a3d5f112e80c0b71859e02957c", "heliport": "feature_group_2b498c718d71a0e810a00461a2c60b25", "large_airport": "feature_group_6e5a571f0c70e6614e8cb261f8ac4820", "medium_airport": "feature_group_eae6a55b5de30214caf3e4b60ed7fc7d", "seaplane_base": "feature_group_a1ec87596e77e05c545d2fd80f699f10", "small_airport": "feature_group_7f1931c5cd4e7e1bc907f16b917fc806"};
+        console.log("Selected types:", selected);
+        for (var t in typeGroups) {
+            var layerName = typeGroups[t];
+            var layer = window[layerName];
+            if (layer) {
+                if (selected.includes(t)) {
+                    map.addLayer(layer);
+                } else {
+                    map.removeLayer(layer);
+                }
+            } else {
+                console.log("Layer not found:", layerName);
+            }
+        }
+    });
+
+    // Select all types by default and trigger change
+    var typeSel = document.getElementById('typeSel');
+    for (var i=0; i<typeSel.options.length; i++) {
+        typeSel.options[i].selected = true;
+    }
+    typeSel.dispatchEvent(new Event('change'));
+});
+</script>
+    
+            <div class="folium-map" id="map_9cc7492903f443be7a57ace4d5ada94b" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_9cc7492903f443be7a57ace4d5ada94b = L.map(
+                "map_9cc7492903f443be7a57ace4d5ada94b",
+                {
+                    center: [44.111886, -78.919237],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 11,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_303f887f657988ebd9fbc4d7a88a9e99 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_303f887f657988ebd9fbc4d7a88a9e99.addTo(map_9cc7492903f443be7a57ace4d5ada94b);
+        
+    
+            var feature_group_10b910dc97bfa9a73205078d190fb5f4 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_10b910dc97bfa9a73205078d190fb5f4.addTo(map_9cc7492903f443be7a57ace4d5ada94b);
+        
+    
+            var feature_group_70f599a3d5f112e80c0b71859e02957c = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_70f599a3d5f112e80c0b71859e02957c.addTo(map_9cc7492903f443be7a57ace4d5ada94b);
+        
+    
+            var feature_group_2b498c718d71a0e810a00461a2c60b25 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_55bf7ca44e341226a61b5ef93c7a941c = L.marker(
+                [44.104863829900005, -78.95409196620001],
+                {
+}
+            ).addTo(feature_group_2b498c718d71a0e810a00461a2c60b25);
+        
+    
+            var icon_9ea2283da7945d9cf6ffa2e4e2ac13f2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "helicopter",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_93ae9cd0a71a2fb421958c07617a0f79 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_68000501bacca3f0107c95f3533bfc67 = $(`<div id="html_68000501bacca3f0107c95f3533bfc67" style="width: 100.0%; height: 100.0%;">CPX6 – Port Perry (Community Memorial Hospital) Heliport<br>Lat: 44.104864<br>Lon: -78.954092<br>Distance: 1.56 NM</div>`)[0];
+                popup_93ae9cd0a71a2fb421958c07617a0f79.setContent(html_68000501bacca3f0107c95f3533bfc67);
+            
+        
+
+        marker_55bf7ca44e341226a61b5ef93c7a941c.bindPopup(popup_93ae9cd0a71a2fb421958c07617a0f79)
+        ;
+
+        
+    
+    
+            marker_55bf7ca44e341226a61b5ef93c7a941c.bindTooltip(
+                `<div>
+                     CPX6 • Port Perry (Community Memorial Hospital) Heliport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_55bf7ca44e341226a61b5ef93c7a941c.setIcon(icon_9ea2283da7945d9cf6ffa2e4e2ac13f2);
+            
+    
+            var marker_2e44894acc999701d7eb4462786d7ffa = L.marker(
+                [44.1024562729, -79.1285777092],
+                {
+}
+            ).addTo(feature_group_2b498c718d71a0e810a00461a2c60b25);
+        
+    
+            var icon_76dcf3314b87f272f02dc1a247bb15f1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "helicopter",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_80ff774d79602db4e4546c6ea4db3c0b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c79f945f31c1a4606bef890834178f64 = $(`<div id="html_c79f945f31c1a4606bef890834178f64" style="width: 100.0%; height: 100.0%;">CNA5 – Uxbridge (Cottage Hospital) Heliport<br>Lat: 44.102456<br>Lon: -79.128578<br>Distance: 9.07 NM</div>`)[0];
+                popup_80ff774d79602db4e4546c6ea4db3c0b.setContent(html_c79f945f31c1a4606bef890834178f64);
+            
+        
+
+        marker_2e44894acc999701d7eb4462786d7ffa.bindPopup(popup_80ff774d79602db4e4546c6ea4db3c0b)
+        ;
+
+        
+    
+    
+            marker_2e44894acc999701d7eb4462786d7ffa.bindTooltip(
+                `<div>
+                     CNA5 • Uxbridge (Cottage Hospital) Heliport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2e44894acc999701d7eb4462786d7ffa.setIcon(icon_76dcf3314b87f272f02dc1a247bb15f1);
+            
+    
+            feature_group_2b498c718d71a0e810a00461a2c60b25.addTo(map_9cc7492903f443be7a57ace4d5ada94b);
+        
+    
+            var feature_group_6e5a571f0c70e6614e8cb261f8ac4820 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_6e5a571f0c70e6614e8cb261f8ac4820.addTo(map_9cc7492903f443be7a57ace4d5ada94b);
+        
+    
+            var feature_group_eae6a55b5de30214caf3e4b60ed7fc7d = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_eae6a55b5de30214caf3e4b60ed7fc7d.addTo(map_9cc7492903f443be7a57ace4d5ada94b);
+        
+    
+            var feature_group_a1ec87596e77e05c545d2fd80f699f10 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_e5d7a048c30a9ddd8b0a6c7d16451147 = L.marker(
+                [44.206667, -78.809167],
+                {
+}
+            ).addTo(feature_group_a1ec87596e77e05c545d2fd80f699f10);
+        
+    
+            var icon_552decfcdd6678ea49cc7119b6e3e67e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "cadetblue",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7fb50d4adb2500754fdacd60c2ff6225 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2ca32ce4f7ddf12c0e48a24c037077e9 = $(`<div id="html_2ca32ce4f7ddf12c0e48a24c037077e9" style="width: 100.0%; height: 100.0%;">CBP7 – Lake Scugog/Ball Point (Smith) Seaplane Base<br>Lat: 44.206667<br>Lon: -78.809167<br>Distance: 7.41 NM</div>`)[0];
+                popup_7fb50d4adb2500754fdacd60c2ff6225.setContent(html_2ca32ce4f7ddf12c0e48a24c037077e9);
+            
+        
+
+        marker_e5d7a048c30a9ddd8b0a6c7d16451147.bindPopup(popup_7fb50d4adb2500754fdacd60c2ff6225)
+        ;
+
+        
+    
+    
+            marker_e5d7a048c30a9ddd8b0a6c7d16451147.bindTooltip(
+                `<div>
+                     CBP7 • Lake Scugog/Ball Point (Smith) Seaplane Base
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e5d7a048c30a9ddd8b0a6c7d16451147.setIcon(icon_552decfcdd6678ea49cc7119b6e3e67e);
+            
+    
+            var marker_7cfe85fb47cc2f9d9556fe4ed0f52e64 = L.marker(
+                [44.129, -78.941],
+                {
+}
+            ).addTo(feature_group_a1ec87596e77e05c545d2fd80f699f10);
+        
+    
+            var icon_c9c859d2a3b4602401c6f07bbc4a23e0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "cadetblue",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_46ab1683a348bd5dc15bb994d78852f7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cb57ca08e8932d690f4cc293820314c2 = $(`<div id="html_cb57ca08e8932d690f4cc293820314c2" style="width: 100.0%; height: 100.0%;">CSV6 – Island View Water Aerodrome<br>Lat: 44.129000<br>Lon: -78.941000<br>Distance: 1.39 NM</div>`)[0];
+                popup_46ab1683a348bd5dc15bb994d78852f7.setContent(html_cb57ca08e8932d690f4cc293820314c2);
+            
+        
+
+        marker_7cfe85fb47cc2f9d9556fe4ed0f52e64.bindPopup(popup_46ab1683a348bd5dc15bb994d78852f7)
+        ;
+
+        
+    
+    
+            marker_7cfe85fb47cc2f9d9556fe4ed0f52e64.bindTooltip(
+                `<div>
+                     CSV6 • Island View Water Aerodrome
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7cfe85fb47cc2f9d9556fe4ed0f52e64.setIcon(icon_c9c859d2a3b4602401c6f07bbc4a23e0);
+            
+    
+            var marker_053171082c941c78601ec75699b6780d = L.marker(
+                [44.161301, -78.8245],
+                {
+}
+            ).addTo(feature_group_a1ec87596e77e05c545d2fd80f699f10);
+        
+    
+            var icon_a120b6de7384b24e0468ee1d7486e65c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "cadetblue",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4d3c122fa48523bfa88b470099a201d8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8a7c742a1fe93e74d2da7619e68fcc39 = $(`<div id="html_8a7c742a1fe93e74d2da7619e68fcc39" style="width: 100.0%; height: 100.0%;">CHS4 – Scugog /Charlies Landing Seaplane Base<br>Lat: 44.161301<br>Lon: -78.824500<br>Distance: 5.05 NM</div>`)[0];
+                popup_4d3c122fa48523bfa88b470099a201d8.setContent(html_8a7c742a1fe93e74d2da7619e68fcc39);
+            
+        
+
+        marker_053171082c941c78601ec75699b6780d.bindPopup(popup_4d3c122fa48523bfa88b470099a201d8)
+        ;
+
+        
+    
+    
+            marker_053171082c941c78601ec75699b6780d.bindTooltip(
+                `<div>
+                     CHS4 • Scugog /Charlies Landing Seaplane Base
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_053171082c941c78601ec75699b6780d.setIcon(icon_a120b6de7384b24e0468ee1d7486e65c);
+            
+    
+            feature_group_a1ec87596e77e05c545d2fd80f699f10.addTo(map_9cc7492903f443be7a57ace4d5ada94b);
+        
+    
+            var feature_group_7f1931c5cd4e7e1bc907f16b917fc806 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_20f85a1909cef85aaa1b76e3059d922f = L.marker(
+                [44.1336968141, -79.0130281448],
+                {
+}
+            ).addTo(feature_group_7f1931c5cd4e7e1bc907f16b917fc806);
+        
+    
+            var icon_3595b6235322bb7b6420fd53960cc4be = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9b233f1c420a9df3f7f31f2c7607ac9d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fb5d5bcc66187f23f3c10fd464ac8b8e = $(`<div id="html_fb5d5bcc66187f23f3c10fd464ac8b8e" style="width: 100.0%; height: 100.0%;">CNP8 – Greenbank Airport<br>Lat: 44.133697<br>Lon: -79.013028<br>Distance: 4.26 NM</div>`)[0];
+                popup_9b233f1c420a9df3f7f31f2c7607ac9d.setContent(html_fb5d5bcc66187f23f3c10fd464ac8b8e);
+            
+        
+
+        marker_20f85a1909cef85aaa1b76e3059d922f.bindPopup(popup_9b233f1c420a9df3f7f31f2c7607ac9d)
+        ;
+
+        
+    
+    
+            marker_20f85a1909cef85aaa1b76e3059d922f.bindTooltip(
+                `<div>
+                     CNP8 • Greenbank Airport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_20f85a1909cef85aaa1b76e3059d922f.setIcon(icon_3595b6235322bb7b6420fd53960cc4be);
+            
+    
+            var marker_629a85597ac64049f79b35277ce75e6d = L.marker(
+                [44.093, -78.7367],
+                {
+}
+            ).addTo(feature_group_7f1931c5cd4e7e1bc907f16b917fc806);
+        
+    
+            var icon_131f0dd2ba3b226317d5f7e3ed6fe333 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4e8d843f943c7ef20566f09a2d4be01b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_62f6072f9ccf4dd151fc2c906236b5c3 = $(`<div id="html_62f6072f9ccf4dd151fc2c906236b5c3" style="width: 100.0%; height: 100.0%;">CBM2 – Blackstock / Martyn<br>Lat: 44.093000<br>Lon: -78.736700<br>Distance: 7.97 NM</div>`)[0];
+                popup_4e8d843f943c7ef20566f09a2d4be01b.setContent(html_62f6072f9ccf4dd151fc2c906236b5c3);
+            
+        
+
+        marker_629a85597ac64049f79b35277ce75e6d.bindPopup(popup_4e8d843f943c7ef20566f09a2d4be01b)
+        ;
+
+        
+    
+    
+            marker_629a85597ac64049f79b35277ce75e6d.bindTooltip(
+                `<div>
+                     CBM2 • Blackstock / Martyn
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_629a85597ac64049f79b35277ce75e6d.setIcon(icon_131f0dd2ba3b226317d5f7e3ed6fe333);
+            
+    
+            var marker_c3468b8125a9291ff8d28d7a2ec4a4ad = L.marker(
+                [44.166891, -78.93503],
+                {
+}
+            ).addTo(feature_group_7f1931c5cd4e7e1bc907f16b917fc806);
+        
+    
+            var icon_b403132bd3233e70b209a2e82ac2f35c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_02196651bd89e70429173bf77898f114 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_099cfe9224d63f0cdb82286c1f2d2685 = $(`<div id="html_099cfe9224d63f0cdb82286c1f2d2685" style="width: 100.0%; height: 100.0%;">CA-0459 – Seagrave / North Port Airfield<br>Lat: 44.166891<br>Lon: -78.935030<br>Distance: 3.37 NM</div>`)[0];
+                popup_02196651bd89e70429173bf77898f114.setContent(html_099cfe9224d63f0cdb82286c1f2d2685);
+            
+        
+
+        marker_c3468b8125a9291ff8d28d7a2ec4a4ad.bindPopup(popup_02196651bd89e70429173bf77898f114)
+        ;
+
+        
+    
+    
+            marker_c3468b8125a9291ff8d28d7a2ec4a4ad.bindTooltip(
+                `<div>
+                     CA-0459 • Seagrave / North Port Airfield
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c3468b8125a9291ff8d28d7a2ec4a4ad.setIcon(icon_b403132bd3233e70b209a2e82ac2f35c);
+            
+    
+            var marker_cedcb8dcb1b793a1b78cf9c1669843fe = L.marker(
+                [43.982038338, -78.81718397139998],
+                {
+}
+            ).addTo(feature_group_7f1931c5cd4e7e1bc907f16b917fc806);
+        
+    
+            var icon_e8f30c5a8ace6c2bb674acc8574f97b2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d3cf69c29091c4247981c9bba38d015a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b18a713b79bdfd6cf4016205ae7ce6a1 = $(`<div id="html_b18a713b79bdfd6cf4016205ae7ce6a1" style="width: 100.0%; height: 100.0%;">CA-0466 – Hampton / Morawetz Field<br>Lat: 43.982038<br>Lon: -78.817184<br>Distance: 8.96 NM</div>`)[0];
+                popup_d3cf69c29091c4247981c9bba38d015a.setContent(html_b18a713b79bdfd6cf4016205ae7ce6a1);
+            
+        
+
+        marker_cedcb8dcb1b793a1b78cf9c1669843fe.bindPopup(popup_d3cf69c29091c4247981c9bba38d015a)
+        ;
+
+        
+    
+    
+            marker_cedcb8dcb1b793a1b78cf9c1669843fe.bindTooltip(
+                `<div>
+                     CA-0466 • Hampton / Morawetz Field
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cedcb8dcb1b793a1b78cf9c1669843fe.setIcon(icon_e8f30c5a8ace6c2bb674acc8574f97b2);
+            
+    
+            var marker_18d599511049e0af7f567334d2d994cb = L.marker(
+                [44.061667, -78.885002],
+                {
+}
+            ).addTo(feature_group_7f1931c5cd4e7e1bc907f16b917fc806);
+        
+    
+            var icon_26f042690226be2794268be44fd9ac46 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_511d8f3ffb41060f38c01d0c4888f66f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_71517e8f372c6983e11807e00b7247f5 = $(`<div id="html_71517e8f372c6983e11807e00b7247f5" style="width: 100.0%; height: 100.0%;">CPP3 – Port Perry / Hoskin Airport<br>Lat: 44.061667<br>Lon: -78.885002<br>Distance: 3.36 NM</div>`)[0];
+                popup_511d8f3ffb41060f38c01d0c4888f66f.setContent(html_71517e8f372c6983e11807e00b7247f5);
+            
+        
+
+        marker_18d599511049e0af7f567334d2d994cb.bindPopup(popup_511d8f3ffb41060f38c01d0c4888f66f)
+        ;
+
+        
+    
+    
+            marker_18d599511049e0af7f567334d2d994cb.bindTooltip(
+                `<div>
+                     CPP3 • Port Perry / Hoskin Airport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_18d599511049e0af7f567334d2d994cb.setIcon(icon_26f042690226be2794268be44fd9ac46);
+            
+    
+            var marker_a6c670d84bed85b9c507c10d4f12aca8 = L.marker(
+                [44.155585, -78.864863],
+                {
+}
+            ).addTo(feature_group_7f1931c5cd4e7e1bc907f16b917fc806);
+        
+    
+            var icon_2e5035f6fab1fc86709e4b875807fa27 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_909af60868a41cf81e8c1323c9bba92a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_aeed383b225bb366ccdb5b286cf86827 = $(`<div id="html_aeed383b225bb366ccdb5b286cf86827" style="width: 100.0%; height: 100.0%;">CA-0712 – Pine Point Airfield<br>Lat: 44.155585<br>Lon: -78.864863<br>Distance: 3.52 NM</div>`)[0];
+                popup_909af60868a41cf81e8c1323c9bba92a.setContent(html_aeed383b225bb366ccdb5b286cf86827);
+            
+        
+
+        marker_a6c670d84bed85b9c507c10d4f12aca8.bindPopup(popup_909af60868a41cf81e8c1323c9bba92a)
+        ;
+
+        
+    
+    
+            marker_a6c670d84bed85b9c507c10d4f12aca8.bindTooltip(
+                `<div>
+                     CA-0712 • Pine Point Airfield
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a6c670d84bed85b9c507c10d4f12aca8.setIcon(icon_2e5035f6fab1fc86709e4b875807fa27);
+            
+    
+            var marker_7d2d902f92675f45d33755c265e842e3 = L.marker(
+                [44.066081, -79.020882],
+                {
+}
+            ).addTo(feature_group_7f1931c5cd4e7e1bc907f16b917fc806);
+        
+    
+            var icon_967806e04187bfd4a01cb3195e099f97 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5bcc26d9533b327d8eaa355aa27a7323 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ba495fb99fd44f983b8f98d18c50e78d = $(`<div id="html_ba495fb99fd44f983b8f98d18c50e78d" style="width: 100.0%; height: 100.0%;">CA-0460 – Utica Airfield<br>Lat: 44.066081<br>Lon: -79.020882<br>Distance: 5.18 NM</div>`)[0];
+                popup_5bcc26d9533b327d8eaa355aa27a7323.setContent(html_ba495fb99fd44f983b8f98d18c50e78d);
+            
+        
+
+        marker_7d2d902f92675f45d33755c265e842e3.bindPopup(popup_5bcc26d9533b327d8eaa355aa27a7323)
+        ;
+
+        
+    
+    
+            marker_7d2d902f92675f45d33755c265e842e3.bindTooltip(
+                `<div>
+                     CA-0460 • Utica Airfield
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7d2d902f92675f45d33755c265e842e3.setIcon(icon_967806e04187bfd4a01cb3195e099f97);
+            
+    
+            var marker_c037b07f91c4c0e768591bc62a79beec = L.marker(
+                [44.190227, -79.014553],
+                {
+}
+            ).addTo(feature_group_7f1931c5cd4e7e1bc907f16b917fc806);
+        
+    
+            var icon_0474d0e6813a986c7c368f0ab1ed5ba1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8a8b1908e590cafeebdb7ecf2bf0fd4f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f8d66679882859cf54af01890e9657eb = $(`<div id="html_f8d66679882859cf54af01890e9657eb" style="width: 100.0%; height: 100.0%;">CA-0843 – Stone Airport<br>Lat: 44.190227<br>Lon: -79.014553<br>Distance: 6.25 NM</div>`)[0];
+                popup_8a8b1908e590cafeebdb7ecf2bf0fd4f.setContent(html_f8d66679882859cf54af01890e9657eb);
+            
+        
+
+        marker_c037b07f91c4c0e768591bc62a79beec.bindPopup(popup_8a8b1908e590cafeebdb7ecf2bf0fd4f)
+        ;
+
+        
+    
+    
+            marker_c037b07f91c4c0e768591bc62a79beec.bindTooltip(
+                `<div>
+                     CA-0843 • Stone Airport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c037b07f91c4c0e768591bc62a79beec.setIcon(icon_0474d0e6813a986c7c368f0ab1ed5ba1);
+            
+    
+            feature_group_7f1931c5cd4e7e1bc907f16b917fc806.addTo(map_9cc7492903f443be7a57ace4d5ada94b);
+        
+    
+            var marker_e608842ce18902f4b75c0ec5263a4eaa = L.marker(
+                [44.111886, -78.919237],
+                {
+}
+            ).addTo(map_9cc7492903f443be7a57ace4d5ada94b);
+        
+    
+            var icon_93e1907346399082eaa7b684cb3c33d5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "user",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_15cf278d2a26db000798da942a9bce61 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cf95f6c527c5ed200152ca91effaf6bf = $(`<div id="html_cf95f6c527c5ed200152ca91effaf6bf" style="width: 100.0%; height: 100.0%;">Pilot<br>Lat: 44.111886<br>Lon: -78.919237</div>`)[0];
+                popup_15cf278d2a26db000798da942a9bce61.setContent(html_cf95f6c527c5ed200152ca91effaf6bf);
+            
+        
+
+        marker_e608842ce18902f4b75c0ec5263a4eaa.bindPopup(popup_15cf278d2a26db000798da942a9bce61)
+        ;
+
+        
+    
+    
+            marker_e608842ce18902f4b75c0ec5263a4eaa.bindTooltip(
+                `<div>
+                     Pilot Location
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e608842ce18902f4b75c0ec5263a4eaa.setIcon(icon_93e1907346399082eaa7b684cb3c33d5);
+            
+    
+            var circle_6b98352d7791274713a38a3678616c76 = L.circle(
+                [44.111886, -78.919237],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1852, "stroke": true, "weight": 2}
+            ).addTo(map_9cc7492903f443be7a57ace4d5ada94b);
+        
+    
+        var popup_fcff34600ecea0104b359e4f535bb035 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_11703408be8126eec6afbdd70bdff43f = $(`<div id="html_11703408be8126eec6afbdd70bdff43f" style="width: 100.0%; height: 100.0%;">1 NM (1.9 km) radius</div>`)[0];
+                popup_fcff34600ecea0104b359e4f535bb035.setContent(html_11703408be8126eec6afbdd70bdff43f);
+            
+        
+
+        circle_6b98352d7791274713a38a3678616c76.bindPopup(popup_fcff34600ecea0104b359e4f535bb035)
+        ;
+
+        
+    
+    
+            var circle_09ac72dcf63e466f8a6695d213513ce5 = L.circle(
+                [44.111886, -78.919237],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "5,5", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5556, "stroke": true, "weight": 1}
+            ).addTo(map_9cc7492903f443be7a57ace4d5ada94b);
+        
+    
+        var popup_2318ed72a93be1ac096857ed5a3111ff = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_34259b91209b49f9dcbd92ba024f2d15 = $(`<div id="html_34259b91209b49f9dcbd92ba024f2d15" style="width: 100.0%; height: 100.0%;">3 NM (5.6 km) radius</div>`)[0];
+                popup_2318ed72a93be1ac096857ed5a3111ff.setContent(html_34259b91209b49f9dcbd92ba024f2d15);
+            
+        
+
+        circle_09ac72dcf63e466f8a6695d213513ce5.bindPopup(popup_2318ed72a93be1ac096857ed5a3111ff)
+        ;
+
+        
+    
+</script>
+</html>
