@@ -3,12 +3,57 @@ import json
 import re
 from datetime import datetime
 
-# Define the API endpoint
-url = "https://plan.navcanada.ca/weather/api/alpha/?site=CZYZ&alpha=notam&notam_choice=default"
+# Define FIRs and their ICAO codes
+firs = {
+    "1": ("Edmonton", "CZEG"),
+    "2": ("Gander", "CZQX"),
+    "3": ("Moncton", "CZQM"),
+    "4": ("Montreal", "CZUL"),
+    "5": ("Toronto", "CZYZ"),
+    "6": ("Vancouver", "CZVR"),
+    "7": ("Winnipeg", "CZWG")
+}
 
-# Fetch the data
+# Display FIR options
+print("Select a FIR by number or enter an ICAO code (e.g., CYOO for Oshawa Executive Airport):")
+for num, (name, icao_code) in firs.items():
+    print(f"{num}: {name} ({icao_code})")
+
+# Get user input
+user_input = input("Enter the number of the FIR or an ICAO code: ").strip().upper()
+
+if user_input in firs:
+    icao = firs[user_input][1]
+    print(f"Selected FIR: {firs[user_input][0]} ({icao})")
+else:
+    icao = user_input
+    print(f"No FIR selected. Using ICAO code: {icao}")
+
+# Define the API endpoint using the selected ICAO code
+url = f"https://plan.navcanada.ca/weather/api/alpha/?site={icao}&alpha=notam&notam_choice=default"
+
+# Fetch the data with error handling
 response = requests.get(url)
+print(f"HTTP status code: {response.status_code}")  # Always print the status code
+
+if response.status_code != 200:
+    print(f"Failed to fetch data for ICAO code '{icao}'.")
+    print(f"Response content: {response.text}")  # Print the response content for debugging
+    exit(1)
+
 data = response.json()
+
+# Check for error or empty data
+if not data.get("data"):
+    print(f"No NOTAMs found or invalid ICAO code '{icao}'.")
+    # Optionally print the full response for debugging
+    print("API response:", data)
+    print(" JSON file will not be created.")
+    exit(1)
+
+# Count total NOTAMs received
+total_notams = len(data.get("data", []))
+print(f"Total NOTAMs received from API: {total_notams}")
 
 # Keywords to filter for obstacle-type events
 KEYWORDS = ["PARAJUMP", "PARACHUTE", "ADVISORY AREA", "CRANE", "GPS", "RESTRICTED", "OBST"]
@@ -67,4 +112,5 @@ output_filename = "filtered_notams_with_coords.json"
 with open(output_filename, "w") as f:
     json.dump(notams_list, f, indent=2)
 
+print(f"Total NOTAMs received: {total_notams}")
 print(f"Saved {len(notams_list)} filtered NOTAMs to {output_filename}")
