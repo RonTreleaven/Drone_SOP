@@ -1,6 +1,12 @@
 
 # Canadian Aerodromes Map (full version with filters + working pilot widget)
 # All-ASCII source
+# Reverted has no NOTAM data... just airports
+# June 4, 2025
+#
+# Prompts for Lat/Lon inscript.  Map permits moving and entering new lat/lon
+
+
 import pandas as pd, geopandas as gpd, folium
 from folium.plugins import FeatureGroupSubGroup, GroupedLayerControl, MarkerCluster
 
@@ -62,10 +68,10 @@ for prov, prov_df in gdf.groupby("region_name"):
         child.add_to(m)
         layers_dict[prov].append(child)
 ### 4.5 Load JSON for NOTAMS CZYZ obstacles
-import JSON
+import json
 # load the filtered NOTAMS (may need some additional logic to grab)
 with open("filtered_notams_with_coords.json", "r") as f:
-    notams_data = JSON.load(f)
+    notams_data = json.load(f)
 
 
 
@@ -136,5 +142,5 @@ window.onload = function() {{
 m.get_root().html.add_child(folium.Element(widget_js))
 
 # ===== 8. save =====
-m.save("airports_Reverted_Notams.html")
-print("Map saved -> airports_Reverted_Notams.html")
+m.save("CA_Airports_Reverted.html")
+print("Map saved -> CA_Airports_Reverted.html")

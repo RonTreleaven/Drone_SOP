@@ -288,3 +288,71 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('getLocation');
+  const output = document.getElementById('output');
+  const locInput = document.getElementById('flight-location');
+
+  // Restore from localStorage if available
+  const dd = localStorage.getItem('pilotLocationDD');
+  const dms = localStorage.getItem('pilotLocationDMS');
+  if (dd && dms) {
+    if (output) {
+      output.innerHTML =
+        `DD: ${dd}<br>` +
+        `DMS: ${dms}<br>` +
+        `<a href="https://maps.google.com/?q=${dd.replace(/ /g, '')}" target="_blank" rel="noopener">View on Google Maps</a>`;
+    }
+    if (locInput) {
+      locInput.value = dd;
+    }
+  }
+
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          // Round to 6 decimal places
+          const latShort = latitude.toFixed(6);
+          const lonShort = longitude.toFixed(6);
+          // Convert to DMS
+          const latDMS = toDMS(latitude, true);
+          const lonDMS = toDMS(longitude, false);
+          output.innerHTML =
+            `DD: ${latShort}, ${lonShort}<br>` +
+            `DMS: ${latDMS}, ${lonDMS}<br>` +
+            `<a href="https://maps.google.com/?q=${latShort},${lonShort}" target="_blank" rel="noopener">View on Google Maps</a>`;
+          // Autofill the Pilot Location field
+          if (locInput) {
+            locInput.value = `${latShort}, ${lonShort}`;
+          }
+          // Store in localStorage
+          localStorage.setItem('pilotLocationDD', `${latShort}, ${lonShort}`);
+          localStorage.setItem('pilotLocationDMS', `${latDMS}, ${lonDMS}`);
+        },
+        (error) => {
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              output.textContent = "User denied the request for Geolocation.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              output.textContent = "Location information is unavailable.";
+              break;
+            case error.TIMEOUT:
+              output.textContent = "The request to get user location timed out.";
+              break;
+            default:
+              output.textContent = "An unknown error occurred.";
+              break;
+          }
+        }
+      );
+    } else {
+      output.textContent = "Geolocation is not supported by this browser.";
+    }
+  });
+});

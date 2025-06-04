@@ -146,5 +146,5 @@ window.onload = function() {{
 m.get_root().html.add_child(folium.Element(widget_js))
 
 # ===== 8. save =====
-m.save("airports_layered_map_with_widget.html")
-print("Map saved -> airports_layered_map_with_widget.html")
+m.save("GPT_Airports_NOTAMS.html")
+print("Map saved -> GPT_Airports_NOTAMS.html")

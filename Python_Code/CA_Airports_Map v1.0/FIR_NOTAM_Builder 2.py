@@ -56,7 +56,7 @@ total_notams = len(data.get("data", []))
 print(f"Total NOTAMs received from API: {total_notams}")
 
 # Keywords to filter for obstacle-type events
-KEYWORDS = ["PARAJUMP", "PARACHUTE", "ADVISORY AREA", "CRANE", "GPS", "RESTRICTED", "OBST"]
+KEYWORDS = ["PARAJUMP", "PARACHUTE", "ADVISORY", "CRANE", "GPS", "RESTRICTED", "OBST"]
 
 # Helper function to extract DMS coordinates from text
 def extract_dms(text):

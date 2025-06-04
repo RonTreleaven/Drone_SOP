@@ -10,11 +10,23 @@
 <body>
 
   <nav class="top-nav">
+    <a href="#" onclick="goBack(event)">&larr; Back</a> |
     <a href="index.html">Home</a> |
     <a href="tools.html" target="_blank" rel="noopener">Tools</a> |
     <a href="flight-log.html">Flight Log</a> |
-    <a href="summary.html" class="active">Summary</a>
+    <a href="summary.html" class="active">Summary</a> |
+    <a href="emerge3.html">Emergency Procedures</a>
   </nav>
+  <script>
+    function goBack(event) {
+      event.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = "tools.html"; // fallback page
+      }
+    }
+  </script>
 
   <header class="site-header">
   <img src="assets/img/logo.png" alt="Logo" class="site-logo">

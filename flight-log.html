@@ -9,10 +9,25 @@
 </head>
 <body>
 
-  <nav class="top-nav">
-  <a href="tools.html">Back to Tools</a> |
-  <a href="emerge3.html" class="active">Emergency Procedures</a>
-  </nav>
+  <!-- Place this at the top of your <body> in flight-log.html -->
+<nav class="top-nav">
+  <a href="#" onclick="goBack(event)">&larr; Back</a> |
+  <a href="index.html">Home</a> |
+  <a href="tools.html">Tools</a> |
+  <a href="flight-log.html" class="active">Flight Log</a> |
+  <a href="summary.html">Summary</a> |
+  <a href="emerge3.html">Emergency Procedures</a>
+</nav>
+<script>
+  function goBack(event) {
+    event.preventDefault();
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.location.href = "tools.html"; // fallback page
+    }
+  }
+</script>
 
   <header class="site-header">
   <img src="assets/img/logo.png" alt="Logo" class="site-logo">
@@ -166,6 +181,8 @@
         output.textContent = "Geolocation is not supported by this browser.";
       }
     });
+
+
   });
   </script>
 </body>

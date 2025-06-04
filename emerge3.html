@@ -83,9 +83,19 @@
 <body>
   <!-- Top Navigation -->
   <nav class="top-nav">
-    <a href="tools.html">Back to Tools</a> |
+    <a href="#" onclick="goBack(event)">&larr; Back</a> |
     <a href="emerge3.html" class="active">Emergency Procedures</a>
   </nav>
+  <script>
+    function goBack(event) {
+      event.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = "tools.html"; // fallback page
+      }
+    }
+  </script>
   <div class="container">
     <h1>Emergency Procedures and Checklists</h1>
     <div class="contact-info">

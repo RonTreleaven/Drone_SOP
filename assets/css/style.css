@@ -256,6 +256,7 @@ main {
 }
 .card h2 {
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
   position: relative;
 }
@@ -300,5 +301,8 @@ main {
 }
 .card-content, .tools-list, .contact-info {
   word-break: break-word;
+}
+selector {
+  property: value;
 }
 
