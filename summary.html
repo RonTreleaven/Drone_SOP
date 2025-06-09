@@ -89,6 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
           };
           div.appendChild(btn);
 
+          if (sop.status === "completed") div.style.background = "#e0ffe0";
+
           summaryContainer.appendChild(div);
         });
       } else {

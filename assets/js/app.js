@@ -55,10 +55,17 @@ function renderIndex(sections) {
   btn.addEventListener('click', () => {
     const list = Array.from(chosen);
     if (!list.length) return;
-    localStorage.removeItem('selectedSections');
-    sections.forEach(s => localStorage.removeItem(`responses_${s.id}`));
+    // Clear old progress
+    localStorage.removeItem('droneSOPProgress');
     localStorage.removeItem('flightLog');
-    localStorage.setItem('selectedSections', JSON.stringify(list));
+    // Initialize new progress structure
+    const progress = {};
+    list.forEach(id => {
+      progress[id] = { status: "not-started", data: {} };
+    });
+    const sopProgress = { selectedSOPs: list, progress };
+    localStorage.setItem('droneSOPProgress', JSON.stringify(sopProgress));
+    // Go to first section
     window.location.href = `sections/${list[0]}.html`;
   });
 }
@@ -98,112 +105,105 @@ function renderFlightLog() {
 
 // ─── SECTION PAGES ─────────────────────────────────────────────────────────────
 function renderSectionPage(sections) {
-  // Get the current section ID from the filename
-  const pathParts = window.location.pathname.split('/');
-  const filename = pathParts[pathParts.length - 1];
-  const sopId = filename.replace('.html', '');
+    const id = window.location.pathname.split('/').pop().replace('.html','');
+  const current = sections.find(s => s.id === id);
+  if (!current) return console.error('Unknown section:', id);
 
-  const section = sections.find(s => s.id === sopId);
-  if (!section) {
-    document.getElementById('checklist-container').innerHTML = '<em>Section not found.</em>';
-    return;
-  }
-
+  document.getElementById('section-title').textContent = current.title;
   const container = document.getElementById('checklist-container');
-  container.innerHTML = '';
+  container.innerHTML = ''; // Clear "Loading..."
 
-  // Load progress
-  const sopProgress = JSON.parse(localStorage.getItem('droneSOPProgress') || '{}');
-  const sectionProgress = sopProgress.progress && sopProgress.progress[sopId] ? sopProgress.progress[sopId] : { data: {}, status: "not-started" };
-
-  // Render the first item as a "Mark as Completed" checkbox
-  const completedDiv = document.createElement('div');
-  completedDiv.className = 'completed-checkbox';
-  const completedLabel = document.createElement('label');
-  completedLabel.innerHTML = `<input type="checkbox" id="section-completed"> ${section.items[0]}`;
-  completedDiv.appendChild(completedLabel);
-  container.appendChild(completedDiv);
-
-  // Set checkbox state from progress
-  document.getElementById('section-completed').checked = sectionProgress.status === "completed";
-
-  // Render the rest of the checklist items as normal checkboxes
-  section.items.slice(1).forEach((item, idx) => {
-    const itemDiv = document.createElement('div');
-    itemDiv.className = 'checklist-item';
-    const itemLabel = document.createElement('label');
-    const itemId = `item-${idx + 1}`;
-    itemLabel.innerHTML = `<input type="checkbox" id="${itemId}"> ${item}`;
-    itemDiv.appendChild(itemLabel);
-    container.appendChild(itemDiv);
-
-    // Restore checked state if previously saved
-    if (sectionProgress.data && sectionProgress.data[itemId]) {
-      document.getElementById(itemId).checked = true;
-    }
+  // Render checklist items
+  let responses = JSON.parse(localStorage.getItem(`responses_${current.id}`) || '[]');
+  if (responses.length !== current.items.length) {
+    responses = current.items.map(() => false);
+  }
+  current.items.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'check-item';
+    const cb = document.createElement('input');
+    cb.type    = 'checkbox';
+    cb.checked = responses[idx];
+    cb.addEventListener('change', () => {
+      responses[idx] = cb.checked;
+      localStorage.setItem(`responses_${current.id}`, JSON.stringify(responses));
+    });
+    const lbl = document.createElement('label');
+    lbl.textContent = item;
+    div.append(cb, ' ', lbl);
+    container.append(div);
   });
 
-  // Save button
+  // Add "Mark as Completed" checkbox
+  const completeDiv = document.createElement('div');
+  completeDiv.style.marginTop = '1em';
+  const completeLabel = document.createElement('label');
+  completeLabel.innerHTML = `<input type="checkbox" id="section-completed"> Mark this section as completed`;
+  completeDiv.appendChild(completeLabel);
+  container.appendChild(completeDiv);
+
+  // // Restore checkbox state if previously completed *** crashed the loading of the Section.json
+  
+  // const sopProgress = JSON.parse(localStorage.getItem('droneSOPProgress') || '{}');
+  // if (sopProgress.progress && sopProgress.progress[current.id]) {
+  //   document.getElementById('section-completed').checked = sopProgress.progress[current.id].status === "completed";
+  // }
+
+  // Save Progress button
   const saveBtn = document.createElement('button');
   saveBtn.textContent = 'Save Progress';
-  saveBtn.style.marginTop = '1em';
-  container.appendChild(saveBtn);
+  saveBtn.style.marginLeft = '1em';
+  completeDiv.appendChild(saveBtn);
 
   saveBtn.addEventListener('click', function() {
-    // Save checklist state
-    const newProgress = { data: {}, status: "in-progress" };
-    // Save each item state
-    section.items.slice(1).forEach((item, idx) => {
-      const itemId = `item-${idx + 1}`;
-      newProgress.data[itemId] = document.getElementById(itemId).checked;
-    });
+    // Save checklist state (your existing logic)
+    // ...
+
     // Save completed status
-    if (document.getElementById('section-completed').checked) {
-      newProgress.status = "completed";
-    }
-    // Update localStorage
+    let sopProgress = JSON.parse(localStorage.getItem('droneSOPProgress') || '{}');
     sopProgress.progress = sopProgress.progress || {};
-    sopProgress.progress[sopId] = newProgress;
+    sopProgress.progress[current.id] = sopProgress.progress[current.id] || { data: {} };
+    sopProgress.progress[current.id].status = document.getElementById('section-completed').checked ? "completed" : "in-progress";
     localStorage.setItem('droneSOPProgress', JSON.stringify(sopProgress));
     alert('Progress saved!');
   });
 
-  // Find the list of selected SOPs from progress
+  // Use droneSOPProgress for navigation
+  const sopProgress = JSON.parse(localStorage.getItem('droneSOPProgress') || '{}');
   const selected = sopProgress.selectedSOPs || [];
-  const currentIdx = selected.indexOf(sopId);
+  const idx = selected.indexOf(current.id);
 
+  // Create navigation buttons
   const navDiv = document.createElement('div');
   navDiv.style.marginTop = '2em';
 
   // Prev button
-  if (currentIdx > 0) {
-    const prevBtn = document.createElement('button');
-    prevBtn.textContent = 'Prev';
-    prevBtn.onclick = () => {
-      window.location.href = `./${selected[currentIdx - 1]}.html`;
-    };
-    navDiv.appendChild(prevBtn);
-  }
+  const prevBtn = document.createElement('button');
+  prevBtn.textContent = idx > 0 ? '< Previous' : '< Back to Index';
+  prevBtn.onclick = () => {
+    if (idx > 0) {
+      window.location.href = `../sections/${selected[idx-1]}.html`;
+    } else {
+      window.location.href = '../index.html';
+    }
+  };
+  navDiv.appendChild(prevBtn);
 
-  // Next button or Flight Log/Summary
-  if (currentIdx < selected.length - 1) {
-    const nextBtn = document.createElement('button');
-    nextBtn.textContent = 'Next';
-    nextBtn.style.marginLeft = '1em';
+  // Next or Flight Log button
+  const nextBtn = document.createElement('button');
+  nextBtn.style.marginLeft = '1em';
+  if (idx < selected.length - 1) {
+    nextBtn.textContent = 'Next >';
     nextBtn.onclick = () => {
-      window.location.href = `./${selected[currentIdx + 1]}.html`;
+      window.location.href = `../sections/${selected[idx+1]}.html`;
     };
-    navDiv.appendChild(nextBtn);
   } else {
-    // Last SOP: show button to go to Flight Log or Summary
-    const logBtn = document.createElement('button');
-    logBtn.textContent = 'Flight Log';
-    logBtn.style.marginLeft = '1em';
-    logBtn.onclick = () => {
+    nextBtn.textContent = 'Flight Log';
+    nextBtn.onclick = () => {
       window.location.href = '../flight-log.html';
     };
-    navDiv.appendChild(logBtn);
   }
+  navDiv.appendChild(nextBtn);
 
   container.appendChild(navDiv);
 }
@@ -399,107 +399,3 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
-
-// // Load SOP sections from sections.json and initialize UI
-// fetch('data/sections.json')
-//   .then(res => res.json())
-//   .then(sections => {
-//     let sopProgress = loadSOPProgress();
-//     if (!sopProgress) {
-//       // First visit: let user select SOPs
-//       renderSOPSelector(sections);
-//     } else {
-//       // Already started: render progress dashboard
-//       renderSections(sections, sopProgress);
-//     }
-//   });
-
-function renderSOPSelector(sections) {
-  const sectionSelector = document.getElementById('section-selector');
-  sectionSelector.innerHTML = '';
-  sections.forEach(sec => {
-    const label = document.createElement('label');
-    label.innerHTML = `<input type="checkbox" value="${sec.id}"> ${sec.title}`;
-    sectionSelector.appendChild(label);
-    sectionSelector.appendChild(document.createElement('br'));
-  });
-  const beginBtn = document.getElementById('begin-btn');
-  beginBtn.disabled = false;
-  beginBtn.onclick = function() {
-    const selected = Array.from(sectionSelector.querySelectorAll('input[type=checkbox]:checked')).map(cb => cb.value);
-    const progress = {};
-    selected.forEach(id => {
-      progress[id] = { status: "not-started", data: {} };
-    });
-    saveSOPProgress({ selectedSOPs: selected, progress });
-    renderSections(sections, { selectedSOPs: selected, progress });
-  };
-}
-
-function renderSections(sections, sopData) {
-  const sectionSelector = document.getElementById('section-selector');
-  sectionSelector.innerHTML = '';
-  sopData.selectedSOPs.forEach(sopId => {
-    const sec = sections.find(s => s.id === sopId);
-    const sop = sopData.progress[sopId];
-    const div = document.createElement('div');
-    div.className = 'sop-section';
-
-    const title = document.createElement('h2');
-    title.textContent = sec ? sec.title : sopId;
-    div.appendChild(title);
-
-    const status = document.createElement('p');
-    status.textContent = `Status: ${sop.status.replace('-', ' ')}`;
-    div.appendChild(status);
-
-    const openBtn = document.createElement('button');
-    openBtn.textContent = sop.status === "completed" ? "Review/Edit" : "Continue";
-    openBtn.onclick = function() {
-      openSOP(sopId);
-    };
-    div.appendChild(openBtn);
-
-    if (sop.status !== "completed") {
-      const completeBtn = document.createElement('button');
-      completeBtn.textContent = "Mark as Completed";
-      completeBtn.onclick = function() {
-        completeSOP(sopId, sop.data);
-        renderSections(sections, loadSOPProgress());
-      };
-      div.appendChild(completeBtn);
-    }
-
-    sectionSelector.appendChild(div);
-  });
-}
-
-function saveSOPProgress(progressObj) {
-  localStorage.setItem('droneSOPProgress', JSON.stringify(progressObj));
-}
-
-function loadSOPProgress() {
-  const data = localStorage.getItem('droneSOPProgress');
-  return data ? JSON.parse(data) : null;
-}
-
-function clearSOPProgress() {
-  localStorage.removeItem('droneSOPProgress');
-}
-
-function openSOP(sopId) {
-  let sopProgress = loadSOPProgress();
-  if (sopProgress.progress[sopId].status === "not-started") {
-    sopProgress.progress[sopId].status = "in-progress";
-    saveSOPProgress(sopProgress);
-  }
-  // Redirect or load the SOP form here, e.g.:
-  // window.location.href = `sop.html?id=${encodeURIComponent(sopId)}`;
-}
-
-function completeSOP(sopId, formData) {
-  let sopProgress = loadSOPProgress();
-  sopProgress.progress[sopId].status = "completed";
-  sopProgress.progress[sopId].data = formData;
-  saveSOPProgress(sopProgress);
-}
