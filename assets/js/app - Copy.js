@@ -98,114 +98,71 @@ function renderFlightLog() {
 
 // ─── SECTION PAGES ─────────────────────────────────────────────────────────────
 function renderSectionPage(sections) {
-  // Get the current section ID from the filename
-  const pathParts = window.location.pathname.split('/');
-  const filename = pathParts[pathParts.length - 1];
-  const sopId = filename.replace('.html', '');
+  const id      = window.location.pathname
+                    .split('/')
+                    .pop()
+                    .replace('.html','');
+  const current = sections.find(s => s.id === id);
+  if (!current) return console.error('Unknown section:', id);
 
-  const section = sections.find(s => s.id === sopId);
-  if (!section) {
-    document.getElementById('checklist-container').innerHTML = '<em>Section not found.</em>';
-    return;
+  document.getElementById('section-title').textContent = current.title;
+  const key     = `responses_${current.id}`;
+  let responses = JSON.parse(localStorage.getItem(key) || '[]');
+  if (responses.length !== current.items.length) {
+    responses = current.items.map(() => false);
   }
 
   const container = document.getElementById('checklist-container');
-  container.innerHTML = '';
-
-  // Load progress
-  const sopProgress = JSON.parse(localStorage.getItem('droneSOPProgress') || '{}');
-  const sectionProgress = sopProgress.progress && sopProgress.progress[sopId] ? sopProgress.progress[sopId] : { data: {}, status: "not-started" };
-
-  // Render the first item as a "Mark as Completed" checkbox
-  const completedDiv = document.createElement('div');
-  completedDiv.className = 'completed-checkbox';
-  const completedLabel = document.createElement('label');
-  completedLabel.innerHTML = `<input type="checkbox" id="section-completed"> ${section.items[0]}`;
-  completedDiv.appendChild(completedLabel);
-  container.appendChild(completedDiv);
-
-  // Set checkbox state from progress
-  document.getElementById('section-completed').checked = sectionProgress.status === "completed";
-
-  // Render the rest of the checklist items as normal checkboxes
-  section.items.slice(1).forEach((item, idx) => {
-    const itemDiv = document.createElement('div');
-    itemDiv.className = 'checklist-item';
-    const itemLabel = document.createElement('label');
-    const itemId = `item-${idx + 1}`;
-    itemLabel.innerHTML = `<input type="checkbox" id="${itemId}"> ${item}`;
-    itemDiv.appendChild(itemLabel);
-    container.appendChild(itemDiv);
-
-    // Restore checked state if previously saved
-    if (sectionProgress.data && sectionProgress.data[itemId]) {
-      document.getElementById(itemId).checked = true;
-    }
-  });
-
-  // Save button
-  const saveBtn = document.createElement('button');
-  saveBtn.textContent = 'Save Progress';
-  saveBtn.style.marginTop = '1em';
-  container.appendChild(saveBtn);
-
-  saveBtn.addEventListener('click', function() {
-    // Save checklist state
-    const newProgress = { data: {}, status: "in-progress" };
-    // Save each item state
-    section.items.slice(1).forEach((item, idx) => {
-      const itemId = `item-${idx + 1}`;
-      newProgress.data[itemId] = document.getElementById(itemId).checked;
+  current.items.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'check-item';
+    const cb = document.createElement('input');
+    cb.type    = 'checkbox';
+    cb.checked = responses[idx];
+    cb.addEventListener('change', () => {
+      responses[idx] = cb.checked;
+      localStorage.setItem(key, JSON.stringify(responses));
     });
-    // Save completed status
-    if (document.getElementById('section-completed').checked) {
-      newProgress.status = "completed";
-    }
-    // Update localStorage
-    sopProgress.progress = sopProgress.progress || {};
-    sopProgress.progress[sopId] = newProgress;
-    localStorage.setItem('droneSOPProgress', JSON.stringify(sopProgress));
-    alert('Progress saved!');
+    const lbl = document.createElement('label');
+    lbl.textContent = item;
+    div.append(cb, ' ', lbl);
+    container.append(div);
   });
 
-  // Find the list of selected SOPs from progress
-  const selected = sopProgress.selectedSOPs || [];
-  const currentIdx = selected.indexOf(sopId);
-
-  const navDiv = document.createElement('div');
-  navDiv.style.marginTop = '2em';
+  const selected = JSON.parse(localStorage.getItem('selectedSections') || '[]');
+  const idx      = selected.indexOf(current.id);
+  const prevBtn  = document.getElementById('prev-btn');
+  const nextBtn  = document.getElementById('next-btn');
 
   // Prev button
-  if (currentIdx > 0) {
-    const prevBtn = document.createElement('button');
-    prevBtn.textContent = 'Prev';
-    prevBtn.onclick = () => {
-      window.location.href = `./${selected[currentIdx - 1]}.html`;
-    };
-    navDiv.appendChild(prevBtn);
-  }
-
-  // Next button or Flight Log/Summary
-  if (currentIdx < selected.length - 1) {
-    const nextBtn = document.createElement('button');
-    nextBtn.textContent = 'Next';
-    nextBtn.style.marginLeft = '1em';
-    nextBtn.onclick = () => {
-      window.location.href = `./${selected[currentIdx + 1]}.html`;
-    };
-    navDiv.appendChild(nextBtn);
+  if (idx > 0) {
+    prevBtn.disabled = false;
+    prevBtn.addEventListener('click', () =>
+      window.location.href = `../sections/${selected[idx-1]}.html`
+    );
   } else {
-    // Last SOP: show button to go to Flight Log or Summary
-    const logBtn = document.createElement('button');
-    logBtn.textContent = 'Flight Log';
-    logBtn.style.marginLeft = '1em';
-    logBtn.onclick = () => {
-      window.location.href = '../flight-log.html';
-    };
-    navDiv.appendChild(logBtn);
+    prevBtn.disabled = false; //Enabe the button
+    prevBtn.textContent = '< Back to Index';
+    prevBtn.addEventListener('click', () =>
+      window.location.href = '../index.html'
+    );  
   }
 
-  container.appendChild(navDiv);
+  // Next or Flight Log
+  if (idx < selected.length - 1) {
+    nextBtn.textContent = 'Next ›';
+    nextBtn.disabled   = false;
+    nextBtn.addEventListener('click', () =>
+      window.location.href = `../sections/${selected[idx+1]}.html`
+    );
+  } else {
+    // Last section: always enabled and goes to flight-log.html
+    nextBtn.textContent = 'Flight Log';
+    nextBtn.disabled   = false;
+    nextBtn.addEventListener('click', () =>
+      window.location.href = '../flight-log.html'
+    );
+  }
 }
 
 // ─── SUMMARY PAGE ──────────────────────────────────────────────────────────────
@@ -399,107 +356,3 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
-
-// // Load SOP sections from sections.json and initialize UI
-// fetch('data/sections.json')
-//   .then(res => res.json())
-//   .then(sections => {
-//     let sopProgress = loadSOPProgress();
-//     if (!sopProgress) {
-//       // First visit: let user select SOPs
-//       renderSOPSelector(sections);
-//     } else {
-//       // Already started: render progress dashboard
-//       renderSections(sections, sopProgress);
-//     }
-//   });
-
-function renderSOPSelector(sections) {
-  const sectionSelector = document.getElementById('section-selector');
-  sectionSelector.innerHTML = '';
-  sections.forEach(sec => {
-    const label = document.createElement('label');
-    label.innerHTML = `<input type="checkbox" value="${sec.id}"> ${sec.title}`;
-    sectionSelector.appendChild(label);
-    sectionSelector.appendChild(document.createElement('br'));
-  });
-  const beginBtn = document.getElementById('begin-btn');
-  beginBtn.disabled = false;
-  beginBtn.onclick = function() {
-    const selected = Array.from(sectionSelector.querySelectorAll('input[type=checkbox]:checked')).map(cb => cb.value);
-    const progress = {};
-    selected.forEach(id => {
-      progress[id] = { status: "not-started", data: {} };
-    });
-    saveSOPProgress({ selectedSOPs: selected, progress });
-    renderSections(sections, { selectedSOPs: selected, progress });
-  };
-}
-
-function renderSections(sections, sopData) {
-  const sectionSelector = document.getElementById('section-selector');
-  sectionSelector.innerHTML = '';
-  sopData.selectedSOPs.forEach(sopId => {
-    const sec = sections.find(s => s.id === sopId);
-    const sop = sopData.progress[sopId];
-    const div = document.createElement('div');
-    div.className = 'sop-section';
-
-    const title = document.createElement('h2');
-    title.textContent = sec ? sec.title : sopId;
-    div.appendChild(title);
-
-    const status = document.createElement('p');
-    status.textContent = `Status: ${sop.status.replace('-', ' ')}`;
-    div.appendChild(status);
-
-    const openBtn = document.createElement('button');
-    openBtn.textContent = sop.status === "completed" ? "Review/Edit" : "Continue";
-    openBtn.onclick = function() {
-      openSOP(sopId);
-    };
-    div.appendChild(openBtn);
-
-    if (sop.status !== "completed") {
-      const completeBtn = document.createElement('button');
-      completeBtn.textContent = "Mark as Completed";
-      completeBtn.onclick = function() {
-        completeSOP(sopId, sop.data);
-        renderSections(sections, loadSOPProgress());
-      };
-      div.appendChild(completeBtn);
-    }
-
-    sectionSelector.appendChild(div);
-  });
-}
-
-function saveSOPProgress(progressObj) {
-  localStorage.setItem('droneSOPProgress', JSON.stringify(progressObj));
-}
-
-function loadSOPProgress() {
-  const data = localStorage.getItem('droneSOPProgress');
-  return data ? JSON.parse(data) : null;
-}
-
-function clearSOPProgress() {
-  localStorage.removeItem('droneSOPProgress');
-}
-
-function openSOP(sopId) {
-  let sopProgress = loadSOPProgress();
-  if (sopProgress.progress[sopId].status === "not-started") {
-    sopProgress.progress[sopId].status = "in-progress";
-    saveSOPProgress(sopProgress);
-  }
-  // Redirect or load the SOP form here, e.g.:
-  // window.location.href = `sop.html?id=${encodeURIComponent(sopId)}`;
-}
-
-function completeSOP(sopId, formData) {
-  let sopProgress = loadSOPProgress();
-  sopProgress.progress[sopId].status = "completed";
-  sopProgress.progress[sopId].data = formData;
-  saveSOPProgress(sopProgress);
-}
