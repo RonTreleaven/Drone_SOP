@@ -119,6 +119,13 @@
     const btn = document.getElementById('getLocation');
     const output = document.getElementById('output');
     const locInput = document.getElementById('flight-location');
+    const form = document.getElementById('flight-log-form');
+    const dateIn = document.getElementById('flight-date');
+    const pilot = document.getElementById('flight-pilot');
+    const obs = document.getElementById('flight-observers');
+    const start = document.getElementById('flight-start');
+    const end = document.getElementById('flight-end');
+    const loc = document.getElementById('flight-location');
 
     // Restore from localStorage if available
     const dd = localStorage.getItem('pilotLocationDD');
@@ -182,7 +189,23 @@
       }
     });
 
-
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const flightLog = {
+        date:      dateIn.value,
+        pilot:     pilot.value.trim(),
+        observers: obs.value.trim(),
+        start:     start.value,
+        end:       end.value,
+        location:  loc.value.trim()
+      };
+      localStorage.setItem('flightLog', JSON.stringify(flightLog));
+      // Always commit the pilot location field as DD
+      if (loc.value.trim()) {
+        localStorage.setItem('pilotLocationDD', loc.value.trim());
+      }
+      alert('✅ Flight log saved.');
+    });
   });
   </script>
 </body>
