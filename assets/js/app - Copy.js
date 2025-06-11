@@ -267,15 +267,6 @@ function renderSummary(sections) {
     return { today, count: next };
   }
 
-  // Utility: get export filename (CSV or PDF)
-  function getExportFilename(ext = 'csv') {
-    const flightLog = JSON.parse(localStorage.getItem('flightLog') || '{}');
-    // Use flight date and pilot name if available, else fallback to today
-    let date = flightLog.date || new Date().toISOString().slice(0,10);
-    let pilot = flightLog.pilot ? flightLog.pilot.replace(/[^a-z0-9]/gi, '_') : 'UnknownPilot';
-    return `FlightLog_${date}_${pilot}.${ext}`;
-  }
-
   document.getElementById('export-csv').addEventListener('click', () => {
     let csv = 'Field,Value\n'
       + `Date,${flightLog.date||''}\n`
@@ -294,7 +285,7 @@ function renderSummary(sections) {
     });
     const { today, count } = bumpCount('csvExport');
     const suffix = count > 1 ? ` (${count})` : '';
-    const filename = getExportFilename('csv');
+    const filename = `Flight Summary ${today}${suffix}.csv`;
     const blob = new Blob([csv], { type: 'text/csv' });
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement('a');
@@ -307,7 +298,7 @@ function renderSummary(sections) {
   document.getElementById('export-pdf').addEventListener('click', () => {
     const { today, count } = bumpCount('pdfExport');
     const suffix = count > 1 ? ` (${count})` : '';
-    const filename = getExportFilename('pdf').replace('.pdf',''); // window.print() uses document.title
+    const filename = `Flight Summary ${today}${suffix}`;
     const origTitle = document.title;
     document.title  = filename;
     window.print();
