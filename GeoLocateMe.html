@@ -4,73 +4,139 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Find my Location</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f6f8;
+      font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #eaf1fb 0%, #f4f6f8 100%);
+      min-height: 100vh;
       margin: 0;
       padding: 0;
+      transition: background 0.5s;
     }
     .top-nav {
       background: #2F5496;
       color: #fff;
-      padding: 10px 0;
+      padding: 12px 0;
       text-align: center;
       font-size: 1.1em;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(47,84,150,0.08);
     }
     .top-nav a {
       color: #fff;
       text-decoration: none;
-      margin: 0 10px;
+      margin: 0 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .top-nav a:hover {
+      color: #ffd700;
     }
     .card {
       background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      max-width: 400px;
-      margin: 40px auto;
-      padding: 28px 32px 24px 32px;
+      border-radius: 14px;
+      box-shadow: 0 6px 24px rgba(47,84,150,0.10);
+      max-width: 420px;
+      margin: 48px auto;
+      padding: 36px 36px 28px 36px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .card:hover {
+      transform: scale(1.015);
+      box-shadow: 0 10px 32px rgba(47,84,150,0.16);
     }
     h1 {
       text-align: center;
       color: #2F5496;
       margin-bottom: 18px;
+      font-size: 2em;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
     .geo-btn {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      background: #2F5496;
+      background: linear-gradient(90deg, #2F5496 60%, #4F81BD 100%);
       color: #fff;
       border: none;
-      border-radius: 4px;
-      padding: 12px;
-      font-size: 1.1em;
+      border-radius: 6px;
+      padding: 14px;
+      font-size: 1.15em;
+      font-weight: 600;
       cursor: pointer;
-      margin-bottom: 18px;
-      transition: background 0.2s;
+      margin-bottom: 20px;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(47,84,150,0.08);
+      gap: 10px;
     }
     .geo-btn:hover {
-      background: #b30000;
+      background: linear-gradient(90deg, #b30000 60%, #ff5e62 100%);
+      box-shadow: 0 4px 16px rgba(179,0,0,0.12);
     }
     #demo {
       background: #eaf1fb;
       border-left: 4px solid #2F5496;
-      padding: 12px;
-      border-radius: 6px;
-      margin-top: 10px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin-top: 12px;
       word-break: break-word;
+      font-size: 1.04em;
+      min-height: 40px;
+      transition: background 0.2s;
+    }
+    .maps-link-btn {
+      display: inline-block;
+      margin-top: 12px;
+      background: #2F5496;
+      color: #fff;
+      padding: 8px 18px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1em;
+      transition: background 0.2s, color 0.2s;
+      box-shadow: 0 2px 8px rgba(47,84,150,0.08);
+    }
+    .maps-link-btn:hover {
+      background: #4F81BD;
+      color: #ffd700;
+    }
+    .icon {
+      margin-right: 8px;
+      color: #2F5496;
+    }
+    .spinner {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border: 3px solid #eaf1fb;
+      border-top: 3px solid #2F5496;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
     }
   </style>
 </head>
 <body>
   <nav class="top-nav">
-    <a href="#" onclick="goBack(event)">&larr; Back</a>
-    | <a href="index.html">Home</a>
+    <a href="#" onclick="goBack(event)"><i class="fa fa-arrow-left"></i> Back</a>
+    | <a href="index.html"><i class="fa fa-home"></i> Home</a>
   </nav>
   <div class="card">
-    <h1>Find My Location</h1>
-    <p>Click the button to get your coordinates.</p>
-    <button class="geo-btn" onclick="getLocation()">Get GPS Location</button>
+    <h1><i class="fa fa-location-dot icon"></i>Find My Location</h1>
+    <p style="text-align:center;">Click the button to get your coordinates.</p>
+    <button class="geo-btn" onclick="getLocation()">
+      <i class="fa fa-crosshairs"></i> Get GPS Location
+    </button>
     <div id="demo"></div>
   </div>
 
@@ -78,10 +144,11 @@
   const x = document.getElementById("demo");
 
   function getLocation() {
+    x.innerHTML = '<div class="spinner"></div> <span style="margin-left:10px;">Getting location...</span>';
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error);
     } else { 
-      x.innerHTML = "Geolocation is not supported by this browser.";
+      x.innerHTML = "<i class='fa fa-exclamation-triangle' style='color:#b30000;'></i> Geolocation is not supported by this browser.";
     }
   }
 
@@ -103,31 +170,35 @@
     const latDMS = toDMS(position.coords.latitude, true);
     const lonDMS = toDMS(position.coords.longitude, false);
     const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
-    x.innerHTML = `<strong>Lat/Lon:</strong> ${lat}, ${lon}<br>
-      <strong>Lat:</strong> ${lat}<br>
-      <strong>Lon:</strong> ${lon}<br>
-      <strong>Lat/Lon (DMS):</strong> ${latDMS}, ${lonDMS}<br>
-      <a href="${mapsLink}" target="_blank">View on Google Maps</a>`;
+    x.innerHTML = `
+      <strong><i class="fa fa-globe icon"></i>Lat/Lon:</strong> ${lat}, ${lon}<br>
+      <strong><i class="fa fa-arrow-up icon"></i>Lat:</strong> ${lat}<br>
+      <strong><i class="fa fa-arrow-right icon"></i>Lon:</strong> ${lon}<br>
+      <strong><i class="fa fa-compass icon"></i>Lat/Lon (DMS):</strong> ${latDMS}, ${lonDMS}<br>
+      <a href="${mapsLink}" target="_blank" class="maps-link-btn"><i class="fa fa-map-location-dot"></i> View on Google Maps</a>
+    `;
     // Save to localStorage for use on other pages
     localStorage.setItem('pilotLocationDD', `${lat}, ${lon}`);
     localStorage.setItem('pilotLocationDMS', `${latDMS}, ${lonDMS}`);
   }
 
   function error(error) {
+    let msg = '';
     switch(error.code) {
       case error.PERMISSION_DENIED:
-        x.innerHTML = "User denied the request for Geolocation."
+        msg = "<i class='fa fa-exclamation-triangle' style='color:#b30000;'></i> User denied the request for Geolocation.";
         break;
       case error.POSITION_UNAVAILABLE:
-        x.innerHTML = "Location information is unavailable."
+        msg = "<i class='fa fa-exclamation-triangle' style='color:#b30000;'></i> Location information is unavailable.";
         break;
       case error.TIMEOUT:
-        x.innerHTML = "The request to get user location timed out."
+        msg = "<i class='fa fa-exclamation-triangle' style='color:#b30000;'></i> The request to get user location timed out.";
         break;
       case error.UNKNOWN_ERROR:
-        x.innerHTML = "An unknown error occurred."
+        msg = "<i class='fa fa-exclamation-triangle' style='color:#b30000;'></i> An unknown error occurred.";
         break;
     }
+    x.innerHTML = msg;
   }
 
   function goBack(event) {
