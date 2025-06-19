@@ -69,7 +69,6 @@ for prov, prov_df in gdf.groupby("iso_region"):
             '</script>'
         )
         m.get_root().html.add_child(folium.Element(js))
-        layers_dict[prov].append(child)
 
 # === Pilot marker + rings ===
 folium.Marker([pilot_lat, pilot_lon], tooltip="Pilot", popup="Pilot Location", icon=folium.Icon(color="purple", icon="user", prefix="fa")).add_to(m)
@@ -77,23 +76,8 @@ folium.Circle([pilot_lat, pilot_lon], radius=nm_to_m, color="red", weight=4, fil
 folium.Circle([pilot_lat, pilot_lon], radius=3*nm_to_m, color="red", weight=2, dash_array="5,5", fill=False, popup="3 NM").add_to(m)
 
 # === NOTAM obstacles ===
-notam_files = sorted(glob.glob("*_NOTAMS_*.json"))
-if not notam_files:
-    raise SystemExit("No NOTAM files available")
-latest_file = notam_files[-1]
-with open(latest_file) as f:
-    notams_data = json.load(f)
-obstacle_layer = folium.FeatureGroup(name="Obstacles", show=False)
-for notam in notams_data:
-    if "coordinates_dd" not in notam: continue
-    for coord in notam["coordinates_dd"]:
-        lat, lon = map(float, coord.split(","))
-        safe_raw = html.escape(notam["raw"]).replace("\n", "<br>")
-        popup_html = "<b>Obstacle Alert</b><br>{}".format(safe_raw)
-        folium.Marker([lat, lon], tooltip="Obstacle", popup=folium.Popup(popup_html), icon=folium.Icon(color="orange", icon="exclamation-triangle", prefix="fa")).add_to(obstacle_layer)
-obstacle_layer.add_to(m)
+# ===  in progress ===
 
-# === NOTAM obstacles ===
 notam_files = sorted(glob.glob("*_NOTAMS_*.json"))
 if not notam_files:
     print("No NOTAM files found in directory.")
@@ -121,37 +105,108 @@ js_obs = (
 )
 m.get_root().html.add_child(folium.Element(js_obs))
 
+notam_js_array = []
+for notam in notams_data:
+    if "coordinates_dd" not in notam:
+        continue
+    popup = html.escape(notam.get("raw", "")).replace("\n", "<br>")
+    for coord in notam["coordinates_dd"]:
+        lat, lon = map(float, coord.split(","))
+        notam_js_array.append({
+            "lat": lat,
+            "lon": lon,
+            "popup": popup
+        })
+
+# Inject into the map HTML
+m.get_root().html.add_child(folium.Element(
+    f"<script>window.NOTAMS = {json.dumps(notam_js_array)};</script>"
+))
+
 # === Sidebar filter ===
 prov_options = ''.join('<option value="{}">{}</option>'.format(p, p) for p in province_names)
 type_options = ''.join('<option value="{}">{}</option>'.format(t, t) for t in airport_types)
 
 sidebar_html = '''
-<div id="sidebar" style="position:fixed;top:10px;left:10px;z-index:9999;background:white;padding:10px;border:1px solid #ccc;max-height:90%;overflow:auto">
+<div id="sidebar" style="position:fixed;top:10px;left:10px;z-index:9;">
   <h4>Filters</h4>
   <label>Province:</label><br>
-  <select id="provSelect" multiple size="5">{prov_options}</select><br><br>
+  <select id="provSelect" multiple size="5">{prov_options}</select><br>
   <label>Airport Types:</label><br>
-  <select id="typeSelect" multiple size="5">{type_options}</select><br><br>
+  <select id="typeSelect" multiple size="5">{type_options}</select><br>
   <button onclick="applyFilter()">Apply Filter</button>
 </div>
+
 <script>
+let airportMarkers = [];
+let notamMarkers = [];
+
+function clearMarkers(markerList) {{
+  markerList.forEach(m => window._map.removeLayer(m));
+  markerList.length = 0;
+}}
+
 function applyFilter() {{
+  // Get selected provinces and types
   var provs = Array.from(document.getElementById('provSelect').selectedOptions).map(o=>o.value);
   var types = Array.from(document.getElementById('typeSelect').selectedOptions).map(o=>o.value);
-  var layers = window._all_layers;
-  for (let id in layers) {{
-    let obj = layers[id];
-    if (!obj || !obj.options || !obj.options.pane) continue;
-    let name = obj.options.pane;
-    let [prov, type] = name.split(':');
-    if (provs.includes(prov) && types.includes(type)) obj.addTo(window._map);
-    else obj.remove();
+
+  // Clear existing markers
+  clearMarkers(airportMarkers);
+  clearMarkers(notamMarkers);
+
+  // Add filtered airport markers
+  if (window.AIRPORTS) {{
+    window.AIRPORTS.forEach(a => {{
+      if ((provs.length === 0 || provs.includes(a.province)) &&
+          (types.length === 0 || types.includes(a.type))) {{
+        let marker = L.marker([a.lat, a.lon])
+          .bindPopup(a.popup)
+          .addTo(window._map);
+        airportMarkers.push(marker);
+      }}
+    }});
+  }}
+
+  // Add filtered NOTAM markers
+  if (window.NOTAMS) {{
+    window.NOTAMS.forEach(n => {{
+      let marker = L.marker([n.lat, n.lon], {{
+        icon: L.AwesomeMarkers.icon({{icon: 'exclamation-triangle', markerColor: 'orange', prefix: 'fa'}})
+      }})
+      .bindPopup("<b>Obstacle Alert</b><br>" + n.popup)
+      .addTo(window._map);
+      notamMarkers.push(marker);
+    });
   }}
 }}
 </script>
 '''.format(prov_options=prov_options, type_options=type_options)
 
 m.get_root().html.add_child(folium.Element(sidebar_html))
+
+# === Airport data for JS ===
+airport_js_array = []
+for idx, row in gdf.iterrows():
+    airport_js_array.append({
+        "lat": row.geometry.y,
+        "lon": row.geometry.x,
+        "province": row["iso_region"],
+        "type": row["type"],
+        "popup": f"{row['name']} ({row['ident']})"
+    })
+
+# For airports
+m.get_root().html.add_child(folium.Element(
+    f"<script>window.AIRPORTS = {json.dumps(airport_js_array)};</script>"
+))
+
+# For NOTAMs
+m.get_root().html.add_child(folium.Element(
+    f"<script>window.NOTAMS = {json.dumps(notam_js_array)};</script>"
+))
+
+m.get_root().script.add_child(folium.Element("window._map = map;"))
 
 # === Export map ===
 m.save("Airports_NOTAMS.html")
