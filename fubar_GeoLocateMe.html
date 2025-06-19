@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find my Location</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+    .top-nav {
+      background: #2F5496;
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 1.1em;
+    }
+    .top-nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 28px 32px 24px 32px;
+    }
+    h1 {
+      text-align: center;
+      color: #2F5496;
+      margin-bottom: 18px;
+    }
+    .geo-btn {
+      display: block;
+      width: 100%;
+      background: #2F5496;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 12px;
+      font-size: 1.1em;
+      cursor: pointer;
+      margin-bottom: 18px;
+      transition: background 0.2s;
+    }
+    .geo-btn:hover {
+      background: #b30000;
+    }
+    #demo {
+      background: #eaf1fb;
+      border-left: 4px solid #2F5496;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 10px;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <nav class="top-nav">
+    <a href="#" onclick="goBack(event)">&larr; Back</a>
+    | <a href="index.html">Home</a>
+  </nav>
+  <div class="card">
+    <h1>Find My Location</h1>
+    <p>Click the button to get your coordinates.</p>
+    <button class="geo-btn" onclick="getLocation()">Get GPS Location</button>
+    <div id="demo"></div>
+  </div>
+
+  <script>
+  const x = document.getElementById("demo");
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error, {timeout: 10000});
+    } else { 
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+
+  function toDMS(deg, isLat) {
+    const absolute = Math.abs(deg);
+    const degrees = Math.floor(absolute);
+    const minutesNotTruncated = (absolute - degrees) * 60;
+    const minutes = Math.floor(minutesNotTruncated);
+    const seconds = ((minutesNotTruncated - minutes) * 60).toFixed(2);
+    const direction = deg >= 0
+      ? (isLat ? "N" : "E")
+      : (isLat ? "S" : "W");
+    return `${degrees}°${minutes}'${seconds}"${direction}`;
+  }
+
+  function success(position) {
+    const lat = position.coords.latitude.toFixed(6);
+    const lon = position.coords.longitude.toFixed(6);
+    const latDMS = toDMS(position.coords.latitude, true);
+    const lonDMS = toDMS(position.coords.longitude, false);
+    const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
+    x.innerHTML = `<strong>Lat/Lon:</strong> ${lat}, ${lon}<br>
+      <strong>Lat:</strong> ${lat}<br>
+      <strong>Lon:</strong> ${lon}<br>
+      <strong>Lat/Lon (DMS):</strong> ${latDMS}, ${lonDMS}<br>
+      <a href="${mapsLink}" target="_blank">View on Google Maps</a>`;
+    // Save to localStorage for use on other pages
+    localStorage.setItem('pilotLocationDD', `${lat}, ${lon}`);
+    localStorage.setItem('pilotLocationDMS', `${latDMS}, ${lonDMS}`);
+  }
+
+  function error(error) {
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        x.innerHTML = "User denied the request for Geolocation."
+        break;
+      case error.POSITION_UNAVAILABLE:
+        x.innerHTML = "Location information is unavailable."
+        break;
+      case error.TIMEOUT:
+        x.innerHTML = "The request to get user location timed out."
+        break;
+      case error.UNKNOWN_ERROR:
+        x.innerHTML = "An unknown error occurred."
+        break;
+    }
+  }
+
+  function goBack(event) {
+    event.preventDefault();
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.location.href = "tools.html"; // fallback page
+    }
+  }
+  </script>
+</body>
+</html>
