@@ -1,0 +1,2 @@
+Total NOTAMs received from API: 12
+Saved 5 filtered NOTAMs to 18_06_25_NOTAMS_CYOO.json
