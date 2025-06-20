@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <style>#map {height: 600px !important;}</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_77fc59d65519e3fceb0449b06424988b {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    <script>window.AIRPORTS = [{"lat": 43.7, "lon": -79.4, "popup": "Toronto Airport"}, {"lat": 45.5, "lon": -73.6, "popup": "Montreal Airport"}];</script>
+    <script>window.NOTAMS = [{"lat": 44.0, "lon": -79.0, "popup": "NOTAM: Obstacle 1"}, {"lat": 46.0, "lon": -74.0, "popup": "NOTAM: Obstacle 2"}];</script>
+    
+<div id="sidebar" style="position:fixed;top:20px;left:20px;z-index:1000;background:#fff;padding:10px;border:1px solid #ccc;">
+  <button onclick="applyFilter()">Show Markers</button>
+</div>
+
+
+
+<script>
+function waitForMapAndRun(fn) {
+  if (window._map && typeof window._map.addLayer === "function") {
+    fn();
+  } else {
+    setTimeout(() => waitForMapAndRun(fn), 100);
+  }
+}
+
+function applyFilter() {
+  console.log("applyFilter called");
+  let airportMarkers = window.airportMarkers = window.airportMarkers || [];
+  let notamMarkers = window.notamMarkers = window.notamMarkers || [];
+  function clearMarkers(markerList) {
+    markerList.forEach(m => window._map.removeLayer(m));
+    markerList.length = 0;
+  }
+  clearMarkers(airportMarkers);
+  clearMarkers(notamMarkers);
+  if (window.AIRPORTS) {
+    window.AIRPORTS.forEach(a => {
+      console.log("Adding airport marker:", a);
+      let marker = L.marker([a.lat, a.lon], {
+        icon: (L.ExtraMarkers && L.ExtraMarkers.icon)
+          ? L.ExtraMarkers.icon({
+              icon: 'fa-plane',
+              markerColor: 'blue',
+              shape: 'square',
+              prefix: 'fa'
+            })
+          : undefined
+      }).bindPopup(a.popup).addTo(window._map);
+      airportMarkers.push(marker);
+    });
+  }
+  if (window.NOTAMS) {
+    window.NOTAMS.forEach(n => {
+      console.log("Adding NOTAM marker:", n);
+      let marker = L.marker([n.lat, n.lon], {
+        icon: (L.ExtraMarkers && L.ExtraMarkers.icon)
+          ? L.ExtraMarkers.icon({
+              icon: 'fa-exclamation-triangle',
+              markerColor: 'orange',
+              shape: 'circle',
+              prefix: 'fa'
+            })
+          : undefined
+      }).bindPopup(n.popup).addTo(window._map);
+      notamMarkers.push(marker);
+    });
+  }
+}
+
+// Wait for map, then run applyFilter
+document.addEventListener("DOMContentLoaded", function() {
+  waitForMapAndRun(applyFilter);
+  window.applyFilter = function() { waitForMapAndRun(applyFilter); };
+});
+</script>
+
+    
+
+<script>
+function loadExtraMarkers(callback) {
+  if (window.L && !window.L.ExtraMarkers) {
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://unpkg.com/leaflet-extra-markers@1.2.1/dist/css/leaflet.extra-markers.min.css';
+    document.head.appendChild(link);
+
+    var script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet-extra-markers@1.2.1/dist/js/leaflet.extra-markers.min.js';
+    script.onload = callback;
+    document.body.appendChild(script);
+  } else if (window.L && window.L.ExtraMarkers) {
+    callback();
+  } else {
+    setTimeout(function() { loadExtraMarkers(callback); }, 100);
+  }
+}
+
+// Usage: load the plugin, then run your marker code
+document.addEventListener("DOMContentLoaded", function() {
+  loadExtraMarkers(function() {
+    if (window.applyFilter) window.applyFilter();
+  });
+});
+</script>
+
+    
+            <div class="folium-map" id="map_77fc59d65519e3fceb0449b06424988b" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_77fc59d65519e3fceb0449b06424988b = L.map(
+                "map_77fc59d65519e3fceb0449b06424988b",
+                {
+                    center: [44.5, -78.5],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 6,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a5c62946babfad6791f78674ce0f418b = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_a5c62946babfad6791f78674ce0f418b.addTo(map_77fc59d65519e3fceb0449b06424988b);
+        
+</script>
+</html>
