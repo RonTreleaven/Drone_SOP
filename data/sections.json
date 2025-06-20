@@ -1,5 +1,38 @@
 [
   {
+    "id": "1_0_Micro_Pre-Flight",
+    "title": "1.0 Micro Pre-Flight",
+    "items": [
+      "Micro Drones Pre-Flight Checklist Completed",
+      "If flying near airports or heliports, fly below 30 m AGL when possible.",
+      "If flying in Controlled Airspace, fly below 30 m AGL.",
+      "If near military aerodrome, fly carefully and ideally below 30 m AGL.",
+      "If in CYR Class F Zone, obtain permission from controlling agency.",
+      "Avoid established aerodrome patterns.",
+      "Check for temporary flight restrictions (NOTAMs, apps).",
+      "Visually and audibly monitor for other aircraft.",
+      "Watch for obstacles: buildings, wires, trees, etc.",
+      "Avoid restricted zones (e.g., emergencies, wildfires).",
+      "Get landowner permission for takeoff/landing in parks.",
+      "Check weather and forecast.",
+      "Ensure Kp index under 4.",
+      "Avoid dusty environments.",
+      "Determine safe range based on site/weather/battery.",
+      "Keep bystanders clear during take-off and landing.",
+      "Do not fly over crowds.",
+      "Ensure crew and involved parties are briefed.",
+      "Check for physical damage.",
+      "Inspect propellers.",
+      "Verify full battery charge.",
+      "Ensure attachments are secure and gimbal guards removed.",
+      "Install micro-SD card if recording.",
+      "Ensure clear, level launch site.",
+      "Crew must be unimpaired and rested.",
+      "Brief all crew on flight plan."
+    ]
+  },
+
+  {
     "id": "1_1_Basic_Pre-Flight",
     "title": "1.1 Basic Pre-Flight",
     "items": [
@@ -48,38 +81,6 @@
       "Avoid land-based airspace restrictions (police, fires, disasters).",
       "Check current and forecasted weather.",
       "Ensure Kp index is suitable (less than 4)."
-    ]
-  },
-  {
-    "id": "1_3_Micro_Pre-Flight",
-    "title": "1.3 Micro Pre-Flight",
-    "items": [
-      "Micro Drones Pre-Flight Checklist Completed",
-      "If flying near airports or heliports, fly below 30 m AGL when possible.",
-      "If flying in Controlled Airspace, fly below 30 m AGL.",
-      "If near military aerodrome, fly carefully and ideally below 30 m AGL.",
-      "If in CYR Class F Zone, obtain permission from controlling agency.",
-      "Avoid established aerodrome patterns.",
-      "Check for temporary flight restrictions (NOTAMs, apps).",
-      "Visually and audibly monitor for other aircraft.",
-      "Watch for obstacles: buildings, wires, trees, etc.",
-      "Avoid restricted zones (e.g., emergencies, wildfires).",
-      "Get landowner permission for takeoff/landing in parks.",
-      "Check weather and forecast.",
-      "Ensure Kp index under 4.",
-      "Avoid dusty environments.",
-      "Determine safe range based on site/weather/battery.",
-      "Keep bystanders clear during take-off and landing.",
-      "Do not fly over crowds.",
-      "Ensure crew and involved parties are briefed.",
-      "Check for physical damage.",
-      "Inspect propellers.",
-      "Verify full battery charge.",
-      "Ensure attachments are secure and gimbal guards removed.",
-      "Install micro-SD card if recording.",
-      "Ensure clear, level launch site.",
-      "Crew must be unimpaired and rested.",
-      "Brief all crew on flight plan."
     ]
   },
   {
