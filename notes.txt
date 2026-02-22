@@ -1,0 +1,7 @@
+Airspace Checker Websit
+https://airspace.canadarasp.com/ 
+
+
+- check the various D,F,E,G,B,A Airspace
+
+435636N 0785747W    (crane in brooklyn)

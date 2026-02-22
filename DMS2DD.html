@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>NOTAM DMS to Decimal Degrees</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 500px;
+    margin: 40px auto;
+}
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+#output {
+    font-size: 18px;
+    margin-top: 20px;
+    background: #eee;
+    padding: 10px;
+}
+a {
+    display: block;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>NOTAM DMS to DD lat,long string converter:</h2>
+
+<input id="notam" placeholder="DMS: 435636N 0785747W">
+
+<button onclick="convert()">Convert</button>
+<button onclick="clearFields()">CLEAR</button>
+
+<div id="output"></div>
+<a id="mapLink" target="_blank"></a>
+
+<script>
+
+function dmsToDD(deg, min, sec, hemi) {
+    let dd = Number(deg) + Number(min)/60 + Number(sec)/3600;
+    if (hemi === 'S' || hemi === 'W') dd *= -1;
+    return dd;
+}
+
+function convert() {
+
+    let input = document.getElementById("notam").value.trim();
+
+    let regex = /(\d{2})(\d{2})(\d{2})([NS])\s*(\d{3})(\d{2})(\d{2})([EW])/;
+
+    let match = input.match(regex);
+
+    if (!match) {
+        document.getElementById("output").innerHTML = "Invalid format";
+        return;
+    }
+
+    let lat = dmsToDD(match[1], match[2], match[3], match[4]);
+    let lon = dmsToDD(match[5], match[6], match[7], match[8]);
+
+    let result = lat.toFixed(6) + ", " + lon.toFixed(6);
+    let gmaps = "https://www.google.com/maps?q=" + result;
+
+    document.getElementById("output").innerHTML = result;
+
+    let link = document.getElementById("mapLink");
+    link.href = gmaps;
+    link.innerHTML = "Open in Google Maps";
+
+    navigator.clipboard.writeText(result);
+}
+
+function clearFields() {
+    document.getElementById("notam").value = "";
+    document.getElementById("output").innerHTML = "";
+    let link = document.getElementById("mapLink");
+    link.href = "";
+    link.innerHTML = "";
+    document.getElementById("notam").focus();
+}
+
+document.getElementById("notam").focus();
+
+</script>
+
+</body>
+</html>
