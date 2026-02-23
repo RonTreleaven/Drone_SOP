@@ -1,44 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NOTAM DMS to Decimal Degrees</title>
 
 <style>
 body {
-    font-family: Arial;
-    max-width: 500px;
-    margin: 40px auto;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 0;
 }
-input, button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
+
+.top-nav {
+  background: #2F5496;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 1.1em;
 }
+
+.top-nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 28px 32px 24px 32px;
+}
+
+h1 {
+  text-align: center;
+  color: #2F5496;
+  margin-bottom: 18px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 1.05em;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background 0.2s;
+}
+
+.btn-primary {
+  background: #2F5496;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #b30000;
+}
+
+.btn-secondary {
+  background: #ccc;
+}
+
+.btn-secondary:hover {
+  background: #999;
+}
+
 #output {
-    font-size: 18px;
-    margin-top: 20px;
-    background: #eee;
-    padding: 10px;
+  background: #eaf1fb;
+  border-left: 4px solid #2F5496;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 16px;
+  word-break: break-word;
 }
-a {
-    display: block;
-    margin-top: 10px;
+
+#mapLink {
+  display: block;
+  margin-top: 12px;
+  text-decoration: none;
+  color: #2F5496;
+  font-weight: bold;
 }
 </style>
 </head>
 
 <body>
 
-<h2>NOTAM DMS to DD lat,long string converter:</h2>
+<nav class="top-nav">
+  <a href="#" onclick="goBack(event)">&larr; Back</a>
+  | <a href="index.html">Home</a>
+</nav>
 
-<input id="notam" placeholder="DMS: 435636N 0785747W">
+<div class="card">
 
-<button onclick="convert()">Convert</button>
-<button onclick="clearFields()">CLEAR</button>
+<h1>DMS → Decimal Degrees</h1>
+
+<p>Enter NOTAM format coordinates:</p>
+
+<input id="notam" placeholder="435636N 0785747W">
+
+<button class="btn btn-primary" onclick="convert()">Convert</button>
+<button class="btn btn-secondary" onclick="clearFields()">CLEAR</button>
 
 <div id="output"></div>
 <a id="mapLink" target="_blank"></a>
+
+</div>
 
 <script>
 
@@ -67,11 +149,11 @@ function convert() {
     let result = lat.toFixed(6) + ", " + lon.toFixed(6);
     let gmaps = "https://www.google.com/maps?q=" + result;
 
-    document.getElementById("output").innerHTML = result;
+    document.getElementById("output").innerHTML = "<strong>Lat/Lon:</strong> " + result;
 
     let link = document.getElementById("mapLink");
     link.href = gmaps;
-    link.innerHTML = "Open in Google Maps";
+    link.innerHTML = "View on Google Maps";
 
     navigator.clipboard.writeText(result);
 }
@@ -83,6 +165,15 @@ function clearFields() {
     link.href = "";
     link.innerHTML = "";
     document.getElementById("notam").focus();
+}
+
+function goBack(event) {
+  event.preventDefault();
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = "tools.html";
+  }
 }
 
 document.getElementById("notam").focus();
