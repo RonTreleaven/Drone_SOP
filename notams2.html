@@ -50,6 +50,8 @@
       })
       .catch(error => console.error("Error fetching NOTAM data:", error));
 
+      // Update Search Functions here
+
     function searchNotams() {
       const firInput = document.getElementById("firInput").value.toUpperCase();
       const icaoInput = document.getElementById("icaoInput").value.toUpperCase();
@@ -58,10 +60,10 @@
       resultsContainer.innerHTML = "";
       console.log("Search Input – FIR:", firInput, "ICAO:", icaoInput); 
 
-      // Log total NOTAMs
-      console.log("Total NOTAMs loaded:", notams.length);
-      
-     // Filter NOTAMs
+      // Log total Notams
+      console.log("Total NOTAMs available:", notams.length);
+
+      // Filter NOTAMs
         const filteredNotams = notams.filter(notam => {
             const rawText = notam.raw;
             
@@ -73,11 +75,12 @@
             const icaoFound = icaoMatch ? icaoMatch[1] : null;
             
             console.log("Checking NOTAM:", notam, "| Extracted FIR:", firFound, "| Extracted ICAO:", icaoFound);
-          // Return true if the NOTAM matches the search criteria
+
+            // Return true if the NOTAM matches the search criteria
             return (firInput === "" || (firFound && firFound === firInput)) &&
                    (icaoInput === "" || (icaoFound && icaoFound === icaoInput));
         });
-        
+
         // Log filtered results
         console.log("Filtered NOTAMs:", filteredNotams); 
         if (filteredNotams.length === 0) {
@@ -104,7 +107,7 @@
 </script>
 
 
-      Filter NOTAMs
+      // Filter NOTAMs
       // const filteredNotams = notams.filter(notam => {
         // console.log("Checking NOTAM:", notam); 
         // return (firInput === "" || notam.fir && notam.fir.toUpperCase() === firInput) &&
@@ -129,6 +132,6 @@
       // }
     // }
   // </script>
-<!-- </body> -->
-<!-- </html> -->
-<!--  -->
+// </body>
+// </html>
+// 
