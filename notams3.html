@@ -192,10 +192,7 @@
 
   <script>
     const notamDataUrl = "./data/notams/All_CA.json";
-    const githubOwner = "RonTreleaven";
-    const githubRepo = "Drone_SOP";
-    const githubBranch = "main";
-    const githubFilePath = "data/notams/All_CA.json";
+    const notamMetaUrl = "./data/notams/All_CA.meta.json";
     let notams = [];
     let dataRefreshDate = "Unavailable";
 
@@ -220,11 +217,11 @@
         }
         updateFirCounts();
         updateFirDates();
-        return fetchGithubFileCommitDate();
+        return fetchGeneratedAtDate();
       })
-      .then(githubDate => {
-        if (githubDate) {
-          dataRefreshDate = `${githubDate} (GitHub commit)`;
+      .then(generatedAtDate => {
+        if (generatedAtDate) {
+          dataRefreshDate = `${generatedAtDate} (generatedAt)`;
           updateFirDates();
         }
       })
@@ -254,26 +251,21 @@
       });
     }
 
-    function fetchGithubFileCommitDate() {
-      const apiUrl =
-        `https://api.github.com/repos/${githubOwner}/${githubRepo}/commits` +
-        `?path=${encodeURIComponent(githubFilePath)}&sha=${encodeURIComponent(githubBranch)}&per_page=1`;
-
-      return fetch(apiUrl)
+    function fetchGeneratedAtDate() {
+      return fetch(notamMetaUrl)
         .then(response => {
           if (!response.ok) {
-            throw new Error(`GitHub API error: ${response.status}`);
+            throw new Error(`Meta file error: ${response.status}`);
           }
           return response.json();
         })
-        .then(commits => {
-          if (!Array.isArray(commits) || commits.length === 0) return null;
-          const commitDate = commits[0]?.commit?.committer?.date;
-          if (!commitDate) return null;
-          return formatDataDate(commitDate);
+        .then(meta => {
+          const generatedAt = meta?.generatedAt;
+          if (!generatedAt) return null;
+          return formatDataDate(generatedAt);
         })
         .catch(error => {
-          console.warn("Could not get GitHub commit date for All_CA.json:", error);
+          console.warn("Could not read generatedAt from All_CA.meta.json:", error);
           return null;
         });
     }

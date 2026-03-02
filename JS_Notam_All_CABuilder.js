@@ -158,6 +158,7 @@ async function fetchAndSave(firKey, fir) {
 async function buildAll() {
   try {
     let allCa = [];
+    const generatedAt = new Date().toISOString();
 
     for (const [key, fir] of Object.entries(FIRS)) {
       const list = await fetchAndSave(key, fir);
@@ -170,7 +171,13 @@ async function buildAll() {
     }
 
     await fs.writeFile("All_CA.json", JSON.stringify(allCa, null, 2), "utf8");
+    await fs.writeFile(
+      "All_CA.meta.json",
+      JSON.stringify({ generatedAt, totalItems: allCa.length }, null, 2),
+      "utf8"
+    );
     console.log(`wrote aggregated All_CA.json with ${allCa.length} total items`);
+    console.log(`wrote All_CA.meta.json generatedAt ${generatedAt}`);
   } catch (err) {
     console.error("Fatal error", err);
     process.exitCode = 1;
