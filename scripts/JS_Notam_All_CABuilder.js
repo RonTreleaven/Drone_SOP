@@ -5,7 +5,9 @@
 // Canadian FIRS" entry had been failing.  Here we split that entry and
 // iterate each code.
 
-// call with Node "JS Notam Builder.js" to start.  Creates .json by FIR and All_CA consolidated .json
+// called with Node "JS Notam Builder.js" to start to create .json by FIR and All_CA consolidated .json
+// updated March 2, 2026 to run in GitHub with ACTION to run daily....
+
 
 
 const fs = require("fs/promises");
