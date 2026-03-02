@@ -5,3 +5,16 @@ https://airspace.canadarasp.com/
 - check the various D,F,E,G,B,A Airspace
 
 435636N 0785747W    (crane in brooklyn)
+439079N 0789658W
+
+
+My house:  43°54'28.4"N 78°57'56.1"W 
+
+43.907880, -78.965591
+
+43.907941835372064, -78.96584312781128
+
+43907941835372064N  07896584312781128W
+
+
+CAJ5  Ajax Heliport
