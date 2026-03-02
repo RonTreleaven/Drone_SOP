@@ -72,7 +72,7 @@
 
     .search-container {
       display: grid;
-      grid-template-columns: 1fr 1fr auto auto;
+      grid-template-columns: 1fr 1fr 1fr auto auto;
       gap: 12px;
       align-items: end;
       margin-bottom: 16px;
@@ -183,6 +183,10 @@
       <div class="field-group">
         <label for="icaoInput">ICAO</label>
         <input type="text" id="icaoInput" placeholder="Enter ICAO code (e.g., CYEG)">
+      </div>
+      <div class="field-group">
+        <label for="notamInput">NOTAM No.</label>
+        <input type="text" id="notamInput" placeholder="Enter NOTAM number (e.g., U0367/26)">
       </div>
       <button class="btn" type="submit">Search</button>
       <button class="btn" type="button" onclick="clearEntries()">Clear Entries</button>
@@ -302,12 +306,13 @@
     function searchNotams() {
       const firInput = document.getElementById("firInput").value.trim().toUpperCase();
       const icaoInput = document.getElementById("icaoInput").value.trim().toUpperCase();
+      const notamInput = document.getElementById("notamInput").value.trim().toUpperCase();
       const resultsContainer = document.getElementById("results");
 
       resultsContainer.innerHTML = "";
 
-      if (firInput === "" && icaoInput === "") {
-        resultsContainer.innerHTML = "<p>Please enter FIR or ICAO code to search.</p>";
+      if (firInput === "" && icaoInput === "" && notamInput === "") {
+        resultsContainer.innerHTML = "<p>Please enter FIR, ICAO, or NOTAM number to search.</p>";
         return;
       }
 
@@ -316,12 +321,15 @@
 
         const firMatch = rawText.match(/Q\)\s*([A-Z]{4})/);
         const icaoMatch = rawText.match(/A\)\s*([A-Z]{4})/);
+        const notamMatch = rawText.match(/([A-Z]\d{4}\/\d{2})\s+NOTAM[A-Z]/);
 
         const firFound = firMatch ? firMatch[1] : null;
         const icaoFound = icaoMatch ? icaoMatch[1] : null;
+        const notamFound = notamMatch ? notamMatch[1] : null;
 
         return (firInput === "" || (firFound && firFound === firInput)) &&
-               (icaoInput === "" || (icaoFound && icaoFound === icaoInput));
+               (icaoInput === "" || (icaoFound && icaoFound === icaoInput)) &&
+               (notamInput === "" || (notamFound && notamFound === notamInput));
       });
 
       if (filteredNotams.length === 0) {
@@ -332,12 +340,15 @@
       filteredNotams.forEach(notam => {
         const firMatch = (notam.raw || "").match(/Q\)\s*([A-Z]{4})/);
         const icaoMatch = (notam.raw || "").match(/A\)\s*([A-Z]{4})/);
+        const notamMatch = (notam.raw || "").match(/([A-Z]\d{4}\/\d{2})\s+NOTAM[A-Z]/);
         const firOutput = firMatch ? firMatch[1] : "N/A";
         const icaoOutput = icaoMatch ? icaoMatch[1] : "N/A";
+        const notamOutput = notamMatch ? notamMatch[1] : "N/A";
         const cleanedDescription = (notam.raw || "").replace(/[\r\n]+/g, " ").trim();
 
         resultsContainer.innerHTML += `
           <div class="notam">
+            <p><strong>NOTAM No:</strong> ${notamOutput}</p>
             <p><strong>FIR:</strong> ${firOutput}</p>
             <p><strong>ICAO:</strong> ${icaoOutput}</p>
             <p><strong>Valid From:</strong> ${notam.startValidity || "N/A"}</p>
