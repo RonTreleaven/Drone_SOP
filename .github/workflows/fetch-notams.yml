@@ -8,6 +8,8 @@ on:
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write       # Grant write permission to the workflow
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
