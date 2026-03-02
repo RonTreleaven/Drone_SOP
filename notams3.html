@@ -192,6 +192,10 @@
 
   <script>
     const notamDataUrl = "./data/notams/All_CA.json";
+    const githubOwner = "RonTreleaven";
+    const githubRepo = "Drone_SOP";
+    const githubBranch = "main";
+    const githubFilePath = "data/notams/All_CA.json";
     let notams = [];
     let dataRefreshDate = "Unavailable";
 
@@ -216,6 +220,13 @@
         }
         updateFirCounts();
         updateFirDates();
+        return fetchGithubFileCommitDate();
+      })
+      .then(githubDate => {
+        if (githubDate) {
+          dataRefreshDate = `${githubDate} (GitHub commit)`;
+          updateFirDates();
+        }
       })
       .catch(error => {
         console.error("Error fetching NOTAM data:", error);
@@ -236,31 +247,35 @@
       });
     }
 
-    function getFallbackDateFromNotams() {
-      let newest = null;
-      notams.forEach(notam => {
-        if (!notam.startValidity) return;
-        const parsed = new Date(notam.startValidity);
-        if (Number.isNaN(parsed.getTime())) return;
-        if (!newest || parsed > newest) newest = parsed;
-      });
-
-      if (!newest) return "Unavailable";
-      return newest.toLocaleString("en-CA", {
-        year: "numeric",
-        month: "short",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false
-      }) + " (latest NOTAM)";
-    }
-
     function updateFirDates(forceValue) {
       const displayDate = forceValue || dataRefreshDate;
       document.querySelectorAll("[data-fir-date]").forEach(cell => {
         cell.textContent = displayDate;
       });
+    }
+
+    function fetchGithubFileCommitDate() {
+      const apiUrl =
+        `https://api.github.com/repos/${githubOwner}/${githubRepo}/commits` +
+        `?path=${encodeURIComponent(githubFilePath)}&sha=${encodeURIComponent(githubBranch)}&per_page=1`;
+
+      return fetch(apiUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`GitHub API error: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(commits => {
+          if (!Array.isArray(commits) || commits.length === 0) return null;
+          const commitDate = commits[0]?.commit?.committer?.date;
+          if (!commitDate) return null;
+          return formatDataDate(commitDate);
+        })
+        .catch(error => {
+          console.warn("Could not get GitHub commit date for All_CA.json:", error);
+          return null;
+        });
     }
 
     function updateFirCounts() {
