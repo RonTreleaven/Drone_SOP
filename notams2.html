@@ -15,11 +15,16 @@
       margin: 10px 0;
       padding: 8px;
       width: 300px;
+      display: block;
+    }
+    .search-container button {
+      padding: 8px 14px;
     }
     .notam {
       border: 1px solid #ccc;
       margin: 10px 0;
       padding: 10px;
+      white-space: pre-wrap;
     }
   </style>
 </head>
@@ -28,110 +33,95 @@
   <div class="search-container">
     <input type="text" id="firInput" placeholder="Enter FIR code (e.g., CZEG)">
     <input type="text" id="icaoInput" placeholder="Enter ICAO code (e.g., CYEG)">
-    <button onclick="searchNotams()">Search</button>
+    <button id="searchBtn" type="button">Search</button>
   </div>
   <div id="results"></div>
 
   <script>
-    const notamDataUrl = "./data/notams/All_CA.json"; 
+    const notamDataUrl = "./data/notams/All_CA.json";
     let notams = [];
 
-    // Fetch NOTAM data from JSON file
+    function extractCode(rawText, field) {
+      if (!rawText) return "";
+      const match = rawText.match(new RegExp(field + "\\)\\s*([A-Z]{4})"));
+      return match ? match[1] : "";
+    }
+
+    function formatDate(value) {
+      if (!value) return "N/A";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return value;
+      return date.toLocaleString();
+    }
+
+    function renderNotams(items) {
+      const resultsContainer = document.getElementById("results");
+
+      if (items.length === 0) {
+        resultsContainer.innerHTML = "<p>No matching NOTAMs found.</p>";
+        return;
+      }
+
+      resultsContainer.innerHTML = items
+        .map(notam => {
+          const fir = extractCode(notam.raw, "Q");
+          const icao = extractCode(notam.raw, "A");
+          return `
+            <div class="notam">
+              <p><strong>FIR:</strong> ${fir || "N/A"}</p>
+              <p><strong>ICAO:</strong> ${icao || "N/A"}</p>
+              <p><strong>Valid From:</strong> ${formatDate(notam.startValidity)}</p>
+              <p><strong>Valid To:</strong> ${formatDate(notam.endValidity)}</p>
+              <p><strong>Description:</strong></p>
+              <div>${notam.raw || ""}</div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    function searchNotams() {
+      const firInput = document.getElementById("firInput").value.trim().toUpperCase();
+      const icaoInput = document.getElementById("icaoInput").value.trim().toUpperCase();
+
+      const filteredNotams = notams.filter(notam => {
+        const fir = extractCode(notam.raw, "Q");
+        const icao = extractCode(notam.raw, "A");
+
+        const firMatches = !firInput || fir === firInput;
+        const icaoMatches = !icaoInput || icao === icaoInput;
+        return firMatches && icaoMatches;
+      });
+
+      renderNotams(filteredNotams);
+    }
+
+    document.getElementById("searchBtn").addEventListener("click", searchNotams);
+    document.getElementById("firInput").addEventListener("keydown", event => {
+      if (event.key === "Enter") searchNotams();
+    });
+    document.getElementById("icaoInput").addEventListener("keydown", event => {
+      if (event.key === "Enter") searchNotams();
+    });
+
     fetch(notamDataUrl)
       .then(response => {
         if (!response.ok) {
-          throw new Error(`Network error! Status: ${response.status}`);
+          throw new Error("Network error! Status: " + response.status);
         }
         return response.json();
       })
       .then(data => {
-        notams = data;
-        console.log("Loaded NOTAMs:", notams); // Log loaded data
-      })
-      .catch(error => console.error("Error fetching NOTAM data:", error));
-
-      // Update Search Functions here
-
-    function searchNotams() {
-      const firInput = document.getElementById("firInput").value.toUpperCase();
-      const icaoInput = document.getElementById("icaoInput").value.toUpperCase();
-      const resultsContainer = document.getElementById("results");
-
-      resultsContainer.innerHTML = "";
-      console.log("Search Input – FIR:", firInput, "ICAO:", icaoInput); 
-
-      // Log total Notams
-      console.log("Total NOTAMs available:", notams.length);
-
-      // Filter NOTAMs
-        const filteredNotams = notams.filter(notam => {
-            const rawText = notam.raw;
-            
-            // Extract FIR and ICAO codes using regex
-            const firMatch = rawText.match(/Q\)\s*([A-Z]{4})/);
-            const icaoMatch = rawText.match(/A\)\s*([A-Z]{4})/);
-            
-            const firFound = firMatch ? firMatch[1] : null;
-            const icaoFound = icaoMatch ? icaoMatch[1] : null;
-            
-            console.log("Checking NOTAM:", notam, "| Extracted FIR:", firFound, "| Extracted ICAO:", icaoFound);
-
-            // Return true if the NOTAM matches the search criteria
-            return (firInput === "" || (firFound && firFound === firInput)) &&
-                   (icaoInput === "" || (icaoFound && icaoFound === icaoInput));
-        });
-
-        // Log filtered results
-        console.log("Filtered NOTAMs:", filteredNotams); 
-        if (filteredNotams.length === 0) {
-            resultsContainer.innerHTML = "<p>No matching NOTAMs found.</p>";
-        } else {
-            filteredNotams.forEach(notam => {
-                const firMatch = notam.raw.match(/Q\)\s*([A-Z]{4})/);
-                const icaoMatch = notam.raw.match(/A\)\s*([A-Z]{4})/);
-                const firOutput = firMatch ? firMatch[1] : 'N/A';
-                const icaoOutput = icaoMatch ? icaoMatch[1] : 'N/A';
-
-                resultsContainer.innerHTML += `
-                    <div class="notam">
-                        <p><strong>FIR:</strong> ${firOutput}</p>
-                        <p><strong>ICAO:</strong> ${icaoOutput}</p>
-                        <p><strong>Valid From:</strong> ${notam.startValidity}</p>
-                        <p><strong>Valid To:</strong> ${notam.endValidity}</p>
-                        <p><strong>Description:</strong> ${notam.raw}</p>
-                    </div>
-                `;
-            });
+        if (!Array.isArray(data)) {
+          throw new Error("Unexpected JSON format: expected an array.");
         }
-    }
-</script>
-
-
-      // Filter NOTAMs
-      // const filteredNotams = notams.filter(notam => {
-        // console.log("Checking NOTAM:", notam); 
-        // return (firInput === "" || notam.fir && notam.fir.toUpperCase() === firInput) &&
-              //  (icaoInput === "" || notam.icao && notam.icao.toUpperCase() === icaoInput);
-      // });
-// 
-      // console.log("Filtered NOTAMs:", filteredNotams);
-      // if (filteredNotams.length === 0) {
-        // resultsContainer.innerHTML = "<p>No matching NOTAMs found.</p>";
-      // } else {
-        // filteredNotams.forEach(notam => {
-          // resultsContainer.innerHTML += `
-            // <div class="notam">
-              // <p><strong>FIR:</strong> ${notam.fir}</p>
-              // <p><strong>ICAO:</strong> ${notam.icao}</p>
-              // <p><strong>Valid From:</strong> ${notam.validFrom}</p>
-              // <p><strong>Valid To:</strong> ${notam.validTo}</p>
-              // <p><strong>Description:</strong> ${notam.description}</p>
-            // </div>
-          // `;
-        // });
-      // }
-    // }
-  // </script>
-// </body>
-// </html>
-// 
+        notams = data;
+        renderNotams(notams);
+      })
+      .catch(error => {
+        document.getElementById("results").innerHTML =
+          "<p>Failed to load NOTAM data: " + error.message + "</p>";
+      });
+  </script>
+</body>
+</html>
