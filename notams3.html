@@ -193,25 +193,25 @@
   <script>
     const notamDataUrl = "./data/notams/All_CA.json";
     let notams = [];
-    let dataRefreshDate = "Unknown";
+    let dataRefreshDate = "Unavailable";
 
     fetch(notamDataUrl)
       .then(response => {
         if (!response.ok) {
           throw new Error(`Network error! Status: ${response.status}`);
         }
-        const lastModifiedHeader = response.headers.get("Last-Modified");
-        const dateHeader = response.headers.get("Date");
-        dataRefreshDate = formatDataDate(lastModifiedHeader || dateHeader);
         return response.json();
       })
       .then(data => {
         if (Array.isArray(data)) {
           notams = data;
+          dataRefreshDate = "Unavailable (generatedAt missing)";
         } else {
           notams = Array.isArray(data.notams) ? data.notams : [];
           if (data.generatedAt) {
             dataRefreshDate = formatDataDate(data.generatedAt);
+          } else {
+            dataRefreshDate = "Unavailable (generatedAt missing)";
           }
         }
         updateFirCounts();
@@ -257,7 +257,7 @@
     }
 
     function updateFirDates(forceValue) {
-      const displayDate = forceValue || (dataRefreshDate !== "Unavailable" ? dataRefreshDate : getFallbackDateFromNotams());
+      const displayDate = forceValue || dataRefreshDate;
       document.querySelectorAll("[data-fir-date]").forEach(cell => {
         cell.textContent = displayDate;
       });
