@@ -159,16 +159,17 @@
           <tr>
             <th>Region</th>
             <th>FIR Code</th>
+            <th>NOTAM Count</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Vancouver</td><td>CZVR</td></tr>
-          <tr><td>Edmonton</td><td>CZEG</td></tr>
-          <tr><td>Winnipeg</td><td>CZWG</td></tr>
-          <tr><td>Toronto</td><td>CZYZ</td></tr>
-          <tr><td>Montreal</td><td>CZUL</td></tr>
-          <tr><td>Moncton</td><td>CZQM</td></tr>
-          <tr><td>Gander</td><td>CZQX</td></tr>
+          <tr><td>Vancouver</td><td>CZVR</td><td data-fir-count="CZVR">0</td></tr>
+          <tr><td>Edmonton</td><td>CZEG</td><td data-fir-count="CZEG">0</td></tr>
+          <tr><td>Winnipeg</td><td>CZWG</td><td data-fir-count="CZWG">0</td></tr>
+          <tr><td>Toronto</td><td>CZYZ</td><td data-fir-count="CZYZ">0</td></tr>
+          <tr><td>Montreal</td><td>CZUL</td><td data-fir-count="CZUL">0</td></tr>
+          <tr><td>Moncton</td><td>CZQM</td><td data-fir-count="CZQM">0</td></tr>
+          <tr><td>Gander</td><td>CZQX</td><td data-fir-count="CZQX">0</td></tr>
         </tbody>
       </table>
     </div>
@@ -201,8 +202,37 @@
       })
       .then(data => {
         notams = data;
+        updateFirCounts();
       })
       .catch(error => console.error("Error fetching NOTAM data:", error));
+
+    function updateFirCounts() {
+      const firCounts = {
+        CZVR: 0,
+        CZEG: 0,
+        CZWG: 0,
+        CZYZ: 0,
+        CZUL: 0,
+        CZQM: 0,
+        CZQX: 0
+      };
+
+      notams.forEach(notam => {
+        const rawText = notam.raw || "";
+        const firMatch = rawText.match(/Q\)\s*([A-Z]{4})/);
+        if (!firMatch) return;
+
+        const firCode = firMatch[1];
+        if (firCounts.hasOwnProperty(firCode)) {
+          firCounts[firCode] += 1;
+        }
+      });
+
+      Object.keys(firCounts).forEach(firCode => {
+        const cell = document.querySelector(`[data-fir-count="${firCode}"]`);
+        if (cell) cell.textContent = firCounts[firCode];
+      });
+    }
 
     function searchNotams() {
       const firInput = document.getElementById("firInput").value.trim().toUpperCase();
