@@ -12,6 +12,9 @@
 
 const fs = require("fs/promises");
 const https = require("https");
+const path = require("path");
+
+const OUTPUT_DIR = path.resolve(__dirname, "..", "data", "notams");
 
 const FIRS = {
   "1": { name: "Edmonton", icao: "CZEG" },
@@ -109,15 +112,12 @@ async function fetchNotams(icao) {
 function filterAndTransform(data) {
   const all = data?.data || [];
   const totalNotams = all.length;
+  const rawNotamsList = [];
   const notamsList = [];
 
   for (const item of all) {
     const rawText = parseRawText(item?.text);
     if (!rawText) continue;
-
-    const upper = rawText.toUpperCase();
-    const hasKeyword = KEYWORDS.some((k) => upper.includes(k));
-    if (!hasKeyword) continue;
 
     const matches = extractDms(rawText);
     const coordsDd = matches.map(([lat, lon]) => {
@@ -125,26 +125,37 @@ function filterAndTransform(data) {
       return `${latDd.toFixed(6)}, ${lonDd.toFixed(6)}`;
     });
 
-    notamsList.push({
+    const normalized = {
       raw: rawText,
       startValidity: item?.startValidity || null,
       endValidity: item?.endValidity || null,
       coordinates_dd: coordsDd,
-    });
+    };
+
+    // Keep a complete, unfiltered copy for search/reporting use-cases.
+    rawNotamsList.push(normalized);
+
+    const upper = rawText.toUpperCase();
+    const hasKeyword = KEYWORDS.some((k) => upper.includes(k));
+    if (!hasKeyword) continue;
+
+    notamsList.push(normalized);
   }
 
-  return { totalNotams, notamsList };
+  return { totalNotams, rawNotamsList, notamsList };
 }
 
 async function fetchAndSave(firKey, fir) {
   // split ICAO string; API doesn't accept more than one site at once
   const icaos = fir.icao.split(",").map((s) => s.trim()).filter(Boolean);
+  let accumulatedRaw = [];
   let accumulated = [];
 
   for (const icao of icaos) {
     try {
       const data = await fetchNotams(icao);
-      const { notamsList } = filterAndTransform(data);
+      const { rawNotamsList, notamsList } = filterAndTransform(data);
+      accumulatedRaw = accumulatedRaw.concat(rawNotamsList);
       accumulated = accumulated.concat(notamsList);
     } catch (err) {
       console.error(`error fetching ${icao}:`, err.message || err);
@@ -152,13 +163,19 @@ async function fetchAndSave(firKey, fir) {
   }
 
   const filename = `${fir.name.replace(/[^a-zA-Z0-9]/g, "_")}.json`;
-  await fs.writeFile(filename, JSON.stringify(accumulated, null, 2), "utf8");
-  console.log(`wrote ${accumulated.length} entries to ${filename}`);
-  return accumulated;
+  const outPath = path.join(OUTPUT_DIR, filename);
+  await fs.writeFile(outPath, JSON.stringify(accumulated, null, 2), "utf8");
+  console.log(
+    `wrote ${accumulated.length} filtered entries to ${outPath} (raw count: ${accumulatedRaw.length})`
+  );
+  return { filtered: accumulated, raw: accumulatedRaw };
 }
 
 async function buildAll() {
   try {
+    await fs.mkdir(OUTPUT_DIR, { recursive: true });
+
+    let allCaRaw = [];
     let allCa = [];
     const generatedAt = new Date().toISOString();
 
@@ -168,18 +185,34 @@ async function buildAll() {
       // artificial aggregate entry (#8) to avoid duplicating the same
       // information twice.
       if (key !== "8") {
-        allCa = allCa.concat(list);
+        allCaRaw = allCaRaw.concat(list.raw);
+        allCa = allCa.concat(list.filtered);
       }
     }
 
-    await fs.writeFile("All_CA.json", JSON.stringify(allCa, null, 2), "utf8");
+    const rawPath = path.join(OUTPUT_DIR, "All_CA_raw.json");
+    const filteredPath = path.join(OUTPUT_DIR, "All_CA.json");
+    const metaPath = path.join(OUTPUT_DIR, "All_CA.meta.json");
+
+    await fs.writeFile(rawPath, JSON.stringify(allCaRaw, null, 2), "utf8");
+    await fs.writeFile(filteredPath, JSON.stringify(allCa, null, 2), "utf8");
     await fs.writeFile(
-      "All_CA.meta.json",
-      JSON.stringify({ generatedAt, totalItems: allCa.length }, null, 2),
+      metaPath,
+      JSON.stringify(
+        {
+          generatedAt,
+          totalItems: allCa.length,
+          filteredTotalItems: allCa.length,
+          rawTotalItems: allCaRaw.length,
+        },
+        null,
+        2
+      ),
       "utf8"
     );
-    console.log(`wrote aggregated All_CA.json with ${allCa.length} total items`);
-    console.log(`wrote All_CA.meta.json generatedAt ${generatedAt}`);
+    console.log(`wrote aggregated ${rawPath} with ${allCaRaw.length} total raw items`);
+    console.log(`wrote aggregated ${filteredPath} with ${allCa.length} total filtered items`);
+    console.log(`wrote ${metaPath} generatedAt ${generatedAt}`);
   } catch (err) {
     console.error("Fatal error", err);
     process.exitCode = 1;
