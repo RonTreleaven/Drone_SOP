@@ -41,35 +41,6 @@
       margin-bottom: 18px;
     }
 
-    .fir-table-wrap {
-      margin-bottom: 18px;
-    }
-
-    .fir-table-wrap h2 {
-      color: #2F5496;
-      margin: 0 0 8px 0;
-      font-size: 1rem;
-    }
-
-    .fir-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-      background: #fff;
-    }
-
-    .fir-table th,
-    .fir-table td {
-      border: 1px solid #d9e3f3;
-      padding: 6px 8px;
-      text-align: left;
-    }
-
-    .fir-table th {
-      background: #eaf1fb;
-      color: #1f3e72;
-    }
-
     .search-container {
       display: grid;
       grid-template-columns: 1fr 1fr auto;
@@ -152,28 +123,7 @@
   <div class="card">
     <h1>Search NOTAMs</h1>
 
-    <div class="fir-table-wrap">
-      <h2>Canadian FIR Reference</h2>
-      <table class="fir-table">
-        <thead>
-          <tr>
-            <th>Region</th>
-            <th>FIR Code</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Vancouver</td><td>CZVR</td></tr>
-          <tr><td>Edmonton</td><td>CZEG</td></tr>
-          <tr><td>Winnipeg</td><td>CZWG</td></tr>
-          <tr><td>Toronto</td><td>CZYZ</td></tr>
-          <tr><td>Montreal</td><td>CZUL</td></tr>
-          <tr><td>Moncton</td><td>CZQM</td></tr>
-          <tr><td>Gander</td><td>CZQX</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <form id="searchForm" class="search-container">
+    <div class="search-container">
       <div class="field-group">
         <label for="firInput">FIR</label>
         <input type="text" id="firInput" placeholder="Enter FIR code (e.g., CZEG)">
@@ -182,8 +132,8 @@
         <label for="icaoInput">ICAO</label>
         <input type="text" id="icaoInput" placeholder="Enter ICAO code (e.g., CYEG)">
       </div>
-      <button class="btn" type="submit">Search</button>
-    </form>
+      <button class="btn" onclick="searchNotams()">Search</button>
+    </div>
 
     <div id="results"></div>
   </div>
@@ -261,11 +211,6 @@
         window.location.href = "tools.html";
       }
     }
-
-    document.getElementById("searchForm").addEventListener("submit", function (event) {
-      event.preventDefault();
-      searchNotams();
-    });
 
     document.getElementById("firInput").focus();
   </script>
