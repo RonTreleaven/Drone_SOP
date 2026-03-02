@@ -206,7 +206,14 @@
         return response.json();
       })
       .then(data => {
-        notams = data;
+        if (Array.isArray(data)) {
+          notams = data;
+        } else {
+          notams = Array.isArray(data.notams) ? data.notams : [];
+          if (data.generatedAt) {
+            dataRefreshDate = formatDataDate(data.generatedAt);
+          }
+        }
         updateFirCounts();
         updateFirDates();
       })
