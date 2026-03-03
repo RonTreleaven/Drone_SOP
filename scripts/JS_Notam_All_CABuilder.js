@@ -15,6 +15,7 @@ const https = require("https");
 const path = require("path");
 
 const OUTPUT_DIR = path.resolve(__dirname, "..", "data", "notams");
+const API_TIMEOUT_MS = 30000;
 
 const FIRS = {
   "1": { name: "Edmonton", icao: "CZEG" },
@@ -86,8 +87,15 @@ async function fetchNotams(icao) {
   )}&alpha=notam&notam_choice=default`;
 
   return new Promise((resolve, reject) => {
-    https
-      .get(url, (res) => {
+    const req = https.get(
+      url,
+      {
+        headers: {
+          Accept: "application/json",
+          "User-Agent": "drone-sop-notam-fetch/1.0",
+        },
+      },
+      (res) => {
         const { statusCode } = res;
         let body = "";
         res.on("data", (chunk) => {
@@ -95,7 +103,9 @@ async function fetchNotams(icao) {
         });
         res.on("end", () => {
           if (!statusCode || statusCode < 200 || statusCode >= 300) {
-            reject(new Error(`Failed to fetch data for ICAO code '${icao}'. Response: ${body}`));
+            reject(
+              new Error(`Failed to fetch data for ICAO code '${icao}'. Response: ${body}`)
+            );
             return;
           }
           try {
@@ -104,8 +114,13 @@ async function fetchNotams(icao) {
             reject(new Error(`Failed to parse API response JSON: ${err.message}`));
           }
         });
-      })
-      .on("error", (err) => reject(new Error(`Request failed: ${err.message}`)));
+      }
+    );
+
+    req.setTimeout(API_TIMEOUT_MS, () => {
+      req.destroy(new Error(`Request timed out after ${API_TIMEOUT_MS} ms for ${icao}`));
+    });
+    req.on("error", (err) => reject(new Error(`Request failed: ${err.message}`)));
   });
 }
 
@@ -152,14 +167,14 @@ async function fetchAndSave(firKey, fir) {
   let accumulated = [];
 
   for (const icao of icaos) {
-    try {
-      const data = await fetchNotams(icao);
-      const { rawNotamsList, notamsList } = filterAndTransform(data);
-      accumulatedRaw = accumulatedRaw.concat(rawNotamsList);
-      accumulated = accumulated.concat(notamsList);
-    } catch (err) {
-      console.error(`error fetching ${icao}:`, err.message || err);
-    }
+    const data = await fetchNotams(icao);
+    const { rawNotamsList, notamsList } = filterAndTransform(data);
+    accumulatedRaw = accumulatedRaw.concat(rawNotamsList);
+    accumulated = accumulated.concat(notamsList);
+  }
+
+  if (accumulatedRaw.length === 0) {
+    throw new Error(`No NOTAM payload returned for ${fir.name} (${fir.icao})`);
   }
 
   const filename = `${fir.name.replace(/[^a-zA-Z0-9]/g, "_")}.json`;
@@ -181,13 +196,12 @@ async function buildAll() {
 
     for (const [key, fir] of Object.entries(FIRS)) {
       const list = await fetchAndSave(key, fir);
-      // when building the "All CA" file, include every FIR except the
-      // artificial aggregate entry (#8) to avoid duplicating the same
-      // information twice.
-      if (key !== "8") {
-        allCaRaw = allCaRaw.concat(list.raw);
-        allCa = allCa.concat(list.filtered);
-      }
+      allCaRaw = allCaRaw.concat(list.raw);
+      allCa = allCa.concat(list.filtered);
+    }
+
+    if (allCaRaw.length === 0) {
+      throw new Error("No NOTAM data was fetched from any FIR; aborting write.");
     }
 
     const rawPath = path.join(OUTPUT_DIR, "All_CA_raw.json");
