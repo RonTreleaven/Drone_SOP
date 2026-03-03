@@ -25,6 +25,7 @@ jobs:
       - name: Move JSON files to data folder
         run: |
           mkdir -p data/notams
+					rm -f data/notams/*.json   # Remove existing JSON files
           mv *.json data/notams/
 
       - name: Commit and push JSON files
