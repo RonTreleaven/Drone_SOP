@@ -1,5 +1,10 @@
-# Airport NOTAM map (repo-driven)
+# Airport NOTAM map (repo-driven gathering of NOTAMS daily)
 # Rewritten to load NOTAMs from GitHub repo clone data/notams/All_CA.json
+
+#########################################################################
+# This creates the base "Notam Map.html" or user defined name for one-off runs
+# Notam Map.html is the basemap, and will pull NOTAM data for /data/Notams/*.json files
+#
 
 import html
 import json

@@ -1,20 +1,6 @@
 # Drone_SOP
-Web Based Drone SOP
+Web Based Drone SOP - Standard Operating Procedures for Ron T 
 
-Standard Operating Procedures for Ron Treleaven
+Current working copy March 4, 2026
 
-Working copy Apr 13th saved as Index.html and Apr13_Index.html for reference.
-May 24 - migrate draft code to new Github repo\archive
-Jun 11, 2025 - Fine tune v1 and removed legacy codebase/html/working files
-
-
-C:\users\Ron Treleaven\Drone_SOP\
-
-...
-New repo structure to include .js and directory tree.
-new GitHub structures created and tested okay.
-Folium Maps with Airports and NOTAMS
-
-![image-20250524100200582](../OneDrive/1_Drone/1_Procedures and Information/My Processes and Procedures/Web/Gv2_struct.png)
-
-
+Get location, map airports and NOTAMS & improve Drone Survey procedures for safety and best practices.
