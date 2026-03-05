@@ -6,6 +6,7 @@ C:\Users\Ron Treleaven\Drone_SOP\Python_Code
 
 
 
+{% raw %}
 ```html
 # Airport NOTAM map (repo-driven gathering of NOTAMS daily)
 # Rewritten to load NOTAMs from GitHub repo clone data/notams/All_CA.json
@@ -648,6 +649,7 @@ if __name__ == "__main__":
     main()
 
 ```
+{% endraw %}
 
 
 
