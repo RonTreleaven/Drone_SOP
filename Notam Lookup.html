@@ -224,9 +224,9 @@
         updateFirDates();
         return fetchGeneratedAtDate();
       })
-      .then(generatedAtDate => {
-        if (generatedAtDate) {
-          dataRefreshDate = `${generatedAtDate} (generatedAt)`;
+      .then(generatedAtInfo => {
+        if (generatedAtInfo) {
+          dataRefreshDate = `${generatedAtInfo.display} (${generatedAtInfo.freshness}, generatedAt)`;
           updateFirDates();
         }
       })
@@ -249,6 +249,20 @@
       });
     }
 
+    function formatFreshness(dateObj) {
+      const diffMs = Date.now() - dateObj.getTime();
+      if (diffMs <= 0) return "0m old";
+
+      const diffMinutes = Math.floor(diffMs / 60000);
+      if (diffMinutes < 60) return `${diffMinutes}m old`;
+
+      const diffHours = diffMinutes / 60;
+      if (diffHours < 48) return `${diffHours.toFixed(1)}h old`;
+
+      const diffDays = diffHours / 24;
+      return `${diffDays.toFixed(1)}d old`;
+    }
+
     function updateFirDates(forceValue) {
       const displayDate = forceValue || dataRefreshDate;
       document.querySelectorAll("[data-fir-date]").forEach(cell => {
@@ -267,7 +281,14 @@
         .then(meta => {
           const generatedAt = meta?.generatedAt;
           if (!generatedAt) return null;
-          return formatDataDate(generatedAt);
+
+          const parsed = new Date(generatedAt);
+          if (Number.isNaN(parsed.getTime())) return null;
+
+          return {
+            display: formatDataDate(generatedAt),
+            freshness: formatFreshness(parsed)
+          };
         })
         .catch(error => {
           console.warn("Could not read generatedAt from All_CA.meta.json:", error);

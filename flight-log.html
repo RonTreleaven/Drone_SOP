@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -8,35 +7,33 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+  <nav class="top-nav">
+    <a href="#" onclick="goBack(event)">&larr; Back</a> |
+    <a href="index.html">Home</a> |
+    <a href="tools.html">Tools</a> |
+    <a href="flight-log.html" class="active">Flight Log</a> |
+    <a href="summary.html">Summary</a> |
+    <a href="emergencies.html">Emergency Procedures</a>
+  </nav>
 
-  <!-- Place this at the top of your <body> in flight-log.html -->
-<nav class="top-nav">
-  <a href="#" onclick="goBack(event)">&larr; Back</a> |
-  <a href="index.html">Home</a> |
-  <a href="tools.html">Tools</a> |
-  <a href="flight-log.html" class="active">Flight Log</a> |
-  <a href="summary.html">Summary</a> |
-  <a href="emerge3.html">Emergency Procedures</a>
-</nav>
-<script>
-  function goBack(event) {
-    event.preventDefault();
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      window.location.href = "tools.html"; // fallback page
+  <script>
+    function goBack(event) {
+      event.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = 'tools.html';
+      }
     }
-  }
-</script>
+  </script>
 
   <header class="site-header">
-  <img src="assets/img/logo.png" alt="Logo" class="site-logo">
-  <h1 class="page-title">Flight Log Information</h1>
+    <img src="assets/img/logo.png" alt="Logo" class="site-logo">
+    <h1 class="page-title">Flight Log Information</h1>
   </header>
 
-  <!-- Quick Location Tool for Pilot -->
   <div class="location-tool">
-    <button type="button" id="getLocation">Get DD Lat/Long co-ords </button>
+    <button type="button" id="getLocation">Get DD Lat/Long co-ords</button>
     <p id="output"></p>
   </div>
 
@@ -87,127 +84,16 @@
   <h2>Additional Emergency Contacts</h2>
   <ul class="tools-list">
     <li>
-      <a href="FIR_FIC_911.html" target="_blank" rel="noopener">
-        Emergency Contacts List
-      </a>
-      — FIR and Emergency Contacts
+      <a href="FIR_FIC_911.html" target="_blank" rel="noopener">Emergency Contacts List</a>
+      - FIR and Emergency Contacts
     </li>
     <li>
-      <a href="https://tc.canada.ca/en/aviation/aviation-accidents-investigations/emergencies-incident-reporting" target="_blank" rel="noopener">
-        Transport Canada Emergency Contacts
-      </a>
-      — Official emergency contacts for aviation.
+      <a href="https://tc.canada.ca/en/aviation/aviation-accidents-investigations/emergencies-incident-reporting" target="_blank" rel="noopener">Transport Canada Emergency Contacts</a>
+      - Official emergency contacts for aviation.
     </li>
   </ul>
 
   <script src="assets/js/app.js"></script>
-  <script>
-  // Helper to convert decimal degrees to DMS string
-  function toDMS(deg, isLat) {
-    const abs = Math.abs(deg);
-    const d = Math.floor(abs);
-    const mFloat = (abs - d) * 60;
-    const m = Math.floor(mFloat);
-    const s = ((mFloat - m) * 60).toFixed(1);
-    const dir = isLat
-      ? (deg >= 0 ? "N" : "S")
-      : (deg >= 0 ? "E" : "W");
-    return `${d}°${m}'${s}"${dir}`;
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    const btn = document.getElementById('getLocation');
-    const output = document.getElementById('output');
-    const locInput = document.getElementById('flight-location');
-    const form = document.getElementById('flight-log-form');
-    const dateIn = document.getElementById('flight-date');
-    const pilot = document.getElementById('flight-pilot');
-    const obs = document.getElementById('flight-observers');
-    const start = document.getElementById('flight-start');
-    const end = document.getElementById('flight-end');
-    const loc = document.getElementById('flight-location');
-
-    // Restore from localStorage if available
-    const dd = localStorage.getItem('pilotLocationDD');
-    const dms = localStorage.getItem('pilotLocationDMS');
-    if (dd && dms) {
-      if (output) {
-        output.innerHTML =
-          `DD: ${dd}<br>` +
-          `DMS: ${dms}<br>` +
-          `<a href="https://maps.google.com/?q=${dd.replace(/ /g, '')}" target="_blank" rel="noopener">View on Google Maps</a>`;
-      }
-      if (locInput) {
-        locInput.value = dd;
-      }
-    }
-
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            // Round to 6 decimal places
-            const latShort = latitude.toFixed(6);
-            const lonShort = longitude.toFixed(6);
-            // Convert to DMS
-            const latDMS = toDMS(latitude, true);
-            const lonDMS = toDMS(longitude, false);
-            output.innerHTML =
-              `DD: ${latShort}, ${lonShort}<br>` +
-              `DMS: ${latDMS}, ${lonDMS}<br>` +
-              `<a href="https://maps.google.com/?q=${latShort},${lonShort}" target="_blank" rel="noopener">View on Google Maps</a>`;
-            // Autofill the Pilot Location field
-            if (locInput) {
-              locInput.value = `${latShort}, ${lonShort}`;
-            }
-            // Store in localStorage
-            localStorage.setItem('pilotLocationDD', `${latShort}, ${lonShort}`);
-            localStorage.setItem('pilotLocationDMS', `${latDMS}, ${lonDMS}`);
-          },
-          (error) => {
-            switch (error.code) {
-              case error.PERMISSION_DENIED:
-                output.textContent = "User denied the request for Geolocation.";
-                break;
-              case error.POSITION_UNAVAILABLE:
-                output.textContent = "Location information is unavailable.";
-                break;
-              case error.TIMEOUT:
-                output.textContent = "The request to get user location timed out.";
-                break;
-              default:
-                output.textContent = "An unknown error occurred.";
-                break;
-            }
-          }
-        );
-      } else {
-        output.textContent = "Geolocation is not supported by this browser.";
-      }
-    });
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const flightLog = {
-        date:      dateIn.value,
-        pilot:     pilot.value.trim(),
-        observers: obs.value.trim(),
-        start:     start.value,
-        end:       end.value,
-        location:  loc.value.trim()
-      };
-      localStorage.setItem('flightLog', JSON.stringify(flightLog));
-      // Always commit the pilot location field as DD
-      if (loc.value.trim()) {
-        localStorage.setItem('pilotLocationDD', loc.value.trim());
-      }
-      alert('✅ Flight log saved.');
-    });
-  });
-  </script>
 </body>
 </html>
 

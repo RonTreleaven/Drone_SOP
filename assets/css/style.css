@@ -271,7 +271,7 @@ main {
   transform: rotate(-90deg);
 }
 
-/* Add to your <style> block in emerge3.html or in style.css */
+/* Add to your <style> block in emergencies.html or in style.css */
 
 @media (max-width: 600px) {
   .container {

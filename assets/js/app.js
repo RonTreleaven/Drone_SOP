@@ -1,7 +1,37 @@
 // assets/js/app.js
 // RLT May 2025 – Final step always goes to Flight Log
 
+const FLIGHT_RUN_STORAGE_KEYS = [
+  'flightLog',
+  'flightDate',
+  'flightPilot',
+  'flightObservers',
+  'flightStart',
+  'flightEnd',
+  'flightLocation',
+  'pilotLocationDD',
+  'pilotLocationDMS'
+];
+
+function safeParseJSON(key, fallback = {}) {
+  try {
+    return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+  } catch (_err) {
+    return fallback;
+  }
+}
+
+function clearFlightRunData() {
+  FLIGHT_RUN_STORAGE_KEYS.forEach(key => localStorage.removeItem(key));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  // Flight Log page does not require sections.json; initialize immediately.
+  if (document.getElementById('flight-log-form')) {
+    renderFlightLog();
+    return;
+  }
+
   const jsonPath = window.location.pathname.includes('/sections/')
     ? '../data/sections.json'
     : './data/sections.json';
@@ -22,8 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function initApp(sections) {
   if (document.getElementById('section-selector')) {
     renderIndex(sections);
-  } else if (document.getElementById('flight-log-form')) {
-    renderFlightLog();
   } else if (document.getElementById('checklist-container')) {
     renderSectionPage(sections);
   } else if (document.getElementById('summary-container')) {
@@ -55,13 +83,13 @@ function renderIndex(sections) {
   btn.addEventListener('click', () => {
     const list = Array.from(chosen);
     if (!list.length) return;
-    // Clear old progress
+    // Clear prior run data so summary/export only reflect the current run.
     localStorage.removeItem('droneSOPProgress');
-    localStorage.removeItem('flightLog');
+    clearFlightRunData();
     // Initialize new progress structure
     const progress = {};
     list.forEach(id => {
-      progress[id] = { status: "not-started", data: {} };
+      progress[id] = { status: 'not-started', data: {} };
     });
     const sopProgress = { selectedSOPs: list, progress };
     localStorage.setItem('droneSOPProgress', JSON.stringify(sopProgress));
@@ -79,14 +107,89 @@ function renderFlightLog() {
   const start  = document.getElementById('flight-start');
   const end    = document.getElementById('flight-end');
   const loc    = document.getElementById('flight-location');
+  const btn    = document.getElementById('getLocation');
+  const output = document.getElementById('output');
 
-  const saved = JSON.parse(localStorage.getItem('flightLog') || '{}');
-  dateIn.value = saved.date      || new Date().toISOString().split('T')[0];
-  pilot.value  = saved.pilot     || '';
-  obs.value    = saved.observers || '';
-  start.value  = saved.start     || '';
-  end.value    = saved.end       || '';
-  loc.value    = saved.location  || '';
+  const toDMS = (deg, isLat) => {
+    const abs = Math.abs(deg);
+    const d = Math.floor(abs);
+    const mFloat = (abs - d) * 60;
+    const m = Math.floor(mFloat);
+    const s = ((mFloat - m) * 60).toFixed(1);
+    const dir = isLat
+      ? (deg >= 0 ? 'N' : 'S')
+      : (deg >= 0 ? 'E' : 'W');
+    return `${d}\u00B0${m}'${s}"${dir}`;
+  };
+
+  const saved = safeParseJSON('flightLog', {});
+
+  dateIn.value = saved.date || localStorage.getItem('flightDate') || new Date().toISOString().split('T')[0];
+  pilot.value  = saved.pilot || localStorage.getItem('flightPilot') || '';
+  obs.value    = saved.observers || localStorage.getItem('flightObservers') || '';
+  start.value  = saved.start || localStorage.getItem('flightStart') || '';
+  end.value    = saved.end || localStorage.getItem('flightEnd') || '';
+  loc.value    = saved.location || localStorage.getItem('flightLocation') || '';
+
+  const dd = localStorage.getItem('pilotLocationDD');
+  const dms = localStorage.getItem('pilotLocationDMS');
+  if (dd && dms) {
+    if (output) {
+      output.innerHTML =
+        `DD: ${dd}<br>` +
+        `DMS: ${dms}<br>` +
+        `<a href="https://maps.google.com/?q=${dd.replace(/ /g, '')}" target="_blank" rel="noopener">View on Google Maps</a>`;
+    }
+    loc.value = dd;
+  }
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      if (!navigator.geolocation) {
+        if (output) output.textContent = 'Geolocation is not supported by this browser.';
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const latShort = latitude.toFixed(6);
+          const lonShort = longitude.toFixed(6);
+          const latDMS = toDMS(latitude, true);
+          const lonDMS = toDMS(longitude, false);
+
+          if (output) {
+            output.innerHTML =
+              `DD: ${latShort}, ${lonShort}<br>` +
+              `DMS: ${latDMS}, ${lonDMS}<br>` +
+              `<a href="https://maps.google.com/?q=${latShort},${lonShort}" target="_blank" rel="noopener">View on Google Maps</a>`;
+          }
+
+          loc.value = `${latShort}, ${lonShort}`;
+          localStorage.setItem('pilotLocationDD', `${latShort}, ${lonShort}`);
+          localStorage.setItem('pilotLocationDMS', `${latDMS}, ${lonDMS}`);
+        },
+        (error) => {
+          if (!output) return;
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              output.textContent = 'User denied the request for Geolocation.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              output.textContent = 'Location information is unavailable.';
+              break;
+            case error.TIMEOUT:
+              output.textContent = 'The request to get user location timed out.';
+              break;
+            default:
+              output.textContent = 'An unknown error occurred.';
+              break;
+          }
+        }
+      );
+    });
+  }
 
   form.addEventListener('submit', e => {
     e.preventDefault();
@@ -98,14 +201,25 @@ function renderFlightLog() {
       end:       end.value,
       location:  loc.value.trim()
     };
+
     localStorage.setItem('flightLog', JSON.stringify(flightLog));
+    localStorage.setItem('flightDate', flightLog.date || '');
+    localStorage.setItem('flightPilot', flightLog.pilot || '');
+    localStorage.setItem('flightObservers', flightLog.observers || '');
+    localStorage.setItem('flightStart', flightLog.start || '');
+    localStorage.setItem('flightEnd', flightLog.end || '');
+    localStorage.setItem('flightLocation', flightLog.location || '');
+    if (flightLog.location) {
+      localStorage.setItem('pilotLocationDD', flightLog.location);
+    }
+
     alert('✅ Flight log saved.');
   });
 }
 
 // ─── SECTION PAGES ─────────────────────────────────────────────────────────────
 function renderSectionPage(sections) {
-    const id = window.location.pathname.split('/').pop().replace('.html','');
+  const id = window.location.pathname.split('/').pop().replace('.html', '');
   const current = sections.find(s => s.id === id);
   if (!current) return console.error('Unknown section:', id);
 
@@ -114,7 +228,7 @@ function renderSectionPage(sections) {
   container.innerHTML = ''; // Clear "Loading..."
 
   // Render checklist items
-  let responses = JSON.parse(localStorage.getItem(`responses_${current.id}`) || '[]');
+  let responses = safeParseJSON(`responses_${current.id}`, []);
   if (responses.length !== current.items.length) {
     responses = current.items.map(() => false);
   }
@@ -142,13 +256,6 @@ function renderSectionPage(sections) {
   completeDiv.appendChild(completeLabel);
   container.appendChild(completeDiv);
 
-  // // Restore checkbox state if previously completed *** crashed the loading of the Section.json
-  
-  // const sopProgress = JSON.parse(localStorage.getItem('droneSOPProgress') || '{}');
-  // if (sopProgress.progress && sopProgress.progress[current.id]) {
-  //   document.getElementById('section-completed').checked = sopProgress.progress[current.id].status === "completed";
-  // }
-
   // Save Progress button
   const saveBtn = document.createElement('button');
   saveBtn.textContent = 'Save Progress';
@@ -160,16 +267,16 @@ function renderSectionPage(sections) {
     // ...
 
     // Save completed status
-    let sopProgress = JSON.parse(localStorage.getItem('droneSOPProgress') || '{}');
+    let sopProgress = safeParseJSON('droneSOPProgress', {});
     sopProgress.progress = sopProgress.progress || {};
     sopProgress.progress[current.id] = sopProgress.progress[current.id] || { data: {} };
-    sopProgress.progress[current.id].status = document.getElementById('section-completed').checked ? "completed" : "in-progress";
+    sopProgress.progress[current.id].status = document.getElementById('section-completed').checked ? 'completed' : 'in-progress';
     localStorage.setItem('droneSOPProgress', JSON.stringify(sopProgress));
     alert('Progress saved!');
   });
 
   // Use droneSOPProgress for navigation
-  const sopProgress = JSON.parse(localStorage.getItem('droneSOPProgress') || '{}');
+  const sopProgress = safeParseJSON('droneSOPProgress', {});
   const selected = sopProgress.selectedSOPs || [];
   const idx = selected.indexOf(current.id);
 
@@ -213,7 +320,7 @@ function renderSummary(sections) {
   const container = document.getElementById('summary-container');
   if (!container) return;
 
-  const flightLog = JSON.parse(localStorage.getItem('flightLog') || '{}');
+  const flightLog = safeParseJSON('flightLog', {});
   const wrapper   = document.createElement('div');
   wrapper.className = 'flight-log-wrapper';
   wrapper.innerHTML = `
@@ -241,10 +348,12 @@ function renderSummary(sections) {
   `;
   container.append(wrapper);
 
-  const selected = JSON.parse(localStorage.getItem('selectedSections') || '[]');
+  // Prefer the current key; keep legacy fallback for older saved sessions.
+  const sopProgress = safeParseJSON('droneSOPProgress', {});
+  const selected = sopProgress.selectedSOPs || safeParseJSON('selectedSections', []);
   selected.forEach(secId => {
     const section   = sections.find(s => s.id === secId);
-    const responses = JSON.parse(localStorage.getItem(`responses_${secId}`) || '[]');
+    const responses = safeParseJSON(`responses_${secId}`, []);
     const block     = document.createElement('div');
     block.className = 'section-block';
     block.innerHTML = `<h2>${section.title}</h2>` +
@@ -264,15 +373,14 @@ function renderSummary(sections) {
     const prev  = parseInt(localStorage.getItem(sk) || '0', 10);
     const next  = prev + 1;
     localStorage.setItem(sk, String(next));
-    return { today, count: next };
   }
 
   // Utility: get export filename (CSV or PDF)
   function getExportFilename(ext = 'csv') {
-    const flightLog = JSON.parse(localStorage.getItem('flightLog') || '{}');
+    const currentFlightLog = safeParseJSON('flightLog', {});
     // Use flight date and pilot name if available, else fallback to today
-    let date = flightLog.date || new Date().toISOString().slice(0,10);
-    let pilot = flightLog.pilot ? flightLog.pilot.replace(/[^a-z0-9]/gi, '_') : 'UnknownPilot';
+    const date = currentFlightLog.date || new Date().toISOString().slice(0, 10);
+    const pilot = currentFlightLog.pilot ? currentFlightLog.pilot.replace(/[^a-z0-9]/gi, '_') : 'UnknownPilot';
     return `FlightLog_${date}_${pilot}.${ext}`;
   }
 
@@ -287,13 +395,12 @@ function renderSummary(sections) {
       + 'Section,Item,Checked\n';
     selected.forEach(secId => {
       const section   = sections.find(s => s.id === secId);
-      const responses = JSON.parse(localStorage.getItem(`responses_${secId}`) || '[]');
+      const responses = safeParseJSON(`responses_${secId}`, []);
       section.items.forEach((item, idx) => {
         csv += `"${section.title}","${item.replace(/"/g,'""')}","${responses[idx] ? 'Yes' : 'No'}"\n`;
       });
     });
-    const { today, count } = bumpCount('csvExport');
-    const suffix = count > 1 ? ` (${count})` : '';
+    bumpCount('csvExport');
     const filename = getExportFilename('csv');
     const blob = new Blob([csv], { type: 'text/csv' });
     const url  = URL.createObjectURL(blob);
@@ -305,8 +412,7 @@ function renderSummary(sections) {
   });
 
   document.getElementById('export-pdf').addEventListener('click', () => {
-    const { today, count } = bumpCount('pdfExport');
-    const suffix = count > 1 ? ` (${count})` : '';
+    bumpCount('pdfExport');
     const filename = getExportFilename('pdf').replace('.pdf',''); // window.print() uses document.title
     const origTitle = document.title;
     document.title  = filename;
@@ -332,79 +438,11 @@ function renderSummary(sections) {
   }
 }
 
-// ─── COLLAPSIBLE CARDS FOR emerge3.html ───────────────────────────────────────
+// Collapsible cards for emergencies.html
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.card h2').forEach(header => {
     header.addEventListener('click', () => {
       header.parentElement.classList.toggle('collapsed');
     });
-  });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-  const btn = document.getElementById('getLocation');
-  const output = document.getElementById('output');
-  const locInput = document.getElementById('flight-location');
-
-  // Restore from localStorage if available
-  const dd = localStorage.getItem('pilotLocationDD');
-  const dms = localStorage.getItem('pilotLocationDMS');
-  if (dd && dms) {
-    if (output) {
-      output.innerHTML =
-        `DD: ${dd}<br>` +
-        `DMS: ${dms}<br>` +
-        `<a href="https://maps.google.com/?q=${dd.replace(/ /g, '')}" target="_blank" rel="noopener">View on Google Maps</a>`;
-    }
-    if (locInput) {
-      locInput.value = dd;
-    }
-  }
-
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          // Round to 6 decimal places
-          const latShort = latitude.toFixed(6);
-          const lonShort = longitude.toFixed(6);
-          // Convert to DMS
-          const latDMS = toDMS(latitude, true);
-          const lonDMS = toDMS(longitude, false);
-          output.innerHTML =
-            `DD: ${latShort}, ${lonShort}<br>` +
-            `DMS: ${latDMS}, ${lonDMS}<br>` +
-            `<a href="https://maps.google.com/?q=${latShort},${lonShort}" target="_blank" rel="noopener">View on Google Maps</a>`;
-          // Autofill the Pilot Location field
-          if (locInput) {
-            locInput.value = `${latShort}, ${lonShort}`;
-          }
-          // Store in localStorage
-          localStorage.setItem('pilotLocationDD', `${latShort}, ${lonShort}`);
-          localStorage.setItem('pilotLocationDMS', `${latDMS}, ${lonDMS}`);
-        },
-        (error) => {
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              output.textContent = "User denied the request for Geolocation.";
-              break;
-            case error.POSITION_UNAVAILABLE:
-              output.textContent = "Location information is unavailable.";
-              break;
-            case error.TIMEOUT:
-              output.textContent = "The request to get user location timed out.";
-              break;
-            default:
-              output.textContent = "An unknown error occurred.";
-              break;
-          }
-        }
-      );
-    } else {
-      output.textContent = "Geolocation is not supported by this browser.";
-    }
   });
 });
