@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     
@@ -45,7 +45,35 @@
 <body>
     
     <style>.leaflet-control-layers{min-width:260px;max-width:340px;font-size:13px;}.leaflet-control-layers-group-name{font-weight:700;color:#1f3b63;margin-top:6px;}.leaflet-control-layers-list{max-height:56vh;overflow-y:auto;padding-right:4px;}.leaflet-control-layers-group-label{cursor:pointer;display:block;position:relative;padding-right:14px;}.leaflet-control-layers-group-label:after{content:'▾';position:absolute;right:2px;top:0;color:#1f3b63;font-size:11px;}.leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label:after{content:'▸';}.leaflet-control-layers-group.province-collapsed>label:not(.leaflet-control-layers-group-label){display:none;}.pilot-input{z-index:1200;}.pilot-flyout{position:relative;width:272px;background:#fff;border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.2);padding:7px;transition:transform .2s ease;overflow:visible;box-sizing:border-box;}.pilot-flyout.collapsed{transform:translateX(-100%);}.pilot-flyout-toggle{position:absolute;right:-24px;top:10px;width:24px;height:52px;border:1px solid #d8e2ee;border-left:none;border-radius:0 6px 6px 0;background:#fff;color:#1f3b63;cursor:pointer;font-weight:700;line-height:1;}.pilot-flyout .controls-row{display:flex;flex-wrap:wrap;gap:3px;align-items:center;}.pilot-flyout input{max-width:102px;font-size:12px;}.pilot-flyout .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:5px;}.pilot-flyout .action-grid button{width:100%;height:24px;margin:0;padding:2px 4px;font-size:10px;line-height:1.05;text-align:center;}.pilot-flyout .controls-meta{font-size:11px;margin-top:3px;line-height:1.25;}.pilot-flyout .status-line{font-weight:600;color:#1f3b63;}.pilot-flyout .dd-hint{color:#666;margin-top:2px;}.home-logo-control{background:#fff;border:1px solid #d8e2ee;border-radius:8px;padding:4px 6px;box-shadow:0 2px 6px rgba(0,0,0,0.2);}.home-logo-control img{display:block;height:64px;width:auto;}.notam-popup{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:1.35;color:#333;}.notam-title{font-weight:700;color:#007acc;margin-bottom:4px;}.notam-label{font-weight:600;color:#1f3b63;}.notam-raw{max-height:220px;overflow:auto;white-space:normal;}</style>
-    
+    <style>
+      .leaflet-control-layers {
+        min-width: 220px;
+        max-width: 320px;
+      }
+      .leaflet-control-layers-expanded {
+        padding: 7px 9px;
+      }
+      .leaflet-control-layers-group.province-collapsed > .leaflet-control-layers-group-label {
+        display: inline-block;
+        max-width: 170px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      @media (max-width: 600px) {
+        .leaflet-control-layers {
+          min-width: 176px;
+          max-width: 220px;
+          font-size: 12px;
+        }
+        .leaflet-control-layers-expanded {
+          padding: 6px 8px;
+        }
+        .leaflet-control-layers-group.province-collapsed > .leaflet-control-layers-group-label {
+          max-width: 146px;
+        }
+      }
+    </style>
 <script>
 window.onload = function() {
   var map = map_ed5adcb44784b36bcd4cb3af9d8761b0;
@@ -285,7 +313,7 @@ window.onload = function() {
       var d = L.DomUtil.create('div','pilot-input');
       L.DomEvent.disableClickPropagation(d);
       d.style.marginTop = '88px';
-        d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls">❮</button><div class="controls-row">Lat <input id="pLat" size="10" maxlength="12" placeholder="43.000000"> Lon <input id="pLon" size="10" maxlength="13" placeholder="-79.000000"></div><div class="controls-meta dd-hint">DD: 43.653200, -79.383200</div><div class="action-grid"><button id="upd">Set Lat/Lon</button><button id="centerPilot">Center Map</button><button id="getPilotLoc">Get Location</button><button id="sourceBtn">Swith Filter Group</button></div><div class="controls-row" style="margin-top:5px;">Radius km <input id="radiusKmInput" size="6" maxlength="6" placeholder="10"> <button id="setRadiusBtn">Change NOTAM Radius</button></div><div id="currentPilotText" class="controls-meta status-line">Current Pilot: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Src: RAW</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div>';
+        d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls">â®</button><div class="controls-row">Lat <input id="pLat" size="10" maxlength="12" placeholder="43.000000"> Lon <input id="pLon" size="10" maxlength="13" placeholder="-79.000000"></div><div class="controls-meta dd-hint">DD: 43.653200, -79.383200</div><div class="action-grid"><button id="upd">Set Lat/Lon</button><button id="centerPilot">Center Map</button><button id="getPilotLoc">Get Location</button><button id="sourceBtn">Swith Filter Group</button></div><div class="controls-row" style="margin-top:5px;">Radius km <input id="radiusKmInput" size="6" maxlength="6" placeholder="10"> <button id="setRadiusBtn">Change NOTAM Radius</button></div><div id="currentPilotText" class="controls-meta status-line">Current Pilot: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Src: RAW</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div>';
       return d;
   };
   ctl.addTo(map);
@@ -296,7 +324,7 @@ window.onload = function() {
           return;
       }
       flyout.classList.toggle('collapsed');
-      this.textContent = flyout.classList.contains('collapsed') ? '❯' : '❮';
+      this.textContent = flyout.classList.contains('collapsed') ? 'â¯' : 'â®';
   };
 
   document.getElementById('upd').onclick = function() {
@@ -57234,7 +57262,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_fe17a48b4f0be7ae3bf3a1c5af883dbd = $(`<div id="html_fe17a48b4f0be7ae3bf3a1c5af883dbd" style="width: 100.0%; height: 100.0%;">CKA8 - St. François Xavier Airport<br>Lat: 49.924400<br>Lon: -97.548897</div>`)[0];
+                var html_fe17a48b4f0be7ae3bf3a1c5af883dbd = $(`<div id="html_fe17a48b4f0be7ae3bf3a1c5af883dbd" style="width: 100.0%; height: 100.0%;">CKA8 - St. FranÃ§ois Xavier Airport<br>Lat: 49.924400<br>Lon: -97.548897</div>`)[0];
                 popup_b38ef988f2e2039678243e60cb6e8c3f.setContent(html_fe17a48b4f0be7ae3bf3a1c5af883dbd);
             
         
@@ -57247,7 +57275,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_d5c784d563022091c535690efad94945.bindTooltip(
                 `<div>
-                     CKA8 | St. François Xavier Airport
+                     CKA8 | St. FranÃ§ois Xavier Airport
                  </div>`,
                 {
   "sticky": true,
@@ -60320,7 +60348,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_f302852108b8a7b27a186fbbff41c442 = $(`<div id="html_f302852108b8a7b27a186fbbff41c442" style="width: 100.0%; height: 100.0%;">CA-0356 - Saint-Léonard (Cyr) Airport<br>Lat: 47.180555<br>Lon: -67.890272</div>`)[0];
+                var html_f302852108b8a7b27a186fbbff41c442 = $(`<div id="html_f302852108b8a7b27a186fbbff41c442" style="width: 100.0%; height: 100.0%;">CA-0356 - Saint-LÃ©onard (Cyr) Airport<br>Lat: 47.180555<br>Lon: -67.890272</div>`)[0];
                 popup_5c4e340de3b70bc2aa4710879bfebbaf.setContent(html_f302852108b8a7b27a186fbbff41c442);
             
         
@@ -60333,7 +60361,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_ee8599d2eab84375e38fd101f2fca217.bindTooltip(
                 `<div>
-                     CA-0356 | Saint-Léonard (Cyr) Airport
+                     CA-0356 | Saint-LÃ©onard (Cyr) Airport
                  </div>`,
                 {
   "sticky": true,
@@ -61404,7 +61432,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_f9b1dd54bc3306799443b9040d3f9323 = $(`<div id="html_f9b1dd54bc3306799443b9040d3f9323" style="width: 100.0%; height: 100.0%;">CYQM - Greater Moncton Roméo LeBlanc International Airport<br>Lat: 46.113189<br>Lon: -64.677190</div>`)[0];
+                var html_f9b1dd54bc3306799443b9040d3f9323 = $(`<div id="html_f9b1dd54bc3306799443b9040d3f9323" style="width: 100.0%; height: 100.0%;">CYQM - Greater Moncton RomÃ©o LeBlanc International Airport<br>Lat: 46.113189<br>Lon: -64.677190</div>`)[0];
                 popup_0926a712f8e1a372713efe2198341eb9.setContent(html_f9b1dd54bc3306799443b9040d3f9323);
             
         
@@ -61417,7 +61445,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_8027eea80c199a423d821e502120b589.bindTooltip(
                 `<div>
-                     CYQM | Greater Moncton Roméo LeBlanc International Airport
+                     CYQM | Greater Moncton RomÃ©o LeBlanc International Airport
                  </div>`,
                 {
   "sticky": true,
@@ -61500,7 +61528,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_2e899cdcf135648dab0302a9b8d6ba5c = $(`<div id="html_2e899cdcf135648dab0302a9b8d6ba5c" style="width: 100.0%; height: 100.0%;">CYSL - Saint-Léonard Airport<br>Lat: 47.157097<br>Lon: -67.836242</div>`)[0];
+                var html_2e899cdcf135648dab0302a9b8d6ba5c = $(`<div id="html_2e899cdcf135648dab0302a9b8d6ba5c" style="width: 100.0%; height: 100.0%;">CYSL - Saint-LÃ©onard Airport<br>Lat: 47.157097<br>Lon: -67.836242</div>`)[0];
                 popup_9e527d4452db3a1b0c83f7a5759b0ce6.setContent(html_2e899cdcf135648dab0302a9b8d6ba5c);
             
         
@@ -61513,7 +61541,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_83b51bd0bc8111327f64bec7b5ca1f31.bindTooltip(
                 `<div>
-                     CYSL | Saint-Léonard Airport
+                     CYSL | Saint-LÃ©onard Airport
                  </div>`,
                 {
   "sticky": true,
@@ -64340,7 +64368,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_d0cde4bca9f0892d54542a4921ba32ae = $(`<div id="html_d0cde4bca9f0892d54542a4921ba32ae" style="width: 100.0%; height: 100.0%;">CA-0807 - François Heliport<br>Lat: 47.581670<br>Lon: -56.745810</div>`)[0];
+                var html_d0cde4bca9f0892d54542a4921ba32ae = $(`<div id="html_d0cde4bca9f0892d54542a4921ba32ae" style="width: 100.0%; height: 100.0%;">CA-0807 - FranÃ§ois Heliport<br>Lat: 47.581670<br>Lon: -56.745810</div>`)[0];
                 popup_21866bd863239cda596258ae2388ef36.setContent(html_d0cde4bca9f0892d54542a4921ba32ae);
             
         
@@ -64353,7 +64381,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_07dbdf4f57cf3beb80d1aa543e10c25c.bindTooltip(
                 `<div>
-                     CA-0807 | François Heliport
+                     CA-0807 | FranÃ§ois Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -69746,7 +69774,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_d2ad7e514b477ce0722c6971a000e08c = $(`<div id="html_d2ad7e514b477ce0722c6971a000e08c" style="width: 100.0%; height: 100.0%;">CDL5 - Doctor’s Lake East Water Aerodrome<br>Lat: 43.881700<br>Lon: -66.097500</div>`)[0];
+                var html_d2ad7e514b477ce0722c6971a000e08c = $(`<div id="html_d2ad7e514b477ce0722c6971a000e08c" style="width: 100.0%; height: 100.0%;">CDL5 - Doctorâ€™s Lake East Water Aerodrome<br>Lat: 43.881700<br>Lon: -66.097500</div>`)[0];
                 popup_5805b1643b6267e2dab80ce6ab6ae7f6.setContent(html_d2ad7e514b477ce0722c6971a000e08c);
             
         
@@ -69759,7 +69787,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_35c8faacc13d0924af76f26200a647bd.bindTooltip(
                 `<div>
-                     CDL5 | Doctor’s Lake East Water Aerodrome
+                     CDL5 | Doctorâ€™s Lake East Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -74472,7 +74500,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_c6b3215574752db9c625f96cc28d24a9 = $(`<div id="html_c6b3215574752db9c625f96cc28d24a9" style="width: 100.0%; height: 100.0%;">CEN7 - Deliné Seaplane Base<br>Lat: 65.183299<br>Lon: -123.417000</div>`)[0];
+                var html_c6b3215574752db9c625f96cc28d24a9 = $(`<div id="html_c6b3215574752db9c625f96cc28d24a9" style="width: 100.0%; height: 100.0%;">CEN7 - DelinÃ© Seaplane Base<br>Lat: 65.183299<br>Lon: -123.417000</div>`)[0];
                 popup_6c436f82b9d185f3acd41b52cbccac50.setContent(html_c6b3215574752db9c625f96cc28d24a9);
             
         
@@ -74485,7 +74513,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_876c09e0435a0d0d9564afd566cf9923.bindTooltip(
                 `<div>
-                     CEN7 | Deliné Seaplane Base
+                     CEN7 | DelinÃ© Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -74616,7 +74644,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_56fdf8fcbd40648cc946216f3afbe1d6 = $(`<div id="html_56fdf8fcbd40648cc946216f3afbe1d6" style="width: 100.0%; height: 100.0%;">CEQ8 - Whatì Seaplane Base<br>Lat: 63.141910<br>Lon: -117.275791</div>`)[0];
+                var html_56fdf8fcbd40648cc946216f3afbe1d6 = $(`<div id="html_56fdf8fcbd40648cc946216f3afbe1d6" style="width: 100.0%; height: 100.0%;">CEQ8 - WhatÃ¬ Seaplane Base<br>Lat: 63.141910<br>Lon: -117.275791</div>`)[0];
                 popup_efffb21535390a0af5aa7461f4758a1f.setContent(html_56fdf8fcbd40648cc946216f3afbe1d6);
             
         
@@ -74629,7 +74657,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_2fdecb73c1658021a03b620b7ab6d739.bindTooltip(
                 `<div>
-                     CEQ8 | Whatì Seaplane Base
+                     CEQ8 | WhatÃ¬ Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -75638,7 +75666,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_e83f7bbd4146b517ed81b8347bcd2538 = $(`<div id="html_e83f7bbd4146b517ed81b8347bcd2538" style="width: 100.0%; height: 100.0%;">CEM3 - Whatì Airport<br>Lat: 63.131699<br>Lon: -117.246002</div>`)[0];
+                var html_e83f7bbd4146b517ed81b8347bcd2538 = $(`<div id="html_e83f7bbd4146b517ed81b8347bcd2538" style="width: 100.0%; height: 100.0%;">CEM3 - WhatÃ¬ Airport<br>Lat: 63.131699<br>Lon: -117.246002</div>`)[0];
                 popup_df1be29c79ee6d81d6e1f956add83bd3.setContent(html_e83f7bbd4146b517ed81b8347bcd2538);
             
         
@@ -75651,7 +75679,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_d77fdc9bf6bc9a21cb2d23d3805ccf58.bindTooltip(
                 `<div>
-                     CEM3 | Whatì Airport
+                     CEM3 | WhatÃ¬ Airport
                  </div>`,
                 {
   "sticky": true,
@@ -76790,7 +76818,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_0e0e3ac034b8bbac88edb2acba81d66a = $(`<div id="html_0e0e3ac034b8bbac88edb2acba81d66a" style="width: 100.0%; height: 100.0%;">CYWE - Wekweètì Airport<br>Lat: 64.190804<br>Lon: -114.077002</div>`)[0];
+                var html_0e0e3ac034b8bbac88edb2acba81d66a = $(`<div id="html_0e0e3ac034b8bbac88edb2acba81d66a" style="width: 100.0%; height: 100.0%;">CYWE - WekweÃ¨tÃ¬ Airport<br>Lat: 64.190804<br>Lon: -114.077002</div>`)[0];
                 popup_5c516e4bd39f16ef775b7752fd91edd3.setContent(html_0e0e3ac034b8bbac88edb2acba81d66a);
             
         
@@ -76803,7 +76831,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_3000e889c45f1b890c066ef5d9d09029.bindTooltip(
                 `<div>
-                     CYWE | Wekweètì Airport
+                     CYWE | WekweÃ¨tÃ¬ Airport
                  </div>`,
                 {
   "sticky": true,
@@ -76838,7 +76866,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_f9a11dade605f6bcb7150b4a5afe48d3 = $(`<div id="html_f9a11dade605f6bcb7150b4a5afe48d3" style="width: 100.0%; height: 100.0%;">CYWJ - Déline Airport<br>Lat: 65.211098<br>Lon: -123.435997</div>`)[0];
+                var html_f9a11dade605f6bcb7150b4a5afe48d3 = $(`<div id="html_f9a11dade605f6bcb7150b4a5afe48d3" style="width: 100.0%; height: 100.0%;">CYWJ - DÃ©line Airport<br>Lat: 65.211098<br>Lon: -123.435997</div>`)[0];
                 popup_86766862e7b3c1df20aba51e90c71ce0.setContent(html_f9a11dade605f6bcb7150b4a5afe48d3);
             
         
@@ -76851,7 +76879,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_1761816afa51937cbf7aa3552ebdd320.bindTooltip(
                 `<div>
-                     CYWJ | Déline Airport
+                     CYWJ | DÃ©line Airport
                  </div>`,
                 {
   "sticky": true,
@@ -98372,7 +98400,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_9b39aa210af3a7d4ea0c7309ba8f06b3 = $(`<div id="html_9b39aa210af3a7d4ea0c7309ba8f06b3" style="width: 100.0%; height: 100.0%;">CYHF - Hearst René Fontaine Municipal Airport<br>Lat: 49.714199<br>Lon: -83.686096</div>`)[0];
+                var html_9b39aa210af3a7d4ea0c7309ba8f06b3 = $(`<div id="html_9b39aa210af3a7d4ea0c7309ba8f06b3" style="width: 100.0%; height: 100.0%;">CYHF - Hearst RenÃ© Fontaine Municipal Airport<br>Lat: 49.714199<br>Lon: -83.686096</div>`)[0];
                 popup_b07c1b38d2d159d69efa980d1b35b846.setContent(html_9b39aa210af3a7d4ea0c7309ba8f06b3);
             
         
@@ -98385,7 +98413,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_94246b745e97fcf5846679ac31978b16.bindTooltip(
                 `<div>
-                     CYHF | Hearst René Fontaine Municipal Airport
+                     CYHF | Hearst RenÃ© Fontaine Municipal Airport
                  </div>`,
                 {
   "sticky": true,
@@ -126790,7 +126818,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_74a4d355c99e6a98627d0b24a8216531 = $(`<div id="html_74a4d355c99e6a98627d0b24a8216531" style="width: 100.0%; height: 100.0%;">CA-0199 - Lac Éon Airport<br>Lat: 51.852501<br>Lon: -63.276798</div>`)[0];
+                var html_74a4d355c99e6a98627d0b24a8216531 = $(`<div id="html_74a4d355c99e6a98627d0b24a8216531" style="width: 100.0%; height: 100.0%;">CA-0199 - Lac Ã‰on Airport<br>Lat: 51.852501<br>Lon: -63.276798</div>`)[0];
                 popup_a96de32327e546056e3649b367e001c4.setContent(html_74a4d355c99e6a98627d0b24a8216531);
             
         
@@ -126803,7 +126831,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_5b8f44789e1741188f0f4319c742f770.bindTooltip(
                 `<div>
-                     CA-0199 | Lac Éon Airport
+                     CA-0199 | Lac Ã‰on Airport
                  </div>`,
                 {
   "sticky": true,
@@ -127078,7 +127106,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_c7249b43c3767ad6c1b4626fcc1b06ac = $(`<div id="html_c7249b43c3767ad6c1b4626fcc1b06ac" style="width: 100.0%; height: 100.0%;">CA-0254 - Mégantic Airport<br>Lat: 45.588055<br>Lon: -70.871665</div>`)[0];
+                var html_c7249b43c3767ad6c1b4626fcc1b06ac = $(`<div id="html_c7249b43c3767ad6c1b4626fcc1b06ac" style="width: 100.0%; height: 100.0%;">CA-0254 - MÃ©gantic Airport<br>Lat: 45.588055<br>Lon: -70.871665</div>`)[0];
                 popup_87682edf418a572fdbbf62af21f9cc12.setContent(html_c7249b43c3767ad6c1b4626fcc1b06ac);
             
         
@@ -127091,7 +127119,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_a08e535516d44ee4cb2754ab8d1f5802.bindTooltip(
                 `<div>
-                     CA-0254 | Mégantic Airport
+                     CA-0254 | MÃ©gantic Airport
                  </div>`,
                 {
   "sticky": true,
@@ -127318,7 +127346,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_8499e9303beeb424a3aa172f33d5d5fe = $(`<div id="html_8499e9303beeb424a3aa172f33d5d5fe" style="width: 100.0%; height: 100.0%;">CA-0314 - Rivière-Ouelle Airport<br>Lat: 47.445332<br>Lon: -69.979134</div>`)[0];
+                var html_8499e9303beeb424a3aa172f33d5d5fe = $(`<div id="html_8499e9303beeb424a3aa172f33d5d5fe" style="width: 100.0%; height: 100.0%;">CA-0314 - RiviÃ¨re-Ouelle Airport<br>Lat: 47.445332<br>Lon: -69.979134</div>`)[0];
                 popup_22b18fb3fd0607ab35d437a3911b5bef.setContent(html_8499e9303beeb424a3aa172f33d5d5fe);
             
         
@@ -127331,7 +127359,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_3b49a5ed63d15551a3a3c798352adece.bindTooltip(
                 `<div>
-                     CA-0314 | Rivière-Ouelle Airport
+                     CA-0314 | RiviÃ¨re-Ouelle Airport
                  </div>`,
                 {
   "sticky": true,
@@ -127750,7 +127778,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_dde66dcbeca94736e9ed9a5d4caca9ed = $(`<div id="html_dde66dcbeca94736e9ed9a5d4caca9ed" style="width: 100.0%; height: 100.0%;">CA-0385 - Baie-Trinité Airport<br>Lat: 49.399859<br>Lon: -67.312460</div>`)[0];
+                var html_dde66dcbeca94736e9ed9a5d4caca9ed = $(`<div id="html_dde66dcbeca94736e9ed9a5d4caca9ed" style="width: 100.0%; height: 100.0%;">CA-0385 - Baie-TrinitÃ© Airport<br>Lat: 49.399859<br>Lon: -67.312460</div>`)[0];
                 popup_f254658f41fe1ab79b94ac4ba893d18d.setContent(html_dde66dcbeca94736e9ed9a5d4caca9ed);
             
         
@@ -127763,7 +127791,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_2ca010201c8c9f1d227b3f29c4443ff2.bindTooltip(
                 `<div>
-                     CA-0385 | Baie-Trinité Airport
+                     CA-0385 | Baie-TrinitÃ© Airport
                  </div>`,
                 {
   "sticky": true,
@@ -127846,7 +127874,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_6a0f371e022291e2e666e570e5be6493 = $(`<div id="html_6a0f371e022291e2e666e570e5be6493" style="width: 100.0%; height: 100.0%;">CA-0423 - Île d'Orléans Heliport<br>Lat: 46.983334<br>Lon: -70.833336</div>`)[0];
+                var html_6a0f371e022291e2e666e570e5be6493 = $(`<div id="html_6a0f371e022291e2e666e570e5be6493" style="width: 100.0%; height: 100.0%;">CA-0423 - ÃŽle d'OrlÃ©ans Heliport<br>Lat: 46.983334<br>Lon: -70.833336</div>`)[0];
                 popup_05defd310f4504b158f451e57e06e9e2.setContent(html_6a0f371e022291e2e666e570e5be6493);
             
         
@@ -127859,7 +127887,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_370078847c9b1518e1afead04cc180c0.bindTooltip(
                 `<div>
-                     CA-0423 | Île d'Orléans Heliport
+                     CA-0423 | ÃŽle d'OrlÃ©ans Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -127942,7 +127970,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_98474f1a718f97db90cdd319936d2427 = $(`<div id="html_98474f1a718f97db90cdd319936d2427" style="width: 100.0%; height: 100.0%;">CA-0490 - Aérodrome Saint-Louis<br>Lat: 46.770733<br>Lon: -71.285477</div>`)[0];
+                var html_98474f1a718f97db90cdd319936d2427 = $(`<div id="html_98474f1a718f97db90cdd319936d2427" style="width: 100.0%; height: 100.0%;">CA-0490 - AÃ©rodrome Saint-Louis<br>Lat: 46.770733<br>Lon: -71.285477</div>`)[0];
                 popup_98e088be6816dcfcb8879544f5a085e1.setContent(html_98474f1a718f97db90cdd319936d2427);
             
         
@@ -127955,7 +127983,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_efc5d3c9313522694671689d0f61ebd0.bindTooltip(
                 `<div>
-                     CA-0490 | Aérodrome Saint-Louis
+                     CA-0490 | AÃ©rodrome Saint-Louis
                  </div>`,
                 {
   "sticky": true,
@@ -127990,7 +128018,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_71de2b14c2a9da78767969ecaad4f616 = $(`<div id="html_71de2b14c2a9da78767969ecaad4f616" style="width: 100.0%; height: 100.0%;">CA-0491 - Montréal / Boucherville Water Aerodrome<br>Lat: 45.627778<br>Lon: -73.454722</div>`)[0];
+                var html_71de2b14c2a9da78767969ecaad4f616 = $(`<div id="html_71de2b14c2a9da78767969ecaad4f616" style="width: 100.0%; height: 100.0%;">CA-0491 - MontrÃ©al / Boucherville Water Aerodrome<br>Lat: 45.627778<br>Lon: -73.454722</div>`)[0];
                 popup_c447a7648b1d2ae9673a65043fc5014c.setContent(html_71de2b14c2a9da78767969ecaad4f616);
             
         
@@ -128003,7 +128031,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_4bfa68232dca814f9065060a9a1be027.bindTooltip(
                 `<div>
-                     CA-0491 | Montréal / Boucherville Water Aerodrome
+                     CA-0491 | MontrÃ©al / Boucherville Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -128230,7 +128258,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_65eec8d079566eacf9c070c9d62ac508 = $(`<div id="html_65eec8d079566eacf9c070c9d62ac508" style="width: 100.0%; height: 100.0%;">CA-0574 - Les Cèdres Water Aerodrome<br>Lat: 45.306001<br>Lon: -74.058008</div>`)[0];
+                var html_65eec8d079566eacf9c070c9d62ac508 = $(`<div id="html_65eec8d079566eacf9c070c9d62ac508" style="width: 100.0%; height: 100.0%;">CA-0574 - Les CÃ¨dres Water Aerodrome<br>Lat: 45.306001<br>Lon: -74.058008</div>`)[0];
                 popup_b0be089239bb79735fa2301e8b2d82d6.setContent(html_65eec8d079566eacf9c070c9d62ac508);
             
         
@@ -128243,7 +128271,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_57dff02ee73df4cd9f63fb91035a341e.bindTooltip(
                 `<div>
-                     CA-0574 | Les Cèdres Water Aerodrome
+                     CA-0574 | Les CÃ¨dres Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -128326,7 +128354,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_141a46dac96115d7d45dd0eb9f9acfb4 = $(`<div id="html_141a46dac96115d7d45dd0eb9f9acfb4" style="width: 100.0%; height: 100.0%;">CA-0600 - Rivère l'Acadie Water Aerodrome<br>Lat: 45.490350<br>Lon: -73.303326</div>`)[0];
+                var html_141a46dac96115d7d45dd0eb9f9acfb4 = $(`<div id="html_141a46dac96115d7d45dd0eb9f9acfb4" style="width: 100.0%; height: 100.0%;">CA-0600 - RivÃ¨re l'Acadie Water Aerodrome<br>Lat: 45.490350<br>Lon: -73.303326</div>`)[0];
                 popup_51dd887ae2869edd2a93d684ed6a1878.setContent(html_141a46dac96115d7d45dd0eb9f9acfb4);
             
         
@@ -128339,7 +128367,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_ebde39ab2b48dca0b8610a15851bdd84.bindTooltip(
                 `<div>
-                     CA-0600 | Rivère l'Acadie Water Aerodrome
+                     CA-0600 | RivÃ¨re l'Acadie Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -128806,7 +128834,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_0c9ce5264ba36a7a41e165c5f1b7b910 = $(`<div id="html_0c9ce5264ba36a7a41e165c5f1b7b910" style="width: 100.0%; height: 100.0%;">CA-0655 - Quebec/Sûreté Heliport<br>Lat: 46.834000<br>Lon: -71.284100</div>`)[0];
+                var html_0c9ce5264ba36a7a41e165c5f1b7b910 = $(`<div id="html_0c9ce5264ba36a7a41e165c5f1b7b910" style="width: 100.0%; height: 100.0%;">CA-0655 - Quebec/SÃ»retÃ© Heliport<br>Lat: 46.834000<br>Lon: -71.284100</div>`)[0];
                 popup_0569e4f83a6cd626c897f9d638eaeb42.setContent(html_0c9ce5264ba36a7a41e165c5f1b7b910);
             
         
@@ -128819,7 +128847,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_72681a989c4915b55ab93560131a9c1a.bindTooltip(
                 `<div>
-                     CA-0655 | Quebec/Sûreté Heliport
+                     CA-0655 | Quebec/SÃ»retÃ© Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -128902,7 +128930,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_028aea30ef08cd56614b19b44ace5ea2 = $(`<div id="html_028aea30ef08cd56614b19b44ace5ea2" style="width: 100.0%; height: 100.0%;">CA-0657 - Pointe-au-Chêne Water Aerodrome<br>Lat: 45.640002<br>Lon: -74.750000</div>`)[0];
+                var html_028aea30ef08cd56614b19b44ace5ea2 = $(`<div id="html_028aea30ef08cd56614b19b44ace5ea2" style="width: 100.0%; height: 100.0%;">CA-0657 - Pointe-au-ChÃªne Water Aerodrome<br>Lat: 45.640002<br>Lon: -74.750000</div>`)[0];
                 popup_b3dcf08a21913947dc7952d7b2672591.setContent(html_028aea30ef08cd56614b19b44ace5ea2);
             
         
@@ -128915,7 +128943,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_31a64d70e1bb0cd97c790022864d4d0b.bindTooltip(
                 `<div>
-                     CA-0657 | Pointe-au-Chêne Water Aerodrome
+                     CA-0657 | Pointe-au-ChÃªne Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -128998,7 +129026,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_2a05cf7ced9cf29a68776bb3c54613ec = $(`<div id="html_2a05cf7ced9cf29a68776bb3c54613ec" style="width: 100.0%; height: 100.0%;">CA-0681 - St. André-Avellin (Old Aerodrome)<br>Lat: 45.802801<br>Lon: -75.054098</div>`)[0];
+                var html_2a05cf7ced9cf29a68776bb3c54613ec = $(`<div id="html_2a05cf7ced9cf29a68776bb3c54613ec" style="width: 100.0%; height: 100.0%;">CA-0681 - St. AndrÃ©-Avellin (Old Aerodrome)<br>Lat: 45.802801<br>Lon: -75.054098</div>`)[0];
                 popup_32ca46102603ea327f37deb147806257.setContent(html_2a05cf7ced9cf29a68776bb3c54613ec);
             
         
@@ -129011,7 +129039,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_7cf741af8088226cd89806f4a127f3cb.bindTooltip(
                 `<div>
-                     CA-0681 | St. André-Avellin (Old Aerodrome)
+                     CA-0681 | St. AndrÃ©-Avellin (Old Aerodrome)
                  </div>`,
                 {
   "sticky": true,
@@ -129334,7 +129362,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_9618353bb7a288315b640efa5adb334e = $(`<div id="html_9618353bb7a288315b640efa5adb334e" style="width: 100.0%; height: 100.0%;">CA-0719 - Sept-Îles/Lac des Rapides Airport<br>Lat: 50.297620<br>Lon: -66.408960</div>`)[0];
+                var html_9618353bb7a288315b640efa5adb334e = $(`<div id="html_9618353bb7a288315b640efa5adb334e" style="width: 100.0%; height: 100.0%;">CA-0719 - Sept-ÃŽles/Lac des Rapides Airport<br>Lat: 50.297620<br>Lon: -66.408960</div>`)[0];
                 popup_04df0d324e055d8a3913563449f5c98c.setContent(html_9618353bb7a288315b640efa5adb334e);
             
         
@@ -129347,7 +129375,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_361ef491dd84f1423159a9e696428b04.bindTooltip(
                 `<div>
-                     CA-0719 | Sept-Îles/Lac des Rapides Airport
+                     CA-0719 | Sept-ÃŽles/Lac des Rapides Airport
                  </div>`,
                 {
   "sticky": true,
@@ -129430,7 +129458,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_caf2d14b18b4378d42a3653f0a21a242 = $(`<div id="html_caf2d14b18b4378d42a3653f0a21a242" style="width: 100.0%; height: 100.0%;">CA-0848 - Rivière-Bleue Airport<br>Lat: 47.446490<br>Lon: -69.039420</div>`)[0];
+                var html_caf2d14b18b4378d42a3653f0a21a242 = $(`<div id="html_caf2d14b18b4378d42a3653f0a21a242" style="width: 100.0%; height: 100.0%;">CA-0848 - RiviÃ¨re-Bleue Airport<br>Lat: 47.446490<br>Lon: -69.039420</div>`)[0];
                 popup_595e04f7e2d75e146fb08d366ad7a169.setContent(html_caf2d14b18b4378d42a3653f0a21a242);
             
         
@@ -129443,7 +129471,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_bcc2a42f4e341a64513e242f21715bf7.bindTooltip(
                 `<div>
-                     CA-0848 | Rivière-Bleue Airport
+                     CA-0848 | RiviÃ¨re-Bleue Airport
                  </div>`,
                 {
   "sticky": true,
@@ -129526,7 +129554,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_d2f1354f3fc3e1725331f29b85db9fca = $(`<div id="html_d2f1354f3fc3e1725331f29b85db9fca" style="width: 100.0%; height: 100.0%;">CA-1049 - Chicoutimi (Hydro-Québec) Heliport<br>Lat: 48.400002<br>Lon: -71.116898</div>`)[0];
+                var html_d2f1354f3fc3e1725331f29b85db9fca = $(`<div id="html_d2f1354f3fc3e1725331f29b85db9fca" style="width: 100.0%; height: 100.0%;">CA-1049 - Chicoutimi (Hydro-QuÃ©bec) Heliport<br>Lat: 48.400002<br>Lon: -71.116898</div>`)[0];
                 popup_d6cbefaf0a4238fd848ca54304035653.setContent(html_d2f1354f3fc3e1725331f29b85db9fca);
             
         
@@ -129539,7 +129567,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_a799780525f114713464b1bb4dddb2d6.bindTooltip(
                 `<div>
-                     CA-1049 | Chicoutimi (Hydro-Québec) Heliport
+                     CA-1049 | Chicoutimi (Hydro-QuÃ©bec) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -129814,7 +129842,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_78640fbf227c08b908aac7ae3ab9e4a0 = $(`<div id="html_78640fbf227c08b908aac7ae3ab9e4a0" style="width: 100.0%; height: 100.0%;">CA-1100 - Rimouski (Hydro-Québec) Heliport<br>Lat: 48.441101<br>Lon: -68.542503</div>`)[0];
+                var html_78640fbf227c08b908aac7ae3ab9e4a0 = $(`<div id="html_78640fbf227c08b908aac7ae3ab9e4a0" style="width: 100.0%; height: 100.0%;">CA-1100 - Rimouski (Hydro-QuÃ©bec) Heliport<br>Lat: 48.441101<br>Lon: -68.542503</div>`)[0];
                 popup_afb47c7ad490090a5a7f77d46c5e54ea.setContent(html_78640fbf227c08b908aac7ae3ab9e4a0);
             
         
@@ -129827,7 +129855,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_84639d58b11add1e5beada642892a77f.bindTooltip(
                 `<div>
-                     CA-1100 | Rimouski (Hydro-Québec) Heliport
+                     CA-1100 | Rimouski (Hydro-QuÃ©bec) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -129862,7 +129890,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_976f753b151a3fe3b0bf7631789b7a3a = $(`<div id="html_976f753b151a3fe3b0bf7631789b7a3a" style="width: 100.0%; height: 100.0%;">CA-1101 - Montreal / Les Cèdres Airport<br>Lat: 45.347500<br>Lon: -74.076698</div>`)[0];
+                var html_976f753b151a3fe3b0bf7631789b7a3a = $(`<div id="html_976f753b151a3fe3b0bf7631789b7a3a" style="width: 100.0%; height: 100.0%;">CA-1101 - Montreal / Les CÃ¨dres Airport<br>Lat: 45.347500<br>Lon: -74.076698</div>`)[0];
                 popup_e9dd1aff28d777afa8d4321630242071.setContent(html_976f753b151a3fe3b0bf7631789b7a3a);
             
         
@@ -129875,7 +129903,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_4184b3924af56cbf8fee87240c7cac36.bindTooltip(
                 `<div>
-                     CA-1101 | Montreal / Les Cèdres Airport
+                     CA-1101 | Montreal / Les CÃ¨dres Airport
                  </div>`,
                 {
   "sticky": true,
@@ -130006,7 +130034,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_209dfb67dbf05dcbeb51a12066d490e8 = $(`<div id="html_209dfb67dbf05dcbeb51a12066d490e8" style="width: 100.0%; height: 100.0%;">CA-1104 - Quebec / Hôpital de l'enfant-Jésus Heliport<br>Lat: 46.837568<br>Lon: -71.225179</div>`)[0];
+                var html_209dfb67dbf05dcbeb51a12066d490e8 = $(`<div id="html_209dfb67dbf05dcbeb51a12066d490e8" style="width: 100.0%; height: 100.0%;">CA-1104 - Quebec / HÃ´pital de l'enfant-JÃ©sus Heliport<br>Lat: 46.837568<br>Lon: -71.225179</div>`)[0];
                 popup_9e3bb45d7cadcedecac63302b1f9bcaf.setContent(html_209dfb67dbf05dcbeb51a12066d490e8);
             
         
@@ -130019,7 +130047,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_866b86a33816b343fc1cb3b7f6736193.bindTooltip(
                 `<div>
-                     CA-1104 | Quebec / Hôpital de l'enfant-Jésus Heliport
+                     CA-1104 | Quebec / HÃ´pital de l'enfant-JÃ©sus Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -130534,7 +130562,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_c1560ec39c32a4dee1f33761396f7b5f = $(`<div id="html_c1560ec39c32a4dee1f33761396f7b5f" style="width: 100.0%; height: 100.0%;">CA-1134 - Parc De La Vérendrye (Le Domaine) Seaplane Base<br>Lat: 47.036701<br>Lon: -76.536697</div>`)[0];
+                var html_c1560ec39c32a4dee1f33761396f7b5f = $(`<div id="html_c1560ec39c32a4dee1f33761396f7b5f" style="width: 100.0%; height: 100.0%;">CA-1134 - Parc De La VÃ©rendrye (Le Domaine) Seaplane Base<br>Lat: 47.036701<br>Lon: -76.536697</div>`)[0];
                 popup_b47b782c6883ea283fc3da8b15d4e80e.setContent(html_c1560ec39c32a4dee1f33761396f7b5f);
             
         
@@ -130547,7 +130575,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_4deaaff3ad0726c084e75b520f18dd0c.bindTooltip(
                 `<div>
-                     CA-1134 | Parc De La Vérendrye (Le Domaine) Seaplane Base
+                     CA-1134 | Parc De La VÃ©rendrye (Le Domaine) Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -130582,7 +130610,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_baa885fbf2ff63d98041eea654144270 = $(`<div id="html_baa885fbf2ff63d98041eea654144270" style="width: 100.0%; height: 100.0%;">CA-1141 - Témiscaming/Lac Kipawa Seaplane Base<br>Lat: 46.778335<br>Lon: -78.979556</div>`)[0];
+                var html_baa885fbf2ff63d98041eea654144270 = $(`<div id="html_baa885fbf2ff63d98041eea654144270" style="width: 100.0%; height: 100.0%;">CA-1141 - TÃ©miscaming/Lac Kipawa Seaplane Base<br>Lat: 46.778335<br>Lon: -78.979556</div>`)[0];
                 popup_790872d7232e5c60cb7d905272de9c57.setContent(html_baa885fbf2ff63d98041eea654144270);
             
         
@@ -130595,7 +130623,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_8e9eb8f04f977dea21194f0ca1414ba8.bindTooltip(
                 `<div>
-                     CA-1141 | Témiscaming/Lac Kipawa Seaplane Base
+                     CA-1141 | TÃ©miscaming/Lac Kipawa Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -131124,7 +131152,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_37ba5a7d23e59b12c82518aef5c8cca8 = $(`<div id="html_37ba5a7d23e59b12c82518aef5c8cca8" style="width: 100.0%; height: 100.0%;">CA-0187 - Citadelle de Québec Heliport<br>Lat: 46.807443<br>Lon: -71.206642</div>`)[0];
+                var html_37ba5a7d23e59b12c82518aef5c8cca8 = $(`<div id="html_37ba5a7d23e59b12c82518aef5c8cca8" style="width: 100.0%; height: 100.0%;">CA-0187 - Citadelle de QuÃ©bec Heliport<br>Lat: 46.807443<br>Lon: -71.206642</div>`)[0];
                 popup_93be05453c0451c67d2c7a852f780863.setContent(html_37ba5a7d23e59b12c82518aef5c8cca8);
             
         
@@ -131137,7 +131165,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_c9bc26bee7c890c77107d9eeb4df5737.bindTooltip(
                 `<div>
-                     CA-0187 | Citadelle de Québec Heliport
+                     CA-0187 | Citadelle de QuÃ©bec Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -131220,7 +131248,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_ebfc26d735911d0ef8efdea6663d0204 = $(`<div id="html_ebfc26d735911d0ef8efdea6663d0204" style="width: 100.0%; height: 100.0%;">CA-0805 - La Cormorandière Heliport<br>Lat: 47.287710<br>Lon: -61.689140</div>`)[0];
+                var html_ebfc26d735911d0ef8efdea6663d0204 = $(`<div id="html_ebfc26d735911d0ef8efdea6663d0204" style="width: 100.0%; height: 100.0%;">CA-0805 - La CormorandiÃ¨re Heliport<br>Lat: 47.287710<br>Lon: -61.689140</div>`)[0];
                 popup_a3f64f152115f45161ad0382ee1f56d8.setContent(html_ebfc26d735911d0ef8efdea6663d0204);
             
         
@@ -131233,7 +131261,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_3d5cbae7f0b71ab639f21af4b41ea77c.bindTooltip(
                 `<div>
-                     CA-0805 | La Cormorandière Heliport
+                     CA-0805 | La CormorandiÃ¨re Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -131508,7 +131536,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_81b11158ac9768f7577096a36a4a1cd7 = $(`<div id="html_81b11158ac9768f7577096a36a4a1cd7" style="width: 100.0%; height: 100.0%;">CCH7 - Capitale Hélicoptère Heliport<br>Lat: 46.800800<br>Lon: -71.374100</div>`)[0];
+                var html_81b11158ac9768f7577096a36a4a1cd7 = $(`<div id="html_81b11158ac9768f7577096a36a4a1cd7" style="width: 100.0%; height: 100.0%;">CCH7 - Capitale HÃ©licoptÃ¨re Heliport<br>Lat: 46.800800<br>Lon: -71.374100</div>`)[0];
                 popup_0c960707e01b2c587473d4ebe7db6a6f.setContent(html_81b11158ac9768f7577096a36a4a1cd7);
             
         
@@ -131521,7 +131549,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_c503f8bf067a035e8a0b3088b7112529.bindTooltip(
                 `<div>
-                     CCH7 | Capitale Hélicoptère Heliport
+                     CCH7 | Capitale HÃ©licoptÃ¨re Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -131652,7 +131680,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_57f60856a80fcb0795aa0e9fb47c07db = $(`<div id="html_57f60856a80fcb0795aa0e9fb47c07db" style="width: 100.0%; height: 100.0%;">CEH8 - Évasion Hélicoptère Heliport<br>Lat: 45.640600<br>Lon: -73.642702</div>`)[0];
+                var html_57f60856a80fcb0795aa0e9fb47c07db = $(`<div id="html_57f60856a80fcb0795aa0e9fb47c07db" style="width: 100.0%; height: 100.0%;">CEH8 - Ã‰vasion HÃ©licoptÃ¨re Heliport<br>Lat: 45.640600<br>Lon: -73.642702</div>`)[0];
                 popup_7ddcbdbdf5fa778aaae11e58893976ba.setContent(html_57f60856a80fcb0795aa0e9fb47c07db);
             
         
@@ -131665,7 +131693,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_4148034efb66312250657270e843d8fb.bindTooltip(
                 `<div>
-                     CEH8 | Évasion Hélicoptère Heliport
+                     CEH8 | Ã‰vasion HÃ©licoptÃ¨re Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -131844,7 +131872,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_7be192af3270abed766635d194abef4c = $(`<div id="html_7be192af3270abed766635d194abef4c" style="width: 100.0%; height: 100.0%;">CIO2 - Îles aux Oies Heliport<br>Lat: 47.137500<br>Lon: -70.478333</div>`)[0];
+                var html_7be192af3270abed766635d194abef4c = $(`<div id="html_7be192af3270abed766635d194abef4c" style="width: 100.0%; height: 100.0%;">CIO2 - ÃŽles aux Oies Heliport<br>Lat: 47.137500<br>Lon: -70.478333</div>`)[0];
                 popup_f012a08380930deee15987ed7edecc76.setContent(html_7be192af3270abed766635d194abef4c);
             
         
@@ -131857,7 +131885,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_0d11dd6597bd8d339b856f4bc2c190fa.bindTooltip(
                 `<div>
-                     CIO2 | Îles aux Oies Heliport
+                     CIO2 | ÃŽles aux Oies Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -132036,7 +132064,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_290ea51cb4b41ceb1d3990400e517a63 = $(`<div id="html_290ea51cb4b41ceb1d3990400e517a63" style="width: 100.0%; height: 100.0%;">CMH4 - Mirabel Hélico Heliport<br>Lat: 45.695550<br>Lon: -73.952500</div>`)[0];
+                var html_290ea51cb4b41ceb1d3990400e517a63 = $(`<div id="html_290ea51cb4b41ceb1d3990400e517a63" style="width: 100.0%; height: 100.0%;">CMH4 - Mirabel HÃ©lico Heliport<br>Lat: 45.695550<br>Lon: -73.952500</div>`)[0];
                 popup_1b76df03d7908d2cef7b1a2439669cc1.setContent(html_290ea51cb4b41ceb1d3990400e517a63);
             
         
@@ -132049,7 +132077,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_fa34f0f81c25bf458ddad99e5d91aff8.bindTooltip(
                 `<div>
-                     CMH4 | Mirabel Hélico Heliport
+                     CMH4 | Mirabel HÃ©lico Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -132420,7 +132448,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_5767015ffb6b890c74cdeaea024f3a9b = $(`<div id="html_5767015ffb6b890c74cdeaea024f3a9b" style="width: 100.0%; height: 100.0%;">CSE2 - Chibougamau (Hydro-Québec) Heliport<br>Lat: 49.887798<br>Lon: -74.400299</div>`)[0];
+                var html_5767015ffb6b890c74cdeaea024f3a9b = $(`<div id="html_5767015ffb6b890c74cdeaea024f3a9b" style="width: 100.0%; height: 100.0%;">CSE2 - Chibougamau (Hydro-QuÃ©bec) Heliport<br>Lat: 49.887798<br>Lon: -74.400299</div>`)[0];
                 popup_34165f29f4656ae1a501768da4dcd3d6.setContent(html_5767015ffb6b890c74cdeaea024f3a9b);
             
         
@@ -132433,7 +132461,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_9fdc8915219a25efa62344b81ed33c06.bindTooltip(
                 `<div>
-                     CSE2 | Chibougamau (Hydro-Québec) Heliport
+                     CSE2 | Chibougamau (Hydro-QuÃ©bec) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -132564,7 +132592,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_71743aa5d66dd2add90620b1bed8bb6e = $(`<div id="html_71743aa5d66dd2add90620b1bed8bb6e" style="width: 100.0%; height: 100.0%;">CSG7 - François Desourdy Heliport<br>Lat: 45.449699<br>Lon: -71.868896</div>`)[0];
+                var html_71743aa5d66dd2add90620b1bed8bb6e = $(`<div id="html_71743aa5d66dd2add90620b1bed8bb6e" style="width: 100.0%; height: 100.0%;">CSG7 - FranÃ§ois Desourdy Heliport<br>Lat: 45.449699<br>Lon: -71.868896</div>`)[0];
                 popup_72c191e853376c6bb98da41103936547.setContent(html_71743aa5d66dd2add90620b1bed8bb6e);
             
         
@@ -132577,7 +132605,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_8b723e71b73b9505c6aa0276c7ba14e6.bindTooltip(
                 `<div>
-                     CSG7 | François Desourdy Heliport
+                     CSG7 | FranÃ§ois Desourdy Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -132660,7 +132688,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_2b84a5753e0cfc8aa95b1e578d8fac25 = $(`<div id="html_2b84a5753e0cfc8aa95b1e578d8fac25" style="width: 100.0%; height: 100.0%;">CSH6 - Montreal / Les Cèdres Heliport<br>Lat: 45.347165<br>Lon: -74.086985</div>`)[0];
+                var html_2b84a5753e0cfc8aa95b1e578d8fac25 = $(`<div id="html_2b84a5753e0cfc8aa95b1e578d8fac25" style="width: 100.0%; height: 100.0%;">CSH6 - Montreal / Les CÃ¨dres Heliport<br>Lat: 45.347165<br>Lon: -74.086985</div>`)[0];
                 popup_4f128cd310159fbf6d4da0d62f23176e.setContent(html_2b84a5753e0cfc8aa95b1e578d8fac25);
             
         
@@ -132673,7 +132701,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_897050b57d6ddc73261f55bbf4ec2a0c.bindTooltip(
                 `<div>
-                     CSH6 | Montreal / Les Cèdres Heliport
+                     CSH6 | Montreal / Les CÃ¨dres Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -132708,7 +132736,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_e0f061f16aaef292e42312f4d7ab5514 = $(`<div id="html_e0f061f16aaef292e42312f4d7ab5514" style="width: 100.0%; height: 100.0%;">CSH9 - Montréal East (AIM) Heliport<br>Lat: 45.635193<br>Lon: -73.562138</div>`)[0];
+                var html_e0f061f16aaef292e42312f4d7ab5514 = $(`<div id="html_e0f061f16aaef292e42312f4d7ab5514" style="width: 100.0%; height: 100.0%;">CSH9 - MontrÃ©al East (AIM) Heliport<br>Lat: 45.635193<br>Lon: -73.562138</div>`)[0];
                 popup_bf2cb5c211760c2d5e67260c10c43af7.setContent(html_e0f061f16aaef292e42312f4d7ab5514);
             
         
@@ -132721,7 +132749,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_f23f2473e27e7391a2836bfa7b34247d.bindTooltip(
                 `<div>
-                     CSH9 | Montréal East (AIM) Heliport
+                     CSH9 | MontrÃ©al East (AIM) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -132852,7 +132880,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_28d84be6d114bf01450f3b69bd5cae01 = $(`<div id="html_28d84be6d114bf01450f3b69bd5cae01" style="width: 100.0%; height: 100.0%;">CSN9 - Baie-Comeau / Héli-Manicouagan Heliport<br>Lat: 49.198956<br>Lon: -68.285418</div>`)[0];
+                var html_28d84be6d114bf01450f3b69bd5cae01 = $(`<div id="html_28d84be6d114bf01450f3b69bd5cae01" style="width: 100.0%; height: 100.0%;">CSN9 - Baie-Comeau / HÃ©li-Manicouagan Heliport<br>Lat: 49.198956<br>Lon: -68.285418</div>`)[0];
                 popup_e3a7342614d3af613ef181596a28db35.setContent(html_28d84be6d114bf01450f3b69bd5cae01);
             
         
@@ -132865,7 +132893,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_9c7d3e8f6ec707d8e1334485693095a3.bindTooltip(
                 `<div>
-                     CSN9 | Baie-Comeau / Héli-Manicouagan Heliport
+                     CSN9 | Baie-Comeau / HÃ©li-Manicouagan Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -132900,7 +132928,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_0ca9816a8e8bd0d2bafbdd9c6fa0f76f = $(`<div id="html_0ca9816a8e8bd0d2bafbdd9c6fa0f76f" style="width: 100.0%; height: 100.0%;">CSR5 - Île d'Orléans Heliport<br>Lat: 46.990799<br>Lon: -70.826698</div>`)[0];
+                var html_0ca9816a8e8bd0d2bafbdd9c6fa0f76f = $(`<div id="html_0ca9816a8e8bd0d2bafbdd9c6fa0f76f" style="width: 100.0%; height: 100.0%;">CSR5 - ÃŽle d'OrlÃ©ans Heliport<br>Lat: 46.990799<br>Lon: -70.826698</div>`)[0];
                 popup_e6b2e079d6ece06641426cb271bde35e.setContent(html_0ca9816a8e8bd0d2bafbdd9c6fa0f76f);
             
         
@@ -132913,7 +132941,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_4443225af95ab91d67a14eb6dd544958.bindTooltip(
                 `<div>
-                     CSR5 | Île d'Orléans Heliport
+                     CSR5 | ÃŽle d'OrlÃ©ans Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -132948,7 +132976,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_ecbbfdee9fffb03d5bc207f1c4cb8d02 = $(`<div id="html_ecbbfdee9fffb03d5bc207f1c4cb8d02" style="width: 100.0%; height: 100.0%;">CSS2 - Rivière-du-Loup Heliport<br>Lat: 47.849039<br>Lon: -69.542253</div>`)[0];
+                var html_ecbbfdee9fffb03d5bc207f1c4cb8d02 = $(`<div id="html_ecbbfdee9fffb03d5bc207f1c4cb8d02" style="width: 100.0%; height: 100.0%;">CSS2 - RiviÃ¨re-du-Loup Heliport<br>Lat: 47.849039<br>Lon: -69.542253</div>`)[0];
                 popup_9422e0ad91aaf956b877c1f5bc9bff3e.setContent(html_ecbbfdee9fffb03d5bc207f1c4cb8d02);
             
         
@@ -132961,7 +132989,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_fba5ea74ea1d0bbc4421e73aeb61b11d.bindTooltip(
                 `<div>
-                     CSS2 | Rivière-du-Loup Heliport
+                     CSS2 | RiviÃ¨re-du-Loup Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -133092,7 +133120,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_56a4415aa590fb48374d270052a25bd4 = $(`<div id="html_56a4415aa590fb48374d270052a25bd4" style="width: 100.0%; height: 100.0%;">CSV3 - Bécancour Heliport<br>Lat: 46.365002<br>Lon: -72.396103</div>`)[0];
+                var html_56a4415aa590fb48374d270052a25bd4 = $(`<div id="html_56a4415aa590fb48374d270052a25bd4" style="width: 100.0%; height: 100.0%;">CSV3 - BÃ©cancour Heliport<br>Lat: 46.365002<br>Lon: -72.396103</div>`)[0];
                 popup_fe6cdf0c1007d41c0c15a92c88641257.setContent(html_56a4415aa590fb48374d270052a25bd4);
             
         
@@ -133105,7 +133133,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_98b3b187bf4ad795b7391f65674cb614.bindTooltip(
                 `<div>
-                     CSV3 | Bécancour Heliport
+                     CSV3 | BÃ©cancour Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -133140,7 +133168,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_00721a48c003ab1f7387a01b67d0cd43 = $(`<div id="html_00721a48c003ab1f7387a01b67d0cd43" style="width: 100.0%; height: 100.0%;">CSW5 - Montréal (Bell) Heliport<br>Lat: 45.685001<br>Lon: -73.931099</div>`)[0];
+                var html_00721a48c003ab1f7387a01b67d0cd43 = $(`<div id="html_00721a48c003ab1f7387a01b67d0cd43" style="width: 100.0%; height: 100.0%;">CSW5 - MontrÃ©al (Bell) Heliport<br>Lat: 45.685001<br>Lon: -73.931099</div>`)[0];
                 popup_b974477779db66823881e2738ae6875c.setContent(html_00721a48c003ab1f7387a01b67d0cd43);
             
         
@@ -133153,7 +133181,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_554c6e2d4cc147e6a0078056448ce8a1.bindTooltip(
                 `<div>
-                     CSW5 | Montréal (Bell) Heliport
+                     CSW5 | MontrÃ©al (Bell) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -133284,7 +133312,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_96e43a842e2b73dc9e25c3fb7e302c2e = $(`<div id="html_96e43a842e2b73dc9e25c3fb7e302c2e" style="width: 100.0%; height: 100.0%;">CSZ2 - Québec (Complex H) Heliport<br>Lat: 46.807205<br>Lon: -71.213432</div>`)[0];
+                var html_96e43a842e2b73dc9e25c3fb7e302c2e = $(`<div id="html_96e43a842e2b73dc9e25c3fb7e302c2e" style="width: 100.0%; height: 100.0%;">CSZ2 - QuÃ©bec (Complex H) Heliport<br>Lat: 46.807205<br>Lon: -71.213432</div>`)[0];
                 popup_150dd91e3596a4d855d3d083f91ab107.setContent(html_96e43a842e2b73dc9e25c3fb7e302c2e);
             
         
@@ -133297,7 +133325,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_4282d6f68918aacd2ab5c44be8d15396.bindTooltip(
                 `<div>
-                     CSZ2 | Québec (Complex H) Heliport
+                     CSZ2 | QuÃ©bec (Complex H) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -133332,7 +133360,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_35c4f26d0ef905ba7f3ea25b20c8ff29 = $(`<div id="html_35c4f26d0ef905ba7f3ea25b20c8ff29" style="width: 100.0%; height: 100.0%;">CSZ6 - St-Jérôme (Hydro-Québec) Heliport<br>Lat: 45.770763<br>Lon: -74.026997</div>`)[0];
+                var html_35c4f26d0ef905ba7f3ea25b20c8ff29 = $(`<div id="html_35c4f26d0ef905ba7f3ea25b20c8ff29" style="width: 100.0%; height: 100.0%;">CSZ6 - St-JÃ©rÃ´me (Hydro-QuÃ©bec) Heliport<br>Lat: 45.770763<br>Lon: -74.026997</div>`)[0];
                 popup_cc5c9d5329becd25fd0d4d11b3c0831f.setContent(html_35c4f26d0ef905ba7f3ea25b20c8ff29);
             
         
@@ -133345,7 +133373,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_516e34835f2fca76f098a87665320f3a.bindTooltip(
                 `<div>
-                     CSZ6 | St-Jérôme (Hydro-Québec) Heliport
+                     CSZ6 | St-JÃ©rÃ´me (Hydro-QuÃ©bec) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -133380,7 +133408,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_d63fca7b614ea8983d8551db7bed7e4f = $(`<div id="html_d63fca7b614ea8983d8551db7bed7e4f" style="width: 100.0%; height: 100.0%;">CSZ8 - Montréal (Sacré-Coeur) Heliport<br>Lat: 45.533169<br>Lon: -73.712431</div>`)[0];
+                var html_d63fca7b614ea8983d8551db7bed7e4f = $(`<div id="html_d63fca7b614ea8983d8551db7bed7e4f" style="width: 100.0%; height: 100.0%;">CSZ8 - MontrÃ©al (SacrÃ©-Coeur) Heliport<br>Lat: 45.533169<br>Lon: -73.712431</div>`)[0];
                 popup_9c61c0f0abd49647477c31f69f0e33f7.setContent(html_d63fca7b614ea8983d8551db7bed7e4f);
             
         
@@ -133393,7 +133421,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_ee67d33bbbfae46ac9781ed8c1f0bb9f.bindTooltip(
                 `<div>
-                     CSZ8 | Montréal (Sacré-Coeur) Heliport
+                     CSZ8 | MontrÃ©al (SacrÃ©-Coeur) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -133428,7 +133456,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_e130881871ad26a449c70d4a5f881944 = $(`<div id="html_e130881871ad26a449c70d4a5f881944" style="width: 100.0%; height: 100.0%;">CTA2 - Sept-Îles (Hydro-Québec) Heliport<br>Lat: 50.288352<br>Lon: -66.412418</div>`)[0];
+                var html_e130881871ad26a449c70d4a5f881944 = $(`<div id="html_e130881871ad26a449c70d4a5f881944" style="width: 100.0%; height: 100.0%;">CTA2 - Sept-ÃŽles (Hydro-QuÃ©bec) Heliport<br>Lat: 50.288352<br>Lon: -66.412418</div>`)[0];
                 popup_13df5c058cc76cd0f705ddd9c26ddf12.setContent(html_e130881871ad26a449c70d4a5f881944);
             
         
@@ -133441,7 +133469,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_b11317fbb8253f454d6c6707561e51b5.bindTooltip(
                 `<div>
-                     CTA2 | Sept-Îles (Hydro-Québec) Heliport
+                     CTA2 | Sept-ÃŽles (Hydro-QuÃ©bec) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -133716,7 +133744,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_535c565c7dabf954a099fa1ed09b1092 = $(`<div id="html_535c565c7dabf954a099fa1ed09b1092" style="width: 100.0%; height: 100.0%;">CTJ2 - Québec (Coast Guard) Heliport<br>Lat: 46.806335<br>Lon: -71.203979</div>`)[0];
+                var html_535c565c7dabf954a099fa1ed09b1092 = $(`<div id="html_535c565c7dabf954a099fa1ed09b1092" style="width: 100.0%; height: 100.0%;">CTJ2 - QuÃ©bec (Coast Guard) Heliport<br>Lat: 46.806335<br>Lon: -71.203979</div>`)[0];
                 popup_8ebc471fc15a207498d72cad8db9fef0.setContent(html_535c565c7dabf954a099fa1ed09b1092);
             
         
@@ -133729,7 +133757,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_85b6122dc976a9962a4aaca432784869.bindTooltip(
                 `<div>
-                     CTJ2 | Québec (Coast Guard) Heliport
+                     CTJ2 | QuÃ©bec (Coast Guard) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -134416,7 +134444,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_d9f6e4a2126b81aa30614ba87b365ab1 = $(`<div id="html_d9f6e4a2126b81aa30614ba87b365ab1" style="width: 100.0%; height: 100.0%;">CYGL - La Grande Rivière Airport<br>Lat: 53.625301<br>Lon: -77.704201</div>`)[0];
+                var html_d9f6e4a2126b81aa30614ba87b365ab1 = $(`<div id="html_d9f6e4a2126b81aa30614ba87b365ab1" style="width: 100.0%; height: 100.0%;">CYGL - La Grande RiviÃ¨re Airport<br>Lat: 53.625301<br>Lon: -77.704201</div>`)[0];
                 popup_705d9d664e4debb2c6d11bb4c5165263.setContent(html_d9f6e4a2126b81aa30614ba87b365ab1);
             
         
@@ -134429,7 +134457,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_1c65114d875a7a90e19c82427c88839f.bindTooltip(
                 `<div>
-                     CYGL | La Grande Rivière Airport
+                     CYGL | La Grande RiviÃ¨re Airport
                  </div>`,
                 {
   "sticky": true,
@@ -134464,7 +134492,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_a2c959764911f7870926f659e39fa678 = $(`<div id="html_a2c959764911f7870926f659e39fa678" style="width: 100.0%; height: 100.0%;">CYGP - Michel-Pouliot Gaspé Airport<br>Lat: 48.774915<br>Lon: -64.481893</div>`)[0];
+                var html_a2c959764911f7870926f659e39fa678 = $(`<div id="html_a2c959764911f7870926f659e39fa678" style="width: 100.0%; height: 100.0%;">CYGP - Michel-Pouliot GaspÃ© Airport<br>Lat: 48.774915<br>Lon: -64.481893</div>`)[0];
                 popup_69de474c1ecb0eced05712fa2bdb5f31.setContent(html_a2c959764911f7870926f659e39fa678);
             
         
@@ -134477,7 +134505,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_2d0ad3b84c17b485c063ebc983157214.bindTooltip(
                 `<div>
-                     CYGP | Michel-Pouliot Gaspé Airport
+                     CYGP | Michel-Pouliot GaspÃ© Airport
                  </div>`,
                 {
   "sticky": true,
@@ -134512,7 +134540,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_f33c838a61cbf7f8d1c09eba215213b3 = $(`<div id="html_f33c838a61cbf7f8d1c09eba215213b3" style="width: 100.0%; height: 100.0%;">CYGR - Îles-de-la-Madeleine Airport<br>Lat: 47.425242<br>Lon: -61.778612</div>`)[0];
+                var html_f33c838a61cbf7f8d1c09eba215213b3 = $(`<div id="html_f33c838a61cbf7f8d1c09eba215213b3" style="width: 100.0%; height: 100.0%;">CYGR - ÃŽles-de-la-Madeleine Airport<br>Lat: 47.425242<br>Lon: -61.778612</div>`)[0];
                 popup_5be115c764f27c60f5b32ed6cdfaac9d.setContent(html_f33c838a61cbf7f8d1c09eba215213b3);
             
         
@@ -134525,7 +134553,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_b44316a32854e17b4d30c8b9a15af30e.bindTooltip(
                 `<div>
-                     CYGR | Îles-de-la-Madeleine Airport
+                     CYGR | ÃŽles-de-la-Madeleine Airport
                  </div>`,
                 {
   "sticky": true,
@@ -134656,7 +134684,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_4d1e6be4d9e6dc08a582ab6ded9912e4 = $(`<div id="html_4d1e6be4d9e6dc08a582ab6ded9912e4" style="width: 100.0%; height: 100.0%;">CYHU - Montréal / Saint-Hubert Metropolitan Airport<br>Lat: 45.517502<br>Lon: -73.416901</div>`)[0];
+                var html_4d1e6be4d9e6dc08a582ab6ded9912e4 = $(`<div id="html_4d1e6be4d9e6dc08a582ab6ded9912e4" style="width: 100.0%; height: 100.0%;">CYHU - MontrÃ©al / Saint-Hubert Metropolitan Airport<br>Lat: 45.517502<br>Lon: -73.416901</div>`)[0];
                 popup_3f873b980d6cbc7ae2ae233c90423dc4.setContent(html_4d1e6be4d9e6dc08a582ab6ded9912e4);
             
         
@@ -134669,7 +134697,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_e9b1f7e1d5c10bb486d205c7a8100321.bindTooltip(
                 `<div>
-                     CYHU | Montréal / Saint-Hubert Metropolitan Airport
+                     CYHU | MontrÃ©al / Saint-Hubert Metropolitan Airport
                  </div>`,
                 {
   "sticky": true,
@@ -135280,7 +135308,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_7c2c2af33c74e9dfe332e79bf17ad2cf = $(`<div id="html_7c2c2af33c74e9dfe332e79bf17ad2cf" style="width: 100.0%; height: 100.0%;">CYRI - Rivière-du-Loup Airport<br>Lat: 47.764400<br>Lon: -69.584702</div>`)[0];
+                var html_7c2c2af33c74e9dfe332e79bf17ad2cf = $(`<div id="html_7c2c2af33c74e9dfe332e79bf17ad2cf" style="width: 100.0%; height: 100.0%;">CYRI - RiviÃ¨re-du-Loup Airport<br>Lat: 47.764400<br>Lon: -69.584702</div>`)[0];
                 popup_3176bc24b6dfdd3a3fcf6b8221f5a54f.setContent(html_7c2c2af33c74e9dfe332e79bf17ad2cf);
             
         
@@ -135293,7 +135321,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_19051cd104c584011bce485a7844eee2.bindTooltip(
                 `<div>
-                     CYRI | Rivière-du-Loup Airport
+                     CYRI | RiviÃ¨re-du-Loup Airport
                  </div>`,
                 {
   "sticky": true,
@@ -135376,7 +135404,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_b3a1ee182dafa1e53b6d5df15d249c93 = $(`<div id="html_b3a1ee182dafa1e53b6d5df15d249c93" style="width: 100.0%; height: 100.0%;">CYRQ - Trois-Rivières Airport<br>Lat: 46.352798<br>Lon: -72.679398</div>`)[0];
+                var html_b3a1ee182dafa1e53b6d5df15d249c93 = $(`<div id="html_b3a1ee182dafa1e53b6d5df15d249c93" style="width: 100.0%; height: 100.0%;">CYRQ - Trois-RiviÃ¨res Airport<br>Lat: 46.352798<br>Lon: -72.679398</div>`)[0];
                 popup_399547009977ab6753e59ee6c9d1f974.setContent(html_b3a1ee182dafa1e53b6d5df15d249c93);
             
         
@@ -135389,7 +135417,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_b2eb8e15dd6d5e9292a72c205f957423.bindTooltip(
                 `<div>
-                     CYRQ | Trois-Rivières Airport
+                     CYRQ | Trois-RiviÃ¨res Airport
                  </div>`,
                 {
   "sticky": true,
@@ -135856,7 +135884,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_96f74692dd86cce1fc572ec5023651cc = $(`<div id="html_96f74692dd86cce1fc572ec5023651cc" style="width: 100.0%; height: 100.0%;">CYZV - Sept-Îles Airport<br>Lat: 50.223301<br>Lon: -66.265602</div>`)[0];
+                var html_96f74692dd86cce1fc572ec5023651cc = $(`<div id="html_96f74692dd86cce1fc572ec5023651cc" style="width: 100.0%; height: 100.0%;">CYZV - Sept-ÃŽles Airport<br>Lat: 50.223301<br>Lon: -66.265602</div>`)[0];
                 popup_babc2050b9fbf1aa1a5157e38ba6fe72.setContent(html_96f74692dd86cce1fc572ec5023651cc);
             
         
@@ -135869,7 +135897,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_26624a94423f7cc13aef15fef35afdc1.bindTooltip(
                 `<div>
-                     CYZV | Sept-Îles Airport
+                     CYZV | Sept-ÃŽles Airport
                  </div>`,
                 {
   "sticky": true,
@@ -135904,7 +135932,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_9af2eac449f8aab89a630a8c04533ab1 = $(`<div id="html_9af2eac449f8aab89a630a8c04533ab1" style="width: 100.0%; height: 100.0%;">CZBM - Bromont (Roland Désourdy) Airport<br>Lat: 45.290798<br>Lon: -72.741402</div>`)[0];
+                var html_9af2eac449f8aab89a630a8c04533ab1 = $(`<div id="html_9af2eac449f8aab89a630a8c04533ab1" style="width: 100.0%; height: 100.0%;">CZBM - Bromont (Roland DÃ©sourdy) Airport<br>Lat: 45.290798<br>Lon: -72.741402</div>`)[0];
                 popup_25a0e6fac236b2188094f60234c8bf2b.setContent(html_9af2eac449f8aab89a630a8c04533ab1);
             
         
@@ -135917,7 +135945,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_d967c802b721b59cfe4ffce82ea90605.bindTooltip(
                 `<div>
-                     CZBM | Bromont (Roland Désourdy) Airport
+                     CZBM | Bromont (Roland DÃ©sourdy) Airport
                  </div>`,
                 {
   "sticky": true,
@@ -135966,7 +135994,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_d6a911ee059d1cba90e6e82a70c2ca58 = $(`<div id="html_d6a911ee059d1cba90e6e82a70c2ca58" style="width: 100.0%; height: 100.0%;">CA-0464 - Saint-François-de-Laval (Laval Aviation)<br>Lat: 45.693126<br>Lon: -73.580911</div>`)[0];
+                var html_d6a911ee059d1cba90e6e82a70c2ca58 = $(`<div id="html_d6a911ee059d1cba90e6e82a70c2ca58" style="width: 100.0%; height: 100.0%;">CA-0464 - Saint-FranÃ§ois-de-Laval (Laval Aviation)<br>Lat: 45.693126<br>Lon: -73.580911</div>`)[0];
                 popup_deafa15b78d75dae6feafb25c91a3858.setContent(html_d6a911ee059d1cba90e6e82a70c2ca58);
             
         
@@ -135979,7 +136007,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_fa90ebdf4b31acb9de3490556ac7b9cb.bindTooltip(
                 `<div>
-                     CA-0464 | Saint-François-de-Laval (Laval Aviation)
+                     CA-0464 | Saint-FranÃ§ois-de-Laval (Laval Aviation)
                  </div>`,
                 {
   "sticky": true,
@@ -136014,7 +136042,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_487d4778331c9e21d63cba474b1a922f = $(`<div id="html_487d4778331c9e21d63cba474b1a922f" style="width: 100.0%; height: 100.0%;">CA-0505 - Rivière Temiscamie Floatbase<br>Lat: 51.008489<br>Lon: -72.989837</div>`)[0];
+                var html_487d4778331c9e21d63cba474b1a922f = $(`<div id="html_487d4778331c9e21d63cba474b1a922f" style="width: 100.0%; height: 100.0%;">CA-0505 - RiviÃ¨re Temiscamie Floatbase<br>Lat: 51.008489<br>Lon: -72.989837</div>`)[0];
                 popup_9c238648aa4d70b91441a96a1d9b8f3a.setContent(html_487d4778331c9e21d63cba474b1a922f);
             
         
@@ -136027,7 +136055,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_e5cfefbbac1dd6f40dd929e7decd49da.bindTooltip(
                 `<div>
-                     CA-0505 | Rivière Temiscamie Floatbase
+                     CA-0505 | RiviÃ¨re Temiscamie Floatbase
                  </div>`,
                 {
   "sticky": true,
@@ -136302,7 +136330,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_253e079be1ad5fb45fb3b0dc1ff915f0 = $(`<div id="html_253e079be1ad5fb45fb3b0dc1ff915f0" style="width: 100.0%; height: 100.0%;">CA-1218 - Tête-à-la-Baleine Water Aerodrome<br>Lat: 50.695000<br>Lon: -59.320000</div>`)[0];
+                var html_253e079be1ad5fb45fb3b0dc1ff915f0 = $(`<div id="html_253e079be1ad5fb45fb3b0dc1ff915f0" style="width: 100.0%; height: 100.0%;">CA-1218 - TÃªte-Ã -la-Baleine Water Aerodrome<br>Lat: 50.695000<br>Lon: -59.320000</div>`)[0];
                 popup_4cbdda033b7e66f995e50b4a21444f08.setContent(html_253e079be1ad5fb45fb3b0dc1ff915f0);
             
         
@@ -136315,7 +136343,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_ef0b32ea84af7bb335e63c38bd8b91e5.bindTooltip(
                 `<div>
-                     CA-1218 | Tête-à-la-Baleine Water Aerodrome
+                     CA-1218 | TÃªte-Ã -la-Baleine Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -136446,7 +136474,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_3347c9049e62c9377182c4092b0b920f = $(`<div id="html_3347c9049e62c9377182c4092b0b920f" style="width: 100.0%; height: 100.0%;">CGD2 - Alma (Rivière La Grande Décharge) Seaplane Base<br>Lat: 48.563301<br>Lon: -71.615799</div>`)[0];
+                var html_3347c9049e62c9377182c4092b0b920f = $(`<div id="html_3347c9049e62c9377182c4092b0b920f" style="width: 100.0%; height: 100.0%;">CGD2 - Alma (RiviÃ¨re La Grande DÃ©charge) Seaplane Base<br>Lat: 48.563301<br>Lon: -71.615799</div>`)[0];
                 popup_25f8fb52fa4ff8a645611c6e4e5ab924.setContent(html_3347c9049e62c9377182c4092b0b920f);
             
         
@@ -136459,7 +136487,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_5bc8f6603a41ca16f1b1447364c1b5e9.bindTooltip(
                 `<div>
-                     CGD2 | Alma (Rivière La Grande Décharge) Seaplane Base
+                     CGD2 | Alma (RiviÃ¨re La Grande DÃ©charge) Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -136542,7 +136570,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_8b0f6bb525f3bb3b002895b5d1de6f81 = $(`<div id="html_8b0f6bb525f3bb3b002895b5d1de6f81" style="width: 100.0%; height: 100.0%;">CHA3 - Hydro Aéroport de Montréal<br>Lat: 45.544000<br>Lon: -73.515000</div>`)[0];
+                var html_8b0f6bb525f3bb3b002895b5d1de6f81 = $(`<div id="html_8b0f6bb525f3bb3b002895b5d1de6f81" style="width: 100.0%; height: 100.0%;">CHA3 - Hydro AÃ©roport de MontrÃ©al<br>Lat: 45.544000<br>Lon: -73.515000</div>`)[0];
                 popup_bdfc80d6c7da6483217d1edd048f5f3b.setContent(html_8b0f6bb525f3bb3b002895b5d1de6f81);
             
         
@@ -136555,7 +136583,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_51caf876e6db8f234afce313bae26129.bindTooltip(
                 `<div>
-                     CHA3 | Hydro Aéroport de Montréal
+                     CHA3 | Hydro AÃ©roport de MontrÃ©al
                  </div>`,
                 {
   "sticky": true,
@@ -136590,7 +136618,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_01cbd9028617abe293e7449f24186dc9 = $(`<div id="html_01cbd9028617abe293e7449f24186dc9" style="width: 100.0%; height: 100.0%;">CJF2 - Carignan/Rivière L’Acadie Water Aerodrome<br>Lat: 45.473600<br>Lon: -73.294800</div>`)[0];
+                var html_01cbd9028617abe293e7449f24186dc9 = $(`<div id="html_01cbd9028617abe293e7449f24186dc9" style="width: 100.0%; height: 100.0%;">CJF2 - Carignan/RiviÃ¨re Lâ€™Acadie Water Aerodrome<br>Lat: 45.473600<br>Lon: -73.294800</div>`)[0];
                 popup_ac6ec64aa013ed8ec88d3572db12d9c2.setContent(html_01cbd9028617abe293e7449f24186dc9);
             
         
@@ -136603,7 +136631,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_d683d63676fede6cf7e30db40e81e4ff.bindTooltip(
                 `<div>
-                     CJF2 | Carignan/Rivière L’Acadie Water Aerodrome
+                     CJF2 | Carignan/RiviÃ¨re Lâ€™Acadie Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -136782,7 +136810,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_b7f3936c86583601c35d3ff98ca2e297 = $(`<div id="html_b7f3936c86583601c35d3ff98ca2e297" style="width: 100.0%; height: 100.0%;">CLS7 - Blais Aéronautique Inc Water Aerodrome<br>Lat: 45.913000<br>Lon: -75.095000</div>`)[0];
+                var html_b7f3936c86583601c35d3ff98ca2e297 = $(`<div id="html_b7f3936c86583601c35d3ff98ca2e297" style="width: 100.0%; height: 100.0%;">CLS7 - Blais AÃ©ronautique Inc Water Aerodrome<br>Lat: 45.913000<br>Lon: -75.095000</div>`)[0];
                 popup_8b0141015f7c3b1ced8f7aaa4ffd89cc.setContent(html_b7f3936c86583601c35d3ff98ca2e297);
             
         
@@ -136795,7 +136823,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_e5c3fcaa892fa4e89e7d0b36d3f38bcb.bindTooltip(
                 `<div>
-                     CLS7 | Blais Aéronautique Inc Water Aerodrome
+                     CLS7 | Blais AÃ©ronautique Inc Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -136878,7 +136906,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_a8d2754893fd24dcbbd784cd67e1813c = $(`<div id="html_a8d2754893fd24dcbbd784cd67e1813c" style="width: 100.0%; height: 100.0%;">CMT2 - Mont-Tremblant (Lac Maskinongé) Seaplane Base<br>Lat: 46.087825<br>Lon: -74.608452</div>`)[0];
+                var html_a8d2754893fd24dcbbd784cd67e1813c = $(`<div id="html_a8d2754893fd24dcbbd784cd67e1813c" style="width: 100.0%; height: 100.0%;">CMT2 - Mont-Tremblant (Lac MaskinongÃ©) Seaplane Base<br>Lat: 46.087825<br>Lon: -74.608452</div>`)[0];
                 popup_6298f670470ed92bb3d39c8e7f80eec3.setContent(html_a8d2754893fd24dcbbd784cd67e1813c);
             
         
@@ -136891,7 +136919,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_092e5d367680f3226e9a8cab2bcbb624.bindTooltip(
                 `<div>
-                     CMT2 | Mont-Tremblant (Lac Maskinongé) Seaplane Base
+                     CMT2 | Mont-Tremblant (Lac MaskinongÃ©) Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -137262,7 +137290,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_4058960382aa0cbf67f8c7f201321d25 = $(`<div id="html_4058960382aa0cbf67f8c7f201321d25" style="width: 100.0%; height: 100.0%;">CSA9 - Lac-Des-Îles Seaplane Base<br>Lat: 46.411900<br>Lon: -75.519995</div>`)[0];
+                var html_4058960382aa0cbf67f8c7f201321d25 = $(`<div id="html_4058960382aa0cbf67f8c7f201321d25" style="width: 100.0%; height: 100.0%;">CSA9 - Lac-Des-ÃŽles Seaplane Base<br>Lat: 46.411900<br>Lon: -75.519995</div>`)[0];
                 popup_cbd293be9f096f6abc281c9f4cc5a7f9.setContent(html_4058960382aa0cbf67f8c7f201321d25);
             
         
@@ -137275,7 +137303,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_9d6168914d781dcd5e39b0c61caf4ddd.bindTooltip(
                 `<div>
-                     CSA9 | Lac-Des-Îles Seaplane Base
+                     CSA9 | Lac-Des-ÃŽles Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -137742,7 +137770,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_77b5381eb6bae26b43b2b444b6f60481 = $(`<div id="html_77b5381eb6bae26b43b2b444b6f60481" style="width: 100.0%; height: 100.0%;">CSM8 - Sept-Îles/Lac des Rapides Water Aerodrome<br>Lat: 50.298901<br>Lon: -66.415604</div>`)[0];
+                var html_77b5381eb6bae26b43b2b444b6f60481 = $(`<div id="html_77b5381eb6bae26b43b2b444b6f60481" style="width: 100.0%; height: 100.0%;">CSM8 - Sept-ÃŽles/Lac des Rapides Water Aerodrome<br>Lat: 50.298901<br>Lon: -66.415604</div>`)[0];
                 popup_494bb71c419cf255cbf1040401753973.setContent(html_77b5381eb6bae26b43b2b444b6f60481);
             
         
@@ -137755,7 +137783,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_eb6f9968a70ee96fbdb1caea41c3b672.bindTooltip(
                 `<div>
-                     CSM8 | Sept-Îles/Lac des Rapides Water Aerodrome
+                     CSM8 | Sept-ÃŽles/Lac des Rapides Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -137790,7 +137818,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_746a3e5d43c1e373c26c5be12ac62ca7 = $(`<div id="html_746a3e5d43c1e373c26c5be12ac62ca7" style="width: 100.0%; height: 100.0%;">CSN8 - Québec/Lac St-Augustin Seaplane Base<br>Lat: 46.751400<br>Lon: -71.394203</div>`)[0];
+                var html_746a3e5d43c1e373c26c5be12ac62ca7 = $(`<div id="html_746a3e5d43c1e373c26c5be12ac62ca7" style="width: 100.0%; height: 100.0%;">CSN8 - QuÃ©bec/Lac St-Augustin Seaplane Base<br>Lat: 46.751400<br>Lon: -71.394203</div>`)[0];
                 popup_4df8ab24b782d70716fd911293fa2c62.setContent(html_746a3e5d43c1e373c26c5be12ac62ca7);
             
         
@@ -137803,7 +137831,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_6b6145647a75e31d019800e125e45c6b.bindTooltip(
                 `<div>
-                     CSN8 | Québec/Lac St-Augustin Seaplane Base
+                     CSN8 | QuÃ©bec/Lac St-Augustin Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -137838,7 +137866,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_5ff0dfdebab288a3425a176dda6c047a = $(`<div id="html_5ff0dfdebab288a3425a176dda6c047a" style="width: 100.0%; height: 100.0%;">CSP8 - Lac Sept-Îles Seaplane Base<br>Lat: 46.939701<br>Lon: -71.745003</div>`)[0];
+                var html_5ff0dfdebab288a3425a176dda6c047a = $(`<div id="html_5ff0dfdebab288a3425a176dda6c047a" style="width: 100.0%; height: 100.0%;">CSP8 - Lac Sept-ÃŽles Seaplane Base<br>Lat: 46.939701<br>Lon: -71.745003</div>`)[0];
                 popup_7e1850b0cae803059476c222ac506991.setContent(html_5ff0dfdebab288a3425a176dda6c047a);
             
         
@@ -137851,7 +137879,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_591e006582b48365538797097df34206.bindTooltip(
                 `<div>
-                     CSP8 | Lac Sept-Îles Seaplane Base
+                     CSP8 | Lac Sept-ÃŽles Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -137934,7 +137962,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_aee2aa9a0bb66f01325943ef0087c591 = $(`<div id="html_aee2aa9a0bb66f01325943ef0087c591" style="width: 100.0%; height: 100.0%;">CSS7 - Lac-à-Beauce Seaplane Base<br>Lat: 47.321401<br>Lon: -72.764997</div>`)[0];
+                var html_aee2aa9a0bb66f01325943ef0087c591 = $(`<div id="html_aee2aa9a0bb66f01325943ef0087c591" style="width: 100.0%; height: 100.0%;">CSS7 - Lac-Ã -Beauce Seaplane Base<br>Lat: 47.321401<br>Lon: -72.764997</div>`)[0];
                 popup_615fe493594bb0cf4a3959386a262221.setContent(html_aee2aa9a0bb66f01325943ef0087c591);
             
         
@@ -137947,7 +137975,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_53cb7af40b7bc68b902dd8a76749e231.bindTooltip(
                 `<div>
-                     CSS7 | Lac-à-Beauce Seaplane Base
+                     CSS7 | Lac-Ã -Beauce Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -138078,7 +138106,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_88b85f75c62171e260dacbe23b93818d = $(`<div id="html_88b85f75c62171e260dacbe23b93818d" style="width: 100.0%; height: 100.0%;">CSU7 - Lac-à-la-Tortue Water Aerodrome<br>Lat: 46.616699<br>Lon: -72.625801</div>`)[0];
+                var html_88b85f75c62171e260dacbe23b93818d = $(`<div id="html_88b85f75c62171e260dacbe23b93818d" style="width: 100.0%; height: 100.0%;">CSU7 - Lac-Ã -la-Tortue Water Aerodrome<br>Lat: 46.616699<br>Lon: -72.625801</div>`)[0];
                 popup_3118781e001518cd4f87e737f1e2d7fb.setContent(html_88b85f75c62171e260dacbe23b93818d);
             
         
@@ -138091,7 +138119,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_bf20dc900413fb1cabfbc408597023b1.bindTooltip(
                 `<div>
-                     CSU7 | Lac-à-la-Tortue Water Aerodrome
+                     CSU7 | Lac-Ã -la-Tortue Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -138174,7 +138202,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_554f2c11e5f979097dad526ed6290592 = $(`<div id="html_554f2c11e5f979097dad526ed6290592" style="width: 100.0%; height: 100.0%;">CSW9 - Ste-Véronique Seaplane Base<br>Lat: 46.514702<br>Lon: -74.990303</div>`)[0];
+                var html_554f2c11e5f979097dad526ed6290592 = $(`<div id="html_554f2c11e5f979097dad526ed6290592" style="width: 100.0%; height: 100.0%;">CSW9 - Ste-VÃ©ronique Seaplane Base<br>Lat: 46.514702<br>Lon: -74.990303</div>`)[0];
                 popup_abbcf7944f3381118f720344cee81ac6.setContent(html_554f2c11e5f979097dad526ed6290592);
             
         
@@ -138187,7 +138215,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_a07f4af806f845d85a5ba1441a595e51.bindTooltip(
                 `<div>
-                     CSW9 | Ste-Véronique Seaplane Base
+                     CSW9 | Ste-VÃ©ronique Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -138270,7 +138298,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_9cdfee6b3c061976bd46fff32bce7267 = $(`<div id="html_9cdfee6b3c061976bd46fff32bce7267" style="width: 100.0%; height: 100.0%;">CSZ7 - Chibougamau/Lac Caché Water Aerodrome<br>Lat: 49.823371<br>Lon: -74.424285</div>`)[0];
+                var html_9cdfee6b3c061976bd46fff32bce7267 = $(`<div id="html_9cdfee6b3c061976bd46fff32bce7267" style="width: 100.0%; height: 100.0%;">CSZ7 - Chibougamau/Lac CachÃ© Water Aerodrome<br>Lat: 49.823371<br>Lon: -74.424285</div>`)[0];
                 popup_33940f1d7ad655e167b7dd4e6c022427.setContent(html_9cdfee6b3c061976bd46fff32bce7267);
             
         
@@ -138283,7 +138311,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_3dedc808b382589c6471240905fe59d1.bindTooltip(
                 `<div>
-                     CSZ7 | Chibougamau/Lac Caché Water Aerodrome
+                     CSZ7 | Chibougamau/Lac CachÃ© Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -138366,7 +138394,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_29eb9d8fd708b4fc1bf169707addabed = $(`<div id="html_29eb9d8fd708b4fc1bf169707addabed" style="width: 100.0%; height: 100.0%;">CTA5 - Val-d'Or/Hydrobase Piché Dubuisson Seaplane Base<br>Lat: 48.085301<br>Lon: -77.888601</div>`)[0];
+                var html_29eb9d8fd708b4fc1bf169707addabed = $(`<div id="html_29eb9d8fd708b4fc1bf169707addabed" style="width: 100.0%; height: 100.0%;">CTA5 - Val-d'Or/Hydrobase PichÃ© Dubuisson Seaplane Base<br>Lat: 48.085301<br>Lon: -77.888601</div>`)[0];
                 popup_734b6e9fd0c7aaecb734e24b1cb36e08.setContent(html_29eb9d8fd708b4fc1bf169707addabed);
             
         
@@ -138379,7 +138407,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_4d2dd69a63d11cebafa7f67987dadc87.bindTooltip(
                 `<div>
-                     CTA5 | Val-d'Or/Hydrobase Piché Dubuisson Seaplane Base
+                     CTA5 | Val-d'Or/Hydrobase PichÃ© Dubuisson Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -138462,7 +138490,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_aab0d0c8bc02c0c7691ac8401b42b537 = $(`<div id="html_aab0d0c8bc02c0c7691ac8401b42b537" style="width: 100.0%; height: 100.0%;">CTD3 - Lac Sébastien Seaplane Base<br>Lat: 48.651699<br>Lon: -71.145798</div>`)[0];
+                var html_aab0d0c8bc02c0c7691ac8401b42b537 = $(`<div id="html_aab0d0c8bc02c0c7691ac8401b42b537" style="width: 100.0%; height: 100.0%;">CTD3 - Lac SÃ©bastien Seaplane Base<br>Lat: 48.651699<br>Lon: -71.145798</div>`)[0];
                 popup_a62ae003e1ea29d69c7857cb08f35e15.setContent(html_aab0d0c8bc02c0c7691ac8401b42b537);
             
         
@@ -138475,7 +138503,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_fe2db73f3ba7236f3aa0e6f91858f135.bindTooltip(
                 `<div>
-                     CTD3 | Lac Sébastien Seaplane Base
+                     CTD3 | Lac SÃ©bastien Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -138702,7 +138730,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_26b5193e7ba4d26839160d6ef380db9c = $(`<div id="html_26b5193e7ba4d26839160d6ef380db9c" style="width: 100.0%; height: 100.0%;">CTM8 - Témiscouata-sur-le-Lac Water Aerodrome<br>Lat: 47.685000<br>Lon: -68.875000</div>`)[0];
+                var html_26b5193e7ba4d26839160d6ef380db9c = $(`<div id="html_26b5193e7ba4d26839160d6ef380db9c" style="width: 100.0%; height: 100.0%;">CTM8 - TÃ©miscouata-sur-le-Lac Water Aerodrome<br>Lat: 47.685000<br>Lon: -68.875000</div>`)[0];
                 popup_4f80d1e06c0c28107f0383418bb7bd1b.setContent(html_26b5193e7ba4d26839160d6ef380db9c);
             
         
@@ -138715,7 +138743,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_7e0f41da6840605801503f1932e75db4.bindTooltip(
                 `<div>
-                     CTM8 | Témiscouata-sur-le-Lac Water Aerodrome
+                     CTM8 | TÃ©miscouata-sur-le-Lac Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -138942,7 +138970,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_e7201d3218555e60cfe48db870418b31 = $(`<div id="html_e7201d3218555e60cfe48db870418b31" style="width: 100.0%; height: 100.0%;">CTV2 - Lac-Des-Écorces Seaplane Base<br>Lat: 46.548599<br>Lon: -75.418602</div>`)[0];
+                var html_e7201d3218555e60cfe48db870418b31 = $(`<div id="html_e7201d3218555e60cfe48db870418b31" style="width: 100.0%; height: 100.0%;">CTV2 - Lac-Des-Ã‰corces Seaplane Base<br>Lat: 46.548599<br>Lon: -75.418602</div>`)[0];
                 popup_4361c05ac32340752a6aa6fdcbcf0a2f.setContent(html_e7201d3218555e60cfe48db870418b31);
             
         
@@ -138955,7 +138983,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_7d720501cd07c01401f25ec09f7ede20.bindTooltip(
                 `<div>
-                     CTV2 | Lac-Des-Écorces Seaplane Base
+                     CTV2 | Lac-Des-Ã‰corces Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -138990,7 +139018,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_cc82b9584f586b488e604dc5ee55cd36 = $(`<div id="html_cc82b9584f586b488e604dc5ee55cd36" style="width: 100.0%; height: 100.0%;">CTX2 - Lac Trévet Seaplane Base<br>Lat: 48.159401<br>Lon: -76.137802</div>`)[0];
+                var html_cc82b9584f586b488e604dc5ee55cd36 = $(`<div id="html_cc82b9584f586b488e604dc5ee55cd36" style="width: 100.0%; height: 100.0%;">CTX2 - Lac TrÃ©vet Seaplane Base<br>Lat: 48.159401<br>Lon: -76.137802</div>`)[0];
                 popup_3ea494e87c8751cb7e66c2b0dae01666.setContent(html_cc82b9584f586b488e604dc5ee55cd36);
             
         
@@ -139003,7 +139031,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_5cab46ef04bce8f27ec7d4fda0fb6800.bindTooltip(
                 `<div>
-                     CTX2 | Lac Trévet Seaplane Base
+                     CTX2 | Lac TrÃ©vet Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -139134,7 +139162,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_5270042889c6a363a44751cc302b676c = $(`<div id="html_5270042889c6a363a44751cc302b676c" style="width: 100.0%; height: 100.0%;">CVP2 - Île Sainte-Hélène Water Airport<br>Lat: 45.521200<br>Lon: -73.539400</div>`)[0];
+                var html_5270042889c6a363a44751cc302b676c = $(`<div id="html_5270042889c6a363a44751cc302b676c" style="width: 100.0%; height: 100.0%;">CVP2 - ÃŽle Sainte-HÃ©lÃ¨ne Water Airport<br>Lat: 45.521200<br>Lon: -73.539400</div>`)[0];
                 popup_87470c9ea6f0acce3fa6319bc13fc53e.setContent(html_5270042889c6a363a44751cc302b676c);
             
         
@@ -139147,7 +139175,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_739eb809390a7acff0cc1b8b4dcccf1e.bindTooltip(
                 `<div>
-                     CVP2 | Île Sainte-Hélène Water Airport
+                     CVP2 | ÃŽle Sainte-HÃ©lÃ¨ne Water Airport
                  </div>`,
                 {
   "sticky": true,
@@ -139436,7 +139464,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_b8da927364da026a5fb0b189596f3389 = $(`<div id="html_b8da927364da026a5fb0b189596f3389" style="width: 100.0%; height: 100.0%;">CA-0457 - L'Île d'Entrée Airfield<br>Lat: 47.276376<br>Lon: -61.712329</div>`)[0];
+                var html_b8da927364da026a5fb0b189596f3389 = $(`<div id="html_b8da927364da026a5fb0b189596f3389" style="width: 100.0%; height: 100.0%;">CA-0457 - L'ÃŽle d'EntrÃ©e Airfield<br>Lat: 47.276376<br>Lon: -61.712329</div>`)[0];
                 popup_ddc2d9c3df225ec0b9b4271e139f8a83.setContent(html_b8da927364da026a5fb0b189596f3389);
             
         
@@ -139449,7 +139477,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_148d37ab316ed57e0cb42b218af3fdcb.bindTooltip(
                 `<div>
-                     CA-0457 | L'Île d'Entrée Airfield
+                     CA-0457 | L'ÃŽle d'EntrÃ©e Airfield
                  </div>`,
                 {
   "sticky": true,
@@ -139484,7 +139512,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_192e7bd74e2ea0008965f8aad1b09558 = $(`<div id="html_192e7bd74e2ea0008965f8aad1b09558" style="width: 100.0%; height: 100.0%;">CA-0463 - Saint-François-de-Laval (Laval Aviation)<br>Lat: 45.688674<br>Lon: -73.581126</div>`)[0];
+                var html_192e7bd74e2ea0008965f8aad1b09558 = $(`<div id="html_192e7bd74e2ea0008965f8aad1b09558" style="width: 100.0%; height: 100.0%;">CA-0463 - Saint-FranÃ§ois-de-Laval (Laval Aviation)<br>Lat: 45.688674<br>Lon: -73.581126</div>`)[0];
                 popup_06006239d560e8dbc0337e34df821922.setContent(html_192e7bd74e2ea0008965f8aad1b09558);
             
         
@@ -139497,7 +139525,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_45b36f79f4bd021a88d6b7ff3a08b577.bindTooltip(
                 `<div>
-                     CA-0463 | Saint-François-de-Laval (Laval Aviation)
+                     CA-0463 | Saint-FranÃ§ois-de-Laval (Laval Aviation)
                  </div>`,
                 {
   "sticky": true,
@@ -139532,7 +139560,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_b71687d62e946abe0d0eb4db8e80accc = $(`<div id="html_b71687d62e946abe0d0eb4db8e80accc" style="width: 100.0%; height: 100.0%;">CA-0526 - Rivière-aux-Saumons Aerodrome<br>Lat: 49.401389<br>Lon: -62.295278</div>`)[0];
+                var html_b71687d62e946abe0d0eb4db8e80accc = $(`<div id="html_b71687d62e946abe0d0eb4db8e80accc" style="width: 100.0%; height: 100.0%;">CA-0526 - RiviÃ¨re-aux-Saumons Aerodrome<br>Lat: 49.401389<br>Lon: -62.295278</div>`)[0];
                 popup_3b5dd217208b256dccd19cc75a983e38.setContent(html_b71687d62e946abe0d0eb4db8e80accc);
             
         
@@ -139545,7 +139573,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_2902a0a3ea02f649925cdff9c7e6c7ad.bindTooltip(
                 `<div>
-                     CA-0526 | Rivière-aux-Saumons Aerodrome
+                     CA-0526 | RiviÃ¨re-aux-Saumons Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -139724,7 +139752,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_6cfee4111d8b084c6915d21d55b48841 = $(`<div id="html_6cfee4111d8b084c6915d21d55b48841" style="width: 100.0%; height: 100.0%;">CA-0718 - Rivière-au-Tonnerre Airport<br>Lat: 50.277110<br>Lon: -64.754770</div>`)[0];
+                var html_6cfee4111d8b084c6915d21d55b48841 = $(`<div id="html_6cfee4111d8b084c6915d21d55b48841" style="width: 100.0%; height: 100.0%;">CA-0718 - RiviÃ¨re-au-Tonnerre Airport<br>Lat: 50.277110<br>Lon: -64.754770</div>`)[0];
                 popup_865d00560ef2ea09fc4d14912959dadd.setContent(html_6cfee4111d8b084c6915d21d55b48841);
             
         
@@ -139737,7 +139765,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_830bf9f2fcfc41961c90bfd99dc3bc56.bindTooltip(
                 `<div>
-                     CA-0718 | Rivière-au-Tonnerre Airport
+                     CA-0718 | RiviÃ¨re-au-Tonnerre Airport
                  </div>`,
                 {
   "sticky": true,
@@ -139820,7 +139848,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_e6c985b10e613c3f96d9e44696dde9d4 = $(`<div id="html_e6c985b10e613c3f96d9e44696dde9d4" style="width: 100.0%; height: 100.0%;">CA-0814 - Brébeuf Airport<br>Lat: 48.394870<br>Lon: -66.383890</div>`)[0];
+                var html_e6c985b10e613c3f96d9e44696dde9d4 = $(`<div id="html_e6c985b10e613c3f96d9e44696dde9d4" style="width: 100.0%; height: 100.0%;">CA-0814 - BrÃ©beuf Airport<br>Lat: 48.394870<br>Lon: -66.383890</div>`)[0];
                 popup_23a017a21828c64a2994a4ed43f5adf2.setContent(html_e6c985b10e613c3f96d9e44696dde9d4);
             
         
@@ -139833,7 +139861,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_0178db5b958fecde1128f427cc02e57b.bindTooltip(
                 `<div>
-                     CA-0814 | Brébeuf Airport
+                     CA-0814 | BrÃ©beuf Airport
                  </div>`,
                 {
   "sticky": true,
@@ -139868,7 +139896,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_cc3094850a2dbf9993812516a8d43301 = $(`<div id="html_cc3094850a2dbf9993812516a8d43301" style="width: 100.0%; height: 100.0%;">CA-0839 - Île Sainte-Marguerite Airport<br>Lat: 47.031730<br>Lon: -70.625710</div>`)[0];
+                var html_cc3094850a2dbf9993812516a8d43301 = $(`<div id="html_cc3094850a2dbf9993812516a8d43301" style="width: 100.0%; height: 100.0%;">CA-0839 - ÃŽle Sainte-Marguerite Airport<br>Lat: 47.031730<br>Lon: -70.625710</div>`)[0];
                 popup_f402c1454583705ea9e84676a7a24995.setContent(html_cc3094850a2dbf9993812516a8d43301);
             
         
@@ -139881,7 +139909,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_2ae3238563ce79a55388d0f36bec4af5.bindTooltip(
                 `<div>
-                     CA-0839 | Île Sainte-Marguerite Airport
+                     CA-0839 | ÃŽle Sainte-Marguerite Airport
                  </div>`,
                 {
   "sticky": true,
@@ -139916,7 +139944,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_bb544179191efb058715a98d7a9a35e7 = $(`<div id="html_bb544179191efb058715a98d7a9a35e7" style="width: 100.0%; height: 100.0%;">CA-0840 - Grosse-Île Airport<br>Lat: 47.033780<br>Lon: -70.659940</div>`)[0];
+                var html_bb544179191efb058715a98d7a9a35e7 = $(`<div id="html_bb544179191efb058715a98d7a9a35e7" style="width: 100.0%; height: 100.0%;">CA-0840 - Grosse-ÃŽle Airport<br>Lat: 47.033780<br>Lon: -70.659940</div>`)[0];
                 popup_45b0d2c09ebf9506876fa2e5b2ece77e.setContent(html_bb544179191efb058715a98d7a9a35e7);
             
         
@@ -139929,7 +139957,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_d834e37fdf5f103d8eafb2657455f27b.bindTooltip(
                 `<div>
-                     CA-0840 | Grosse-Île Airport
+                     CA-0840 | Grosse-ÃŽle Airport
                  </div>`,
                 {
   "sticky": true,
@@ -139964,7 +139992,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_b0e58e48f66440880a8238ada0a96280 = $(`<div id="html_b0e58e48f66440880a8238ada0a96280" style="width: 100.0%; height: 100.0%;">CA-0874 - Aérodrome Nilgaut<br>Lat: 46.570969<br>Lon: -77.331871</div>`)[0];
+                var html_b0e58e48f66440880a8238ada0a96280 = $(`<div id="html_b0e58e48f66440880a8238ada0a96280" style="width: 100.0%; height: 100.0%;">CA-0874 - AÃ©rodrome Nilgaut<br>Lat: 46.570969<br>Lon: -77.331871</div>`)[0];
                 popup_5cbb844a3519aa5dc861a8fe014dba67.setContent(html_b0e58e48f66440880a8238ada0a96280);
             
         
@@ -139977,7 +140005,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_5b84b8b4457cb7add5d649f0faa65398.bindTooltip(
                 `<div>
-                     CA-0874 | Aérodrome Nilgaut
+                     CA-0874 | AÃ©rodrome Nilgaut
                  </div>`,
                 {
   "sticky": true,
@@ -140108,7 +140136,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_dadf201f959765902a2d770c0b328944 = $(`<div id="html_dadf201f959765902a2d770c0b328944" style="width: 100.0%; height: 100.0%;">CA-0967 - Vauréal Airstrip<br>Lat: 49.615780<br>Lon: -62.604280</div>`)[0];
+                var html_dadf201f959765902a2d770c0b328944 = $(`<div id="html_dadf201f959765902a2d770c0b328944" style="width: 100.0%; height: 100.0%;">CA-0967 - VaurÃ©al Airstrip<br>Lat: 49.615780<br>Lon: -62.604280</div>`)[0];
                 popup_eb7763aebc03af19cd282c4ea8e820a1.setContent(html_dadf201f959765902a2d770c0b328944);
             
         
@@ -140121,7 +140149,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_b4362f710d8739f000ac7953911da8c5.bindTooltip(
                 `<div>
-                     CA-0967 | Vauréal Airstrip
+                     CA-0967 | VaurÃ©al Airstrip
                  </div>`,
                 {
   "sticky": true,
@@ -140156,7 +140184,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_bb529b2d6e30a5af633f25030ff84f69 = $(`<div id="html_bb529b2d6e30a5af633f25030ff84f69" style="width: 100.0%; height: 100.0%;">CA-0968 - Baie Innommée Airstrip<br>Lat: 49.250990<br>Lon: -61.801810</div>`)[0];
+                var html_bb529b2d6e30a5af633f25030ff84f69 = $(`<div id="html_bb529b2d6e30a5af633f25030ff84f69" style="width: 100.0%; height: 100.0%;">CA-0968 - Baie InnommÃ©e Airstrip<br>Lat: 49.250990<br>Lon: -61.801810</div>`)[0];
                 popup_88f1e9e119c1e0c3d19b93fe383325af.setContent(html_bb529b2d6e30a5af633f25030ff84f69);
             
         
@@ -140169,7 +140197,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_454b17414d23400d48585640697efc7c.bindTooltip(
                 `<div>
-                     CA-0968 | Baie Innommée Airstrip
+                     CA-0968 | Baie InnommÃ©e Airstrip
                  </div>`,
                 {
   "sticky": true,
@@ -140348,7 +140376,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_07c2b4f798708fe4945215f7ea5d6703 = $(`<div id="html_07c2b4f798708fe4945215f7ea5d6703" style="width: 100.0%; height: 100.0%;">CAA2 - St. André-Avellin Aerodrome<br>Lat: 45.744319<br>Lon: -75.070267</div>`)[0];
+                var html_07c2b4f798708fe4945215f7ea5d6703 = $(`<div id="html_07c2b4f798708fe4945215f7ea5d6703" style="width: 100.0%; height: 100.0%;">CAA2 - St. AndrÃ©-Avellin Aerodrome<br>Lat: 45.744319<br>Lon: -75.070267</div>`)[0];
                 popup_d3caf973f6523b872157734325fcee69.setContent(html_07c2b4f798708fe4945215f7ea5d6703);
             
         
@@ -140361,7 +140389,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_13c6156ac3835b8afe0a90e6e55e1232.bindTooltip(
                 `<div>
-                     CAA2 | St. André-Avellin Aerodrome
+                     CAA2 | St. AndrÃ©-Avellin Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -140540,7 +140568,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_cbef6ef2716ac09cee2ba9abb441ef05 = $(`<div id="html_cbef6ef2716ac09cee2ba9abb441ef05" style="width: 100.0%; height: 100.0%;">CCU2 - ULM Québec Aerodrome<br>Lat: 46.173889<br>Lon: -73.278889</div>`)[0];
+                var html_cbef6ef2716ac09cee2ba9abb441ef05 = $(`<div id="html_cbef6ef2716ac09cee2ba9abb441ef05" style="width: 100.0%; height: 100.0%;">CCU2 - ULM QuÃ©bec Aerodrome<br>Lat: 46.173889<br>Lon: -73.278889</div>`)[0];
                 popup_d465adfc80f6fab68a074058adf44017.setContent(html_cbef6ef2716ac09cee2ba9abb441ef05);
             
         
@@ -140553,7 +140581,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_d5d2f29af15b55b93d0766738248524f.bindTooltip(
                 `<div>
-                     CCU2 | ULM Québec Aerodrome
+                     CCU2 | ULM QuÃ©bec Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -140588,7 +140616,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_5519365f608db762fbe19da0aa233719 = $(`<div id="html_5519365f608db762fbe19da0aa233719" style="width: 100.0%; height: 100.0%;">CDD3 - Ste-Agnès-de-Dundee Airport<br>Lat: 45.047722<br>Lon: -74.340102</div>`)[0];
+                var html_5519365f608db762fbe19da0aa233719 = $(`<div id="html_5519365f608db762fbe19da0aa233719" style="width: 100.0%; height: 100.0%;">CDD3 - Ste-AgnÃ¨s-de-Dundee Airport<br>Lat: 45.047722<br>Lon: -74.340102</div>`)[0];
                 popup_1715e487e40d7025242447e4497e0ec0.setContent(html_5519365f608db762fbe19da0aa233719);
             
         
@@ -140601,7 +140629,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_3753dec0203b45cb1961cac4223dba87.bindTooltip(
                 `<div>
-                     CDD3 | Ste-Agnès-de-Dundee Airport
+                     CDD3 | Ste-AgnÃ¨s-de-Dundee Airport
                  </div>`,
                 {
   "sticky": true,
@@ -140972,7 +141000,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_38d57eda2c6f062254d35b1decab2ea6 = $(`<div id="html_38d57eda2c6f062254d35b1decab2ea6" style="width: 100.0%; height: 100.0%;">CNV9 - Québec / Neuville Airport<br>Lat: 46.721476<br>Lon: -71.585498</div>`)[0];
+                var html_38d57eda2c6f062254d35b1decab2ea6 = $(`<div id="html_38d57eda2c6f062254d35b1decab2ea6" style="width: 100.0%; height: 100.0%;">CNV9 - QuÃ©bec / Neuville Airport<br>Lat: 46.721476<br>Lon: -71.585498</div>`)[0];
                 popup_90f47d9aa5370e04fad138d0e9cfba90.setContent(html_38d57eda2c6f062254d35b1decab2ea6);
             
         
@@ -140985,7 +141013,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_2c4932180a6cc4b09163a35a8c035e53.bindTooltip(
                 `<div>
-                     CNV9 | Québec / Neuville Airport
+                     CNV9 | QuÃ©bec / Neuville Airport
                  </div>`,
                 {
   "sticky": true,
@@ -141116,7 +141144,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_e2b747a36df579a607b87c029b058ddd = $(`<div id="html_e2b747a36df579a607b87c029b058ddd" style="width: 100.0%; height: 100.0%;">CRB4 - Rivière Bonnard Airport<br>Lat: 50.704399<br>Lon: -71.162498</div>`)[0];
+                var html_e2b747a36df579a607b87c029b058ddd = $(`<div id="html_e2b747a36df579a607b87c029b058ddd" style="width: 100.0%; height: 100.0%;">CRB4 - RiviÃ¨re Bonnard Airport<br>Lat: 50.704399<br>Lon: -71.162498</div>`)[0];
                 popup_950004e01ffa77de5e2e992e4fed5a21.setContent(html_e2b747a36df579a607b87c029b058ddd);
             
         
@@ -141129,7 +141157,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_ecbb6e680d4835d9374b972be03c3b03.bindTooltip(
                 `<div>
-                     CRB4 | Rivière Bonnard Airport
+                     CRB4 | RiviÃ¨re Bonnard Airport
                  </div>`,
                 {
   "sticky": true,
@@ -141164,7 +141192,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_d22053ee03e8aedee0f816b624133335 = $(`<div id="html_d22053ee03e8aedee0f816b624133335" style="width: 100.0%; height: 100.0%;">CRB5 - Rivière Bell Aerodrome<br>Lat: 49.078899<br>Lon: -62.236900</div>`)[0];
+                var html_d22053ee03e8aedee0f816b624133335 = $(`<div id="html_d22053ee03e8aedee0f816b624133335" style="width: 100.0%; height: 100.0%;">CRB5 - RiviÃ¨re Bell Aerodrome<br>Lat: 49.078899<br>Lon: -62.236900</div>`)[0];
                 popup_b8a5340a3e7289451c294276bbc82b8d.setContent(html_d22053ee03e8aedee0f816b624133335);
             
         
@@ -141177,7 +141205,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_41de4a50332b747b34112833c8af47d8.bindTooltip(
                 `<div>
-                     CRB5 | Rivière Bell Aerodrome
+                     CRB5 | RiviÃ¨re Bell Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -141356,7 +141384,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_e350c3f3b783cd35bb42fc714de3c737 = $(`<div id="html_e350c3f3b783cd35bb42fc714de3c737" style="width: 100.0%; height: 100.0%;">CRT2 - Rivière Témiscamie (Air Roberval) Airport<br>Lat: 51.009247<br>Lon: -72.983594</div>`)[0];
+                var html_e350c3f3b783cd35bb42fc714de3c737 = $(`<div id="html_e350c3f3b783cd35bb42fc714de3c737" style="width: 100.0%; height: 100.0%;">CRT2 - RiviÃ¨re TÃ©miscamie (Air Roberval) Airport<br>Lat: 51.009247<br>Lon: -72.983594</div>`)[0];
                 popup_7b4703433b0bf5c9ac199d6df70e6987.setContent(html_e350c3f3b783cd35bb42fc714de3c737);
             
         
@@ -141369,7 +141397,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_bc40dcf53df917e4869fb6d91fcbf15d.bindTooltip(
                 `<div>
-                     CRT2 | Rivière Témiscamie (Air Roberval) Airport
+                     CRT2 | RiviÃ¨re TÃ©miscamie (Air Roberval) Airport
                  </div>`,
                 {
   "sticky": true,
@@ -141932,7 +141960,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_11598d49f57ac75be0b7dbc7e9da4707 = $(`<div id="html_11598d49f57ac75be0b7dbc7e9da4707" style="width: 100.0%; height: 100.0%;">CSH2 - Île-aux-Grues Airport<br>Lat: 47.072402<br>Lon: -70.533235</div>`)[0];
+                var html_11598d49f57ac75be0b7dbc7e9da4707 = $(`<div id="html_11598d49f57ac75be0b7dbc7e9da4707" style="width: 100.0%; height: 100.0%;">CSH2 - ÃŽle-aux-Grues Airport<br>Lat: 47.072402<br>Lon: -70.533235</div>`)[0];
                 popup_45c971a79c25b03e4d2f600fcc05f385.setContent(html_11598d49f57ac75be0b7dbc7e9da4707);
             
         
@@ -141945,7 +141973,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_d9f5695383ea13b790802f4fbf2d9958.bindTooltip(
                 `<div>
-                     CSH2 | Île-aux-Grues Airport
+                     CSH2 | ÃŽle-aux-Grues Airport
                  </div>`,
                 {
   "sticky": true,
@@ -142316,7 +142344,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_557660bdd9be76d56dd5fcee20b91131 = $(`<div id="html_557660bdd9be76d56dd5fcee20b91131" style="width: 100.0%; height: 100.0%;">CSL3 - Lac-à-la-Tortue Airport<br>Lat: 46.621806<br>Lon: -72.632889</div>`)[0];
+                var html_557660bdd9be76d56dd5fcee20b91131 = $(`<div id="html_557660bdd9be76d56dd5fcee20b91131" style="width: 100.0%; height: 100.0%;">CSL3 - Lac-Ã -la-Tortue Airport<br>Lat: 46.621806<br>Lon: -72.632889</div>`)[0];
                 popup_d493ab9eba705f0579f2da30d2d7dc6c.setContent(html_557660bdd9be76d56dd5fcee20b91131);
             
         
@@ -142329,7 +142357,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_6962c64db4abc269fa56aa7dab633a5b.bindTooltip(
                 `<div>
-                     CSL3 | Lac-à-la-Tortue Airport
+                     CSL3 | Lac-Ã -la-Tortue Airport
                  </div>`,
                 {
   "sticky": true,
@@ -142556,7 +142584,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_9896bd6f09eefcb8929d6dc8e2b8d306 = $(`<div id="html_9896bd6f09eefcb8929d6dc8e2b8d306" style="width: 100.0%; height: 100.0%;">CSN3 - St-Jérôme Airport<br>Lat: 45.779799<br>Lon: -74.067088</div>`)[0];
+                var html_9896bd6f09eefcb8929d6dc8e2b8d306 = $(`<div id="html_9896bd6f09eefcb8929d6dc8e2b8d306" style="width: 100.0%; height: 100.0%;">CSN3 - St-JÃ©rÃ´me Airport<br>Lat: 45.779799<br>Lon: -74.067088</div>`)[0];
                 popup_b01529f4de821149a90013c1c256c2cb.setContent(html_9896bd6f09eefcb8929d6dc8e2b8d306);
             
         
@@ -142569,7 +142597,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_f8e39618b7359db340ae7cf80683d181.bindTooltip(
                 `<div>
-                     CSN3 | St-Jérôme Airport
+                     CSN3 | St-JÃ©rÃ´me Airport
                  </div>`,
                 {
   "sticky": true,
@@ -142700,7 +142728,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_2ccb707118693950719d36de07a6059f = $(`<div id="html_2ccb707118693950719d36de07a6059f" style="width: 100.0%; height: 100.0%;">CSP6 - Montreal / Aéroparc Île Perrot<br>Lat: 45.376099<br>Lon: -73.907204</div>`)[0];
+                var html_2ccb707118693950719d36de07a6059f = $(`<div id="html_2ccb707118693950719d36de07a6059f" style="width: 100.0%; height: 100.0%;">CSP6 - Montreal / AÃ©roparc ÃŽle Perrot<br>Lat: 45.376099<br>Lon: -73.907204</div>`)[0];
                 popup_1e54b03552f441ee696ff6f8de8d8c8d.setContent(html_2ccb707118693950719d36de07a6059f);
             
         
@@ -142713,7 +142741,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_5504063e2dd368be7738277b1c588e2f.bindTooltip(
                 `<div>
-                     CSP6 | Montreal / Aéroparc Île Perrot
+                     CSP6 | Montreal / AÃ©roparc ÃŽle Perrot
                  </div>`,
                 {
   "sticky": true,
@@ -143420,7 +143448,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_f1eaac8207d72384ca76f84e04d6fd53 = $(`<div id="html_f1eaac8207d72384ca76f84e04d6fd53" style="width: 100.0%; height: 100.0%;">CSZ4 - St-Frédéric Airport<br>Lat: 46.331402<br>Lon: -70.963303</div>`)[0];
+                var html_f1eaac8207d72384ca76f84e04d6fd53 = $(`<div id="html_f1eaac8207d72384ca76f84e04d6fd53" style="width: 100.0%; height: 100.0%;">CSZ4 - St-FrÃ©dÃ©ric Airport<br>Lat: 46.331402<br>Lon: -70.963303</div>`)[0];
                 popup_864390039ccb4c74dc81c7e7db244ffe.setContent(html_f1eaac8207d72384ca76f84e04d6fd53);
             
         
@@ -143433,7 +143461,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_abe31bde70657c5fb7bcc1f736cf33b8.bindTooltip(
                 `<div>
-                     CSZ4 | St-Frédéric Airport
+                     CSZ4 | St-FrÃ©dÃ©ric Airport
                  </div>`,
                 {
   "sticky": true,
@@ -143468,7 +143496,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_dfab6251b0c8859c8b00ea964e9b4bc1 = $(`<div id="html_dfab6251b0c8859c8b00ea964e9b4bc1" style="width: 100.0%; height: 100.0%;">CTA3 - Île aux Coudres Airport<br>Lat: 47.389400<br>Lon: -70.384399</div>`)[0];
+                var html_dfab6251b0c8859c8b00ea964e9b4bc1 = $(`<div id="html_dfab6251b0c8859c8b00ea964e9b4bc1" style="width: 100.0%; height: 100.0%;">CTA3 - ÃŽle aux Coudres Airport<br>Lat: 47.389400<br>Lon: -70.384399</div>`)[0];
                 popup_9de8a59982c4c598ba09392d2208cff9.setContent(html_dfab6251b0c8859c8b00ea964e9b4bc1);
             
         
@@ -143481,7 +143509,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_490db62309332fa7b54ba79dba2a51c4.bindTooltip(
                 `<div>
-                     CTA3 | Île aux Coudres Airport
+                     CTA3 | ÃŽle aux Coudres Airport
                  </div>`,
                 {
   "sticky": true,
@@ -143564,7 +143592,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_3cac49b2a134c53daa22018e75fc9070 = $(`<div id="html_3cac49b2a134c53daa22018e75fc9070" style="width: 100.0%; height: 100.0%;">CTB6 - Tête-à-la-Baleine Airport<br>Lat: 50.674400<br>Lon: -59.383598</div>`)[0];
+                var html_3cac49b2a134c53daa22018e75fc9070 = $(`<div id="html_3cac49b2a134c53daa22018e75fc9070" style="width: 100.0%; height: 100.0%;">CTB6 - TÃªte-Ã -la-Baleine Airport<br>Lat: 50.674400<br>Lon: -59.383598</div>`)[0];
                 popup_ed49cf59b8458307ae81e9b027d6def7.setContent(html_3cac49b2a134c53daa22018e75fc9070);
             
         
@@ -143577,7 +143605,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_05af9bab768efd82d3cd3094b87f2f69.bindTooltip(
                 `<div>
-                     CTB6 | Tête-à-la-Baleine Airport
+                     CTB6 | TÃªte-Ã -la-Baleine Airport
                  </div>`,
                 {
   "sticky": true,
@@ -143612,7 +143640,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_dd8b8e5e4a78f464e875ee98d26b9164 = $(`<div id="html_dd8b8e5e4a78f464e875ee98d26b9164" style="width: 100.0%; height: 100.0%;">CTE5 - Lac à la Perchaude Airport<br>Lat: 46.622501<br>Lon: -72.848297</div>`)[0];
+                var html_dd8b8e5e4a78f464e875ee98d26b9164 = $(`<div id="html_dd8b8e5e4a78f464e875ee98d26b9164" style="width: 100.0%; height: 100.0%;">CTE5 - Lac Ã  la Perchaude Airport<br>Lat: 46.622501<br>Lon: -72.848297</div>`)[0];
                 popup_50036c949c50cd0a843ca669691e1a97.setContent(html_dd8b8e5e4a78f464e875ee98d26b9164);
             
         
@@ -143625,7 +143653,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_11063ecfbbb4c42ec5a83fc328e23e46.bindTooltip(
                 `<div>
-                     CTE5 | Lac à la Perchaude Airport
+                     CTE5 | Lac Ã  la Perchaude Airport
                  </div>`,
                 {
   "sticky": true,
@@ -143708,7 +143736,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_5ed0d536734fd85ac79304460bab899d = $(`<div id="html_5ed0d536734fd85ac79304460bab899d" style="width: 100.0%; height: 100.0%;">CTG3 - Du Rocher-Percé (Pabok) Airport<br>Lat: 48.383780<br>Lon: -64.562703</div>`)[0];
+                var html_5ed0d536734fd85ac79304460bab899d = $(`<div id="html_5ed0d536734fd85ac79304460bab899d" style="width: 100.0%; height: 100.0%;">CTG3 - Du Rocher-PercÃ© (Pabok) Airport<br>Lat: 48.383780<br>Lon: -64.562703</div>`)[0];
                 popup_d187d4fb1817d4adcd319738c89b1d94.setContent(html_5ed0d536734fd85ac79304460bab899d);
             
         
@@ -143721,7 +143749,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_a33aa4114152d9c7e273c76daef5d116.bindTooltip(
                 `<div>
-                     CTG3 | Du Rocher-Percé (Pabok) Airport
+                     CTG3 | Du Rocher-PercÃ© (Pabok) Airport
                  </div>`,
                 {
   "sticky": true,
@@ -143804,7 +143832,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_44c0ed8600ec8d893fd7cd3b171cc1ed = $(`<div id="html_44c0ed8600ec8d893fd7cd3b171cc1ed" style="width: 100.0%; height: 100.0%;">CTJ3 - Rivière-la-Madeleine Airport<br>Lat: 49.241950<br>Lon: -65.330490</div>`)[0];
+                var html_44c0ed8600ec8d893fd7cd3b171cc1ed = $(`<div id="html_44c0ed8600ec8d893fd7cd3b171cc1ed" style="width: 100.0%; height: 100.0%;">CTJ3 - RiviÃ¨re-la-Madeleine Airport<br>Lat: 49.241950<br>Lon: -65.330490</div>`)[0];
                 popup_0a22ff7a066789dc19670ce89480856f.setContent(html_44c0ed8600ec8d893fd7cd3b171cc1ed);
             
         
@@ -143817,7 +143845,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_0e61b2b54fe57242fba1e4d7ede0e9b4.bindTooltip(
                 `<div>
-                     CTJ3 | Rivière-la-Madeleine Airport
+                     CTJ3 | RiviÃ¨re-la-Madeleine Airport
                  </div>`,
                 {
   "sticky": true,
@@ -143900,7 +143928,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_59331ddc3ec738f06aac078e8cf8e23f = $(`<div id="html_59331ddc3ec738f06aac078e8cf8e23f" style="width: 100.0%; height: 100.0%;">CTK6 - Kégashka Airport<br>Lat: 50.195801<br>Lon: -61.265800</div>`)[0];
+                var html_59331ddc3ec738f06aac078e8cf8e23f = $(`<div id="html_59331ddc3ec738f06aac078e8cf8e23f" style="width: 100.0%; height: 100.0%;">CTK6 - KÃ©gashka Airport<br>Lat: 50.195801<br>Lon: -61.265800</div>`)[0];
                 popup_58aa1f437506c7d771b4336bafa02bd3.setContent(html_59331ddc3ec738f06aac078e8cf8e23f);
             
         
@@ -143913,7 +143941,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_320be8b4b10fbb9edd74a3f0c1a2379c.bindTooltip(
                 `<div>
-                     CTK6 | Kégashka Airport
+                     CTK6 | KÃ©gashka Airport
                  </div>`,
                 {
   "sticky": true,
@@ -144236,7 +144264,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_cc02e286a1fe45dd5498f60d635daca0 = $(`<div id="html_cc02e286a1fe45dd5498f60d635daca0" style="width: 100.0%; height: 100.0%;">CTU5 - La Tabatière Airport<br>Lat: 50.830799<br>Lon: -58.975601</div>`)[0];
+                var html_cc02e286a1fe45dd5498f60d635daca0 = $(`<div id="html_cc02e286a1fe45dd5498f60d635daca0" style="width: 100.0%; height: 100.0%;">CTU5 - La TabatiÃ¨re Airport<br>Lat: 50.830799<br>Lon: -58.975601</div>`)[0];
                 popup_1352e80f4c0e65cf13265c9a80c4309e.setContent(html_cc02e286a1fe45dd5498f60d635daca0);
             
         
@@ -144249,7 +144277,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_8a9a9d645c0904889e5a0fc0a3a7abe2.bindTooltip(
                 `<div>
-                     CTU5 | La Tabatière Airport
+                     CTU5 | La TabatiÃ¨re Airport
                  </div>`,
                 {
   "sticky": true,
@@ -145148,7 +145176,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_e4ea25450f5948b0a0bc94207584fa50 = $(`<div id="html_e4ea25450f5948b0a0bc94207584fa50" style="width: 100.0%; height: 100.0%;">CYRC - Chicoutimi/Saint-Honoré Aerodrome<br>Lat: 48.520963<br>Lon: -71.052560</div>`)[0];
+                var html_e4ea25450f5948b0a0bc94207584fa50 = $(`<div id="html_e4ea25450f5948b0a0bc94207584fa50" style="width: 100.0%; height: 100.0%;">CYRC - Chicoutimi/Saint-HonorÃ© Aerodrome<br>Lat: 48.520963<br>Lon: -71.052560</div>`)[0];
                 popup_54961509115b485f0390a9a874aee4c4.setContent(html_e4ea25450f5948b0a0bc94207584fa50);
             
         
@@ -145161,7 +145189,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_cb3616d10fd819b10ab6bbed06202453.bindTooltip(
                 `<div>
-                     CYRC | Chicoutimi/Saint-Honoré Aerodrome
+                     CYRC | Chicoutimi/Saint-HonorÃ© Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -151328,7 +151356,7 @@ Lon: ${lon.toFixed(6)}`;
 
         
             
-                var html_6cd137366427294b3ee3bad7f82e17da = $(`<div id="html_6cd137366427294b3ee3bad7f82e17da" style="width: 100.0%; height: 100.0%;">CJF3 - Île-à-la-Crosse Airport<br>Lat: 55.489700<br>Lon: -107.930000</div>`)[0];
+                var html_6cd137366427294b3ee3bad7f82e17da = $(`<div id="html_6cd137366427294b3ee3bad7f82e17da" style="width: 100.0%; height: 100.0%;">CJF3 - ÃŽle-Ã -la-Crosse Airport<br>Lat: 55.489700<br>Lon: -107.930000</div>`)[0];
                 popup_37018e4b8196e1a0eecdee6423e1e324.setContent(html_6cd137366427294b3ee3bad7f82e17da);
             
         
@@ -151341,7 +151369,7 @@ Lon: ${lon.toFixed(6)}`;
     
             marker_a2cf3a32a0b2142ac969e3b25c90848c.bindTooltip(
                 `<div>
-                     CJF3 | Île-à-la-Crosse Airport
+                     CJF3 | ÃŽle-Ã -la-Crosse Airport
                  </div>`,
                 {
   "sticky": true,
@@ -160795,3 +160823,4 @@ Lon: ${lon.toFixed(6)}`;
         
 </script>
 </html>
+

@@ -307,13 +307,16 @@ def build_map(pilot_lat, pilot_lon, notams_filtered, notams_raw, generated_at=No
     m.get_root().html.add_child(
         folium.Element(
             "<style>"
-            ".leaflet-control-layers{min-width:260px;max-width:340px;font-size:13px;}"
+            ".leaflet-control-layers{min-width:220px;max-width:320px;font-size:13px;}"
+            ".leaflet-control-layers-expanded{padding:7px 9px;}"
             ".leaflet-control-layers-group-name{font-weight:700;color:#1f3b63;margin-top:6px;}"
             ".leaflet-control-layers-list{max-height:56vh;overflow-y:auto;padding-right:4px;}"
             ".leaflet-control-layers-group-label{cursor:pointer;display:block;position:relative;padding-right:14px;}"
             ".leaflet-control-layers-group-label:after{content:'▾';position:absolute;right:2px;top:0;color:#1f3b63;font-size:11px;}"
             ".leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label:after{content:'▸';}"
             ".leaflet-control-layers-group.province-collapsed>label:not(.leaflet-control-layers-group-label){display:none;}"
+            ".leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label{display:inline-block;max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}"
+            "@media (max-width:600px){.leaflet-control-layers{min-width:176px;max-width:220px;font-size:12px;}.leaflet-control-layers-expanded{padding:6px 8px;}.leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label{max-width:146px;}}"
             ".pilot-input{z-index:1200;}"
             ".pilot-flyout{position:relative;width:272px;background:#fff;border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.2);padding:7px;transition:transform .2s ease;overflow:visible;box-sizing:border-box;}"
             ".pilot-flyout.collapsed{transform:translateX(-100%);}" 
