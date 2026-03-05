@@ -1,0 +1,12 @@
+theme: jekyll-theme-primer
+
+title: Drone_SOP
+
+description: Drone SOP reference site
+
+exclude:
+  - Python_Code/
+  - "Markdown Docs/"
+  - TODO/
+  - "_tmp safety copies/"
+  - "**/__pycache__/"
