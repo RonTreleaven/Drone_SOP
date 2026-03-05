@@ -318,13 +318,18 @@ window.onload = function() {
   };
   ctl.addTo(map);
 
+  var pilotFlyoutToggle = document.getElementById('pilotFlyoutToggle');
+  if (pilotFlyoutToggle) {
+      pilotFlyoutToggle.textContent = '<';
+  }
+
   document.getElementById('pilotFlyoutToggle').onclick = function() {
       var flyout = document.getElementById('pilotFlyout');
       if (!flyout) {
           return;
       }
       flyout.classList.toggle('collapsed');
-      this.textContent = flyout.classList.contains('collapsed') ? 'â¯' : 'â®';
+      this.textContent = flyout.classList.contains('collapsed') ? '>' : '<';
   };
 
   document.getElementById('upd').onclick = function() {
@@ -160823,4 +160828,7 @@ Lon: ${lon.toFixed(6)}`;
         
 </script>
 </html>
+
+
+
 
