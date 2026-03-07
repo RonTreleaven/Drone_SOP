@@ -1,9 +1,12 @@
-# Airport NOTAM map (repo-driven gathering of NOTAMS daily)
-# Rewritten to load NOTAMs from GitHub repo clone data/notams/All_CA.json
-
+##############################################################################
+# Gold v2.d1 NotamsMap Builder.py source code
+#
+# Airport NOTAMs map and GitHub actions to create daily .json database. (NOTAMS daily at 6AM ET)
+# NotamsMap.html is output, to load NOTAMs from GitHub repo clone data/notams/All_CA.json, 
+# Javascripts and variables are used to survey Airpace, Warnings/Obstacles and toggle beteen lat/lon as pilot location, and NOTAM filter radius.
 #########################################################################
-# This creates the base "Notam Map.html" or user defined name for one-off runs
-# Notam Map.html is the basemap, and will pull NOTAM data for /data/Notams/*.json files
+# Default "NotamsMap.html" with user opition to change output filename, for one-off map generation.
+# NotamsMap.html is the basemap, and will pull NOTAM data for /data/Notams/*.json files
 #
 
 import html
@@ -21,17 +24,18 @@ from folium.plugins import FeatureGroupSubGroup, GroupedLayerControl, MarkerClus
 # ==============================
 # GLOBAL CONFIG
 # ==============================
-DEFAULT_ZOOM = 10
+DEFAULT_ZOOM = 12  #10 is current default map size
 NM_TO_M = 1852
-NOTAM_RADIUS_KM = 10
-NOTAM_RADIUS_M = NOTAM_RADIUS_KM * 1000
+NOTAM_RADIUS_KM = 11.1 # was 10 , testing 11.1 in One-Off run.
+NOTAM_RADIUS_M = NOTAM_RADIUS_KM * 100  # 1000 or ???? Notam radius in meters, used for map circle radius and filtering obstacles
 COORD_DECIMALS = 6
 
-# Point this to your local GitHub repo clone root
+# Pointer to local GitHub repo clone root
 REPO_ROOT = Path(r"C:\Users\Ron Treleaven\Drone_SOP")
 NOTAMS_FILTERED_PATH = REPO_ROOT / "data" / "notams" / "All_CA.json"
 NOTAMS_RAW_PATH = REPO_ROOT / "data" / "notams" / "All_CA_raw.json"
 META_PATH = REPO_ROOT / "data" / "notams" / "All_CA.meta.json"
+
 
 ICON_STYLE = {
     "heliport": {"icon": "helicopter", "color": "green"},
@@ -42,70 +46,24 @@ ICON_STYLE = {
     "default": {"icon": "map-marker", "color": "lightgray"},
 }
 
-DEFAULT_BASEMAP_KEY = "cartodb_positron"
-BASEMAP_OPTIONS = {
-    "cartodb_positron": {
-        "name": "CartoDB Positron",
-        "tiles": "CartoDB positron",
-    },
-    "cartodb_voyager": {
-        "name": "CartoDB Voyager",
-        "tiles": "CartoDB Voyager",
-    },
-    "openstreetmap": {
-        "name": "OpenStreetMap",
-        "tiles": "OpenStreetMap",
-    },
-    "opentopomap": {
-        "name": "OpenTopoMap",
-        "tiles": "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
-        "attr": "Map data (c) OpenStreetMap contributors, SRTM | style (c) OpenTopoMap",
-    },
-    "esri_world_imagery": {
-        "name": "Esri World Imagery",
-        "tiles": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        "attr": "Tiles (c) Esri and contributors",
-    },
-    "google_roadmap": {
-        "name": "Google Roadmap",
-        "tiles": "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
-        "attr": "Map data (c) Google",
-    },
-    "google_satellite": {
-        "name": "Google Satellite",
-        "tiles": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
-        "attr": "Imagery (c) Google",
-    },
-    "google_hybrid": {
-        "name": "Google Hybrid",
-        "tiles": "https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
-        "attr": "Imagery and labels (c) Google",
-    },
-    "google_terrain": {
-        "name": "Google Terrain",
-        "tiles": "https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}",
-        "attr": "Terrain (c) Google",
-    },
-}
-
-nest_asyncio.apply()
+nest_asyncio.apply() # Allow nested asyncio for Windows Location Services in Jupyter/interactive environments, and avoid "RuntimeError: This event loop is already running" if get_windows_location is used in such contexts.
 
 
-def haversine_km(lat1, lon1, lat2, lon2):
-    r_km = 6371.0
-    phi1 = math.radians(lat1)
-    phi2 = math.radians(lat2)
-    d_phi = math.radians(lat2 - lat1)
-    d_lambda = math.radians(lon2 - lon1)
+def haversine_km(lat1, lon1, lat2, lon2): # Returns distance in kilometers between two lat/lon points using Haversine formula
+    r_km = 6371.0 # Earth radius in kilometers
+    phi1 = math.radians(lat1) # Convert degrees to radians
+    phi2 = math.radians(lat2)   # Convert degrees to radians
+    d_phi = math.radians(lat2 - lat1) # Difference in latitude in radians
+    d_lambda = math.radians(lon2 - lon1) # Difference in longitude in radians
 
     a = (
         math.sin(d_phi / 2) ** 2
         + math.cos(phi1) * math.cos(phi2) * math.sin(d_lambda / 2) ** 2
     )
-    return 2 * r_km * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    return 2 * r_km * math.atan2(math.sqrt(a), math.sqrt(1 - a)) # Haversine distance in kilometers
 
 
-def format_notam_raw_for_popup(raw_text):
+def format_notam_raw_for_popup(raw_text): # Formats raw NOTAM text for HTML popup display
     compact = re.sub(r"\s+", " ", (raw_text or "")).strip()
     if not compact:
         return ""
@@ -115,11 +73,8 @@ def format_notam_raw_for_popup(raw_text):
     return "<br>".join(html.escape(part) for part in parts)
 
 
-def get_windows_location(timeout=5, desired_accuracy=25):
-    """
-    Returns (lat, lon, accuracy_m) using Windows Location Services
-    or None if unavailable / denied / timeout exceeded.
-    """
+def get_windows_location(timeout=5, desired_accuracy=25): # Returns pilot location using Windows Location Services
+    
     try:
         import asyncio
         from winsdk.windows.devices.geolocation import Geolocator
@@ -185,31 +140,6 @@ def get_pilot_location():
             print("Numeric DD lat/lon required (example: 43.653200 and -79.383200).")
 
 
-def choose_basemap_key():
-    print("\nBasemap options:")
-    keys = list(BASEMAP_OPTIONS.keys())
-    for idx, key in enumerate(keys, start=1):
-        print(f"{idx}. {BASEMAP_OPTIONS[key]['name']} [{key}]")
-
-    choice = input(
-        f"Choose basemap by number or key [{DEFAULT_BASEMAP_KEY}]: "
-    ).strip().lower()
-
-    if not choice:
-        return DEFAULT_BASEMAP_KEY
-
-    if choice.isdigit():
-        num = int(choice)
-        if 1 <= num <= len(keys):
-            return keys[num - 1]
-
-    if choice in BASEMAP_OPTIONS:
-        return choice
-
-    print(f"Unknown basemap '{choice}'. Falling back to {DEFAULT_BASEMAP_KEY}.")
-    return DEFAULT_BASEMAP_KEY
-
-
 def load_notams_file(path, label):
     if not path.exists():
         raise SystemExit(f"NOTAM file not found: {path}")
@@ -269,39 +199,31 @@ def prepare_obstacle_points(notams_data):
     return points
 
 
-def build_map(
-    pilot_lat,
-    pilot_lon,
-    notams_filtered,
-    notams_raw,
-    generated_at=None,
-    basemap_key=DEFAULT_BASEMAP_KEY,
-):
-    # 1) Airports
-    df = pd.read_csv("https://davidmegginson.github.io/ourairports-data/airports.csv")
+def build_map(pilot_lat, pilot_lon, notams_filtered, notams_raw, generated_at=None):  # 1) Airports and heliports from OurAirports dataset, filtered to Canada
+       
+    df = pd.read_csv("https://davidmegginson.github.io/ourairports-data/airports.csv") # OurAirports global airports dataset, updated periodically by David Megginson and contributors, 
+                                                                                       # licensed under Open Database License (ODbL) - https://ourairports.com/data/
+                                                                                       # https://ourairports.com/about.html#credits  David Megginson and contributors, licensed under Open Database License (ODbL)
     df = df[df["iso_country"] == "CA"].copy()
 
     gdf = gpd.GeoDataFrame(
         df,
         geometry=gpd.points_from_xy(df.longitude_deg, df.latitude_deg),
-        crs="EPSG:4326",
+        crs="EPSG:4326",  # EPSG:4326 standard coordinate reference system for geographic coordinates 
+                          # (latitude and longitude) in degrees, used by GPS and web mapping applications.
+                          # EPSG:3978 uses Canada Lambert Conformal Conic projection, 
+                          # which is optimized for mapping Canada and provides better distance and area accuracy across the country, but requires reprojection to EPSG:4326 for use with Folium/Leaflet
     )
 
     # 2) Base map
     m = folium.Map(
         location=[pilot_lat, pilot_lon],
         zoom_start=DEFAULT_ZOOM,
-        tiles=None,
+        # tiles="CartoDB positron",
+        tiles="https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png",
+        attr="Map tiles by Stamen Design, CC BY 3.0. Data by OpenStreetMap, ODbL.",
         zoom_control=False,
     )
-    basemap = BASEMAP_OPTIONS.get(basemap_key, BASEMAP_OPTIONS[DEFAULT_BASEMAP_KEY])
-    folium.TileLayer(
-        tiles=basemap["tiles"],
-        attr=basemap.get("attr"),
-        name=basemap["name"],
-        overlay=False,
-        control=False,
-    ).add_to(m)
 
     # 3) Province/type layers
     province_parents, layers_dict = {}, {}
@@ -665,7 +587,7 @@ window.onload = function() {{
       var d = L.DomUtil.create('div','pilot-input');
       L.DomEvent.disableClickPropagation(d);
       d.style.marginTop = '88px';
-        d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls"><</button><div class="controls-row">Lat <input id="pLat" size="10" maxlength="12" placeholder="43.000000"> Lon <input id="pLon" size="10" maxlength="13" placeholder="-79.000000"></div><div class="controls-meta dd-hint">DD: 43.653200, -79.383200</div><div class="action-grid"><button id="upd">Set Lat/Lon</button><button id="centerPilot">Center Map</button><button id="getPilotLoc">Get Location</button><button id="sourceBtn">Switch Filter Group</button></div><div class="controls-row" style="margin-top:5px;">Radius km <input id="radiusKmInput" size="6" maxlength="6" placeholder="10"> <button id="setRadiusBtn">Change NOTAM Radius</button></div><div id="currentPilotText" class="controls-meta status-line">Current Pilot: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Src: RAW</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div>';
+        d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls"><</button><div class="controls-row">Lat <input id="pLat" size="10" maxlength="12" placeholder="43.000000"> Lon <input id="pLon" size="10" maxlength="13" placeholder="-79.000000"></div><div class="controls-meta dd-hint">DD: 43.653200, -79.383200</div><div class="action-grid"><button id="upd">Set Lat/Lon</button><button id="centerPilot">Center Map</button><button id="getPilotLoc">Get Location</button><button id="sourceBtn">Swith Filter Group</button></div><div class="controls-row" style="margin-top:5px;">Radius km <input id="radiusKmInput" size="6" maxlength="6" placeholder="10"> <button id="setRadiusBtn">Change NOTAM Radius</button></div><div id="currentPilotText" class="controls-meta status-line">Current Pilot: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Src: RAW</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div>';
       return d;
   }};
   ctl.addTo(map);
@@ -767,7 +689,6 @@ window.onload = function() {{
 
     print(f"Loaded filtered NOTAMs from: {NOTAMS_FILTERED_PATH}")
     print(f"Loaded RAW NOTAMs from: {NOTAMS_RAW_PATH}")
-    print(f"Basemap: {basemap['name']} [{basemap_key}]")
     if generated_at:
         print(f"NOTAM data generatedAt: {generated_at}")
     print(f"Initial obstacle markers plotted (FILTERED): {shown}")
@@ -776,24 +697,11 @@ window.onload = function() {{
 
 
 def main():
-    basemap_key = choose_basemap_key()
-    if basemap_key.startswith("google_"):
-        print(
-            "Note: Google tile use may require API keys/licensing terms for production usage."
-        )
-
     pilot_lat, pilot_lon = get_pilot_location()
     print(f"Using pilot location: {pilot_lat}, {pilot_lon}")
 
     notams_filtered, notams_raw, generated_at = load_notams_from_repo()
-    m = build_map(
-        pilot_lat,
-        pilot_lon,
-        notams_filtered,
-        notams_raw,
-        generated_at,
-        basemap_key=basemap_key,
-    )
+    m = build_map(pilot_lat, pilot_lon, notams_filtered, notams_raw, generated_at)
 
     default_out_name = "Notam Map.html"
     out_name = input(
