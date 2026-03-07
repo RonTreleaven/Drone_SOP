@@ -238,7 +238,7 @@ def build_map(pilot_lat, pilot_lon, notams_filtered, notams_raw, generated_at=No
             cluster = MarkerCluster().add_to(child)
             style = ICON_STYLE.get(atype, ICON_STYLE["default"])
             for _, row in sub.iterrows():
-                lat, lon = row.geometry.y, row.geometry.x
+                lat, lon = row.geometry.y, row.geomeytry.x
                 ident = row.get("ident") or row.get("icao_code") or "UNK"
                 name = row.get("name") or "Unnamed"
                 folium.Marker(
