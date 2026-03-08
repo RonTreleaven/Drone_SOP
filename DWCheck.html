@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drone Weather Assessment Tool</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef2f5;
+max-width:850px;
+margin:auto;
+padding:20px;
+}
+
+h2{
+margin-bottom:10px;
+}
+
+input{
+padding:6px;
+font-size:16px;
+text-transform:uppercase;
+}
+
+button{
+padding:7px 14px;
+font-size:15px;
+margin-left:5px;
+}
+
+button:disabled{
+opacity:0.65;
+cursor:not-allowed;
+}
+
+.panel{
+background:white;
+padding:15px;
+border-radius:6px;
+margin-top:15px;
+box-shadow:0 2px 4px rgba(0,0,0,0.1);
+}
+
+.safe{background:#c8f7c5;}
+.caution{background:#fff3b0;}
+.risky{background:#ffd6a5;}
+.nogo{background:#ffb3b3;}
+
+pre{
+background:#fafafa;
+padding:10px;
+overflow-x:auto;
+}
+
+.metric{
+margin:4px 0;
+}
+
+.controls{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+align-items:center;
+}
+
+.controls input,
+.controls button{
+margin:0;
+}
+
+.error-banner{
+display:none;
+background:#ffe3e3;
+border:1px solid #c92a2a;
+color:#7f1d1d;
+padding:10px 12px;
+border-radius:6px;
+margin-top:12px;
+}
+
+.error-banner.show{
+display:block;
+}
+
+.loading-wrap{
+display:none;
+align-items:center;
+gap:10px;
+margin-top:12px;
+padding:8px 10px;
+border-radius:6px;
+background:#e8f1ff;
+border:1px solid #9ec5fe;
+color:#084298;
+}
+
+.loading-wrap.show{
+display:flex;
+}
+
+.spinner{
+width:18px;
+height:18px;
+border:3px solid #9ec5fe;
+border-top-color:#084298;
+border-radius:50%;
+animation:spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+to{transform:rotate(360deg);}
+}
+
+.station-list{
+margin:0;
+padding-left:18px;
+}
+
+.station-list li{
+margin:5px 0;
+}
+
+.subtle{
+color:#445;
+font-size:14px;
+margin-top:8px;
+}
+
+.top-nav{
+margin-bottom:10px;
+font-size:14px;
+}
+
+.top-nav a{
+color:#0b57d0;
+text-decoration:none;
+}
+
+.top-nav a:hover{
+text-decoration:underline;
+}
+
+.status-ok{
+color:#14532d;
+font-weight:600;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="top-nav">
+<a href="#" onclick="goBack(event)">&larr; Back</a> |
+<a href="index.html">Home</a>
+</nav>
+
+<h2>Micro-Drone Weather Risk Assessment</h2>
+
+<div class="controls">
+<input id="icao" placeholder="ICAO (CYOO)">
+<button id="checkBtn" onclick="runCheck()">Check Conditions</button>
+<button id="locBtn" onclick="useCurrentLocation()">Use Current Location</button>
+</div>
+
+<div id="errorBanner" class="error-banner"></div>
+
+<div id="loadingWrap" class="loading-wrap" aria-live="polite">
+<div class="spinner" aria-hidden="true"></div>
+<div id="loadingText">Searching weather sources...</div>
+</div>
+
+<div id="riskPanel" class="panel"></div>
+
+<div class="panel">
+<h3>Current METAR</h3>
+<pre id="metarText"></pre>
+</div>
+
+<div class="panel">
+<h3>Geomagnetic Conditions (Kp Index)</h3>
+<div id="kpData"></div>
+</div>
+
+<div class="panel">
+<h3>Nearest METAR Stations</h3>
+<div id="locationInfo" class="subtle">Location not set.</div>
+<div id="currentLocationDetails" class="subtle"><em>Current location unknown. Please refresh after setting location on Home, or click Use Current Location.</em></div>
+<div id="nearestStations">Use "Use Current Location" to find closest stations.</div>
+</div>
+
+<div class="panel">
+<h3>Weather Check Record</h3>
+<div id="dwCheckStatus" class="subtle">No weather check saved yet.</div>
+<button id="completeBtn" type="button" onclick="markWeatherCheckComplete()">Mark Weather Check Complete</button>
+</div>
+
+<script>
+
+/* -------------------------
+   MAIN CONTROL FUNCTION
+------------------------- */
+
+let latestNearestStations = []
+let latestLocation = null
+let latestWeatherArtifact = null
+let stationsCachePromise = null
+
+function goBack(event){
+event.preventDefault()
+if(document.referrer) window.location.href = document.referrer
+else window.location.href = "index.html"
+}
+
+async function runCheck(){
+
+clearError()
+setLoading(true,"Checking METAR and geomagnetic conditions...")
+try{
+
+const icao = document.getElementById("icao").value.toUpperCase()
+
+if(!icao){
+showError("Enter ICAO code before checking conditions.")
+return
+}
+
+const metar = await fetchMETAR(icao)
+
+if(!metar){
+return
+}
+
+displayMETAR(metar)
+
+const windRisk = calculateWindRisk(metar)
+
+displayRisk(windRisk,metar)
+
+const kp = await fetchKpIndex()
+
+displayKp(kp)
+
+saveWeatherArtifact({
+icao,
+metar,
+risk: windRisk,
+kp,
+nearestStations: latestNearestStations,
+location: latestLocation
+})
+
+renderWeatherCheckStatus()
+}
+finally{
+setLoading(false)
+}
+
+}
+
+
+async function useCurrentLocation(){
+
+clearError()
+setLoading(true,"Getting location and nearest stations...")
+
+try{
+
+if(!navigator.geolocation){
+showError("Geolocation is not supported by this browser.")
+return
+}
+
+const position = await getCurrentPosition()
+const lat = position.coords.latitude
+const lon = position.coords.longitude
+
+latestLocation = { lat, lon, source: "dwcheck-geolocation" }
+
+const savedLoc = saveKnownPilotLocation(lat,lon,"dwcheck-geolocation")
+
+document.getElementById("locationInfo").textContent =
+`Current location: ${lat.toFixed(4)}, ${lon.toFixed(4)}`
+
+renderCurrentLocationDetails(`${savedLoc.latShort}, ${savedLoc.lonShort}`, savedLoc.dms)
+
+const nearest = await findNearestStations(lat,lon,3)
+
+if(!nearest.length){
+showError("No nearby METAR stations found from station cache.")
+return
+}
+
+displayNearestStations(nearest)
+latestNearestStations = nearest
+
+// Auto-fill the closest station for fast METAR lookup.
+document.getElementById("icao").value = nearest[0].icaoId
+
+}
+catch(err){
+if(err && err.code === 1) showError("Location permission denied.")
+else if(err && err.code === 2) showError("Unable to determine your location.")
+else if(err && err.code === 3) showError("Location request timed out.")
+else showError("Unable to get current location.")
+}
+finally{
+setLoading(false)
+}
+
+}
+
+
+function getCurrentPosition(){
+return new Promise((resolve,reject) => {
+navigator.geolocation.getCurrentPosition(
+resolve,
+reject,
+{ enableHighAccuracy:true, timeout:12000, maximumAge:300000 }
+)
+})
+}
+
+
+async function findNearestStations(lat,lon,count=3){
+const stations = await fetchStationsCache()
+
+if(!Array.isArray(stations)) return []
+
+const candidates = stations
+.filter(s => s && s.icaoId && Number.isFinite(Number(s.lat)) && Number.isFinite(Number(s.lon)))
+.map(s => ({
+icaoId: s.icaoId,
+site: s.site || "Unknown",
+lat: Number(s.lat),
+lon: Number(s.lon),
+distanceKm: distance(lat,lon,Number(s.lat),Number(s.lon))
+}))
+.sort((a,b) => a.distanceKm - b.distanceKm)
+
+return candidates.slice(0,count)
+}
+
+
+async function fetchWithTimeout(url,timeoutMs=7000,options={}){
+const controller = new AbortController()
+const timeout = setTimeout(() => controller.abort(), timeoutMs)
+try{
+return await fetch(url,{ ...options, signal:controller.signal })
+}
+finally{
+clearTimeout(timeout)
+}
+}
+
+
+async function fetchStationsCache(){
+if(stationsCachePromise) return stationsCachePromise
+
+stationsCachePromise = (async () => {
+
+// Prefer local repo cache for speed and reliability.
+const localUrls = [
+"./data/notams/stations.cache.json",
+"data/notams/stations.cache.json"
+]
+
+for(const localUrl of localUrls){
+try{
+const local = await fetchWithTimeout(localUrl,4000,{ cache:"force-cache" })
+if(local.ok){
+const data = await local.json()
+if(Array.isArray(data) && data.length) return data
+}
+}
+catch{
+// Try next source.
+}
+}
+
+const remoteUrl = "https://aviationweather.gov/data/cache/stations.cache.json"
+const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(remoteUrl)}`
+
+try{
+const direct = await fetchWithTimeout(remoteUrl,5000)
+if(direct.ok) return await direct.json()
+}
+catch{
+// Direct fetch can fail in-browser due to CORS.
+}
+
+try{
+const proxied = await fetchWithTimeout(proxyUrl,7000)
+if(!proxied.ok){
+showError(`Stations cache request failed (${proxied.status}).`)
+return []
+}
+return await proxied.json()
+}
+catch{
+showError("Unable to load station cache for nearest-airport lookup.")
+return []
+}
+
+})()
+
+return stationsCachePromise.then(data => {
+if(!Array.isArray(data) || !data.length) stationsCachePromise = null
+return data
+})
+}
+
+
+function displayNearestStations(stations){
+const el = document.getElementById("nearestStations")
+
+const items = stations.map(s =>
+`<li><b>${s.icaoId}</b> - ${s.site} (${s.distanceKm.toFixed(1)} km)</li>`
+).join("")
+
+el.innerHTML = `<ol class="station-list">${items}</ol>`
+}
+
+
+function distance(lat1, lon1, lat2, lon2){
+
+const R = 6371
+const dLat = (lat2-lat1) * Math.PI/180
+const dLon = (lon2-lon1) * Math.PI/180
+
+const a =
+Math.sin(dLat/2)**2 +
+Math.cos(lat1*Math.PI/180) *
+Math.cos(lat2*Math.PI/180) *
+Math.sin(dLon/2)**2
+
+const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+
+return R*c
+}
+
+
+function parseLatLonText(value){
+if(!value || typeof value !== "string") return null
+const m = value.trim().match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/)
+if(!m) return null
+const lat = Number(m[1])
+const lon = Number(m[2])
+if(!Number.isFinite(lat) || !Number.isFinite(lon)) return null
+if(lat < -90 || lat > 90 || lon < -180 || lon > 180) return null
+return { lat, lon }
+}
+
+
+function saveKnownPilotLocation(lat,lon,source="dwcheck"){
+const latShort = Number(lat).toFixed(6)
+const lonShort = Number(lon).toFixed(6)
+const latDMS = toDMS(Number(lat),true)
+const lonDMS = toDMS(Number(lon),false)
+localStorage.setItem("pilotLocationDD",`${latShort}, ${lonShort}`)
+localStorage.setItem("pilotLocationDMS",`${latDMS}, ${lonDMS}`)
+localStorage.setItem("pilotLatitude",latShort)
+localStorage.setItem("pilotLongitude",lonShort)
+localStorage.setItem("pilotLocationSource",source)
+return { latShort, lonShort, dms:`${latDMS}, ${lonDMS}` }
+}
+
+
+function toDMS(deg,isLat){
+const abs = Math.abs(deg)
+const d = Math.floor(abs)
+const mFloat = (abs-d) * 60
+const m = Math.floor(mFloat)
+const s = ((mFloat-m) * 60).toFixed(1)
+const dir = isLat
+? (deg >= 0 ? "N" : "S")
+: (deg >= 0 ? "E" : "W")
+return `${d}\u00B0${m}'${s}"${dir}`
+}
+
+
+function renderCurrentLocationDetails(ddText,dmsText){
+const el = document.getElementById("currentLocationDetails")
+if(!el) return
+if(!ddText){
+el.innerHTML = "<em>Current location unknown. Please refresh after setting location on Home, or click Use Current Location.</em>"
+return
+}
+const mapQ = ddText.replace(/\s/g,"")
+el.innerHTML = `
+DD: ${ddText}<br>
+DMS: ${dmsText || "Unavailable"}<br>
+<a href="https://maps.google.com/?q=${mapQ}" target="_blank" rel="noopener">View on Google Maps</a>
+`
+}
+
+
+async function restoreKnownPilotLocation(){
+const fromDD = parseLatLonText(localStorage.getItem("pilotLocationDD") || "")
+const dmsStored = localStorage.getItem("pilotLocationDMS") || ""
+const latStored = Number(localStorage.getItem("pilotLatitude"))
+const lonStored = Number(localStorage.getItem("pilotLongitude"))
+const fromLatLon = Number.isFinite(latStored) && Number.isFinite(lonStored)
+? { lat:latStored, lon:lonStored }
+: null
+
+const known = fromDD || fromLatLon
+if(!known){
+renderCurrentLocationDetails("","")
+return
+}
+
+latestLocation = { lat: known.lat, lon: known.lon, source: "stored" }
+const ddText = `${known.lat.toFixed(6)}, ${known.lon.toFixed(6)}`
+const dmsComputed = `${toDMS(known.lat,true)}, ${toDMS(known.lon,false)}`
+renderCurrentLocationDetails(ddText,dmsStored || dmsComputed)
+
+document.getElementById("locationInfo").textContent =
+`Stored pilot location: ${known.lat.toFixed(4)}, ${known.lon.toFixed(4)}`
+
+const nearest = await findNearestStations(known.lat,known.lon,3)
+if(!nearest.length) return
+
+displayNearestStations(nearest)
+latestNearestStations = nearest
+
+if(!document.getElementById("icao").value){
+document.getElementById("icao").value = nearest[0].icaoId
+}
+}
+
+
+function saveWeatherArtifact(payload){
+const now = new Date().toISOString()
+
+latestWeatherArtifact = {
+timestamp: now,
+icao: payload.icao,
+metarRaw: payload.metar?.rawOb || "",
+windKt: payload.risk?.wind ?? 0,
+gustKt: payload.risk?.gust ?? 0,
+visibilitySm: payload.risk?.visibility ?? null,
+ceilingFt: payload.risk?.ceiling ?? null,
+riskScore: payload.risk?.score ?? 0,
+riskLabel: getRiskLabel(payload.risk?.score ?? 0),
+kpIndex: payload.kp?.kp ?? null,
+kpCondition: getKpCondition(payload.kp?.kp ?? null),
+location: payload.location || null,
+nearestStations: Array.isArray(payload.nearestStations) ? payload.nearestStations : []
+}
+
+localStorage.setItem("dwCheckLatest",JSON.stringify(latestWeatherArtifact))
+}
+
+
+function getRiskLabel(score){
+if(score <= 1) return "SAFE"
+if(score <= 3) return "CAUTION"
+if(score <= 5) return "RISKY"
+return "NO-GO"
+}
+
+
+function getKpCondition(kpValue){
+if(kpValue == null) return "Unavailable"
+if(kpValue >= 5) return "Geomagnetic Storm"
+if(kpValue >= 4) return "Elevated"
+return "Nominal"
+}
+
+
+function markWeatherCheckComplete(){
+if(!latestWeatherArtifact){
+const saved = localStorage.getItem("dwCheckLatest")
+if(saved){
+try{ latestWeatherArtifact = JSON.parse(saved) }
+catch{ latestWeatherArtifact = null }
+}
+}
+
+if(!latestWeatherArtifact){
+showError("Run Check Conditions first to create a weather record.")
+return
+}
+
+const completedAt = new Date().toISOString()
+localStorage.setItem("dwCheckCompleted","true")
+localStorage.setItem("dwCheckCompletedAt",completedAt)
+renderWeatherCheckStatus()
+}
+
+
+function renderWeatherCheckStatus(){
+const el = document.getElementById("dwCheckStatus")
+const completed = localStorage.getItem("dwCheckCompleted") === "true"
+const completedAt = localStorage.getItem("dwCheckCompletedAt")
+
+if(!latestWeatherArtifact){
+const saved = localStorage.getItem("dwCheckLatest")
+if(saved){
+try{ latestWeatherArtifact = JSON.parse(saved) }
+catch{ latestWeatherArtifact = null }
+}
+}
+
+if(!latestWeatherArtifact){
+el.textContent = "No weather check saved yet."
+return
+}
+
+const when = new Date(latestWeatherArtifact.timestamp).toLocaleString()
+const completeLine = completed
+? `<div class="status-ok">Completed: ${completedAt ? new Date(completedAt).toLocaleString() : "Yes"}</div>`
+: `<div>Completed: No</div>`
+
+el.innerHTML = `
+<div>Last check: ${when}</div>
+<div>ICAO: ${latestWeatherArtifact.icao || "-"}</div>
+<div>Risk: ${latestWeatherArtifact.riskLabel} (score ${latestWeatherArtifact.riskScore})</div>
+<div>Kp: ${latestWeatherArtifact.kpIndex ?? "-"} (${latestWeatherArtifact.kpCondition})</div>
+${completeLine}
+`
+}
+
+function setLoading(isLoading,message="Searching weather sources..."){
+const wrap = document.getElementById("loadingWrap")
+const button = document.getElementById("checkBtn")
+const locButton = document.getElementById("locBtn")
+const input = document.getElementById("icao")
+const loadingText = document.getElementById("loadingText")
+
+if(isLoading){
+loadingText.textContent = message
+wrap.classList.add("show")
+button.disabled = true
+locButton.disabled = true
+input.disabled = true
+return
+}
+
+wrap.classList.remove("show")
+button.disabled = false
+locButton.disabled = false
+input.disabled = false
+}
+
+
+function showError(message){
+const banner = document.getElementById("errorBanner")
+banner.textContent = message
+banner.classList.add("show")
+}
+
+function clearError(){
+const banner = document.getElementById("errorBanner")
+banner.textContent = ""
+banner.classList.remove("show")
+}
+
+
+/* -------------------------
+   METAR FETCH
+------------------------- */
+
+async function fetchMETAR(icao){
+
+const aviationWeatherUrl =
+`https://aviationweather.gov/api/data/metar?ids=${icao}&format=json`
+
+const noaaTxtUrl =
+`https://tgftp.nws.noaa.gov/data/observations/metar/stations/${icao}.TXT`
+
+const proxyUrl =
+`https://api.allorigins.win/raw?url=${encodeURIComponent(noaaTxtUrl)}`
+
+try{
+
+const response = await fetch(aviationWeatherUrl)
+
+if(response.ok){
+const data = await response.json()
+
+if(Array.isArray(data) && data.length){
+return mapMetarFields(data[0])
+}
+}
+
+}
+catch{
+// Direct call can fail in-browser due to CORS; fallback below.
+}
+
+try{
+
+const proxyResponse = await fetch(proxyUrl)
+
+if(!proxyResponse.ok){
+showError(`METAR request failed (${proxyResponse.status}).`)
+return null
+}
+
+const txt = await proxyResponse.text()
+const lines = txt.split(/\r?\n/).map(s => s.trim()).filter(Boolean)
+const rawLine =
+lines.find(s => /\b[A-Z]{4}\s\d{6}Z\b/.test(s)) ||
+lines.find(s => s.startsWith("METAR ")) ||
+lines[lines.length-1]
+
+if(!rawLine){
+showError("No METAR data returned for that ICAO.")
+return null
+}
+
+return parseRawMetar(rawLine)
+
+}
+catch{
+showError("Unable to reach METAR service. Check internet/API availability.")
+return null
+}
+
+}
+
+
+function mapMetarFields(m){
+return {
+// Support both legacy and current field names.
+wspd: parseInt(m.wspd ?? m.wind_speed_kt) || 0,
+wgst: parseInt(m.wgst ?? m.wind_gust_kt) || 0,
+visib: parseFloat(m.visib ?? m.visibility_statute_mi) || 10,
+ceil: parseInt(m.ceil ?? m.sky_condition?.[0]?.cloud_base_ft_agl) || 5000,
+rawOb: m.rawOb ?? m.raw_text ?? ""
+}
+}
+
+
+function parseRawMetar(raw){
+
+const windMatch = raw.match(/\b(?:\d{3}|VRB)(\d{2,3})(?:G(\d{2,3}))?KT\b/)
+const vis = parseVisibilitySm(raw)
+
+const cloudMatches = [...raw.matchAll(/\b(?:BKN|OVC|VV)(\d{3})\b/g)]
+const cloudBases = cloudMatches.map(m => parseInt(m[1],10) * 100).filter(n => Number.isFinite(n))
+const ceiling = cloudBases.length ? Math.min(...cloudBases) : 5000
+
+const wind = windMatch ? parseInt(windMatch[1],10) : 0
+const gust = windMatch && windMatch[2] ? parseInt(windMatch[2],10) : wind
+
+return {
+wspd: wind,
+wgst: gust,
+visib: vis,
+ceil: ceiling,
+rawOb: raw
+}
+
+}
+
+
+function parseVisibilitySm(raw){
+
+const p6 = raw.match(/\bP6SM\b/)
+if(p6) return 6
+
+const wholeFraction = raw.match(/\b(\d+)\s(\d)\/(\d)SM\b/)
+if(wholeFraction){
+return parseInt(wholeFraction[1],10) + (parseInt(wholeFraction[2],10) / parseInt(wholeFraction[3],10))
+}
+
+const fraction = raw.match(/\b(\d)\/(\d)SM\b/)
+if(fraction){
+return parseInt(fraction[1],10) / parseInt(fraction[2],10)
+}
+
+const whole = raw.match(/\b(\d+)SM\b/)
+if(whole) return parseInt(whole[1],10)
+
+return 10
+
+}
+
+/* -------------------------
+   WIND RISK LOGIC
+------------------------- */
+
+function calculateWindRisk(metar){
+
+const wind = metar.wspd || 0
+const gust = metar.wgst || wind
+const vis = parseFloat(metar.visib) || 10
+const ceiling = metar.ceil || 5000
+
+let score = 0
+
+if(wind > 20) score += 3
+else if(wind > 15) score += 2
+else if(wind > 10) score += 1
+
+if(gust - wind > 8) score += 1
+
+if(vis < 5) score += 1
+
+if(ceiling < 1200) score += 1
+
+return {
+score:score,
+wind:wind,
+gust:gust,
+visibility:vis,
+ceiling:ceiling
+}
+
+}
+
+
+/* -------------------------
+   DISPLAY FUNCTIONS
+------------------------- */
+
+function displayMETAR(metar){
+
+document.getElementById("metarText").textContent =
+metar.rawOb
+
+}
+
+
+function displayRisk(risk,metar){
+
+let label=""
+let css=""
+
+if(risk.score<=1){
+label="SAFE"
+css="safe"
+}
+else if(risk.score<=3){
+label="CAUTION"
+css="caution"
+}
+else if(risk.score<=5){
+label="RISKY"
+css="risky"
+}
+else{
+label="NO-GO"
+css="nogo"
+}
+
+const panel = document.getElementById("riskPanel")
+
+panel.className = "panel "+css
+
+panel.innerHTML = `
+
+<h3>Flight Risk Evaluation</h3>
+
+<div class="metric"><b>Status:</b> ${label}</div>
+<div class="metric"><b>Risk Score:</b> ${risk.score}</div>
+
+<hr>
+
+<div class="metric">Wind: ${risk.wind} kt</div>
+<div class="metric">Gust: ${risk.gust} kt</div>
+<div class="metric">Visibility: ${risk.visibility} SM</div>
+<div class="metric">Ceiling: ${risk.ceiling} ft</div>
+
+`
+
+}
+
+
+/* -------------------------
+   NOAA SPACE WEATHER
+------------------------- */
+
+async function fetchKpIndex(){
+
+const url =
+"https://services.swpc.noaa.gov/json/planetary_k_index_1m.json"
+
+try{
+
+const r = await fetch(url)
+
+if(!r.ok){
+showError(`Kp request failed (${r.status}).`)
+return null
+}
+
+const data = await r.json()
+
+return data[data.length-1]
+
+}
+catch{
+showError("Unable to reach NOAA Kp service.")
+return null
+}
+
+}
+
+
+function displayKp(kp){
+
+const el = document.getElementById("kpData")
+
+if(!kp){
+el.innerHTML="Unavailable"
+return
+}
+
+const kpValue = kp.kp
+
+let note="Nominal"
+
+if(kpValue>=5) note="Geomagnetic Storm"
+else if(kpValue>=4) note="Elevated"
+
+el.innerHTML = `
+<b>Kp Index:</b> ${kpValue}<br>
+<b>Condition:</b> ${note}
+`
+
+}
+
+restoreKnownPilotLocation()
+renderWeatherCheckStatus()
+
+</script>
+
+</body>
+</html>

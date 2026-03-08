@@ -1,18 +1,24 @@
+# Gold v2 NotamsMap Builder.py - March 8, 2026
+# This is a standalone script to build the NOTAM map HTML file from the daily repo data pull
+
 # Airport NOTAM map (repo-driven gathering of NOTAMS daily)
 # Rewritten to load NOTAMs from GitHub repo clone data/notams/All_CA.json
 
 #########################################################################
-# This creates the base "Notam Map.html" or user defined name for one-off runs
+# This creates the base "NotamsMap.html" or a user defined name for one-off runs in .py script here
 # Notam Map.html is the basemap, and will pull NOTAM data for /data/Notams/*.json files
 #
 
+#########################
+# Imports 
+#########################
 import html
 import json
 import math
 import re
 from pathlib import Path
 
-import nest_asyncio
+import nest_asyncio # to run properly in Jupyter without event loop issues
 import pandas as pd
 import geopandas as gpd
 import folium

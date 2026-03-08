@@ -3,10 +3,10 @@ C:\Users\Ron Treleaven\Drone_SOP\Python_Code
 
 
 ## **26_Notam Map_Goldv1.0.py**  
+# % raw % was added due to Jekyl error on code within "fences" in Markdown ``` used as code fences.
 
 
-
-{% raw %}
+{% raw %} 
 ```html
 # Airport NOTAM map (repo-driven gathering of NOTAMS daily)
 # Rewritten to load NOTAMs from GitHub repo clone data/notams/All_CA.json

@@ -10,7 +10,13 @@ const FLIGHT_RUN_STORAGE_KEYS = [
   'flightEnd',
   'flightLocation',
   'pilotLocationDD',
-  'pilotLocationDMS'
+  'pilotLocationDMS',
+  'pilotLatitude',
+  'pilotLongitude',
+  'pilotLocationSource',
+  'dwCheckLatest',
+  'dwCheckCompleted',
+  'dwCheckCompletedAt'
 ];
 
 function safeParseJSON(key, fallback = {}) {
@@ -23,6 +29,44 @@ function safeParseJSON(key, fallback = {}) {
 
 function clearFlightRunData() {
   FLIGHT_RUN_STORAGE_KEYS.forEach(key => localStorage.removeItem(key));
+}
+
+function parseLatLonText(value) {
+  if (!value || typeof value !== 'string') return null;
+  const m = value.trim().match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);
+  if (!m) return null;
+  const lat = Number(m[1]);
+  const lon = Number(m[2]);
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+  if (lat < -90 || lat > 90 || lon < -180 || lon > 180) return null;
+  return { lat, lon };
+}
+
+function toDMS(deg, isLat) {
+  const abs = Math.abs(deg);
+  const d = Math.floor(abs);
+  const mFloat = (abs - d) * 60;
+  const m = Math.floor(mFloat);
+  const s = ((mFloat - m) * 60).toFixed(1);
+  const dir = isLat
+    ? (deg >= 0 ? 'N' : 'S')
+    : (deg >= 0 ? 'E' : 'W');
+  return `${d}\u00B0${m}'${s}"${dir}`;
+}
+
+function savePilotLocation(lat, lon, source = 'manual') {
+  const latShort = Number(lat).toFixed(6);
+  const lonShort = Number(lon).toFixed(6);
+  const latDMS = toDMS(Number(lat), true);
+  const lonDMS = toDMS(Number(lon), false);
+
+  localStorage.setItem('pilotLocationDD', `${latShort}, ${lonShort}`);
+  localStorage.setItem('pilotLocationDMS', `${latDMS}, ${lonDMS}`);
+  localStorage.setItem('pilotLatitude', latShort);
+  localStorage.setItem('pilotLongitude', lonShort);
+  localStorage.setItem('pilotLocationSource', source);
+
+  return { latShort, lonShort, latDMS, lonDMS };
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -96,6 +140,59 @@ function renderIndex(sections) {
     // Go to first section
     window.location.href = `sections/${list[0]}.html`;
   });
+
+  setupIndexLocationCard();
+}
+
+function setupIndexLocationCard() {
+  const locBtn = document.getElementById('index-get-location');
+  const out = document.getElementById('index-location-output');
+  if (!locBtn || !out) return;
+
+  const renderOutput = (ddText, dmsText) => {
+    out.innerHTML =
+      `DD: ${ddText}<br>` +
+      `DMS: ${dmsText}<br>` +
+      `<a href="https://maps.google.com/?q=${ddText.replace(/\s/g, '')}" target="_blank" rel="noopener">View on Google Maps</a>`;
+  };
+
+  const dd = localStorage.getItem('pilotLocationDD') || '';
+  const parsed = parseLatLonText(dd);
+  if (parsed) {
+    const saved = savePilotLocation(parsed.lat, parsed.lon, localStorage.getItem('pilotLocationSource') || 'restored');
+    renderOutput(`${saved.latShort}, ${saved.lonShort}`, `${saved.latDMS}, ${saved.lonDMS}`);
+  }
+
+  locBtn.addEventListener('click', () => {
+    if (!navigator.geolocation) {
+      out.textContent = 'Geolocation is not supported by this browser.';
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const saved = savePilotLocation(position.coords.latitude, position.coords.longitude, 'index');
+        renderOutput(`${saved.latShort}, ${saved.lonShort}`, `${saved.latDMS}, ${saved.lonDMS}`);
+      },
+      error => {
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            out.textContent = 'User denied the request for Geolocation.';
+            break;
+          case error.POSITION_UNAVAILABLE:
+            out.textContent = 'Location information is unavailable.';
+            break;
+          case error.TIMEOUT:
+            out.textContent = 'The request to get user location timed out.';
+            break;
+          default:
+            out.textContent = 'An unknown error occurred.';
+            break;
+        }
+      },
+      { enableHighAccuracy: true, timeout: 12000, maximumAge: 300000 }
+    );
+  });
 }
 
 // ─── FLIGHT LOG ────────────────────────────────────────────────────────────────
@@ -110,16 +207,17 @@ function renderFlightLog() {
   const btn    = document.getElementById('getLocation');
   const output = document.getElementById('output');
 
-  const toDMS = (deg, isLat) => {
-    const abs = Math.abs(deg);
-    const d = Math.floor(abs);
-    const mFloat = (abs - d) * 60;
-    const m = Math.floor(mFloat);
-    const s = ((mFloat - m) * 60).toFixed(1);
-    const dir = isLat
-      ? (deg >= 0 ? 'N' : 'S')
-      : (deg >= 0 ? 'E' : 'W');
-    return `${d}\u00B0${m}'${s}"${dir}`;
+  const writePilotLocationToStorage = (lat, lon, source = 'manual') => {
+    return savePilotLocation(lat, lon, source);
+  };
+
+  const renderPilotLocationOutput = (ddText, dmsText) => {
+    if (!output) return;
+    const mapQ = ddText.replace(/\s/g, '');
+    output.innerHTML =
+      `DD: ${ddText}<br>` +
+      (dmsText ? `DMS: ${dmsText}<br>` : '') +
+      `<a href="https://maps.google.com/?q=${mapQ}" target="_blank" rel="noopener">View on Google Maps</a>`;
   };
 
   const saved = safeParseJSON('flightLog', {});
@@ -133,14 +231,14 @@ function renderFlightLog() {
 
   const dd = localStorage.getItem('pilotLocationDD');
   const dms = localStorage.getItem('pilotLocationDMS');
-  if (dd && dms) {
-    if (output) {
-      output.innerHTML =
-        `DD: ${dd}<br>` +
-        `DMS: ${dms}<br>` +
-        `<a href="https://maps.google.com/?q=${dd.replace(/ /g, '')}" target="_blank" rel="noopener">View on Google Maps</a>`;
-    }
-    loc.value = dd;
+  const parsedFromDD = parseLatLonText(dd || '');
+  const parsedFromInput = parseLatLonText(loc.value || '');
+  const restored = parsedFromDD || parsedFromInput;
+
+  if (restored) {
+    const stored = writePilotLocationToStorage(restored.lat, restored.lon, localStorage.getItem('pilotLocationSource') || 'restored');
+    renderPilotLocationOutput(`${stored.latShort}, ${stored.lonShort}`, `${stored.latDMS}, ${stored.lonDMS}`);
+    loc.value = `${stored.latShort}, ${stored.lonShort}`;
   }
 
   if (btn) {
@@ -156,19 +254,11 @@ function renderFlightLog() {
           const longitude = position.coords.longitude;
           const latShort = latitude.toFixed(6);
           const lonShort = longitude.toFixed(6);
-          const latDMS = toDMS(latitude, true);
-          const lonDMS = toDMS(longitude, false);
+          const savedLoc = writePilotLocationToStorage(latitude, longitude, 'geolocation');
 
-          if (output) {
-            output.innerHTML =
-              `DD: ${latShort}, ${lonShort}<br>` +
-              `DMS: ${latDMS}, ${lonDMS}<br>` +
-              `<a href="https://maps.google.com/?q=${latShort},${lonShort}" target="_blank" rel="noopener">View on Google Maps</a>`;
-          }
+          renderPilotLocationOutput(`${latShort}, ${lonShort}`, `${savedLoc.latDMS}, ${savedLoc.lonDMS}`);
 
           loc.value = `${latShort}, ${lonShort}`;
-          localStorage.setItem('pilotLocationDD', `${latShort}, ${lonShort}`);
-          localStorage.setItem('pilotLocationDMS', `${latDMS}, ${lonDMS}`);
         },
         (error) => {
           if (!output) return;
@@ -209,8 +299,10 @@ function renderFlightLog() {
     localStorage.setItem('flightStart', flightLog.start || '');
     localStorage.setItem('flightEnd', flightLog.end || '');
     localStorage.setItem('flightLocation', flightLog.location || '');
-    if (flightLog.location) {
-      localStorage.setItem('pilotLocationDD', flightLog.location);
+    const parsed = parseLatLonText(flightLog.location);
+    if (parsed) {
+      const saved = writePilotLocationToStorage(parsed.lat, parsed.lon, 'flight-log');
+      renderPilotLocationOutput(`${saved.latShort}, ${saved.lonShort}`, `${saved.latDMS}, ${saved.lonDMS}`);
     }
 
     alert('✅ Flight log saved.');
@@ -347,6 +439,43 @@ function renderSummary(sections) {
     </table>
   `;
   container.append(wrapper);
+
+  const weather = safeParseJSON('dwCheckLatest', null);
+  const weatherComplete = localStorage.getItem('dwCheckCompleted') === 'true';
+  const weatherCompleteAt = localStorage.getItem('dwCheckCompletedAt');
+  const weatherDiv = document.createElement('div');
+  weatherDiv.className = 'section-block';
+
+  if (weather && weather.timestamp) {
+    const nearest = Array.isArray(weather.nearestStations)
+      ? weather.nearestStations.map(s => `${s.icaoId} (${Number(s.distanceKm || 0).toFixed(1)} km)`).join(', ')
+      : '';
+    const when = new Date(weather.timestamp).toLocaleString();
+    const completedText = weatherComplete
+      ? `Yes (${weatherCompleteAt ? new Date(weatherCompleteAt).toLocaleString() : 'time unavailable'})`
+      : 'No';
+
+    weatherDiv.innerHTML = `
+      <h2>Weather Sanity Check</h2>
+      <ul>
+        <li>Checked At: ${when}</li>
+        <li>Completed: ${completedText}</li>
+        <li>ICAO: ${weather.icao || '—'}</li>
+        <li>Risk: ${weather.riskLabel || '—'} (score ${weather.riskScore ?? '—'})</li>
+        <li>Kp: ${weather.kpIndex ?? '—'} (${weather.kpCondition || 'Unavailable'})</li>
+        <li>Wind/Gust: ${weather.windKt ?? '—'} / ${weather.gustKt ?? '—'} kt</li>
+        <li>Visibility/Ceiling: ${weather.visibilitySm ?? '—'} SM / ${weather.ceilingFt ?? '—'} ft</li>
+        <li>Nearest Stations: ${nearest || '—'}</li>
+      </ul>
+    `;
+  } else {
+    weatherDiv.innerHTML = `
+      <h2>Weather Sanity Check</h2>
+      <p><em>No weather check artifact saved for this session.</em></p>
+    `;
+  }
+
+  container.append(weatherDiv);
 
   // Prefer the current key; keep legacy fallback for older saved sessions.
   const sopProgress = safeParseJSON('droneSOPProgress', {});
