@@ -8,15 +8,7 @@ const FLIGHT_RUN_STORAGE_KEYS = [
   'flightObservers',
   'flightStart',
   'flightEnd',
-  'flightLocation',
-  'pilotLocationDD',
-  'pilotLocationDMS',
-  'pilotLatitude',
-  'pilotLongitude',
-  'pilotLocationSource',
-  'dwCheckLatest',
-  'dwCheckCompleted',
-  'dwCheckCompletedAt'
+  'flightLocation'
 ];
 
 function safeParseJSON(key, fallback = {}) {
@@ -504,16 +496,99 @@ function renderSummary(sections) {
     localStorage.setItem(sk, String(next));
   }
 
-  // Utility: get export filename (CSV or PDF)
-  function getExportFilename(ext = 'csv') {
-    const currentFlightLog = safeParseJSON('flightLog', {});
-    // Use flight date and pilot name if available, else fallback to today
-    const date = currentFlightLog.date || new Date().toISOString().slice(0, 10);
-    const pilot = currentFlightLog.pilot ? currentFlightLog.pilot.replace(/[^a-z0-9]/gi, '_') : 'UnknownPilot';
-    return `FlightLog_${date}_${pilot}.${ext}`;
+  function getIsoDateStr() {
+    return new Date().toISOString().slice(0, 10);
   }
 
-  document.getElementById('export-csv').addEventListener('click', () => {
+  function getNextLogExportMeta(ext = 'csv') {
+    const date = getIsoDateStr();
+    const key = `logExportIteration_${date}`;
+    const prev = parseInt(localStorage.getItem(key) || '0', 10);
+    const next = prev + 1;
+    return {
+      key,
+      next,
+      filename: `LOG_${date}_${next}.${ext}`
+    };
+  }
+
+  function commitLogExportIteration(meta) {
+    if (!meta || !meta.key || !Number.isFinite(meta.next)) return;
+    const prev = parseInt(localStorage.getItem(meta.key) || '0', 10);
+    if (meta.next > prev) localStorage.setItem(meta.key, String(meta.next));
+  }
+
+  function sanitizeFilenameBase(input) {
+    return String(input || '')
+      .replace(/[<>:"/\\|?*\x00-\x1F]/g, '_')
+      .replace(/\s+/g, '_')
+      .replace(/_+/g, '_')
+      .replace(/^_+|_+$/g, '');
+  }
+
+  function promptForFilename(defaultFilename, ext) {
+    const expectedExt = `.${ext}`;
+    const defaultBase = defaultFilename.toLowerCase().endsWith(expectedExt)
+      ? defaultFilename.slice(0, -expectedExt.length)
+      : defaultFilename;
+
+    const userInput = prompt(`Enter ${ext.toUpperCase()} file name:`, defaultBase);
+    if (userInput === null) return null;
+
+    const cleanBase = sanitizeFilenameBase(userInput);
+    if (!cleanBase) {
+      alert('Invalid file name. Export cancelled.');
+      return null;
+    }
+
+    return `${cleanBase}${expectedExt}`;
+  }
+
+  function getExportStatusElement() {
+    let el = document.getElementById('export-status');
+    if (el) return el;
+
+    el = document.createElement('p');
+    el.id = 'export-status';
+    el.style.marginTop = '10px';
+    el.style.fontSize = '0.95em';
+    el.style.color = '#2f3b52';
+
+    const pdfBtn = document.getElementById('export-pdf');
+    if (pdfBtn && pdfBtn.parentNode) {
+      pdfBtn.parentNode.insertBefore(el, pdfBtn.nextSibling);
+    } else {
+      container.appendChild(el);
+    }
+
+    return el;
+  }
+
+  function setExportStatus(message, isError = false) {
+    const el = getExportStatusElement();
+    el.textContent = message;
+    el.style.color = isError ? '#8a1f1f' : '#2f3b52';
+  }
+
+  async function saveTextFileWithPicker(content, filename, mimeType) {
+    if (!window.showSaveFilePicker) return false;
+
+    const ext = filename.split('.').pop() || 'txt';
+    const handle = await window.showSaveFilePicker({
+      suggestedName: filename,
+      types: [{
+        description: `${ext.toUpperCase()} file`,
+        accept: { [mimeType]: [`.${ext}`] }
+      }]
+    });
+
+    const writable = await handle.createWritable();
+    await writable.write(content);
+    await writable.close();
+    return true;
+  }
+
+  document.getElementById('export-csv').addEventListener('click', async () => {
     let csv = 'Field,Value\n'
       + `Date,${flightLog.date||''}\n`
       + `Pilot(s),${flightLog.pilot||''}\n`
@@ -529,8 +604,29 @@ function renderSummary(sections) {
         csv += `"${section.title}","${item.replace(/"/g,'""')}","${responses[idx] ? 'Yes' : 'No'}"\n`;
       });
     });
-    bumpCount('csvExport');
-    const filename = getExportFilename('csv');
+    const exportMeta = getNextLogExportMeta('csv');
+    const filename = promptForFilename(exportMeta.filename, 'csv');
+    if (!filename) {
+      setExportStatus('CSV export cancelled.');
+      return;
+    }
+
+    try {
+      const usedPicker = await saveTextFileWithPicker(csv, filename, 'text/csv');
+      if (usedPicker) {
+        commitLogExportIteration(exportMeta);
+        bumpCount('csvExport');
+        setExportStatus(`CSV saved: ${filename}`);
+        return;
+      }
+    } catch (err) {
+      if (err && err.name === 'AbortError') {
+        setExportStatus('CSV export cancelled.');
+        return;
+      }
+      console.warn('Save file picker unavailable or cancelled, falling back to browser download.', err);
+    }
+
     const blob = new Blob([csv], { type: 'text/csv' });
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement('a');
@@ -538,15 +634,27 @@ function renderSummary(sections) {
     a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
+    commitLogExportIteration(exportMeta);
+    bumpCount('csvExport');
+    setExportStatus(`CSV download started: ${filename}`);
   });
 
   document.getElementById('export-pdf').addEventListener('click', () => {
-    bumpCount('pdfExport');
-    const filename = getExportFilename('pdf').replace('.pdf',''); // window.print() uses document.title
+    const exportMeta = getNextLogExportMeta('pdf');
+    const chosen = promptForFilename(exportMeta.filename, 'pdf');
+    if (!chosen) {
+      setExportStatus('PDF export cancelled.');
+      return;
+    }
+    const filename = chosen.replace('.pdf',''); // window.print() uses document.title
     const origTitle = document.title;
     document.title  = filename;
+    alert('Use the print dialog to choose Save as PDF and select the destination folder.');
     window.print();
     document.title  = origTitle;
+    commitLogExportIteration(exportMeta);
+    bumpCount('pdfExport');
+    setExportStatus(`PDF print/save dialog opened for: ${chosen}`);
   });
 
   document.getElementById('return-home').addEventListener('click', () =>

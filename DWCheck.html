@@ -148,6 +148,96 @@ color:#14532d;
 font-weight:600;
 }
 
+.risk-mini-table{
+width:100%;
+border-collapse:collapse;
+font-size:13px;
+margin-top:8px;
+}
+
+.risk-mini-table th,
+.risk-mini-table td{
+border:1px solid #d7dde4;
+padding:6px;
+text-align:left;
+vertical-align:top;
+}
+
+.risk-mini-table th{
+background:#f7f9fc;
+}
+
+.kp-badge{
+display:inline-block;
+padding:4px 8px;
+border-radius:999px;
+font-weight:600;
+font-size:12px;
+margin-bottom:6px;
+}
+
+.kp-nominal{
+background:#d3f9d8;
+color:#14532d;
+}
+
+.kp-elevated{
+background:#fff3bf;
+color:#7a4e00;
+}
+
+.kp-storm{
+background:#ffd8d8;
+color:#8a1f1f;
+}
+
+.kp-scale{
+margin-top:8px;
+font-size:13px;
+color:#334;
+}
+
+.kp-scale-table{
+width:100%;
+border-collapse:collapse;
+max-width:560px;
+margin:8px auto 0;
+font-size:12px;
+text-align:center;
+}
+
+.kp-scale-table th,
+.kp-scale-table td{
+border:1px solid #d7dde4;
+padding:6px;
+}
+
+.kp-scale-table th{
+background:#f7f9fc;
+}
+
+.table-wrap{
+overflow-x:auto;
+}
+
+.ref-table{
+width:100%;
+border-collapse:collapse;
+font-size:14px;
+}
+
+.ref-table th,
+.ref-table td{
+border:1px solid #d7dde4;
+padding:8px;
+vertical-align:top;
+text-align:left;
+}
+
+.ref-table th{
+background:#f4f7fb;
+}
+
 </style>
 </head>
 
@@ -162,8 +252,8 @@ font-weight:600;
 
 <div class="controls">
 <input id="icao" placeholder="ICAO (CYOO)">
-<button id="checkBtn" onclick="runCheck()">Check Conditions</button>
-<button id="locBtn" onclick="useCurrentLocation()">Use Current Location</button>
+<button id="locBtn" onclick="useCurrentLocation()">Get Location DD</button>
+<button id="checkBtn" onclick="runCheck()">Check METAR Weather</button>
 </div>
 
 <div id="errorBanner" class="error-banner"></div>
@@ -174,6 +264,54 @@ font-weight:600;
 </div>
 
 <div id="riskPanel" class="panel"></div>
+
+<div class="panel">
+<h3>Drone Wind Resistance Reference</h3>
+<div class="table-wrap">
+<table class="ref-table">
+<thead>
+<tr>
+<th>Drone Model</th>
+<th>Max Wind Resistance (KT)</th>
+<th>Max Wind Resistance (km/h)</th>
+<th>Drone Size</th>
+<th>Wind Speed Risk Assessment</th>
+<th>Gust Risk Assessment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DJI Mini Pro 3</td>
+<td>21 KT</td>
+<td>38.5 km/h</td>
+<td>Micro</td>
+<td rowspan="3">
+0-10 KT: Low<br>
+11-20 KT: Moderate<br>
+21-25 KT: High<br>
+26+ KT: Severe
+</td>
+<td>Gusts &gt; 21 KT: Increased Risk</td>
+</tr>
+<tr>
+<td>DJI Mini Pro 4</td>
+<td>21 KT</td>
+<td>38.5 km/h</td>
+<td>Micro</td>
+<td>Gusts &gt; 21 KT: Increased Risk</td>
+</tr>
+<tr>
+<td>DJI Mavic 2 Pro</td>
+<td>29-38 KT</td>
+<td>54-70 km/h</td>
+<td>Small RPA</td>
+<td>Use caution when gusts approach sustained wind resistance limits</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="subtle">Reference chart only. Always follow manufacturer limits and site-specific conditions.</div>
+</div>
 
 <div class="panel">
 <h3>Current METAR</h3>
@@ -187,9 +325,9 @@ font-weight:600;
 
 <div class="panel">
 <h3>Nearest METAR Stations</h3>
-<div id="locationInfo" class="subtle">Location not set.</div>
-<div id="currentLocationDetails" class="subtle"><em>Current location unknown. Please refresh after setting location on Home, or click Use Current Location.</em></div>
-<div id="nearestStations">Use "Use Current Location" to find closest stations.</div>
+<div id="currentLocationDetails" class="subtle"><em>Current Pilot Location unknown. Refresh after setting location, or click Use Current Location.</em></div>
+<hr>
+<div id="nearestStations">Closest stations will appear here.</div>
 </div>
 
 <div class="panel">
@@ -207,6 +345,7 @@ font-weight:600;
 let latestNearestStations = []
 let latestLocation = null
 let latestWeatherArtifact = null
+let committedWeatherArtifact = null
 let stationsCachePromise = null
 
 function goBack(event){
@@ -281,9 +420,6 @@ const lon = position.coords.longitude
 latestLocation = { lat, lon, source: "dwcheck-geolocation" }
 
 const savedLoc = saveKnownPilotLocation(lat,lon,"dwcheck-geolocation")
-
-document.getElementById("locationInfo").textContent =
-`Current location: ${lat.toFixed(4)}, ${lon.toFixed(4)}`
 
 renderCurrentLocationDetails(`${savedLoc.latShort}, ${savedLoc.lonShort}`, savedLoc.dms)
 
@@ -486,14 +622,13 @@ function renderCurrentLocationDetails(ddText,dmsText){
 const el = document.getElementById("currentLocationDetails")
 if(!el) return
 if(!ddText){
-el.innerHTML = "<em>Current location unknown. Please refresh after setting location on Home, or click Use Current Location.</em>"
+el.innerHTML = "<em>Current Pilot Location unknown. Refresh after setting location, or click Use Current Location.</em>"
 return
 }
-const mapQ = ddText.replace(/\s/g,"")
 el.innerHTML = `
+<b>Current Pilot Location</b><br>
 DD: ${ddText}<br>
-DMS: ${dmsText || "Unavailable"}<br>
-<a href="https://maps.google.com/?q=${mapQ}" target="_blank" rel="noopener">View on Google Maps</a>
+DMS: ${dmsText || "Unavailable"}
 `
 }
 
@@ -518,9 +653,6 @@ const ddText = `${known.lat.toFixed(6)}, ${known.lon.toFixed(6)}`
 const dmsComputed = `${toDMS(known.lat,true)}, ${toDMS(known.lon,false)}`
 renderCurrentLocationDetails(ddText,dmsStored || dmsComputed)
 
-document.getElementById("locationInfo").textContent =
-`Stored pilot location: ${known.lat.toFixed(4)}, ${known.lon.toFixed(4)}`
-
 const nearest = await findNearestStations(known.lat,known.lon,3)
 if(!nearest.length) return
 
@@ -540,6 +672,7 @@ latestWeatherArtifact = {
 timestamp: now,
 icao: payload.icao,
 metarRaw: payload.metar?.rawOb || "",
+windDir: payload.risk?.windDir ?? "N/A",
 windKt: payload.risk?.wind ?? 0,
 gustKt: payload.risk?.gust ?? 0,
 visibilitySm: payload.risk?.visibility ?? null,
@@ -552,29 +685,29 @@ location: payload.location || null,
 nearestStations: Array.isArray(payload.nearestStations) ? payload.nearestStations : []
 }
 
-localStorage.setItem("dwCheckLatest",JSON.stringify(latestWeatherArtifact))
+// Keep checks as draft until user explicitly commits with Mark Weather Check Complete.
+localStorage.setItem("dwCheckDraft",JSON.stringify(latestWeatherArtifact))
 }
 
 
 function getRiskLabel(score){
-if(score <= 1) return "SAFE"
-if(score <= 3) return "CAUTION"
-if(score <= 5) return "RISKY"
-return "NO-GO"
+if(score <= 2) return "SAFE"
+if(score <= 4) return "CAUTION"
+return "RISKY"
 }
 
 
 function getKpCondition(kpValue){
 if(kpValue == null) return "Unavailable"
 if(kpValue >= 5) return "Geomagnetic Storm"
-if(kpValue >= 4) return "Elevated"
+if(kpValue >= 4 && kpValue < 5) return "Elevated"
 return "Nominal"
 }
 
 
 function markWeatherCheckComplete(){
 if(!latestWeatherArtifact){
-const saved = localStorage.getItem("dwCheckLatest")
+const saved = localStorage.getItem("dwCheckDraft")
 if(saved){
 try{ latestWeatherArtifact = JSON.parse(saved) }
 catch{ latestWeatherArtifact = null }
@@ -587,6 +720,12 @@ return
 }
 
 const completedAt = new Date().toISOString()
+committedWeatherArtifact = {
+...latestWeatherArtifact,
+committedAt: completedAt
+}
+
+localStorage.setItem("dwCheckLatest",JSON.stringify(committedWeatherArtifact))
 localStorage.setItem("dwCheckCompleted","true")
 localStorage.setItem("dwCheckCompletedAt",completedAt)
 renderWeatherCheckStatus()
@@ -598,30 +737,53 @@ const el = document.getElementById("dwCheckStatus")
 const completed = localStorage.getItem("dwCheckCompleted") === "true"
 const completedAt = localStorage.getItem("dwCheckCompletedAt")
 
-if(!latestWeatherArtifact){
+if(!committedWeatherArtifact){
 const saved = localStorage.getItem("dwCheckLatest")
 if(saved){
-try{ latestWeatherArtifact = JSON.parse(saved) }
+try{ committedWeatherArtifact = JSON.parse(saved) }
+catch{ committedWeatherArtifact = null }
+}
+}
+
+if(!latestWeatherArtifact){
+const draft = localStorage.getItem("dwCheckDraft")
+if(draft){
+try{ latestWeatherArtifact = JSON.parse(draft) }
 catch{ latestWeatherArtifact = null }
 }
 }
 
-if(!latestWeatherArtifact){
+if(!committedWeatherArtifact){
+if(latestWeatherArtifact){
+el.innerHTML = `<div>Draft check ready. Click <b>Mark Weather Check Complete</b> to commit.</div>`
+}
+else{
 el.textContent = "No weather check saved yet."
+}
 return
 }
 
-const when = new Date(latestWeatherArtifact.timestamp).toLocaleString()
+const when = new Date(committedWeatherArtifact.timestamp).toLocaleString()
 const completeLine = completed
 ? `<div class="status-ok">Completed: ${completedAt ? new Date(completedAt).toLocaleString() : "Yes"}</div>`
 : `<div>Completed: No</div>`
 
+let draftLine = ""
+if(latestWeatherArtifact && latestWeatherArtifact.timestamp){
+const draftTs = new Date(latestWeatherArtifact.timestamp).getTime()
+const committedTs = new Date(committedWeatherArtifact.timestamp).getTime()
+if(draftTs > committedTs){
+draftLine = `<div>Draft update available from ${new Date(latestWeatherArtifact.timestamp).toLocaleString()} (not committed)</div>`
+}
+}
+
 el.innerHTML = `
 <div>Last check: ${when}</div>
-<div>ICAO: ${latestWeatherArtifact.icao || "-"}</div>
-<div>Risk: ${latestWeatherArtifact.riskLabel} (score ${latestWeatherArtifact.riskScore})</div>
-<div>Kp: ${latestWeatherArtifact.kpIndex ?? "-"} (${latestWeatherArtifact.kpCondition})</div>
+<div>ICAO: ${committedWeatherArtifact.icao || "-"}</div>
+<div>Risk: ${committedWeatherArtifact.riskLabel} (score ${committedWeatherArtifact.riskScore})</div>
+<div>Kp: ${committedWeatherArtifact.kpIndex ?? "-"} (${committedWeatherArtifact.kpCondition})</div>
 ${completeLine}
+${draftLine}
 `
 }
 
@@ -728,6 +890,7 @@ return null
 function mapMetarFields(m){
 return {
 // Support both legacy and current field names.
+wdir: parseInt(m.wdir ?? m.wind_dir_degrees) || null,
 wspd: parseInt(m.wspd ?? m.wind_speed_kt) || 0,
 wgst: parseInt(m.wgst ?? m.wind_gust_kt) || 0,
 visib: parseFloat(m.visib ?? m.visibility_statute_mi) || 10,
@@ -740,6 +903,7 @@ rawOb: m.rawOb ?? m.raw_text ?? ""
 function parseRawMetar(raw){
 
 const windMatch = raw.match(/\b(?:\d{3}|VRB)(\d{2,3})(?:G(\d{2,3}))?KT\b/)
+const dirMatch = raw.match(/\b(\d{3}|VRB)\d{2,3}(?:G\d{2,3})?KT\b/)
 const vis = parseVisibilitySm(raw)
 
 const cloudMatches = [...raw.matchAll(/\b(?:BKN|OVC|VV)(\d{3})\b/g)]
@@ -750,6 +914,7 @@ const wind = windMatch ? parseInt(windMatch[1],10) : 0
 const gust = windMatch && windMatch[2] ? parseInt(windMatch[2],10) : wind
 
 return {
+wdir: dirMatch ? (dirMatch[1] === "VRB" ? "VRB" : parseInt(dirMatch[1],10)) : null,
 wspd: wind,
 wgst: gust,
 visib: vis,
@@ -790,6 +955,8 @@ function calculateWindRisk(metar){
 
 const wind = metar.wspd || 0
 const gust = metar.wgst || wind
+const dirRaw = metar.wdir
+const windDir = dirRaw === "VRB" ? "VRB" : (Number.isFinite(Number(dirRaw)) ? `${String(Number(dirRaw)).padStart(3,"0")}°` : "N/A")
 const vis = parseFloat(metar.visib) || 10
 const ceiling = metar.ceil || 5000
 
@@ -807,6 +974,7 @@ if(ceiling < 1200) score += 1
 
 return {
 score:score,
+windDir:windDir,
 wind:wind,
 gust:gust,
 visibility:vis,
@@ -833,20 +1001,16 @@ function displayRisk(risk,metar){
 let label=""
 let css=""
 
-if(risk.score<=1){
+if(risk.score<=2){
 label="SAFE"
 css="safe"
 }
-else if(risk.score<=3){
+else if(risk.score<=4){
 label="CAUTION"
 css="caution"
 }
-else if(risk.score<=5){
-label="RISKY"
-css="risky"
-}
 else{
-label="NO-GO"
+label="RISKY"
 css="nogo"
 }
 
@@ -863,10 +1027,43 @@ panel.innerHTML = `
 
 <hr>
 
+<div class="metric">Wind Direction: ${risk.windDir}</div>
 <div class="metric">Wind: ${risk.wind} kt</div>
 <div class="metric">Gust: ${risk.gust} kt</div>
 <div class="metric">Visibility: ${risk.visibility} SM</div>
 <div class="metric">Ceiling: ${risk.ceiling} ft</div>
+
+<hr>
+
+<h4>Risk Score Bands</h4>
+<table class="risk-mini-table">
+<thead>
+<tr>
+<th>Band</th>
+<th>Color</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-2</td>
+<td>Green</td>
+<td>Lower operational risk</td>
+</tr>
+<tr>
+<td>3-4</td>
+<td>Yellow</td>
+<td>Moderate caution required</td>
+</tr>
+<tr>
+<td>5+</td>
+<td>Red</td>
+<td>Risky conditions</td>
+</tr>
+</tbody>
+</table>
+
+<div class="subtle">Max theoretical risk score: <b>6</b> (wind 3 + gust spread 1 + low visibility 1 + low ceiling 1).</div>
 
 `
 
@@ -915,14 +1112,44 @@ return
 
 const kpValue = kp.kp
 
-let note="Nominal"
+const note = getKpCondition(Number(kpValue))
+let badgeClass = "kp-nominal"
 
-if(kpValue>=5) note="Geomagnetic Storm"
-else if(kpValue>=4) note="Elevated"
+if(note === "Geomagnetic Storm") badgeClass = "kp-storm"
+else if(note === "Elevated") badgeClass = "kp-elevated"
 
 el.innerHTML = `
+<div class="kp-badge ${badgeClass}">${note}</div><br>
 <b>Kp Index:</b> ${kpValue}<br>
 <b>Condition:</b> ${note}
+<div class="kp-scale">
+<table class="kp-scale-table">
+<thead>
+<tr>
+<th>Band</th>
+<th>Label</th>
+<th>Color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 4</td>
+<td>Nominal</td>
+<td>Green</td>
+</tr>
+<tr>
+<td>4-5</td>
+<td>Elevated</td>
+<td>Amber</td>
+</tr>
+<tr>
+<td>&gt;= 5</td>
+<td>Geomagnetic Storm</td>
+<td>Red</td>
+</tr>
+</tbody>
+</table>
+</div>
 `
 
 }
