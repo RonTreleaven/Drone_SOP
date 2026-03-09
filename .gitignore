@@ -1,0 +1,17 @@
+# Python caches and bytecode
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# Python virtual environment
+.venv/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Archived/test folders (keep local, do not track)
+_tmp safety copies/
+test file archived/
+
+# Local editor settings
+.vscode/

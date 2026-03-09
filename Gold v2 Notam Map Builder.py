@@ -42,6 +42,27 @@ ICON_STYLE = {
     "default": {"icon": "map-marker", "color": "lightgray"},
 }
 
+PROVINCE_NAMES = {
+    "CA-AB": "Alberta",
+    "CA-BC": "British Columbia",
+    "CA-MB": "Manitoba",
+    "CA-NB": "New Brunswick",
+    "CA-NL": "Newfoundland and Labrador",
+    "CA-NS": "Nova Scotia",
+    "CA-NT": "Northwest Territories",
+    "CA-NU": "Nunavut",
+    "CA-ON": "Ontario",
+    "CA-PE": "Prince Edward Island",
+    "CA-QC": "Quebec",
+    "CA-SK": "Saskatchewan",
+    "CA-YT": "Yukon",
+}
+
+
+def province_label(iso_region: str) -> str:
+    name = PROVINCE_NAMES.get(iso_region)
+    return f"{iso_region} ({name})" if name else iso_region
+
 DEFAULT_BASEMAP_KEY = "cartodb_positron"
 BASEMAP_OPTIONS = {
     "cartodb_positron": {
@@ -295,20 +316,34 @@ def build_map(
         zoom_control=False,
     )
     basemap = BASEMAP_OPTIONS.get(basemap_key, BASEMAP_OPTIONS[DEFAULT_BASEMAP_KEY])
-    folium.TileLayer(
-        tiles=basemap["tiles"],
-        attr=basemap.get("attr"),
-        name=basemap["name"],
-        overlay=False,
-        control=False,
-    ).add_to(m)
+    basemap_layers = {}
+    for key, opt in BASEMAP_OPTIONS.items():
+        layer = folium.TileLayer(
+            tiles=opt["tiles"],
+            attr=opt.get("attr"),
+            name=opt["name"],
+            overlay=False,
+            control=False,
+            show=(key == basemap_key),
+        ).add_to(m)
+        basemap_layers[opt["name"]] = layer.get_name()
+
+    basemap_layers_js = "{\n" + ",\n".join(
+        f"      {json.dumps(name)}: {js_var}"
+        for name, js_var in basemap_layers.items()
+    ) + "\n    }"
 
     # 3) Province/type layers
     province_parents, layers_dict = {}, {}
+    province_group_labels = {}
+    airport_layer_vars = []
+    airport_layer_index = {}
     for prov in sorted(gdf["iso_region"].dropna().unique(), key=lambda x: (x != "CA-ON", x)):
         fg = folium.FeatureGroup(name=prov).add_to(m)
         province_parents[prov] = fg
-        layers_dict[prov] = []
+        display_label = province_label(prov)
+        province_group_labels[prov] = display_label
+        layers_dict[display_label] = []
 
     for prov, prov_df in gdf.groupby("iso_region"):
         for atype, sub in prov_df.groupby("type"):
@@ -326,7 +361,26 @@ def build_map(
                     icon=folium.Icon(color=style["color"], icon=style["icon"], prefix="fa"),
                 ).add_to(cluster)
             child.add_to(m)
-            layers_dict[prov].append(child)
+            layers_dict[province_group_labels[prov]].append(child)
+            airport_layer_vars.append(child.get_name())
+            airport_layer_index.setdefault(prov, {})[atype] = child.get_name()
+
+    airport_layers_js = "[" + ", ".join(airport_layer_vars) + "]"
+    airport_layer_index_js = (
+        "{\n"
+        + ",\n".join(
+            "      "
+            + json.dumps(prov)
+            + ": {"
+            + ", ".join(
+                f"{json.dumps(atype)}: {layer_var}"
+                for atype, layer_var in sorted(type_map.items())
+            )
+            + "}"
+            for prov, type_map in sorted(airport_layer_index.items())
+        )
+        + "\n    }"
+    )
 
     # 4) Pilot marker + rings
     pm = folium.Marker(
@@ -372,29 +426,19 @@ def build_map(
     # 5) Obstacles layer from repo JSON
     obstacle_layer = folium.FeatureGroup(name=f"Obstacles <= {NOTAM_RADIUS_KM} km")
     obstacle_layer_js = obstacle_layer.get_name()
-    filtered_points = prepare_obstacle_points(notams_filtered)
-    raw_points = prepare_obstacle_points(notams_raw)
-
-    shown = 0
-    for point in filtered_points:
-        if haversine_km(pilot_lat, pilot_lon, point["lat"], point["lon"]) <= NOTAM_RADIUS_KM:
-            shown += 1
-
     obstacle_layer.add_to(m)
-    layers_dict["Obstacles"] = [obstacle_layer]
 
     # 6) Layer control + style
-    control_groups = {"Obstacles": layers_dict["Obstacles"]}
+    control_groups = {}
     for group_name, group_layers in layers_dict.items():
-        if group_name != "Obstacles":
-            control_groups[group_name] = group_layers
+        control_groups[group_name] = group_layers
 
     GroupedLayerControl(groups=control_groups, exclusive_groups=[], collapsed=True).add_to(m)
     m.get_root().html.add_child(
         folium.Element(
             "<style>"
-            ".leaflet-control-layers{min-width:220px;max-width:320px;font-size:13px;}"
-            ".leaflet-control-layers-expanded{padding:7px 9px;}"
+            ".leaflet-control-layers{font-size:13px;}"
+            ".leaflet-control-layers.leaflet-control-layers-expanded{min-width:220px;max-width:320px;padding:7px 9px;}"
             ".leaflet-control-layers-group-name{font-weight:700;color:#1f3b63;margin-top:6px;}"
             ".leaflet-control-layers-list{max-height:56vh;overflow-y:auto;padding-right:4px;}"
             ".leaflet-control-layers-group-label{cursor:pointer;display:block;position:relative;padding-right:14px;}"
@@ -406,7 +450,7 @@ def build_map(
             ".pilot-input{z-index:1200;}"
             ".pilot-flyout{position:relative;width:272px;background:#fff;border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.2);padding:7px;transition:transform .2s ease;overflow:visible;box-sizing:border-box;}"
             ".pilot-flyout.collapsed{transform:translateX(-100%);}" 
-            ".pilot-flyout-toggle{position:absolute;right:-24px;top:10px;width:24px;height:52px;border:1px solid #d8e2ee;border-left:none;border-radius:0 6px 6px 0;background:#fff;color:#1f3b63;cursor:pointer;font-weight:700;line-height:1;}"
+            ".pilot-flyout-toggle{position:absolute;right:-30px;top:10px;width:30px;height:34px;border:1px solid #d8e2ee;border-left:none;border-radius:0 8px 8px 0;background:#fff;color:#1f3b63;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;}"
             ".pilot-flyout .controls-row{display:flex;flex-wrap:wrap;gap:3px;align-items:center;}"
             ".pilot-flyout input{max-width:102px;font-size:12px;}"
             ".pilot-flyout .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:5px;}"
@@ -416,6 +460,17 @@ def build_map(
             ".pilot-flyout .dd-hint{color:#666;margin-top:2px;}"
             ".home-logo-control{background:#fff;border:1px solid #d8e2ee;border-radius:8px;padding:4px 6px;box-shadow:0 2px 6px rgba(0,0,0,0.2);}"
             ".home-logo-control img{display:block;height:64px;width:auto;}"
+            ".map-layers-control .leaflet-control-layers-toggle{background-image:none!important;width:34px;height:34px;position:relative;border-radius:8px;background:linear-gradient(145deg,#e7f3ff,#d5e8ff);border:1px solid #c2d6ef;}"
+            ".map-layers-control .leaflet-control-layers-toggle:before{content:'\\f0ac';font-family:'Font Awesome 6 Free';font-weight:900;font-size:16px;line-height:34px;display:block;text-align:center;color:#12406d;}"
+            ".left-mini-toggle-control{background:#fff;border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);}"
+            ".left-mini-toggle-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:#1f3b63;text-decoration:none;font-size:16px;}"
+            ".left-mini-toggle-control.inactive .left-mini-toggle-btn{color:#8b97a7;background:#f4f6f9;}"
+            ".center-map-control{background:#fff;border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);}"
+            ".center-map-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:#1f3b63;text-decoration:none;font-size:16px;}"
+            ".leaflet-control-zoom.leaflet-bar{border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);overflow:hidden;}"
+            ".leaflet-control-zoom.leaflet-bar a{width:34px;height:34px;line-height:34px;font-size:18px;color:#1f3b63;}"
+            ".leaflet-control-zoom.leaflet-bar a:first-child{border-top-left-radius:8px;border-top-right-radius:8px;}"
+            ".leaflet-control-zoom.leaflet-bar a:last-child{border-bottom-left-radius:8px;border-bottom-right-radius:8px;}"
             ".notam-popup{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:1.35;color:#333;}"
             ".notam-title{font-weight:700;color:#007acc;margin-bottom:4px;}"
             ".notam-label{font-weight:600;color:#1f3b63;}"
@@ -428,22 +483,126 @@ def build_map(
     widget_js = f"""
 <script>
 window.onload = function() {{
+    try {{
+        console.info('[NOTAM MAP] widget init start');
   var map = {m.get_name()};
   var marker = {pm_js};
   var c1 = {c1_js};
   var c3 = {c3_js};
   var c100 = {c100_js};
-  var obstacleLayer = {obstacle_layer_js};
+    var obstacleLayer = {obstacle_layer_js};
+        var airportLayers = {airport_layers_js};
+        var airportLayerIndex = {airport_layer_index_js};
+        var selectedAirportLayers = [];
+        var notamsVisible = true;
     var radiusKm = {NOTAM_RADIUS_KM};
-    var filteredNotams = {json.dumps(filtered_points)};
-    var rawNotams = {json.dumps(raw_points)};
+    var filteredNotams = [];
+    var rawNotams = [];
     var activeSource = 'RAW';
+    var notamDataReady = false;
+    var notamDataError = '';
     var currentZoom = map.getZoom();
+        var basemapLayers = {basemap_layers_js};
+    var basemapStorageKey = 'notam-map.basemap';
+    var defaultBasemapName = {json.dumps(basemap['name'])};
+    var currentBasemapName = defaultBasemapName;
 
-    L.control.zoom({{position:'bottomleft'}}).addTo(map);
+    // Dial in finer zoom increments for smoother manual zooming.
+    map.options.zoomSnap = 0.25;
+    map.options.zoomDelta = 0.25;
+    map.options.wheelPxPerZoomLevel = 140;
+    if (map.scrollWheelZoom && map.scrollWheelZoom.setWheelPxPerZoomLevel) {{
+        map.scrollWheelZoom.setWheelPxPerZoomLevel(140);
+    }}
+
+        var zoomControl = L.control.zoom({{position:'topleft'}});
+        var basemapControl = L.control.layers(basemapLayers, null, {{ position: 'topleft', collapsed: true }});
 
   function formatCoord(v) {{
       return Number(v).toFixed({COORD_DECIMALS});
+  }}
+
+  function toDms(deg, isLat) {{
+      var abs = Math.abs(Number(deg));
+      var d = Math.floor(abs);
+      var mFloat = (abs - d) * 60;
+      var m = Math.floor(mFloat);
+      var s = ((mFloat - m) * 60).toFixed(1);
+      var dir = isLat ? (deg >= 0 ? 'N' : 'S') : (deg >= 0 ? 'E' : 'W');
+      return d + '\u00B0' + m + "'" + s + '"' + dir;
+  }}
+
+  function parseLatLonText(value) {{
+      if (!value || typeof value !== 'string') {{
+          return null;
+      }}
+    var m = value.trim().match(/^\\s*(-?\\d+(?:\\.\\d+)?)\\s*,\\s*(-?\\d+(?:\\.\\d+)?)\\s*$/);
+      if (!m) {{
+          return null;
+      }}
+      var lat = Number(m[1]);
+      var lon = Number(m[2]);
+      if (!isFinite(lat) || !isFinite(lon)) {{
+          return null;
+      }}
+      if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {{
+          return null;
+      }}
+      return L.latLng(lat, lon);
+  }}
+
+  function getStoredPilotLocation() {{
+      try {{
+          var dd = localStorage.getItem('pilotLocationDD') || '';
+          var parsedDd = parseLatLonText(dd);
+          if (parsedDd) {{
+              return parsedDd;
+          }}
+
+          var lat = Number(localStorage.getItem('pilotLatitude'));
+          var lon = Number(localStorage.getItem('pilotLongitude'));
+          if (isFinite(lat) && isFinite(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {{
+              return L.latLng(lat, lon);
+          }}
+      }} catch (err) {{
+          console.warn('[NOTAM MAP] unable to read pilot location from localStorage', err);
+      }}
+      return null;
+  }}
+
+  function savePilotLocationToStorage(ll, source) {{
+      try {{
+          var lat = Number(ll.lat);
+          var lon = Number(ll.lng);
+          var latShort = lat.toFixed({COORD_DECIMALS});
+          var lonShort = lon.toFixed({COORD_DECIMALS});
+          localStorage.setItem('pilotLocationDD', latShort + ', ' + lonShort);
+          localStorage.setItem('pilotLocationDMS', toDms(lat, true) + ', ' + toDms(lon, false));
+          localStorage.setItem('pilotLatitude', latShort);
+          localStorage.setItem('pilotLongitude', lonShort);
+          localStorage.setItem('pilotLocationSource', source || 'notams-map');
+      }} catch (err) {{
+          console.warn('[NOTAM MAP] unable to write pilot location to localStorage', err);
+      }}
+  }}
+
+  function maybePromptPilotLocationRefresh() {{
+      var key = 'notam-map.prompted-location-update';
+      try {{
+          if (sessionStorage.getItem(key) === '1') {{
+              return;
+          }}
+          sessionStorage.setItem(key, '1');
+      }} catch (_err) {{
+      }}
+
+      var promptMsg = 'Use current device location to update Pilot Location now?';
+      if (confirm(promptMsg)) {{
+          var btn = document.getElementById('getPilotLoc');
+          if (btn) {{
+              btn.click();
+          }}
+      }}
   }}
 
   function updatePilotDisplay(ll) {{
@@ -456,6 +615,312 @@ window.onload = function() {{
       }}
       if (pilotText) {{
           pilotText.textContent = 'Current Pilot Location: ' + formatCoord(ll.lat) + ', ' + formatCoord(ll.lng);
+      }}
+  }}
+
+  function updateBasemapDisplay() {{
+      var basemapText = document.getElementById('currentBasemapText');
+      if (basemapText) {{
+          basemapText.textContent = 'Basemap: ' + (currentBasemapName || 'Unknown');
+      }}
+  }}
+
+  function anySelectedAirportLayerVisible() {{
+      for (var i = 0; i < selectedAirportLayers.length; i++) {{
+          if (map.hasLayer(selectedAirportLayers[i])) {{
+              return true;
+          }}
+      }}
+      return false;
+  }}
+
+  function setAllAirportLayersVisible(visible) {{
+      for (var i = 0; i < airportLayers.length; i++) {{
+          var lyr = airportLayers[i];
+          if (!lyr) {{
+              continue;
+          }}
+          if (visible) {{
+              if (!map.hasLayer(lyr)) {{
+                  map.addLayer(lyr);
+              }}
+          }} else if (map.hasLayer(lyr)) {{
+              map.removeLayer(lyr);
+          }}
+      }}
+  }}
+
+  function setSelectedAirportLayersVisible(visible) {{
+      for (var i = 0; i < selectedAirportLayers.length; i++) {{
+          var lyr = selectedAirportLayers[i];
+          if (!lyr) {{
+              continue;
+          }}
+          if (visible) {{
+              if (!map.hasLayer(lyr)) {{
+                  map.addLayer(lyr);
+              }}
+          }} else if (map.hasLayer(lyr)) {{
+              map.removeLayer(lyr);
+          }}
+      }}
+  }}
+
+  function normalizeProvinceCode(candidate) {{
+      if (!candidate) {{
+          return null;
+      }}
+      var text = String(candidate).trim();
+      if (!text) {{
+          return null;
+      }}
+      if (/^CA-[A-Z]{{2}}$/.test(text.toUpperCase())) {{
+          return text.toUpperCase();
+      }}
+      if (/^[A-Z]{{2}}$/.test(text.toUpperCase())) {{
+          return 'CA-' + text.toUpperCase();
+      }}
+
+      var byName = {{
+          'alberta': 'CA-AB',
+          'british columbia': 'CA-BC',
+          'manitoba': 'CA-MB',
+          'new brunswick': 'CA-NB',
+          'newfoundland and labrador': 'CA-NL',
+          'nova scotia': 'CA-NS',
+          'northwest territories': 'CA-NT',
+          'nunavut': 'CA-NU',
+          'ontario': 'CA-ON',
+          'prince edward island': 'CA-PE',
+          'quebec': 'CA-QC',
+          'saskatchewan': 'CA-SK',
+          'yukon': 'CA-YT'
+      }};
+      return byName[text.toLowerCase()] || null;
+  }}
+
+  function applyAirportDefaultsForProvince(provinceCode) {{
+      var code = normalizeProvinceCode(provinceCode);
+      var typeMap = code ? airportLayerIndex[code] : null;
+      selectedAirportLayers = [];
+
+      if (typeMap) {{
+          for (var atype in typeMap) {{
+              if (!Object.prototype.hasOwnProperty.call(typeMap, atype)) {{
+                  continue;
+              }}
+              if (String(atype).toLowerCase() === 'closed') {{
+                  continue;
+              }}
+              selectedAirportLayers.push(typeMap[atype]);
+          }}
+      }}
+
+      setAllAirportLayersVisible(false);
+      setSelectedAirportLayersVisible(true);
+      updateAirportsToggleLabel();
+  }}
+
+  async function detectProvinceCodeForLocation(ll) {{
+      try {{
+          var url = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + encodeURIComponent(ll.lat) + '&lon=' + encodeURIComponent(ll.lng) + '&zoom=5&addressdetails=1';
+          var resp = await fetch(url, {{ cache: 'no-store' }});
+          if (!resp.ok) {{
+              return null;
+          }}
+          var payload = await resp.json();
+          var addr = (payload && payload.address) ? payload.address : {{}};
+          return (
+              normalizeProvinceCode(addr['ISO3166-2-lvl4']) ||
+              normalizeProvinceCode(addr['ISO3166-2-lvl3']) ||
+              normalizeProvinceCode(addr.state_code) ||
+              normalizeProvinceCode(addr.state) ||
+              normalizeProvinceCode(addr.province) ||
+              normalizeProvinceCode(addr.region)
+          );
+      }} catch (err) {{
+          console.warn('[NOTAM MAP] province detection failed', err);
+          return null;
+      }}
+  }}
+
+  async function applyAirportDefaultsFromLocation(ll) {{
+      var code = await detectProvinceCodeForLocation(ll);
+      if (code && airportLayerIndex[code]) {{
+          applyAirportDefaultsForProvince(code);
+          return;
+      }}
+
+      if (airportLayerIndex['CA-ON']) {{
+          applyAirportDefaultsForProvince('CA-ON');
+          return;
+      }}
+
+      for (var fallbackCode in airportLayerIndex) {{
+          if (Object.prototype.hasOwnProperty.call(airportLayerIndex, fallbackCode)) {{
+              applyAirportDefaultsForProvince(fallbackCode);
+              return;
+          }}
+      }}
+  }}
+
+  function updateAirportsToggleLabel() {{
+      var txt = document.getElementById('airportsToggleText');
+      var ctl = document.getElementById('airportsToggleCtl');
+      var active = anySelectedAirportLayerVisible();
+
+      if (txt) {{
+          txt.textContent = active ? 'Hide Airports Layer' : 'Show Airports Layer';
+      }}
+
+      if (ctl) {{
+          ctl.classList.toggle('inactive', !active);
+          ctl.title = active ? 'Hide Airports Layer' : 'Show Airports Layer';
+      }}
+  }}
+
+  function setNotamsVisible(visible) {{
+      notamsVisible = !!visible;
+      if (notamsVisible) {{
+          if (!map.hasLayer(obstacleLayer)) {{
+              map.addLayer(obstacleLayer);
+          }}
+      }} else if (map.hasLayer(obstacleLayer)) {{
+          map.removeLayer(obstacleLayer);
+      }}
+      updateNotamsToggleVisual();
+  }}
+
+  function updateNotamsToggleVisual() {{
+      var ctl = document.getElementById('notamsToggleCtl');
+      if (ctl) {{
+          ctl.classList.toggle('inactive', !notamsVisible);
+      }}
+  }}
+
+  function applyBasemapByName(name) {{
+      if (!name || !basemapLayers[name]) {{
+          return false;
+      }}
+
+      for (var layerName in basemapLayers) {{
+          if (!Object.prototype.hasOwnProperty.call(basemapLayers, layerName)) {{
+              continue;
+          }}
+          var layer = basemapLayers[layerName];
+          if (map.hasLayer(layer)) {{
+              map.removeLayer(layer);
+          }}
+      }}
+
+      map.addLayer(basemapLayers[name]);
+      currentBasemapName = name;
+      updateBasemapDisplay();
+      return true;
+  }}
+
+  function getStoredBasemapName() {{
+      try {{
+          return localStorage.getItem(basemapStorageKey);
+      }} catch (err) {{
+          console.warn('[NOTAM MAP] unable to read basemap from localStorage', err);
+          return null;
+      }}
+  }}
+
+  function setStoredBasemapName(name) {{
+      try {{
+          localStorage.setItem(basemapStorageKey, name);
+      }} catch (err) {{
+          console.warn('[NOTAM MAP] unable to write basemap to localStorage', err);
+      }}
+  }}
+
+  function splitCoordinatePair(value) {{
+      if (typeof value !== 'string') {{
+          return null;
+      }}
+      var parts = value.split(',');
+      if (parts.length < 2) {{
+          return null;
+      }}
+      var lat = parseFloat(parts[0]);
+      var lon = parseFloat(parts[1]);
+      if (!isFinite(lat) || !isFinite(lon)) {{
+          return null;
+      }}
+      return {{ lat: lat, lon: lon }};
+  }}
+
+  function normalizeNotamRecords(records) {{
+      if (!Array.isArray(records)) {{
+          return [];
+      }}
+
+      var normalized = [];
+      for (var i = 0; i < records.length; i++) {{
+          var rec = records[i] || {{}};
+          var start = rec.start || rec.startValidity || null;
+          var end = rec.end || rec.endValidity || null;
+          var rawHtml = rec.rawHtml || '';
+
+          if (!rawHtml && rec.raw) {{
+              rawHtml = escapeHtml(rec.raw).replace(/\\n/g, '<br>');
+          }}
+
+          if (isFinite(rec.lat) && isFinite(rec.lon)) {{
+              normalized.push({{
+                  lat: Number(rec.lat),
+                  lon: Number(rec.lon),
+                  start: start,
+                  end: end,
+                  rawHtml: rawHtml
+              }});
+              continue;
+          }}
+
+          var coords = Array.isArray(rec.coordinates_dd) ? rec.coordinates_dd : [];
+          for (var c = 0; c < coords.length; c++) {{
+              var pair = splitCoordinatePair(coords[c]);
+              if (!pair) {{
+                  continue;
+              }}
+              normalized.push({{
+                  lat: pair.lat,
+                  lon: pair.lon,
+                  start: start,
+                  end: end,
+                  rawHtml: rawHtml
+              }});
+          }}
+      }}
+      return normalized;
+  }}
+
+  async function fetchNotamJson(path) {{
+      var res = await fetch(path, {{ cache: 'no-store' }});
+      if (!res.ok) {{
+          throw new Error('HTTP ' + res.status + ' for ' + path);
+      }}
+      return res.json();
+  }}
+
+  async function loadNotamData() {{
+      try {{
+          var results = await Promise.all([
+              fetchNotamJson('data/notams/All_CA.json'),
+              fetchNotamJson('data/notams/All_CA_raw.json')
+          ]);
+
+          filteredNotams = normalizeNotamRecords(results[0]);
+          rawNotams = normalizeNotamRecords(results[1]);
+          notamDataReady = true;
+          notamDataError = '';
+      }} catch (err) {{
+          notamDataReady = false;
+          notamDataError = (err && err.message) ? err.message : 'Unknown NOTAM load error';
+          filteredNotams = [];
+          rawNotams = [];
       }}
   }}
 
@@ -487,7 +952,16 @@ window.onload = function() {{
       refreshObstacles(marker.getLatLng());
   }}
 
-  function initProvinceGroupCollapse() {{
+  function centerMapToPilotRadius() {{
+      var bounds = c100.getBounds ? c100.getBounds() : null;
+      if (!bounds) {{
+          map.setView(marker.getLatLng(), currentZoom);
+          return;
+      }}
+      map.fitBounds(bounds, {{ padding: [30, 30] }});
+  }}
+
+    function initProvinceGroupCollapse() {{
       var groups = document.querySelectorAll('.leaflet-control-layers-group');
       for (var i = 0; i < groups.length; i++) {{
           var group = groups[i];
@@ -501,11 +975,7 @@ window.onload = function() {{
               continue;
           }}
 
-          var groupName = (nameEl.textContent || '').trim().toLowerCase();
-          var isObstacles = groupName.indexOf('obstacle') !== -1;
-          if (!isObstacles) {{
-              group.classList.add('province-collapsed');
-          }}
+          group.classList.add('province-collapsed');
 
           labelEl.dataset.collapseBound = '1';
           labelEl.addEventListener('click', function(ev) {{
@@ -563,6 +1033,15 @@ window.onload = function() {{
 
   function refreshObstacles(ll) {{
       obstacleLayer.clearLayers();
+      var countText = document.getElementById('obstacleCountText');
+
+      if (!notamDataReady) {{
+          if (countText) {{
+              countText.textContent = notamDataError ? ('NOTAM load failed: ' + notamDataError) : 'Loading NOTAM data...';
+          }}
+          return;
+      }}
+
       var activeNotams = getActiveNotams();
       var shownCount = 0;
 
@@ -586,7 +1065,6 @@ window.onload = function() {{
           .addTo(obstacleLayer);
       }}
 
-      var countText = document.getElementById('obstacleCountText');
       if (countText) {{
           countText.textContent = 'Obstacles (' + radiusLabel() + ' km): ' + shownCount;
       }}
@@ -597,8 +1075,9 @@ window.onload = function() {{
       c1.setLatLng(ll); c3.setLatLng(ll); c100.setLatLng(ll);
       c1Touch.setLatLng(ll); c3Touch.setLatLng(ll); c100Touch.setLatLng(ll);
       marker.setPopupContent("Pilot<br>Lat: " + ll.lat.toFixed(6) + "<br>Lon: " + ll.lng.toFixed(6));
+      savePilotLocationToStorage(ll, 'notams-map');
       if (shouldCenter) {{
-          map.setView(ll, currentZoom);
+          centerMapToPilotRadius();
       }}
       refreshObstacles(ll);
       updatePilotDisplay(ll);
@@ -660,24 +1139,162 @@ window.onload = function() {{
   }};
   homeCtl.addTo(map);
 
+  var centerMapCtl = L.control({{position:'topleft'}});
+  centerMapCtl.onAdd = function() {{
+      var d = L.DomUtil.create('div', 'center-map-control');
+      var btn = L.DomUtil.create('a', 'center-map-btn', d);
+      btn.href = '#';
+      btn.title = 'Center Map on Pilot';
+      btn.setAttribute('aria-label', 'Center Map on Pilot');
+      btn.innerHTML = '<i class="fa-solid fa-crosshairs"></i>';
+      L.DomEvent.disableClickPropagation(d);
+      L.DomEvent.on(btn, 'click', function(ev) {{
+          L.DomEvent.stop(ev);
+          centerMapToPilotRadius();
+      }});
+      return d;
+  }};
+  centerMapCtl.addTo(map);
+
+  var airportsToggleCtl = L.control({{position:'topleft'}});
+  airportsToggleCtl.onAdd = function() {{
+      var d = L.DomUtil.create('div', 'left-mini-toggle-control');
+      d.id = 'airportsToggleCtl';
+      var btn = L.DomUtil.create('a', 'left-mini-toggle-btn', d);
+      btn.href = '#';
+      btn.title = 'Toggle airport types by province';
+      btn.setAttribute('aria-label', 'Toggle Airports Layer');
+      btn.innerHTML = '<i class="fa-solid fa-plane-departure"></i><span id="airportsToggleText" style="display:none">Toggle Airports Layer</span>';
+      L.DomEvent.disableClickPropagation(d);
+      L.DomEvent.on(btn, 'click', function(ev) {{
+          L.DomEvent.stop(ev);
+          setSelectedAirportLayersVisible(!anySelectedAirportLayerVisible());
+          updateAirportsToggleLabel();
+      }});
+      return d;
+  }};
+  airportsToggleCtl.addTo(map);
+
+  var notamsToggleCtl = L.control({{position:'topleft'}});
+  notamsToggleCtl.onAdd = function() {{
+      var d = L.DomUtil.create('div', 'left-mini-toggle-control');
+      d.id = 'notamsToggleCtl';
+      var btn = L.DomUtil.create('a', 'left-mini-toggle-btn', d);
+      btn.href = '#';
+      btn.title = 'Toggle NOTAM obstacles';
+      btn.setAttribute('aria-label', 'Toggle NOTAMs');
+      btn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+      L.DomEvent.disableClickPropagation(d);
+      L.DomEvent.on(btn, 'click', function(ev) {{
+          L.DomEvent.stop(ev);
+          setNotamsVisible(!notamsVisible);
+      }});
+      return d;
+  }};
+  notamsToggleCtl.addTo(map);
+
+  basemapControl.addTo(map);
+  var basemapCtlContainer = basemapControl.getContainer ? basemapControl.getContainer() : null;
+  if (basemapCtlContainer) {{
+      basemapCtlContainer.classList.add('map-layers-control');
+      basemapCtlContainer.title = 'Map Layers';
+      var baseToggle = basemapCtlContainer.querySelector('.leaflet-control-layers-toggle');
+      if (baseToggle) {{
+          baseToggle.title = 'Map Layers';
+          baseToggle.setAttribute('aria-label', 'Map Layers');
+      }}
+  }}
+
+    zoomControl.addTo(map);
+
   var ctl = L.control({{position:'topleft'}});
   ctl.onAdd = function() {{
       var d = L.DomUtil.create('div','pilot-input');
       L.DomEvent.disableClickPropagation(d);
       d.style.marginTop = '88px';
-        d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls"><</button><div class="controls-row">Lat <input id="pLat" size="10" maxlength="12" placeholder="43.000000"> Lon <input id="pLon" size="10" maxlength="13" placeholder="-79.000000"></div><div class="controls-meta dd-hint">DD: 43.653200, -79.383200</div><div class="action-grid"><button id="upd">Set Lat/Lon</button><button id="centerPilot">Center Map</button><button id="getPilotLoc">Get Location</button><button id="sourceBtn">Switch Filter Group</button></div><div class="controls-row" style="margin-top:5px;">Radius km <input id="radiusKmInput" size="6" maxlength="6" placeholder="10"> <button id="setRadiusBtn">Change NOTAM Radius</button></div><div id="currentPilotText" class="controls-meta status-line">Current Pilot: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Src: RAW</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div>';
+        d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls"><i class="fa-solid fa-bars"></i></button><div class="controls-row">Lat <input id="pLat" size="10" maxlength="12" placeholder="43.000000"> Lon <input id="pLon" size="10" maxlength="13" placeholder="-79.000000"></div><div class="controls-meta dd-hint">DD: 43.653200, -79.383200</div><div class="action-grid"><button id="upd">Set Lat/Lon</button><button id="centerPilot">Center Map</button><button id="getPilotLoc">Get Location</button><button id="sourceBtn">Switch Filter Group</button></div><div class="controls-row" style="margin-top:5px;">Radius km <input id="radiusKmInput" size="6" maxlength="6" placeholder="10"> <button id="setRadiusBtn">Change NOTAM Radius</button></div><div id="currentPilotText" class="controls-meta status-line">Current Pilot: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Src: RAW</div><div id="currentBasemapText" class="controls-meta status-line">Basemap: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div>';
       return d;
   }};
   ctl.addTo(map);
 
-  document.getElementById('pilotFlyoutToggle').onclick = function() {{
+  map.on('baselayerchange', function(e) {{
+      if (e && e.name) {{
+          currentBasemapName = e.name;
+          setStoredBasemapName(currentBasemapName);
+          updateBasemapDisplay();
+      }}
+  }});
+
+      map.on('overlayadd', function() {{
+          updateAirportsToggleLabel();
+          updateNotamsToggleVisual();
+      }});
+
+      map.on('overlayremove', function() {{
+          updateAirportsToggleLabel();
+          updateNotamsToggleVisual();
+      }});
+
+  function setPilotFlyoutCollapsed(collapsed) {{
+      var flyout = document.getElementById('pilotFlyout');
+      var toggle = document.getElementById('pilotFlyoutToggle');
+      if (!flyout || !toggle) {{
+          return;
+      }}
+      flyout.classList.toggle('collapsed', !!collapsed);
+      toggle.innerHTML = flyout.classList.contains('collapsed')
+          ? '<i class="fa-solid fa-bars"></i>'
+          : '<i class="fa-solid fa-xmark"></i>';
+  }}
+
+  function collapsePilotFlyoutIfIdle() {{
       var flyout = document.getElementById('pilotFlyout');
       if (!flyout) {{
           return;
       }}
-      flyout.classList.toggle('collapsed');
-    this.textContent = flyout.classList.contains('collapsed') ? '>' : '<';
-  }};
+      if (flyout.contains(document.activeElement)) {{
+          return;
+      }}
+      setPilotFlyoutCollapsed(true);
+  }}
+
+  (function wirePilotFlyoutBehavior() {{
+      var flyout = document.getElementById('pilotFlyout');
+      var toggle = document.getElementById('pilotFlyoutToggle');
+      if (!flyout || !toggle) {{
+          return;
+      }}
+
+      toggle.onclick = function(ev) {{
+          if (ev) {{
+              ev.preventDefault();
+          }}
+          setPilotFlyoutCollapsed(!flyout.classList.contains('collapsed'));
+      }};
+
+      flyout.addEventListener('mouseenter', function() {{
+          setPilotFlyoutCollapsed(false);
+      }});
+
+      flyout.addEventListener('mouseleave', function() {{
+          window.setTimeout(collapsePilotFlyoutIfIdle, 120);
+      }});
+
+      flyout.addEventListener('focusin', function() {{
+          setPilotFlyoutCollapsed(false);
+      }});
+
+      flyout.addEventListener('focusout', function() {{
+          window.setTimeout(function() {{
+              if (!flyout.matches(':hover')) {{
+                  collapsePilotFlyoutIfIdle();
+              }}
+          }}, 120);
+      }});
+
+      // Start open for immediate Pilot Controls interaction on load.
+      setPilotFlyoutCollapsed(false);
+  }})();
 
   document.getElementById('upd').onclick = function() {{
       var lat=parseFloat(document.getElementById('pLat').value);
@@ -687,10 +1304,11 @@ window.onload = function() {{
       if(lon < -180 || lon > 180) {{ alert("Longitude must be between -180 and 180"); return; }}
       var ll=L.latLng(lat,lon);
       applyPilotLocation(ll, true);
+      applyAirportDefaultsFromLocation(ll);
   }};
 
   document.getElementById('centerPilot').onclick = function() {{
-      map.setView(marker.getLatLng(), currentZoom);
+      centerMapToPilotRadius();
   }};
 
     document.getElementById('sourceBtn').onclick = function() {{
@@ -733,7 +1351,9 @@ window.onload = function() {{
                   if (!confirm(promptMsg)) {{
                       return;
                   }}
-                  applyPilotLocation(L.latLng(lat, lon), true);
+                  var ll = L.latLng(lat, lon);
+                  applyPilotLocation(ll, true);
+                  applyAirportDefaultsFromLocation(ll);
               }},
               function(err) {{
                   var msg = 'Unable to retrieve location.';
@@ -756,10 +1376,35 @@ window.onload = function() {{
       }};
 
     setTimeout(initProvinceGroupCollapse, 0);
-  updatePilotDisplay(marker.getLatLng());
+    var startupPilotLocation = marker.getLatLng();
+    var restoredPilotLocation = getStoredPilotLocation();
+    if (restoredPilotLocation) {{
+            startupPilotLocation = restoredPilotLocation;
+            applyPilotLocation(restoredPilotLocation, true);
+            applyAirportDefaultsFromLocation(restoredPilotLocation);
+            setTimeout(maybePromptPilotLocationRefresh, 300);
+    }}
+
+    updatePilotDisplay(startupPilotLocation);
     updateSourceDisplay();
+        setAllAirportLayersVisible(false);
+        updateAirportsToggleLabel();
+        applyAirportDefaultsFromLocation(startupPilotLocation);
+        applyBasemapByName(getStoredBasemapName()) || applyBasemapByName(defaultBasemapName);
+        updateBasemapDisplay();
+        updateNotamsToggleVisual();
     updateRadiusDisplay();
-  refreshObstacles(marker.getLatLng());
+    refreshObstacles(startupPilotLocation);
+    loadNotamData().then(function() {{
+                        refreshObstacles(marker.getLatLng());
+                        console.info('[NOTAM MAP] NOTAM data loaded and obstacle layer refreshed');
+        }}).catch(function(err) {{
+                        console.error('[NOTAM MAP] loadNotamData failed', err);
+    }});
+        console.info('[NOTAM MAP] widget init complete');
+    }} catch (err) {{
+        console.error('[NOTAM MAP] widget init failed', err);
+    }}
 }};
 </script>
 """
@@ -770,7 +1415,7 @@ window.onload = function() {{
     print(f"Basemap: {basemap['name']} [{basemap_key}]")
     if generated_at:
         print(f"NOTAM data generatedAt: {generated_at}")
-    print(f"Initial obstacle markers plotted (FILTERED): {shown}")
+    print("Obstacle markers are now loaded dynamically in-browser from data/notams/*.json")
 
     return m
 

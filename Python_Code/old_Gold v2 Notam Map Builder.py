@@ -292,14 +292,6 @@ def build_map(pilot_lat, pilot_lon, notams_filtered, notams_raw, generated_at=No
     # 5) Obstacles layer from repo JSON
     obstacle_layer = folium.FeatureGroup(name=f"Obstacles <= {NOTAM_RADIUS_KM} km")
     obstacle_layer_js = obstacle_layer.get_name()
-    filtered_points = prepare_obstacle_points(notams_filtered)
-    raw_points = prepare_obstacle_points(notams_raw)
-
-    shown = 0
-    for point in filtered_points:
-        if haversine_km(pilot_lat, pilot_lon, point["lat"], point["lon"]) <= NOTAM_RADIUS_KM:
-            shown += 1
-
     obstacle_layer.add_to(m)
     layers_dict["Obstacles"] = [obstacle_layer]
 
@@ -348,6 +340,8 @@ def build_map(pilot_lat, pilot_lon, notams_filtered, notams_raw, generated_at=No
     widget_js = f"""
 <script>
 window.onload = function() {{
+    try {{
+        console.info('[NOTAM MAP] widget init start');
   var map = {m.get_name()};
   var marker = {pm_js};
   var c1 = {c1_js};
@@ -355,9 +349,11 @@ window.onload = function() {{
   var c100 = {c100_js};
   var obstacleLayer = {obstacle_layer_js};
     var radiusKm = {NOTAM_RADIUS_KM};
-    var filteredNotams = {json.dumps(filtered_points)};
-    var rawNotams = {json.dumps(raw_points)};
+    var filteredNotams = [];
+    var rawNotams = [];
     var activeSource = 'RAW';
+    var notamDataReady = false;
+    var notamDataError = '';
     var currentZoom = map.getZoom();
 
     L.control.zoom({{position:'bottomleft'}}).addTo(map);
@@ -376,6 +372,94 @@ window.onload = function() {{
       }}
       if (pilotText) {{
           pilotText.textContent = 'Current Pilot Location: ' + formatCoord(ll.lat) + ', ' + formatCoord(ll.lng);
+      }}
+  }}
+
+  function splitCoordinatePair(value) {{
+      if (typeof value !== 'string') {{
+          return null;
+      }}
+      var parts = value.split(',');
+      if (parts.length < 2) {{
+          return null;
+      }}
+      var lat = parseFloat(parts[0]);
+      var lon = parseFloat(parts[1]);
+      if (!isFinite(lat) || !isFinite(lon)) {{
+          return null;
+      }}
+      return {{ lat: lat, lon: lon }};
+  }}
+
+  function normalizeNotamRecords(records) {{
+      if (!Array.isArray(records)) {{
+          return [];
+      }}
+
+      var normalized = [];
+      for (var i = 0; i < records.length; i++) {{
+          var rec = records[i] || {{}};
+          var start = rec.start || rec.startValidity || null;
+          var end = rec.end || rec.endValidity || null;
+          var rawHtml = rec.rawHtml || '';
+
+          if (!rawHtml && rec.raw) {{
+              rawHtml = escapeHtml(rec.raw).replace(/\\n/g, '<br>');
+          }}
+
+          if (isFinite(rec.lat) && isFinite(rec.lon)) {{
+              normalized.push({{
+                  lat: Number(rec.lat),
+                  lon: Number(rec.lon),
+                  start: start,
+                  end: end,
+                  rawHtml: rawHtml
+              }});
+              continue;
+          }}
+
+          var coords = Array.isArray(rec.coordinates_dd) ? rec.coordinates_dd : [];
+          for (var c = 0; c < coords.length; c++) {{
+              var pair = splitCoordinatePair(coords[c]);
+              if (!pair) {{
+                  continue;
+              }}
+              normalized.push({{
+                  lat: pair.lat,
+                  lon: pair.lon,
+                  start: start,
+                  end: end,
+                  rawHtml: rawHtml
+              }});
+          }}
+      }}
+      return normalized;
+  }}
+
+  async function fetchNotamJson(path) {{
+      var res = await fetch(path, {{ cache: 'no-store' }});
+      if (!res.ok) {{
+          throw new Error('HTTP ' + res.status + ' for ' + path);
+      }}
+      return res.json();
+  }}
+
+  async function loadNotamData() {{
+      try {{
+          var results = await Promise.all([
+              fetchNotamJson('data/notams/All_CA.json'),
+              fetchNotamJson('data/notams/All_CA_raw.json')
+          ]);
+
+          filteredNotams = normalizeNotamRecords(results[0]);
+          rawNotams = normalizeNotamRecords(results[1]);
+          notamDataReady = true;
+          notamDataError = '';
+      }} catch (err) {{
+          notamDataReady = false;
+          notamDataError = (err && err.message) ? err.message : 'Unknown NOTAM load error';
+          filteredNotams = [];
+          rawNotams = [];
       }}
   }}
 
@@ -483,6 +567,15 @@ window.onload = function() {{
 
   function refreshObstacles(ll) {{
       obstacleLayer.clearLayers();
+      var countText = document.getElementById('obstacleCountText');
+
+      if (!notamDataReady) {{
+          if (countText) {{
+              countText.textContent = notamDataError ? ('NOTAM load failed: ' + notamDataError) : 'Loading NOTAM data...';
+          }}
+          return;
+      }}
+
       var activeNotams = getActiveNotams();
       var shownCount = 0;
 
@@ -506,7 +599,6 @@ window.onload = function() {{
           .addTo(obstacleLayer);
       }}
 
-      var countText = document.getElementById('obstacleCountText');
       if (countText) {{
           countText.textContent = 'Obstacles (' + radiusLabel() + ' km): ' + shownCount;
       }}
@@ -680,6 +772,16 @@ window.onload = function() {{
     updateSourceDisplay();
     updateRadiusDisplay();
   refreshObstacles(marker.getLatLng());
+    loadNotamData().then(function() {{
+                        refreshObstacles(marker.getLatLng());
+                        console.info('[NOTAM MAP] NOTAM data loaded and obstacle layer refreshed');
+        }}).catch(function(err) {{
+                        console.error('[NOTAM MAP] loadNotamData failed', err);
+    }});
+        console.info('[NOTAM MAP] widget init complete');
+    }} catch (err) {{
+        console.error('[NOTAM MAP] widget init failed', err);
+    }}
 }};
 </script>
 """
@@ -689,7 +791,7 @@ window.onload = function() {{
     print(f"Loaded RAW NOTAMs from: {NOTAMS_RAW_PATH}")
     if generated_at:
         print(f"NOTAM data generatedAt: {generated_at}")
-    print(f"Initial obstacle markers plotted (FILTERED): {shown}")
+    print("Obstacle markers are now loaded dynamically in-browser from data/notams/*.json")
 
     return m
 

@@ -14,4 +14,6 @@ Leaflet : https://leafletjs.com/
 OpenStreetMap: https://www.openstreetmap.org/copyright
 
 CartoDB : https://carto.com/attributions 
- 
+
+Google Maps: display Google name if map source
+

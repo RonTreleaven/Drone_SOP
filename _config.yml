@@ -9,4 +9,5 @@ exclude:
   - "Markdown Docs/"
   - TODO/
   - "_tmp safety copies/"
+  - "test file archived/"
   - "**/__pycache__/"
