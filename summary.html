@@ -43,92 +43,13 @@
 
   <!-- Export & navigation controls -->
   <button id="return-home">Return Home</button>
+  <button id="save-summary">Future Magic</button>
   <button id="export-csv">Download CSV</button>
   <button id="export-pdf">Download PDF</button>
   <button id="clear-data">Clear Previous Inputs Data</button>
 
   <script src="assets/js/app.js"></script>
-  <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Show pilot location summary
-  const dd = localStorage.getItem('pilotLocationDD');
-  const dms = localStorage.getItem('pilotLocationDMS');
-  const locationDiv = document.getElementById('pilot-location-summary');
-  if (locationDiv && dd && dms) {
-    locationDiv.innerHTML =
-      `<strong>Pilot Location:</strong><br>DD: ${dd}<br>DMS: ${dms}`;
-  } else if (locationDiv) {
-    locationDiv.innerHTML = "<em>Pilot location not recorded in this session.</em>";
-  }
 
-  // Load SOP progress from localStorage
-  const sopProgress = JSON.parse(localStorage.getItem('droneSOPProgress') || '{}');
-  const summaryContainer = document.getElementById('summary-container');
-  summaryContainer.innerHTML = '';
-
-  // Fetch sections.json for friendly titles
-  fetch('data/sections.json')
-    .then(res => res.json())
-    .then(sections => {
-      if (sopProgress.selectedSOPs && sopProgress.progress) {
-        sopProgress.selectedSOPs.forEach(sopId => {
-          const sop = sopProgress.progress[sopId];
-          const sec = sections.find(s => s.id === sopId);
-          const title = sec ? sec.title : sopId.replace(/_/g, ' ');
-          const div = document.createElement('div');
-          div.className = 'sop-summary';
-
-          div.innerHTML = `<strong>${title}</strong> — Status: <em>${sop.status.replace('-', ' ')}</em>`;
-
-          // Add a button to revisit the SOP/Section
-          const btn = document.createElement('button');
-          btn.textContent = sop.status === "completed" ? "Review/Edit" : "Continue";
-          btn.onclick = function() {
-            // Redirect to the SOP page (adjust path as needed)
-            window.location.href = `sections/${sopId}.html`;
-          };
-          div.appendChild(btn);
-
-          if (sop.status === "completed") div.style.background = "#e0ffe0";
-
-          summaryContainer.appendChild(div);
-        });
-      } else {
-        summaryContainer.innerHTML = "<em>No SOP progress found for this session.</em>";
-      }
-    });
-
-  // Clear data button logic
-  document.getElementById('clear-data').addEventListener('click', function() {
-    if (confirm('Are you sure you want to wipe/clear all data? This cannot be undone.')) {
-      // Remove all relevant localStorage keys
-      localStorage.removeItem('pilotLocationDD');
-      localStorage.removeItem('pilotLocationDMS');
-      localStorage.removeItem('pilotLatitude');
-      localStorage.removeItem('pilotLongitude');
-      localStorage.removeItem('pilotLocationSource');
-      localStorage.removeItem('flightDate');
-      localStorage.removeItem('flightPilot');
-      localStorage.removeItem('flightObservers');
-      localStorage.removeItem('flightStart');
-      localStorage.removeItem('flightEnd');
-      localStorage.removeItem('flightLocation');
-      localStorage.removeItem('dwCheckLatest');
-      localStorage.removeItem('dwCheckDraft');
-      localStorage.removeItem('dwCheckCompleted');
-      localStorage.removeItem('dwCheckCompletedAt');
-      localStorage.removeItem('selectedSections');
-      localStorage.removeItem('flightLog');
-      localStorage.removeItem('droneSOPProgress');
-      // Remove any section responses
-      Object.keys(localStorage).forEach(key => {
-        if (key.startsWith('responses_')) localStorage.removeItem(key);
-      });
-      location.reload();
-    }
-  });
-});
-  </script>
   
 </body>
 </html>

@@ -11,6 +11,27 @@ const FLIGHT_RUN_STORAGE_KEYS = [
   'flightLocation'
 ];
 
+const WEATHER_CHECK_STORAGE_KEYS = [
+  'dwCheckLatest',
+  'dwCheckDraft',
+  'dwCheckDraftPending',
+  'dwCheckCompleted',
+  'dwCheckCompletedAt'
+];
+
+const SESSION_PROGRESS_KEYS = [
+  'droneSOPProgress',
+  'selectedSections'
+];
+
+const PILOT_LOCATION_KEYS = [
+  'pilotLocationDD',
+  'pilotLocationDMS',
+  'pilotLatitude',
+  'pilotLongitude',
+  'pilotLocationSource'
+];
+
 function safeParseJSON(key, fallback = {}) {
   try {
     return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
@@ -21,6 +42,28 @@ function safeParseJSON(key, fallback = {}) {
 
 function clearFlightRunData() {
   FLIGHT_RUN_STORAGE_KEYS.forEach(key => localStorage.removeItem(key));
+}
+
+function clearWeatherCheckData() {
+  WEATHER_CHECK_STORAGE_KEYS.forEach(key => localStorage.removeItem(key));
+}
+
+function clearSessionProgressData() {
+  SESSION_PROGRESS_KEYS.forEach(key => localStorage.removeItem(key));
+  Object.keys(localStorage).forEach(key => {
+    if (key.startsWith('responses_')) localStorage.removeItem(key);
+  });
+}
+
+function clearPilotLocationData() {
+  PILOT_LOCATION_KEYS.forEach(key => localStorage.removeItem(key));
+}
+
+function clearSessionStateAfterSummarySave() {
+  clearFlightRunData();
+  clearWeatherCheckData();
+  clearSessionProgressData();
+  clearPilotLocationData();
 }
 
 function parseLatLonText(value) {
@@ -198,6 +241,46 @@ function renderFlightLog() {
   const loc    = document.getElementById('flight-location');
   const btn    = document.getElementById('getLocation');
   const output = document.getElementById('output');
+  const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+
+  const RECENT_PILOTS_KEY = 'flightRecentPilots';
+  const RECENT_OBSERVERS_KEY = 'flightRecentObservers';
+
+  const parseList = key => {
+    const parsed = safeParseJSON(key, []);
+    return Array.isArray(parsed) ? parsed.filter(v => typeof v === 'string' && v.trim()) : [];
+  };
+
+  const saveRecentValue = (key, value) => {
+    const clean = String(value || '').trim();
+    if (!clean) return;
+    const existing = parseList(key).filter(v => v.toLowerCase() !== clean.toLowerCase());
+    const next = [clean, ...existing].slice(0, 3);
+    localStorage.setItem(key, JSON.stringify(next));
+  };
+
+  const attachRecentList = (inputEl, key, datalistId) => {
+    if (!inputEl) return;
+    const list = parseList(key);
+    const dl = document.createElement('datalist');
+    dl.id = datalistId;
+    list.forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      dl.appendChild(opt);
+    });
+    document.body.appendChild(dl);
+    inputEl.setAttribute('list', datalistId);
+  };
+
+  const formatTimeHHMM = d => {
+    const h = String(d.getHours()).padStart(2, '0');
+    const m = String(d.getMinutes()).padStart(2, '0');
+    return `${h}:${m}`;
+  };
+
+  const now = new Date();
+  const plus30 = new Date(now.getTime() + 30 * 60000);
 
   const writePilotLocationToStorage = (lat, lon, source = 'manual') => {
     return savePilotLocation(lat, lon, source);
@@ -213,13 +296,49 @@ function renderFlightLog() {
   };
 
   const saved = safeParseJSON('flightLog', {});
+  const savedAt = localStorage.getItem('flightLogSavedAt') || '';
+  const recentPilots = parseList(RECENT_PILOTS_KEY);
+  const recentObservers = parseList(RECENT_OBSERVERS_KEY);
 
   dateIn.value = saved.date || localStorage.getItem('flightDate') || new Date().toISOString().split('T')[0];
-  pilot.value  = saved.pilot || localStorage.getItem('flightPilot') || '';
-  obs.value    = saved.observers || localStorage.getItem('flightObservers') || '';
-  start.value  = saved.start || localStorage.getItem('flightStart') || '';
-  end.value    = saved.end || localStorage.getItem('flightEnd') || '';
+  pilot.value  = saved.pilot || localStorage.getItem('flightPilot') || recentPilots[0] || '';
+  obs.value    = saved.observers || localStorage.getItem('flightObservers') || recentObservers[0] || '';
+  start.value  = saved.start || localStorage.getItem('flightStart') || formatTimeHHMM(now);
+  end.value    = saved.end || localStorage.getItem('flightEnd') || formatTimeHHMM(plus30);
   loc.value    = saved.location || localStorage.getItem('flightLocation') || '';
+
+  attachRecentList(pilot, RECENT_PILOTS_KEY, 'pilot-names-list');
+  attachRecentList(obs, RECENT_OBSERVERS_KEY, 'observer-names-list');
+
+  let flightLogStatus = document.getElementById('flight-log-status');
+  if (!flightLogStatus && form) {
+    flightLogStatus = document.createElement('p');
+    flightLogStatus.id = 'flight-log-status';
+    flightLogStatus.className = 'subtle';
+    form.parentNode.insertBefore(flightLogStatus, form.nextSibling);
+  }
+
+  let summaryQuickLink = document.getElementById('flight-log-summary-link');
+  if (!summaryQuickLink && form) {
+    summaryQuickLink = document.createElement('a');
+    summaryQuickLink.id = 'flight-log-summary-link';
+    summaryQuickLink.href = 'summary.html';
+    summaryQuickLink.textContent = 'Quick Link: Go to Summary';
+    summaryQuickLink.style.display = 'none';
+    summaryQuickLink.style.marginLeft = '12px';
+    summaryQuickLink.style.fontWeight = '600';
+    form.appendChild(summaryQuickLink);
+  }
+
+  if (saved && (saved.date || saved.pilot || saved.location)) {
+    if (submitBtn) submitBtn.textContent = 'Update Flight Log';
+    if (flightLogStatus) {
+      flightLogStatus.textContent = savedAt
+        ? `Flight Log saved in this session at ${new Date(savedAt).toLocaleString()}. You can edit and update.`
+        : 'Flight Log already saved in this session. You can edit and update.';
+    }
+    if (summaryQuickLink) summaryQuickLink.style.display = 'inline-block';
+  }
 
   const dd = localStorage.getItem('pilotLocationDD');
   const dms = localStorage.getItem('pilotLocationDMS');
@@ -297,6 +416,17 @@ function renderFlightLog() {
       renderPilotLocationOutput(`${saved.latShort}, ${saved.lonShort}`, `${saved.latDMS}, ${saved.lonDMS}`);
     }
 
+    const saveTs = new Date().toISOString();
+    localStorage.setItem('flightLogSavedAt', saveTs);
+    saveRecentValue(RECENT_PILOTS_KEY, flightLog.pilot);
+    saveRecentValue(RECENT_OBSERVERS_KEY, flightLog.observers);
+
+    if (submitBtn) submitBtn.textContent = 'Update Flight Log';
+    if (flightLogStatus) {
+      flightLogStatus.textContent = `Flight Log saved at ${new Date(saveTs).toLocaleString()}. You can edit and update, or continue to Summary.`;
+    }
+    if (summaryQuickLink) summaryQuickLink.style.display = 'inline-block';
+
     alert('✅ Flight log saved.');
   });
 }
@@ -306,6 +436,14 @@ function renderSectionPage(sections) {
   const id = window.location.pathname.split('/').pop().replace('.html', '');
   const current = sections.find(s => s.id === id);
   if (!current) return console.error('Unknown section:', id);
+  const params = new URLSearchParams(window.location.search);
+  const fromSummary = params.get('from') === 'summary';
+
+  const sopProgress = safeParseJSON('droneSOPProgress', {});
+  const selected = sopProgress.selectedSOPs || [];
+  const currentProgress = (sopProgress.progress && sopProgress.progress[current.id])
+    ? sopProgress.progress[current.id]
+    : { status: 'not-started', data: {} };
 
   document.getElementById('section-title').textContent = current.title;
   const container = document.getElementById('checklist-container');
@@ -316,6 +454,38 @@ function renderSectionPage(sections) {
   if (responses.length !== current.items.length) {
     responses = current.items.map(() => false);
   }
+  const itemCheckboxes = [];
+
+  const persistResponses = () => {
+    localStorage.setItem(`responses_${current.id}`, JSON.stringify(responses));
+  };
+
+  const setAllChecklistItems = (checked) => {
+    responses = responses.map(() => checked);
+    itemCheckboxes.forEach(cb => {
+      cb.checked = checked;
+    });
+    persistResponses();
+    syncSectionStatusFromUI();
+  };
+
+  const syncSectionStatusFromUI = () => {
+    const completedToggleEl = document.getElementById('section-completed');
+    const isCompleted = !!(completedToggleEl && completedToggleEl.checked);
+    const hasAnyChecks = responses.some(Boolean);
+
+    let sopProgress = safeParseJSON('droneSOPProgress', {});
+    sopProgress.progress = sopProgress.progress || {};
+    sopProgress.progress[current.id] = sopProgress.progress[current.id] || { data: {} };
+    sopProgress.progress[current.id].status = isCompleted
+      ? 'completed'
+      : (hasAnyChecks ? 'in-progress' : 'not-started');
+    localStorage.setItem('droneSOPProgress', JSON.stringify(sopProgress));
+  };
+
+  const firstItemText = String(current.items[0] || '');
+  const firstItemMeansChecklistComplete = /checklist\s+completed/i.test(firstItemText);
+
   current.items.forEach((item, idx) => {
     const div = document.createElement('div');
     div.className = 'check-item';
@@ -324,8 +494,14 @@ function renderSectionPage(sections) {
     cb.checked = responses[idx];
     cb.addEventListener('change', () => {
       responses[idx] = cb.checked;
-      localStorage.setItem(`responses_${current.id}`, JSON.stringify(responses));
+      if (idx === 0 && cb.checked && firstItemMeansChecklistComplete) {
+        setAllChecklistItems(true);
+        return;
+      }
+      persistResponses();
+      syncSectionStatusFromUI();
     });
+    itemCheckboxes.push(cb);
     const lbl = document.createElement('label');
     lbl.textContent = item;
     div.append(cb, ' ', lbl);
@@ -340,45 +516,72 @@ function renderSectionPage(sections) {
   completeDiv.appendChild(completeLabel);
   container.appendChild(completeDiv);
 
-  // Save Progress button
+  const completedToggle = completeDiv.querySelector('#section-completed');
+  if (completedToggle) {
+    completedToggle.checked = currentProgress.status === 'completed';
+    completedToggle.addEventListener('change', () => {
+      syncSectionStatusFromUI();
+    });
+  }
+
+  const completeHint = document.createElement('span');
+  completeHint.className = 'subtle';
+  completeHint.style.marginLeft = '1em';
+  completeHint.textContent = 'Status updates automatically. Mark completed when finished.';
+  completeDiv.appendChild(completeHint);
+
+  const selectAllBtn = document.createElement('button');
+  selectAllBtn.textContent = 'Select All Items';
+  selectAllBtn.style.marginLeft = '1em';
+  selectAllBtn.type = 'button';
+  selectAllBtn.addEventListener('click', () => {
+    setAllChecklistItems(true);
+  });
+  completeDiv.appendChild(selectAllBtn);
+
   const saveBtn = document.createElement('button');
   saveBtn.textContent = 'Save Progress';
   saveBtn.style.marginLeft = '1em';
-  completeDiv.appendChild(saveBtn);
-
-  saveBtn.addEventListener('click', function() {
-    // Save checklist state (your existing logic)
-    // ...
-
-    // Save completed status
-    let sopProgress = safeParseJSON('droneSOPProgress', {});
-    sopProgress.progress = sopProgress.progress || {};
-    sopProgress.progress[current.id] = sopProgress.progress[current.id] || { data: {} };
-    sopProgress.progress[current.id].status = document.getElementById('section-completed').checked ? 'completed' : 'in-progress';
-    localStorage.setItem('droneSOPProgress', JSON.stringify(sopProgress));
+  saveBtn.type = 'button';
+  saveBtn.addEventListener('click', () => {
+    persistResponses();
+    syncSectionStatusFromUI();
     alert('Progress saved!');
   });
+  completeDiv.appendChild(saveBtn);
+
+  syncSectionStatusFromUI();
 
   // Use droneSOPProgress for navigation
-  const sopProgress = safeParseJSON('droneSOPProgress', {});
-  const selected = sopProgress.selectedSOPs || [];
   const idx = selected.indexOf(current.id);
+  const allowBackwardNav = selected.length > 1 || fromSummary;
 
   // Create navigation buttons
   const navDiv = document.createElement('div');
   navDiv.style.marginTop = '2em';
 
+  if (allowBackwardNav) {
+    const homeBtn = document.createElement('button');
+    homeBtn.textContent = fromSummary ? 'Return to Summary' : 'Return to Index';
+    homeBtn.onclick = () => {
+      window.location.href = fromSummary ? '../summary.html' : '../index.html';
+    };
+    navDiv.appendChild(homeBtn);
+  }
+
   // Prev button
   const prevBtn = document.createElement('button');
-  prevBtn.textContent = idx > 0 ? '< Previous' : '< Back to Index';
+  prevBtn.textContent = '< Previous';
+  prevBtn.style.marginLeft = allowBackwardNav ? '1em' : '0';
   prevBtn.onclick = () => {
     if (idx > 0) {
       window.location.href = `../sections/${selected[idx-1]}.html`;
-    } else {
-      window.location.href = '../index.html';
     }
   };
-  navDiv.appendChild(prevBtn);
+  prevBtn.disabled = !allowBackwardNav || idx <= 0;
+  if (allowBackwardNav) {
+    navDiv.appendChild(prevBtn);
+  }
 
   // Next or Flight Log button
   const nextBtn = document.createElement('button');
@@ -389,10 +592,34 @@ function renderSectionPage(sections) {
       window.location.href = `../sections/${selected[idx+1]}.html`;
     };
   } else {
-    nextBtn.textContent = 'Flight Log';
-    nextBtn.onclick = () => {
-      window.location.href = '../flight-log.html';
-    };
+    const savedFlightLog = safeParseJSON('flightLog', {});
+    const hasFlightLog = !!(
+      savedFlightLog &&
+      (
+        savedFlightLog.date ||
+        savedFlightLog.pilot ||
+        savedFlightLog.observers ||
+        savedFlightLog.start ||
+        savedFlightLog.end ||
+        savedFlightLog.location
+      )
+    );
+
+    if (hasFlightLog && fromSummary) {
+      nextBtn.textContent = 'Return to Summary';
+      nextBtn.onclick = () => {
+        window.location.href = '../summary.html';
+      };
+    } else if (hasFlightLog) {
+      nextBtn.textContent = 'Flight Log Saved';
+      nextBtn.disabled = true;
+      nextBtn.title = 'Flight Log already captured for this run.';
+    } else {
+      nextBtn.textContent = 'Flight Log';
+      nextBtn.onclick = () => {
+        window.location.href = '../flight-log.html';
+      };
+    }
   }
   navDiv.appendChild(nextBtn);
 
@@ -475,14 +702,33 @@ function renderSummary(sections) {
   selected.forEach(secId => {
     const section   = sections.find(s => s.id === secId);
     const responses = safeParseJSON(`responses_${secId}`, []);
+    const secStatus = (sopProgress.progress && sopProgress.progress[secId] && sopProgress.progress[secId].status)
+      ? sopProgress.progress[secId].status
+      : 'not-started';
     const block     = document.createElement('div');
     block.className = 'section-block';
     block.innerHTML = `<h2>${section.title}</h2>` +
+      `<p><strong>Status:</strong> ${secStatus.replace('-', ' ')}</p>` +
       `<ul>${section.items.map((item,i) =>
         `<li>${responses[i] ? '✔' : '◻'} ${item}</li>`
       ).join('')}</ul>`;
+
+    const revisitBtn = document.createElement('button');
+    revisitBtn.textContent = secStatus === 'completed' ? 'Review/Edit' : 'Continue';
+    revisitBtn.addEventListener('click', () => {
+      window.location.href = `sections/${secId}.html?from=summary`;
+    });
+    block.appendChild(revisitBtn);
+
     container.append(block);
   });
+
+  if (!selected.length) {
+    const noSopDiv = document.createElement('div');
+    noSopDiv.className = 'section-block';
+    noSopDiv.innerHTML = '<h2>SOP Procedures</h2><p><em>No SOP procedures were selected for this run.</em></p>';
+    container.append(noSopDiv);
+  }
 
   // Filename utilities...
   function getDateStr() {
@@ -570,6 +816,12 @@ function renderSummary(sections) {
     el.style.color = isError ? '#8a1f1f' : '#2f3b52';
   }
 
+  function csvEscape(value) {
+    const text = String(value ?? '');
+    if (/[",\n]/.test(text)) return `"${text.replace(/"/g, '""')}"`;
+    return text;
+  }
+
   async function saveTextFileWithPicker(content, filename, mimeType) {
     if (!window.showSaveFilePicker) return false;
 
@@ -589,19 +841,54 @@ function renderSummary(sections) {
   }
 
   document.getElementById('export-csv').addEventListener('click', async () => {
+    const weather = safeParseJSON('dwCheckLatest', null);
+    const weatherComplete = localStorage.getItem('dwCheckCompleted') === 'true';
+    const weatherCompleteAt = localStorage.getItem('dwCheckCompletedAt');
+    const nearestStations = (weather && Array.isArray(weather.nearestStations))
+      ? weather.nearestStations.map(s => `${s.icaoId} (${Number(s.distanceKm || 0).toFixed(1)} km)`).join('; ')
+      : '';
+
     let csv = 'Field,Value\n'
-      + `Date,${flightLog.date||''}\n`
-      + `Pilot(s),${flightLog.pilot||''}\n`
-      + `Observer(s),${flightLog.observers||''}\n`
-      + `Start,${flightLog.start||''}\n`
-      + `End,${flightLog.end||''}\n`
-      + `Location,${flightLog.location||''}\n\n`
-      + 'Section,Item,Checked\n';
+      + `Date,${csvEscape(flightLog.date || '')}\n`
+      + `Pilot(s),${csvEscape(flightLog.pilot || '')}\n`
+      + `Observer(s),${csvEscape(flightLog.observers || '')}\n`
+      + `Start,${csvEscape(flightLog.start || '')}\n`
+      + `End,${csvEscape(flightLog.end || '')}\n`
+      + `Location,${csvEscape(flightLog.location || '')}\n`;
+
+    if (weather && weather.timestamp) {
+      csv += `Weather Checked At,${csvEscape(new Date(weather.timestamp).toLocaleString())}\n`
+        + `Weather Completed,${csvEscape(weatherComplete ? 'Yes' : 'No')}\n`
+        + `Weather Completed At,${csvEscape(weatherCompleteAt ? new Date(weatherCompleteAt).toLocaleString() : '')}\n`
+        + `Weather ICAO,${csvEscape(weather.icao || '')}\n`
+        + `Weather Risk Label,${csvEscape(weather.riskLabel || '')}\n`
+        + `Weather Risk Score,${csvEscape(weather.riskScore ?? '')}\n`
+        + `Weather KP Index,${csvEscape(weather.kpIndex ?? '')}\n`
+        + `Weather KP Condition,${csvEscape(weather.kpCondition || '')}\n`
+        + `Weather Wind kt,${csvEscape(weather.windKt ?? '')}\n`
+        + `Weather Gust kt,${csvEscape(weather.gustKt ?? '')}\n`
+        + `Weather Visibility SM,${csvEscape(weather.visibilitySm ?? '')}\n`
+        + `Weather Ceiling ft,${csvEscape(weather.ceilingFt ?? '')}\n`
+        + `Weather Nearest Stations,${csvEscape(nearestStations)}\n`;
+    } else {
+      csv += 'Weather Check Saved,No\n';
+    }
+
+    csv += '\nSOP Section,Status\n';
+    selected.forEach(secId => {
+      const section = sections.find(s => s.id === secId);
+      const secStatus = (sopProgress.progress && sopProgress.progress[secId] && sopProgress.progress[secId].status)
+        ? sopProgress.progress[secId].status
+        : 'not-started';
+      csv += `${csvEscape(section ? section.title : secId)},${csvEscape(secStatus)}\n`;
+    });
+
+    csv += '\nSection,Item,Checked\n';
     selected.forEach(secId => {
       const section   = sections.find(s => s.id === secId);
       const responses = safeParseJSON(`responses_${secId}`, []);
       section.items.forEach((item, idx) => {
-        csv += `"${section.title}","${item.replace(/"/g,'""')}","${responses[idx] ? 'Yes' : 'No'}"\n`;
+        csv += `${csvEscape(section.title)},${csvEscape(item)},${csvEscape(responses[idx] ? 'Yes' : 'No')}\n`;
       });
     });
     const exportMeta = getNextLogExportMeta('csv');
@@ -660,6 +947,44 @@ function renderSummary(sections) {
   document.getElementById('return-home').addEventListener('click', () =>
     window.location.href = 'index.html'
   );
+
+  const saveSummaryBtn = document.getElementById('save-summary');
+  const clearDataBtn = document.getElementById('clear-data');
+
+  function setSummaryButtonsDisabled(isDisabled) {
+    if (saveSummaryBtn) saveSummaryBtn.disabled = isDisabled;
+    if (clearDataBtn) clearDataBtn.disabled = isDisabled;
+  }
+
+  if (clearDataBtn) {
+    clearDataBtn.addEventListener('click', () => {
+      if (!confirm('Are you sure you want to wipe/clear all data? This cannot be undone.')) {
+        setExportStatus('Clear inputs cancelled.');
+        return;
+      }
+
+      setSummaryButtonsDisabled(true);
+      setExportStatus('Clearing session inputs...');
+
+      localStorage.removeItem('flightSummaryLatest');
+      localStorage.removeItem('flightSummaryHistory');
+      clearSessionStateAfterSummarySave();
+
+      setExportStatus('All inputs cleared. Reloading...');
+      setTimeout(() => location.reload(), 350);
+    });
+  }
+
+  if (saveSummaryBtn) {
+    saveSummaryBtn.addEventListener('click', () => {
+      setSummaryButtonsDisabled(true);
+      setExportStatus('hahaha!');
+      setTimeout(() => {
+        setExportStatus('Ready.');
+        setSummaryButtonsDisabled(false);
+      }, 3000);
+    });
+  }
 
   // Pilot Location (DD/DMS)
   const dd = localStorage.getItem('pilotLocationDD');
