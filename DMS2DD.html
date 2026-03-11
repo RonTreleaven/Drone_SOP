@@ -130,7 +130,7 @@ function dmsToDD(deg, min, sec, hemi) {
     return dd;
 }
 
-function convert() {
+function convert(skipClipboard) {
 
     let input = document.getElementById("notam").value.trim();
 
@@ -155,7 +155,9 @@ function convert() {
     link.href = gmaps;
     link.innerHTML = "View on Google Maps";
 
-    navigator.clipboard.writeText(result);
+    if (!skipClipboard && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(result).catch(() => {});
+    }
 }
 
 function clearFields() {
@@ -176,7 +178,18 @@ function goBack(event) {
   }
 }
 
-document.getElementById("notam").focus();
+function getQueryParam(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+}
+
+const prefill = getQueryParam("dms");
+if (prefill) {
+    document.getElementById("notam").value = prefill;
+    convert(true);
+} else {
+    document.getElementById("notam").focus();
+}
 
 </script>
 

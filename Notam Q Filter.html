@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOTAM Q-Code Filter</title>
+  <link rel="stylesheet" href="./assets/css/notams-common.css">
+</head>
+<body>
+  <nav class="top-nav">
+    <a href="#" onclick="goBack(event)">&larr; Back</a>
+    | <a href="index.html">Home</a>
+  </nav>
+
+  <div class="card">
+    <h1>NOTAM Q-Code Filter</h1>
+
+    <div class="fir-table-wrap">
+      <h2>Canadian FIR Reference</h2>
+      <table class="fir-table">
+        <thead>
+          <tr>
+            <th>Region</th>
+            <th>FIR Code</th>
+            <th>NOTAM Count</th>
+            <th>NOTAM Data gathered</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-fir-row="CZVR"><td>Vancouver</td><td>CZVR</td><td data-fir-count="CZVR">0</td><td data-fir-date>Loading...</td></tr>
+          <tr data-fir-row="CZEG"><td>Edmonton</td><td>CZEG</td><td data-fir-count="CZEG">0</td><td data-fir-date>Loading...</td></tr>
+          <tr data-fir-row="CZWG"><td>Winnipeg</td><td>CZWG</td><td data-fir-count="CZWG">0</td><td data-fir-date>Loading...</td></tr>
+          <tr data-fir-row="CZYZ"><td>Toronto</td><td>CZYZ</td><td data-fir-count="CZYZ">0</td><td data-fir-date>Loading...</td></tr>
+          <tr data-fir-row="CZUL"><td>Montreal</td><td>CZUL</td><td data-fir-count="CZUL">0</td><td data-fir-date>Loading...</td></tr>
+          <tr data-fir-row="CZQM"><td>Moncton</td><td>CZQM</td><td data-fir-count="CZQM">0</td><td data-fir-date>Loading...</td></tr>
+          <tr data-fir-row="CZQX"><td>Gander</td><td>CZQX</td><td data-fir-count="CZQX">0</td><td data-fir-date>Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <form id="searchForm" class="search-container" autocomplete="off">
+      <div class="field-group">
+        <label for="firInput">FIR</label>
+        <input type="text" id="firInput" placeholder="Enter FIR code (e.g., CZEG)">
+      </div>
+      <div class="field-group">
+        <label for="icaoInput">ICAO</label>
+        <input type="text" id="icaoInput" placeholder="Enter ICAO code (e.g., CYOO)">
+      </div>
+      <div class="field-group">
+        <label for="notamInput">NOTAM No.</label>
+        <input type="text" id="notamInput" placeholder="Enter NOTAM number (e.g., U0367/26)">
+      </div>
+      <button class="btn" type="submit">Search</button>
+      <button class="btn" type="button" onclick="clearEntries()">Clear Entries</button>
+    </form>
+
+    <div class="status-bar">
+      <div class="status-block">
+        <div>NOTAMS Count:</div>
+        <div class="status-value" id="notamCount">0</div>
+      </div>
+      <div class="status-block">
+        <div>Data Source:</div>
+        <div class="status-value" id="filterState">RAW</div>
+      </div>
+      <button class="btn" type="button" id="filterToggle">Apply Filter</button>
+    </div>
+
+    <div class="section">
+      <h2>Q-Code Subject Filters</h2>
+      <div class="filter-grid">
+        <div class="filter-box">
+          <h3>Obstacles / Lighting</h3>
+          <div class="toggle-row">
+            <button class="btn btn-small" type="button" data-toggle-group="obstacles" data-toggle="on">Select All</button>
+            <button class="btn btn-small" type="button" data-toggle-group="obstacles" data-toggle="off">Deselect All</button>
+          </div>
+          <div class="checklist" data-group="obstacles">
+            <label><input type="checkbox" class="q-subject" value="OB" checked> OB (Obstacle)</label>
+            <label><input type="checkbox" class="q-subject" value="OL" checked> OL (Obstacle lights)</label>
+          </div>
+        </div>
+        <div class="filter-box">
+          <h3>Warnings / Activities (W*)</h3>
+          <div class="toggle-row">
+            <button class="btn btn-small" type="button" data-toggle-group="warnings" data-toggle="on">Select All</button>
+            <button class="btn btn-small" type="button" data-toggle-group="warnings" data-toggle="off">Deselect All</button>
+          </div>
+          <div class="checklist" data-group="warnings">
+            <label><input type="checkbox" class="q-group" value="W" checked> All W* warnings</label>
+            <label><input type="checkbox" class="q-subject" value="WU" checked> WU (Unmanned aircraft)</label>
+            <label><input type="checkbox" class="q-subject" value="WP" checked> WP (Parachute / paragliding)</label>
+            <label><input type="checkbox" class="q-subject" value="WH" checked> WH (Blasting)</label>
+            <label><input type="checkbox" class="q-subject" value="WB" checked> WB (Aerobatics)</label>
+            <label><input type="checkbox" class="q-subject" value="WA" checked> WA (Air display)</label>
+          </div>
+          <div class="hint">If "All W*" is checked, individual W* choices are optional.</div>
+        </div>
+        <div class="filter-box">
+          <h3>Airspace Restrictions (R*)</h3>
+          <div class="toggle-row">
+            <button class="btn btn-small" type="button" data-toggle-group="restrictions" data-toggle="on">Select All</button>
+            <button class="btn btn-small" type="button" data-toggle-group="restrictions" data-toggle="off">Deselect All</button>
+          </div>
+          <div class="checklist" data-group="restrictions">
+            <label><input type="checkbox" class="q-group" value="R" checked> All R* restrictions</label>
+            <label><input type="checkbox" class="q-subject" value="RD" checked> RD (Danger)</label>
+            <label><input type="checkbox" class="q-subject" value="RP" checked> RP (Prohibited)</label>
+            <label><input type="checkbox" class="q-subject" value="RR" checked> RR (Restricted)</label>
+            <label><input type="checkbox" class="q-subject" value="RT" checked> RT (Temporary restricted)</label>
+            <label><input type="checkbox" class="q-subject" value="RO" checked> RO (Overflying)</label>
+          </div>
+          <div class="hint">If "All R*" is checked, individual R* choices are optional.</div>
+        </div>
+        <div class="filter-box">
+          <h3>Airspace Structure (A*)</h3>
+          <div class="toggle-row">
+            <button class="btn btn-small" type="button" data-toggle-group="structure" data-toggle="on">Select All</button>
+            <button class="btn btn-small" type="button" data-toggle-group="structure" data-toggle="off">Deselect All</button>
+          </div>
+          <div class="checklist" data-group="structure">
+            <label><input type="checkbox" class="q-group" value="A" checked> All A* airspace</label>
+            <label><input type="checkbox" class="q-subject" value="AA" checked> AA (A* subject in feed)</label>
+            <label><input type="checkbox" class="q-subject" value="AC" checked> AC (Control zone / CTR)</label>
+            <label><input type="checkbox" class="q-subject" value="AF" checked> AF (FIR)</label>
+            <label><input type="checkbox" class="q-subject" value="AN" checked> AN (A* subject in feed)</label>
+            <label><input type="checkbox" class="q-subject" value="AO" checked> AO (A* subject in feed)</label>
+            <label><input type="checkbox" class="q-subject" value="AR" checked> AR (A* subject in feed)</label>
+            <label><input type="checkbox" class="q-subject" value="AT" checked> AT (TMA)</label>
+          </div>
+          <div class="hint">Leave unchecked if you only care about warnings/obstacles.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Q Filter Actions</h2>
+      <div class="search-container">
+        <button class="btn" type="button" id="applyFilters">Apply Q Filters</button>
+        <button class="btn" type="button" id="clearFilters">Clear Q Filters</button>
+        <button class="btn" type="button" id="aircraftOnlyPreset">Aircraft-Service/Procedure Only</button>
+      </div>
+      <div class="filter-box filter-box-spaced">
+        <h3>Exclude Aircraft-Service/Procedure Subjects</h3>
+        <div class="toggle-row">
+          <button class="btn btn-small" type="button" data-toggle-group="exclude-aircraft" data-toggle="on">Select All</button>
+          <button class="btn btn-small" type="button" data-toggle-group="exclude-aircraft" data-toggle="off">Deselect All</button>
+        </div>
+        <div class="checklist" data-group="exclude-aircraft">
+          <label><input type="checkbox" class="q-exclude" value="F"> QF (Facilities / services)</label>
+          <label><input type="checkbox" class="q-exclude" value="L"> QL (Lighting facilities)</label>
+          <label><input type="checkbox" class="q-exclude" value="M"> QM (Movement / landing area)</label>
+          <label><input type="checkbox" class="q-exclude" value="P"> QP (Air traffic procedures)</label>
+        </div>
+        <div class="hint">Use this to hide aircraft-specific service/procedure NOTAMs (e.g., QFAXX, QPIAU, QPMCH, QLYXX, QMXXX).</div>
+      </div>
+
+      <input type="hidden" id="subjectInput" value="" autocomplete="off">
+      <input type="hidden" id="statusInput" value="" autocomplete="off">
+    </div>
+
+      <div id="filterStatusLine" class="filter-status-line">Filter status: Enter FIR/ICAO/NOTAM to start.</div>
+
+    <div id="results"></div>
+  </div>
+
+  <script>
+    const notamDataSources = {
+      raw: "./data/notams/All_CA_raw.json",
+      filtered: "./data/notams/All_CA.json"
+    };
+    const notamMetaUrl = "./data/notams/All_CA.meta.json";
+    let notams = [];
+    let currentSourceKey = "raw";
+    let dataRefreshDate = "Unavailable";
+
+    function setFilterStateDisplay() {
+      const filterState = document.getElementById("filterState");
+      const toggleBtn = document.getElementById("filterToggle");
+      const isFiltered = currentSourceKey === "filtered";
+      filterState.textContent = isFiltered ? "FILTERED" : "RAW";
+      toggleBtn.textContent = isFiltered ? "Switch to RAW" : "Switch to FILTERED";
+    }
+
+    function updateNotamCount(count) {
+      const countEl = document.getElementById("notamCount");
+      countEl.textContent = typeof count === "number" ? count : "0";
+    }
+
+    function formatDataDate(headerValue) {
+      if (!headerValue) return "Unavailable";
+      const parsed = new Date(headerValue);
+      if (Number.isNaN(parsed.getTime())) return "Unavailable";
+      return parsed.toLocaleString("en-CA", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      });
+    }
+
+    function formatFreshness(dateObj) {
+      const diffMs = Date.now() - dateObj.getTime();
+      if (diffMs <= 0) return "0m old";
+
+      const diffMinutes = Math.floor(diffMs / 60000);
+      if (diffMinutes < 60) return `${diffMinutes}m old`;
+
+      const diffHours = diffMinutes / 60;
+      if (diffHours < 48) return `${diffHours.toFixed(1)}h old`;
+
+      const diffDays = diffHours / 24;
+      return `${diffDays.toFixed(1)}d old`;
+    }
+
+    function updateFirDates(forceValue) {
+      const displayDate = forceValue || dataRefreshDate;
+      document.querySelectorAll("[data-fir-date]").forEach(cell => {
+        cell.textContent = displayDate;
+      });
+    }
+
+    function fetchGeneratedAtDate() {
+      return fetch(notamMetaUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Meta file error: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(meta => {
+          const generatedAt = meta?.generatedAt;
+          if (!generatedAt) return null;
+
+          const parsed = new Date(generatedAt);
+          if (Number.isNaN(parsed.getTime())) return null;
+
+          return {
+            display: formatDataDate(generatedAt),
+            freshness: formatFreshness(parsed)
+          };
+        })
+        .catch(error => {
+          console.warn("Could not read generatedAt from All_CA.meta.json:", error);
+          return null;
+        });
+    }
+
+    function loadNotamData() {
+      const notamDataUrl = notamDataSources[currentSourceKey];
+      return fetch(notamDataUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Network error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          notams = Array.isArray(data) ? data : (Array.isArray(data.notams) ? data.notams : []);
+          updateNotamCount(notams.length);
+          updateFirCounts(notams);
+          updateFirDates();
+          return fetchGeneratedAtDate();
+        })
+        .then(generatedAtInfo => {
+          if (generatedAtInfo) {
+            dataRefreshDate = `${generatedAtInfo.display} (${generatedAtInfo.freshness}, generatedAt)`;
+            updateFirDates();
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching NOTAM data:", error);
+          updateNotamCount(0);
+          updateFirDates("Unavailable");
+        });
+    }
+
+    function parseQLine(rawText) {
+      const match = (rawText || "").match(/Q\)\s*([A-Z]{4})\/(Q[A-Z]{4})\//);
+      if (!match) return null;
+      const fir = match[1];
+      const qcode = match[2];
+      const subject = qcode.slice(1, 3);
+      const status = qcode.slice(3, 5);
+      return { fir, qcode, subject, status };
+    }
+
+    function decodeQSubject(code) {
+      const map = {
+        // Obstacles / lights
+        OB: "Obstacle",
+        OL: "Obstacle lights",
+        // AGA movement areas / lights / facilities
+        QM: "Movement and landing area",
+        QL: "Lighting facilities",
+        QF: "Facilities / services",
+        // Procedures / airspace
+        QP: "Air traffic procedures",
+        QW: "Navigation warnings",
+        // Warnings / activities (W*)
+        WA: "Air display",
+        WB: "Aerobatics",
+        WC: "Captive balloon / kite",
+        WD: "Demolition of explosives",
+        WE: "Exercises",
+        WG: "Glider flying",
+        WH: "Blasting",
+        WJ: "Banner / target towing",
+        WL: "Free balloon",
+        WM: "Missile / gun / rocket firing",
+        WP: "Parachute / paragliding",
+        WR: "Radioactive / toxic materials",
+        WS: "Burning / blowing gas",
+        WT: "Mass movement of aircraft",
+        WU: "Unmanned aircraft",
+        WV: "Formation flight",
+        WW: "Significant volcanic activity",
+        WY: "Aerial survey",
+        WZ: "Model flying",
+        // Airspace restrictions (R*)
+        RA: "Airspace reservation",
+        RD: "Danger area",
+        RM: "Military operating area",
+        RO: "Overflying restrictions",
+        RP: "Prohibited area",
+        RR: "Restricted area",
+        RT: "Temporary restricted area",
+        // Airspace structure (A*)
+        AC: "Control zone / CTR",
+        AD: "ADIZ",
+        AE: "Control area / CTA",
+        AF: "FIR",
+        AT: "TMA",
+        AZ: "ATZ",
+        AA: "Airspace subject (AA)",
+        AN: "Airspace subject (AN)",
+        AO: "Airspace subject (AO)",
+        AR: "Airspace reservation / restriction",
+        // Common 2-letter subjects seen in data
+        QL: "Lighting facilities",
+        QM: "Movement and landing area",
+        QF: "Facilities / services",
+        QP: "Air traffic procedures"
+      };
+      return map[code] || "Unknown";
+    }
+
+    function decodeQCondition(code) {
+      const map = {
+        // Status/condition (4th/5th letters)
+        AA: "Absent",
+        AC: "Completed",
+        AD: "Available",
+        AF: "Fully operational",
+        AH: "Hours of service",
+        AM: "Military activity",
+        AN: "Available for night use",
+        AO: "Operational",
+        AP: "Prior permission required",
+        AR: "Runway closed",
+        AS: "Unserviceable",
+        AT: "Temporarily closed",
+        AU: "Not available",
+        AW: "Work in progress",
+        AX: "Not specified",
+        CA: "Cancelled",
+        CC: "Completed",
+        CH: "Changed",
+        CL: "Closed",
+        CS: "Operating",
+        CT: "Temporarily closed",
+        XX: "Other / unspecified"
+      };
+      return map[code] || "Unknown";
+    }
+
+    function decodeQTraffic(code) {
+      const map = {
+        I: "IFR",
+        V: "VFR",
+        IV: "IFR + VFR"
+      };
+      return map[code] || "Unknown";
+    }
+
+    function decodeQPurpose(code) {
+      const map = {
+        N: "Immediate attention (NOTAMN)",
+        B: "Operationally significant for PIB",
+        O: "Operational significance",
+        M: "Miscellaneous",
+        K: "Checklist",
+        BO: "Briefing + Operational"
+      };
+      return map[code] || "Unknown";
+    }
+
+    function decodeQScope(code) {
+      const map = {
+        A: "Aerodrome",
+        E: "Enroute",
+        W: "Warnings",
+        AE: "Aerodrome + Enroute",
+        AW: "Aerodrome + Warnings",
+        EW: "Enroute + Warnings",
+        AEW: "Aerodrome + Enroute + Warnings"
+      };
+      return map[code] || "Unknown";
+    }
+
+    function parseQualifierFields(rawText) {
+      const match = (rawText || "").match(/Q\)\s*([A-Z]{4})\/(Q[A-Z]{4})\/([IV]{1,2})\/([NBO MK]{1,2})\/([A-Z]{1,3})\/(\d{3})\/(\d{3})\/([0-9NSWE]{15})/);
+      if (!match) return null;
+      return {
+        fir: match[1],
+        qcode: match[2],
+        traffic: match[3],
+        purpose: match[4].replace(/\s+/g, ""),
+        scope: match[5],
+        lower: match[6],
+        upper: match[7],
+        coord: match[8]
+      };
+    }
+
+    function normalizeSubjectInput(token) {
+      const clean = token.trim().toUpperCase();
+      if (!clean) return null;
+      if (clean.startsWith("Q") && clean.length >= 3) {
+        return { subject: clean.slice(1, 3) };
+      }
+      if (clean.length === 2) {
+        return { subject: clean };
+      }
+      if (clean.length === 1) {
+        return { category: clean };
+      }
+      return null;
+    }
+
+    function normalizeStatusInput(token) {
+      const clean = token.trim().toUpperCase();
+      if (!clean) return null;
+      if (clean.startsWith("Q") && clean.length >= 5) {
+        return { status: clean.slice(3, 5) };
+      }
+      if (clean.length === 2) {
+        return { status: clean };
+      }
+      return null;
+    }
+
+    function getSelectedSubjects() {
+      const subjects = new Set();
+      const categories = new Set();
+      document.querySelectorAll(".q-subject:checked").forEach(el => subjects.add(el.value));
+      document.querySelectorAll(".q-group:checked").forEach(el => {
+        const group = el.value;
+        if (group === "W") {
+          categories.add("W");
+          ["WA","WB","WC","WD","WE","WG","WH","WJ","WL","WM","WP","WR","WS","WT","WU","WV","WW","WY","WZ"].forEach(s => subjects.add(s));
+        } else if (group === "R") {
+          categories.add("R");
+          ["RA","RD","RM","RO","RP","RR","RT"].forEach(s => subjects.add(s));
+        } else if (group === "A") {
+          categories.add("A");
+          ["AA","AC","AF","AN","AO","AR","AT"].forEach(s => subjects.add(s));
+        }
+      });
+
+      const manual = document.getElementById("subjectInput").value
+        .split(",")
+        .map(normalizeSubjectInput)
+        .filter(Boolean);
+      manual.forEach(entry => {
+        if (entry.subject) subjects.add(entry.subject);
+        if (entry.category) categories.add(entry.category);
+      });
+
+      return { subjects, categories };
+    }
+
+    function getSelectedStatuses() {
+      const statusInput = document.getElementById("statusInput").value
+        .split(",")
+        .map(normalizeStatusInput)
+        .filter(Boolean);
+      const statuses = new Set();
+      statusInput.forEach(entry => {
+        if (entry.status) statuses.add(entry.status);
+      });
+      return statuses;
+    }
+
+    function getExcludedSubjects() {
+      const excludedCategories = new Set();
+      document.querySelectorAll(".q-exclude:checked").forEach(el => excludedCategories.add(el.value));
+      return { excludedCategories };
+    }
+
+    function areAllIncludeControlsChecked() {
+      const includeControls = Array.from(document.querySelectorAll(".q-subject, .q-group"));
+      return includeControls.length > 0 && includeControls.every(el => el.checked);
+    }
+
+    function updateFirCounts(sourceList) {
+      const list = Array.isArray(sourceList) ? sourceList : notams;
+      const firCounts = {
+        CZVR: 0,
+        CZEG: 0,
+        CZWG: 0,
+        CZYZ: 0,
+        CZUL: 0,
+        CZQM: 0,
+        CZQX: 0
+      };
+
+      list.forEach(notam => {
+        const rawText = notam.raw || "";
+        const firMatch = rawText.match(/Q\)\s*([A-Z]{4})/);
+        if (!firMatch) return;
+
+        const firCode = firMatch[1];
+        if (Object.prototype.hasOwnProperty.call(firCounts, firCode)) {
+          firCounts[firCode] += 1;
+        }
+      });
+
+      Object.keys(firCounts).forEach(firCode => {
+        const cell = document.querySelector(`[data-fir-count="${firCode}"]`);
+        const row = document.querySelector(`[data-fir-row="${firCode}"]`);
+        if (cell) cell.textContent = firCounts[firCode];
+        if (row) row.classList.toggle("fir-has-notams", firCounts[firCode] > 0);
+      });
+    }
+
+    function updateSelectedFirHighlight() {
+      const firInput = document.getElementById("firInput").value.trim().toUpperCase();
+      document.querySelectorAll("[data-fir-row]").forEach(row => {
+        const code = row.getAttribute("data-fir-row");
+        row.classList.toggle("fir-selected", firInput !== "" && code === firInput);
+      });
+    }
+
+    function updateFilterStatusLine(message) {
+      const line = document.getElementById("filterStatusLine");
+      if (line) line.textContent = message;
+    }
+
+    function refreshCollapsibleFilterSummaries() {
+      document.querySelectorAll('.filter-box[data-collapsible="true"]').forEach(box => {
+        const summary = box.querySelector('.filter-summary');
+        if (!summary) return;
+
+        const total = box.querySelectorAll('.q-subject, .q-group').length;
+        const selected = box.querySelectorAll('.q-subject:checked, .q-group:checked').length;
+
+        if (total === 0) {
+          summary.textContent = '';
+          return;
+        }
+
+        if (selected === total) {
+          summary.textContent = 'All selected';
+        } else if (selected === 0) {
+          summary.textContent = 'None selected';
+        } else {
+          summary.textContent = `${selected}/${total} selected`;
+        }
+      });
+    }
+
+    function setFilterCollapsedState(box, collapsed) {
+      box.classList.toggle('collapsed', collapsed);
+      const btn = box.querySelector('.collapse-btn');
+      if (!btn) return;
+      btn.textContent = collapsed ? '▼' : '▲';
+      btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      btn.setAttribute('title', collapsed ? 'Show choices' : 'Hide choices');
+    }
+
+    function initCollapsibleFilterChoices() {
+      const boxes = Array.from(document.querySelectorAll('.filter-grid .filter-box'));
+
+      boxes.forEach((box, idx) => {
+        const h3 = box.querySelector('h3');
+        if (!h3) return;
+
+        const header = document.createElement('div');
+        header.className = 'filter-head';
+
+        const title = document.createElement('div');
+        title.className = 'filter-head-title';
+        title.textContent = h3.textContent;
+
+        const meta = document.createElement('div');
+        meta.className = 'filter-head-meta';
+
+        const summary = document.createElement('span');
+        summary.className = 'filter-summary';
+
+        const toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'collapse-btn';
+        toggle.setAttribute('aria-label', `Toggle ${h3.textContent} choices`);
+
+        meta.appendChild(summary);
+        meta.appendChild(toggle);
+        header.appendChild(title);
+        header.appendChild(meta);
+
+        const body = document.createElement('div');
+        body.className = 'filter-body';
+
+        while (box.firstChild) {
+          if (box.firstChild !== h3) {
+            body.appendChild(box.firstChild);
+          } else {
+            box.removeChild(h3);
+          }
+        }
+
+        box.appendChild(header);
+        box.appendChild(body);
+        box.setAttribute('data-collapsible', 'true');
+
+        setFilterCollapsedState(box, true);
+        toggle.addEventListener('click', function () {
+          const isCollapsed = box.classList.contains('collapsed');
+          setFilterCollapsedState(box, !isCollapsed);
+        });
+      });
+
+      refreshCollapsibleFilterSummaries();
+    }
+
+    function filterNotams() {
+      const firInput = document.getElementById("firInput").value.trim().toUpperCase();
+      const icaoInput = document.getElementById("icaoInput").value.trim().toUpperCase();
+      const notamInput = document.getElementById("notamInput").value.trim().toUpperCase();
+      const subjectInputRaw = document.getElementById("subjectInput").value.trim();
+      const statusInputRaw = document.getElementById("statusInput").value.trim();
+      const selected = getSelectedSubjects();
+      const selectedSubjects = selected.subjects;
+      const selectedCategories = selected.categories;
+      const selectedStatuses = getSelectedStatuses();
+      const excluded = getExcludedSubjects();
+      const excludedCategories = excluded.excludedCategories;
+      const allIncludeChecked = areAllIncludeControlsChecked();
+      const hasManualInclude = subjectInputRaw !== "" || statusInputRaw !== "";
+      const hasIncludeFilters = hasManualInclude || !allIncludeChecked;
+      const hasAnyExplicitInclude = selectedSubjects.size > 0 || selectedCategories.size > 0 || selectedStatuses.size > 0;
+
+      return notams.filter(notam => {
+        const rawText = notam.raw || "";
+
+        const firMatch = rawText.match(/Q\)\s*([A-Z]{4})/);
+        const icaoMatch = rawText.match(/A\)\s*([A-Z]{4})/);
+        const notamMatch = rawText.match(/([A-Z]\d{4}\/\d{2})\s+NOTAM[A-Z]/);
+
+        const firFound = firMatch ? firMatch[1] : null;
+        const icaoFound = icaoMatch ? icaoMatch[1] : null;
+        const notamFound = notamMatch ? notamMatch[1] : null;
+
+        const qInfo = parseQLine(rawText);
+        const subjectOk = selectedSubjects.size === 0 || (qInfo && selectedSubjects.has(qInfo.subject));
+        const categoryOk = selectedCategories.size === 0 || (qInfo && selectedCategories.has(qInfo.subject.slice(0, 1)));
+        const statusOk = selectedStatuses.size === 0 || (qInfo && selectedStatuses.has(qInfo.status));
+        const excludedOk = excludedCategories.size === 0 || !qInfo || !excludedCategories.has(qInfo.subject.slice(0, 1));
+        const includeOk = !hasIncludeFilters
+          ? true
+          : (hasAnyExplicitInclude && subjectOk && categoryOk && statusOk);
+
+        return (firInput === "" || (firFound && firFound === firInput)) &&
+               (icaoInput === "" || (icaoFound && icaoFound === icaoInput)) &&
+               (notamInput === "" || (notamFound && notamFound === notamInput)) &&
+               includeOk &&
+               excludedOk;
+      });
+    }
+
+    function renderResults(list) {
+      const resultsContainer = document.getElementById("results");
+      resultsContainer.innerHTML = "";
+
+      if (list.length === 0) {
+        resultsContainer.innerHTML = "<p>No matching NOTAMs found.</p>";
+        return;
+      }
+
+      list.forEach(notam => {
+        const qInfo = parseQLine(notam.raw || "");
+        const qualifier = parseQualifierFields(notam.raw || "");
+        const qLabel = qInfo ? `${qInfo.qcode} (Subject ${qInfo.subject}: ${decodeQSubject(qInfo.subject)}, Condition ${qInfo.status}: ${decodeQCondition(qInfo.status)})` : "N/A";
+        const qDetails = qualifier
+          ? `Traffic ${qualifier.traffic}: ${decodeQTraffic(qualifier.traffic)} | Purpose ${qualifier.purpose}: ${decodeQPurpose(qualifier.purpose)} | Scope ${qualifier.scope}: ${decodeQScope(qualifier.scope)} | Limits ${qualifier.lower}-${qualifier.upper} | ${qualifier.coord}`
+          : "Qualifier: N/A";
+        const cleanedDescription = (notam.raw || "").replace(/[\r\n]+/g, " ").trim();
+
+        resultsContainer.innerHTML += `
+          <div class="notam">
+            <p><strong>Q-Code:</strong> ${qLabel}</p>
+            <p><strong>Qualifier:</strong> ${qDetails}</p>
+            <p><strong>Valid From:</strong> ${notam.startValidity || "N/A"}</p>
+            <p><strong>Valid To:</strong> ${notam.endValidity || "N/A"}</p>
+            <p><strong>Description:</strong> ${cleanedDescription}</p>
+          </div>
+        `;
+      });
+    }
+
+    function applySearch() {
+      const firInput = document.getElementById("firInput").value.trim();
+      const icaoInput = document.getElementById("icaoInput").value.trim();
+      const notamInput = document.getElementById("notamInput").value.trim();
+      const subjectInputRaw = document.getElementById("subjectInput").value.trim();
+      const statusInputRaw = document.getElementById("statusInput").value.trim();
+      const selected = getSelectedSubjects();
+      const selectedStatuses = getSelectedStatuses();
+      const excluded = getExcludedSubjects();
+      const allIncludeChecked = areAllIncludeControlsChecked();
+      const hasManualInclude = subjectInputRaw !== "" || statusInputRaw !== "";
+      const hasIncludeFilters = hasManualInclude || !allIncludeChecked;
+      const hasAnyExplicitInclude = selected.subjects.size > 0 || selected.categories.size > 0 || selectedStatuses.size > 0;
+      const hasTextScope = Boolean(firInput || icaoInput || notamInput);
+      updateSelectedFirHighlight();
+
+      const scopeParts = [];
+      if (firInput) scopeParts.push(`FIR ${firInput.toUpperCase()}`);
+      if (icaoInput) scopeParts.push(`ICAO ${icaoInput.toUpperCase()}`);
+      if (notamInput) scopeParts.push(`NOTAM ${notamInput.toUpperCase()}`);
+      const sourceText = currentSourceKey === "filtered" ? "FILTERED" : "RAW";
+      const includeText = hasIncludeFilters
+        ? (hasAnyExplicitInclude ? "Include filters: ACTIVE" : "Include filters: EMPTY")
+        : "Include filters: ALL";
+      const excludeText = excluded.excludedCategories.size > 0
+        ? `Exclude categories: ${Array.from(excluded.excludedCategories).sort().join(",")}`
+        : "Exclude categories: none";
+
+      if (!hasTextScope) {
+        updateNotamCount(0);
+        updateFirCounts(notams);
+        renderResults([]);
+        updateFilterStatusLine(`Filter status: source ${sourceText} | Scope: none | ${includeText} | ${excludeText}`);
+        const resultsContainer = document.getElementById("results");
+        resultsContainer.innerHTML = "<p>Enter FIR/ICAO/NOTAM to list results. Q filters refine the results once a scope is set.</p>";
+        return;
+      }
+
+      if (hasIncludeFilters && !hasAnyExplicitInclude) {
+        updateNotamCount(0);
+        updateFirCounts([]);
+        renderResults([]);
+        updateFilterStatusLine(`Filter status: source ${sourceText} | Scope: ${scopeParts.join(", ")} | Include filters are empty; select at least one include option or use Select All. | ${excludeText}`);
+        return;
+      }
+
+      const list = filterNotams();
+      updateNotamCount(list.length);
+      updateFirCounts(list);
+      renderResults(list);
+      updateFilterStatusLine(`Filter status: source ${sourceText} | Scope: ${scopeParts.join(", ")} | ${includeText} | ${excludeText} | Results: ${list.length}`);
+    }
+
+    function clearEntries() {
+      window.location.reload();
+    }
+
+    function goBack(event) {
+      event.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = "tools.html";
+      }
+    }
+
+    document.getElementById("searchForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      applySearch();
+    });
+
+    document.getElementById("firInput").addEventListener("input", function () {
+      updateSelectedFirHighlight();
+    });
+
+    document.getElementById("applyFilters").addEventListener("click", function () {
+      applySearch();
+    });
+
+    document.getElementById("clearFilters").addEventListener("click", function () {
+      document.getElementById("subjectInput").value = "";
+      document.getElementById("statusInput").value = "";
+      document.querySelectorAll(".q-subject, .q-group").forEach(el => {
+        el.checked = false;
+      });
+      document.querySelectorAll(".q-exclude").forEach(el => {
+        el.checked = false;
+      });
+      refreshCollapsibleFilterSummaries();
+      applySearch();
+    });
+
+    document.getElementById("aircraftOnlyPreset").addEventListener("click", function () {
+      document.querySelectorAll(".q-subject, .q-group").forEach(el => {
+        el.checked = false;
+      });
+      document.querySelectorAll(".q-exclude").forEach(el => {
+        el.checked = false;
+      });
+      document.getElementById("subjectInput").value = "F,L,M,P";
+      document.getElementById("statusInput").value = "";
+      refreshCollapsibleFilterSummaries();
+      applySearch();
+    });
+
+    document.querySelectorAll("[data-toggle-group]").forEach(btn => {
+      btn.addEventListener("click", function () {
+        const group = btn.getAttribute("data-toggle-group");
+        const mode = btn.getAttribute("data-toggle");
+        document.querySelectorAll(`[data-group="${group}"] input[type="checkbox"]`).forEach(cb => {
+          cb.checked = mode === "on";
+        });
+        refreshCollapsibleFilterSummaries();
+        applySearch();
+      });
+    });
+
+    document.querySelectorAll(".q-subject, .q-group").forEach(el => {
+      el.addEventListener("change", function () {
+        refreshCollapsibleFilterSummaries();
+      });
+    });
+
+    document.getElementById("filterToggle").addEventListener("click", function () {
+      const toggleBtn = document.getElementById("filterToggle");
+      toggleBtn.disabled = true;
+      currentSourceKey = currentSourceKey === "raw" ? "filtered" : "raw";
+      setFilterStateDisplay();
+      loadNotamData()
+        .then(() => applySearch())
+        .finally(() => {
+          toggleBtn.disabled = false;
+        });
+    });
+
+    initCollapsibleFilterChoices();
+    setFilterStateDisplay();
+    loadNotamData().then(() => applySearch());
+    updateSelectedFirHighlight();
+    document.getElementById("subjectInput").value = "";
+    document.getElementById("statusInput").value = "";
+  </script>
+</body>
+</html>

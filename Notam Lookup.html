@@ -4,144 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NOTAM Search</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 0;
-    }
-
-    .top-nav {
-      background: #2F5496;
-      color: #fff;
-      padding: 10px 0;
-      text-align: center;
-      font-size: 1.1em;
-    }
-
-    .top-nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 10px;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      max-width: 860px;
-      margin: 40px auto;
-      padding: 28px 32px 24px 32px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #2F5496;
-      margin-bottom: 18px;
-    }
-
-    .fir-table-wrap {
-      margin-bottom: 18px;
-    }
-
-    .fir-table-wrap h2 {
-      color: #2F5496;
-      margin: 0 0 8px 0;
-      font-size: 1rem;
-    }
-
-    .fir-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-      background: #fff;
-    }
-
-    .fir-table th,
-    .fir-table td {
-      border: 1px solid #d9e3f3;
-      padding: 6px 8px;
-      text-align: left;
-    }
-
-    .fir-table th {
-      background: #eaf1fb;
-      color: #1f3e72;
-    }
-
-    .search-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr auto auto;
-      gap: 12px;
-      align-items: end;
-      margin-bottom: 16px;
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .field-group label {
-      font-weight: 600;
-      color: #2F5496;
-      margin-bottom: 6px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      font-size: 1em;
-      box-sizing: border-box;
-    }
-
-    .btn {
-      border: none;
-      border-radius: 4px;
-      padding: 12px 16px;
-      font-size: 1.05em;
-      cursor: pointer;
-      transition: background 0.2s;
-      background: #2F5496;
-      color: #fff;
-      white-space: nowrap;
-    }
-
-    .btn:hover {
-      background: #b30000;
-    }
-
-    #results p {
-      margin: 0.5rem 0;
-    }
-
-    .notam {
-      background: #eaf1fb;
-      border-left: 4px solid #2F5496;
-      border-radius: 6px;
-      padding: 12px;
-      margin-top: 12px;
-      word-break: break-word;
-    }
-
-    @media (max-width: 760px) {
-      .card {
-        margin: 20px 12px;
-        padding: 20px 16px;
-      }
-
-      .search-container {
-        grid-template-columns: 1fr;
-      }
-
-      .btn {
-        width: 100%;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="./assets/css/notams-common.css">
 </head>
 <body>
   <nav class="top-nav">
@@ -192,48 +55,86 @@
       <button class="btn" type="button" onclick="clearEntries()">Clear Entries</button>
     </form>
 
+    <div class="status-bar">
+      <div class="status-block">
+        <div>NOTAMS Count:</div>
+        <div class="status-value" id="notamCount">0</div>
+      </div>
+      <div class="status-block">
+        <div>Filtered State:</div>
+        <div class="status-value" id="filterState">RAW</div>
+      </div>
+      <button class="btn" type="button" id="filterToggle">Apply Filter</button>
+    </div>
+
+    <div class="lookup-links">
+      <a class="btn" href="Notam Q Filter.html">Open Q-Filter Deep Dive</a>
+    </div>
+
     <div id="results"></div>
   </div>
 
   <script>
-    const notamDataUrl = "./data/notams/All_CA_raw.json";
+    const notamDataSources = {
+      raw: "./data/notams/All_CA_raw.json",
+      filtered: "./data/notams/All_CA.json"
+    };
     const notamMetaUrl = "./data/notams/All_CA.meta.json";
     let notams = [];
     let dataRefreshDate = "Unavailable";
+    let currentSourceKey = "raw";
 
-    fetch(notamDataUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Network error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        if (Array.isArray(data)) {
-          notams = data;
-          dataRefreshDate = "Unavailable (generatedAt missing)";
-        } else {
-          notams = Array.isArray(data.notams) ? data.notams : [];
-          if (data.generatedAt) {
-            dataRefreshDate = formatDataDate(data.generatedAt);
-          } else {
-            dataRefreshDate = "Unavailable (generatedAt missing)";
+    function setFilterStateDisplay() {
+      const filterState = document.getElementById("filterState");
+      const toggleBtn = document.getElementById("filterToggle");
+      const isFiltered = currentSourceKey === "filtered";
+      filterState.textContent = isFiltered ? "FILTERED" : "RAW";
+      toggleBtn.textContent = isFiltered ? "Use Raw" : "Apply Filter";
+    }
+
+    function updateNotamCount(count) {
+      const countEl = document.getElementById("notamCount");
+      countEl.textContent = typeof count === "number" ? count : "0";
+    }
+
+    function loadNotamData() {
+      const notamDataUrl = notamDataSources[currentSourceKey];
+      return fetch(notamDataUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Network error! Status: ${response.status}`);
           }
-        }
-        updateFirCounts();
-        updateFirDates();
-        return fetchGeneratedAtDate();
-      })
-      .then(generatedAtInfo => {
-        if (generatedAtInfo) {
-          dataRefreshDate = `${generatedAtInfo.display} (${generatedAtInfo.freshness}, generatedAt)`;
+          return response.json();
+        })
+        .then(data => {
+          if (Array.isArray(data)) {
+            notams = data;
+            dataRefreshDate = "Unavailable (generatedAt missing)";
+          } else {
+            notams = Array.isArray(data.notams) ? data.notams : [];
+            if (data.generatedAt) {
+              dataRefreshDate = formatDataDate(data.generatedAt);
+            } else {
+              dataRefreshDate = "Unavailable (generatedAt missing)";
+            }
+          }
+          updateFirCounts(notams);
+          updateNotamCount(notams.length);
           updateFirDates();
-        }
-      })
-      .catch(error => {
-        console.error("Error fetching NOTAM data:", error);
-        updateFirDates("Unavailable");
-      });
+          return fetchGeneratedAtDate();
+        })
+        .then(generatedAtInfo => {
+          if (generatedAtInfo) {
+            dataRefreshDate = `${generatedAtInfo.display} (${generatedAtInfo.freshness}, generatedAt)`;
+            updateFirDates();
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching NOTAM data:", error);
+          updateFirDates("Unavailable");
+          updateNotamCount(0);
+        });
+    }
 
     function formatDataDate(headerValue) {
       if (!headerValue) return "Unavailable";
@@ -296,7 +197,8 @@
         });
     }
 
-    function updateFirCounts() {
+    function updateFirCounts(sourceList) {
+      const list = Array.isArray(sourceList) ? sourceList : notams;
       const firCounts = {
         CZVR: 0,
         CZEG: 0,
@@ -307,7 +209,7 @@
         CZQX: 0
       };
 
-      notams.forEach(notam => {
+      list.forEach(notam => {
         const rawText = notam.raw || "";
         const firMatch = rawText.match(/Q\)\s*([A-Z]{4})/);
         if (!firMatch) return;
@@ -324,20 +226,48 @@
       });
     }
 
-    function searchNotams() {
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function buildDescriptionHtml(rawText, highlightESection) {
+      const flat = (rawText || "").replace(/[\r\n]+/g, " ").trim();
+      if (!highlightESection) {
+        return escapeHtml(flat);
+      }
+
+      const match = flat.match(/E\)\s*(.*?)(?=\s[A-Z]\)|$)/);
+      if (!match || typeof match.index !== "number") {
+        return escapeHtml(flat);
+      }
+
+      const start = match.index;
+      const end = start + match[0].length;
+      const before = flat.slice(0, start);
+      const eSection = match[0];
+      const after = flat.slice(end);
+
+      return `${escapeHtml(before)}<span class="e-highlight">${escapeHtml(eSection)}</span>${escapeHtml(after)}`;
+    }
+
+    function extractDmsCoordinate(rawText) {
+      const flat = (rawText || "").replace(/[\r\n]+/g, " ").trim();
+      const match = flat.match(/(\d{6}[NS])\s*(\d{7}[EW])/);
+      if (!match) return null;
+      return `${match[1]} ${match[2]}`;
+    }
+
+    function getFilteredNotams() {
       const firInput = document.getElementById("firInput").value.trim().toUpperCase();
       const icaoInput = document.getElementById("icaoInput").value.trim().toUpperCase();
       const notamInput = document.getElementById("notamInput").value.trim().toUpperCase();
-      const resultsContainer = document.getElementById("results");
 
-      resultsContainer.innerHTML = "";
-
-      if (firInput === "" && icaoInput === "" && notamInput === "") {
-        resultsContainer.innerHTML = "<p>Please enter FIR, ICAO, or NOTAM number to search.</p>";
-        return;
-      }
-
-      const filteredNotams = notams.filter(notam => {
+      return notams.filter(notam => {
         const rawText = notam.raw || "";
 
         const firMatch = rawText.match(/Q\)\s*([A-Z]{4})/);
@@ -352,6 +282,26 @@
                (icaoInput === "" || (icaoFound && icaoFound === icaoInput)) &&
                (notamInput === "" || (notamFound && notamFound === notamInput));
       });
+    }
+
+    function searchNotams() {
+      const firInput = document.getElementById("firInput").value.trim().toUpperCase();
+      const icaoInput = document.getElementById("icaoInput").value.trim().toUpperCase();
+      const notamInput = document.getElementById("notamInput").value.trim().toUpperCase();
+      const resultsContainer = document.getElementById("results");
+
+      resultsContainer.innerHTML = "";
+
+      if (firInput === "" && icaoInput === "" && notamInput === "") {
+        resultsContainer.innerHTML = "<p>Please enter FIR, ICAO, or NOTAM number to search.</p>";
+        updateNotamCount(notams.length);
+        updateFirCounts(notams);
+        return;
+      }
+
+      const filteredNotams = getFilteredNotams();
+      updateNotamCount(filteredNotams.length);
+      updateFirCounts(filteredNotams);
 
       if (filteredNotams.length === 0) {
         resultsContainer.innerHTML = "<p>No matching NOTAMs found.</p>";
@@ -359,13 +309,18 @@
       }
 
       filteredNotams.forEach(notam => {
+        const highlightESection = currentSourceKey === "filtered";
         const firMatch = (notam.raw || "").match(/Q\)\s*([A-Z]{4})/);
         const icaoMatch = (notam.raw || "").match(/A\)\s*([A-Z]{4})/);
         const notamMatch = (notam.raw || "").match(/([A-Z]\d{4}\/\d{2})\s+NOTAM[A-Z]/);
         const firOutput = firMatch ? firMatch[1] : "N/A";
         const icaoOutput = icaoMatch ? icaoMatch[1] : "N/A";
         const notamOutput = notamMatch ? notamMatch[1] : "N/A";
-        const cleanedDescription = (notam.raw || "").replace(/[\r\n]+/g, " ").trim();
+        const descriptionHtml = buildDescriptionHtml(notam.raw || "", highlightESection);
+        const dmsCoord = highlightESection ? extractDmsCoordinate(notam.raw || "") : null;
+        const dmsLink = dmsCoord
+          ? `<p><strong>Location:</strong> <a href="DMS2DD.html?dms=${encodeURIComponent(dmsCoord)}" target="_blank">Convert ${escapeHtml(dmsCoord)} to DD</a></p>`
+          : "";
 
         resultsContainer.innerHTML += `
           <div class="notam">
@@ -374,7 +329,8 @@
             <p><strong>ICAO:</strong> ${icaoOutput}</p>
             <p><strong>Valid From:</strong> ${notam.startValidity || "N/A"}</p>
             <p><strong>Valid To:</strong> ${notam.endValidity || "N/A"}</p>
-            <p><strong>Description:</strong> ${cleanedDescription}</p>
+            <p><strong>Description:</strong> ${descriptionHtml}</p>
+            ${dmsLink}
           </div>
         `;
       });
@@ -397,6 +353,28 @@
       event.preventDefault();
       searchNotams();
     });
+
+    document.getElementById("filterToggle").addEventListener("click", function () {
+      const toggleBtn = document.getElementById("filterToggle");
+      toggleBtn.disabled = true;
+      currentSourceKey = currentSourceKey === "raw" ? "filtered" : "raw";
+      setFilterStateDisplay();
+      loadNotamData()
+        .then(() => {
+          const firInput = document.getElementById("firInput").value.trim();
+          const icaoInput = document.getElementById("icaoInput").value.trim();
+          const notamInput = document.getElementById("notamInput").value.trim();
+          if (firInput || icaoInput || notamInput) {
+            searchNotams();
+          }
+        })
+        .finally(() => {
+          toggleBtn.disabled = false;
+        });
+    });
+
+    setFilterStateDisplay();
+    loadNotamData();
 
     document.getElementById("firInput").focus();
   </script>
