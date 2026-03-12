@@ -1,8 +1,9 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>NOTAM Map</title>
     
         <script>
             L_NO_TOUCH = false;
@@ -22,8 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
     
-            <meta name="viewport" content="width=device-width,
-                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <style>
                 #map_98843c79a06ace3ed6f5eb42bafb9da1 {
                     position: relative;
@@ -44,12 +44,44 @@
 </head>
 <body>
     
-    <style>.leaflet-control-layers{font-size:13px;}.leaflet-control-layers.leaflet-control-layers-expanded{min-width:220px;max-width:320px;padding:7px 9px;}.leaflet-control-layers-group-name{font-weight:700;color:#1f3b63;margin-top:6px;}.leaflet-control-layers-list{max-height:56vh;overflow-y:auto;padding-right:4px;}.leaflet-control-layers-group-label{cursor:pointer;display:block;position:relative;padding-right:14px;}.leaflet-control-layers-group-label:after{content:'â–¾';position:absolute;right:2px;top:0;color:#1f3b63;font-size:11px;}.leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label:after{content:'â–¸';}.leaflet-control-layers-group.province-collapsed>label:not(.leaflet-control-layers-group-label){display:none;}.leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label{display:inline-block;max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}@media (max-width:600px){.leaflet-control-layers{min-width:176px;max-width:220px;font-size:12px;}.leaflet-control-layers-expanded{padding:6px 8px;}.leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label{max-width:146px;}}.pilot-input{z-index:1200;}.pilot-flyout{position:relative;width:272px;background:#fff;border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.2);padding:7px;transition:transform .2s ease;overflow:visible;box-sizing:border-box;}.pilot-flyout.collapsed{transform:translateX(-100%);}.pilot-flyout-toggle{position:absolute;right:-30px;top:10px;width:30px;height:34px;border:1px solid #d8e2ee;border-left:none;border-radius:0 8px 8px 0;background:#fff;color:#1f3b63;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;}.pilot-flyout .controls-row{display:flex;flex-wrap:wrap;gap:3px;align-items:center;}.pilot-flyout input{max-width:102px;font-size:12px;}.pilot-flyout .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:5px;}.pilot-flyout .action-grid button{width:100%;height:24px;margin:0;padding:2px 4px;font-size:10px;line-height:1.05;text-align:center;}.pilot-flyout .controls-meta{font-size:11px;margin-top:3px;line-height:1.25;}.pilot-flyout .status-line{font-weight:600;color:#1f3b63;}.pilot-flyout .dd-hint{color:#666;margin-top:2px;}.home-logo-control{background:#fff;border:1px solid #d8e2ee;border-radius:8px;padding:4px 6px;box-shadow:0 2px 6px rgba(0,0,0,0.2);}.home-logo-control img{display:block;height:64px;width:auto;}.map-layers-control .leaflet-control-layers-toggle{background-image:none!important;width:34px;height:34px;position:relative;border-radius:8px;background:linear-gradient(145deg,#e7f3ff,#d5e8ff);border:1px solid #c2d6ef;}.map-layers-control .leaflet-control-layers-toggle:before{content:'\f0ac';font-family:'Font Awesome 6 Free';font-weight:900;font-size:16px;line-height:34px;display:block;text-align:center;color:#12406d;}.left-mini-toggle-control{background:#fff;border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);}.left-mini-toggle-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:#1f3b63;text-decoration:none;font-size:16px;}.left-mini-toggle-control.inactive .left-mini-toggle-btn{color:#8b97a7;background:#f4f6f9;}.center-map-control{background:#fff;border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);}.center-map-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:#1f3b63;text-decoration:none;font-size:16px;}.leaflet-control-zoom.leaflet-bar{border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);overflow:hidden;}.leaflet-control-zoom.leaflet-bar a{width:34px;height:34px;line-height:34px;font-size:18px;color:#1f3b63;}.leaflet-control-zoom.leaflet-bar a:first-child{border-top-left-radius:8px;border-top-right-radius:8px;}.leaflet-control-zoom.leaflet-bar a:last-child{border-bottom-left-radius:8px;border-bottom-right-radius:8px;}.notam-popup{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:1.35;color:#333;}.notam-title{font-weight:700;color:#007acc;margin-bottom:4px;}.notam-label{font-weight:600;color:#1f3b63;}.notam-raw{max-height:220px;overflow:auto;white-space:normal;}</style>
+    <style>.leaflet-control-layers{font-size:13px;}.leaflet-control-layers.leaflet-control-layers-expanded{min-width:220px;max-width:320px;padding:7px 9px;}.leaflet-control-layers-group-name{font-weight:700;color:#1f3b63;margin-top:6px;}.leaflet-control-layers-list{max-height:56vh;overflow-y:auto;padding-right:4px;}.leaflet-control-layers-group-label{cursor:pointer;display:block;position:relative;padding-right:14px;}.leaflet-control-layers-group-label:after{content:'\\25BE';position:absolute;right:2px;top:0;color:#1f3b63;font-size:11px;}.leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label:after{content:'\\25B8';}.leaflet-control-layers-group.province-collapsed>label:not(.leaflet-control-layers-group-label){display:none;}.leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label{display:inline-block;max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}@media (max-width:600px){.leaflet-control-layers{min-width:176px;max-width:220px;font-size:12px;}.leaflet-control-layers-expanded{padding:6px 8px;}.leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label{max-width:146px;}}.pilot-input{z-index:1200;}.pilot-flyout{position:relative;width:272px;background:#fff;border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.2);padding:7px;transition:transform .2s ease;overflow:visible;box-sizing:border-box;}.pilot-flyout.collapsed{transform:translateX(-100%);}.pilot-flyout-toggle{position:absolute;right:-30px;top:10px;width:30px;height:34px;border:1px solid #d8e2ee;border-left:none;border-radius:0 8px 8px 0;background:#fff;color:#1f3b63;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;}.pilot-flyout .controls-row{display:flex;flex-wrap:wrap;gap:3px;align-items:center;}.pilot-flyout input{max-width:102px;font-size:12px;}.pilot-flyout .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:5px;}.pilot-flyout .action-grid button{width:100%;height:24px;margin:0;padding:2px 4px;font-size:10px;line-height:1.05;text-align:center;}.pilot-flyout .controls-meta{font-size:11px;margin-top:3px;line-height:1.25;}.pilot-flyout .status-line{font-weight:600;color:#1f3b63;}.pilot-flyout .dd-hint{color:#666;margin-top:2px;}.home-logo-control{background:#fff;border:1px solid #d8e2ee;border-radius:8px;padding:4px 6px;box-shadow:0 2px 6px rgba(0,0,0,0.2);}.home-logo-control img{display:block;height:64px;width:auto;}.map-layers-control .leaflet-control-layers-toggle{background-image:none!important;width:34px;height:34px;position:relative;border-radius:8px;background:linear-gradient(145deg,#e7f3ff,#d5e8ff);border:1px solid #c2d6ef;}.map-layers-control .leaflet-control-layers-toggle:before{content:'\f0ac';font-family:'Font Awesome 6 Free';font-weight:900;font-size:16px;line-height:34px;display:block;text-align:center;color:#12406d;}.left-mini-toggle-control{background:#fff;border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);}.left-mini-toggle-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:#1f3b63;text-decoration:none;font-size:16px;}.left-mini-toggle-control.inactive .left-mini-toggle-btn{color:#8b97a7;background:#f4f6f9;}.center-map-control{background:#fff;border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);}.center-map-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:#1f3b63;text-decoration:none;font-size:16px;}.leaflet-control-zoom.leaflet-bar{border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);overflow:hidden;}.leaflet-control-zoom.leaflet-bar a{width:34px;height:34px;line-height:34px;font-size:18px;color:#1f3b63;}.leaflet-control-zoom.leaflet-bar a:first-child{border-top-left-radius:8px;border-top-right-radius:8px;}.leaflet-control-zoom.leaflet-bar a:last-child{border-bottom-left-radius:8px;border-bottom-right-radius:8px;}.notam-popup{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:1.35;color:#333;}.notam-title{font-weight:700;color:#007acc;margin-bottom:4px;}.notam-label{font-weight:600;color:#1f3b63;}.notam-raw{max-height:220px;overflow:auto;white-space:normal;}</style>
     
 <script>
 window.onload = function() {
     try {
         console.info('[NOTAM MAP] widget init start');
+  var launchParams = new URLSearchParams(window.location.search || '');
+  var launchedFromQFilter = (launchParams.get('src') || '').toLowerCase() === 'qfilter';
+
+  window.closeMapTab = function() {
+      if (window.opener && !window.opener.closed) {
+          try {
+              window.opener.focus();
+              window.close();
+              return;
+          } catch (e) {
+              console.warn('[NOTAM MAP] opener focus/close failed', e);
+          }
+      }
+
+      if (launchedFromQFilter) {
+          window.location.href = 'Notam Q Filter.html';
+          return;
+      }
+
+      if (window.history.length > 1) {
+          window.history.back();
+          return;
+      }
+
+      if (document.referrer) {
+          window.location.href = document.referrer;
+          return;
+      }
+
+      window.location.href = 'Notam Q Filter.html';
+  };
+
   var map = map_98843c79a06ace3ed6f5eb42bafb9da1;
   var marker = marker_e2da8748603407bcdb2fe1055b924a60;
   var c1 = circle_afe9a36f6e03709171042c1af2183ecc;
@@ -78,6 +110,10 @@ window.onload = function() {
     var filteredNotams = [];
     var rawNotams = [];
     var activeSource = 'RAW';
+    var linkedObstacleLocation = null;
+    var linkedObstacleMarker = null;
+    var linkedObstacleGlow = null;
+    var pilotToObstacleLine = null;
     var notamDataReady = false;
     var notamDataError = '';
     var currentZoom = map.getZoom();
@@ -118,7 +154,7 @@ window.onload = function() {
       var m = Math.floor(mFloat);
       var s = ((mFloat - m) * 60).toFixed(1);
       var dir = isLat ? (deg >= 0 ? 'N' : 'S') : (deg >= 0 ? 'E' : 'W');
-      return d + 'Â°' + m + "'" + s + '"' + dir;
+      return d + '°' + m + "'" + s + '"' + dir;
   }
 
   function parseLatLonText(value) {
@@ -138,6 +174,115 @@ window.onload = function() {
           return null;
       }
       return L.latLng(lat, lon);
+  }
+  function getLinkedObstacleFromQuery() {
+      try {
+          var params = new URLSearchParams(window.location.search || '');
+          var latRaw = params.get('lat') || params.get('latitude');
+          var lonRaw = params.get('lon') || params.get('lng') || params.get('longitude');
+          if (latRaw == null || lonRaw == null) {
+              return null;
+          }
+          var lat = Number(latRaw);
+          var lon = Number(lonRaw);
+          if (!isFinite(lat) || !isFinite(lon)) {
+              return null;
+          }
+          if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+              return null;
+          }
+          return L.latLng(lat, lon);
+      } catch (err) {
+          return null;
+      }
+  }
+
+  function updatePilotObstacleContext(pilotLL) {
+      if (!linkedObstacleLocation || !pilotLL) {
+          if (linkedObstacleGlow && map.hasLayer(linkedObstacleGlow)) {
+              map.removeLayer(linkedObstacleGlow);
+          }
+          if (linkedObstacleMarker && map.hasLayer(linkedObstacleMarker)) {
+              map.removeLayer(linkedObstacleMarker);
+          }
+          if (pilotToObstacleLine && map.hasLayer(pilotToObstacleLine)) {
+              map.removeLayer(pilotToObstacleLine);
+          }
+          return;
+      }
+
+      if (!linkedObstacleGlow) {
+          linkedObstacleGlow = L.circleMarker([linkedObstacleLocation.lat, linkedObstacleLocation.lng], {
+              radius: 20,
+              color: '#ff9800',
+              weight: 2,
+              fillColor: '#ff9800',
+              fillOpacity: 0.20,
+              interactive: false
+          });
+      } else {
+          linkedObstacleGlow.setLatLng(linkedObstacleLocation);
+      }
+      if (!map.hasLayer(linkedObstacleGlow)) {
+          linkedObstacleGlow.addTo(map);
+      }
+
+      if (!linkedObstacleMarker) {
+          linkedObstacleMarker = L.marker([linkedObstacleLocation.lat, linkedObstacleLocation.lng], {
+              icon: L.AwesomeMarkers.icon({
+                  icon: 'triangle-exclamation',
+                  prefix: 'fa',
+                  markerColor: 'orange'
+              }),
+              zIndexOffset: 1950
+          });
+      } else {
+          linkedObstacleMarker.setLatLng(linkedObstacleLocation);
+      }
+      if (!map.hasLayer(linkedObstacleMarker)) {
+          linkedObstacleMarker.addTo(map);
+      }
+      linkedObstacleMarker.bindTooltip('Focus Obstacle', { direction: 'top' });
+
+      var path = [[pilotLL.lat, pilotLL.lng], [linkedObstacleLocation.lat, linkedObstacleLocation.lng]];
+      if (!pilotToObstacleLine) {
+          pilotToObstacleLine = L.polyline(path, {
+              color: '#ff7a00',
+              weight: 4,
+              opacity: 0.95,
+              dashArray: '8,7'
+          });
+      } else {
+          pilotToObstacleLine.setLatLngs(path);
+      }
+      if (!map.hasLayer(pilotToObstacleLine)) {
+          pilotToObstacleLine.addTo(map);
+      }
+
+      var km = haversineKm(pilotLL.lat, pilotLL.lng, linkedObstacleLocation.lat, linkedObstacleLocation.lng);
+      var nm = km / 1.852;
+      var distanceBadge = '<span style="background:rgba(198,40,40,0.95);color:#fff;padding:3px 8px;border-radius:12px;font-weight:700;font-size:11px;box-shadow:0 0 10px rgba(198,40,40,0.55);">' + km.toFixed(1) + ' km</span>';
+      if (!pilotToObstacleLine.getTooltip()) {
+          pilotToObstacleLine.bindTooltip(distanceBadge, { permanent: true, direction: 'center', opacity: 1 });
+      } else {
+          pilotToObstacleLine.setTooltipContent(distanceBadge);
+      }
+
+      linkedObstacleMarker.bindPopup(
+          '<div class="notam-popup">' +
+          '<div class="notam-title">Focus Obstacle</div>' +
+          '<div><span class="notam-label">Distance from Pilot:</span> ' + km.toFixed(1) + ' km (' + nm.toFixed(1) + ' NM)</div>' +
+          '<div><span class="notam-label">Position:</span> ' + formatCoord(linkedObstacleLocation.lat) + ', ' + formatCoord(linkedObstacleLocation.lng) + '</div>' +
+          '</div>'
+      );
+
+      var countText = document.getElementById('obstacleCountText');
+      if (countText) {
+          var base = countText.textContent || '';
+          base = base.replace(/\s*\|\s*Focus:\s*[0-9.]+\s*km\s*\([0-9.]+\s*NM\)\s*$/i, '');
+          base = base.replace(/\s*\|\s*Target:\s*[0-9.]+\s*km\s*\([0-9.]+\s*NM\)\s*$/i, '');
+          countText.textContent = base + ' | Focus: ' + km.toFixed(1) + ' km (' + nm.toFixed(1) + ' NM)';
+      }
   }
 
   function getStoredPilotLocation() {
@@ -523,6 +668,11 @@ window.onload = function() {
   }
 
   function centerMapToPilotRadius() {
+      if (linkedObstacleLocation) {
+          var pairBounds = L.latLngBounds([marker.getLatLng(), linkedObstacleLocation]);
+          map.fitBounds(pairBounds.pad(0.25), { padding: [30, 30] });
+          return;
+      }
       var bounds = c100.getBounds ? c100.getBounds() : null;
       if (!bounds) {
           map.setView(marker.getLatLng(), currentZoom);
@@ -638,6 +788,7 @@ window.onload = function() {
       if (countText) {
           countText.textContent = 'Obstacles (' + radiusLabel() + ' km): ' + shownCount;
       }
+      updatePilotObstacleContext(ll);
   }
 
   function applyPilotLocation(ll, shouldCenter) {
@@ -651,6 +802,7 @@ window.onload = function() {
       }
       refreshObstacles(ll);
       updatePilotDisplay(ll);
+      updatePilotObstacleContext(ll);
   }
 
   function createCircleTouchTarget(circle, popupText) {
@@ -694,6 +846,7 @@ window.onload = function() {
       currentZoom = map.getZoom();
   });
 
+  marker.setZIndexOffset(2000);
   marker.dragging.enable();
   marker.on('dragend', function(e) {
       var ll = e.target.getLatLng();
@@ -944,10 +1097,16 @@ var ll = L.latLng(lat, lon);
     setTimeout(initProvinceGroupCollapse, 0);
     var startupPilotLocation = marker.getLatLng();
     var restoredPilotLocation = getStoredPilotLocation();
+    linkedObstacleLocation = getLinkedObstacleFromQuery();
     if (restoredPilotLocation) {
             startupPilotLocation = restoredPilotLocation;
-            applyPilotLocation(restoredPilotLocation, true);
-            applyAirportDefaultsFromLocation(restoredPilotLocation);
+    }
+
+    applyPilotLocation(startupPilotLocation, !linkedObstacleLocation);
+    applyAirportDefaultsFromLocation(startupPilotLocation);
+    if (linkedObstacleLocation) {
+        var startupBounds = L.latLngBounds([startupPilotLocation, linkedObstacleLocation]);
+        map.fitBounds(startupBounds.pad(0.25), { padding: [30, 30] });
     }
 
     updatePilotDisplay(startupPilotLocation);
@@ -972,7 +1131,25 @@ var ll = L.latLng(lat, lon);
     }
 };
 </script>
-    
+<style>
+#backToQFilterBtn {
+    position: fixed;
+    top: 12px;
+    left: 110px;
+    z-index: 2600;
+    background: #c62828;
+    border: 1px solid #8e1b1b;
+    border-radius: 8px;
+    padding: 7px 12px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+}
+</style>
+
+            <button id="backToQFilterBtn" type="button" onclick="closeMapTab()">&times; Close Map Tab</button>
             <div class="folium-map" id="map_98843c79a06ace3ed6f5eb42bafb9da1" ></div>
         
 </body>
@@ -161515,3 +161692,9 @@ var ll = L.latLng(lat, lon);
         
 </script>
 </html>
+
+
+
+
+
+

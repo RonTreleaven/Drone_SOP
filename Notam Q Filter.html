@@ -5,6 +5,302 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NOTAM Q-Code Filter</title>
   <link rel="stylesheet" href="./assets/css/notams-common.css">
+  <style>
+    .q-legend-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 1000;
+    }
+
+    .q-legend-modal.open {
+      display: block;
+    }
+
+    .q-legend-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .q-legend-dialog {
+      position: relative;
+      width: min(980px, calc(100vw - 32px));
+      max-height: calc(100vh - 32px);
+      margin: 16px auto;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #d7dce3;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .q-legend-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e6ebf2;
+    }
+
+    .q-legend-context {
+      padding: 10px 16px;
+      border-bottom: 1px solid #e6ebf2;
+      background: #f8fbff;
+    }
+
+    .q-legend-context-title {
+      margin: 0 0 6px;
+      font-size: 0.95rem;
+      color: #1f3652;
+    }
+
+    .q-legend-context-line {
+      margin: 0 0 8px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #0f1b2d;
+      color: #f0f5fb;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.98rem;
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+
+    .q-legend-context-line .seg-fir,
+    .q-legend-context-line .seg-qcode,
+    .q-legend-context-line .seg-traffic,
+    .q-legend-context-line .seg-purpose,
+    .q-legend-context-line .seg-scope,
+    .q-legend-context-line .seg-limits,
+    .q-legend-context-line .seg-coord,
+    .q-legend-context-list .seg-fir,
+    .q-legend-context-list .seg-qcode,
+    .q-legend-context-list .seg-traffic,
+    .q-legend-context-list .seg-purpose,
+    .q-legend-context-list .seg-scope,
+    .q-legend-context-list .seg-limits,
+    .q-legend-context-list .seg-coord {
+      font-weight: 700;
+    }
+
+    /* High contrast colors for dark sample line */
+    .q-legend-context-line .seg-fir { color: #86d7ff; }
+    .q-legend-context-line .seg-qcode { color: #ffd37a; }
+    .q-legend-context-line .seg-traffic { color: #86f0a6; }
+    .q-legend-context-line .seg-purpose { color: #ffb7d8; }
+    .q-legend-context-line .seg-scope { color: #d0c3ff; }
+    .q-legend-context-line .seg-limits { color: #fff08d; }
+    .q-legend-context-line .seg-coord { color: #8aeff3; }
+
+    /* High contrast colors for light list background */
+    .q-legend-context-list .seg-fir { color: #0b5ea8; }
+    .q-legend-context-list .seg-qcode { color: #8a4700; }
+    .q-legend-context-list .seg-traffic { color: #146f33; }
+    .q-legend-context-list .seg-purpose { color: #9b1b51; }
+    .q-legend-context-list .seg-scope { color: #4f35a3; }
+    .q-legend-context-list .seg-limits { color: #7a5d00; }
+    .q-legend-context-list .seg-coord { color: #0c6f77; }
+
+    .q-legend-context-list {
+      margin: 0;
+      padding-left: 16px;
+      font-size: 0.82rem;
+      color: #344860;
+      line-height: 1.4;
+    }
+
+    .q-legend-title {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .q-legend-tools {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 16px;
+      border-bottom: 1px solid #e6ebf2;
+      flex-wrap: wrap;
+    }
+
+    .q-legend-tools input {
+      flex: 1;
+      min-width: 220px;
+      padding: 8px 10px;
+      border: 1px solid #c7ced8;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .q-legend-body {
+      padding: 12px 16px 16px;
+      overflow: auto;
+    }
+
+    .q-legend-section {
+      margin-bottom: 16px;
+    }
+
+    .q-legend-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .q-legend-section h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .q-legend-toggle {
+      border: 1px solid #c7ced8;
+      background: #fff;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
+    .q-legend-section.collapsed .q-legend-table,
+    .q-legend-section.collapsed .q-legend-note {
+      display: none;
+    }
+
+    .q-legend-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      background: #fff;
+    }
+
+    .q-legend-table th,
+    .q-legend-table td {
+      border: 1px solid #e1e6ee;
+      padding: 7px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .q-legend-table th {
+      background: #f6f8fb;
+      font-weight: 600;
+    }
+
+    .q-legend-note {
+      margin: 4px 0 0;
+      color: #4f5f74;
+      font-size: 0.84rem;
+    }
+
+    .fir-reference-box {
+      margin-bottom: 14px;
+    }
+
+    .fir-reference-box .filter-body {
+      padding-top: 8px;
+    }
+
+    .fir-table-clickable tbody tr {
+      cursor: pointer;
+    }
+
+    .fir-table-clickable tbody tr:hover {
+      background: #f3f7ff;
+    }
+
+    .fir-reference-note {
+      margin: 0 0 8px;
+      color: #4f5f74;
+      font-size: 0.88rem;
+    }
+
+    .q-actions-box {
+      margin-top: 10px;
+    }
+
+    .q-actions-note {
+      margin: 0 0 8px;
+      color: #4f5f74;
+      font-size: 0.88rem;
+    }
+
+    .q-actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .q-actions-live-summary {
+      margin: 0 0 12px;
+      color: #4a5a71;
+      font-size: 0.88rem;
+    }
+
+    .results-panel-box {
+      margin-top: 10px;
+    }
+
+    .coord-link {
+      color: #0b3f74;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid #85b8e6;
+      background: #dff1ff;
+      border-radius: 6px;
+      padding: 1px 5px;
+      display: inline-block;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .e-highlight .coord-link {
+      color: #072f57;
+      border-color: #5d9ed6;
+      background: #cae7ff;
+    }
+
+    .coord-link:hover,
+    .coord-link:focus-visible {
+      background: #c3e3ff;
+      border-color: #4f90ca;
+      outline: none;
+    }
+
+    .q-help-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin: -2px 0 10px;
+    }
+
+    .q-help-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .q-help-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #1f4f7f;
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1;
+      border: 1px solid #153756;
+    }
+
+  </style>
 </head>
 <body>
   <nav class="top-nav">
@@ -14,38 +310,56 @@
 
   <div class="card">
     <h1>NOTAM Q-Code Filter</h1>
+    <div class="q-help-row">
+      <button class="btn" type="button" id="toggleResultsQuick" title="Show or hide filtered NOTAM results">
+        View NOTAMS
+      </button>
+      <button class="btn q-help-trigger" type="button" id="openQLegend" title="Open Q-code legend and standards reference">
+        <span class="q-help-icon" aria-hidden="true">?</span>
+        <span>Q-Legend Help</span>
+      </button>
+    </div>
 
-    <div class="fir-table-wrap">
-      <h2>Canadian FIR Reference</h2>
-      <table class="fir-table">
-        <thead>
-          <tr>
-            <th>Region</th>
-            <th>FIR Code</th>
-            <th>NOTAM Count</th>
-            <th>NOTAM Data gathered</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr data-fir-row="CZVR"><td>Vancouver</td><td>CZVR</td><td data-fir-count="CZVR">0</td><td data-fir-date>Loading...</td></tr>
-          <tr data-fir-row="CZEG"><td>Edmonton</td><td>CZEG</td><td data-fir-count="CZEG">0</td><td data-fir-date>Loading...</td></tr>
-          <tr data-fir-row="CZWG"><td>Winnipeg</td><td>CZWG</td><td data-fir-count="CZWG">0</td><td data-fir-date>Loading...</td></tr>
-          <tr data-fir-row="CZYZ"><td>Toronto</td><td>CZYZ</td><td data-fir-count="CZYZ">0</td><td data-fir-date>Loading...</td></tr>
-          <tr data-fir-row="CZUL"><td>Montreal</td><td>CZUL</td><td data-fir-count="CZUL">0</td><td data-fir-date>Loading...</td></tr>
-          <tr data-fir-row="CZQM"><td>Moncton</td><td>CZQM</td><td data-fir-count="CZQM">0</td><td data-fir-date>Loading...</td></tr>
-          <tr data-fir-row="CZQX"><td>Gander</td><td>CZQX</td><td data-fir-count="CZQX">0</td><td data-fir-date>Loading...</td></tr>
-        </tbody>
-      </table>
+    <div class="filter-box fir-reference-box collapsed" id="firReferenceBox">
+      <div class="filter-head">
+        <div class="filter-head-title">Canadian FIR Reference</div>
+        <div class="filter-head-meta">
+          <span class="filter-summary">Default FIR: CZYZ (Toronto)</span>
+          <button class="collapse-btn" type="button" id="toggleFirReference" aria-expanded="false" title="Show FIR reference" aria-label="Toggle Canadian FIR reference">▼</button>
+        </div>
+      </div>
+      <div class="filter-body">
+        <p class="fir-reference-note">Click a row to set FIR quickly in the search input.</p>
+        <table class="fir-table fir-table-clickable">
+          <thead>
+            <tr>
+              <th>Region</th>
+              <th>FIR Code</th>
+              <th>NOTAM Count</th>
+              <th>NOTAM Data gathered</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-fir-row="CZVR"><td>Vancouver</td><td>CZVR</td><td data-fir-count="CZVR">0</td><td data-fir-date>Loading...</td></tr>
+            <tr data-fir-row="CZEG"><td>Edmonton</td><td>CZEG</td><td data-fir-count="CZEG">0</td><td data-fir-date>Loading...</td></tr>
+            <tr data-fir-row="CZWG"><td>Winnipeg</td><td>CZWG</td><td data-fir-count="CZWG">0</td><td data-fir-date>Loading...</td></tr>
+            <tr data-fir-row="CZYZ"><td>Toronto</td><td>CZYZ</td><td data-fir-count="CZYZ">0</td><td data-fir-date>Loading...</td></tr>
+            <tr data-fir-row="CZUL"><td>Montreal</td><td>CZUL</td><td data-fir-count="CZUL">0</td><td data-fir-date>Loading...</td></tr>
+            <tr data-fir-row="CZQM"><td>Moncton</td><td>CZQM</td><td data-fir-count="CZQM">0</td><td data-fir-date>Loading...</td></tr>
+            <tr data-fir-row="CZQX"><td>Gander</td><td>CZQX</td><td data-fir-count="CZQX">0</td><td data-fir-date>Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <form id="searchForm" class="search-container" autocomplete="off">
       <div class="field-group">
         <label for="firInput">FIR</label>
-        <input type="text" id="firInput" placeholder="Enter FIR code (e.g., CZEG)">
+        <input type="text" id="firInput" value="CZYZ" maxlength="4" placeholder="Enter FIR code (e.g., CZEG)">
       </div>
       <div class="field-group">
         <label for="icaoInput">ICAO</label>
-        <input type="text" id="icaoInput" placeholder="Enter ICAO code (e.g., CYOO)">
+        <input type="text" id="icaoInput" autofocus placeholder="CYOO">
       </div>
       <div class="field-group">
         <label for="notamInput">NOTAM No.</label>
@@ -134,35 +448,94 @@
       </div>
     </div>
 
-    <div class="section">
-      <h2>Q Filter Actions</h2>
-      <div class="search-container">
-        <button class="btn" type="button" id="applyFilters">Apply Q Filters</button>
-        <button class="btn" type="button" id="clearFilters">Clear Q Filters</button>
-        <button class="btn" type="button" id="aircraftOnlyPreset">Aircraft-Service/Procedure Only</button>
-      </div>
-      <div class="filter-box filter-box-spaced">
-        <h3>Exclude Aircraft-Service/Procedure Subjects</h3>
-        <div class="toggle-row">
-          <button class="btn btn-small" type="button" data-toggle-group="exclude-aircraft" data-toggle="on">Select All</button>
-          <button class="btn btn-small" type="button" data-toggle-group="exclude-aircraft" data-toggle="off">Deselect All</button>
+    <div class="filter-box q-actions-box collapsed" id="qActionsBox">
+      <div class="filter-head">
+        <div class="filter-head-title">Q-Code Filters</div>
+        <div class="filter-head-meta">
+          <span class="filter-summary" id="qActionsSummary">Actions ready</span>
+          <button class="collapse-btn" type="button" id="toggleQActions" aria-expanded="false" title="Show Q-Code filters" aria-label="Toggle Q-Code filters">▼</button>
         </div>
-        <div class="checklist" data-group="exclude-aircraft">
-          <label><input type="checkbox" class="q-exclude" value="F"> QF (Facilities / services)</label>
-          <label><input type="checkbox" class="q-exclude" value="L"> QL (Lighting facilities)</label>
-          <label><input type="checkbox" class="q-exclude" value="M"> QM (Movement / landing area)</label>
-          <label><input type="checkbox" class="q-exclude" value="P"> QP (Air traffic procedures)</label>
-        </div>
-        <div class="hint">Use this to hide aircraft-specific service/procedure NOTAMs (e.g., QFAXX, QPIAU, QPMCH, QLYXX, QMXXX).</div>
       </div>
+      <div class="filter-body">
+        <p class="q-actions-note">Default workflow for drone pilots: keep aircraft-service/procedure exclusions on, then apply as needed.</p>
+        <div class="q-actions-row">
+          <button class="btn" type="button" id="applyFilters">Apply</button>
+          <button class="btn" type="button" id="clearFilters">Clear All Q-Codes</button>
+          <button class="btn" type="button" id="aircraftOnlyPreset">Aircraft Procedure</button>
+        </div>
+        <p class="q-actions-live-summary" id="qActionsLiveSummary">Include: all selected | Exclude: none</p>
 
-      <input type="hidden" id="subjectInput" value="" autocomplete="off">
-      <input type="hidden" id="statusInput" value="" autocomplete="off">
+        <div class="filter-box filter-box-spaced">
+          <h3>Exclude Aircraft-Service/Procedure Subjects</h3>
+          <div class="toggle-row">
+            <button class="btn btn-small" type="button" data-toggle-group="exclude-aircraft" data-toggle="on">Select All</button>
+            <button class="btn btn-small" type="button" data-toggle-group="exclude-aircraft" data-toggle="off">Deselect All</button>
+          </div>
+          <div class="checklist" data-group="exclude-aircraft">
+            <label><input type="checkbox" class="q-exclude" value="F" checked> QF (Facilities / services)</label>
+            <label><input type="checkbox" class="q-exclude" value="L" checked> QL (Lighting facilities)</label>
+            <label><input type="checkbox" class="q-exclude" value="M" checked> QM (Movement / landing area)</label>
+            <label><input type="checkbox" class="q-exclude" value="P" checked> QP (Air traffic procedures)</label>
+          </div>
+          <div class="hint">Use this to hide aircraft-specific service/procedure NOTAMs (e.g., QFAXX, QPIAU, QPMCH, QLYXX, QMXXX).</div>
+        </div>
+
+        <input type="hidden" id="subjectInput" value="" autocomplete="off">
+        <input type="hidden" id="statusInput" value="" autocomplete="off">
+      </div>
     </div>
 
-      <div id="filterStatusLine" class="filter-status-line">Filter status: Enter FIR/ICAO/NOTAM to start.</div>
+    <div class="filter-box results-panel-box" id="resultsPanelBox">
+      <div class="filter-head">
+        <div class="filter-head-title">Filter Status & Results</div>
+        <div class="filter-head-meta">
+          <span class="filter-summary" id="resultsPanelSummary">Results: 0</span>
+          <button class="collapse-btn" type="button" id="toggleResultsPanel" aria-expanded="true" title="Hide results">▲</button>
+        </div>
+      </div>
+      <div class="filter-body">
+        <div id="filterStatusLine" class="filter-status-line">Filter status: Enter FIR/ICAO/NOTAM to start.</div>
+        <div id="results"></div>
+      </div>
+    </div>
+  </div>
 
-    <div id="results"></div>
+  <div id="qLegendModal" class="q-legend-modal" aria-hidden="true">
+    <div class="q-legend-backdrop" data-close-qlegend></div>
+    <div class="q-legend-dialog" role="dialog" aria-modal="true" aria-labelledby="qLegendTitle">
+      <div class="q-legend-header">
+        <h2 class="q-legend-title" id="qLegendTitle">NOTAM Q-Code Legend</h2>
+        <button class="btn btn-small" type="button" id="closeQLegendTop">Close</button>
+      </div>
+      <div class="q-legend-context" aria-label="Q-line quick reference">
+        <p class="q-legend-context-title"><strong>Example Q Line Anatomy</strong></p>
+        <p class="q-legend-context-line">
+          Q)
+          <span class="seg-fir">CZYZ</span> /
+          <span class="seg-qcode">QOLAS</span> /
+          <span class="seg-traffic">IV</span> /
+          <span class="seg-purpose">M</span> /
+          <span class="seg-scope">AE</span> /
+          <span class="seg-limits">000 / 014</span> /
+          <span class="seg-coord">4447N07822W005</span>
+        </p>
+        <ul class="q-legend-context-list">
+          <li><strong class="seg-fir">CZYZ</strong>: FIR (Toronto FIR)</li>
+          <li><strong class="seg-qcode">QOLAS</strong>: Q + <strong class="seg-qcode">OL</strong> Subject + <strong class="seg-qcode">AS</strong> Condition</li>
+          <li><strong class="seg-traffic">IV</strong>: IFR + VFR traffic</li>
+          <li><strong class="seg-purpose">M</strong>: Miscellaneous purpose</li>
+          <li><strong class="seg-scope">AE</strong>: Aerodrome + En-route scope</li>
+          <li><strong class="seg-limits">000/014</strong>: Surface to 1,400 ft</li>
+          <li><strong class="seg-coord">4447N07822W005</strong>: Center + 5 NM radius</li>
+        </ul>
+      </div>
+      <div class="q-legend-tools">
+        <input id="qLegendSearch" type="text" placeholder="Search code or meaning (example: RT, runway, restricted)">
+        <button class="btn btn-small" type="button" id="qLegendShowAllToggle">Show All</button>
+        <button class="btn btn-small" type="button" id="qLegendClearSearch">Clear</button>
+      </div>
+      <div class="q-legend-body" id="qLegendBody"></div>
+    </div>
   </div>
 
   <script>
@@ -171,9 +544,20 @@
       filtered: "./data/notams/All_CA.json"
     };
     const notamMetaUrl = "./data/notams/All_CA.meta.json";
+    const lastIcaoStorageKey = "notam-qfilter.lastIcao";
     let notams = [];
     let currentSourceKey = "raw";
     let dataRefreshDate = "Unavailable";
+    let clearFiltersMode = "clear";
+    let defaultFilterState = null;
+    let qLegendShowAll = false;
+    const qLegendCollapsed = {
+      subject: true,
+      condition: true,
+      traffic: true,
+      purpose: true,
+      scope: true
+    };
 
     function setFilterStateDisplay() {
       const filterState = document.getElementById("filterState");
@@ -186,6 +570,8 @@
     function updateNotamCount(count) {
       const countEl = document.getElementById("notamCount");
       countEl.textContent = typeof count === "number" ? count : "0";
+      const panelSummary = document.getElementById("resultsPanelSummary");
+      if (panelSummary) panelSummary.textContent = `Results: ${countEl.textContent}`;
     }
 
     function formatDataDate(headerValue) {
@@ -293,13 +679,20 @@
         // Obstacles / lights
         OB: "Obstacle",
         OL: "Obstacle lights",
-        // AGA movement areas / lights / facilities
-        QM: "Movement and landing area",
-        QL: "Lighting facilities",
-        QF: "Facilities / services",
+        // Runways/Surface 
+        FA: "Runway friction / braking",
+        FC: "Runway closure",
+        FI: "Runway lighting",
+        FJ: "Runway markings",
+
+        // Aerodrome facilities
+        MX: "Miscellaneous aerodrome information",
+        LY: "Aerodrome lighting",
+      
         // Procedures / airspace
-        QP: "Air traffic procedures",
-        QW: "Navigation warnings",
+        PI: "Instrument approach procedure",
+        PM: "Approach minima",
+      
         // Warnings / activities (W*)
         WA: "Air display",
         WB: "Aerobatics",
@@ -338,41 +731,38 @@
         AA: "Airspace subject (AA)",
         AN: "Airspace subject (AN)",
         AO: "Airspace subject (AO)",
-        AR: "Airspace reservation / restriction",
-        // Common 2-letter subjects seen in data
-        QL: "Lighting facilities",
-        QM: "Movement and landing area",
-        QF: "Facilities / services",
-        QP: "Air traffic procedures"
+        AR: "Airspace reservation / restriction"
       };
       return map[code] || "Unknown";
     }
 
     function decodeQCondition(code) {
       const map = {
-        // Status/condition (4th/5th letters)
-        AA: "Absent",
-        AC: "Completed",
-        AD: "Available",
-        AF: "Fully operational",
-        AH: "Hours of service",
-        AM: "Military activity",
-        AN: "Available for night use",
-        AO: "Operational",
-        AP: "Prior permission required",
-        AR: "Runway closed",
+        // Status/condition (4th/5th letters) - active set pending NAV Canada verification
         AS: "Unserviceable",
-        AT: "Temporarily closed",
         AU: "Not available",
-        AW: "Work in progress",
-        AX: "Not specified",
-        CA: "Cancelled",
-        CC: "Completed",
         CH: "Changed",
         CL: "Closed",
-        CS: "Operating",
-        CT: "Temporarily closed",
+        CS: "Construction",
+        CT: "Temporary",
+        CA: "Cancelled",
+        AW: "Work in progress",
         XX: "Other / unspecified"
+
+        // Temporarily disabled until NAV Canada standards are verified:
+        // AA: "Absent",
+        // AC: "Completed",
+        // AD: "Available",
+        // AF: "Fully operational",
+        // AH: "Hours of service",
+        // AM: "Military activity",
+        // AN: "Available for night use",
+        // AO: "Operational",
+        // AP: "Prior permission required",
+        // AR: "Runway closed",
+        // AT: "Temporarily closed",
+        // AX: "Not specified",
+        // CC: "Completed"
       };
       return map[code] || "Unknown";
     }
@@ -411,8 +801,322 @@
       return map[code] || "Unknown";
     }
 
+    const qLegendSections = [
+      {
+        id: "subject",
+        title: "Q Subject Codes (2nd and 3rd letters)",
+        collapsible: true,
+        entries: [
+          { code: "OB", meaning: "Obstacle" },
+          { code: "OL", meaning: "Obstacle lights" },
+          { code: "FA", meaning: "Runway friction / braking" },
+          { code: "FC", meaning: "Runway closure" },
+          { code: "FI", meaning: "Runway lighting" },
+          { code: "FJ", meaning: "Runway markings" },
+          { code: "MX", meaning: "Miscellaneous aerodrome information" },
+          { code: "LY", meaning: "Aerodrome lighting" },
+          { code: "PI", meaning: "Instrument approach procedure" },
+          { code: "PM", meaning: "Approach minima" },
+          { code: "WA", meaning: "Air display" },
+          { code: "WB", meaning: "Aerobatics" },
+          { code: "WC", meaning: "Captive balloon / kite" },
+          { code: "WD", meaning: "Demolition of explosives" },
+          { code: "WE", meaning: "Exercises" },
+          { code: "WG", meaning: "Glider flying" },
+          { code: "WH", meaning: "Blasting" },
+          { code: "WJ", meaning: "Banner / target towing" },
+          { code: "WL", meaning: "Free balloon" },
+          { code: "WM", meaning: "Missile / gun / rocket firing" },
+          { code: "WP", meaning: "Parachute / paragliding" },
+          { code: "WR", meaning: "Radioactive / toxic materials" },
+          { code: "WS", meaning: "Burning / blowing gas" },
+          { code: "WT", meaning: "Mass movement of aircraft" },
+          { code: "WU", meaning: "Unmanned aircraft" },
+          { code: "WV", meaning: "Formation flight" },
+          { code: "WW", meaning: "Significant volcanic activity" },
+          { code: "WY", meaning: "Aerial survey" },
+          { code: "WZ", meaning: "Model flying" },
+          { code: "RA", meaning: "Airspace reservation" },
+          { code: "RD", meaning: "Danger area" },
+          { code: "RM", meaning: "Military operating area" },
+          { code: "RO", meaning: "Overflying restrictions" },
+          { code: "RP", meaning: "Prohibited area" },
+          { code: "RR", meaning: "Restricted area" },
+          { code: "RT", meaning: "Temporary restricted area" },
+          { code: "AC", meaning: "Control zone / CTR" },
+          { code: "AD", meaning: "ADIZ" },
+          { code: "AE", meaning: "Control area / CTA" },
+          { code: "AF", meaning: "FIR" },
+          { code: "AT", meaning: "TMA" },
+          { code: "AZ", meaning: "ATZ" },
+          { code: "AA", meaning: "Airspace subject (AA)" },
+          { code: "AN", meaning: "Airspace subject (AN)" },
+          { code: "AO", meaning: "Airspace subject (AO)" },
+          { code: "AR", meaning: "Airspace reservation / restriction" }
+        ]
+      },
+      {
+        id: "condition",
+        title: "Q Condition Codes (4th and 5th letters)",
+        collapsible: true,
+        note: "Pending NAV Canada verification: active and parked codes are listed for pilot lookup.",
+        entries: [
+          { code: "AS", meaning: "Unserviceable", status: "Active" },
+          { code: "AU", meaning: "Not available", status: "Active" },
+          { code: "CH", meaning: "Changed", status: "Active" },
+          { code: "CL", meaning: "Closed", status: "Active" },
+          { code: "CS", meaning: "Construction", status: "Active" },
+          { code: "CT", meaning: "Temporary", status: "Active" },
+          { code: "CA", meaning: "Cancelled", status: "Active" },
+          { code: "AW", meaning: "Work in progress", status: "Active" },
+          { code: "XX", meaning: "Other / unspecified", status: "Active" },
+          { code: "AA", meaning: "Absent", status: "Parked" },
+          { code: "AC", meaning: "Completed", status: "Parked" },
+          { code: "AD", meaning: "Available", status: "Parked" },
+          { code: "AF", meaning: "Fully operational", status: "Parked" },
+          { code: "AH", meaning: "Hours of service", status: "Parked" },
+          { code: "AM", meaning: "Military activity", status: "Parked" },
+          { code: "AN", meaning: "Available for night use", status: "Parked" },
+          { code: "AO", meaning: "Operational", status: "Parked" },
+          { code: "AP", meaning: "Prior permission required", status: "Parked" },
+          { code: "AR", meaning: "Runway closed", status: "Parked" },
+          { code: "AT", meaning: "Temporarily closed", status: "Parked" },
+          { code: "AX", meaning: "Not specified", status: "Parked" },
+          { code: "CC", meaning: "Completed", status: "Parked" }
+        ]
+      },
+      {
+        id: "traffic",
+        title: "Q Traffic Codes",
+        collapsible: true,
+        entries: [
+          { code: "I", meaning: "IFR" },
+          { code: "V", meaning: "VFR" },
+          { code: "IV", meaning: "IFR + VFR" }
+        ]
+      },
+      {
+        id: "purpose",
+        title: "Q Purpose Codes",
+        collapsible: true,
+        entries: [
+          { code: "N", meaning: "Immediate attention (NOTAMN)" },
+          { code: "B", meaning: "Operationally significant for PIB" },
+          { code: "O", meaning: "Operational significance" },
+          { code: "M", meaning: "Miscellaneous" },
+          { code: "K", meaning: "Checklist" },
+          { code: "BO", meaning: "Briefing + Operational" }
+        ]
+      },
+      {
+        id: "scope",
+        title: "Q Scope Codes",
+        collapsible: true,
+        entries: [
+          { code: "A", meaning: "Aerodrome" },
+          { code: "E", meaning: "Enroute" },
+          { code: "W", meaning: "Warnings" },
+          { code: "AE", meaning: "Aerodrome + Enroute" },
+          { code: "AW", meaning: "Aerodrome + Warnings" },
+          { code: "EW", meaning: "Enroute + Warnings" },
+          { code: "AEW", meaning: "Aerodrome + Enroute + Warnings" }
+        ]
+      }
+    ];
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function dmsTokenToDecimal(token, isLat) {
+      const clean = (token || "").toUpperCase().trim();
+      const dir = clean.slice(-1);
+      const body = clean.slice(0, -1);
+
+      if (isLat && !/[NS]/.test(dir)) return null;
+      if (!isLat && !/[EW]/.test(dir)) return null;
+
+      let degDigits = isLat ? 2 : 3;
+      if (!/^\d+$/.test(body)) return null;
+      if (body.length !== degDigits + 2 && body.length !== degDigits + 4) return null;
+
+      const deg = Number(body.slice(0, degDigits));
+      const min = Number(body.slice(degDigits, degDigits + 2));
+      const sec = body.length === degDigits + 4 ? Number(body.slice(degDigits + 2, degDigits + 4)) : 0;
+
+      if (min >= 60 || sec >= 60) return null;
+
+      let dd = deg + (min / 60) + (sec / 3600);
+      if (dir === "S" || dir === "W") dd = -dd;
+      return dd;
+    }
+
+    function linkifyDmsCoordinatePairs(text) {
+      const value = text || "";
+      const pairRegex = /(\d{4,6}[NS])\s*(\d{5,7}[EW])/gi;
+      let lastIndex = 0;
+      let match;
+      const out = [];
+
+      while ((match = pairRegex.exec(value)) !== null) {
+        out.push(escapeHtml(value.slice(lastIndex, match.index)));
+
+        const latToken = (match[1] || "").toUpperCase();
+        const lonToken = (match[2] || "").toUpperCase();
+        const lat = dmsTokenToDecimal(latToken, true);
+        const lon = dmsTokenToDecimal(lonToken, false);
+
+        if (lat == null || lon == null) {
+          out.push(escapeHtml(match[0]));
+        } else {
+          const href = `NotamsMap.html?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}&focus=1&src=qfilter`;
+          out.push(`<a class="coord-link" href="${href}" onclick="return openMapTab(event, this);" title="Lookup on Map?" aria-label="Lookup on Map?">${escapeHtml(latToken)}&nbsp;${escapeHtml(lonToken)}</a>`);
+        }
+
+        lastIndex = pairRegex.lastIndex;
+      }
+
+      out.push(escapeHtml(value.slice(lastIndex)));
+      return out.join("");
+    }
+
+    function openMapTab(event, anchorEl) {
+      if (event) event.preventDefault();
+      const href = anchorEl && anchorEl.href ? anchorEl.href : null;
+      if (!href) return false;
+
+      const popup = window.open(href, "_blank");
+      if (popup) {
+        popup.focus();
+      } else {
+        // Fallback for popup-blocked scenarios
+        window.location.href = href;
+      }
+      return false;
+    }
+
+    function buildDescriptionHtml(rawText, highlightESection) {
+      const flat = (rawText || "").replace(/[\r\n]+/g, " ").trim();
+      if (!highlightESection) {
+        return linkifyDmsCoordinatePairs(flat);
+      }
+
+      const match = flat.match(/E\)\s*(.*?)(?=\s[A-Z]\)|$)/);
+      if (!match || typeof match.index !== "number") {
+        return escapeHtml(flat);
+      }
+
+      const start = match.index;
+      const end = start + match[0].length;
+      const before = flat.slice(0, start);
+      const eSection = match[0];
+      const after = flat.slice(end);
+
+      return `${escapeHtml(before)}<span class="e-highlight">${linkifyDmsCoordinatePairs(eSection)}</span>${escapeHtml(after)}`;
+    }
+
+    function renderQLegend(searchText) {
+      const container = document.getElementById("qLegendBody");
+      const filter = (searchText || "").trim().toUpperCase();
+      const html = [];
+
+      const showAllBtn = document.getElementById("qLegendShowAllToggle");
+      if (showAllBtn) {
+        showAllBtn.textContent = qLegendShowAll ? "Collapse All" : "Show All";
+      }
+
+      qLegendSections.forEach(section => {
+        const rows = section.entries.filter(entry => {
+          if (!filter) return true;
+          return entry.code.toUpperCase() === filter;
+        });
+
+        if (rows.length === 0) return;
+
+        const hasStatus = rows.some(row => Boolean(row.status));
+        const sectionId = section.id || "";
+        const hasActiveSearch = filter.length > 0;
+        const isCollapsed = section.collapsible && !hasActiveSearch && !qLegendShowAll && qLegendCollapsed[sectionId] === true;
+        html.push(`<section class="q-legend-section${isCollapsed ? " collapsed" : ""}" data-legend-section="${escapeHtml(sectionId)}">`);
+        html.push(`<div class="q-legend-section-head">`);
+        html.push(`<h3>${escapeHtml(section.title)}</h3>`);
+        if (section.collapsible && sectionId) {
+          html.push(`<button class="q-legend-toggle" type="button" data-legend-toggle="${escapeHtml(sectionId)}">${isCollapsed ? "Show" : "Hide"}</button>`);
+        }
+        html.push(`</div>`);
+        if (section.note) {
+          html.push(`<p class="q-legend-note">${escapeHtml(section.note)}</p>`);
+        }
+        html.push(`<table class="q-legend-table">`);
+        html.push(`<thead><tr><th>Code</th><th>Meaning</th>${hasStatus ? "<th>Status</th>" : ""}</tr></thead><tbody>`);
+
+        rows.forEach(row => {
+          html.push(`<tr><td>${escapeHtml(row.code)}</td><td>${escapeHtml(row.meaning)}</td>${hasStatus ? `<td>${escapeHtml(row.status || "")}</td>` : ""}</tr>`);
+        });
+
+        html.push(`</tbody></table></section>`);
+      });
+
+      container.innerHTML = html.length > 0 ? html.join("") : "<p>No legend entries match your search.</p>";
+
+      container.querySelectorAll("[data-legend-toggle]").forEach(btn => {
+        btn.addEventListener("click", function () {
+          const id = btn.getAttribute("data-legend-toggle");
+          if (!id) return;
+          qLegendCollapsed[id] = !qLegendCollapsed[id];
+          renderQLegend(document.getElementById("qLegendSearch").value);
+        });
+      });
+    }
+
+    function openQLegend() {
+      const modal = document.getElementById("qLegendModal");
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      renderQLegend(document.getElementById("qLegendSearch").value);
+      document.getElementById("qLegendSearch").focus();
+    }
+
+    function closeQLegend() {
+      const modal = document.getElementById("qLegendModal");
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    function initQLegendModal() {
+      document.getElementById("openQLegend").addEventListener("click", openQLegend);
+      document.getElementById("closeQLegendTop").addEventListener("click", closeQLegend);
+      document.querySelectorAll("[data-close-qlegend]").forEach(el => {
+        el.addEventListener("click", closeQLegend);
+      });
+      document.getElementById("qLegendSearch").addEventListener("input", function () {
+        renderQLegend(this.value);
+      });
+      document.getElementById("qLegendClearSearch").addEventListener("click", function () {
+        const input = document.getElementById("qLegendSearch");
+        input.value = "";
+        renderQLegend("");
+        input.focus();
+      });
+      document.getElementById("qLegendShowAllToggle").addEventListener("click", function () {
+        qLegendShowAll = !qLegendShowAll;
+        renderQLegend(document.getElementById("qLegendSearch").value);
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && document.getElementById("qLegendModal").classList.contains("open")) {
+          closeQLegend();
+        }
+      });
+      renderQLegend("");
+    }
+
     function parseQualifierFields(rawText) {
-      const match = (rawText || "").match(/Q\)\s*([A-Z]{4})\/(Q[A-Z]{4})\/([IV]{1,2})\/([NBO MK]{1,2})\/([A-Z]{1,3})\/(\d{3})\/(\d{3})\/([0-9NSWE]{15})/);
+      const match = (rawText || "").match(/Q\)\s*([A-Z]{4})\/(Q[A-Z]{4})\/(IV|I|V)\/(BO|N|B|O|M|K)\/([A-Z]{1,3})\/(\d{3})\/(\d{3})\/([0-9NSWE]{15})/);
       if (!match) return null;
       return {
         fir: match[1],
@@ -501,6 +1205,37 @@
       return { excludedCategories };
     }
 
+    function snapshotFilterState() {
+      return {
+        subjectInput: document.getElementById("subjectInput").value,
+        statusInput: document.getElementById("statusInput").value,
+        subjectChecks: Array.from(document.querySelectorAll(".q-subject")).map(el => ({ value: el.value, checked: el.checked })),
+        groupChecks: Array.from(document.querySelectorAll(".q-group")).map(el => ({ value: el.value, checked: el.checked })),
+        excludeChecks: Array.from(document.querySelectorAll(".q-exclude")).map(el => ({ value: el.value, checked: el.checked }))
+      };
+    }
+
+    function applyFilterState(state) {
+      if (!state) return;
+
+      document.getElementById("subjectInput").value = state.subjectInput || "";
+      document.getElementById("statusInput").value = state.statusInput || "";
+
+      const subjectMap = new Map((state.subjectChecks || []).map(item => [item.value, item.checked]));
+      const groupMap = new Map((state.groupChecks || []).map(item => [item.value, item.checked]));
+      const excludeMap = new Map((state.excludeChecks || []).map(item => [item.value, item.checked]));
+
+      document.querySelectorAll(".q-subject").forEach(el => {
+        if (subjectMap.has(el.value)) el.checked = subjectMap.get(el.value);
+      });
+      document.querySelectorAll(".q-group").forEach(el => {
+        if (groupMap.has(el.value)) el.checked = groupMap.get(el.value);
+      });
+      document.querySelectorAll(".q-exclude").forEach(el => {
+        if (excludeMap.has(el.value)) el.checked = excludeMap.get(el.value);
+      });
+    }
+
     function areAllIncludeControlsChecked() {
       const includeControls = Array.from(document.querySelectorAll(".q-subject, .q-group"));
       return includeControls.length > 0 && includeControls.every(el => el.checked);
@@ -548,6 +1283,139 @@
     function updateFilterStatusLine(message) {
       const line = document.getElementById("filterStatusLine");
       if (line) line.textContent = message;
+    }
+
+    function setFirReferenceCollapsedState(collapsed) {
+      const box = document.getElementById("firReferenceBox");
+      const btn = document.getElementById("toggleFirReference");
+      if (!box || !btn) return;
+      box.classList.toggle("collapsed", collapsed);
+      btn.textContent = collapsed ? "▼" : "▲";
+      btn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      btn.setAttribute("title", collapsed ? "Show FIR reference" : "Hide FIR reference");
+    }
+
+    function initFirReferencePanel() {
+      const toggle = document.getElementById("toggleFirReference");
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const isCollapsed = document.getElementById("firReferenceBox").classList.contains("collapsed");
+          setFirReferenceCollapsedState(!isCollapsed);
+        });
+      }
+
+      document.querySelectorAll("[data-fir-row]").forEach(row => {
+        row.addEventListener("click", function () {
+          const code = row.getAttribute("data-fir-row") || "";
+          if (!code) return;
+          const firInput = document.getElementById("firInput");
+          firInput.value = code;
+          updateSelectedFirHighlight();
+          applySearch();
+        });
+      });
+
+      setFirReferenceCollapsedState(true);
+    }
+
+    function setQActionsCollapsedState(collapsed) {
+      const box = document.getElementById("qActionsBox");
+      const btn = document.getElementById("toggleQActions");
+      if (!box || !btn) return;
+      box.classList.toggle("collapsed", collapsed);
+      btn.textContent = collapsed ? "▼" : "▲";
+      btn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      btn.setAttribute("title", collapsed ? "Show Q-Code filters" : "Hide Q-Code filters");
+    }
+
+    function refreshQActionsSummary() {
+      const includeControls = Array.from(document.querySelectorAll(".q-subject, .q-group"));
+      const includeSelected = includeControls.filter(el => el.checked).length;
+      const includeText = includeSelected === includeControls.length
+        ? "all selected"
+        : `${includeSelected}/${includeControls.length} selected`;
+
+      const excluded = Array.from(document.querySelectorAll(".q-exclude:checked")).map(el => el.value).sort();
+      const excludeText = excluded.length > 0 ? excluded.join(",") : "none";
+
+      const headerSummary = document.getElementById("qActionsSummary");
+      const bodySummary = document.getElementById("qActionsLiveSummary");
+      const summaryText = `Include: ${includeText} | Exclude: ${excludeText}`;
+
+      if (headerSummary) headerSummary.textContent = summaryText;
+      if (bodySummary) bodySummary.textContent = summaryText;
+    }
+
+    function initQActionsPanel() {
+      const toggle = document.getElementById("toggleQActions");
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const isCollapsed = document.getElementById("qActionsBox").classList.contains("collapsed");
+          setQActionsCollapsedState(!isCollapsed);
+        });
+      }
+
+      document.querySelectorAll(".q-subject, .q-group, .q-exclude").forEach(el => {
+        el.addEventListener("change", refreshQActionsSummary);
+      });
+
+      setQActionsCollapsedState(true);
+      refreshQActionsSummary();
+    }
+
+    function setResultsPanelCollapsedState(collapsed) {
+      const box = document.getElementById("resultsPanelBox");
+      const btn = document.getElementById("toggleResultsPanel");
+      const quickBtn = document.getElementById("toggleResultsQuick");
+      if (!box || !btn) return;
+      box.classList.toggle("collapsed", collapsed);
+      btn.textContent = collapsed ? "▼" : "▲";
+      btn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      btn.setAttribute("title", collapsed ? "Show results" : "Hide results");
+      if (quickBtn) {
+        quickBtn.textContent = collapsed ? "View NOTAMS" : "Hide NOTAMS";
+        quickBtn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      }
+    }
+
+    function initResultsPanel() {
+      const toggle = document.getElementById("toggleResultsPanel");
+      const quickToggle = document.getElementById("toggleResultsQuick");
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const isCollapsed = document.getElementById("resultsPanelBox").classList.contains("collapsed");
+          setResultsPanelCollapsedState(!isCollapsed);
+        });
+      }
+      if (quickToggle) {
+        quickToggle.addEventListener("click", function () {
+          const isCollapsed = document.getElementById("resultsPanelBox").classList.contains("collapsed");
+          setResultsPanelCollapsedState(!isCollapsed);
+        });
+      }
+      setResultsPanelCollapsedState(true);
+    }
+
+    function saveLastIcao() {
+      try {
+        const icao = (document.getElementById("icaoInput").value || "").trim().toUpperCase();
+        if (/^[A-Z]{4}$/.test(icao)) {
+          localStorage.setItem(lastIcaoStorageKey, icao);
+        }
+      } catch (err) {
+        console.warn("Could not save last ICAO:", err);
+      }
+    }
+
+    function restoreLastIcao() {
+      try {
+        const saved = (localStorage.getItem(lastIcaoStorageKey) || "").trim().toUpperCase();
+        if (/^[A-Z]{4}$/.test(saved)) {
+          document.getElementById("icaoInput").value = saved;
+        }
+      } catch (err) {
+        console.warn("Could not restore last ICAO:", err);
+      }
     }
 
     function refreshCollapsibleFilterSummaries() {
@@ -694,11 +1562,14 @@
       list.forEach(notam => {
         const qInfo = parseQLine(notam.raw || "");
         const qualifier = parseQualifierFields(notam.raw || "");
-        const qLabel = qInfo ? `${qInfo.qcode} (Subject ${qInfo.subject}: ${decodeQSubject(qInfo.subject)}, Condition ${qInfo.status}: ${decodeQCondition(qInfo.status)})` : "N/A";
+        const highlightESection = true;
+        const qLabel = qInfo
+          ? `${qInfo.qcode} — ${decodeQSubject(qInfo.subject)} / ${decodeQCondition(qInfo.status)}`
+          : "N/A";
         const qDetails = qualifier
           ? `Traffic ${qualifier.traffic}: ${decodeQTraffic(qualifier.traffic)} | Purpose ${qualifier.purpose}: ${decodeQPurpose(qualifier.purpose)} | Scope ${qualifier.scope}: ${decodeQScope(qualifier.scope)} | Limits ${qualifier.lower}-${qualifier.upper} | ${qualifier.coord}`
           : "Qualifier: N/A";
-        const cleanedDescription = (notam.raw || "").replace(/[\r\n]+/g, " ").trim();
+        const descriptionHtml = buildDescriptionHtml(notam.raw || "", highlightESection);
 
         resultsContainer.innerHTML += `
           <div class="notam">
@@ -706,7 +1577,7 @@
             <p><strong>Qualifier:</strong> ${qDetails}</p>
             <p><strong>Valid From:</strong> ${notam.startValidity || "N/A"}</p>
             <p><strong>Valid To:</strong> ${notam.endValidity || "N/A"}</p>
-            <p><strong>Description:</strong> ${cleanedDescription}</p>
+            <p><strong>Description:</strong> ${descriptionHtml}</p>
           </div>
         `;
       });
@@ -716,6 +1587,7 @@
       const firInput = document.getElementById("firInput").value.trim();
       const icaoInput = document.getElementById("icaoInput").value.trim();
       const notamInput = document.getElementById("notamInput").value.trim();
+      const hasValidIcao = /^[A-Z]{4}$/.test(icaoInput.toUpperCase());
       const subjectInputRaw = document.getElementById("subjectInput").value.trim();
       const statusInputRaw = document.getElementById("statusInput").value.trim();
       const selected = getSelectedSubjects();
@@ -727,6 +1599,10 @@
       const hasAnyExplicitInclude = selected.subjects.size > 0 || selected.categories.size > 0 || selectedStatuses.size > 0;
       const hasTextScope = Boolean(firInput || icaoInput || notamInput);
       updateSelectedFirHighlight();
+
+      if (hasValidIcao) {
+        setResultsPanelCollapsedState(false);
+      }
 
       const scopeParts = [];
       if (firInput) scopeParts.push(`FIR ${firInput.toUpperCase()}`);
@@ -780,11 +1656,18 @@
 
     document.getElementById("searchForm").addEventListener("submit", function (event) {
       event.preventDefault();
+      saveLastIcao();
       applySearch();
     });
 
     document.getElementById("firInput").addEventListener("input", function () {
+      this.value = this.value.toUpperCase();
       updateSelectedFirHighlight();
+    });
+
+    document.getElementById("icaoInput").addEventListener("input", function () {
+      this.value = this.value.toUpperCase();
+      saveLastIcao();
     });
 
     document.getElementById("applyFilters").addEventListener("click", function () {
@@ -792,16 +1675,28 @@
     });
 
     document.getElementById("clearFilters").addEventListener("click", function () {
-      document.getElementById("subjectInput").value = "";
-      document.getElementById("statusInput").value = "";
-      document.querySelectorAll(".q-subject, .q-group").forEach(el => {
-        el.checked = false;
-      });
-      document.querySelectorAll(".q-exclude").forEach(el => {
-        el.checked = false;
-      });
+      const clearBtn = document.getElementById("clearFilters");
+
+      if (clearFiltersMode === "clear") {
+        document.getElementById("subjectInput").value = "";
+        document.getElementById("statusInput").value = "";
+        document.querySelectorAll(".q-subject, .q-group").forEach(el => {
+          el.checked = false;
+        });
+        document.querySelectorAll(".q-exclude").forEach(el => {
+          el.checked = false;
+        });
+        clearFiltersMode = "defaults";
+        clearBtn.textContent = "Select Defaults";
+      } else {
+        applyFilterState(defaultFilterState);
+        clearFiltersMode = "clear";
+        clearBtn.textContent = "Clear All Q-Codes";
+      }
+
       refreshCollapsibleFilterSummaries();
-      applySearch();
+      refreshQActionsSummary();
+      document.getElementById("applyFilters").click();
     });
 
     document.getElementById("aircraftOnlyPreset").addEventListener("click", function () {
@@ -814,6 +1709,7 @@
       document.getElementById("subjectInput").value = "F,L,M,P";
       document.getElementById("statusInput").value = "";
       refreshCollapsibleFilterSummaries();
+      refreshQActionsSummary();
       applySearch();
     });
 
@@ -825,6 +1721,7 @@
           cb.checked = mode === "on";
         });
         refreshCollapsibleFilterSummaries();
+        refreshQActionsSummary();
         applySearch();
       });
     });
@@ -832,6 +1729,7 @@
     document.querySelectorAll(".q-subject, .q-group").forEach(el => {
       el.addEventListener("change", function () {
         refreshCollapsibleFilterSummaries();
+        refreshQActionsSummary();
       });
     });
 
@@ -847,12 +1745,18 @@
         });
     });
 
+    initFirReferencePanel();
+    initQActionsPanel();
+    initResultsPanel();
+    initQLegendModal();
+    restoreLastIcao();
     initCollapsibleFilterChoices();
     setFilterStateDisplay();
     loadNotamData().then(() => applySearch());
     updateSelectedFirHighlight();
     document.getElementById("subjectInput").value = "";
     document.getElementById("statusInput").value = "";
+    defaultFilterState = snapshotFilterState();
   </script>
 </body>
 </html>

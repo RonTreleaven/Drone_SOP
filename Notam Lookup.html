@@ -5,6 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NOTAM Search</title>
   <link rel="stylesheet" href="./assets/css/notams-common.css">
+  <style>
+    .coord-link {
+      color: #0b3f74;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid #85b8e6;
+      background: #dff1ff;
+      border-radius: 6px;
+      padding: 1px 5px;
+      display: inline-block;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .coord-link:hover,
+    .coord-link:focus-visible {
+      background: #c3e3ff;
+      border-color: #4f90ca;
+      outline: none;
+    }
+  </style>
 </head>
 <body>
   <nav class="top-nav">
@@ -235,10 +256,76 @@
         .replace(/'/g, "&#039;");
     }
 
+    function dmsTokenToDecimal(token, isLat) {
+      const clean = (token || "").toUpperCase().trim();
+      const dir = clean.slice(-1);
+      const body = clean.slice(0, -1);
+
+      if (isLat && !/[NS]/.test(dir)) return null;
+      if (!isLat && !/[EW]/.test(dir)) return null;
+
+      const degDigits = isLat ? 2 : 3;
+      if (!/^\d+$/.test(body)) return null;
+      if (body.length !== degDigits + 2 && body.length !== degDigits + 4) return null;
+
+      const deg = Number(body.slice(0, degDigits));
+      const min = Number(body.slice(degDigits, degDigits + 2));
+      const sec = body.length === degDigits + 4 ? Number(body.slice(degDigits + 2, degDigits + 4)) : 0;
+
+      if (min >= 60 || sec >= 60) return null;
+
+      let dd = deg + (min / 60) + (sec / 3600);
+      if (dir === "S" || dir === "W") dd = -dd;
+      return dd;
+    }
+
+    function linkifyDmsCoordinatePairs(text) {
+      const value = text || "";
+      const pairRegex = /(\d{4,6}[NS])\s*(\d{5,7}[EW])/gi;
+      let lastIndex = 0;
+      let match;
+      const out = [];
+
+      while ((match = pairRegex.exec(value)) !== null) {
+        out.push(escapeHtml(value.slice(lastIndex, match.index)));
+
+        const latToken = (match[1] || "").toUpperCase();
+        const lonToken = (match[2] || "").toUpperCase();
+        const lat = dmsTokenToDecimal(latToken, true);
+        const lon = dmsTokenToDecimal(lonToken, false);
+
+        if (lat == null || lon == null) {
+          out.push(escapeHtml(match[0]));
+        } else {
+          const href = `NotamsMap.html?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}&focus=1&src=qfilter`;
+          out.push(`<a class="coord-link" href="${href}" onclick="return openMapTab(event, this);" title="Lookup on Map?" aria-label="Lookup on Map?">${escapeHtml(latToken)}&nbsp;${escapeHtml(lonToken)}</a>`);
+        }
+
+        lastIndex = pairRegex.lastIndex;
+      }
+
+      out.push(escapeHtml(value.slice(lastIndex)));
+      return out.join("");
+    }
+
+    function openMapTab(event, anchorEl) {
+      if (event) event.preventDefault();
+      const href = anchorEl && anchorEl.href ? anchorEl.href : null;
+      if (!href) return false;
+
+      const popup = window.open(href, "_blank");
+      if (popup) {
+        popup.focus();
+      } else {
+        window.location.href = href;
+      }
+      return false;
+    }
+
     function buildDescriptionHtml(rawText, highlightESection) {
       const flat = (rawText || "").replace(/[\r\n]+/g, " ").trim();
       if (!highlightESection) {
-        return escapeHtml(flat);
+        return linkifyDmsCoordinatePairs(flat);
       }
 
       const match = flat.match(/E\)\s*(.*?)(?=\s[A-Z]\)|$)/);
@@ -252,7 +339,7 @@
       const eSection = match[0];
       const after = flat.slice(end);
 
-      return `${escapeHtml(before)}<span class="e-highlight">${escapeHtml(eSection)}</span>${escapeHtml(after)}`;
+      return `${escapeHtml(before)}<span class="e-highlight">${linkifyDmsCoordinatePairs(eSection)}</span>${escapeHtml(after)}`;
     }
 
     function extractDmsCoordinate(rawText) {
