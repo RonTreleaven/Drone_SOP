@@ -1,38 +1,270 @@
 <!DOCTYPE html>
-<! version 1.0 RLT - May 22 2025 -->
-
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Drone SOP – Select Sections</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <title>Drone SOP Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-a: #f3fbff;
+      --bg-b: #eef8ef;
+      --ink: #1f2833;
+      --muted: #506070;
+      --accent: #0f6d5a;
+      --accent-2: #0b5ea8;
+      --panel: #ffffff;
+      --line: #d6e4ef;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(11, 94, 168, 0.10), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(15, 109, 90, 0.10), transparent 45%),
+        linear-gradient(160deg, var(--bg-a), var(--bg-b));
+      min-height: 100vh;
+    }
+    .shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 1.25rem;
+    }
+    .top-nav {
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .top-nav a {
+      color: var(--accent-2);
+      text-decoration: none;
+      margin-right: 0.55rem;
+    }
+    .top-nav a.active {
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.25rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .brand img {
+      width: 74px;
+      height: auto;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+    }
+    .sub {
+      margin: 0.55rem 0 1.1rem;
+      color: var(--muted);
+      max-width: 68ch;
+    }
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.75rem;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.9rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: #a9c8df;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+    .card h2 {
+      margin: 0 0 0.35rem;
+      font-size: 1.05rem;
+    }
+    .card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .cta {
+      margin-top: 1rem;
+    }
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .cta a {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+    }
+    .cta a.alt {
+      background: var(--accent-2);
+    }
+    .loc-init {
+      margin: 0.9rem 0 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .mini-btn {
+      border: 1px solid #7ba7c8;
+      background: #ffffff;
+      color: #0b5ea8;
+      border-radius: 999px;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .mini-btn:hover {
+      background: #edf6ff;
+    }
+    .loc-status {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  </style>
 </head>
 <body>
+  <div class="shell">
+    <nav class="top-nav">
+      <a href="index.html" class="active">Home</a> |
+      <a href="Sections.html">Checklists</a> |
+      <a href="tools.html" target="_blank" rel="noopener">Tools</a> |
+      <a href="flight-log.html">Flight Log</a> |
+      <a href="summary.html">Summary</a> |
+      <a href="emergencies.html">Emergency Procedures</a>
+    </nav>
 
-  <nav class="top-nav">
-    <a href="index.html" class="active">Home</a> |
-    <a href="tools.html" target="_blank" rel="noopener">Tools</a> |
-    <a href="flight-log.html">Flight Log</a> |
-    <a href="summary.html">Summary</a> |
-    <a href="emergencies.html">Emergency Procedures</a>
-  </nav>
+    <main class="hero">
+      <div class="brand">
+        <img src="assets/img/logo.png" alt="Drone SOP logo">
+        <h1>Drone SOP Mission Hub</h1>
+      </div>
+      <p class="sub">
+        Start each operation from the checklist workflow, then log and review your flight artifacts in one place. To begin, set your current location for Tools and Surveys for Drone Operations and map aids.
+      </p>
+      <div class="loc-init">
+        <button id="init-pilot-location" class="mini-btn" type="button">Set Pilot Location</button>
+        <span id="pilot-location-status" class="loc-status">No pilot location set yet.</span>
+      </div>
 
-<!-- Site Header with LOGO -->
-  <header class="site-header">
-    <img src="assets/img/logo.png" alt="Logo" class="site-logo">
-    <h1 class="page-title">Standard Operating Procedures</h1>
-  </header>
+      <section class="actions" aria-label="Primary links">
+        <a class="card" href="tools.html" target="_blank" rel="noopener">
+          <h2>Tools</h2>
+          <p>Open weather, location, NOTAM, and utility workflows.</p>
+        </a>
+        <a class="card" href="Sections.html">
+          <h2>Checklists and Procedures</h2>
+          <p>Select one or more SOP sections for the current flight run.</p>
+        </a>
+        <a class="card" href="flight-log.html">
+          <h2>Flight Log</h2>
+          <p>Capture pilot, observer, timing, and location details.</p>
+        </a>
+        <a class="card" href="summary.html">
+          <h2>Flight Summary</h2>
+          <p>Review status and export report artifacts for your records.</p>
+        </a>
+      </section>
 
-  <main>
-    <p>Select all sections you would like to include in your flight record:</p>
-	<div id="section-selector"></div>
-	<button id="begin-btn" disabled>Begin</button>
-  </main>	
-   
-  <script src="assets/js/app.js"></script>
+      <p class="cta">
+        <span class="cta-actions">
+          <a href="Sections.html">Start Checklist Review</a>
+          <a class="alt" href="tools.html" target="_blank" rel="noopener">Open Tools</a>
+          <a class="alt" href="flight-log.html">Open Flight Log</a>
+          <a class="alt" href="summary.html">Open Flight Summary</a>
+        </span>
+      </p>
+    </main>
+  </div>
+  <script>
+    function toDMS(deg, isLat) {
+      const abs = Math.abs(deg);
+      const d = Math.floor(abs);
+      const mFloat = (abs - d) * 60;
+      const m = Math.floor(mFloat);
+      const s = ((mFloat - m) * 60).toFixed(1);
+      const dir = isLat ? (deg >= 0 ? 'N' : 'S') : (deg >= 0 ? 'E' : 'W');
+      return `${d}\u00B0${m}'${s}"${dir}`;
+    }
+
+    function setPilotLocation(lat, lon, source) {
+      const latNum = Number(lat);
+      const lonNum = Number(lon);
+      const latShort = latNum.toFixed(6);
+      const lonShort = lonNum.toFixed(6);
+      const latDMS = toDMS(latNum, true);
+      const lonDMS = toDMS(lonNum, false);
+
+      localStorage.setItem('pilotLocationDD', `${latShort}, ${lonShort}`);
+      localStorage.setItem('pilotLocationDMS', `${latDMS}, ${lonDMS}`);
+      localStorage.setItem('pilotLatitude', latShort);
+      localStorage.setItem('pilotLongitude', lonShort);
+      localStorage.setItem('pilotLocationSource', source);
+
+      return { latShort, lonShort };
+    }
+
+    function updateStatusFromStorage() {
+      const status = document.getElementById('pilot-location-status');
+      if (!status) return;
+      const dd = localStorage.getItem('pilotLocationDD');
+      if (dd) {
+        status.textContent = `Pilot location ready: ${dd}`;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('init-pilot-location');
+      const status = document.getElementById('pilot-location-status');
+      if (!btn || !status) return;
+
+      updateStatusFromStorage();
+
+      btn.addEventListener('click', () => {
+        if (!navigator.geolocation) {
+          status.textContent = 'Geolocation is not supported by this browser.';
+          return;
+        }
+
+        status.textContent = 'Getting location...';
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const saved = setPilotLocation(
+              position.coords.latitude,
+              position.coords.longitude,
+              'index-hub'
+            );
+            status.textContent = `Pilot location ready: ${saved.latShort}, ${saved.lonShort}`;
+          },
+          () => {
+            status.textContent = 'Unable to fetch location. Check browser permissions and try again.';
+          },
+          { enableHighAccuracy: true, timeout: 12000, maximumAge: 300000 }
+        );
+      });
+    });
+  </script>
 </body>
 </html>
 

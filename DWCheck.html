@@ -156,6 +156,63 @@ color:#14532d;
 font-weight:600;
 }
 
+.status-alert{
+color:#8a1f1f;
+font-weight:700;
+}
+
+.mini-action-btn{
+padding:4px 9px;
+font-size:12px;
+margin-left:0;
+margin-top:8px;
+}
+
+.mini-action-btn.state-fresh{
+background:#d3f9d8;
+border:1px solid #2f9e44;
+color:#14532d;
+}
+
+.mini-action-btn.state-stale{
+background:#ffd8d8;
+border:1px solid #c92a2a;
+color:#7f1d1d;
+font-weight:700;
+}
+
+.flow-next-card{
+margin-top:10px;
+padding:10px 12px;
+border:1px solid #b7dfc2;
+background:#effcf3;
+border-radius:8px;
+}
+
+.flow-next-card.is-hidden{
+display:none;
+}
+
+.flow-next-link{
+display:inline-block;
+margin-top:6px;
+padding:6px 10px;
+border-radius:6px;
+text-decoration:none;
+background:#2f9e44;
+color:#fff;
+font-weight:600;
+font-size:13px;
+}
+
+.flow-next-link:hover{
+background:#237a33;
+}
+
+.is-hidden{
+display:none;
+}
+
 .risk-mini-table{
 width:100%;
 border-collapse:collapse;
@@ -358,7 +415,8 @@ background:#f4f7fb;
 <div class="controls">
 <input id="icao" placeholder="ICAO (CYOO)">
 <button id="locBtn" onclick="useCurrentLocation()">Get Pilot Location</button>
-<button id="checkBtn" onclick="runCheck()">Get METAR/KP index</button>
+<button id="checkBtn" onclick="runCheck()">Fetch METAR/KP Risk Assessment</button>
+<button id="completeBtn" type="button" onclick="markWeatherCheckComplete()">Save Weather Check</button>
 </div>
 
 <div id="errorBanner" class="error-banner"></div>
@@ -375,6 +433,16 @@ background:#f4f7fb;
 <div id="nearestStations">Closest stations will appear here.</div>
 </div>
 
+<div class="panel">
+<h3>Weather Check Record</h3>
+<div id="dwCheckStatus" class="subtle">No weather check saved yet.</div>
+<button id="rerunAssessmentBtn" type="button" class="mini-action-btn is-hidden" onclick="runNewAssessment()">Run New Assessment</button>
+<div id="dwNextFlightLog" class="flow-next-card is-hidden">
+<div><b>Weather assessment is current.</b> Continue to log this flight.</div>
+<a class="flow-next-link" href="flight-log.html">Proceed to Flight Log</a>
+</div>
+</div>
+
 <div id="riskPanel" class="panel">
 <h3>Drone Weather Survey</h3>
 <div class="risk-placeholder">Run METAR Weather Check to load current survey details.</div>
@@ -388,12 +456,6 @@ background:#f4f7fb;
 <div class="panel">
 <h3>NOAA Geomagnetic Planetary Kp Index</h3>
 <div id="kpData"></div>
-</div>
-
-<div class="panel">
-<h3>Weather Check Record</h3>
-<div id="dwCheckStatus" class="subtle">No weather check saved yet.</div>
-<button id="completeBtn" type="button" onclick="markWeatherCheckComplete()">Save Weather Check</button>
 </div>
 
 <div class="panel">
@@ -493,7 +555,7 @@ try{
 const knownPilot = getKnownPilotLocation()
 if(!knownPilot || isPilotLocationUndefined(knownPilot.lat,knownPilot.lon)){
 renderCurrentLocationDetails("0.000000, 0.000000","0\u00B00'0.0\"N, 0\u00B00'0.0\"E")
-showError("Pilot location not defined. Click Get Location DD first, then run Check METAR Weather.")
+showError("Pilot location not defined. Click Get/Update Pilot Location first, then run Fetch METAR/KP Risk Assessment.")
 return
 }
 
@@ -558,6 +620,7 @@ const lon = position.coords.longitude
 latestLocation = { lat, lon, source: "dwcheck-geolocation" }
 
 const savedLoc = saveKnownPilotLocation(lat,lon,"dwcheck-geolocation")
+updatePilotLocationButtonLabel()
 
 renderCurrentLocationDetails(`${savedLoc.latShort}, ${savedLoc.lonShort}`, savedLoc.dms)
 
@@ -761,6 +824,19 @@ return { latShort, lonShort, dms:`${latDMS}, ${lonDMS}` }
 }
 
 
+function updatePilotLocationButtonLabel(){
+const locButton = document.getElementById("locBtn")
+if(!locButton) return
+const known = getKnownPilotLocation()
+if(known && !isPilotLocationUndefined(known.lat,known.lon)){
+locButton.textContent = "Update Pilot Location"
+}
+else{
+locButton.textContent = "Get Pilot Location"
+}
+}
+
+
 function toDMS(deg,isLat){
 const abs = Math.abs(deg)
 const d = Math.floor(abs)
@@ -792,7 +868,7 @@ el.classList.add("location-not-defined")
 el.innerHTML = `
 <b>Pilot Location Not Yet Defined</b><br>
 Pilot Location: DD: [ ${ddText} ] | DMS: [ ${dmsText || "0\u00B00'0.0\"N, 0\u00B00'0.0\"E"} ]<br>
-Use <b>Get Location DD</b> to set your pilot location before running METAR Weather Check.
+Use <b>Get/Update Pilot Location</b> to set your pilot location before running METAR/KP Risk Assessment.
 `
 return
 }
@@ -820,7 +896,8 @@ if(isPilotLocationUndefined(known.lat,known.lon)){
 latestLocation = null
 latestNearestStations = []
 renderCurrentLocationDetails(ddText,dmsStored || dmsComputed)
-document.getElementById("nearestStations").innerHTML = "<em>Pilot location not defined yet. Click Get Location DD to load nearby METAR stations.</em>"
+document.getElementById("nearestStations").innerHTML = "<em>Pilot location not defined yet. Click Get/Update Pilot Location to load nearby METAR stations.</em>"
+updatePilotLocationButtonLabel()
 return
 }
 
@@ -836,6 +913,8 @@ latestNearestStations = nearest
 if(!document.getElementById("icao").value){
 document.getElementById("icao").value = nearest[0].icaoId
 }
+
+updatePilotLocationButtonLabel()
 
 }
 
@@ -902,10 +981,10 @@ committedWeatherArtifact = parseStoredArtifact("dwCheckLatest")
 
 if(!latestWeatherArtifact){
 if(committedWeatherArtifact){
-showError("No new weather check to save. Run Get METAR/KP index to create an updated draft.")
+showError("No new weather check to save. Run Fetch METAR/KP Risk Assessment to create an updated draft.")
 }
 else{
-showError("Run Get METAR/KP index first to create a weather record.")
+showError("Run Fetch METAR/KP Risk Assessment first to create a weather record.")
 }
 renderWeatherCheckStatus()
 return
@@ -913,7 +992,7 @@ return
 
 const hasPendingDraft = localStorage.getItem("dwCheckDraftPending") === "true"
 if(!hasPendingDraft){
-showError("Latest weather check is already saved. Run Get METAR/KP index to create a new draft.")
+showError("Latest weather check is already saved. Run Fetch METAR/KP Risk Assessment to create a new draft.")
 renderWeatherCheckStatus()
 return
 }
@@ -934,9 +1013,30 @@ renderWeatherCheckStatus()
 }
 
 
+function runNewAssessment(){
+if(committedWeatherArtifact && committedWeatherArtifact.icao && !document.getElementById("icao").value){
+document.getElementById("icao").value = committedWeatherArtifact.icao
+}
+runCheck()
+}
+
+
+function formatHoursSince(timestampIso){
+if(!timestampIso) return null
+const t = new Date(timestampIso).getTime()
+if(!Number.isFinite(t)) return null
+const hours = (Date.now() - t) / 3600000
+if(!Number.isFinite(hours) || hours < 0) return null
+if(hours < 1) return `${Math.round(hours * 60)} min`
+return `${hours.toFixed(1)} hr`
+}
+
+
 function renderWeatherCheckStatus(){
 const el = document.getElementById("dwCheckStatus")
 const saveBtn = document.getElementById("completeBtn")
+const rerunBtn = document.getElementById("rerunAssessmentBtn")
+const nextFlightLogCard = document.getElementById("dwNextFlightLog")
 const completed = localStorage.getItem("dwCheckCompleted") === "true"
 const completedAt = localStorage.getItem("dwCheckCompletedAt")
 const hasPendingDraft = localStorage.getItem("dwCheckDraftPending") === "true"
@@ -961,22 +1061,27 @@ if(!committedWeatherArtifact){
 if(latestWeatherArtifact){
 el.innerHTML = `<div>Draft check ready. Click <b>Save Weather Check</b> to commit.</div>`
 if(saveBtn) saveBtn.disabled = false
+if(rerunBtn) rerunBtn.classList.add("is-hidden")
+if(nextFlightLogCard) nextFlightLogCard.classList.add("is-hidden")
 }
 else{
 el.textContent = "No weather check saved yet."
 if(saveBtn) saveBtn.disabled = true
+if(rerunBtn) rerunBtn.classList.add("is-hidden")
+if(nextFlightLogCard) nextFlightLogCard.classList.add("is-hidden")
 }
 return
 }
 
-const when = new Date(committedWeatherArtifact.timestamp).toLocaleString()
-const completeLine = completed
-? `<div class="status-ok">Completed: ${completedAt ? new Date(completedAt).toLocaleString() : "Yes"}</div>`
-: `<div>Completed: No</div>`
+const ageMs = Date.now() - new Date(committedWeatherArtifact.timestamp).getTime()
+const isStale = Number.isFinite(ageMs) && ageMs > 3600000
+const hoursSince = formatHoursSince(committedWeatherArtifact.timestamp)
 
-let draftLine = ""
+const completeLine = completed
+? `<div class="${isStale ? "status-alert" : "status-ok"}">Record State: ${hoursSince ? `${hoursSince} since last saved weather assessment` : "Saved"}</div>`
+: `<div class="status-alert">Record State: Not saved</div>`
+
 if(hasPendingDraft && latestWeatherArtifact && latestWeatherArtifact.timestamp){
-draftLine = `<div>Draft update available from ${new Date(latestWeatherArtifact.timestamp).toLocaleString()} (not committed)</div>`
 if(saveBtn) saveBtn.disabled = false
 }
 else{
@@ -984,13 +1089,72 @@ if(saveBtn) saveBtn.disabled = true
 }
 
 el.innerHTML = `
-<div>Last check: ${when}</div>
+${completeLine}
 <div>ICAO: ${committedWeatherArtifact.icao || "-"}</div>
 <div>Risk: ${committedWeatherArtifact.riskLabel} (score ${committedWeatherArtifact.riskScore})</div>
 <div>Kp: ${committedWeatherArtifact.kpIndex ?? "-"} (${committedWeatherArtifact.kpCondition})</div>
-${completeLine}
-${draftLine}
 `
+
+if(rerunBtn){
+rerunBtn.classList.remove("is-hidden","state-fresh","state-stale")
+if(isStale){
+rerunBtn.textContent = "Refresh Weather Assessment"
+rerunBtn.classList.add("state-stale")
+rerunBtn.disabled = false
+}
+else{
+rerunBtn.textContent = "Recently Saved"
+rerunBtn.classList.add("state-fresh")
+rerunBtn.disabled = true
+}
+}
+
+if(nextFlightLogCard){
+const showNext = completed && !isStale;
+nextFlightLogCard.classList.toggle("is-hidden", !showNext);
+}
+}
+
+
+function renderSavedWeatherArtifactDetails(){
+const artifact = committedWeatherArtifact || latestWeatherArtifact
+if(!artifact) return
+
+if(artifact.metarRaw){
+document.getElementById("metarText").textContent = artifact.metarRaw
+}
+
+if(Number.isFinite(Number(artifact.kpIndex))){
+displayKp({ kp: Number(artifact.kpIndex) })
+}
+
+const fallbackRisk = {
+score: Number(artifact.riskScore || 0),
+windDir: artifact.windDir || "N/A",
+wind: Number(artifact.windKt || 0),
+gust: Number(artifact.gustKt || 0),
+visibility: artifact.visibilitySm == null ? 10 : Number(artifact.visibilitySm),
+ceiling: artifact.ceilingFt == null ? 5000 : Number(artifact.ceilingFt)
+}
+displayRisk(fallbackRisk, { rawOb: artifact.metarRaw || "" })
+
+if(Array.isArray(artifact.nearestStations) && artifact.nearestStations.length){
+displayNearestStations(artifact.nearestStations)
+latestNearestStations = artifact.nearestStations
+if(!document.getElementById("icao").value && artifact.nearestStations[0] && artifact.nearestStations[0].icaoId){
+document.getElementById("icao").value = artifact.nearestStations[0].icaoId
+}
+}
+
+if(artifact.location && Number.isFinite(Number(artifact.location.lat)) && Number.isFinite(Number(artifact.location.lon))){
+latestLocation = {
+lat: Number(artifact.location.lat),
+lon: Number(artifact.location.lon),
+source: artifact.location.source || "dwcheck-saved"
+}
+const savedLoc = saveKnownPilotLocation(latestLocation.lat,latestLocation.lon,"dwcheck-saved")
+renderCurrentLocationDetails(`${savedLoc.latShort}, ${savedLoc.lonShort}`, savedLoc.dms)
+}
 }
 
 function setLoading(isLoading,message="Searching weather sources..."){
@@ -1384,6 +1548,8 @@ el.innerHTML = `
 
 restoreKnownPilotLocation()
 renderWeatherCheckStatus()
+updatePilotLocationButtonLabel()
+renderSavedWeatherArtifactDetails()
 
 </script>
 

@@ -77,6 +77,10 @@ function parseLatLonText(value) {
   return { lat, lon };
 }
 
+function isPilotLocationUndefined(lat, lon) {
+  return Math.abs(Number(lat)) < 0.000001 && Math.abs(Number(lon)) < 0.000001;
+}
+
 function toDMS(deg, isLat) {
   const abs = Math.abs(deg);
   const d = Math.floor(abs);
@@ -104,12 +108,165 @@ function savePilotLocation(lat, lon, source = 'manual') {
   return { latShort, lonShort, latDMS, lonDMS };
 }
 
+function normalizePilotLocationState() {
+  const dd = parseLatLonText(localStorage.getItem('pilotLocationDD') || '');
+  const lat = Number(localStorage.getItem('pilotLatitude'));
+  const lon = Number(localStorage.getItem('pilotLongitude'));
+  const fromLatLon = Number.isFinite(lat) && Number.isFinite(lon)
+    ? { lat, lon }
+    : null;
+  const best = dd || fromLatLon;
+
+  if (best) {
+    savePilotLocation(best.lat, best.lon, localStorage.getItem('pilotLocationSource') || 'normalized');
+    return;
+  }
+
+  const anyLocationKey = PILOT_LOCATION_KEYS.some(key => !!localStorage.getItem(key));
+  if (anyLocationKey) clearPilotLocationData();
+}
+
+function parseJSONRaw(raw) {
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function normalizeWeatherState() {
+  const latestRaw = localStorage.getItem('dwCheckLatest');
+  const draftRaw = localStorage.getItem('dwCheckDraft');
+  const latest = parseJSONRaw(latestRaw);
+  const draft = parseJSONRaw(draftRaw);
+  const pending = localStorage.getItem('dwCheckDraftPending') === 'true';
+
+  if (latestRaw && !latest) {
+    localStorage.removeItem('dwCheckLatest');
+    localStorage.removeItem('dwCheckCompleted');
+    localStorage.removeItem('dwCheckCompletedAt');
+  }
+
+  if (draftRaw && !draft) {
+    localStorage.removeItem('dwCheckDraft');
+    localStorage.setItem('dwCheckDraftPending', 'false');
+  }
+
+  if (latest) {
+    const stamp =
+      localStorage.getItem('dwCheckCompletedAt') ||
+      latest.committedAt ||
+      latest.timestamp ||
+      '';
+
+    localStorage.setItem('dwCheckCompleted', 'true');
+    if (stamp) localStorage.setItem('dwCheckCompletedAt', stamp);
+
+    if (!draft) {
+      localStorage.setItem('dwCheckDraftPending', 'false');
+    }
+  } else {
+    localStorage.removeItem('dwCheckCompleted');
+    localStorage.removeItem('dwCheckCompletedAt');
+    if (!draft && pending) localStorage.setItem('dwCheckDraftPending', 'false');
+  }
+
+  if (draft && !pending) {
+    localStorage.setItem('dwCheckDraftPending', 'true');
+  }
+}
+
+function normalizeSessionProgressState() {
+  const selected = safeParseJSON('selectedSections', []);
+  const sopProgress = safeParseJSON('droneSOPProgress', {});
+  const hasSelected = Array.isArray(selected) && selected.length > 0;
+  const hasSopSelected = Array.isArray(sopProgress.selectedSOPs) && sopProgress.selectedSOPs.length > 0;
+  const hasProgressMap = sopProgress.progress && typeof sopProgress.progress === 'object';
+
+  if (hasSopSelected) {
+    localStorage.setItem('selectedSections', JSON.stringify(sopProgress.selectedSOPs));
+    return;
+  }
+
+  if (hasSelected) {
+    const progress = {};
+    selected.forEach(id => {
+      progress[id] = { status: 'not-started', data: {} };
+    });
+    localStorage.setItem('droneSOPProgress', JSON.stringify({ selectedSOPs: selected, progress }));
+    return;
+  }
+
+  if (hasProgressMap) {
+    const inferred = Object.keys(sopProgress.progress);
+    if (inferred.length) {
+      localStorage.setItem('selectedSections', JSON.stringify(inferred));
+      localStorage.setItem('droneSOPProgress', JSON.stringify({ selectedSOPs: inferred, progress: sopProgress.progress }));
+      return;
+    }
+  }
+
+  localStorage.removeItem('selectedSections');
+}
+
+function validateAndHealSessionState() {
+  normalizePilotLocationState();
+  normalizeWeatherState();
+  normalizeSessionProgressState();
+}
+
+function goBackWithFallback(fallbackHref = 'index.html') {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = fallbackHref;
+  }
+}
+
+function ensureTopNavBackLink() {
+  const nav = document.querySelector('.top-nav');
+  if (!nav) return;
+
+  const existingBack = Array.from(nav.querySelectorAll('a')).find(a =>
+    (a.dataset && a.dataset.backLink === 'true') || /back/i.test((a.textContent || '').trim())
+  );
+  if (existingBack) return;
+
+  const fallbackHref = window.location.pathname.includes('/sections/')
+    ? '../Sections.html'
+    : 'index.html';
+
+  const back = document.createElement('a');
+  back.href = '#';
+  back.dataset.backLink = 'true';
+  back.textContent = '\u2190 Back';
+  back.addEventListener('click', event => {
+    event.preventDefault();
+    goBackWithFallback(fallbackHref);
+  });
+
+  const sep = document.createTextNode(' | ');
+  nav.insertBefore(sep, nav.firstChild);
+  nav.insertBefore(back, sep);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  // Heal stale or partial localStorage state before rendering any page UI.
+  validateAndHealSessionState();
+  ensureTopNavBackLink();
+
   // Flight Log page does not require sections.json; initialize immediately.
   if (document.getElementById('flight-log-form')) {
     renderFlightLog();
     return;
   }
+
+  const needsSectionsData =
+    !!document.getElementById('section-selector') ||
+    !!document.getElementById('checklist-container') ||
+    !!document.getElementById('summary-container');
+  if (!needsSectionsData) return;
 
   const jsonPath = window.location.pathname.includes('/sections/')
     ? '../data/sections.json'
@@ -143,24 +300,109 @@ function renderIndex(sections) {
   const container = document.getElementById('section-selector');
   const btn       = document.getElementById('begin-btn');
   const chosen    = new Set();
+  const checkboxById = new Map();
+
+  const presets = {
+    micro: ['1_0_Micro_Pre-Flight', '2_0_Takeoff_Procedures', '3_0_Landing_Procedures'],
+    basic: ['1_1_Basic_Pre-Flight', '2_0_Takeoff_Procedures', '3_0_Landing_Procedures', '5_1_Basic_Rules'],
+    advanced: ['1_2_Advanced_Pre-Flight', '2_0_Takeoff_Procedures', '3_0_Landing_Procedures', '5_2_Advanced_Rules']
+  };
+
+  const intro = document.createElement('div');
+  intro.style.marginBottom = '1rem';
+  intro.innerHTML = '<strong>Choose a profile:</strong> Micro, Basic, or Advanced. Then accept defaults or add more sections.';
+
+  const presetWrap = document.createElement('div');
+  presetWrap.style.display = 'flex';
+  presetWrap.style.gap = '0.5rem';
+  presetWrap.style.flexWrap = 'wrap';
+  presetWrap.style.marginBottom = '0.8rem';
+
+  const microBtn = document.createElement('button');
+  microBtn.type = 'button';
+  microBtn.textContent = 'MICRO';
+
+  const basicBtn = document.createElement('button');
+  basicBtn.type = 'button';
+  basicBtn.textContent = 'BASIC';
+
+  const advBtn = document.createElement('button');
+  advBtn.type = 'button';
+  advBtn.textContent = 'ADVANCED';
+
+  presetWrap.append(microBtn, basicBtn, advBtn);
+
+  const promptLine = document.createElement('p');
+  promptLine.className = 'subtle';
+  promptLine.style.margin = '0.4rem 0 0.8rem';
+  promptLine.textContent = 'Select a profile to preload default SOP sections.';
+
+  const decisionWrap = document.createElement('div');
+  decisionWrap.style.display = 'flex';
+  decisionWrap.style.gap = '0.5rem';
+  decisionWrap.style.flexWrap = 'wrap';
+  decisionWrap.style.marginBottom = '0.9rem';
+
+  const acceptDefaultsBtn = document.createElement('button');
+  acceptDefaultsBtn.type = 'button';
+  acceptDefaultsBtn.textContent = 'Accept Defaults and Start';
+  acceptDefaultsBtn.disabled = true;
+
+  const addMoreBtn = document.createElement('button');
+  addMoreBtn.type = 'button';
+  addMoreBtn.textContent = 'Add or Remove Sections';
+  addMoreBtn.disabled = true;
+
+  decisionWrap.append(acceptDefaultsBtn, addMoreBtn);
+
+  container.before(intro, presetWrap, promptLine, decisionWrap);
+
+  function getChosenInSectionOrder() {
+    return sections.filter(sec => chosen.has(sec.id)).map(sec => sec.id);
+  }
+
+  function updateBeginButtonState() {
+    btn.disabled = chosen.size === 0;
+    btn.textContent = chosen.size ? 'Start With Selected Sections' : 'Start Review';
+  }
+
+  function syncCheckboxesFromChosen() {
+    checkboxById.forEach((cb, id) => {
+      cb.checked = chosen.has(id);
+    });
+    updateBeginButtonState();
+  }
+
+  function applyPreset(profileKey) {
+    chosen.clear();
+    (presets[profileKey] || []).forEach(id => {
+      if (checkboxById.has(id)) chosen.add(id);
+    });
+
+    syncCheckboxesFromChosen();
+    acceptDefaultsBtn.disabled = chosen.size === 0;
+    addMoreBtn.disabled = chosen.size === 0;
+    promptLine.textContent = 'Defaults loaded. Accept defaults to start now, or add/remove sections before starting.';
+  }
 
   sections.forEach(sec => {
     const label = document.createElement('label');
     label.style.cursor = 'pointer';
     const cb = document.createElement('input');
-    cb.type  = 'checkbox';
+    cb.type = 'checkbox';
     cb.value = sec.id;
     cb.addEventListener('change', () => {
       if (cb.checked) chosen.add(cb.value);
       else chosen.delete(cb.value);
-      btn.disabled = chosen.size === 0;
+      updateBeginButtonState();
     });
+    checkboxById.set(sec.id, cb);
     label.append(cb, ' ', sec.title);
     container.append(label);
   });
 
-  btn.addEventListener('click', () => {
-    const list = Array.from(chosen);
+  function beginWithSelection() {
+    const list = getChosenInSectionOrder();
     if (!list.length) return;
     // Clear prior run data so summary/export only reflect the current run.
     localStorage.removeItem('droneSOPProgress');
@@ -172,9 +414,23 @@ function renderIndex(sections) {
     });
     const sopProgress = { selectedSOPs: list, progress };
     localStorage.setItem('droneSOPProgress', JSON.stringify(sopProgress));
+    localStorage.setItem('selectedSections', JSON.stringify(list));
     // Go to first section
     window.location.href = `sections/${list[0]}.html`;
+  }
+
+  microBtn.addEventListener('click', () => applyPreset('micro'));
+  basicBtn.addEventListener('click', () => applyPreset('basic'));
+  advBtn.addEventListener('click', () => applyPreset('advanced'));
+
+  acceptDefaultsBtn.addEventListener('click', () => beginWithSelection());
+  addMoreBtn.addEventListener('click', () => {
+    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    promptLine.textContent = 'Adjust selections below, then click Start With Selected Sections.';
   });
+
+  btn.addEventListener('click', () => beginWithSelection());
+  updateBeginButtonState();
 
   setupIndexLocationCard();
 }
@@ -241,6 +497,8 @@ function renderFlightLog() {
   const loc    = document.getElementById('flight-location');
   const btn    = document.getElementById('getLocation');
   const output = document.getElementById('output');
+  const weatherStatus = document.getElementById('flight-weather-status');
+  const weatherRefreshBtn = document.getElementById('flight-weather-refresh');
   const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
 
   const RECENT_PILOTS_KEY = 'flightRecentPilots';
@@ -293,6 +551,44 @@ function renderFlightLog() {
       `DD: ${ddText}<br>` +
       (dmsText ? `DMS: ${dmsText}<br>` : '') +
       `<a href="https://maps.google.com/?q=${mapQ}" target="_blank" rel="noopener">View on Google Maps</a>`;
+    updateFlightLogLocationButtonLabel();
+  };
+
+  const updateFlightLogLocationButtonLabel = () => {
+    if (!btn) return;
+    const ddStored = localStorage.getItem('pilotLocationDD') || '';
+    const parsedFromDD = parseLatLonText(ddStored);
+    const parsedFromInput = parseLatLonText((loc && loc.value) ? loc.value : '');
+    const active = parsedFromDD || parsedFromInput;
+    const hasDefinedLocation = !!(active && !isPilotLocationUndefined(active.lat, active.lon));
+    btn.textContent = hasDefinedLocation ? 'Refresh Pilot Location' : 'Get Pilot Location';
+  };
+
+  const renderFlightWeatherStatus = () => {
+    if (!weatherStatus) return;
+
+    const completedAt = localStorage.getItem('dwCheckCompletedAt');
+    const latest = safeParseJSON('dwCheckLatest', null);
+    const stamp = completedAt || (latest && latest.committedAt) || (latest && latest.timestamp) || '';
+
+    if (!stamp) {
+      weatherStatus.textContent = 'Last Weather Check: not saved yet.';
+      if (weatherRefreshBtn) weatherRefreshBtn.textContent = 'Run Drone Risk and Weather Survey';
+      return;
+    }
+
+    const whenMs = new Date(stamp).getTime();
+    if (!Number.isFinite(whenMs)) {
+      weatherStatus.textContent = 'Last Weather Check: saved (time unavailable).';
+      return;
+    }
+
+    const hours = Math.max(0, (Date.now() - whenMs) / 3600000);
+    const elapsedText = hours < 1
+      ? `${Math.round(hours * 60)} min since saved`
+      : `${hours.toFixed(1)} hr since saved`;
+    weatherStatus.textContent = `Last Weather Check: ${elapsedText}.`;
+    if (weatherRefreshBtn) weatherRefreshBtn.textContent = 'Refresh Weather Assessment';
   };
 
   const saved = safeParseJSON('flightLog', {});
@@ -323,9 +619,14 @@ function renderFlightLog() {
     summaryQuickLink = document.createElement('a');
     summaryQuickLink.id = 'flight-log-summary-link';
     summaryQuickLink.href = 'summary.html';
-    summaryQuickLink.textContent = 'Quick Link: Go to Summary';
+    summaryQuickLink.textContent = 'Proceed to Summary';
     summaryQuickLink.style.display = 'none';
     summaryQuickLink.style.marginLeft = '12px';
+    summaryQuickLink.style.padding = '6px 10px';
+    summaryQuickLink.style.borderRadius = '999px';
+    summaryQuickLink.style.background = '#2f9e44';
+    summaryQuickLink.style.color = '#ffffff';
+    summaryQuickLink.style.textDecoration = 'none';
     summaryQuickLink.style.fontWeight = '600';
     form.appendChild(summaryQuickLink);
   }
@@ -352,6 +653,21 @@ function renderFlightLog() {
     loc.value = `${stored.latShort}, ${stored.lonShort}`;
   }
 
+  updateFlightLogLocationButtonLabel();
+  renderFlightWeatherStatus();
+
+  window.addEventListener('pageshow', () => {
+    updateFlightLogLocationButtonLabel();
+    renderFlightWeatherStatus();
+  });
+
+  if (weatherRefreshBtn) {
+    weatherRefreshBtn.addEventListener('click', () => {
+      // Launch the same tool referenced in Tools -> Drone Risk and Weather Survey.
+      window.location.href = 'DWCheck.html?from=flight-log';
+    });
+  }
+
   if (btn) {
     btn.addEventListener('click', () => {
       if (!navigator.geolocation) {
@@ -370,6 +686,7 @@ function renderFlightLog() {
           renderPilotLocationOutput(`${latShort}, ${lonShort}`, `${savedLoc.latDMS}, ${savedLoc.lonDMS}`);
 
           loc.value = `${latShort}, ${lonShort}`;
+          updateFlightLogLocationButtonLabel();
         },
         (error) => {
           if (!output) return;
@@ -414,6 +731,7 @@ function renderFlightLog() {
     if (parsed) {
       const saved = writePilotLocationToStorage(parsed.lat, parsed.lon, 'flight-log');
       renderPilotLocationOutput(`${saved.latShort}, ${saved.lonShort}`, `${saved.latDMS}, ${saved.lonDMS}`);
+      updateFlightLogLocationButtonLabel();
     }
 
     const saveTs = new Date().toISOString();
@@ -438,6 +756,7 @@ function renderSectionPage(sections) {
   if (!current) return console.error('Unknown section:', id);
   const params = new URLSearchParams(window.location.search);
   const fromSummary = params.get('from') === 'summary';
+  let nextHighlightTimer = null;
 
   const sopProgress = safeParseJSON('droneSOPProgress', {});
   const selected = sopProgress.selectedSOPs || [];
@@ -543,12 +862,34 @@ function renderSectionPage(sections) {
   saveBtn.textContent = 'Save Progress';
   saveBtn.style.marginLeft = '1em';
   saveBtn.type = 'button';
+  const saveStatus = document.createElement('span');
+  saveStatus.className = 'subtle';
+  saveStatus.style.marginLeft = '0.75em';
+  let saveStatusTimer = null;
   saveBtn.addEventListener('click', () => {
     persistResponses();
     syncSectionStatusFromUI();
-    alert('Progress saved!');
+    saveStatus.textContent = 'Progress saved.';
+    if (saveStatusTimer) clearTimeout(saveStatusTimer);
+    saveStatusTimer = setTimeout(() => {
+      saveStatus.textContent = '';
+    }, 3000);
+
+    const nextActionBtn = document.getElementById('section-next-btn');
+    if (nextActionBtn) {
+      nextActionBtn.style.boxShadow = '0 0 0 3px rgba(47, 158, 68, 0.45)';
+      nextActionBtn.style.background = '#2f9e44';
+      nextActionBtn.style.color = '#ffffff';
+      if (nextHighlightTimer) clearTimeout(nextHighlightTimer);
+      nextHighlightTimer = setTimeout(() => {
+        nextActionBtn.style.boxShadow = '';
+        nextActionBtn.style.background = '';
+        nextActionBtn.style.color = '';
+      }, 3000);
+    }
   });
   completeDiv.appendChild(saveBtn);
+  completeDiv.appendChild(saveStatus);
 
   syncSectionStatusFromUI();
 
@@ -562,9 +903,9 @@ function renderSectionPage(sections) {
 
   if (allowBackwardNav) {
     const homeBtn = document.createElement('button');
-    homeBtn.textContent = fromSummary ? 'Return to Summary' : 'Return to Index';
+    homeBtn.textContent = fromSummary ? 'Return to Summary' : 'Return to Checklists';
     homeBtn.onclick = () => {
-      window.location.href = fromSummary ? '../summary.html' : '../index.html';
+      window.location.href = fromSummary ? '../summary.html' : '../Sections.html';
     };
     navDiv.appendChild(homeBtn);
   }
@@ -585,6 +926,7 @@ function renderSectionPage(sections) {
 
   // Next or Flight Log button
   const nextBtn = document.createElement('button');
+  nextBtn.id = 'section-next-btn';
   nextBtn.style.marginLeft = '1em';
   if (idx < selected.length - 1) {
     nextBtn.textContent = 'Next >';
@@ -592,32 +934,17 @@ function renderSectionPage(sections) {
       window.location.href = `../sections/${selected[idx+1]}.html`;
     };
   } else {
-    const savedFlightLog = safeParseJSON('flightLog', {});
-    const hasFlightLog = !!(
-      savedFlightLog &&
-      (
-        savedFlightLog.date ||
-        savedFlightLog.pilot ||
-        savedFlightLog.observers ||
-        savedFlightLog.start ||
-        savedFlightLog.end ||
-        savedFlightLog.location
-      )
-    );
-
-    if (hasFlightLog && fromSummary) {
+    if (fromSummary) {
       nextBtn.textContent = 'Return to Summary';
       nextBtn.onclick = () => {
         window.location.href = '../summary.html';
       };
-    } else if (hasFlightLog) {
-      nextBtn.textContent = 'Flight Log Saved';
-      nextBtn.disabled = true;
-      nextBtn.title = 'Flight Log already captured for this run.';
     } else {
-      nextBtn.textContent = 'Flight Log';
+      nextBtn.textContent = 'Save Selections for Flight Log Report';
       nextBtn.onclick = () => {
-        window.location.href = '../flight-log.html';
+        // Keep section selections in session and continue to tools workflow.
+        localStorage.setItem('selectedSections', JSON.stringify(selected));
+        window.location.href = '../tools.html';
       };
     }
   }
@@ -675,7 +1002,7 @@ function renderSummary(sections) {
       : 'No';
 
     weatherDiv.innerHTML = `
-      <h2>Weather Sanity Check</h2>
+      <h2>Drone Risk and Weather Survey</h2>
       <ul>
         <li>Checked At: ${when}</li>
         <li>Completed: ${completedText}</li>
@@ -689,7 +1016,7 @@ function renderSummary(sections) {
     `;
   } else {
     weatherDiv.innerHTML = `
-      <h2>Weather Sanity Check</h2>
+      <h2>Drone Risk and Weather Survey</h2>
       <p><em>No weather check artifact saved for this session.</em></p>
     `;
   }
@@ -822,6 +1149,25 @@ function renderSummary(sections) {
     return text;
   }
 
+  function inferChecklistProfile(selectedIds) {
+    if (!Array.isArray(selectedIds) || !selectedIds.length) return 'Custom';
+
+    const micro = ['1_0_Micro_Pre-Flight', '2_0_Takeoff_Procedures', '3_0_Landing_Procedures'];
+    const basic = ['1_1_Basic_Pre-Flight', '2_0_Takeoff_Procedures', '3_0_Landing_Procedures', '5_1_Basic_Rules'];
+    const advanced = ['1_2_Advanced_Pre-Flight', '2_0_Takeoff_Procedures', '3_0_Landing_Procedures', '5_2_Advanced_Rules'];
+
+    const hasAll = profile => profile.every(id => selectedIds.includes(id));
+    const exact = profile => selectedIds.length === profile.length && hasAll(profile);
+
+    if (exact(micro)) return 'Micro';
+    if (exact(basic)) return 'Basic';
+    if (exact(advanced)) return 'Advanced';
+    if (hasAll(micro)) return 'Micro + Custom';
+    if (hasAll(basic)) return 'Basic + Custom';
+    if (hasAll(advanced)) return 'Advanced + Custom';
+    return 'Custom';
+  }
+
   async function saveTextFileWithPicker(content, filename, mimeType) {
     if (!window.showSaveFilePicker) return false;
 
@@ -854,7 +1200,8 @@ function renderSummary(sections) {
       + `Observer(s),${csvEscape(flightLog.observers || '')}\n`
       + `Start,${csvEscape(flightLog.start || '')}\n`
       + `End,${csvEscape(flightLog.end || '')}\n`
-      + `Location,${csvEscape(flightLog.location || '')}\n`;
+      + `Location,${csvEscape(flightLog.location || '')}\n`
+      + `Checklist Profile,${csvEscape(inferChecklistProfile(selected))}\n`;
 
     if (weather && weather.timestamp) {
       csv += `Weather Checked At,${csvEscape(new Date(weather.timestamp).toLocaleString())}\n`
@@ -887,9 +1234,11 @@ function renderSummary(sections) {
     selected.forEach(secId => {
       const section   = sections.find(s => s.id === secId);
       const responses = safeParseJSON(`responses_${secId}`, []);
-      section.items.forEach((item, idx) => {
-        csv += `${csvEscape(section.title)},${csvEscape(item)},${csvEscape(responses[idx] ? 'Yes' : 'No')}\n`;
-      });
+      const firstItem = section && Array.isArray(section.items) && section.items.length
+        ? section.items[0]
+        : 'Checklist completed';
+      const firstChecked = Array.isArray(responses) && responses.length ? !!responses[0] : false;
+      csv += `${csvEscape(section ? section.title : secId)},${csvEscape(firstItem)},${csvEscape(firstChecked ? 'Yes' : 'No')}\n`;
     });
     const exportMeta = getNextLogExportMeta('csv');
     const filename = promptForFilename(exportMeta.filename, 'csv');
@@ -951,6 +1300,73 @@ function renderSummary(sections) {
   const saveSummaryBtn = document.getElementById('save-summary');
   const clearDataBtn = document.getElementById('clear-data');
 
+  function buildSummarySnapshot() {
+    const weatherLatest = safeParseJSON('dwCheckLatest', null);
+    const weatherCompleted = localStorage.getItem('dwCheckCompleted') === 'true';
+    const weatherCompletedAt = localStorage.getItem('dwCheckCompletedAt') || null;
+    const sopLatest = safeParseJSON('droneSOPProgress', {});
+    const selectedIds = Array.isArray(sopLatest.selectedSOPs)
+      ? sopLatest.selectedSOPs
+      : safeParseJSON('selectedSections', []);
+
+    const selectedSections = selectedIds.map(secId => {
+      const section = sections.find(s => s.id === secId);
+      const responses = safeParseJSON(`responses_${secId}`, []);
+      const status = (sopLatest.progress && sopLatest.progress[secId] && sopLatest.progress[secId].status)
+        ? sopLatest.progress[secId].status
+        : 'not-started';
+
+      return {
+        id: secId,
+        title: section ? section.title : secId,
+        status,
+        checklistItems: section
+          ? section.items.map((item, idx) => ({ item, checked: !!responses[idx] }))
+          : []
+      };
+    });
+
+    const createdAt = new Date().toISOString();
+
+    return {
+      createdAt,
+      flightLog,
+      weather: {
+        completed: weatherCompleted,
+        completedAt: weatherCompletedAt,
+        latest: weatherLatest
+      },
+      selectedSections
+    };
+  }
+
+  function saveSummarySnapshot() {
+    const snapshot = buildSummarySnapshot();
+    localStorage.setItem('flightSummaryLatest', JSON.stringify(snapshot));
+
+    const history = safeParseJSON('flightSummaryHistory', []);
+    const list = Array.isArray(history) ? history : [];
+    list.unshift(snapshot);
+    const trimmed = list.slice(0, 25);
+    localStorage.setItem('flightSummaryHistory', JSON.stringify(trimmed));
+
+    return snapshot;
+  }
+
+  function promptSummaryExportChoice() {
+    const answer = prompt(
+      'Summary snapshot saved. Export now? Type: csv, pdf, or skip',
+      'csv'
+    );
+
+    if (answer === null) return 'cancelled';
+    const choice = String(answer).trim().toLowerCase();
+    if (!choice || choice === 'skip' || choice === 'none') return 'skip';
+    if (choice === 'csv') return 'csv';
+    if (choice === 'pdf') return 'pdf';
+    return 'invalid';
+  }
+
   function setSummaryButtonsDisabled(isDisabled) {
     if (saveSummaryBtn) saveSummaryBtn.disabled = isDisabled;
     if (clearDataBtn) clearDataBtn.disabled = isDisabled;
@@ -978,11 +1394,23 @@ function renderSummary(sections) {
   if (saveSummaryBtn) {
     saveSummaryBtn.addEventListener('click', () => {
       setSummaryButtonsDisabled(true);
-      setExportStatus('hahaha!');
-      setTimeout(() => {
-        setExportStatus('Ready.');
-        setSummaryButtonsDisabled(false);
-      }, 3000);
+
+      const snapshot = saveSummarySnapshot();
+      const savedAt = new Date(snapshot.createdAt).toLocaleString();
+      setExportStatus(`Summary snapshot saved at ${savedAt}.`);
+
+      const choice = promptSummaryExportChoice();
+      if (choice === 'csv') {
+        document.getElementById('export-csv').click();
+      } else if (choice === 'pdf') {
+        document.getElementById('export-pdf').click();
+      } else if (choice === 'invalid') {
+        setExportStatus('Unknown choice. Snapshot saved; export skipped.', true);
+      } else if (choice === 'skip') {
+        setExportStatus(`Summary snapshot saved at ${savedAt}. Export skipped.`);
+      }
+
+      setSummaryButtonsDisabled(false);
     });
   }
 
