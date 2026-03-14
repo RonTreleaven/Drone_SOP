@@ -239,8 +239,14 @@ function ensureTopNavBackLink() {
 
   const back = document.createElement('a');
   back.href = '#';
+  back.className = 'back-link';
   back.dataset.backLink = 'true';
-  back.textContent = '\u2190 Back';
+  const icon = document.createElement('span');
+  icon.className = 'back-icon';
+  icon.setAttribute('aria-hidden', 'true');
+  icon.innerHTML = '&#8592;';
+  back.appendChild(icon);
+  back.appendChild(document.createTextNode('BACK'));
   back.addEventListener('click', event => {
     event.preventDefault();
     goBackWithFallback(fallbackHref);
@@ -251,10 +257,32 @@ function ensureTopNavBackLink() {
   nav.insertBefore(back, sep);
 }
 
+function ensureSectionHeaderBranding() {
+  if (!window.location.pathname.includes('/sections/')) return;
+
+  const titleEl = document.getElementById('section-title');
+  if (!titleEl) return;
+  if (titleEl.closest('.site-header')) return;
+
+  const header = document.createElement('header');
+  header.className = 'site-header';
+
+  const logo = document.createElement('img');
+  logo.src = '../assets/img/logo_25.svg';
+  logo.alt = 'Logo';
+  logo.className = 'site-logo';
+
+  titleEl.classList.add('page-title');
+  titleEl.parentNode.insertBefore(header, titleEl);
+  header.appendChild(logo);
+  header.appendChild(titleEl);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // Heal stale or partial localStorage state before rendering any page UI.
   validateAndHealSessionState();
   ensureTopNavBackLink();
+  ensureSectionHeaderBranding();
 
   // Flight Log page does not require sections.json; initialize immediately.
   if (document.getElementById('flight-log-form')) {
@@ -301,6 +329,7 @@ function renderIndex(sections) {
   const btn       = document.getElementById('begin-btn');
   const chosen    = new Set();
   const checkboxById = new Map();
+  let activePresetIds = null;
 
   const presets = {
     micro: ['1_0_Micro_Pre-Flight', '2_0_Takeoff_Procedures', '3_0_Landing_Procedures'],
@@ -357,6 +386,20 @@ function renderIndex(sections) {
 
   container.before(intro, presetWrap, promptLine, decisionWrap);
 
+  function getPersistedSelection() {
+    const progress = safeParseJSON('droneSOPProgress', {});
+    if (Array.isArray(progress.selectedSOPs) && progress.selectedSOPs.length) {
+      return progress.selectedSOPs;
+    }
+
+    const selected = safeParseJSON('selectedSections', []);
+    if (Array.isArray(selected) && selected.length) {
+      return selected;
+    }
+
+    return [];
+  }
+
   function getChosenInSectionOrder() {
     return sections.filter(sec => chosen.has(sec.id)).map(sec => sec.id);
   }
@@ -364,6 +407,36 @@ function renderIndex(sections) {
   function updateBeginButtonState() {
     btn.disabled = chosen.size === 0;
     btn.textContent = chosen.size ? 'Start With Selected Sections' : 'Start Review';
+    updateStartActionHighlights();
+  }
+
+  function toggleActionHighlight(button, isOn) {
+    if (!button) return;
+    if (isOn) {
+      button.style.boxShadow = '0 0 0 3px rgba(47, 158, 68, 0.45)';
+      button.style.background = '#2f9e44';
+      button.style.color = '#ffffff';
+      return;
+    }
+
+    button.style.boxShadow = '';
+    button.style.background = '';
+    button.style.color = '';
+  }
+
+  function updateStartActionHighlights() {
+    const hasSelection = chosen.size > 0;
+    const hasPreset = Array.isArray(activePresetIds) && activePresetIds.length > 0;
+    const hasPresetDelta = hasPreset && (
+      chosen.size !== activePresetIds.length ||
+      activePresetIds.some(id => !chosen.has(id))
+    );
+
+    const highlightAcceptDefaults = hasSelection && hasPreset && !hasPresetDelta && !acceptDefaultsBtn.disabled;
+    const highlightStartSelected = hasSelection && (!hasPreset || hasPresetDelta) && !btn.disabled;
+
+    toggleActionHighlight(acceptDefaultsBtn, highlightAcceptDefaults);
+    toggleActionHighlight(btn, highlightStartSelected);
   }
 
   function syncCheckboxesFromChosen() {
@@ -375,7 +448,8 @@ function renderIndex(sections) {
 
   function applyPreset(profileKey) {
     chosen.clear();
-    (presets[profileKey] || []).forEach(id => {
+    activePresetIds = (presets[profileKey] || []).filter(id => checkboxById.has(id));
+    activePresetIds.forEach(id => {
       if (checkboxById.has(id)) chosen.add(id);
     });
 
@@ -383,6 +457,30 @@ function renderIndex(sections) {
     acceptDefaultsBtn.disabled = chosen.size === 0;
     addMoreBtn.disabled = chosen.size === 0;
     promptLine.textContent = 'Defaults loaded. Accept defaults to start now, or add/remove sections before starting.';
+    updateStartActionHighlights();
+  }
+
+  function hydrateSelectionsFromSession() {
+    const restored = getPersistedSelection();
+    if (!restored.length) return;
+
+    restored.forEach(id => {
+      if (checkboxById.has(id)) chosen.add(id);
+    });
+
+    syncCheckboxesFromChosen();
+    acceptDefaultsBtn.disabled = chosen.size === 0;
+    addMoreBtn.disabled = chosen.size === 0;
+    if (chosen.size) {
+      promptLine.textContent = 'Previous session selections restored. You can start now or modify sections.';
+    }
+
+    const selectedList = getChosenInSectionOrder();
+    const matchingPreset = Object.values(presets).find(profileIds =>
+      profileIds.length === selectedList.length && profileIds.every(id => selectedList.includes(id))
+    );
+    activePresetIds = matchingPreset ? [...matchingPreset] : null;
+    updateStartActionHighlights();
   }
 
   sections.forEach(sec => {
@@ -431,6 +529,7 @@ function renderIndex(sections) {
 
   btn.addEventListener('click', () => beginWithSelection());
   updateBeginButtonState();
+  hydrateSelectionsFromSession();
 
   setupIndexLocationCard();
 }
@@ -757,6 +856,7 @@ function renderSectionPage(sections) {
   const params = new URLSearchParams(window.location.search);
   const fromSummary = params.get('from') === 'summary';
   let nextHighlightTimer = null;
+  let saveNeedsAttention = true;
 
   const sopProgress = safeParseJSON('droneSOPProgress', {});
   const selected = sopProgress.selectedSOPs || [];
@@ -786,6 +886,7 @@ function renderSectionPage(sections) {
     });
     persistResponses();
     syncSectionStatusFromUI();
+    updateSaveProgressHighlight(true);
   };
 
   const syncSectionStatusFromUI = () => {
@@ -819,6 +920,7 @@ function renderSectionPage(sections) {
       }
       persistResponses();
       syncSectionStatusFromUI();
+      updateSaveProgressHighlight(true);
     });
     itemCheckboxes.push(cb);
     const lbl = document.createElement('label');
@@ -840,6 +942,7 @@ function renderSectionPage(sections) {
     completedToggle.checked = currentProgress.status === 'completed';
     completedToggle.addEventListener('change', () => {
       syncSectionStatusFromUI();
+      updateSaveProgressHighlight(true);
     });
   }
 
@@ -862,6 +965,21 @@ function renderSectionPage(sections) {
   saveBtn.textContent = 'Save Progress';
   saveBtn.style.marginLeft = '1em';
   saveBtn.type = 'button';
+
+  const updateSaveProgressHighlight = (needsSave) => {
+    saveNeedsAttention = !!needsSave;
+    if (saveNeedsAttention) {
+      saveBtn.style.boxShadow = '0 0 0 3px rgba(47, 158, 68, 0.45)';
+      saveBtn.style.background = '#2f9e44';
+      saveBtn.style.color = '#ffffff';
+      return;
+    }
+
+    saveBtn.style.boxShadow = '';
+    saveBtn.style.background = '';
+    saveBtn.style.color = '';
+  };
+
   const saveStatus = document.createElement('span');
   saveStatus.className = 'subtle';
   saveStatus.style.marginLeft = '0.75em';
@@ -887,11 +1005,14 @@ function renderSectionPage(sections) {
         nextActionBtn.style.color = '';
       }, 3000);
     }
+
+    updateSaveProgressHighlight(false);
   });
   completeDiv.appendChild(saveBtn);
   completeDiv.appendChild(saveStatus);
 
   syncSectionStatusFromUI();
+  updateSaveProgressHighlight(true);
 
   // Use droneSOPProgress for navigation
   const idx = selected.indexOf(current.id);
@@ -1054,6 +1175,13 @@ function renderSummary(sections) {
     const noSopDiv = document.createElement('div');
     noSopDiv.className = 'section-block';
     noSopDiv.innerHTML = '<h2>SOP Procedures</h2><p><em>No SOP procedures were selected for this run.</em></p>';
+
+    const selectSopLink = document.createElement('a');
+    selectSopLink.href = 'Sections.html';
+    selectSopLink.className = 'sop-select-cta';
+    selectSopLink.textContent = 'Select SOP Sections';
+    noSopDiv.appendChild(selectSopLink);
+
     container.append(noSopDiv);
   }
 
@@ -1299,6 +1427,7 @@ function renderSummary(sections) {
 
   const saveSummaryBtn = document.getElementById('save-summary');
   const clearDataBtn = document.getElementById('clear-data');
+  let summarySnapshotSaved = false;
 
   function buildSummarySnapshot() {
     const weatherLatest = safeParseJSON('dwCheckLatest', null);
@@ -1372,6 +1501,34 @@ function renderSummary(sections) {
     if (clearDataBtn) clearDataBtn.disabled = isDisabled;
   }
 
+  function clearInputsAndRestartHome() {
+    setSummaryButtonsDisabled(true);
+    setExportStatus('Clearing session inputs...');
+
+    localStorage.removeItem('flightSummaryLatest');
+    localStorage.removeItem('flightSummaryHistory');
+    clearSessionStateAfterSummarySave();
+
+    setExportStatus('All inputs cleared. Returning Home...');
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 350);
+  }
+
+  function promoteSaveButtonToClearAction() {
+    if (!saveSummaryBtn) return;
+
+    summarySnapshotSaved = true;
+    saveSummaryBtn.textContent = 'Clear Previous Inputs/Data';
+    saveSummaryBtn.style.background = '#2f9e44';
+    saveSummaryBtn.style.boxShadow = '0 0 0 3px rgba(47, 158, 68, 0.35)';
+
+    if (clearDataBtn) {
+      clearDataBtn.style.display = 'none';
+      clearDataBtn.disabled = true;
+    }
+  }
+
   if (clearDataBtn) {
     clearDataBtn.addEventListener('click', () => {
       if (!confirm('Are you sure you want to wipe/clear all data? This cannot be undone.')) {
@@ -1379,20 +1536,21 @@ function renderSummary(sections) {
         return;
       }
 
-      setSummaryButtonsDisabled(true);
-      setExportStatus('Clearing session inputs...');
-
-      localStorage.removeItem('flightSummaryLatest');
-      localStorage.removeItem('flightSummaryHistory');
-      clearSessionStateAfterSummarySave();
-
-      setExportStatus('All inputs cleared. Reloading...');
-      setTimeout(() => location.reload(), 350);
+      clearInputsAndRestartHome();
     });
   }
 
   if (saveSummaryBtn) {
     saveSummaryBtn.addEventListener('click', () => {
+      if (summarySnapshotSaved) {
+        if (!confirm('Clear previous inputs/data and restart at Home?')) {
+          setExportStatus('Clear inputs cancelled.');
+          return;
+        }
+        clearInputsAndRestartHome();
+        return;
+      }
+
       setSummaryButtonsDisabled(true);
 
       const snapshot = saveSummarySnapshot();
@@ -1410,6 +1568,8 @@ function renderSummary(sections) {
         setExportStatus(`Summary snapshot saved at ${savedAt}. Export skipped.`);
       }
 
+      promoteSaveButtonToClearAction();
+      setExportStatus('Summary saved. Next step: Clear Previous Inputs/Data to start a new run from Home.');
       setSummaryButtonsDisabled(false);
     });
   }

@@ -100,6 +100,37 @@ h2 { font-size: 1.5rem; border-bottom: 2px solid #ddd; padding-bottom: 0.25rem; 
   font-weight: bold;
   text-decoration: underline;
 }
+.top-nav .back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem 0.35rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid #9ec9e8;
+  background: #eaf5ff;
+  color: #0b5ea8;
+  font-weight: 700;
+  font-size: 0.98rem;
+  text-decoration: none;
+  vertical-align: middle;
+}
+.top-nav .back-link .back-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background: #0b5ea8;
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1;
+}
+.top-nav .back-link:hover {
+  text-decoration: none;
+  background: #d8ecff;
+  border-color: #7db2db;
+}
 button {
   margin: 0.5rem 0.25rem;
   padding: 0.5rem 1rem;
@@ -247,6 +278,39 @@ main {
     font-weight: bold;
     color: #b30000;
     content: attr(data-label);
+  }
+}
+
+.sop-select-cta {
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: #2f9e44;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 0 0 0 rgba(47, 158, 68, 0.45);
+  animation: sopCtaPop 1.5s ease-out 2;
+}
+
+.sop-select-cta:hover {
+  background: #237a33;
+  text-decoration: none;
+}
+
+@keyframes sopCtaPop {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(47, 158, 68, 0.45);
+  }
+  35% {
+    transform: scale(1.03);
+    box-shadow: 0 0 0 8px rgba(47, 158, 68, 0.18);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(47, 158, 68, 0);
   }
 }
 

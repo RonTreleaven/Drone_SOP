@@ -36,6 +36,14 @@ opacity:0.65;
 cursor:not-allowed;
 }
 
+button.next-step-highlight{
+background:#2f9e44;
+border:1px solid #237a33;
+color:#ffffff;
+font-weight:700;
+box-shadow:0 0 0 3px rgba(47,158,68,0.25);
+}
+
 .panel{
 background:white;
 padding:15px;
@@ -151,6 +159,40 @@ text-decoration:none;
 text-decoration:underline;
 }
 
+.top-nav .back-link{
+display:inline-flex;
+align-items:center;
+gap:0.4rem;
+padding:0.35rem 0.7rem 0.35rem 0.45rem;
+border-radius:999px;
+border:1px solid #9ec9e8;
+background:#eaf5ff;
+color:#0b5ea8;
+font-weight:700;
+font-size:0.98rem;
+text-decoration:none;
+vertical-align:middle;
+}
+
+.top-nav .back-link .back-icon{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:1.6rem;
+height:1.6rem;
+border-radius:999px;
+background:#0b5ea8;
+color:#ffffff;
+font-size:1rem;
+line-height:1;
+}
+
+.top-nav .back-link:hover{
+text-decoration:none;
+background:#d8ecff;
+border-color:#7db2db;
+}
+
 .status-ok{
 color:#14532d;
 font-weight:600;
@@ -207,6 +249,10 @@ font-size:13px;
 
 .flow-next-link:hover{
 background:#237a33;
+}
+
+.controls .flow-next-link{
+margin-top:0;
 }
 
 .is-hidden{
@@ -407,7 +453,7 @@ background:#f4f7fb;
 <body>
 
 <nav class="top-nav">
-<a href="#" onclick="goBack(event)">&larr; Back</a>
+<a href="#" class="back-link" onclick="goBack(event)"><span class="back-icon" aria-hidden="true">&#8592;</span>BACK</a>
 </nav>
 
 <h2>Micro-Drone Weather Risk Assessment</h2>
@@ -417,6 +463,7 @@ background:#f4f7fb;
 <button id="locBtn" onclick="useCurrentLocation()">Get Pilot Location</button>
 <button id="checkBtn" onclick="runCheck()">Fetch METAR/KP Risk Assessment</button>
 <button id="completeBtn" type="button" onclick="markWeatherCheckComplete()">Save Weather Check</button>
+<a id="proceedFlightLogBtn" class="flow-next-link is-hidden" href="flight-log.html">Proceed to Flight Log</a>
 </div>
 
 <div id="errorBanner" class="error-banner"></div>
@@ -437,10 +484,6 @@ background:#f4f7fb;
 <h3>Weather Check Record</h3>
 <div id="dwCheckStatus" class="subtle">No weather check saved yet.</div>
 <button id="rerunAssessmentBtn" type="button" class="mini-action-btn is-hidden" onclick="runNewAssessment()">Run New Assessment</button>
-<div id="dwNextFlightLog" class="flow-next-card is-hidden">
-<div><b>Weather assessment is current.</b> Continue to log this flight.</div>
-<a class="flow-next-link" href="flight-log.html">Proceed to Flight Log</a>
-</div>
 </div>
 
 <div id="riskPanel" class="panel">
@@ -834,6 +877,35 @@ locButton.textContent = "Update Pilot Location"
 else{
 locButton.textContent = "Get Pilot Location"
 }
+updateActionButtonHighlights()
+}
+
+
+function updateActionButtonHighlights(){
+const locButton = document.getElementById("locBtn")
+const checkButton = document.getElementById("checkBtn")
+const saveButton = document.getElementById("completeBtn")
+if(!locButton || !checkButton) return
+
+const hasPendingDraft = localStorage.getItem("dwCheckDraftPending") === "true"
+const draftArtifact = latestWeatherArtifact || parseStoredArtifact("dwCheckDraft")
+const shouldHighlightSave = !!(hasPendingDraft && draftArtifact)
+
+if(saveButton){
+saveButton.classList.toggle("next-step-highlight", shouldHighlightSave)
+}
+
+if(shouldHighlightSave){
+locButton.classList.remove("next-step-highlight")
+checkButton.classList.remove("next-step-highlight")
+return
+}
+
+const known = getKnownPilotLocation()
+const hasPilotLocation = !!(known && !isPilotLocationUndefined(known.lat,known.lon))
+
+locButton.classList.toggle("next-step-highlight", !hasPilotLocation)
+checkButton.classList.toggle("next-step-highlight", hasPilotLocation)
 }
 
 
@@ -1036,7 +1108,7 @@ function renderWeatherCheckStatus(){
 const el = document.getElementById("dwCheckStatus")
 const saveBtn = document.getElementById("completeBtn")
 const rerunBtn = document.getElementById("rerunAssessmentBtn")
-const nextFlightLogCard = document.getElementById("dwNextFlightLog")
+const nextFlightLogBtn = document.getElementById("proceedFlightLogBtn")
 const completed = localStorage.getItem("dwCheckCompleted") === "true"
 const completedAt = localStorage.getItem("dwCheckCompletedAt")
 const hasPendingDraft = localStorage.getItem("dwCheckDraftPending") === "true"
@@ -1062,14 +1134,15 @@ if(latestWeatherArtifact){
 el.innerHTML = `<div>Draft check ready. Click <b>Save Weather Check</b> to commit.</div>`
 if(saveBtn) saveBtn.disabled = false
 if(rerunBtn) rerunBtn.classList.add("is-hidden")
-if(nextFlightLogCard) nextFlightLogCard.classList.add("is-hidden")
+if(nextFlightLogBtn) nextFlightLogBtn.classList.add("is-hidden")
 }
 else{
 el.textContent = "No weather check saved yet."
 if(saveBtn) saveBtn.disabled = true
 if(rerunBtn) rerunBtn.classList.add("is-hidden")
-if(nextFlightLogCard) nextFlightLogCard.classList.add("is-hidden")
+if(nextFlightLogBtn) nextFlightLogBtn.classList.add("is-hidden")
 }
+updateActionButtonHighlights()
 return
 }
 
@@ -1109,10 +1182,12 @@ rerunBtn.disabled = true
 }
 }
 
-if(nextFlightLogCard){
+if(nextFlightLogBtn){
 const showNext = completed && !isStale;
-nextFlightLogCard.classList.toggle("is-hidden", !showNext);
+nextFlightLogBtn.classList.toggle("is-hidden", !showNext);
 }
+
+updateActionButtonHighlights()
 }
 
 
@@ -1549,6 +1624,7 @@ el.innerHTML = `
 restoreKnownPilotLocation()
 renderWeatherCheckStatus()
 updatePilotLocationButtonLabel()
+updateActionButtonHighlights()
 renderSavedWeatherArtifactDetails()
 
 </script>

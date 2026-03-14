@@ -128,3 +128,14 @@ See [Standard 922](https://tc.canada.ca/en/corporate-services/acts-regulations/l
 ## 
 
 ​	
+
+
+
+This Drone Mission Hub takes applies the 'Know Before You Go" principles and approach to flying drones safely.  
+This site is intended to aid drone pilots with repeatable checklists and workflows as standard operating procedures (SOP), in which to survey your surroundings, fetch NOTAMs to assess obstacles and air traffic warnings, and performing local weather checks and planetary KP index to and mission risks, based on pilot location.
+
+Just getting started?  See also Transport Canada's [Flying Your Drone Safely and Legally](https://tc.canada.ca/en/aviation/drone-safety/learn-rules-you-fly-your-drone/flying-your-drone-safely-legally?utm_campaign=tc-drone-safety-ongoing&utm_medium=vurl&utm_source=canada-ca-safe-legal-drones) web site for flying legally and safe
+
+
+
+To begin, set your current location for using Tools the drone operations and mapping aid here.

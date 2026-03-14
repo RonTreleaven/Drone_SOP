@@ -57,6 +57,12 @@
       align-items: center;
       gap: 1rem;
     }
+    .brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
     .brand img {
       width: 74px;
       height: auto;
@@ -65,10 +71,38 @@
       margin: 0;
       font-size: clamp(1.4rem, 2.5vw, 2rem);
     }
+    .intro-card {
+      margin: 0.9rem 0 1rem;
+      padding: 0.95rem 1rem;
+      background: #f7fbff;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent-2);
+      border-radius: 10px;
+    }
+    .intro-card h2 {
+      margin: 0 0 0.4rem;
+      font-size: 1rem;
+      color: #1f3b63;
+    }
+    .intro-card p {
+      margin: 0 0 0.45rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .intro-card .waiver-note {
+      margin: 0;
+      font-size: 0.82rem;
+      color: #5a6a79;
+    }
     .sub {
       margin: 0.55rem 0 1.1rem;
       color: var(--muted);
       max-width: 68ch;
+    }
+    .start-flow {
+      margin-top: 0.95rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--line);
     }
     .actions {
       display: grid;
@@ -89,6 +123,10 @@
       border-color: #a9c8df;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     }
+    .card.is-highlighted {
+      border-color: #0f6d5a;
+      box-shadow: 0 0 0 4px rgba(15, 109, 90, 0.38), 0 0 18px rgba(15, 109, 90, 0.36), 0 10px 24px rgba(0, 0, 0, 0.10);
+    }
     .card h2 {
       margin: 0 0 0.35rem;
       font-size: 1.05rem;
@@ -97,26 +135,6 @@
       margin: 0;
       font-size: 0.9rem;
       color: var(--muted);
-    }
-    .cta {
-      margin-top: 1rem;
-    }
-    .cta-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .cta a {
-      display: inline-block;
-      background: var(--accent);
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      padding: 0.7rem 1rem;
-      border-radius: 8px;
-    }
-    .cta a.alt {
-      background: var(--accent-2);
     }
     .loc-init {
       margin: 0.9rem 0 1.2rem;
@@ -138,9 +156,88 @@
     .mini-btn:hover {
       background: #edf6ff;
     }
+    .mini-btn.is-highlighted {
+      border-color: #0f6d5a;
+      background: #0f6d5a;
+      color: #ffffff;
+      box-shadow: 0 0 0 4px rgba(15, 109, 90, 0.35), 0 0 14px rgba(15, 109, 90, 0.34);
+    }
     .loc-status {
       font-size: 0.85rem;
       color: var(--muted);
+    }
+    .flame-reset-btn {
+      min-width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid #7f1d1d;
+      background: linear-gradient(180deg, #fff7f4, #ffe6dd);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0 0.55rem;
+      box-shadow: 0 0 0 2px rgba(217, 35, 35, 0.14);
+      flex-shrink: 0;
+      transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+    .flame-reset-btn.is-visible {
+      display: inline-flex;
+    }
+    .flame-reset-btn .wipe-label {
+      display: none;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #7f1d1d;
+      white-space: nowrap;
+    }
+    .flame-reset-btn.is-armed {
+      width: auto;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ff5e4a, #b71c1c);
+      border-color: #7f1d1d;
+      box-shadow: 0 0 0 3px rgba(183, 28, 28, 0.28), 0 8px 20px rgba(127, 29, 29, 0.28);
+    }
+    .flame-reset-btn.is-armed .wipe-label {
+      display: inline;
+      color: #ffffff;
+    }
+    .flame-reset-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 2px rgba(217, 35, 35, 0.20), 0 6px 14px rgba(127, 29, 29, 0.16);
+    }
+    .flame-reset-btn:focus-visible {
+      outline: 2px solid #7f1d1d;
+      outline-offset: 2px;
+    }
+    .flame-icon {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .flame-icon::before {
+      content: '';
+      width: 20px;
+      height: 18px;
+      background: linear-gradient(180deg, #ffd14a, #ff8c00);
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+      filter: drop-shadow(0 0 1px rgba(127, 29, 29, 0.45));
+    }
+    .flame-icon::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 11px;
+      background: radial-gradient(circle at 45% 35%, #ffe8a0 0 33%, #ff7a2f 56%, #c62828 95%);
+      border-radius: 55% 55% 70% 70%;
+      transform: translateY(2px) rotate(-8deg);
+      clip-path: polygon(50% 0%, 80% 30%, 88% 58%, 70% 82%, 50% 100%, 30% 82%, 12% 58%, 20% 30%);
     }
   </style>
 </head>
@@ -148,28 +245,49 @@
   <div class="shell">
     <nav class="top-nav">
       <a href="index.html" class="active">Home</a> |
-      <a href="Sections.html">Checklists</a> |
-      <a href="tools.html" target="_blank" rel="noopener">Tools</a> |
+      <a href="Sections.html">SOP Sections</a> |
+      <a href="tools.html">Tools</a> |
       <a href="flight-log.html">Flight Log</a> |
       <a href="summary.html">Summary</a> |
       <a href="emergencies.html">Emergency Procedures</a>
     </nav>
 
     <main class="hero">
-      <div class="brand">
-        <img src="assets/img/logo.png" alt="Drone SOP logo">
-        <h1>Drone SOP Mission Hub</h1>
-      </div>
-      <p class="sub">
-        Start each operation from the checklist workflow, then log and review your flight artifacts in one place. To begin, set your current location for Tools and Surveys for Drone Operations and map aids.
-      </p>
-      <div class="loc-init">
-        <button id="init-pilot-location" class="mini-btn" type="button">Set Pilot Location</button>
-        <span id="pilot-location-status" class="loc-status">No pilot location set yet.</span>
+      <div class="brand-row">
+        <div class="brand">
+          <img src="assets/img/logo_25.svg" alt="Drone SOP logo">
+          <h1>Drone SOP Mission Hub</h1>
+        </div>
+        <button
+          id="clear-all-data"
+          class="flame-reset-btn"
+          type="button"
+          title="Clear all data"
+          aria-label="Clear all data"
+          aria-pressed="false"
+        >
+          <span class="flame-icon" aria-hidden="true"></span>
+          <span class="wipe-label">CONFIRM</span>
+        </button>
       </div>
 
+      <section class="intro-card" aria-label="Site introduction and use notice">
+        <h2>Introduction</h2>
+        <p>
+          This Drone Mission Hub follows a Know Before You Go approach with repeatable SOP checklists, NOTAM and weather/Kp checks, and mission logging.
+        </p>
+        <p>
+          New to drone ops? Review
+          <a href="https://tc.canada.ca/en/aviation/drone-safety/learn-rules-you-fly-your-drone/flying-your-drone-safely-legally?utm_campaign=tc-drone-safety-ongoing&utm_medium=vurl&utm_source=canada-ca-safe-legal-drones" target="_blank" rel="noopener">Transport Canada: Flying Your Drone Safely and Legally</a>.
+        </p>
+        <h2>Use at your own risk</h2>
+        <p class="waiver-note">
+          All information shared is for personal use and in development. The Pilot in Command takes accountability and is responsible for all drone flight decisions.
+        </p>
+      </section>
+
       <section class="actions" aria-label="Primary links">
-        <a class="card" href="tools.html" target="_blank" rel="noopener">
+        <a id="tools-card" class="card" href="tools.html">
           <h2>Tools</h2>
           <p>Open weather, location, NOTAM, and utility workflows.</p>
         </a>
@@ -187,14 +305,16 @@
         </a>
       </section>
 
-      <p class="cta">
-        <span class="cta-actions">
-          <a href="Sections.html">Start Checklist Review</a>
-          <a class="alt" href="tools.html" target="_blank" rel="noopener">Open Tools</a>
-          <a class="alt" href="flight-log.html">Open Flight Log</a>
-          <a class="alt" href="summary.html">Open Flight Summary</a>
-        </span>
-      </p>
+      <section class="start-flow" aria-label="Start flow guidance">
+        <p class="sub">
+          To begin, set your Pilot Location, then select Tools, SOPs and complete Flight Logs and record of your drone operation planning and mission.
+        </p>
+        <div class="loc-init">
+          <button id="init-pilot-location" class="mini-btn" type="button">Set Pilot Location</button>
+          <span id="pilot-location-status" class="loc-status">No pilot location set yet.</span>
+        </div>
+      </section>
+
     </main>
   </div>
   <script>
@@ -227,19 +347,85 @@
 
     function updateStatusFromStorage() {
       const status = document.getElementById('pilot-location-status');
-      if (!status) return;
+      if (!status) return false;
       const dd = localStorage.getItem('pilotLocationDD');
       if (dd) {
         status.textContent = `Pilot location ready: ${dd}`;
+        return true;
       }
+      return false;
+    }
+
+    function updateHighlightState(hasPilotLocation) {
+      const btn = document.getElementById('init-pilot-location');
+      const toolsCard = document.getElementById('tools-card');
+      if (!btn || !toolsCard) return;
+
+      btn.classList.toggle('is-highlighted', !hasPilotLocation);
+      toolsCard.classList.toggle('is-highlighted', hasPilotLocation);
+    }
+
+    async function clearAllDataAndReload() {
+      localStorage.clear();
+      sessionStorage.clear();
+
+      if (window.caches && typeof window.caches.keys === 'function') {
+        try {
+          const keys = await window.caches.keys();
+          await Promise.all(keys.map((key) => window.caches.delete(key)));
+        } catch (_err) {
+          // Continue even if cache storage is unavailable.
+        }
+      }
+
+      const freshUrl = `${window.location.pathname}?fresh=${Date.now()}`;
+      window.location.replace(freshUrl);
+    }
+
+    function hasStoredSessionData() {
+      return sessionStorage.length > 0 || localStorage.length > 0;
+    }
+
+    let wipeArmTimer = null;
+
+    function setWipeArmed(isArmed) {
+      const clearBtn = document.getElementById('clear-all-data');
+      if (!clearBtn) return;
+
+      clearBtn.classList.toggle('is-armed', isArmed);
+      clearBtn.setAttribute('aria-pressed', isArmed ? 'true' : 'false');
+      clearBtn.title = isArmed ? 'Confirm clear all data now' : 'Clear all data';
+
+      if (!isArmed && wipeArmTimer) {
+        clearTimeout(wipeArmTimer);
+        wipeArmTimer = null;
+      }
+    }
+
+    function armWipeAction() {
+      setWipeArmed(true);
+      wipeArmTimer = setTimeout(() => {
+        setWipeArmed(false);
+      }, 4500);
+    }
+
+    function updateClearDataVisibility() {
+      const clearBtn = document.getElementById('clear-all-data');
+      if (!clearBtn) return;
+      const visible = hasStoredSessionData();
+      clearBtn.classList.toggle('is-visible', visible);
+      if (!visible) setWipeArmed(false);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       const btn = document.getElementById('init-pilot-location');
+      const clearBtn = document.getElementById('clear-all-data');
       const status = document.getElementById('pilot-location-status');
-      if (!btn || !status) return;
+      if (!btn || !status || !clearBtn) return;
 
-      updateStatusFromStorage();
+      const hasPilotLocation = updateStatusFromStorage();
+      updateHighlightState(hasPilotLocation);
+      updateClearDataVisibility();
 
       btn.addEventListener('click', () => {
         if (!navigator.geolocation) {
@@ -256,12 +442,26 @@
               'index-hub'
             );
             status.textContent = `Pilot location ready: ${saved.latShort}, ${saved.lonShort}`;
+            updateHighlightState(true);
+            updateClearDataVisibility();
           },
           () => {
             status.textContent = 'Unable to fetch location. Check browser permissions and try again.';
           },
           { enableHighAccuracy: true, timeout: 12000, maximumAge: 300000 }
         );
+      });
+
+      clearBtn.addEventListener('click', async () => {
+        if (!clearBtn.classList.contains('is-armed')) {
+          armWipeAction();
+          status.textContent = 'Wipe armed. Click once more within 5s to confirm.';
+          return;
+        }
+
+        status.textContent = 'Clearing all saved data...';
+        setWipeArmed(false);
+        await clearAllDataAndReload();
       });
     });
   </script>

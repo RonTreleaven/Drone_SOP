@@ -19,6 +19,11 @@
       line-height: 1.2;
     }
 
+    #firInput,
+    #icaoInput {
+      text-transform: uppercase;
+    }
+
     .coord-link:hover,
     .coord-link:focus-visible {
       background: #c3e3ff;
@@ -396,7 +401,7 @@
       }
 
       filteredNotams.forEach(notam => {
-        const highlightESection = currentSourceKey === "filtered";
+        const highlightESection = true;
         const firMatch = (notam.raw || "").match(/Q\)\s*([A-Z]{4})/);
         const icaoMatch = (notam.raw || "").match(/A\)\s*([A-Z]{4})/);
         const notamMatch = (notam.raw || "").match(/([A-Z]\d{4}\/\d{2})\s+NOTAM[A-Z]/);
@@ -404,10 +409,6 @@
         const icaoOutput = icaoMatch ? icaoMatch[1] : "N/A";
         const notamOutput = notamMatch ? notamMatch[1] : "N/A";
         const descriptionHtml = buildDescriptionHtml(notam.raw || "", highlightESection);
-        const dmsCoord = highlightESection ? extractDmsCoordinate(notam.raw || "") : null;
-        const dmsLink = dmsCoord
-          ? `<p><strong>Location:</strong> <a href="DMS2DD.html?dms=${encodeURIComponent(dmsCoord)}" target="_blank">Convert ${escapeHtml(dmsCoord)} to DD</a></p>`
-          : "";
 
         resultsContainer.innerHTML += `
           <div class="notam">
@@ -417,7 +418,6 @@
             <p><strong>Valid From:</strong> ${notam.startValidity || "N/A"}</p>
             <p><strong>Valid To:</strong> ${notam.endValidity || "N/A"}</p>
             <p><strong>Description:</strong> ${descriptionHtml}</p>
-            ${dmsLink}
           </div>
         `;
       });
@@ -436,9 +436,38 @@
       }
     }
 
+    function forceUppercaseInput(inputEl) {
+      if (!inputEl) return;
+      inputEl.addEventListener("input", function () {
+        const start = inputEl.selectionStart;
+        const end = inputEl.selectionEnd;
+        inputEl.value = inputEl.value.toUpperCase();
+        if (start !== null && end !== null) {
+          inputEl.setSelectionRange(start, end);
+        }
+      });
+    }
+
+    function submitSearchWithAutoFilter() {
+      const firInput = document.getElementById("firInput").value.trim();
+      const icaoInput = document.getElementById("icaoInput").value.trim();
+      const shouldAutoFilter = Boolean(firInput || icaoInput);
+
+      if (shouldAutoFilter && currentSourceKey !== "filtered") {
+        currentSourceKey = "filtered";
+        setFilterStateDisplay();
+        loadNotamData().then(() => {
+          searchNotams();
+        });
+        return;
+      }
+
+      searchNotams();
+    }
+
     document.getElementById("searchForm").addEventListener("submit", function (event) {
       event.preventDefault();
-      searchNotams();
+      submitSearchWithAutoFilter();
     });
 
     document.getElementById("filterToggle").addEventListener("click", function () {
@@ -462,6 +491,9 @@
 
     setFilterStateDisplay();
     loadNotamData();
+
+    forceUppercaseInput(document.getElementById("firInput"));
+    forceUppercaseInput(document.getElementById("icaoInput"));
 
     document.getElementById("firInput").focus();
   </script>
