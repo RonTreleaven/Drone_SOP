@@ -1361,26 +1361,26 @@ throw new Error(`${label} failed: ${err?.message || "unknown"}`)
 
 }
 
-function extractRawMetarLine(txt) {
-    const lines = String(txt || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+// function extractRawMetarLine(txt) {
+    // const lines = String(txt || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
 
-    return (
-        lines.find(s => /\b(SPECI|METAR)\s[A-Z]{4}\s\d{6}Z\b/.test(s)) || // Handles SPECI and METAR
-        null // Return null if nothing is found
-    );
-}
-
-// function extractRawMetarLine(txt){
-
-// const lines = String(txt || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean)
-
-// return (
-// lines.find(s => /\b[A-Z]{4}\s\d{6}Z\b/.test(s)) ||
-// lines.find(s => s.startsWith("METAR ")) ||
-// null
-// )
-
+    // return (
+        // lines.find(s => /\b(SPECI|METAR)\s[A-Z]{4}\s\d{6}Z\b/.test(s)) || // Handles SPECI and METAR
+        //null // Return null if nothing is found
+    // );
 // }
+
+function extractRawMetarLine(txt){
+
+const lines = String(txt || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean)
+
+return (
+lines.find(s => /\b[A-Z]{4}\s\d{6}Z\b/.test(s)) ||
+lines.find(s => s.startsWith("METAR ")) ||
+null
+)
+
+}
 
 
 function mapMetarFields(m){
