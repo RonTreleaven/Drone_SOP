@@ -447,6 +447,45 @@ text-align:left;
 background:#f4f7fb;
 }
 
+.weather-summary-panel{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:10px;
+margin-top:12px;
+}
+
+.weather-summary-item{
+background:#f7f9fc;
+border:1px solid #d7dde4;
+border-radius:8px;
+padding:10px;
+}
+
+.weather-summary-item b{
+display:block;
+font-size:12px;
+letter-spacing:0.03em;
+text-transform:uppercase;
+color:#445;
+margin-bottom:4px;
+}
+
+.weather-summary-item span{
+display:block;
+font-size:14px;
+color:#1f2833;
+}
+
+.weather-summary-item.full-width{
+grid-column:1 / -1;
+}
+
+.weather-summary-empty{
+color:#445;
+font-size:14px;
+margin-top:10px;
+}
+
 </style>
 </head>
 
@@ -492,8 +531,9 @@ background:#f4f7fb;
 </div>
 
 <div class="panel">
-<h3>Current METAR</h3>
+<h3>Current Weather Report</h3>
 <pre id="metarText"></pre>
+<div id="weatherSummaryPanel" class="weather-summary-empty">Run METAR Weather Check to load structured observation details.</div>
 </div>
 
 <div class="panel">
@@ -582,6 +622,65 @@ let latestLocation = null
 let latestWeatherArtifact = null
 let committedWeatherArtifact = null
 let stationsCachePromise = null
+let lastMetarFetchInfo = {
+winnerLabel: "",
+winnerUrl: "",
+errors: []
+}
+
+const WEATHER_INTENSITY_MAP = {
+"-": "Light",
+"+": "Heavy",
+"VC": "In the vicinity"
+}
+
+const WEATHER_DESCRIPTOR_MAP = {
+MI: "Shallow",
+PR: "Partial",
+BC: "Patches",
+DR: "Low drifting",
+BL: "Blowing",
+SH: "Showers",
+TS: "Thunderstorm",
+FZ: "Freezing"
+}
+
+const WEATHER_PHENOMENA_MAP = {
+DZ: "Drizzle",
+RA: "Rain",
+SN: "Snow",
+SG: "Snow grains",
+IC: "Ice crystals",
+PL: "Ice pellets",
+GR: "Hail",
+GS: "Small hail",
+UP: "Unknown precipitation",
+BR: "Mist",
+FG: "Fog",
+FU: "Smoke",
+VA: "Volcanic ash",
+DU: "Dust",
+SA: "Sand",
+HZ: "Haze",
+PY: "Spray",
+PO: "Dust whirls",
+SQ: "Squalls",
+FC: "Funnel cloud",
+SS: "Sandstorm",
+DS: "Duststorm"
+}
+
+const CLOUD_COVERAGE_MAP = {
+SKC: "Sky clear",
+CLR: "Clear",
+NCD: "No clouds detected",
+NSC: "No significant cloud",
+FEW: "Few",
+SCT: "Scattered",
+BKN: "Broken",
+OVC: "Overcast",
+VV: "Vertical visibility"
+}
 
 function goBack(event){
 event.preventDefault()
@@ -621,6 +720,7 @@ return
 }
 
 displayMETAR(metar)
+displayStructuredWeather(metar)
 
 const windRisk = calculateWindRisk(metar)
 
@@ -998,6 +1098,9 @@ latestWeatherArtifact = {
 timestamp: now,
 icao: payload.icao,
 metarRaw: payload.metar?.rawOb || "",
+normalizedObservation: payload.metar?.normalized || null,
+metarSource: payload.metar?.source || payload.metar?.normalized?.source || lastMetarFetchInfo.winnerLabel || "",
+metarSourceUrl: payload.metar?.sourceUrl || payload.metar?.normalized?.sourceUrl || lastMetarFetchInfo.winnerUrl || "",
 windDir: payload.risk?.windDir ?? "N/A",
 windKt: payload.risk?.wind ?? 0,
 gustKt: payload.risk?.gust ?? 0,
@@ -1199,6 +1302,13 @@ if(artifact.metarRaw){
 document.getElementById("metarText").textContent = artifact.metarRaw
 }
 
+displayStructuredWeather({
+rawOb: artifact.metarRaw || "",
+normalized: artifact.normalizedObservation || null,
+source: artifact.metarSource || "",
+sourceUrl: artifact.metarSourceUrl || ""
+})
+
 if(Number.isFinite(Number(artifact.kpIndex))){
 displayKp({ kp: Number(artifact.kpIndex) })
 }
@@ -1279,6 +1389,12 @@ const cleanIcao = String(icao || "").trim().toUpperCase()
 const aviationWeatherUrl =
 `https://aviationweather.gov/api/data/metar?ids=${cleanIcao}&format=json`
 
+const aviationProxyAllOriginsUrl =
+`https://api.allorigins.win/raw?url=${encodeURIComponent(aviationWeatherUrl)}`
+
+const aviationProxyCodeTabsUrl =
+`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(aviationWeatherUrl)}`
+
 const noaaTxtUrl =
 `https://tgftp.nws.noaa.gov/data/observations/metar/stations/${cleanIcao}.TXT`
 
@@ -1289,31 +1405,59 @@ const proxyCodeTabsUrl =
 `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(noaaTxtUrl)}`
 
 const attempts = [
-fetchMetarFromAviation(aviationWeatherUrl),
-fetchMetarFromTextSource(noaaTxtUrl,"NOAA direct"),
-fetchMetarFromTextSource(proxyAllOriginsUrl,"NOAA via AllOrigins"),
-fetchMetarFromTextSource(proxyCodeTabsUrl,"NOAA via CodeTabs")
+{ run: () => fetchMetarFromAviation(aviationWeatherUrl, 4000),         label: "AviationWeather JSON",                url: aviationWeatherUrl },
+{ run: () => fetchMetarFromAviation(aviationProxyAllOriginsUrl, 3500),  label: "AviationWeather JSON via AllOrigins", url: aviationProxyAllOriginsUrl },
+{ run: () => fetchMetarFromAviation(aviationProxyCodeTabsUrl, 5500),    label: "AviationWeather JSON via CodeTabs",   url: aviationProxyCodeTabsUrl },
+{ run: () => fetchMetarFromTextSource(noaaTxtUrl,"NOAA direct"),        label: "NOAA direct",                         url: noaaTxtUrl },
+{ run: () => fetchMetarFromTextSource(proxyAllOriginsUrl,"NOAA via AllOrigins"), label: "NOAA via AllOrigins",        url: proxyAllOriginsUrl },
+{ run: () => fetchMetarFromTextSource(proxyCodeTabsUrl,"NOAA via CodeTabs"),     label: "NOAA via CodeTabs",          url: proxyCodeTabsUrl }
 ]
 
+const errors = []
+for(const attempt of attempts){
 try{
+const metar = await attempt.run()
+if(metar){
+if(!metar.normalized){
+metar.normalized = normalizeWeatherObservation(metar.rawOb || "", { source: attempt.label, sourceUrl: attempt.url })
+}
+if(!metar.normalized.source) metar.normalized.source = attempt.label
+if(!metar.normalized.sourceUrl) metar.normalized.sourceUrl = attempt.url
+metar.source = metar.normalized.source
+metar.sourceUrl = metar.normalized.sourceUrl
+}
 
-return await Promise.any(attempts)
+lastMetarFetchInfo = {
+winnerLabel: attempt.label,
+winnerUrl: attempt.url,
+errors
+}
 
+return metar
 }
 catch(err){
-console.warn("METAR fetch failed across all sources",err)
-showError(`Unable to retrieve METAR for ${cleanIcao}. Tried AviationWeather and NOAA sources. Check connection and try again.`)
+errors.push(`${attempt.label}: ${err?.message || "unknown error"}`)
+}
+}
+
+lastMetarFetchInfo = {
+winnerLabel: "",
+winnerUrl: "",
+errors
+}
+
+console.warn("METAR fetch failed across all sources",errors)
+showError(`Unable to retrieve METAR for ${cleanIcao}. Tried AviationWeather JSON (direct + proxies), then NOAA fallbacks.`)
 return null
-}
 
 }
 
 
-async function fetchMetarFromAviation(url){
+async function fetchMetarFromAviation(url,timeoutMs=5500){
 
 try{
 
-const response = await fetchWithTimeout(url,5500)
+const response = await fetchWithTimeout(url,timeoutMs)
 
 if(!response.ok){
 throw new Error(`AviationWeather HTTP ${response.status}`)
@@ -1322,7 +1466,7 @@ throw new Error(`AviationWeather HTTP ${response.status}`)
 const data = await response.json()
 
 if(Array.isArray(data) && data.length){
-return mapMetarFields(data[0])
+return mapMetarFields(data[0],"AviationWeather JSON",url)
 }
 
 throw new Error("AviationWeather empty response")
@@ -1352,7 +1496,7 @@ if(!rawLine){
 throw new Error(`${label} returned no METAR line`)
 }
 
-return parseRawMetar(rawLine)
+return parseRawMetar(rawLine,label,url)
 
 }
 catch(err){
@@ -1375,49 +1519,401 @@ function extractRawMetarLine(txt){
 const lines = String(txt || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean)
 
 return (
+lines.find(s => /^SPECI\s+[A-Z]{4}\s\d{6}Z\b/.test(s)) ||
+lines.find(s => /^METAR\s+[A-Z]{4}\s\d{6}Z\b/.test(s)) ||
 lines.find(s => /\b[A-Z]{4}\s\d{6}Z\b/.test(s)) ||
 lines.find(s => s.startsWith("METAR ")) ||
+lines.find(s => s.startsWith("SPECI ")) ||
 null
 )
 
 }
 
 
-function mapMetarFields(m){
+function mapMetarFields(m,sourceLabel="AviationWeather",sourceUrl=""){
+const rawText = String(m.rawOb ?? m.raw_text ?? "").trim()
+const normalized = normalizeWeatherObservation(rawText, {
+source: sourceLabel,
+sourceUrl,
+api: m
+})
+
 return {
 // Support both legacy and current field names.
-wdir: parseInt(m.wdir ?? m.wind_dir_degrees) || null,
-wspd: parseInt(m.wspd ?? m.wind_speed_kt) || 0,
-wgst: parseInt(m.wgst ?? m.wind_gust_kt) || 0,
-visib: parseFloat(m.visib ?? m.visibility_statute_mi) || 10,
-ceil: parseInt(m.ceil ?? m.sky_condition?.[0]?.cloud_base_ft_agl) || 5000,
-rawOb: m.rawOb ?? m.raw_text ?? ""
+wdir: normalized.wind.directionDegrees ?? (parseInt(m.wdir ?? m.wind_dir_degrees) || null),
+wspd: normalized.wind.speedKt ?? (parseInt(m.wspd ?? m.wind_speed_kt) || 0),
+wgst: normalized.wind.gustKt ?? (parseInt(m.wgst ?? m.wind_gust_kt) || 0),
+visib: normalized.visibility.valueSm ?? (parseFloat(m.visib ?? m.visibility_statute_mi) || 10),
+ceil: normalized.ceilingFt ?? (parseInt(m.ceil ?? m.sky_condition?.[0]?.cloud_base_ft_agl) || 5000),
+rawOb: rawText,
+normalized
 }
 }
 
 
-function parseRawMetar(raw){
+function parseRawMetar(raw,source="raw-text",sourceUrl=""){
 
-const windMatch = raw.match(/\b(?:\d{3}|VRB)(\d{2,3})(?:G(\d{2,3}))?KT\b/)
-const dirMatch = raw.match(/\b(\d{3}|VRB)\d{2,3}(?:G\d{2,3})?KT\b/)
-const vis = parseVisibilitySm(raw)
-
-const cloudMatches = [...raw.matchAll(/\b(?:BKN|OVC|VV)(\d{3})\b/g)]
-const cloudBases = cloudMatches.map(m => parseInt(m[1],10) * 100).filter(n => Number.isFinite(n))
-const ceiling = cloudBases.length ? Math.min(...cloudBases) : 5000
-
-const wind = windMatch ? parseInt(windMatch[1],10) : 0
-const gust = windMatch && windMatch[2] ? parseInt(windMatch[2],10) : wind
+const normalized = normalizeWeatherObservation(raw,{ source, sourceUrl })
 
 return {
-wdir: dirMatch ? (dirMatch[1] === "VRB" ? "VRB" : parseInt(dirMatch[1],10)) : null,
-wspd: wind,
-wgst: gust,
-visib: vis,
-ceil: ceiling,
-rawOb: raw
+wdir: normalized.wind.directionText === "VRB" ? "VRB" : normalized.wind.directionDegrees,
+wspd: normalized.wind.speedKt ?? 0,
+wgst: normalized.wind.gustKt ?? normalized.wind.speedKt ?? 0,
+visib: normalized.visibility.valueSm ?? 10,
+ceil: normalized.ceilingFt ?? 5000,
+rawOb: normalized.rawText,
+normalized
 }
 
+}
+
+
+function normalizeWeatherObservation(raw,options={}){
+const text = String(raw || "").trim().replace(/\s+/g," ")
+const api = options.api || {}
+const reportType = detectReportType(text,api)
+const station = detectStationId(text,api)
+const observed = parseObservationTime(text,api)
+const wind = parseWindDetails(text)
+const visibility = parseVisibilityDetails(text)
+const clouds = parseCloudLayers(text,api)
+const weather = parseWeatherDetails(text,api)
+const temps = parseTemperatureDewpoint(text,api)
+const altimeter = parseAltimeter(text,api)
+
+const ceilingCandidates = clouds
+.filter(layer => ["BKN","OVC","VV"].includes(layer.coverageCode) && Number.isFinite(layer.heightFt))
+.map(layer => layer.heightFt)
+
+return {
+reportType,
+station,
+observed,
+rawText: text,
+source: options.source || "derived",
+sourceUrl: options.sourceUrl || "",
+wind,
+visibility,
+ceilingFt: ceilingCandidates.length ? Math.min(...ceilingCandidates) : null,
+clouds,
+temperature: temps.temperatureC,
+dewpoint: temps.dewpointC,
+altimeter,
+weather,
+notableWeatherText: weather.length
+? weather.map(item => item.text).join(", ")
+: "No notable weather reported"
+}
+}
+
+
+function detectReportType(raw,api={}){
+const apiType = String(api.metar_type ?? api.metarType ?? api.report_type ?? api.reportType ?? "").trim().toUpperCase()
+if(apiType === "SPECI" || apiType === "METAR") return apiType
+if(/^SPECI\b/.test(raw)) return "SPECI"
+if(/^METAR\b/.test(raw)) return "METAR"
+// Bare format (no METAR/SPECI prefix) from NOAA text — assume routine METAR
+if(/^[A-Z]{4}\s\d{6}Z\b/.test(raw)) return "METAR"
+return "Unknown"
+}
+
+
+function detectStationId(raw,api={}){
+const apiStation = String(api.icaoId ?? api.icao_id ?? api.station_id ?? api.station ?? "").trim().toUpperCase()
+if(/^[A-Z]{4}$/.test(apiStation)) return apiStation
+const prefixed = raw.match(/^(?:METAR|SPECI)\s+([A-Z]{4})\b/)
+if(prefixed) return prefixed[1]
+const bare = raw.match(/^([A-Z]{4})\s\d{6}Z\b/)
+return bare ? bare[1] : ""
+}
+
+
+function parseObservationTime(raw,api={}){
+const tokenMatch = raw.match(/\b(\d{6})Z\b/)
+const token = tokenMatch ? `${tokenMatch[1]}Z` : ""
+const obsTimeValue = api.reportTime ?? api.observation_time ?? api.observed ?? api.observationTime ?? api.obsTime ?? ""
+
+let when = null
+
+if(obsTimeValue !== "" && obsTimeValue != null){
+const candidate = parseApiObservationDate(obsTimeValue)
+if(Number.isFinite(candidate.getTime())) when = candidate
+}
+
+// Build approximate UTC Date from the day/time token when no API timestamp is available
+if(!when && tokenMatch){
+const day  = parseInt(tokenMatch[1].slice(0,2),10)
+const hour = parseInt(tokenMatch[1].slice(2,4),10)
+const min  = parseInt(tokenMatch[1].slice(4,6),10)
+const now = new Date()
+let candidate = new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),day,hour,min))
+// If the result is more than 12 h in the future it belongs to the previous month
+if(candidate.getTime() - now.getTime() > 12 * 3600000){
+candidate = new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth()-1,day,hour,min))
+}
+if(Number.isFinite(candidate.getTime())) when = candidate
+}
+
+let display
+if(when && Number.isFinite(when.getTime())){
+const localStr = formatLocalTime(when)
+display = token
+? (localStr ? `${token} / ${localStr}` : token)
+: when.toUTCString()
+}
+else{
+display = token || "Unavailable"
+}
+
+return { token, iso: String(obsTimeValue || ""), display, when }
+}
+
+
+function parseApiObservationDate(value){
+if(value instanceof Date) return value
+if(typeof value === "number"){
+// AviationWeather can return Unix seconds for obsTime.
+const ms = value > 1000000000000 ? value : value * 1000
+return new Date(ms)
+}
+
+const text = String(value || "").trim()
+if(/^\d+$/.test(text)){
+const n = Number(text)
+const ms = n > 1000000000000 ? n : n * 1000
+return new Date(ms)
+}
+
+return new Date(text)
+}
+
+
+function formatLocalTime(date){
+try{
+return date.toLocaleTimeString([],{
+hour: "2-digit",
+minute: "2-digit",
+hour12: false,
+timeZoneName: "short"
+})
+}
+catch{
+return ""
+}
+}
+
+
+function parseWindDetails(raw){
+const windMatch = raw.match(/\b(\d{3}|VRB)(\d{2,3})(?:G(\d{2,3}))?KT\b/)
+const variableMatch = raw.match(/\b(\d{3})V(\d{3})\b/)
+
+if(!windMatch){
+return {
+raw: "",
+directionText: "N/A",
+directionDegrees: null,
+speedKt: 0,
+gustKt: 0,
+variableFrom: variableMatch ? Number(variableMatch[1]) : null,
+variableTo: variableMatch ? Number(variableMatch[2]) : null,
+display: "Unavailable"
+}
+}
+
+const directionToken = windMatch[1]
+const speedKt = Number(windMatch[2])
+const gustKt = windMatch[3] ? Number(windMatch[3]) : speedKt
+const directionDegrees = directionToken === "VRB" ? null : Number(directionToken)
+const directionText = directionToken === "VRB" ? "VRB" : `${String(directionDegrees).padStart(3,"0")}°`
+const variableText = variableMatch ? `, variable ${variableMatch[1]}°-${variableMatch[2]}°` : ""
+
+return {
+raw: windMatch[0],
+directionText,
+directionDegrees,
+speedKt,
+gustKt,
+variableFrom: variableMatch ? Number(variableMatch[1]) : null,
+variableTo: variableMatch ? Number(variableMatch[2]) : null,
+display: `${directionText} at ${speedKt} kt${gustKt > speedKt ? ` gust ${gustKt} kt` : ""}${variableText}`
+}
+}
+
+
+function parseVisibilityDetails(raw){
+const valueSm = parseVisibilitySm(raw)
+const rawMatch = raw.match(/\b(?:P6SM|M?\d+\s+\d\/\dSM|M?\d\/\dSM|M?\d+SM)\b/)
+return {
+raw: rawMatch ? rawMatch[0] : "",
+valueSm,
+display: valueSm == null ? "Unavailable" : `${valueSm} SM`
+}
+}
+
+
+function parseCloudLayers(raw,api={}){
+const rawLayers = [...raw.matchAll(/\b(FEW|SCT|BKN|OVC|VV|SKC|CLR|NSC|NCD)(\d{3})?(CB|TCU)?\b/g)]
+.map(match => ({
+coverageCode: match[1],
+coverageText: CLOUD_COVERAGE_MAP[match[1]] || match[1],
+heightFt: match[2] ? Number(match[2]) * 100 : null,
+modifier: match[3] || "",
+raw: match[0],
+display: `${CLOUD_COVERAGE_MAP[match[1]] || match[1]}${match[2] ? ` ${Number(match[2]) * 100} ft` : ""}${match[3] ? ` ${match[3]}` : ""}`.trim()
+}))
+
+if(rawLayers.length) return rawLayers
+
+const apiLayers = Array.isArray(api.sky_condition) ? api.sky_condition : []
+return apiLayers.map(layer => {
+const coverageCode = String(layer.sky_cover ?? layer.cover ?? "").toUpperCase()
+const heightValue = Number(layer.cloud_base_ft_agl ?? layer.base_ft_agl ?? layer.base)
+return {
+coverageCode,
+coverageText: CLOUD_COVERAGE_MAP[coverageCode] || coverageCode || "Unknown",
+heightFt: Number.isFinite(heightValue) ? heightValue : null,
+modifier: String(layer.cloud_type ?? "").toUpperCase(),
+raw: "",
+display: `${CLOUD_COVERAGE_MAP[coverageCode] || coverageCode || "Unknown"}${Number.isFinite(heightValue) ? ` ${heightValue} ft` : ""}`.trim()
+}
+})
+}
+
+
+function parseWeatherDetails(raw,api={}){
+const tokens = String(raw || "").split(/\s+/).filter(Boolean)
+const matches = []
+
+for(const token of tokens){
+if(isWeatherToken(token)){
+matches.push({
+code: token,
+text: decodeWeatherToken(token)
+})
+}
+}
+
+if(matches.length) return matches
+
+const apiWx = String(api.wxString ?? api.wx_string ?? "").trim()
+if(apiWx){
+return apiWx.split(/\s+/).filter(Boolean).map(code => ({
+code,
+text: decodeWeatherToken(code)
+}))
+}
+
+return []
+}
+
+
+function isWeatherToken(token){
+return /^(?:\+|-|VC)?(?:MI|PR|BC|DR|BL|SH|TS|FZ)?(?:DZ|RA|SN|SG|IC|PL|GR|GS|UP|BR|FG|FU|VA|DU|SA|HZ|PY|PO|SQ|FC|SS|DS)+$/.test(token)
+}
+
+
+function decodeWeatherToken(token){
+let rest = String(token || "")
+const parts = []
+
+const intensityMatch = rest.match(/^(\+|-|VC)/)
+if(intensityMatch){
+parts.push(WEATHER_INTENSITY_MAP[intensityMatch[1]] || intensityMatch[1])
+rest = rest.slice(intensityMatch[1].length)
+}
+
+const descriptorMatch = rest.match(/^(MI|PR|BC|DR|BL|SH|TS|FZ)/)
+if(descriptorMatch){
+parts.push(WEATHER_DESCRIPTOR_MAP[descriptorMatch[1]] || descriptorMatch[1])
+rest = rest.slice(descriptorMatch[1].length)
+}
+
+const phenomena = []
+while(rest.length >= 2){
+const code = rest.slice(0,2)
+phenomena.push(WEATHER_PHENOMENA_MAP[code] || code)
+rest = rest.slice(2)
+}
+
+if(phenomena.length) parts.push(phenomena.join(" and "))
+
+return parts.length ? parts.join(" ") : token
+}
+
+
+function parseTemperatureDewpoint(raw,api={}){
+const match = raw.match(/\b(M?\d{2})\/(M?\d{2})\b/)
+if(match){
+return {
+temperatureC: decodeSignedMetarNumber(match[1]),
+dewpointC: decodeSignedMetarNumber(match[2])
+}
+}
+
+const temperatureC = Number(api.temp ?? api.temp_c)
+const dewpointC = Number(api.dewp ?? api.dewpoint_c)
+return {
+temperatureC: Number.isFinite(temperatureC) ? temperatureC : null,
+dewpointC: Number.isFinite(dewpointC) ? dewpointC : null
+}
+}
+
+
+function decodeSignedMetarNumber(token){
+if(!token) return null
+return token.startsWith("M") ? -Number(token.slice(1)) : Number(token)
+}
+
+
+function parseAltimeter(raw,api={}){
+const inchesMatch = raw.match(/\bA(\d{4})\b/)
+if(inchesMatch){
+const inHg = Number((Number(inchesMatch[1]) / 100).toFixed(2))
+return {
+raw: inchesMatch[0],
+inHg,
+hPa: Number((inHg * 33.8639).toFixed(1)),
+display: `${inHg.toFixed(2)} inHg`
+}
+}
+
+const hpaMatch = raw.match(/\bQ(\d{4})\b/)
+if(hpaMatch){
+const hPa = Number(hpaMatch[1])
+return {
+raw: hpaMatch[0],
+inHg: Number((hPa / 33.8639).toFixed(2)),
+hPa,
+display: `${hPa} hPa`
+}
+}
+
+const altim = Number(api.altim ?? api.altimeter ?? api.altim_in_hg)
+if(Number.isFinite(altim)){
+// AviationWeather altim is often hPa (e.g., 1016), while some feeds use inHg.
+if(altim > 200){
+return {
+raw: "",
+inHg: Number((altim / 33.8639).toFixed(2)),
+hPa: Number(altim.toFixed(1)),
+display: `${altim.toFixed(1)} hPa`
+}
+}
+
+return {
+raw: "",
+inHg: altim,
+hPa: Number((altim * 33.8639).toFixed(1)),
+display: `${altim.toFixed(2)} inHg`
+}
+}
+
+return {
+raw: "",
+inHg: null,
+hPa: null,
+display: "Unavailable"
+}
 }
 
 
@@ -1425,6 +1921,16 @@ function parseVisibilitySm(raw){
 
 const p6 = raw.match(/\bP6SM\b/)
 if(p6) return 6
+
+const lessThan = raw.match(/\bM(\d)\/(\d)SM\b/)
+if(lessThan){
+return Number((parseInt(lessThan[1],10) / parseInt(lessThan[2],10)).toFixed(2))
+}
+
+const lessThanWhole = raw.match(/\bM(\d+)SM\b/)
+if(lessThanWhole){
+return parseInt(lessThanWhole[1],10)
+}
 
 const wholeFraction = raw.match(/\b(\d+)\s(\d)\/(\d)SM\b/)
 if(wholeFraction){
@@ -1489,6 +1995,94 @@ function displayMETAR(metar){
 document.getElementById("metarText").textContent =
 metar.rawOb
 
+}
+
+
+function displayStructuredWeather(metar){
+const panel = document.getElementById("weatherSummaryPanel")
+if(!panel) return
+
+let normalized = metar?.normalized || null
+if(!normalized || !normalized.rawText){
+normalized = normalizeWeatherObservation(metar?.rawOb || "", { source:"display" })
+}
+else if((!normalized.reportType || normalized.reportType === "Unknown") && metar?.rawOb){
+// Recompute on display so older cached artifacts can pick up newer report-type parsing.
+normalized = normalizeWeatherObservation(metar.rawOb, {
+source: metar?.source || normalized.source || "display-refresh",
+sourceUrl: metar?.sourceUrl || normalized.sourceUrl || ""
+})
+}
+
+if(!normalized.source && metar?.source){
+normalized.source = metar.source
+}
+if(!normalized.sourceUrl && metar?.sourceUrl){
+normalized.sourceUrl = metar.sourceUrl
+}
+if(!normalized.source && lastMetarFetchInfo.winnerLabel){
+normalized.source = lastMetarFetchInfo.winnerLabel
+}
+if(!normalized.sourceUrl && lastMetarFetchInfo.winnerUrl){
+normalized.sourceUrl = lastMetarFetchInfo.winnerUrl
+}
+
+if(!normalized || !normalized.rawText){
+panel.className = "weather-summary-empty"
+panel.textContent = "Run METAR Weather Check to load structured observation details."
+return
+}
+
+const cloudText = normalized.clouds.length
+? normalized.clouds.map(layer => layer.display).join(", ")
+: "No cloud layers reported"
+
+const weatherText = normalized.weather.length
+? normalized.weather.map(item => `${item.code} (${item.text})`).join(", ")
+: normalized.notableWeatherText
+
+const tempText = normalized.temperature == null
+? "Unavailable"
+: `${normalized.temperature} C / ${normalized.dewpoint == null ? "--" : normalized.dewpoint} C`
+
+const ceilingText = normalized.ceilingFt == null ? "No ceiling reported" : `${normalized.ceilingFt} ft`
+const reportTypeText = (!normalized.reportType || normalized.reportType === "Unknown") ? "null" : normalized.reportType
+const sourceText = normalized.source || "unknown"
+const sourceCallText = normalized.sourceUrl || "Unavailable"
+
+panel.className = "weather-summary-panel"
+panel.innerHTML = `
+<div class="weather-summary-item"><b>Report Type (METAR/SPECI)</b><span>${escapeHtml(reportTypeText)}</span></div>
+<div class="weather-summary-item"><b>Report Source</b><span>${escapeHtml(sourceText)}</span></div>
+<div class="weather-summary-item full-width"><b>Successful Call</b><span>${renderSourceCallHtml(sourceCallText)}</span></div>
+<div class="weather-summary-item"><b>Observed</b><span>${escapeHtml(normalized.observed.display || "Unavailable")}</span></div>
+<div class="weather-summary-item"><b>Wind</b><span>${escapeHtml(normalized.wind.display || "Unavailable")}</span></div>
+<div class="weather-summary-item"><b>Visibility</b><span>${escapeHtml(normalized.visibility.display || "Unavailable")}</span></div>
+<div class="weather-summary-item"><b>Ceiling</b><span>${escapeHtml(ceilingText)}</span></div>
+<div class="weather-summary-item"><b>Temperature / Dew Point</b><span>${escapeHtml(tempText)}</span></div>
+<div class="weather-summary-item"><b>Altimeter</b><span>${escapeHtml(normalized.altimeter.display || "Unavailable")}</span></div>
+<div class="weather-summary-item full-width"><b>Clouds</b><span>${escapeHtml(cloudText)}</span></div>
+<div class="weather-summary-item full-width"><b>Notable Weather</b><span>${escapeHtml(weatherText)}</span></div>
+`
+}
+
+
+function escapeHtml(value){
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/\"/g,"&quot;")
+}
+
+
+function renderSourceCallHtml(url){
+if(!url || url === "Unavailable") return escapeHtml(url || "Unavailable")
+if(!/^https:\/\//i.test(url)) return escapeHtml(url)
+let display
+try{ display = decodeURIComponent(url) }
+catch{ display = url }
+return `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="word-break:break-all;font-size:13px;">${escapeHtml(display)}</a>`
 }
 
 
