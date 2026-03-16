@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     
@@ -988,12 +988,15 @@ window.onload = function() {
   }
 
   function disableBaseCircleInteractions(circle) {
+      // Disable Leaflet-level interactivity (works for both canvas and SVG renderers)
+      circle.options.interactive = false;
       if (circle.unbindPopup) {
           circle.unbindPopup();
       }
       if (circle.off) {
           circle.off();
       }
+      // For SVG renderer: suppress browser-level pointer events on the path element
       if (circle._path) {
           circle._path.style.pointerEvents = 'none';
       }
@@ -1421,7 +1424,7 @@ var ll = L.latLng(lat, lon);
                     ...{
   "zoom": 10,
   "zoomControl": false,
-  "preferCanvas": true,
+  "preferCanvas": false,
 }
 
                 }
