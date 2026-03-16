@@ -212,6 +212,9 @@ window.onload = function() {
     var provinceCodeCache = Object.create(null);
     var refreshQueued = false;
     var pendingRefreshLatLng = null;
+    var obstacleMarkers = [];
+    var lastObstacleTapKey = '';
+    var lastObstacleTapIndex = 0;
     var obstacleIcon = L.AwesomeMarkers.icon({
         icon: 'exclamation-triangle',
         prefix: 'fa',
@@ -918,6 +921,9 @@ window.onload = function() {
 
   function refreshObstacles(ll) {
       obstacleLayer.clearLayers();
+      obstacleMarkers = [];
+      lastObstacleTapKey = '';
+      lastObstacleTapIndex = 0;
       var countText = document.getElementById('obstacleCountText');
 
       if (!notamDataReady) {
@@ -939,7 +945,7 @@ window.onload = function() {
           }
 
           shownCount += 1;
-          L.marker([item.lat, item.lon], {
+          var obstacleMarker = L.marker([item.lat, item.lon], {
               icon: obstacleIcon,
               riseOnHover: true,
               keyboard: false
@@ -947,6 +953,11 @@ window.onload = function() {
           .bindTooltip('Obstacle')
           .bindPopup(buildObstaclePopupHtml(item), { maxWidth: 420 })
           .addTo(obstacleLayer);
+
+          obstacleMarker.on('click', function() {
+              this.setZIndexOffset(4000);
+          });
+          obstacleMarkers.push(obstacleMarker);
       }
 
       if (countText) {
@@ -970,41 +981,117 @@ window.onload = function() {
       updatePilotObstacleContext(ll);
   }
 
-  function createCircleTouchTarget(circle, popupText) {
+  function closeRingPopups() {
+      c1Touch.closePopup();
+      c3Touch.closePopup();
+      c100Touch.closePopup();
+  }
+
+  function disableBaseCircleInteractions(circle) {
+      if (circle.unbindPopup) {
+          circle.unbindPopup();
+      }
+      if (circle.off) {
+          circle.off();
+      }
+      if (circle._path) {
+          circle._path.style.pointerEvents = 'none';
+      }
+  }
+
+  function createCircleTouchTarget(circle, popupText, strokeWeight) {
       var target = L.circle(circle.getLatLng(), {
           radius: circle.getRadius(),
           color: '#000',
           opacity: 0,
-          weight: 28,
+          weight: strokeWeight,
           fill: false,
           interactive: true,
           bubblingMouseEvents: false
       }).addTo(map);
 
-      target.bindPopup(popupText);
+      target.bindPopup(popupText, { autoClose: false, closeOnClick: false });
       target.on('mouseover', function() {
           target.openPopup();
       });
       target.on('mouseout', function() {
           target.closePopup();
       });
-      target.on('click', function() {
+      target.on('click touchstart', function(ev) {
+          if (ev && ev.originalEvent) {
+              ev.originalEvent.preventDefault();
+              ev.originalEvent.stopPropagation();
+          }
+          closeRingPopups();
           target.openPopup();
       });
-      target.on('touchend', function() {
-          setTimeout(function() { target.closePopup(); }, 1200);
+      target.on('touchend', function(ev) {
+          if (ev && ev.originalEvent) {
+              ev.originalEvent.preventDefault();
+              ev.originalEvent.stopPropagation();
+          }
       });
       return target;
   }
 
-  var c1Touch = createCircleTouchTarget(c1, '1 NM (1.9 km) radius');
-  var c3Touch = createCircleTouchTarget(c3, '3 NM (5.6 km) radius');
-  var c100Touch = createCircleTouchTarget(c100, radiusLabel() + ' km NOTAM filter radius');
+  function openNearbyObstaclePopup(containerPoint) {
+      if (!containerPoint || !obstacleMarkers.length) {
+          return false;
+      }
+      var candidates = [];
+      var pixelThreshold = isCompactTouchLayout ? 28 : 18;
 
-    map.on('click', function() {
-            c1Touch.closePopup();
-            c3Touch.closePopup();
-            c100Touch.closePopup();
+      for (var i = 0; i < obstacleMarkers.length; i++) {
+          var obstacleMarker = obstacleMarkers[i];
+          var point = map.latLngToContainerPoint(obstacleMarker.getLatLng());
+          var dx = point.x - containerPoint.x;
+          var dy = point.y - containerPoint.y;
+          var distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance <= pixelThreshold) {
+              candidates.push({ marker: obstacleMarker, distance: distance });
+          }
+      }
+
+      if (!candidates.length) {
+          lastObstacleTapKey = '';
+          lastObstacleTapIndex = 0;
+          return false;
+      }
+
+      candidates.sort(function(a, b) {
+          return a.distance - b.distance;
+      });
+
+      var tapKey = candidates.map(function(entry) {
+          var ll = entry.marker.getLatLng();
+          return ll.lat.toFixed(6) + ',' + ll.lng.toFixed(6);
+      }).join('|');
+
+      if (tapKey !== lastObstacleTapKey) {
+          lastObstacleTapKey = tapKey;
+          lastObstacleTapIndex = 0;
+      } else {
+          lastObstacleTapIndex = (lastObstacleTapIndex + 1) % candidates.length;
+      }
+
+      var chosenMarker = candidates[lastObstacleTapIndex].marker;
+      chosenMarker.setZIndexOffset(4000);
+      chosenMarker.openPopup();
+      return true;
+  }
+
+  var c1Touch = createCircleTouchTarget(c1, '1 NM (1.9 km) radius', 34);
+  var c3Touch = createCircleTouchTarget(c3, '3 NM (5.6 km) radius', 34);
+  var c100Touch = createCircleTouchTarget(c100, radiusLabel() + ' km NOTAM filter radius', 18);
+  disableBaseCircleInteractions(c1);
+  disableBaseCircleInteractions(c3);
+  disableBaseCircleInteractions(c100);
+
+    map.on('click', function(e) {
+            closeRingPopups();
+            if (e && e.containerPoint) {
+                openNearbyObstaclePopup(e.containerPoint);
+            }
     });
 
   map.on('zoomend', function() {
