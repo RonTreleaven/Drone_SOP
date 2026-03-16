@@ -18,6 +18,41 @@ body {
   text-decoration: none;
   margin: 0 10px;
 }
+.top-nav a.active {
+  font-weight: 700;
+  text-decoration: underline;
+}
+.top-nav .back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem 0.35rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid #9ec9e8;
+  background: #eaf5ff;
+  color: #0b5ea8;
+  font-weight: 700;
+  font-size: 0.98rem;
+  text-decoration: none;
+  vertical-align: middle;
+}
+.top-nav .back-link .back-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background: #0b5ea8;
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1;
+}
+.top-nav .back-link:hover {
+  text-decoration: none;
+  background: #d8ecff;
+  border-color: #7db2db;
+}
 
 .card {
   background: #fff;

@@ -1,0 +1,72 @@
+
+Fetched 3 resources
+
+Ran terminal command: $p='NotamsMap.html'; "marker lines: $((Select-String -Path $p -Pattern 'L\.marker\(' -AllMatches).Count)"; "cluster group lines: $((Select-String -Path $p -Pattern 'L\.markerClusterGroup\(' -AllMatches).Count)"; "awesome icon lines: $((Select-String -Path $p -Pattern 'L\.AwesomeMarkers\.icon\(' -AllMatches).Count)"; "file size MB: $([math]::Round((Get-Item $p).Length/1MB,2))"
+
+Searched for regex `Promise\.all|All_CA\.json|All_CA_raw\.json|normalizeNotamRecords\(|obstacleLayer\.clearLayers\(|for \(var i = 0; i < activeNotams\.length; i\+\+\)|enableHighAccuracy: true` (`**/NotamsMap.html`), 9 results
+
+Searched for regex ``bootstrap|\$\(`|jQuery|L_NO_TOUCH|L_DISABLE_3D|preferCanvas|markerClusterGroup\(\s*\{`` (`**/NotamsMap.html`), 80 results
+
+Searched for regex `detectProvinceCodeForLocation|applyAirportDefaultsFromLocation|nominatim|reverse\?format=jsonv2|applyPilotLocation\(ll, true\);\s*applyAirportDefaultsFromLocation\(ll\);` (`**/NotamsMap.html`), 9 results
+
+Searched for regex `L\.control\(\{position:'topleft'\}\)|d\.style\.marginTop = '88px'|pilot-flyout|@media \(max-width:600px\)` (`**/NotamsMap.html`), 19 results
+
+1. High: Mobile rendering pressure is very high because the page is shipping a massive inline marker payload.
+- Evidence: map bootstrap and marker construction begin in NotamsMap.html, with thousands of repeated marker/icon blocks from NotamsMap.html onward.
+- Impact on iPhone: long parse/compile time, slower first interaction, and jank during pan/zoom on weaker CPUs.
+- Additional evidence: I measured 3386 marker or cluster constructor matches in this file.
+
+2. High: Obstacle redraw strategy is full clear and rebuild on each update.
+- Evidence: NotamsMap.html clears all layers at NotamsMap.html, loops all active NOTAMs at NotamsMap.html, and creates new markers at NotamsMap.html.
+- Called repeatedly from pilot moves/radius/source changes at NotamsMap.html, NotamsMap.html, NotamsMap.html, NotamsMap.html, NotamsMap.html.
+- Impact: this is one of the biggest runtime costs on small devices.
+
+3. Medium: Startup does duplicate province reverse-geocode work and there is no cache.
+- Evidence: reverse geocode request in NotamsMap.html, called by NotamsMap.html.
+- Startup calls appear twice at NotamsMap.html and NotamsMap.html.
+- Impact: unnecessary network latency and battery/radio use on mobile.
+
+4. Medium: iPhone control density is likely too high for top-left stacking.
+- Evidence: five top-left controls at NotamsMap.html, NotamsMap.html, NotamsMap.html, NotamsMap.html, NotamsMap.html, with fixed pilot panel margin at NotamsMap.html.
+- CSS is mostly one packed line with limited small-screen tuning in NotamsMap.html, and pilot flyout HTML is large in NotamsMap.html.
+- Impact: reduced map viewport and touch collisions on phones; iPad will handle better but still busy.
+
+5. Medium: Geolocation settings are accuracy-maximized for every request.
+- Evidence: NotamsMap.html uses enableHighAccuracy true and maximumAge 0.
+- Impact: slower first fix and higher battery use, especially indoors or weak signal.
+
+6. Low: Version and plugin posture is mixed for performance and maintenance.
+- Current versions in file:
+- Leaflet 1.9.3 at NotamsMap.html and NotamsMap.html
+- MarkerCluster 1.1.0 at NotamsMap.html
+- FeatureGroup.SubGroup 1.0.2 at NotamsMap.html
+- GroupedLayerControl 0.6.1 at NotamsMap.html
+- External check: Leaflet stable latest is 1.9.4 (1.x line), and Leaflet 2.0 is alpha/pre-release.
+
+Open questions and assumptions
+1. I am assuming this file is generated and checked in as a static artifact (Folium-style output), not assembled dynamically at runtime.
+2. I am assuming airport markers are intended to be available for Canada-wide use without server-side filtering.
+3. I am assuming iPhone smoothness is the top priority over always-on full feature density.
+
+Version recommendation
+1. Upgrade Leaflet from 1.9.3 to 1.9.4. Low risk, worthwhile bugfixes for mobile and control behavior.
+2. Upgrade Leaflet.markercluster from 1.1.0 to 1.5.3. This is a meaningful gap and likely to improve clustering behavior and compatibility.
+3. Do not move to Leaflet 2.0 alpha yet in this project. Your plugin stack and global L style indicate high migration risk right now.
+
+Best opportunities for iPad vs iPhone optimization
+1. Biggest win: reduce initial payload for phones.
+- Split airport data by province or viewport and lazy-load markers instead of embedding all marker JS inline.
+2. Biggest runtime win: stop rebuilding obstacle markers from scratch.
+- Keep a marker pool keyed by NOTAM id/lat-lon and diff add/remove based on radius/source changes.
+3. Add explicit responsive modes.
+- iPad: keep most controls visible.
+- iPhone: collapse to a single menu button plus 2 primary actions.
+4. Tune location requests by device.
+- iPhone default: enableHighAccuracy false, maximumAge 30000 to 60000, with an optional High Accuracy retry button.
+5. Avoid duplicate reverse geocode and cache province code by rounded lat/lon.
+
+If you want, I can implement a Phase 1 patch now with minimal risk:
+1. Leaflet 1.9.4 and markercluster 1.5.3 CDN updates.
+2. Remove duplicate startup province lookup calls.
+3. Add mobile control compaction for iPhone widths.
+4. Add simple geolocation mode tuning and province lookup cache.
