@@ -1022,6 +1022,20 @@ return `${d}\u00B0${m}'${s}"${dir}`
 }
 
 
+function normalizePilotDms(dmsText,lat,lon){
+if(!dmsText) return ""
+
+let normalized = dmsText.replace(/\u00C2/g,"")
+
+const dmsPattern = /^\d+°\d+'\d+(?:\.\d+)?"[NS], \d+°\d+'\d+(?:\.\d+)?"[EW]$/
+if(dmsPattern.test(normalized)) return normalized
+
+const computed = `${toDMS(lat,true)}, ${toDMS(lon,false)}`
+localStorage.setItem("pilotLocationDMS",computed)
+return computed
+}
+
+
 function renderCurrentLocationDetails(ddText,dmsText){
 const el = document.getElementById("currentLocationDetails")
 if(!el) return
@@ -1063,18 +1077,19 @@ return
 
 const ddText = `${known.lat.toFixed(6)}, ${known.lon.toFixed(6)}`
 const dmsComputed = `${toDMS(known.lat,true)}, ${toDMS(known.lon,false)}`
+const dmsDisplay = normalizePilotDms(dmsStored,known.lat,known.lon) || dmsComputed
 
 if(isPilotLocationUndefined(known.lat,known.lon)){
 latestLocation = null
 latestNearestStations = []
-renderCurrentLocationDetails(ddText,dmsStored || dmsComputed)
+renderCurrentLocationDetails(ddText,dmsDisplay)
 document.getElementById("nearestStations").innerHTML = "<em>Pilot location not defined yet. Click Get/Update Pilot Location to load nearby METAR stations.</em>"
 updatePilotLocationButtonLabel()
 return
 }
 
 latestLocation = { lat: known.lat, lon: known.lon, source: "stored" }
-renderCurrentLocationDetails(ddText,dmsStored || dmsComputed)
+renderCurrentLocationDetails(ddText,dmsDisplay)
 
 const nearest = await findNearestStations(known.lat,known.lon,3)
 if(!nearest.length) return
