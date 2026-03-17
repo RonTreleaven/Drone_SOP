@@ -299,6 +299,154 @@ main {
   text-decoration: none;
 }
 
+.sop-cta{
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.08);
+}
+
+.sop-cta-red{
+  background: #c92a2a;
+}
+
+.sop-cta-red:hover{
+  background: #a61e1e;
+  text-decoration: none;
+}
+
+.sop-cta-yellow{
+  background: #f59f00;
+  color: #3f2c00;
+}
+
+.sop-cta-yellow:hover{
+  background: #d38700;
+  text-decoration: none;
+}
+
+.sop-cta-green{
+  background: #2f9e44;
+}
+
+.sop-cta-green:hover{
+  background: #237a33;
+  text-decoration: none;
+}
+
+.weather-refresh-cta{
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.08);
+}
+
+.weather-cta-fresh{
+  background: #2f9e44;
+}
+
+.weather-cta-fresh:hover{
+  background: #237a33;
+  text-decoration: none;
+}
+
+.weather-cta-stale{
+  background: #c92a2a;
+}
+
+.weather-cta-stale:hover{
+  background: #a61e1e;
+  text-decoration: none;
+}
+
+.summary-header{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.summary-header h2{
+  margin: 0;
+}
+
+.summary-cta{
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.08);
+  white-space: nowrap;
+}
+
+.summary-cta-green{
+  background: #2f9e44;
+}
+
+.summary-cta-green:hover{
+  background: #237a33;
+  text-decoration: none;
+}
+
+.summary-cta-yellow{
+  background: #f59f00;
+  color: #3f2c00;
+}
+
+.summary-cta-yellow:hover{
+  background: #d38700;
+  text-decoration: none;
+}
+
+.summary-cta-red{
+  background: #c92a2a;
+}
+
+.summary-cta-red:hover{
+  background: #a61e1e;
+  text-decoration: none;
+}
+
+.flight-cta{
+  display: inline-block;
+  margin: 0.4rem 0 0.6rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.08);
+}
+
+.flight-cta-red{
+  background: #c92a2a;
+}
+
+.flight-cta-red:hover{
+  background: #a61e1e;
+  text-decoration: none;
+}
+
+.flight-cta-green{
+  background: #2f9e44;
+}
+
+.flight-cta-green:hover{
+  background: #237a33;
+  text-decoration: none;
+}
+
 @keyframes sopCtaPop {
   0% {
     transform: scale(1);

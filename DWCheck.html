@@ -210,6 +210,54 @@ margin-left:0;
 margin-top:8px;
 }
 
+.modal-overlay{
+position:fixed;
+inset:0;
+background:rgba(15,23,42,0.55);
+display:none;
+align-items:center;
+justify-content:center;
+padding:18px;
+z-index:2000;
+}
+
+.modal-overlay.show{
+display:flex;
+}
+
+.modal-card{
+background:#ffffff;
+border-radius:10px;
+max-width:520px;
+width:100%;
+box-shadow:0 18px 45px rgba(15,23,42,0.25);
+padding:16px 18px;
+}
+
+.modal-card h4{
+margin:0 0 8px 0;
+font-size:16px;
+}
+
+.modal-score-title{
+margin:0 0 8px 0;
+font-size:14px;
+font-weight:700;
+color:#223;
+}
+
+.modal-card .modal-list{
+margin:0;
+padding-left:18px;
+font-size:14px;
+color:#223;
+}
+
+.modal-card .modal-actions{
+margin-top:12px;
+text-align:right;
+}
+
 .mini-action-btn.state-fresh{
 background:#d3f9d8;
 border:1px solid #2f9e44;
@@ -503,6 +551,7 @@ margin-top:10px;
 <button id="checkBtn" onclick="runCheck()">Fetch METAR/KP Risk Assessment</button>
 <button id="completeBtn" type="button" onclick="markWeatherCheckComplete()">Save Weather Check</button>
 <a id="proceedFlightLogBtn" class="flow-next-link is-hidden" href="flight-log.html">Proceed to Flight Log</a>
+<a id="returnToolsBtn" class="flow-next-link is-hidden" href="tools.html">Return to Tools Menu</a>
 </div>
 
 <div id="errorBanner" class="error-banner"></div>
@@ -528,6 +577,22 @@ margin-top:10px;
 <div id="riskPanel" class="panel">
 <h3>Drone Weather Survey</h3>
 <div class="risk-placeholder">Run METAR Weather Check to load current survey details.</div>
+</div>
+
+<div id="scoringIndexModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="scoringIndexTitle">
+<div class="modal-card">
+<h4 id="scoringIndexTitle">Scoring Index</h4>
+<h5 class="modal-score-title">Maximum Score 7</h5>
+<ul class="modal-list">
+<li><b>Wind:</b> &gt; 21 KT = 4, &gt; 15 KT = 3, &gt; 10 KT = 2</li>
+<li><b>Gust spread:</b> &gt; 8 KT = +1</li>
+<li><b>Visibility:</b> &lt; 3 SM = +1</li>
+<li><b>Ceiling:</b> &lt; 1000 ft = +1</li>
+</ul>
+<div class="modal-actions">
+<button type="button" class="mini-action-btn" onclick="closeScoringIndex()">Close</button>
+</div>
+</div>
 </div>
 
 <div class="panel">
@@ -601,8 +666,8 @@ margin-top:10px;
 </tr>
 <tr>
 <td>Mavic 2 Pro</td>
-<td>29-38</td>
-<td>54-70</td>
+<td>21</td>
+<td>38.5</td>
 <td>Small RPA. Use caution near upper limits.</td>
 </tr>
 </tbody>
@@ -682,11 +747,68 @@ OVC: "Overcast",
 VV: "Vertical visibility"
 }
 
+const BEAUFORT_SCALE = [
+{ level: 0, min: 0, max: 1 },
+{ level: 1, min: 1, max: 3 },
+{ level: 2, min: 4, max: 6 },
+{ level: 3, min: 7, max: 10 },
+{ level: 4, min: 11, max: 16 },
+{ level: 5, min: 17, max: 21 },
+{ level: 6, min: 22, max: 27 },
+{ level: 7, min: 28, max: 33 },
+{ level: 8, min: 34, max: 40 },
+{ level: 9, min: 41, max: 47 },
+{ level: 10, min: 48, max: 55 },
+{ level: 11, min: 56, max: 63 },
+{ level: 12, min: 64, max: 999 }
+]
+
+function getBeaufortLevel(kts){
+if(!Number.isFinite(kts)) return null
+const entry = BEAUFORT_SCALE.find(b => kts >= b.min && kts <= b.max)
+return entry ? entry.level : null
+}
+
+function getDroneRisk(beaufort){
+if(beaufort == null) return "Unavailable"
+if(beaufort <= 4) return "LOW"
+if(beaufort <= 6) return "CAUTION"
+if(beaufort <= 7) return "HIGH"
+return "DANGER"
+}
+
+function getScoreRiskLabel(score){
+const n = Number(score)
+if(!Number.isFinite(n)) return "Unavailable"
+if(n <= 2) return "LOW"
+if(n <= 4) return "CAUTION"
+if(n <= 6) return "HIGH"
+return "DANGER"
+}
+
 function goBack(event){
 event.preventDefault()
 if(document.referrer) window.location.href = document.referrer
 else window.location.href = "index.html"
 }
+
+function openScoringIndex(){
+const modal = document.getElementById("scoringIndexModal")
+if(!modal) return
+modal.classList.add("show")
+}
+
+function closeScoringIndex(){
+const modal = document.getElementById("scoringIndexModal")
+if(!modal) return
+modal.classList.remove("show")
+}
+
+document.addEventListener("click",event => {
+const modal = document.getElementById("scoringIndexModal")
+if(!modal || !modal.classList.contains("show")) return
+if(event.target === modal) closeScoringIndex()
+})
 
 async function runCheck(){
 
@@ -1119,6 +1241,8 @@ metarSourceUrl: payload.metar?.sourceUrl || payload.metar?.normalized?.sourceUrl
 windDir: payload.risk?.windDir ?? "N/A",
 windKt: payload.risk?.wind ?? 0,
 gustKt: payload.risk?.gust ?? 0,
+beaufortGust: payload.risk?.beaufortGust ?? null,
+beaufortRisk: payload.risk?.beaufortRisk ?? null,
 visibilitySm: payload.risk?.visibility ?? null,
 ceilingFt: payload.risk?.ceiling ?? null,
 riskScore: payload.risk?.score ?? 0,
@@ -1227,6 +1351,7 @@ const el = document.getElementById("dwCheckStatus")
 const saveBtn = document.getElementById("completeBtn")
 const rerunBtn = document.getElementById("rerunAssessmentBtn")
 const nextFlightLogBtn = document.getElementById("proceedFlightLogBtn")
+const returnToolsBtn = document.getElementById("returnToolsBtn")
 const completed = localStorage.getItem("dwCheckCompleted") === "true"
 const completedAt = localStorage.getItem("dwCheckCompletedAt")
 const hasPendingDraft = localStorage.getItem("dwCheckDraftPending") === "true"
@@ -1269,7 +1394,7 @@ const isStale = Number.isFinite(ageMs) && ageMs > 3600000
 const hoursSince = formatHoursSince(committedWeatherArtifact.timestamp)
 
 const completeLine = completed
-? `<div class="${isStale ? "status-alert" : "status-ok"}">Record State: ${hoursSince ? `${hoursSince} since last saved weather assessment` : "Saved"}</div>`
+? `<div class="${isStale ? "status-alert" : "status-ok"}">Record State: ${hoursSince ? `${hoursSince} since last saved weather assessment${isStale ? ". Re-poll recommended." : ""}` : "Saved"}</div>`
 : `<div class="status-alert">Record State: Not saved</div>`
 
 if(hasPendingDraft && latestWeatherArtifact && latestWeatherArtifact.timestamp){
@@ -1305,6 +1430,11 @@ const showNext = completed && !isStale;
 nextFlightLogBtn.classList.toggle("is-hidden", !showNext);
 }
 
+if(returnToolsBtn){
+const showTools = completed && !isStale;
+returnToolsBtn.classList.toggle("is-hidden", !showTools);
+}
+
 updateActionButtonHighlights()
 }
 
@@ -1333,6 +1463,8 @@ score: Number(artifact.riskScore || 0),
 windDir: artifact.windDir || "N/A",
 wind: Number(artifact.windKt || 0),
 gust: Number(artifact.gustKt || 0),
+beaufortGust: artifact.beaufortGust ?? getBeaufortLevel(Number(artifact.gustKt || 0)),
+beaufortRisk: artifact.beaufortRisk ?? getDroneRisk(Math.max(getBeaufortLevel(Number(artifact.windKt || 0)), getBeaufortLevel(Number(artifact.gustKt || 0)))),
 visibility: artifact.visibilitySm == null ? 10 : Number(artifact.visibilitySm),
 ceiling: artifact.ceilingFt == null ? 5000 : Number(artifact.ceilingFt)
 }
@@ -1979,21 +2111,22 @@ const ceiling = metar.ceil || 5000
 
 let score = 0
 
-if(wind > 20) score += 3
-else if(wind > 15) score += 2
-else if(wind > 10) score += 1
-
+if(wind > 21) score += 4
+else if(wind > 15) score += 3
+else if(wind > 10) score += 2
 if(gust - wind > 8) score += 1
 
-if(vis < 5) score += 1
-
-if(ceiling < 1200) score += 1
+if(vis < 3) score += 1           // add 1 to risk score if <3 SM visibility
+if(ceiling < 1000) score += 1    // add 1 to risk score if ceiling < 1000 ft  
 
 return {
 score:score,
 windDir:windDir,
 wind:wind,
 gust:gust,
+beaufortWind: getBeaufortLevel(wind),
+beaufortGust: getBeaufortLevel(gust),
+beaufortRisk: getDroneRisk(Math.max(getBeaufortLevel(wind), getBeaufortLevel(gust))),
 visibility:vis,
 ceiling:ceiling
 }
@@ -2066,13 +2199,12 @@ const sourceText = normalized.source || "unknown"
 const sourceCallText = normalized.sourceUrl || "Unavailable"
 
 panel.className = "weather-summary-panel"
-panel.innerHTML = `
-<div class="weather-summary-item"><b>Report Type (METAR/SPECI)</b><span>${escapeHtml(reportTypeText)}</span></div>
-<div class="weather-summary-item"><b>Report Source</b><span>${escapeHtml(sourceText)}</span></div>
-<div class="weather-summary-item full-width"><b>Successful Call</b><span>${renderSourceCallHtml(sourceCallText)}</span></div>
-<div class="weather-summary-item"><b>Observed</b><span>${escapeHtml(normalized.observed.display || "Unavailable")}</span></div>
-<div class="weather-summary-item"><b>Wind</b><span>${escapeHtml(normalized.wind.display || "Unavailable")}</span></div>
-<div class="weather-summary-item"><b>Visibility</b><span>${escapeHtml(normalized.visibility.display || "Unavailable")}</span></div>
+	panel.innerHTML = `
+	<div class="weather-summary-item"><b>Report Type (METAR/SPECI)</b><span>${escapeHtml(reportTypeText)}</span></div>
+	<div class="weather-summary-item"><b>Report Source</b><span>${escapeHtml(sourceText)}</span></div>
+	<div class="weather-summary-item"><b>Observed</b><span>${escapeHtml(normalized.observed.display || "Unavailable")}</span></div>
+	<div class="weather-summary-item"><b>Wind</b><span>${escapeHtml(normalized.wind.display || "Unavailable")}</span></div>
+	<div class="weather-summary-item"><b>Visibility</b><span>${escapeHtml(normalized.visibility.display || "Unavailable")}</span></div>
 <div class="weather-summary-item"><b>Ceiling</b><span>${escapeHtml(ceilingText)}</span></div>
 <div class="weather-summary-item"><b>Temperature / Dew Point</b><span>${escapeHtml(tempText)}</span></div>
 <div class="weather-summary-item"><b>Altimeter</b><span>${escapeHtml(normalized.altimeter.display || "Unavailable")}</span></div>
@@ -2127,19 +2259,25 @@ panel.innerHTML = `
 
 <h3>Drone Weather Survey</h3>
 
-<div class="metric"><b>Status:</b> ${label}</div>
-<div class="metric"><b>Risk Score:</b> ${risk.score}</div>
+	<div class="metric"><b>Status:</b> ${label}</div>
+	<div class="metric"><b>Risk Score:</b> ${risk.score}</div>
+	<div class="metric"><b>Wind Risk Level:</b> ${getScoreRiskLabel(risk.score)}</div>
+	<div class="subtle">
+	<button type="button" class="mini-action-btn" onclick="openScoringIndex()">Scoring Index</button>
+	<span class="subtle">Maximum Score 7</span>
+	</div>
+	
+	<hr>
 
-<hr>
+	<div class="metric">Wind Direction: ${risk.windDir}</div>
+	<div class="metric">Wind: ${risk.wind} kt</div>
+	<div class="metric">Gust: ${risk.gust} kt</div>
+	<div class="metric">Beaufort Scale (Gusts): ${risk.beaufortGust == null ? "Unavailable" : `Level ${risk.beaufortGust}`}</div>
+	<div class="metric">Beaufort Risk Level: ${risk.beaufortRisk || "Unavailable"}</div>
+	<div class="metric">Visibility: ${risk.visibility} SM</div>
+	<div class="metric">Ceiling: ${risk.ceiling} ft</div>
 
-<div class="metric">Wind Direction: ${risk.windDir}</div>
-<div class="metric">Wind: ${risk.wind} kt</div>
-<div class="metric">Gust: ${risk.gust} kt</div>
-<div class="metric">Visibility: ${risk.visibility} SM</div>
-<div class="metric">Ceiling: ${risk.ceiling} ft</div>
-
-<hr>
-<div class="subtle">Max theoretical risk score: <b>6</b> (wind 3 + gust spread 1 + low visibility 1 + low ceiling 1).</div>
+	<hr>
 
 `
 

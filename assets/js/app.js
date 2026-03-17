@@ -3,6 +3,7 @@
 
 const FLIGHT_RUN_STORAGE_KEYS = [
   'flightLog',
+  'flightLogLatest',
   'flightDate',
   'flightPilot',
   'flightObservers',
@@ -504,7 +505,7 @@ function renderIndex(sections) {
     if (!list.length) return;
     // Clear prior run data so summary/export only reflect the current run.
     localStorage.removeItem('droneSOPProgress');
-    clearFlightRunData();
+    // Preserve flight log state when updating SOP selections.
     // Initialize new progress structure
     const progress = {};
     list.forEach(id => {
@@ -820,6 +821,7 @@ function renderFlightLog() {
     };
 
     localStorage.setItem('flightLog', JSON.stringify(flightLog));
+    localStorage.setItem('flightLogLatest', JSON.stringify(flightLog));
     localStorage.setItem('flightDate', flightLog.date || '');
     localStorage.setItem('flightPilot', flightLog.pilot || '');
     localStorage.setItem('flightObservers', flightLog.observers || '');
@@ -1080,10 +1082,26 @@ function renderSummary(sections) {
   if (!container) return;
 
   const flightLog = safeParseJSON('flightLog', {});
+  const flightLogFallback = safeParseJSON('flightLogLatest', {});
+  const activeFlightLog = (flightLog && (flightLog.date || flightLog.pilot || flightLog.observers || flightLog.start || flightLog.end || flightLog.location))
+    ? flightLog
+    : flightLogFallback;
+  const hasFlightLogData = !!(activeFlightLog && (activeFlightLog.date || activeFlightLog.pilot || activeFlightLog.observers || activeFlightLog.start || activeFlightLog.end || activeFlightLog.location));
+  const flightLogSavedAt = localStorage.getItem('flightLogSavedAt') || '';
+  const flightLogSavedMs = flightLogSavedAt ? new Date(flightLogSavedAt).getTime() : NaN;
+  const flightLogAgeHr = Number.isFinite(flightLogSavedMs) ? (Date.now() - flightLogSavedMs) / 3600000 : null;
+  const flightLogFresh = flightLogAgeHr != null && flightLogAgeHr < 1;
+  const flightLogCtaLabel = (hasFlightLogData && flightLogFresh)
+    ? `Log Saved @ ${new Date(flightLogSavedAt).toLocaleString()}`
+    : 'Complete Flight Log';
+  const flightLogCtaClass = (hasFlightLogData && flightLogFresh) ? 'summary-cta-green' : 'summary-cta-red';
   const wrapper   = document.createElement('div');
   wrapper.className = 'flight-log-wrapper';
   wrapper.innerHTML = `
-    <h2>Flight Log Information</h2>
+    <div class="summary-header">
+      <h2>Flight Log Information</h2>
+      <a href="flight-log.html" class="summary-cta ${flightLogCtaClass}">${flightLogCtaLabel}</a>
+    </div>
     <table class="flight-log-table">
       <thead>
         <tr>
@@ -1096,11 +1114,11 @@ function renderSummary(sections) {
       </thead>
       <tbody>
         <tr>
-          <td>${flightLog.date || '—'}</td>
-          <td>${flightLog.pilot || '—'} / ${flightLog.observers || '—'}</td>
-          <td>${flightLog.start || '—'}</td>
-          <td>${flightLog.end || '—'}</td>
-          <td>${flightLog.location || '—'}</td>
+          <td>${activeFlightLog.date || '—'}</td>
+          <td>${activeFlightLog.pilot || '—'} / ${activeFlightLog.observers || '—'}</td>
+          <td>${activeFlightLog.start || '—'}</td>
+          <td>${activeFlightLog.end || '—'}</td>
+          <td>${activeFlightLog.location || '—'}</td>
         </tr>
       </tbody>
     </table>
@@ -1121,9 +1139,19 @@ function renderSummary(sections) {
     const completedText = weatherComplete
       ? `Yes (${weatherCompleteAt ? new Date(weatherCompleteAt).toLocaleString() : 'time unavailable'})`
       : 'No';
+    const weatherStamp = weatherCompleteAt || weather.committedAt || weather.timestamp;
+    const stampMs = new Date(weatherStamp).getTime();
+    const weatherAgeHr = Number.isFinite(stampMs) ? (Date.now() - stampMs) / 3600000 : null;
+    const isFresh = weatherAgeHr != null && weatherAgeHr < 1;
+    const weatherCtaLabel = isFresh ? 'Weather Survey <1 hr old' : 'Refresh Weather Survey';
+    const weatherCtaClass = isFresh ? 'summary-cta-green' : 'summary-cta-red';
+    const weatherCta = `<a href="DWCheck.html" class="summary-cta ${weatherCtaClass}">${weatherCtaLabel}</a>`;
 
     weatherDiv.innerHTML = `
-      <h2>Drone Risk and Weather Survey</h2>
+      <div class="summary-header">
+        <h2>Drone Risk and Weather Survey</h2>
+        ${weatherCta}
+      </div>
       <ul>
         <li>Checked At: ${when}</li>
         <li>Completed: ${completedText}</li>
@@ -1137,7 +1165,10 @@ function renderSummary(sections) {
     `;
   } else {
     weatherDiv.innerHTML = `
-      <h2>Drone Risk and Weather Survey</h2>
+      <div class="summary-header">
+        <h2>Drone Risk and Weather Survey</h2>
+        <a href="DWCheck.html" class="summary-cta summary-cta-red">Refresh Weather Survey</a>
+      </div>
       <p><em>No weather check artifact saved for this session.</em></p>
     `;
   }
@@ -1147,6 +1178,39 @@ function renderSummary(sections) {
   // Prefer the current key; keep legacy fallback for older saved sessions.
   const sopProgress = safeParseJSON('droneSOPProgress', {});
   const selected = sopProgress.selectedSOPs || safeParseJSON('selectedSections', []);
+
+  const sopSummary = document.createElement('div');
+  sopSummary.className = 'section-block';
+  const sopProgressMap = sopProgress.progress || {};
+  const allCompleted = selected.length
+    ? selected.every(secId => (sopProgressMap[secId] && sopProgressMap[secId].status === 'completed'))
+    : false;
+  const sopCta = document.createElement('a');
+  sopCta.href = 'Sections.html';
+  sopCta.className = 'summary-cta';
+
+  if (!selected.length) {
+    sopSummary.innerHTML = '<div class="summary-header"><h2>SOP Procedures</h2></div><p><em>No SOP procedures were selected for this run.</em></p>';
+    sopCta.classList.add('summary-cta-red');
+    sopCta.textContent = 'Select SOP Sections';
+  } else if (!allCompleted) {
+    const firstIncomplete = selected.find(secId => !(sopProgressMap[secId] && sopProgressMap[secId].status === 'completed'));
+    sopSummary.innerHTML = '<div class="summary-header"><h2>SOP Procedures</h2></div><p><em>Some SOP checks are still incomplete.</em></p>';
+    sopCta.classList.add('summary-cta-yellow');
+    sopCta.textContent = 'Complete SOP Checks';
+    if (firstIncomplete) {
+      sopCta.href = `sections/${firstIncomplete}.html?from=summary`;
+    }
+  } else {
+    sopSummary.innerHTML = '<div class="summary-header"><h2>SOP Procedures</h2></div><p><em>All selected SOP checks are complete.</em></p>';
+    sopCta.classList.add('summary-cta-green');
+    sopCta.textContent = 'SOP Completed';
+  }
+
+  const sopHeader = sopSummary.querySelector('.summary-header');
+  if (sopHeader) sopHeader.appendChild(sopCta);
+  else sopSummary.appendChild(sopCta);
+  container.append(sopSummary);
   selected.forEach(secId => {
     const section   = sections.find(s => s.id === secId);
     const responses = safeParseJSON(`responses_${secId}`, []);
@@ -1170,20 +1234,6 @@ function renderSummary(sections) {
 
     container.append(block);
   });
-
-  if (!selected.length) {
-    const noSopDiv = document.createElement('div');
-    noSopDiv.className = 'section-block';
-    noSopDiv.innerHTML = '<h2>SOP Procedures</h2><p><em>No SOP procedures were selected for this run.</em></p>';
-
-    const selectSopLink = document.createElement('a');
-    selectSopLink.href = 'Sections.html';
-    selectSopLink.className = 'sop-select-cta';
-    selectSopLink.textContent = 'Select SOP Sections';
-    noSopDiv.appendChild(selectSopLink);
-
-    container.append(noSopDiv);
-  }
 
   // Filename utilities...
   function getDateStr() {
