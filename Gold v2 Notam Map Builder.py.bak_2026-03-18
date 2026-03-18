@@ -354,15 +354,10 @@ def build_map(
                 lat, lon = row.geometry.y, row.geometry.x
                 ident = row.get("ident") or row.get("icao_code") or "UNK"
                 name = row.get("name") or "Unnamed"
-                dd_str = f"{lat:.6f}, {lon:.6f}"
-                focus_url = f"NotamsMap.html?lat={lat:.6f}&lon={lon:.6f}&focus=1&src=qfilter"
                 folium.Marker(
                     [lat, lon],
                     tooltip=f"{ident} | {name}",
-                    popup=(
-                        f"{ident} - {name}"
-                        f"<br><a href='{focus_url}'>Open NOTAM focus: {dd_str}</a>"
-                    ),
+                    popup=f"{ident} - {name}<br>Lat: {lat:.6f}<br>Lon: {lon:.6f}",
                     icon=folium.Icon(color=style["color"], icon=style["icon"], prefix="fa"),
                 ).add_to(cluster)
             child.add_to(m)
@@ -446,8 +441,12 @@ def build_map(
             ".leaflet-control-layers.leaflet-control-layers-expanded{min-width:220px;max-width:320px;padding:7px 9px;}"
             ".leaflet-control-layers-group-name{font-weight:700;color:#1f3b63;margin-top:6px;}"
             ".leaflet-control-layers-list{max-height:56vh;overflow-y:auto;padding-right:4px;}"
-            ".leaflet-control-layers-group-label{display:block;}"
-            "@media (max-width:600px){.leaflet-control-layers{min-width:176px;max-width:220px;font-size:12px;}.leaflet-control-layers-expanded{padding:6px 8px;}}"
+            ".leaflet-control-layers-group-label{cursor:pointer;display:block;position:relative;padding-right:14px;}"
+            ".leaflet-control-layers-group-label:after{content:'▾';position:absolute;right:2px;top:0;color:#1f3b63;font-size:11px;}"
+            ".leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label:after{content:'▸';}"
+            ".leaflet-control-layers-group.province-collapsed>label:not(.leaflet-control-layers-group-label){display:none;}"
+            ".leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label{display:inline-block;max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}"
+            "@media (max-width:600px){.leaflet-control-layers{min-width:176px;max-width:220px;font-size:12px;}.leaflet-control-layers-expanded{padding:6px 8px;}.leaflet-control-layers-group.province-collapsed>.leaflet-control-layers-group-label{max-width:146px;}}"
             ".pilot-input{z-index:1200;}"
             ".pilot-flyout{position:relative;width:272px;background:#fff;border:1px solid #d8e2ee;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.2);padding:7px;transition:transform .2s ease;overflow:visible;box-sizing:border-box;}"
             ".pilot-flyout.collapsed{transform:translateX(-100%);}" 
@@ -479,143 +478,6 @@ def build_map(
             "</style>"
         )
     )
-    m.get_root().html.add_child(
-        folium.Element(
-            """
-<style>
-  .map-layers-control.leaflet-control-layers {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-  .map-layers-control.leaflet-control-layers-expanded {
-    background: #ffffff !important;
-    border: 1px solid #d8e2ee !important;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
-    border-radius: 8px;
-  }
-  .map-layers-control .leaflet-control-layers-list {
-    max-height: 56vh;
-    overflow-y: auto;
-    touch-action: pan-y;
-    overscroll-behavior: contain;
-  }
-  .map-layers-control .map-layers-close-btn {
-    display: none;
-    margin-top: 8px;
-    width: 100%;
-    border: 1px solid #d8e2ee;
-    border-radius: 6px;
-    background: #f7fafc;
-    color: #1f3b63;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 6px 8px;
-    cursor: pointer;
-  }
-  .map-layers-control.leaflet-control-layers-expanded .map-layers-close-btn {
-    display: block;
-  }
-
-  #getPilotLoc.needs-location {
-    background: #2e7d32;
-    border: 1px solid #1b5e20;
-    color: #ffffff;
-    font-weight: 700;
-  }
-  #getPilotLoc.needs-location:hover {
-    background: #276a2b;
-  }
-  .pilot-marker-wrap {
-    background: transparent;
-    border: none;
-  }
-  .pilot-marker-wrap .pilot-marker-glow {
-    position: absolute;
-    left: 50%;
-    top: 52%;
-    width: 34px;
-    height: 34px;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: rgba(255, 215, 0, 0.34);
-    box-shadow: 0 0 12px 6px rgba(255, 215, 0, 0.56);
-    pointer-events: none;
-  }
-  .pilot-marker-wrap .pilot-marker-pin {
-    position: absolute;
-    left: 50%;
-    top: 2px;
-    width: 30px;
-    height: 30px;
-    transform: translateX(-50%) rotate(-45deg);
-    border-radius: 50% 50% 50% 0;
-    background: #4a148c;
-    border: 2px solid #ffffff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
-  }
-  .pilot-marker-wrap .pilot-marker-pin i {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
-    color: #ffffff;
-    font-size: 14px;
-    line-height: 1;
-  }
-</style>
-<style>
-  @media (max-width: 768px) {
-    #backToQFilterBtn {
-      width: 32px;
-      height: 32px;
-      font-size: 14px;
-    }
-    .home-logo-control {
-      display: block;
-      padding: 2px 4px;
-    }
-    .home-logo-control img {
-      height: 32px;
-      width: auto;
-    }
-    .pilot-flyout {
-      width: 236px;
-      max-width: calc(100vw - 56px);
-    }
-    .pilot-flyout .action-grid button {
-      height: 28px;
-      font-size: 11px;
-    }
-  }
-</style>
-<style>
-  .pilot-input {
-    pointer-events: none;
-  }
-  .pilot-input .pilot-flyout {
-    pointer-events: auto;
-  }
-  .pilot-input .pilot-flyout.collapsed {
-    pointer-events: none;
-  }
-  .pilot-input .pilot-flyout.collapsed .pilot-flyout-toggle {
-    pointer-events: auto;
-  }
-  /* Obstacles toggle hint state (off + nearby NOTAMS) */
-  .left-mini-toggle-control.notams-hint .left-mini-toggle-btn {
-    color: #b85c00;
-    background: #fff3cd;
-  }
-  /* Uniform 34px sizing for all left-column controls */
-  .left-mini-toggle-control,
-  .center-map-control {
-    border-radius: 8px;
-  }
-</style>
-"""
-        )
-    )
 
     # 7) Inject widget for pilot drag/manual update and dynamic NOTAM source/filter
     widget_js = f"""
@@ -623,38 +485,6 @@ def build_map(
 window.onload = function() {{
     try {{
         console.info('[NOTAM MAP] widget init start');
-  var launchParams = new URLSearchParams(window.location.search || '');
-  var launchedFromQFilter = (launchParams.get('src') || '').toLowerCase() === 'qfilter';
-  var linkedFocusRequested = /^(1|true|yes|on)$/i.test((launchParams.get('focus') || '').trim());
-
-  window.closeMapTab = function() {{
-      if (window.opener && !window.opener.closed) {{
-          try {{
-              window.opener.focus();
-              window.close();
-              return;
-          }} catch (e) {{
-              console.warn('[NOTAM MAP] opener focus/close failed', e);
-          }}
-      }}
-
-      if (launchedFromQFilter) {{
-          window.location.href = 'Notam Q Filter.html';
-          return;
-      }}
-
-      if (window.history.length > 1) {{
-          window.history.back();
-          return;
-      }}
-
-      if (document.referrer) {{
-          window.location.href = document.referrer;
-          return;
-      }}
-
-      window.location.href = 'Notam Q Filter.html';
-  }};
   var map = {m.get_name()};
   var marker = {pm_js};
   var c1 = {c1_js};
@@ -669,26 +499,9 @@ window.onload = function() {{
     var filteredNotams = [];
     var rawNotams = [];
     var activeSource = 'RAW';
-    var linkedObstacleLocation = null;
-    var linkedObstacleAutoOpenPending = false;
-    var linkedObstacleMarker = null;
-    var linkedObstacleGlow = null;
-    var pilotToObstacleLine = null;
     var notamDataReady = false;
     var notamDataError = '';
     var currentZoom = map.getZoom();
-    var provinceCodeCache = Object.create(null);
-    var refreshQueued = false;
-    var pendingRefreshLatLng = null;
-    var obstacleMarkers = [];
-    var lastObstacleTapKey = '';
-    var lastObstacleTapIndex = 0;
-    var obstacleIcon = L.AwesomeMarkers.icon({{
-        icon: 'exclamation-triangle',
-        prefix: 'fa',
-        markerColor: 'red'
-    }});
-    var isCompactTouchLayout = window.matchMedia && window.matchMedia('(max-width: 768px)').matches && (('ontouchstart' in window) || navigator.maxTouchPoints > 0);
         var basemapLayers = {basemap_layers_js};
     var basemapStorageKey = 'notam-map.basemap';
     var defaultBasemapName = {json.dumps(basemap['name'])};
@@ -701,25 +514,9 @@ window.onload = function() {{
     if (map.scrollWheelZoom && map.scrollWheelZoom.setWheelPxPerZoomLevel) {{
         map.scrollWheelZoom.setWheelPxPerZoomLevel(140);
     }}
-    if (typeof map.options.tapTolerance === 'number' && map.options.tapTolerance < 22) {{
-        map.options.tapTolerance = 22;
-    }}
 
         var zoomControl = L.control.zoom({{position:'topleft'}});
         var basemapControl = L.control.layers(basemapLayers, null, {{ position: 'topleft', collapsed: true }});
-  function applyPilotMarkerVisual() {{
-      var pilotIcon = L.divIcon({{
-          className: 'pilot-marker-wrap',
-          html: '<div class="pilot-marker-glow"></div><div class="pilot-marker-pin"><i class="fa-solid fa-user"></i></div>',
-          iconSize: [36, 44],
-          iconAnchor: [18, 42],
-          popupAnchor: [0, -36],
-          tooltipAnchor: [14, -22]
-      }});
-      marker.setIcon(pilotIcon);
-  }}
-
-  applyPilotMarkerVisual();
 
   function formatCoord(v) {{
       return Number(v).toFixed({COORD_DECIMALS});
@@ -754,172 +551,18 @@ window.onload = function() {{
       return L.latLng(lat, lon);
   }}
 
-  function isValidPilotLocation(ll) {{
-      return !!(ll &&
-          isFinite(ll.lat) && isFinite(ll.lng) &&
-          ll.lat >= -90 && ll.lat <= 90 &&
-          ll.lng >= -180 && ll.lng <= 180);
-  }}
-
-  function isZeroPilotLocation(ll) {{
-      if (!isValidPilotLocation(ll)) {{
-          return false;
-      }}
-      return Math.abs(Number(ll.lat)) < 0.000001 && Math.abs(Number(ll.lng)) < 0.000001;
-  }}
-
-  function hasUsablePilotLocation(ll) {{
-      return isValidPilotLocation(ll) && !isZeroPilotLocation(ll);
-  }}
-
-  function getLinkedObstacleFromQuery() {{
-      try {{
-          var params = new URLSearchParams(window.location.search || '');
-          var latRaw = params.get('lat') || params.get('latitude');
-          var lonRaw = params.get('lon') || params.get('lng') || params.get('longitude');
-          if (latRaw == null || lonRaw == null) {{
-              return null;
-          }}
-          var lat = Number(latRaw);
-          var lon = Number(lonRaw);
-          if (!isFinite(lat) || !isFinite(lon)) {{
-              return null;
-          }}
-          if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {{
-              return null;
-          }}
-          return L.latLng(lat, lon);
-      }} catch (err) {{
-          return null;
-      }}
-  }}
-
-  function updatePilotObstacleContext(pilotLL) {{
-      if (!linkedObstacleLocation || !pilotLL) {{
-          if (linkedObstacleGlow && map.hasLayer(linkedObstacleGlow)) {{
-              map.removeLayer(linkedObstacleGlow);
-          }}
-          if (linkedObstacleMarker && map.hasLayer(linkedObstacleMarker)) {{
-              map.removeLayer(linkedObstacleMarker);
-          }}
-          if (pilotToObstacleLine && map.hasLayer(pilotToObstacleLine)) {{
-              map.removeLayer(pilotToObstacleLine);
-          }}
-          return;
-      }}
-
-      if (!linkedObstacleGlow) {{
-          linkedObstacleGlow = L.circleMarker([linkedObstacleLocation.lat, linkedObstacleLocation.lng], {{
-              radius: 20,
-              color: '#ff9800',
-              weight: 2,
-              fillColor: '#ff9800',
-              fillOpacity: 0.20,
-              interactive: false
-          }});
-      }} else {{
-          linkedObstacleGlow.setLatLng(linkedObstacleLocation);
-      }}
-      if (!map.hasLayer(linkedObstacleGlow)) {{
-          linkedObstacleGlow.addTo(map);
-      }}
-
-      if (!linkedObstacleMarker) {{
-          linkedObstacleMarker = L.marker([linkedObstacleLocation.lat, linkedObstacleLocation.lng], {{
-              icon: L.AwesomeMarkers.icon({{
-                  icon: 'triangle-exclamation',
-                  prefix: 'fa',
-                  markerColor: 'orange'
-              }}),
-              zIndexOffset: 1950
-          }});
-      }} else {{
-          linkedObstacleMarker.setLatLng(linkedObstacleLocation);
-      }}
-      if (!map.hasLayer(linkedObstacleMarker)) {{
-          linkedObstacleMarker.addTo(map);
-      }}
-      linkedObstacleMarker.bindTooltip('Focus Obstacle', {{ direction: 'top' }});
-
-      var path = [[pilotLL.lat, pilotLL.lng], [linkedObstacleLocation.lat, linkedObstacleLocation.lng]];
-      if (!pilotToObstacleLine) {{
-          pilotToObstacleLine = L.polyline(path, {{
-              color: '#ff7a00',
-              weight: 4,
-              opacity: 0.95,
-              dashArray: '8,7'
-          }});
-      }} else {{
-          pilotToObstacleLine.setLatLngs(path);
-      }}
-      if (!map.hasLayer(pilotToObstacleLine)) {{
-          pilotToObstacleLine.addTo(map);
-      }}
-
-      var km = haversineKm(pilotLL.lat, pilotLL.lng, linkedObstacleLocation.lat, linkedObstacleLocation.lng);
-      var nm = km / 1.852;
-      var distanceBadge = '<span style="background:rgba(198,40,40,0.95);color:#fff;padding:3px 8px;border-radius:12px;font-weight:700;font-size:11px;box-shadow:0 0 10px rgba(198,40,40,0.55);">' + km.toFixed(1) + ' km</span>';
-      if (!pilotToObstacleLine.getTooltip()) {{
-          pilotToObstacleLine.bindTooltip(distanceBadge, {{ permanent: true, direction: 'center', opacity: 1 }});
-      }} else {{
-          pilotToObstacleLine.setTooltipContent(distanceBadge);
-      }}
-
-      // Try to find the matching NOTAM item for full detail popup
-      var matchedItem = null;
-      var searchPool = getActiveNotams ? getActiveNotams() : [];
-      for (var si = 0; si < searchPool.length; si++) {{
-          var sp = searchPool[si];
-          if (Math.abs(sp.lat - linkedObstacleLocation.lat) < 0.0002 &&
-              Math.abs(sp.lon - linkedObstacleLocation.lng) < 0.0002) {{
-              matchedItem = sp;
-              break;
-          }}
-      }}
-      var distHeader = '<div class="notam-popup"><div class="notam-title">Focus Obstacle</div>' +
-          '<div><span class="notam-label">Distance from Pilot:</span> ' + km.toFixed(1) + ' km (' + nm.toFixed(1) + ' NM)</div>' +
-          '<hr style="margin:6px 0">';
-      var popupBody = matchedItem
-          ? buildObstaclePopupHtml(matchedItem).replace('<div class="notam-popup">', '').replace('</div>\\n</div>', '').replace(/<\\/div>$/, '')
-          : '<div><span class="notam-label">Position:</span> ' + formatCoord(linkedObstacleLocation.lat) + ', ' + formatCoord(linkedObstacleLocation.lng) + '</div>';
-      var linkedPopupWasOpen = !!(linkedObstacleMarker.isPopupOpen && linkedObstacleMarker.isPopupOpen());
-      linkedObstacleMarker.bindPopup(distHeader + popupBody + '</div>', {{
-          maxWidth: 420,
-          autoClose: false,
-          closeOnClick: false
-      }});
-      if (linkedPopupWasOpen) {{
-          linkedObstacleMarker.openPopup();
-      }}
-      if (linkedObstacleAutoOpenPending && (notamDataReady || !!notamDataError)) {{
-          linkedObstacleMarker.openPopup();
-          linkedObstacleAutoOpenPending = false;
-      }}
-
-      var countText = document.getElementById('obstacleCountText');
-      if (countText) {{
-          var base = countText.textContent || '';
-          base = base.replace(/\\s*\\|\\s*Focus:\\s*[0-9.]+\\s*km\\s*\\([0-9.]+\\s*NM\\)\\s*$/i, '');
-          base = base.replace(/\\s*\\|\\s*Target:\\s*[0-9.]+\\s*km\\s*\\([0-9.]+\\s*NM\\)\\s*$/i, '');
-          countText.textContent = base + ' | Focus: ' + km.toFixed(1) + ' km (' + nm.toFixed(1) + ' NM)';
-      }}
-  }}
-
   function getStoredPilotLocation() {{
       try {{
           var dd = localStorage.getItem('pilotLocationDD') || '';
           var parsedDd = parseLatLonText(dd);
-          if (hasUsablePilotLocation(parsedDd)) {{
+          if (parsedDd) {{
               return parsedDd;
           }}
 
           var lat = Number(localStorage.getItem('pilotLatitude'));
           var lon = Number(localStorage.getItem('pilotLongitude'));
           if (isFinite(lat) && isFinite(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {{
-              var storedLl = L.latLng(lat, lon);
-              if (hasUsablePilotLocation(storedLl)) {{
-                  return storedLl;
-              }}
+              return L.latLng(lat, lon);
           }}
       }} catch (err) {{
           console.warn('[NOTAM MAP] unable to read pilot location from localStorage', err);
@@ -940,6 +583,25 @@ window.onload = function() {{
           localStorage.setItem('pilotLocationSource', source || 'notams-map');
       }} catch (err) {{
           console.warn('[NOTAM MAP] unable to write pilot location to localStorage', err);
+      }}
+  }}
+
+  function maybePromptPilotLocationRefresh() {{
+      var key = 'notam-map.prompted-location-update';
+      try {{
+          if (sessionStorage.getItem(key) === '1') {{
+              return;
+          }}
+          sessionStorage.setItem(key, '1');
+      }} catch (_err) {{
+      }}
+
+      var promptMsg = 'Use current device location to update Pilot Location now?';
+      if (confirm(promptMsg)) {{
+          var btn = document.getElementById('getPilotLoc');
+          if (btn) {{
+              btn.click();
+          }}
       }}
   }}
 
@@ -989,15 +651,18 @@ window.onload = function() {{
   }}
 
   function setSelectedAirportLayersVisible(visible) {{
-      if (visible) {{
-          for (var i = 0; i < selectedAirportLayers.length; i++) {{
-              var lyr = selectedAirportLayers[i];
-              if (lyr && !map.hasLayer(lyr)) {{
+      for (var i = 0; i < selectedAirportLayers.length; i++) {{
+          var lyr = selectedAirportLayers[i];
+          if (!lyr) {{
+              continue;
+          }}
+          if (visible) {{
+              if (!map.hasLayer(lyr)) {{
                   map.addLayer(lyr);
               }}
+          }} else if (map.hasLayer(lyr)) {{
+              map.removeLayer(lyr);
           }}
-      }} else {{
-          setAllAirportLayersVisible(false);
       }}
   }}
 
@@ -1128,15 +793,9 @@ window.onload = function() {{
 
   function updateNotamsToggleVisual() {{
       var ctl = document.getElementById('notamsToggleCtl');
-      if (!ctl) return;
-      var count = window._notamObstacleCount || 0;
-      ctl.classList.remove('inactive', 'notams-hint');
-      if (!notamsVisible && count > 0) {{
-          ctl.classList.add('notams-hint'); // amber: obstacles exist while toggle is off
-      }} else if (!notamsVisible) {{
-          ctl.classList.add('inactive'); // grey: toggle off and no nearby obstacles
+      if (ctl) {{
+          ctl.classList.toggle('inactive', !notamsVisible);
       }}
-      // when toggle is on, keep the same normal look as Airports toggle
   }}
 
   function applyBasemapByName(name) {{
@@ -1290,7 +949,7 @@ window.onload = function() {{
       c100Touch.setRadius(radiusKm * 1000);
       c100Touch.bindPopup(radiusLabel() + ' km NOTAM filter radius');
       updateRadiusDisplay();
-      scheduleRefreshObstacles(marker.getLatLng());
+      refreshObstacles(marker.getLatLng());
   }}
 
   function centerMapToPilotRadius() {{
@@ -1300,6 +959,33 @@ window.onload = function() {{
           return;
       }}
       map.fitBounds(bounds, {{ padding: [30, 30] }});
+  }}
+
+    function initProvinceGroupCollapse() {{
+      var groups = document.querySelectorAll('.leaflet-control-layers-group');
+      for (var i = 0; i < groups.length; i++) {{
+          var group = groups[i];
+          var nameEl = group.querySelector('.leaflet-control-layers-group-name');
+          var labelEl = group.querySelector('.leaflet-control-layers-group-label');
+          if (!nameEl || !labelEl) {{
+              continue;
+          }}
+
+          if (labelEl.dataset.collapseBound === '1') {{
+              continue;
+          }}
+
+          group.classList.add('province-collapsed');
+
+          labelEl.dataset.collapseBound = '1';
+          labelEl.addEventListener('click', function(ev) {{
+              ev.stopPropagation();
+              var parent = ev.currentTarget.parentElement;
+              if (parent) {{
+                  parent.classList.toggle('province-collapsed');
+              }}
+          }});
+      }}
   }}
 
   function escapeHtml(txt) {{
@@ -1321,40 +1007,6 @@ window.onload = function() {{
 
   function getActiveNotams() {{
       return activeSource === 'RAW' ? rawNotams : filteredNotams;
-  }}
-
-  function scheduleRefreshObstacles(ll) {{
-      pendingRefreshLatLng = ll;
-      if (refreshQueued) {{
-          return;
-      }}
-      refreshQueued = true;
-      requestAnimationFrame(function() {{
-          refreshQueued = false;
-          var target = pendingRefreshLatLng || marker.getLatLng();
-          pendingRefreshLatLng = null;
-          refreshObstacles(target);
-      }});
-  }}
-
-  function getLikelyNotamCandidates(allNotams, ll, kmRadius) {{
-      var latPad = kmRadius / 110.574;
-      var lonDivisor = Math.max(0.25, Math.cos(ll.lat * Math.PI / 180) * 111.320);
-      var lonPad = kmRadius / lonDivisor;
-      var minLat = ll.lat - latPad;
-      var maxLat = ll.lat + latPad;
-      var minLon = ll.lng - lonPad;
-      var maxLon = ll.lng + lonPad;
-      var candidates = [];
-
-      for (var i = 0; i < allNotams.length; i++) {{
-          var item = allNotams[i];
-          if (item.lat < minLat || item.lat > maxLat || item.lon < minLon || item.lon > maxLon) {{
-              continue;
-          }}
-          candidates.push(item);
-      }}
-      return candidates;
   }}
 
   function buildObstaclePopupHtml(item) {{
@@ -1381,9 +1033,6 @@ window.onload = function() {{
 
   function refreshObstacles(ll) {{
       obstacleLayer.clearLayers();
-      obstacleMarkers = [];
-      lastObstacleTapKey = '';
-      lastObstacleTapIndex = 0;
       var countText = document.getElementById('obstacleCountText');
 
       if (!notamDataReady) {{
@@ -1394,194 +1043,98 @@ window.onload = function() {{
       }}
 
       var activeNotams = getActiveNotams();
-      var candidates = getLikelyNotamCandidates(activeNotams, ll, radiusKm);
       var shownCount = 0;
 
-      for (var i = 0; i < candidates.length; i++) {{
-          var item = candidates[i];
+      for (var i = 0; i < activeNotams.length; i++) {{
+          var item = activeNotams[i];
           var km = haversineKm(ll.lat, ll.lng, item.lat, item.lon);
           if (km > radiusKm) {{
               continue;
           }}
 
           shownCount += 1;
-          var obstacleMarker = L.marker([item.lat, item.lon], {{
-              icon: obstacleIcon,
-              riseOnHover: true,
-              keyboard: false
+          L.marker([item.lat, item.lon], {{
+              icon: L.AwesomeMarkers.icon({{
+                  icon: 'exclamation-triangle',
+                  prefix: 'fa',
+                  markerColor: 'red'
+              }})
           }})
           .bindTooltip('Obstacle')
           .bindPopup(buildObstaclePopupHtml(item), {{ maxWidth: 420 }})
           .addTo(obstacleLayer);
-
-          obstacleMarker.on('click touchstart', function(ev) {{
-              this.setZIndexOffset(4000);
-              this.openPopup();
-              if (ev) {{
-                  if (ev.originalEvent) {{
-                      ev.originalEvent.preventDefault();
-                      ev.originalEvent.stopPropagation();
-                  }}
-              }}
-          }});
-          obstacleMarkers.push(obstacleMarker);
       }}
 
       if (countText) {{
           countText.textContent = 'Obstacles (' + radiusLabel() + ' km): ' + shownCount;
       }}
-      window._notamObstacleCount = shownCount;
-      updateNotamsToggleVisual();
-      updatePilotObstacleContext(ll);
   }}
 
   function applyPilotLocation(ll, shouldCenter) {{
       marker.setLatLng(ll).openPopup();
       c1.setLatLng(ll); c3.setLatLng(ll); c100.setLatLng(ll);
       c1Touch.setLatLng(ll); c3Touch.setLatLng(ll); c100Touch.setLatLng(ll);
-      marker.setPopupContent("Pilot<br>Lat: " + ll.lat.toFixed({COORD_DECIMALS}) + "<br>Lon: " + ll.lng.toFixed({COORD_DECIMALS}));
+      marker.setPopupContent("Pilot<br>Lat: " + ll.lat.toFixed(6) + "<br>Lon: " + ll.lng.toFixed(6));
       savePilotLocationToStorage(ll, 'notams-map');
       if (shouldCenter) {{
           centerMapToPilotRadius();
       }}
-      scheduleRefreshObstacles(ll);
+      refreshObstacles(ll);
       updatePilotDisplay(ll);
-      updatePilotLocationPromptState(ll);
-      updatePilotObstacleContext(ll);
   }}
 
-  function closeRingPopups() {{
-      c1Touch.closePopup();
-      c3Touch.closePopup();
-      c100Touch.closePopup();
-  }}
-
-  function disableBaseCircleInteractions(circle) {{
-      // Disable Leaflet-level interactivity (works for both canvas and SVG renderers)
-      circle.options.interactive = false;
-      if (circle.unbindPopup) {{
-          circle.unbindPopup();
-      }}
-      if (circle.off) {{
-          circle.off();
-      }}
-      // For SVG renderer: suppress browser-level pointer events on the path element
-      if (circle._path) {{
-          circle._path.style.pointerEvents = 'none';
-      }}
-  }}
-
-  function createCircleTouchTarget(circle, popupText, strokeWeight) {{
+  function createCircleTouchTarget(circle, popupText) {{
       var target = L.circle(circle.getLatLng(), {{
           radius: circle.getRadius(),
           color: '#000',
           opacity: 0,
-          weight: strokeWeight,
+          weight: 28,
           fill: false,
           interactive: true,
           bubblingMouseEvents: false
       }}).addTo(map);
 
-      target.bindPopup(popupText, {{ autoClose: false, closeOnClick: false }});
+      target.bindPopup(popupText);
       target.on('mouseover', function() {{
           target.openPopup();
       }});
       target.on('mouseout', function() {{
           target.closePopup();
       }});
-      target.on('click touchstart', function(ev) {{
-          if (ev && ev.originalEvent) {{
-              ev.originalEvent.preventDefault();
-              ev.originalEvent.stopPropagation();
-          }}
-          closeRingPopups();
+      target.on('click', function() {{
           target.openPopup();
       }});
-      target.on('touchend', function(ev) {{
-          if (ev && ev.originalEvent) {{
-              ev.originalEvent.preventDefault();
-              ev.originalEvent.stopPropagation();
-          }}
+      target.on('touchend', function() {{
+          setTimeout(function() {{ target.closePopup(); }}, 1200);
       }});
       return target;
   }}
 
-  function openNearbyObstaclePopup(containerPoint) {{
-      if (!containerPoint || !obstacleMarkers.length) {{
-          return false;
-      }}
-      var candidates = [];
-      var pixelThreshold = isCompactTouchLayout ? 28 : 18;
+  var c1Touch = createCircleTouchTarget(c1, '1 NM (1.9 km) radius');
+  var c3Touch = createCircleTouchTarget(c3, '3 NM (5.6 km) radius');
+  var c100Touch = createCircleTouchTarget(c100, radiusLabel() + ' km NOTAM filter radius');
 
-      for (var i = 0; i < obstacleMarkers.length; i++) {{
-          var obstacleMarker = obstacleMarkers[i];
-          var point = map.latLngToContainerPoint(obstacleMarker.getLatLng());
-          var dx = point.x - containerPoint.x;
-          var dy = point.y - containerPoint.y;
-          var distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance <= pixelThreshold) {{
-              candidates.push({{ marker: obstacleMarker, distance: distance }});
-          }}
-      }}
-
-      if (!candidates.length) {{
-          lastObstacleTapKey = '';
-          lastObstacleTapIndex = 0;
-          return false;
-      }}
-
-      candidates.sort(function(a, b) {{
-          return a.distance - b.distance;
-      }});
-
-      var tapKey = candidates.map(function(entry) {{
-          var ll = entry.marker.getLatLng();
-          return ll.lat.toFixed(6) + ',' + ll.lng.toFixed(6);
-      }}).join('|');
-
-      if (tapKey !== lastObstacleTapKey) {{
-          lastObstacleTapKey = tapKey;
-          lastObstacleTapIndex = 0;
-      }} else {{
-          lastObstacleTapIndex = (lastObstacleTapIndex + 1) % candidates.length;
-      }}
-
-      var chosenMarker = candidates[lastObstacleTapIndex].marker;
-      chosenMarker.setZIndexOffset(4000);
-      chosenMarker.openPopup();
-      return true;
-  }}
-
-  var c1Touch = createCircleTouchTarget(c1, '1 NM (1.9 km) radius', 34);
-  var c3Touch = createCircleTouchTarget(c3, '3 NM (5.6 km) radius', 34);
-  var c100Touch = createCircleTouchTarget(c100, radiusLabel() + ' km NOTAM filter radius', 18);
-  disableBaseCircleInteractions(c1);
-  disableBaseCircleInteractions(c3);
-  disableBaseCircleInteractions(c100);
-
-    map.on('click touchend', function(e) {{
-            closeRingPopups();
-            if (e && e.containerPoint) {{
-                openNearbyObstaclePopup(e.containerPoint);
-            }}
+    map.on('click', function() {{
+            c1Touch.closePopup();
+            c3Touch.closePopup();
+            c100Touch.closePopup();
     }});
 
   map.on('zoomend', function() {{
       currentZoom = map.getZoom();
   }});
 
-  marker.setZIndexOffset(2000);
   marker.dragging.enable();
   marker.on('dragend', function(e) {{
       var ll = e.target.getLatLng();
       applyPilotLocation(ll, false);
   }});
 
-  var homeCtl = L.control({{position:'bottomright'}});
+  var homeCtl = L.control({{position:'topleft'}});
   homeCtl.onAdd = function() {{
       var d = L.DomUtil.create('div', 'home-logo-control');
       L.DomEvent.disableClickPropagation(d);
-      d.innerHTML = '<a href="index.html" title="Home"><picture><source srcset="assets/img/logo_25.svg" type="image/svg+xml"><img src="assets/img/logo.png" alt="Home"></picture></a>';
+      d.innerHTML = '<a href="tools.html" title="Tools Menu"><img src="assets/img/logo.png" alt="Tools"></a>';
       return d;
   }};
   homeCtl.addTo(map);
@@ -1645,30 +1198,10 @@ window.onload = function() {{
   if (basemapCtlContainer) {{
       basemapCtlContainer.classList.add('map-layers-control');
       basemapCtlContainer.title = 'Map Layers';
-      L.DomEvent.disableClickPropagation(basemapCtlContainer);
-      L.DomEvent.disableScrollPropagation(basemapCtlContainer);
       var baseToggle = basemapCtlContainer.querySelector('.leaflet-control-layers-toggle');
       if (baseToggle) {{
           baseToggle.title = 'Map Layers';
           baseToggle.setAttribute('aria-label', 'Map Layers');
-      }}
-      var layersList = basemapCtlContainer.querySelector('.leaflet-control-layers-list');
-      if (layersList) {{
-          L.DomEvent.on(layersList, 'touchstart', L.DomEvent.stopPropagation);
-          L.DomEvent.on(layersList, 'touchmove', L.DomEvent.stopPropagation);
-      }}
-      if (!basemapCtlContainer.querySelector('.map-layers-close-btn')) {{
-          var closeBtn = L.DomUtil.create('button', 'map-layers-close-btn', basemapCtlContainer);
-          closeBtn.type = 'button';
-          closeBtn.textContent = 'Close';
-          closeBtn.setAttribute('aria-label', 'Close map layers panel');
-          closeBtn.title = 'Close';
-          L.DomEvent.on(closeBtn, 'click', function(ev) {{
-              L.DomEvent.stop(ev);
-              if (basemapControl && basemapControl.collapse) {{
-                  basemapControl.collapse();
-              }}
-          }});
       }}
   }}
 
@@ -1683,24 +1216,6 @@ window.onload = function() {{
       return d;
   }};
   ctl.addTo(map);
-
-  // Enforce visual order in the left control column
-  (function() {{
-      var col = document.querySelector('.leaflet-top.leaflet-left');
-      if (!col) return;
-      var order = [
-          '.leaflet-control-zoom',
-          '.map-layers-control',
-          '#notamsToggleCtl',
-          '#airportsToggleCtl',
-          '.center-map-control',
-          '.pilot-input'
-      ];
-      order.reverse().forEach(function(sel) {{
-          var el = col.querySelector(sel);
-          if (el) col.insertBefore(el, col.firstChild);
-      }});
-  }})();
 
   map.on('baselayerchange', function(e) {{
       if (e && e.name) {{
@@ -1727,28 +1242,9 @@ window.onload = function() {{
           return;
       }}
       flyout.classList.toggle('collapsed', !!collapsed);
-      toggle.setAttribute('aria-expanded', String(!flyout.classList.contains('collapsed')));
       toggle.innerHTML = flyout.classList.contains('collapsed')
           ? '<i class="fa-solid fa-bars"></i>'
           : '<i class="fa-solid fa-xmark"></i>';
-  }}
-
-
-  function updatePilotLocationPromptState(ll) {{
-      var getPilotLocBtn = document.getElementById('getPilotLoc');
-      if (!getPilotLocBtn) {{
-          return;
-      }}
-
-      var needsLocation = !hasUsablePilotLocation(ll);
-      getPilotLocBtn.classList.toggle('needs-location', needsLocation);
-      getPilotLocBtn.title = needsLocation
-          ? 'Pilot location required. Click to use device location.'
-          : 'Get Location';
-
-      if (needsLocation) {{
-          setPilotFlyoutCollapsed(false);
-      }}
   }}
 
   function collapsePilotFlyoutIfIdle() {{
@@ -1769,12 +1265,6 @@ window.onload = function() {{
           return;
       }}
 
-      // Match neighboring map control button size and improve tap target.
-      toggle.style.width = '34px';
-      toggle.style.height = '34px';
-      toggle.style.right = '-34px';
-      toggle.style.fontSize = '16px';
-
       toggle.onclick = function(ev) {{
           if (ev) {{
               ev.preventDefault();
@@ -1782,38 +1272,29 @@ window.onload = function() {{
           setPilotFlyoutCollapsed(!flyout.classList.contains('collapsed'));
       }};
 
-      // Start collapsed; expand/collapse only on hamburger click/tap.
-      setPilotFlyoutCollapsed(true);
+      flyout.addEventListener('mouseenter', function() {{
+          setPilotFlyoutCollapsed(false);
+      }});
+
+      flyout.addEventListener('mouseleave', function() {{
+          window.setTimeout(collapsePilotFlyoutIfIdle, 120);
+      }});
+
+      flyout.addEventListener('focusin', function() {{
+          setPilotFlyoutCollapsed(false);
+      }});
+
+      flyout.addEventListener('focusout', function() {{
+          window.setTimeout(function() {{
+              if (!flyout.matches(':hover')) {{
+                  collapsePilotFlyoutIfIdle();
+              }}
+          }}, 120);
+      }});
+
+      // Start open for immediate Pilot Controls interaction on load.
+      setPilotFlyoutCollapsed(false);
   }})();
-
-  function stabilizeViewportLayout() {{
-      window.scrollTo(0, 0);
-      if (map && map.invalidateSize) {{
-          map.invalidateSize(false);
-      }}
-  }}
-
-  window.addEventListener('resize', stabilizeViewportLayout);
-  window.addEventListener('orientationchange', stabilizeViewportLayout);
-  if (window.visualViewport) {{
-      window.visualViewport.addEventListener('resize', stabilizeViewportLayout);
-      window.visualViewport.addEventListener('scroll', stabilizeViewportLayout);
-  }}
-
-  function preventBrowserZoomGestures(ev) {{
-      if (ev) {{
-          ev.preventDefault();
-      }}
-  }}
-
-  document.addEventListener('gesturestart', preventBrowserZoomGestures, {{ passive: false }});
-  document.addEventListener('gesturechange', preventBrowserZoomGestures, {{ passive: false }});
-  document.addEventListener('gestureend', preventBrowserZoomGestures, {{ passive: false }});
-  window.addEventListener('wheel', function(ev) {{
-      if (ev && ev.ctrlKey) {{
-          ev.preventDefault();
-      }}
-  }}, {{ passive: false }});
 
   document.getElementById('upd').onclick = function() {{
       var lat=parseFloat(document.getElementById('pLat').value);
@@ -1866,6 +1347,10 @@ window.onload = function() {{
               function(pos) {{
                   var lat = pos.coords.latitude;
                   var lon = pos.coords.longitude;
+                  var promptMsg = `Use current location?\n\nLat: ${{lat.toFixed({COORD_DECIMALS})}}\nLon: ${{lon.toFixed({COORD_DECIMALS})}}`;
+                  if (!confirm(promptMsg)) {{
+                      return;
+                  }}
                   var ll = L.latLng(lat, lon);
                   applyPilotLocation(ll, true);
                   applyAirportDefaultsFromLocation(ll);
@@ -1886,22 +1371,19 @@ window.onload = function() {{
                   }}
                   alert(msg);
               }},
-              {{ enableHighAccuracy: !isCompactTouchLayout, timeout: 12000, maximumAge: isCompactTouchLayout ? 30000 : 5000 }}
+              {{ enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }}
           );
       }};
 
+    setTimeout(initProvinceGroupCollapse, 0);
     var startupPilotLocation = marker.getLatLng();
     var restoredPilotLocation = getStoredPilotLocation();
-    linkedObstacleLocation = getLinkedObstacleFromQuery();
-    linkedObstacleAutoOpenPending = !!(linkedObstacleLocation && linkedFocusRequested);
     if (restoredPilotLocation) {{
             startupPilotLocation = restoredPilotLocation;
+            applyPilotLocation(restoredPilotLocation, true);
+            applyAirportDefaultsFromLocation(restoredPilotLocation);
+            setTimeout(maybePromptPilotLocationRefresh, 300);
     }}
-    var startupLocationMissing = !hasUsablePilotLocation(startupPilotLocation);
-
-    applyPilotLocation(startupPilotLocation, !startupLocationMissing);
-    applyAirportDefaultsFromLocation(startupPilotLocation);
-
 
     updatePilotDisplay(startupPilotLocation);
     updateSourceDisplay();
@@ -1910,11 +1392,11 @@ window.onload = function() {{
         applyAirportDefaultsFromLocation(startupPilotLocation);
         applyBasemapByName(getStoredBasemapName()) || applyBasemapByName(defaultBasemapName);
         updateBasemapDisplay();
-    updateNotamsToggleVisual();
+        updateNotamsToggleVisual();
     updateRadiusDisplay();
-    scheduleRefreshObstacles(startupPilotLocation);
+    refreshObstacles(startupPilotLocation);
     loadNotamData().then(function() {{
-                        scheduleRefreshObstacles(marker.getLatLng());
+                        refreshObstacles(marker.getLatLng());
                         console.info('[NOTAM MAP] NOTAM data loaded and obstacle layer refreshed');
         }}).catch(function(err) {{
                         console.error('[NOTAM MAP] loadNotamData failed', err);
@@ -1927,43 +1409,6 @@ window.onload = function() {{
 </script>
 """
     m.get_root().html.add_child(folium.Element(widget_js))
-    m.get_root().html.add_child(
-        folium.Element(
-            """
-<style>
-.leaflet-top.leaflet-left {
-    margin-top: calc(40px + env(safe-area-inset-top, 0px));
-}
-
-#backToQFilterBtn {
-    position: fixed;
-    left: calc(10px + env(safe-area-inset-left, 0px));
-    top: calc(10px + env(safe-area-inset-top, 0px));
-    z-index: 2600;
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    border: 1px solid #8e1b1b;
-    background: #c62828;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    font-size: 16px;
-    line-height: 1;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-}
-#backToQFilterBtn:hover {
-    background: #b71c1c;
-}
-</style>
-
-<button id="backToQFilterBtn" type="button" onclick="closeMapTab()" aria-label="Back" title="Back to previous page"><i class="fa-solid fa-arrow-left"></i></button>
-"""
-        )
-    )
 
     print(f"Loaded filtered NOTAMs from: {NOTAMS_FILTERED_PATH}")
     print(f"Loaded RAW NOTAMs from: {NOTAMS_RAW_PATH}")

@@ -166,81 +166,84 @@
       font-size: 0.85rem;
       color: var(--muted);
     }
-    .flame-reset-btn {
+    .loc-status.is-armed {
+      color: #b71c1c;
+      font-weight: 700;
+    }
+    .trash-reset-btn {
       min-width: 42px;
       height: 42px;
       border-radius: 50%;
       border: 1px solid #7f1d1d;
-      background: linear-gradient(180deg, #fff7f4, #ffe6dd);
+      background: linear-gradient(180deg, #f8fbff, #e8eff6);
       cursor: pointer;
       display: none;
       align-items: center;
       justify-content: center;
       gap: 0.35rem;
       padding: 0 0.55rem;
-      box-shadow: 0 0 0 2px rgba(217, 35, 35, 0.14);
+      box-shadow: 0 0 0 2px rgba(95, 124, 160, 0.16);
       flex-shrink: 0;
       transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
     }
-    .flame-reset-btn.is-visible {
+    .trash-reset-btn.is-visible {
       display: inline-flex;
     }
-    .flame-reset-btn .wipe-label {
+    .trash-reset-btn .wipe-label {
       display: none;
       font-size: 0.68rem;
       font-weight: 800;
       letter-spacing: 0.04em;
-      color: #7f1d1d;
+      color: #5a6a79;
       white-space: nowrap;
     }
-    .flame-reset-btn.is-visible .wipe-label {
-      display: inline;
-    }
-    .flame-reset-btn.is-armed {
-      width: auto;
-      border-radius: 999px;
+    .trash-reset-btn.is-armed {
       background: linear-gradient(180deg, #ff5e4a, #b71c1c);
       border-color: #7f1d1d;
       box-shadow: 0 0 0 3px rgba(183, 28, 28, 0.28), 0 8px 20px rgba(127, 29, 29, 0.28);
     }
-    .flame-reset-btn.is-armed .wipe-label {
-      display: inline;
-      color: #ffffff;
-    }
-    .flame-reset-btn:hover {
+    .trash-reset-btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 0 0 2px rgba(217, 35, 35, 0.20), 0 6px 14px rgba(127, 29, 29, 0.16);
+      box-shadow: 0 0 0 2px rgba(95, 124, 160, 0.22), 0 6px 14px rgba(95, 124, 160, 0.18);
     }
-    .flame-reset-btn:focus-visible {
-      outline: 2px solid #7f1d1d;
+    .trash-reset-btn:focus-visible {
+      outline: 2px solid #5a6a79;
       outline-offset: 2px;
     }
-    .flame-icon {
+    .trash-icon {
       position: relative;
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
-    .flame-icon::before {
-      content: '';
-      width: 20px;
-      height: 18px;
-      background: linear-gradient(180deg, #ffd14a, #ff8c00);
-      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-      filter: drop-shadow(0 0 1px rgba(127, 29, 29, 0.45));
+    .trash-icon svg {
+      width: 22px;
+      height: 22px;
+      display: block;
     }
-    .flame-icon::after {
-      content: '';
-      position: absolute;
-      width: 8px;
-      height: 11px;
-      background: radial-gradient(circle at 45% 35%, #ffe8a0 0 33%, #ff7a2f 56%, #c62828 95%);
-      border-radius: 55% 55% 70% 70%;
-      transform: translateY(2px) rotate(-8deg);
-      clip-path: polygon(50% 0%, 80% 30%, 88% 58%, 70% 82%, 50% 100%, 30% 82%, 12% 58%, 20% 30%);
+    .trash-icon .can-empty {
+      fill: none;
+      stroke: #5a6a79;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .trash-icon .can-full {
+      fill: #ffffff;
+      stroke: #ffffff;
+      stroke-width: 1.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0;
+    }
+    .trash-reset-btn.is-armed .trash-icon .can-empty {
+      opacity: 0;
+    }
+    .trash-reset-btn.is-armed .trash-icon .can-full {
+      opacity: 1;
     }
   </style>
 </head>
@@ -263,14 +266,19 @@
         </div>
         <button
           id="clear-all-data"
-          class="flame-reset-btn"
+          class="trash-reset-btn"
           type="button"
-          title="Clear all data"
-          aria-label="Clear all data"
+          title="Clear all forms"
+          aria-label="Clear all forms"
           aria-pressed="false"
         >
-          <span class="flame-icon" aria-hidden="true"></span>
-          <span class="wipe-label">Clear Previous Data</span>
+          <span class="trash-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <path class="can-empty" d="M4 7h16M9 4h6M6 7l1 13h10l1-13M10 11v6M14 11v6" />
+              <path class="can-full" d="M4 7h16M9 4h6M7 7l1 13h8l1-13M10 11v6M14 11v6" />
+            </svg>
+          </span>
+          <span class="wipe-label">Clear all forms</span>
         </button>
       </div>
 
@@ -398,7 +406,12 @@
 
       clearBtn.classList.toggle('is-armed', isArmed);
       clearBtn.setAttribute('aria-pressed', isArmed ? 'true' : 'false');
-      clearBtn.title = isArmed ? 'Confirm clear all data now' : 'Clear all session data';
+      clearBtn.title = isArmed ? 'Confirm data to be trashed...' : 'Clear all forms';
+
+      const status = document.getElementById('pilot-location-status');
+      if (status) {
+        status.classList.toggle('is-armed', isArmed);
+      }
 
       if (!isArmed && wipeArmTimer) {
         clearTimeout(wipeArmTimer);
@@ -459,11 +472,12 @@
       clearBtn.addEventListener('click', async () => {
         if (!clearBtn.classList.contains('is-armed')) {
           armWipeAction();
-          status.textContent = 'Wipe armed. Click once more within 5s to confirm.';
+          status.textContent = 'Click trashcan again to confirm refresh all forms.';
           return;
         }
 
         status.textContent = 'Clearing all saved data...';
+        status.classList.remove('is-armed');
         setWipeArmed(false);
         await clearAllDataAndReload();
       });
