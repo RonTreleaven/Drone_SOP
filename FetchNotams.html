@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch Real-Time NOTAMs (Prototype)</title>
+  <link rel="stylesheet" href="./assets/css/notams-common.css">
+  <style>
+    :root {
+      --accent: #0b5ea8;
+      --accent-2: #1f3e72;
+      --bg-soft: #f3f8ff;
+      --ok: #1f7a3f;
+      --warn: #9a6a00;
+      --err: #b3261e;
+    }
+
+    .selection-block {
+      margin: 4px 0 10px;
+    }
+
+    .selection-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px 18px;
+      margin-bottom: 8px;
+    }
+
+    .selection-stats {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 2px 14px;
+      align-items: baseline;
+      color: #1f3e72;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .selection-stats .k {
+      text-align: right;
+      color: #2a4d7f;
+      font-weight: 700;
+    }
+
+    .selection-stats .v {
+      min-width: 52px;
+      color: #123f76;
+      font-weight: 800;
+    }
+
+    .selectors-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 120px 180px;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 8px;
+    }
+
+    .selection-cache-row {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .selection-cache-row .btn {
+      min-width: 162px;
+    }
+
+    .subtle {
+      color: #4c5b73;
+      font-size: 0.9rem;
+      margin: 0 0 12px;
+    }
+
+    #lastFetchBanner.fresh {
+      color: var(--ok);
+      font-weight: 700;
+    }
+
+    #lastFetchBanner.stale {
+      color: #4c5b73;
+      font-weight: 600;
+    }
+
+    .status-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin: 10px 0 14px;
+    }
+
+    .status-pill {
+      border: 1px solid #d3deef;
+      background: #f9fbff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      min-height: 52px;
+    }
+
+    .status-pill .k {
+      display: block;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: #4c5b73;
+      margin-bottom: 4px;
+    }
+
+    .status-pill .v {
+      color: var(--accent-2);
+      font-weight: 700;
+      word-break: break-word;
+      text-align: center;
+    }
+
+    .status-ok { color: var(--ok); }
+    .status-warn { color: var(--warn); }
+    .status-err { color: var(--err); }
+
+    .results-wrap {
+      border: 1px solid #d3deef;
+      border-radius: 10px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .results-header {
+      background: var(--bg-soft);
+      border-bottom: 1px solid #d3deef;
+      padding: 10px 12px;
+      font-weight: 700;
+      color: var(--accent-2);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .results-header-actions {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .results-list {
+      max-height: 62vh;
+      overflow: auto;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .notam-item {
+      border-bottom: 1px solid #edf2fa;
+      padding: 10px 12px;
+    }
+
+    .notam-item:last-child {
+      border-bottom: none;
+    }
+
+    .notam-line1 {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: baseline;
+      margin-bottom: 5px;
+    }
+
+    .notam-id {
+      font-weight: 700;
+      color: var(--accent-2);
+    }
+
+    .notam-loc {
+      background: #e6f0ff;
+      color: #0f3f84;
+      border: 1px solid #c9ddff;
+      border-radius: 999px;
+      padding: 1px 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .notam-time {
+      color: #5d6b83;
+      font-size: 0.82rem;
+    }
+
+    .notam-preview {
+      margin: 0;
+      color: #17253e;
+      font-size: 0.9rem;
+      line-height: 1.35;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .coord-link {
+      color: #0b3f74;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid #85b8e6;
+      background: #dff1ff;
+      border-radius: 6px;
+      padding: 1px 5px;
+      display: inline-block;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .e-highlight .coord-link {
+      color: #072f57;
+      border-color: #5d9ed6;
+      background: #cae7ff;
+    }
+
+    .coord-link:hover,
+    .coord-link:focus-visible {
+      background: #c3e3ff;
+      border-color: #4f90ca;
+      outline: none;
+    }
+
+    .loading {
+      display: none;
+      margin: 8px 0 12px;
+      padding: 8px 10px;
+      border: 1px solid #d3deef;
+      border-radius: 8px;
+      background: #f8fbff;
+      color: #33527f;
+      font-weight: 600;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .loading.active {
+      display: flex;
+      width: 100%;
+    }
+
+    .loading-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #c9d8ef;
+      border-top-color: #0b5ea8;
+      border-radius: 50%;
+      animation: loading-spin 0.8s linear infinite;
+      flex: 0 0 16px;
+    }
+
+    @keyframes loading-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #4c5b73;
+      border-left: 3px solid #c7d8f1;
+      padding-left: 8px;
+    }
+
+    .q-filter-box {
+      border: 1px solid #d3deef;
+      border-radius: 8px;
+      background: #f9fbff;
+      padding: 10px;
+      margin: 2px 0 12px;
+    }
+
+    .q-filter-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .q-filter-title {
+      font-weight: 700;
+      color: #1f3e72;
+      margin-right: 8px;
+    }
+
+    .q-help-btn {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #openQLegend {
+      pointer-events: auto;
+    }
+
+    .q-help-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #1f4f7f;
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1;
+      border: 1px solid #153756;
+    }
+
+    .q-filter-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .icao-controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .icao-controls select {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .q-filter-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      background: #ffffff;
+      border: 1px solid #d6e2f5;
+      border-radius: 6px;
+      padding: 5px 6px;
+      color: #27466f;
+    }
+
+    .qcat-toggle {
+      width: 100%;
+      border: 1px solid #b7cae7;
+      background: #ffffff;
+      color: #1c3f6b;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+    }
+
+    .qcat-toggle.exclude {
+      background: #fff1ef;
+      border-color: #d9a6a0;
+      color: #7f2116;
+    }
+
+    .qcat-toggle.include {
+      background: #eff8ef;
+      border-color: #9fc9a6;
+      color: #1d5f2f;
+    }
+
+    .q-filter-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .q-filter-summary {
+      margin: 8px 0 0;
+      color: #4c5b73;
+      font-size: 0.84rem;
+    }
+
+    .filter-toggle-btn {
+      border: 1px solid #9fc9a6;
+      background: #eff8ef;
+      color: #1d5f2f;
+      border-radius: 7px;
+      padding: 5px 10px;
+      font-weight: 700;
+      cursor: pointer;
+      min-width: 110px;
+      text-align: center;
+    }
+
+    .filter-toggle-btn.is-on {
+      border-color: #d9a6a0;
+      background: #fff1ef;
+      color: #7f2116;
+    }
+
+    .q-legend-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 1000;
+    }
+
+    .q-legend-modal.open {
+      display: block;
+    }
+
+    .q-legend-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .q-legend-dialog {
+      position: relative;
+      width: min(920px, calc(100vw - 32px));
+      max-height: calc(100vh - 32px);
+      margin: 16px auto;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #d7dce3;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .q-legend-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e6ebf2;
+    }
+
+    .q-legend-header-actions {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .q-legend-title {
+      margin: 0;
+      font-size: 1.05rem;
+      color: #1f3652;
+    }
+
+    .q-legend-body {
+      padding: 12px 16px 16px;
+      overflow: auto;
+    }
+
+    .q-legend-context {
+      padding: 10px 12px;
+      border: 1px solid #d7e2f3;
+      border-radius: 8px;
+      background: #f8fbff;
+      margin-bottom: 10px;
+    }
+
+    .q-legend-context-title {
+      margin: 0 0 6px;
+      font-size: 0.92rem;
+      color: #1f3652;
+    }
+
+    .q-legend-context-line {
+      margin: 0 0 8px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #0f1b2d;
+      color: #f0f5fb;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.94rem;
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+
+    .q-legend-context-list {
+      margin: 0;
+      padding-left: 16px;
+      font-size: 0.82rem;
+      color: #344860;
+      line-height: 1.4;
+    }
+
+    .seg-fir,
+    .seg-qcode,
+    .seg-traffic,
+    .seg-purpose,
+    .seg-scope,
+    .seg-limits,
+    .seg-coord {
+      font-weight: 700;
+    }
+
+    .q-legend-context-line .seg-fir { color: #86d7ff; }
+    .q-legend-context-line .seg-qcode { color: #ffd37a; }
+    .q-legend-context-line .seg-traffic { color: #86f0a6; }
+    .q-legend-context-line .seg-purpose { color: #ffb7d8; }
+    .q-legend-context-line .seg-scope { color: #d0c3ff; }
+    .q-legend-context-line .seg-limits { color: #fff08d; }
+    .q-legend-context-line .seg-coord { color: #8aeff3; }
+
+    .q-legend-tools {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .q-legend-tools input {
+      flex: 1;
+      min-width: 220px;
+      padding: 8px 10px;
+      border: 1px solid #c7ced8;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .q-legend-note {
+      margin: 0 0 10px;
+      color: #4f5f74;
+      font-size: 0.88rem;
+    }
+
+    .q-legend-popout-status {
+      display: none;
+      margin: 0 0 10px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      border: 1px solid #d7e2f3;
+      background: #f8fbff;
+      color: #1f3652;
+    }
+
+    .q-legend-popout-status.show {
+      display: block;
+    }
+
+    .q-legend-popout-status.warn {
+      border-color: #e4b45d;
+      background: #fff7e8;
+      color: #7a4b00;
+    }
+
+    .q-legend-popout-status.ok {
+      border-color: #9fc9a6;
+      background: #eff8ef;
+      color: #1d5f2f;
+    }
+
+    .q-legend-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      background: #fff;
+    }
+
+    .q-legend-table th,
+    .q-legend-table td {
+      border: 1px solid #e1e6ee;
+      padding: 7px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .q-legend-table th {
+      background: #f6f8fb;
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .q-legend-col-code {
+      font-weight: 700;
+      color: #163e70;
+      white-space: nowrap;
+    }
+
+    .q-legend-section {
+      margin-bottom: 14px;
+    }
+
+    .q-legend-section h3 {
+      margin: 0 0 6px;
+      font-size: 0.96rem;
+      color: #1f3652;
+    }
+
+    .mode-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      font-weight: 600;
+      color: #2d4670;
+    }
+
+    @media (max-width: 920px) {
+      .selectors-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .q-filter-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .status-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .card {
+        margin: 16px;
+        padding: 16px;
+      }
+
+      .selection-top {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .selection-stats {
+        grid-template-columns: auto 1fr;
+      }
+
+      .selectors-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .q-filter-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .icao-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .status-row {
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .selection-cache-row .btn {
+        min-width: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="top-nav">
+    <a href="#" class="back-link" onclick="goBack(event)"><span class="back-icon" aria-hidden="true">&#8592;</span>BACK</a> |
+    <a href="index.html">Home</a> |
+    <a href="Sections.html">SOP Sections</a> |
+    <a href="tools.html" class="active">Tools</a> |
+    <a href="flight-log.html">Flight Log</a> |
+    <a href="summary.html">Summary</a> |
+    <a href="emergencies.html">Emergency Procedures</a>
+  </nav>
+
+  <div class="card">
+    <h1>Real-Time NOTAM Fetch Prototype</h1>
+    <p class="subtle" id="lastFetchBanner">Last Fetch: - EDT | - UTC</p>
+
+    <section class="selection-block" aria-label="Selections">
+      <div class="selection-top">
+        <div class="selection-stats">
+          <span class="k">FIR Selected:</span><span class="v" id="currentFirValue">CZYZ</span>
+          <span class="k">ICAO Selected:</span><span class="v" id="currentIcaoValue">-</span>
+          <span class="k">NOTAMS in scope:</span><span class="v" id="notamsInScopeInline">0</span>
+          <span class="k">Airports in Scope:</span><span class="v" id="airportsFoundInline">0</span>
+        </div>
+        <button class="btn" type="submit" form="fetchForm">Fetch Live</button>
+      </div>
+
+    <form id="fetchForm" class="selectors-grid">
+      <div class="field-group">
+        <label for="firSelect">FIR Selected</label>
+        <select id="firSelect">
+          <option value="CZVR">CZVR - Vancouver FIR</option>
+          <option value="CZEG">CZEG - Edmonton FIR</option>
+          <option value="CZWG">CZWG - Winnipeg FIR</option>
+          <option value="CZYZ" selected>CZYZ - Toronto FIR</option>
+          <option value="CZUL">CZUL - Montreal FIR</option>
+          <option value="CZQM">CZQM - Moncton FIR</option>
+          <option value="CZQX">CZQX - Gander FIR</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="icaoSelect">ICAO Selected</label>
+        <div class="icao-controls">
+          <select id="icaoSelect">
+            <option value="" selected>All Airports</option>
+          </select>
+          <button class="btn btn-small" type="button" id="clearIcaoBtn">Clear ICAO</button>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="maxItems">Show max</label>
+        <select id="maxItems">
+          <option value="50">50</option>
+          <option value="100" selected>100</option>
+          <option value="200">200</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="useWxRecallMode">Request Mode</label>
+        <label class="mode-toggle">
+          <input id="useWxRecallMode" type="checkbox">
+          Use WXRecall API bundle
+        </label>
+      </div>
+    </form>
+    <div class="selection-cache-row">
+      <button class="btn" type=     "button" id="refreshFromCacheBtn">Use Cache</button>
+    </div>
+
+    <div id="loadingState" class="loading" role="status" aria-live="polite" aria-busy="false">
+      <span class="loading-spinner" aria-hidden="true"></span>
+      <span class="loading-text">Loading NOTAMs (cache first, live refresh in progress)...</span>
+    </div>
+    </section>
+
+    <div class="q-filter-box">
+      <div class="q-filter-head">
+        <span class="q-filter-title">Q-Code Category Filter</span>
+        <button class="filter-toggle-btn" type="button" id="toggleQFilterBtn" data-state="off">Filters OFF</button>
+        <button class="btn btn-small q-help-btn" type="button" id="openQLegend" title="Open Q-code legend">
+          <span class="q-help-icon" aria-hidden="true">?</span>
+          <span>Q-code Legend</span>
+        </button>
+      </div>
+      <div class="q-filter-grid">
+        <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="F" data-state="exclude">F*: Exclude</button></div>
+        <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="L" data-state="exclude">L*: Exclude</button></div>
+        <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="M" data-state="exclude">M*: Exclude</button></div>
+        <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="P" data-state="exclude">P*: Exclude</button></div>
+        <div class="q-filter-chip"><button class="qcat-toggle include" type="button" data-qcat="O" data-state="include">O*: Include</button></div>
+        <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="X" data-state="exclude">X*: Exclude</button></div>
+      </div>
+      <div class="q-filter-actions">
+        <button class="btn btn-small" type="button" id="qSetAllExcludeBtn">Set All Exclude</button>
+        <button class="btn btn-small" type="button" id="qSetAllIncludeBtn">Set All Include</button>
+      </div>
+      <p class="q-filter-summary" id="qFilterSummary">Q filter is off. Live results are unchanged.</p>
+    </div>
+
+    <div id="qLegendModal" class="q-legend-modal" aria-hidden="true">
+      <div class="q-legend-backdrop" data-close-qlegend></div>
+      <div class="q-legend-dialog" role="dialog" aria-modal="true" aria-labelledby="qLegendTitle">
+        <div class="q-legend-header">
+          <h2 class="q-legend-title" id="qLegendTitle">NOTAM Q-Code Legend</h2>
+          <div class="q-legend-header-actions">
+            <button class="btn btn-small" type="button" id="popoutQLegend">Pop out</button>
+            <button class="btn btn-small" type="button" id="closeQLegend">Close</button>
+          </div>
+        </div>
+        <div class="q-legend-body">
+          <div class="q-legend-context" aria-label="Q-line quick reference">
+            <p class="q-legend-context-title"><strong>Q Line Anatomy Example</strong></p>
+            <p class="q-legend-context-line">
+              Q)
+              <span class="seg-fir">CZYZ</span> /
+              <span class="seg-qcode">QOLAS</span> /
+              <span class="seg-traffic">IV</span> /
+              <span class="seg-purpose">M</span> /
+              <span class="seg-scope">AE</span> /
+              <span class="seg-limits">000 / 014</span> /
+              <span class="seg-coord">4447N07822W005</span>
+            </p>
+            <ul class="q-legend-context-list">
+              <li><strong class="seg-fir">CZYZ</strong>: FIR</li>
+              <li><strong class="seg-qcode">QOLAS</strong>: Q + subject OL + condition AS</li>
+              <li><strong class="seg-traffic">IV</strong>: IFR + VFR</li>
+              <li><strong class="seg-purpose">M</strong>: Miscellaneous purpose</li>
+              <li><strong class="seg-scope">AE</strong>: Aerodrome + En-route</li>
+              <li><strong class="seg-limits">000 / 014</strong>: Surface to 1,400 ft</li>
+              <li><strong class="seg-coord">4447N07822W005</strong>: Center and radius</li>
+            </ul>
+          </div>
+
+          <p class="q-legend-note">Q subject codes are listed alphabetically for quick lookup. The filter toggles on this page are category-based by first subject letter (F, L, M, P, O, X).</p>
+          <p class="q-legend-popout-status" id="qLegendPopoutStatus" role="status" aria-live="polite"></p>
+          <div class="q-legend-tools">
+            <input id="qLegendSearch" type="text" placeholder="Lookup by code prefix (example: I, IV, P, PM, AE)">
+            <button class="btn btn-small" type="button" id="qLegendClearSearch">Clear</button>
+          </div>
+          <div id="qLegendBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-row">
+      <div class="status-pill"><span class="k">Source</span><span class="v" id="sourceValue">-</span></div>
+      <div class="status-pill"><span class="k">Fetch Time</span><span class="v" id="fetchTimeValue">-</span></div>
+      <div class="status-pill"><span class="k">Total NOTAMs</span><span class="v" id="totalValue">0</span></div>
+      <div class="status-pill"><span class="k">Displayed</span><span class="v" id="shownValue">0</span></div>
+      <div class="status-pill"><span class="k">Updated</span><span class="v" id="updatedValue">-</span></div>
+    </div>
+
+    <div class="results-wrap">
+      <div class="results-header">
+        <span id="resultsHeaderText">No data loaded yet.</span>
+        <div class="results-header-actions">
+          <button class="btn" type="button" id="viewAllOnMapBtn" disabled>View all on map</button>
+          <button class="btn" type="button" id="clearCacheBtn">Clear Site Cache</button>
+        </div>
+      </div>
+      <ul class="results-list" id="resultsList"></ul>
+    </div>
+
+    <p class="note">Performance strategy on this page: timeout-limited fetch, cache-first rendering, simple DOM output, and optional proxy fallback if direct browser fetch is blocked.</p>
+  </div>
+
+  <script>
+    const API_BASE = "https://plan.navcanada.ca/weather/api/alpha/";
+    const DIRECT_TIMEOUT_MS = 5000;
+    const PROXY_TIMEOUT_MS = 14000;
+    const PROXY_PROVIDERS = [
+      {
+        name: "allorigins",
+        label: "AllOrigins",
+        buildUrl: targetUrl => `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`
+      },
+      {
+        name: "corsproxy",
+        label: "CorsProxy",
+        buildUrl: targetUrl => `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`
+      }
+    ];
+    const CACHE_TTL_MS = 5 * 60 * 1000;
+    const LIVE_FETCH_COOLDOWN_MS = 30 * 60 * 1000;
+    const FRESH_BANNER_WINDOW_MS = 60 * 60 * 1000;
+    const LAST_ICAO_STORAGE_KEY = "fetchnotams:lastIcao";
+    const MAP_PAYLOAD_STORAGE_PREFIX = "fetchnotams:map:payload:";
+    const MAP_PAYLOAD_TTL_MS = 2 * 60 * 60 * 1000;
+    const FIR_CODES = ["CZVR", "CZEG", "CZWG", "CZYZ", "CZUL", "CZQM", "CZQX"];
+    const FIR_CODE_SET = new Set(FIR_CODES);
+    const DISPLAY_TIME_ZONE = "America/Toronto";
+    const WXRECALL_ALPHA_TYPES = [
+      "sigmet",
+      "airmet",
+      "notam",
+      "metar",
+      "taf",
+      "pirep",
+      "upperwind",
+      "space_weather"
+    ];
+
+    const el = {
+      form: document.getElementById("fetchForm"),
+      firSelect: document.getElementById("firSelect"),
+      icaoSelect: document.getElementById("icaoSelect"),
+      currentFirValue: document.getElementById("currentFirValue"),
+      currentIcaoValue: document.getElementById("currentIcaoValue"),
+      clearIcaoBtn: document.getElementById("clearIcaoBtn"),
+      airportsFoundInline: document.getElementById("airportsFoundInline"),
+      notamsInScopeInline: document.getElementById("notamsInScopeInline"),
+      maxItems: document.getElementById("maxItems"),
+      useWxRecallMode: document.getElementById("useWxRecallMode"),
+      toggleQFilterBtn: document.getElementById("toggleQFilterBtn"),
+      qSetAllExcludeBtn: document.getElementById("qSetAllExcludeBtn"),
+      qSetAllIncludeBtn: document.getElementById("qSetAllIncludeBtn"),
+      qFilterSummary: document.getElementById("qFilterSummary"),
+      openQLegend:
+        document.getElementById("openQLegend") ||
+        document.getElementById("openQCodeLegend") ||
+        document.getElementById("openQCodeLegendBtn") ||
+        document.querySelector(".q-help-btn"),
+      qLegendModal: document.getElementById("qLegendModal"),
+      closeQLegend: document.getElementById("closeQLegend"),
+      popoutQLegend: document.getElementById("popoutQLegend"),
+      qLegendSearch: document.getElementById("qLegendSearch"),
+      qLegendClearSearch: document.getElementById("qLegendClearSearch"),
+      qLegendBody: document.getElementById("qLegendBody"),
+      qLegendPopoutStatus: document.getElementById("qLegendPopoutStatus"),
+      lastFetchBanner: document.getElementById("lastFetchBanner"),
+      loadingState: document.getElementById("loadingState"),
+      loadingText: document.querySelector("#loadingState .loading-text"),
+      sourceValue: document.getElementById("sourceValue"),
+      fetchTimeValue: document.getElementById("fetchTimeValue"),
+      totalValue: document.getElementById("totalValue"),
+      shownValue: document.getElementById("shownValue"),
+      updatedValue: document.getElementById("updatedValue"),
+      resultsHeaderText: document.getElementById("resultsHeaderText"),
+      resultsList: document.getElementById("resultsList"),
+      viewAllOnMapBtn: document.getElementById("viewAllOnMapBtn"),
+      clearCacheBtn: document.getElementById("clearCacheBtn"),
+      refreshFromCacheBtn: document.getElementById("refreshFromCacheBtn")
+    };
+
+    let currentItems = [];
+    let currentFilteredItems = [];
+    let pendingMapPayloadInfo = null;
+    let qLegendPopupWindow = null;
+    let qLegendOpenedAtMs = 0;
+    let qLegendLastLaunchAtMs = 0;
+    let lastSelectedIcao = normalizeCode(localStorage.getItem(LAST_ICAO_STORAGE_KEY) || "", 4);
+    let hasAutoFocusedIcao = false;
+    let lastFetchActionSite = normalizeCode(document.getElementById("firSelect")?.value || "CZYZ", 4) || "CZYZ";
+
+    const TRACKED_Q_CATEGORIES = ["F", "L", "M", "P", "O", "X"];
+    const Q_SUBJECT_CODES = [
+      { code: "AA", meaning: "Airspace subject (AA)" },
+      { code: "AC", meaning: "Control zone / CTR" },
+      { code: "AD", meaning: "ADIZ" },
+      { code: "AE", meaning: "Control area / CTA" },
+      { code: "AF", meaning: "FIR" },
+      { code: "AN", meaning: "Airspace subject (AN)" },
+      { code: "AO", meaning: "Airspace subject (AO)" },
+      { code: "AR", meaning: "Airspace reservation / restriction" },
+      { code: "AT", meaning: "TMA" },
+      { code: "AZ", meaning: "ATZ" },
+      { code: "FA", meaning: "Runway friction / braking" },
+      { code: "FC", meaning: "Runway closure" },
+      { code: "FI", meaning: "Runway lighting" },
+      { code: "FJ", meaning: "Runway markings" },
+      { code: "LY", meaning: "Aerodrome lighting" },
+      { code: "MX", meaning: "Miscellaneous aerodrome information" },
+      { code: "OB", meaning: "Obstacle" },
+      { code: "OL", meaning: "Obstacle lights" },
+      { code: "PI", meaning: "Instrument approach procedure" },
+      { code: "PM", meaning: "Approach minima" },
+      { code: "RA", meaning: "Airspace reservation" },
+      { code: "RD", meaning: "Danger area" },
+      { code: "RM", meaning: "Military operating area" },
+      { code: "RO", meaning: "Overflying restrictions" },
+      { code: "RP", meaning: "Prohibited area" },
+      { code: "RR", meaning: "Restricted area" },
+      { code: "RT", meaning: "Temporary restricted area" },
+      { code: "WA", meaning: "Air display" },
+      { code: "WB", meaning: "Aerobatics" },
+      { code: "WC", meaning: "Captive balloon / kite" },
+      { code: "WD", meaning: "Demolition of explosives" },
+      { code: "WE", meaning: "Exercises" },
+      { code: "WG", meaning: "Glider flying" },
+      { code: "WH", meaning: "Blasting" },
+      { code: "WJ", meaning: "Banner / target towing" },
+      { code: "WL", meaning: "Free balloon" },
+      { code: "WM", meaning: "Missile / gun / rocket firing" },
+      { code: "WP", meaning: "Parachute / paragliding" },
+      { code: "WR", meaning: "Radioactive / toxic materials" },
+      { code: "WS", meaning: "Burning / blowing gas" },
+      { code: "WT", meaning: "Mass movement of aircraft" },
+      { code: "WU", meaning: "Unmanned aircraft" },
+      { code: "WV", meaning: "Formation flight" },
+      { code: "WW", meaning: "Significant volcanic activity" },
+      { code: "WY", meaning: "Aerial survey" },
+      { code: "WZ", meaning: "Model flying" }
+    ];
+    const Q_CONDITION_CODES = [
+      { code: "AS", meaning: "Unserviceable" },
+      { code: "AU", meaning: "Not available" },
+      { code: "CH", meaning: "Changed" },
+      { code: "CL", meaning: "Closed" },
+      { code: "CS", meaning: "Construction" },
+      { code: "CT", meaning: "Temporary" },
+      { code: "CA", meaning: "Cancelled" },
+      { code: "AW", meaning: "Work in progress" },
+      { code: "XX", meaning: "Other / unspecified" }
+    ];
+    const Q_TRAFFIC_CODES = [
+      { code: "I", meaning: "IFR" },
+      { code: "V", meaning: "VFR" },
+      { code: "IV", meaning: "IFR + VFR" }
+    ];
+    const Q_SCOPE_CODES = [
+      { code: "A", meaning: "Aerodrome" },
+      { code: "E", meaning: "Enroute" },
+      { code: "W", meaning: "Warnings" },
+      { code: "AE", meaning: "Aerodrome + Enroute" },
+      { code: "AW", meaning: "Aerodrome + Warnings" },
+      { code: "EW", meaning: "Enroute + Warnings" },
+      { code: "AEW", meaning: "Aerodrome + Enroute + Warnings" }
+    ];
+
+    function goBack(event) {
+      event.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+        return;
+      }
+      window.location.href = "tools.html";
+    }
+
+    function normalizeCode(value, maxLen) {
+      return String(value || "")
+        .trim()
+        .toUpperCase()
+        .replace(/[^A-Z0-9]/g, "")
+        .slice(0, maxLen);
+    }
+
+    function persistLastIcao(code) {
+      const normalized = normalizeCode(code, 4);
+      lastSelectedIcao = normalized;
+      if (!normalized) {
+        return;
+      }
+      localStorage.setItem(LAST_ICAO_STORAGE_KEY, normalized);
+    }
+
+    function updateSelectionSummary() {
+      const selectedFir = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      const selectedIcao = normalizeCode(el.icaoSelect.value, 4) || "-";
+      el.currentFirValue.textContent = selectedFir;
+      el.currentIcaoValue.textContent = selectedIcao;
+    }
+
+    function setIcaoSelection(code) {
+      const normalized = normalizeCode(code, 4);
+      if (!normalized) {
+        el.icaoSelect.value = "";
+        updateSelectionSummary();
+        return;
+      }
+      const exists = Array.from(el.icaoSelect.options).some(opt => normalizeCode(opt.value, 4) === normalized);
+      if (!exists) {
+        const option = document.createElement("option");
+        option.value = normalized;
+        option.textContent = normalized;
+        el.icaoSelect.appendChild(option);
+      }
+      el.icaoSelect.value = normalized;
+      updateSelectionSummary();
+      persistLastIcao(normalized);
+    }
+
+    function refreshIcaoOptionsFromItems(items) {
+      const airports = buildAirportUniverseFromItems(items || []);
+      const selectedBefore = normalizeCode(el.icaoSelect.value, 4);
+      const preferredIcao = selectedBefore || lastSelectedIcao;
+      const optionsHtml = airports
+        .map(code => `<option value="${escapeHtml(code)}">${escapeHtml(code)}</option>`)
+        .join("");
+      el.icaoSelect.innerHTML = `<option value="">All Airports</option>${optionsHtml}`;
+
+      if (preferredIcao) {
+        setIcaoSelection(preferredIcao);
+      } else {
+        setIcaoSelection("");
+      }
+    }
+
+    function extractAirportCodeFromRaw(rawText) {
+      if (!rawText || typeof rawText !== "string") return "";
+      const m = rawText.match(/A\)\s*([A-Z0-9]{3,4})/i);
+      if (!m) return "";
+      return normalizeCode(m[1], 4);
+    }
+
+    function isLikelyIcaoAirport(code) {
+      if (!code) return false;
+      const normalized = normalizeCode(code, 4);
+      if (!/^C[A-Z0-9]{3}$/.test(normalized)) return false;
+      if (normalized === "CXXX") return false;
+      if (FIR_CODE_SET.has(normalized)) return false;
+      return true;
+    }
+
+    function buildAirportUniverseFromItems(items) {
+      const set = new Set();
+
+      for (const item of items) {
+        const locCode = normalizeCode(item?.location || "", 4);
+        if (isLikelyIcaoAirport(locCode)) {
+          set.add(locCode);
+        }
+
+        const rawCode = extractAirportCodeFromRaw(item?.raw || "");
+        const rawCode4 = normalizeCode(rawCode, 4);
+        if (isLikelyIcaoAirport(rawCode4)) {
+          set.add(rawCode4);
+        }
+      }
+
+      return Array.from(set).sort();
+    }
+
+    function updateAirportUniverseInfo(items) {
+      const airports = buildAirportUniverseFromItems(items || []);
+      const countText = String(airports.length);
+      el.airportsFoundInline.textContent = countText;
+    }
+
+    function toPrettyDate(iso) {
+      if (!iso) return "-";
+      const d = new Date(iso);
+      if (Number.isNaN(d.getTime())) return "-";
+      const dateText = d.toLocaleString("en-CA", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        timeZone: DISPLAY_TIME_ZONE
+      });
+      const tzText = new Intl.DateTimeFormat("en-CA", {
+        timeZone: DISPLAY_TIME_ZONE,
+        timeZoneName: "short"
+      })
+        .formatToParts(d)
+        .find(part => part.type === "timeZoneName")?.value || "ET";
+      return `${dateText} ${tzText}`;
+    }
+
+    function toUtcDateTime(iso) {
+      if (!iso) return "-";
+      const d = new Date(iso);
+      if (Number.isNaN(d.getTime())) return "-";
+      const utcText = d.toLocaleString("en-CA", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        timeZone: "UTC"
+      });
+      return `${utcText} UTC`;
+    }
+
+    function updateLastFetchBanner(iso, sourceLabel = "Fetch") {
+      if (!iso) {
+        el.lastFetchBanner.textContent = "Last Fetch: - EDT | - UTC";
+        el.lastFetchBanner.classList.remove("fresh", "stale");
+        return;
+      }
+
+      const edtText = toPrettyDate(iso);
+      const utcText = toUtcDateTime(iso);
+      const d = new Date(iso);
+      const ageMs = Number.isNaN(d.getTime()) ? Infinity : (Date.now() - d.getTime());
+      const ageMins = Number.isFinite(ageMs) ? Math.max(0, Math.floor(ageMs / 60000)) : null;
+      const ageText = ageMins == null ? "age n/a" : `age ${ageMins}m`;
+
+      el.lastFetchBanner.textContent = `Last ${sourceLabel}: ${edtText} | ${utcText} | ${ageText}`;
+      const isFresh = ageMs >= 0 && ageMs < FRESH_BANNER_WINDOW_MS;
+      el.lastFetchBanner.classList.toggle("fresh", isFresh);
+      el.lastFetchBanner.classList.toggle("stale", !isFresh);
+    }
+
+    function getCacheAgeMs(site) {
+      const cached = loadCache(site);
+      const fetchedAt = cached?.fetchedAt;
+      if (!fetchedAt) return Infinity;
+      const d = new Date(fetchedAt);
+      if (Number.isNaN(d.getTime())) return Infinity;
+      return Date.now() - d.getTime();
+    }
+
+    function buildApiUrl(site) {
+      const params = new URLSearchParams();
+      params.append("site", site);
+
+      if (el.useWxRecallMode.checked) {
+        for (const alpha of WXRECALL_ALPHA_TYPES) {
+          params.append("alpha", alpha);
+        }
+      } else {
+        params.append("alpha", "notam");
+      }
+
+      params.append("notam_choice", "default");
+      params.append("_", String(Date.now()));
+      return `${API_BASE}?${params.toString()}`;
+    }
+
+    function cacheKeyForSite(site) {
+      return `fetchnotams:site:${site}`;
+    }
+
+    function loadCache(site) {
+      const raw = localStorage.getItem(cacheKeyForSite(site));
+      if (!raw) return null;
+      try {
+        return JSON.parse(raw);
+      } catch {
+        return null;
+      }
+    }
+
+    function saveCache(site, payload) {
+      localStorage.setItem(cacheKeyForSite(site), JSON.stringify(payload));
+    }
+
+    async function fetchWithTimeout(url, timeoutMs) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const res = await fetch(url, {
+          method: "GET",
+          signal: controller.signal,
+          cache: "no-store",
+          credentials: "omit"
+        });
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        return await res.json();
+      } finally {
+        clearTimeout(timeoutId);
+      }
+    }
+
+    function parseTextBlock(value) {
+      if (typeof value !== "string") return "";
+      try {
+        const parsed = JSON.parse(value);
+        if (parsed && typeof parsed === "object") {
+          return parsed.raw || parsed.english || parsed.french || "";
+        }
+      } catch {
+        return value;
+      }
+      return "";
+    }
+
+    function parseQLine(rawText) {
+      const m = (rawText || "").match(/Q\)\s*([A-Z]{4})\/(Q[A-Z]{4})\//i);
+      if (!m) return null;
+      const qcode = String(m[2] || "").toUpperCase();
+      const subject = qcode.slice(1, 3);
+      const category = subject.slice(0, 1);
+      const status = qcode.slice(3, 5);
+      return { qcode, subject, category, status };
+    }
+
+    function dmsTokenToDecimal(token, isLat) {
+      const clean = (token || "").toUpperCase().trim();
+      const dir = clean.slice(-1);
+      const body = clean.slice(0, -1);
+
+      if (isLat && !/[NS]/.test(dir)) return null;
+      if (!isLat && !/[EW]/.test(dir)) return null;
+
+      const degDigits = isLat ? 2 : 3;
+      if (!/^\d+$/.test(body)) return null;
+      if (body.length !== degDigits + 2 && body.length !== degDigits + 4) return null;
+
+      const deg = Number(body.slice(0, degDigits));
+      const min = Number(body.slice(degDigits, degDigits + 2));
+      const sec = body.length === degDigits + 4 ? Number(body.slice(degDigits + 2, degDigits + 4)) : 0;
+
+      if (min >= 60 || sec >= 60) return null;
+
+      let dd = deg + (min / 60) + (sec / 3600);
+      if (dir === "S" || dir === "W") dd = -dd;
+      return dd;
+    }
+
+    function linkifyDmsCoordinatePairs(text) {
+      const value = text || "";
+      const pairRegex = /(\d{4,6}[NS])\s*(\d{5,7}[EW])/gi;
+      let lastIndex = 0;
+      let match;
+      const out = [];
+
+      while ((match = pairRegex.exec(value)) !== null) {
+        out.push(escapeHtml(value.slice(lastIndex, match.index)));
+
+        const latToken = (match[1] || "").toUpperCase();
+        const lonToken = (match[2] || "").toUpperCase();
+        const lat = dmsTokenToDecimal(latToken, true);
+        const lon = dmsTokenToDecimal(lonToken, false);
+
+        if (lat == null || lon == null) {
+          out.push(escapeHtml(match[0]));
+        } else {
+          const href = `NotamsMap.html?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}&focus=1&src=fetchnotams`;
+          out.push(`<a class="coord-link" href="${href}" onclick="return openMapTab(event, this);" title="Lookup on Map?" aria-label="Lookup on Map?">${escapeHtml(latToken)}&nbsp;${escapeHtml(lonToken)}</a>`);
+        }
+
+        lastIndex = pairRegex.lastIndex;
+      }
+
+      out.push(escapeHtml(value.slice(lastIndex)));
+      return out.join("");
+    }
+
+    function extractDmsCoordinatePairsFromText(text) {
+      const value = String(text || "");
+      const pairRegex = /(\d{4,6}[NS])\s*(\d{5,7}[EW])/gi;
+      const found = [];
+      let match;
+
+      while ((match = pairRegex.exec(value)) !== null) {
+        const latToken = (match[1] || "").toUpperCase();
+        const lonToken = (match[2] || "").toUpperCase();
+        const lat = dmsTokenToDecimal(latToken, true);
+        const lon = dmsTokenToDecimal(lonToken, false);
+        if (lat == null || lon == null) continue;
+        if (lat < -90 || lat > 90 || lon < -180 || lon > 180) continue;
+        found.push({ lat, lon });
+      }
+
+      return found;
+    }
+
+    function extractPrimaryCoordinateFromNotam(rawText) {
+      const value = String(rawText || "");
+      if (!value) return null;
+
+      const eMatch = value.match(/E\)\s*([\s\S]*?)(?=(?:\n|\r\n?)[A-Z]\)|$)/);
+      const eSection = eMatch ? String(eMatch[0] || "") : "";
+      const eCoords = extractDmsCoordinatePairsFromText(eSection);
+      if (eCoords.length > 0) {
+        return eCoords[0];
+      }
+
+      const anyCoords = extractDmsCoordinatePairsFromText(value);
+      return anyCoords.length > 0 ? anyCoords[0] : null;
+    }
+
+    function pruneOldMapPayloads() {
+      const now = Date.now();
+      const staleKeys = [];
+      for (let i = 0; i < localStorage.length; i += 1) {
+        const key = localStorage.key(i);
+        if (!key || !key.startsWith(MAP_PAYLOAD_STORAGE_PREFIX)) continue;
+        try {
+          const raw = localStorage.getItem(key);
+          const parsed = raw ? JSON.parse(raw) : null;
+          const createdAt = Number(parsed?.createdAt || 0);
+          if (!createdAt || (now - createdAt) > MAP_PAYLOAD_TTL_MS) {
+            staleKeys.push(key);
+          }
+        } catch {
+          staleKeys.push(key);
+        }
+      }
+      for (const key of staleKeys) {
+        localStorage.removeItem(key);
+      }
+    }
+
+    function buildMapPayloadFromItems(items, maxMarkers = 120) {
+      const records = [];
+      const seen = new Set();
+      let rawCoordinateCount = 0;
+
+      for (const item of items || []) {
+        const coord = extractPrimaryCoordinateFromNotam(item?.raw || "");
+        if (!coord) continue;
+
+        rawCoordinateCount += 1;
+        const key = `${coord.lat.toFixed(6)},${coord.lon.toFixed(6)}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+
+        if (records.length < maxMarkers) {
+          records.push({
+            lat: Number(coord.lat.toFixed(6)),
+            lon: Number(coord.lon.toFixed(6)),
+            start: item?.startValidity || null,
+            end: item?.endValidity || null,
+            raw: String(item?.raw || "")
+          });
+        }
+      }
+
+      return {
+        records,
+        uniqueMarkerCount: seen.size,
+        rawCoordinateCount,
+        truncated: seen.size > records.length
+      };
+    }
+
+    function storeMapPayload(records) {
+      pruneOldMapPayloads();
+      const key = `${MAP_PAYLOAD_STORAGE_PREFIX}${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+      const payload = {
+        createdAt: Date.now(),
+        records
+      };
+      localStorage.setItem(key, JSON.stringify(payload));
+      return key;
+    }
+
+    function buildBatchMapUrlFromPayloadKey(payloadKey, payloadInfo) {
+      const records = payloadInfo?.records || [];
+      if (!records.length || !payloadKey) return "";
+
+      const first = records[0];
+      const params = new URLSearchParams();
+      params.set("src", "fetchnotams");
+      params.set("focus", "1");
+      params.set("payload_key", payloadKey);
+      params.set("lat", String(first.lat));
+      params.set("lon", String(first.lon));
+      if (payloadInfo.truncated) {
+        params.set("marker_truncated", "1");
+      }
+
+      return `NotamsMap.html?${params.toString()}`;
+    }
+
+    function updateViewAllOnMapButton(displayItems) {
+      const payloadInfo = buildMapPayloadFromItems(displayItems, 120);
+      const hasPayload = payloadInfo.records.length > 0;
+      const notamCount = Array.isArray(displayItems) ? displayItems.length : 0;
+      const markerCount = payloadInfo.records.length;
+
+      pendingMapPayloadInfo = hasPayload ? payloadInfo : null;
+      el.viewAllOnMapBtn.disabled = !hasPayload;
+
+      if (!hasPayload) {
+        el.viewAllOnMapBtn.textContent = "View all on map";
+        el.viewAllOnMapBtn.title = "No coordinates found in displayed results";
+        return;
+      }
+
+      if (markerCount === notamCount) {
+        el.viewAllOnMapBtn.textContent = `View all on map (${markerCount})`;
+      } else {
+        el.viewAllOnMapBtn.textContent = `View all on map (${notamCount} NOTAMs, ${markerCount} markers)`;
+      }
+
+      if (payloadInfo.truncated) {
+        el.viewAllOnMapBtn.title = `Showing first ${markerCount} unique markers (more available)`;
+      } else {
+        el.viewAllOnMapBtn.title = `Open ${notamCount} displayed NOTAM(s) as ${markerCount} marker(s)`;
+      }
+    }
+
+    function openMapTab(event, anchorEl) {
+      if (event) event.preventDefault();
+      const href = anchorEl && anchorEl.href ? anchorEl.href : null;
+      if (!href) return false;
+
+      const popup = window.open(href, "_blank");
+      if (popup) {
+        popup.focus();
+      } else {
+        window.location.href = href;
+      }
+      return false;
+    }
+
+    function buildNotamDescriptionHtml(rawText) {
+      const value = String(rawText || "");
+      const eMatch = value.match(/E\)\s*([\s\S]*?)(?=(?:\n|\r\n?)[A-Z]\)|$)/);
+      if (!eMatch || typeof eMatch.index !== "number") {
+        return escapeHtml(value);
+      }
+
+      const start = eMatch.index;
+      const end = start + eMatch[0].length;
+      const before = value.slice(0, start);
+      const eSection = eMatch[0];
+      const after = value.slice(end);
+      return `${escapeHtml(before)}<span class="e-highlight">${linkifyDmsCoordinatePairs(eSection)}</span>${escapeHtml(after)}`;
+    }
+
+    function getQCategoryModeMap() {
+      const map = new Map();
+      document.querySelectorAll(".qcat-toggle").forEach(node => {
+        const category = normalizeCode(node.dataset.qcat || "", 1);
+        const state = String(node.dataset.state || "include").toLowerCase() === "exclude" ? "exclude" : "include";
+        if (category) {
+          map.set(category, state);
+        }
+      });
+      return map;
+    }
+
+    function setQCategoryButtonState(button, state) {
+      const category = normalizeCode(button.dataset.qcat || "", 1);
+      const normalizedState = state === "exclude" ? "exclude" : "include";
+      button.dataset.state = normalizedState;
+      button.classList.remove("include", "exclude");
+      button.classList.add(normalizedState);
+      button.textContent = `${category}*: ${normalizedState === "exclude" ? "Exclude" : "Include"}`;
+    }
+
+    function isQFilterEnabled() {
+      return String(el.toggleQFilterBtn?.dataset.state || "off").toLowerCase() === "on";
+    }
+
+    function setQFilterToggleState(enabled) {
+      const isOn = !!enabled;
+      el.toggleQFilterBtn.dataset.state = isOn ? "on" : "off";
+      el.toggleQFilterBtn.classList.toggle("is-on", isOn);
+      el.toggleQFilterBtn.textContent = isOn ? "Filters ON" : "Filters OFF";
+    }
+
+    function updateQFilterSummary() {
+      const enabled = isQFilterEnabled();
+      const modeMap = getQCategoryModeMap();
+      const excluded = TRACKED_Q_CATEGORIES.filter(category => modeMap.get(category) === "exclude");
+      const included = TRACKED_Q_CATEGORIES.filter(category => modeMap.get(category) !== "exclude");
+      const excludedText = excluded.length > 0 ? excluded.join(",") : "none";
+      const includedText = included.length > 0 ? included.join(",") : "none";
+      if (!enabled) {
+        el.qFilterSummary.textContent = "Q filter is off. Live results are unchanged.";
+        return;
+      }
+      el.qFilterSummary.textContent = `Q filter on: include ${includedText} | exclude ${excludedText}.`;
+    }
+
+    function filterLegendRows(rows, query) {
+      if (!query) return rows;
+      const normalized = query.endsWith("*") ? query.slice(0, -1) : query;
+      if (!normalized) return rows;
+
+      return rows.filter(entry => {
+        const code = String(entry.code || "").toUpperCase();
+        // Strict code-prefix lookup for category/subject/traffic/scope codes.
+        return code.startsWith(normalized);
+      });
+    }
+
+    function renderLegendSection(title, rows, codeHeader = "Code") {
+      if (!rows.length) return "";
+      const body = rows
+        .map(entry => `
+          <tr>
+            <td class="q-legend-col-code">${escapeHtml(entry.code)}</td>
+            <td>${escapeHtml(entry.meaning)}</td>
+          </tr>
+        `)
+        .join("");
+      return `
+        <section class="q-legend-section">
+          <h3>${escapeHtml(title)}</h3>
+          <table class="q-legend-table">
+            <thead>
+              <tr>
+                <th>${escapeHtml(codeHeader)}</th>
+                <th>Meaning</th>
+              </tr>
+            </thead>
+            <tbody>${body}</tbody>
+          </table>
+        </section>
+      `;
+    }
+
+    function renderQSubjectLegendTable() {
+      const rawQuery = String(el.qLegendSearch?.value || "").toUpperCase();
+      const query = rawQuery.replace(/[^A-Z*]/g, "").replace(/\*+/g, "*").trim();
+      const subjectRows = filterLegendRows([...Q_SUBJECT_CODES].sort((a, b) => a.code.localeCompare(b.code)), query);
+      const conditionRows = filterLegendRows([...Q_CONDITION_CODES].sort((a, b) => a.code.localeCompare(b.code)), query);
+      const trafficRows = filterLegendRows([...Q_TRAFFIC_CODES].sort((a, b) => a.code.localeCompare(b.code)), query);
+      const scopeRows = filterLegendRows([...Q_SCOPE_CODES].sort((a, b) => a.code.localeCompare(b.code)), query);
+
+      const sections = [
+        renderLegendSection("Q Subject Codes (2nd and 3rd characters)", subjectRows, "Subject"),
+        renderLegendSection("Q Condition Codes (4th and 5th characters)", conditionRows, "Condition"),
+        renderLegendSection("Q Traffic Codes", trafficRows, "Traffic"),
+        renderLegendSection("Q Scope Codes", scopeRows, "Scope")
+      ].filter(Boolean);
+
+      el.qLegendBody.innerHTML = sections.length > 0
+        ? sections.join("")
+        : '<p class="q-legend-note">No legend entries match your search.</p>';
+    }
+
+    function openQCodeLegend() {
+      el.qLegendModal.classList.add("open");
+      el.qLegendModal.setAttribute("aria-hidden", "false");
+      qLegendOpenedAtMs = Date.now();
+      setQCodeLegendPopoutStatus("", "");
+    }
+
+    function setQCodeLegendPopoutStatus(message, tone = "") {
+      if (!el.qLegendPopoutStatus) return;
+      const msg = String(message || "").trim();
+      el.qLegendPopoutStatus.textContent = msg;
+      el.qLegendPopoutStatus.classList.remove("show", "warn", "ok");
+      if (!msg) return;
+      el.qLegendPopoutStatus.classList.add("show");
+      if (tone === "warn" || tone === "ok") {
+        el.qLegendPopoutStatus.classList.add(tone);
+      }
+    }
+
+    function openQCodeLegendPopup() {
+      try {
+        const popupWidth = 860;
+        const popupHeight = 820;
+        const left = Math.max(20, window.screenX + window.outerWidth - popupWidth - 30);
+        const top = Math.max(20, window.screenY + 70);
+        const features = [
+          `width=${popupWidth}`,
+          `height=${popupHeight}`,
+          `left=${left}`,
+          `top=${top}`,
+          "resizable=yes",
+          "scrollbars=yes",
+          "menubar=no",
+          "toolbar=no",
+          "location=no",
+          "status=no"
+        ].join(",");
+
+        if (!qLegendPopupWindow || qLegendPopupWindow.closed) {
+          qLegendPopupWindow = window.open("", "NotamQCodeLegendWindow", features);
+        }
+
+        if (!qLegendPopupWindow || qLegendPopupWindow.closed) {
+          setQCodeLegendPopoutStatus("Pop-out blocked by browser settings. Allow pop-ups for this page, then click Pop out again.", "warn");
+          return false;
+        }
+
+        const contextHtml = document.querySelector(".q-legend-context")?.outerHTML || "";
+        const noteHtml = document.querySelector(".q-legend-note")?.outerHTML || "";
+        const tableHtml = el.qLegendBody?.innerHTML || "";
+        const popupDoc = qLegendPopupWindow.document;
+
+        popupDoc.open();
+        popupDoc.write(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOTAM Q-Code Legend</title>
+  <style>
+    body { margin: 0; font-family: Segoe UI, Tahoma, Arial, sans-serif; background: #f4f8ff; color: #1f3652; }
+    .wrap { padding: 14px; }
+    .head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .title { margin: 0; font-size: 1.1rem; }
+    .hint { color: #4f5f74; font-size: 0.85rem; }
+    .q-legend-context { padding: 10px 12px; border: 1px solid #d7e2f3; border-radius: 8px; background: #f8fbff; margin-bottom: 10px; }
+    .q-legend-context-title { margin: 0 0 6px; font-size: 0.92rem; color: #1f3652; }
+    .q-legend-context-line { margin: 0 0 8px; padding: 8px 10px; border-radius: 8px; background: #0f1b2d; color: #f0f5fb; font-family: Consolas, Courier New, monospace; font-size: 0.94rem; white-space: nowrap; overflow-x: auto; }
+    .q-legend-context-list { margin: 0; padding-left: 16px; font-size: 0.82rem; color: #344860; line-height: 1.4; }
+    .seg-fir, .seg-qcode, .seg-traffic, .seg-purpose, .seg-scope, .seg-limits, .seg-coord { font-weight: 700; }
+    .q-legend-context-line .seg-fir { color: #86d7ff; }
+    .q-legend-context-line .seg-qcode { color: #ffd37a; }
+    .q-legend-context-line .seg-traffic { color: #86f0a6; }
+    .q-legend-context-line .seg-purpose { color: #ffb7d8; }
+    .q-legend-context-line .seg-scope { color: #d0c3ff; }
+    .q-legend-context-line .seg-limits { color: #fff08d; }
+    .q-legend-context-line .seg-coord { color: #8aeff3; }
+    .q-legend-note { margin: 0 0 10px; color: #4f5f74; font-size: 0.88rem; }
+    .q-legend-tools { display: flex; gap: 8px; align-items: center; margin: 0 0 10px; }
+    .q-legend-tools input { flex: 1; min-width: 220px; padding: 8px 10px; border: 1px solid #c7ced8; border-radius: 8px; font-size: 0.95rem; }
+    .q-legend-tools button { border: 1px solid #c7ced8; background: #ffffff; border-radius: 8px; padding: 8px 10px; cursor: pointer; font-weight: 600; color: #1f3652; }
+    .q-legend-empty { display: none; margin: 0 0 10px; color: #b3261e; font-size: 0.88rem; font-weight: 600; }
+    .q-legend-section { margin-bottom: 14px; }
+    .q-legend-section h3 { margin: 0 0 6px; font-size: 0.96rem; color: #1f3652; }
+    .q-legend-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; background: #fff; }
+    .q-legend-table th, .q-legend-table td { border: 1px solid #e1e6ee; padding: 7px 8px; text-align: left; vertical-align: top; }
+    .q-legend-table th { background: #f6f8fb; font-weight: 700; position: sticky; top: 0; z-index: 1; }
+    .q-legend-col-code { font-weight: 700; color: #163e70; white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <h1 class="title">NOTAM Q-Code Legend</h1>
+      <div class="hint">Tip: You can move and resize this window.</div>
+    </div>
+    ${contextHtml}
+    ${noteHtml}
+    <div class="q-legend-tools">
+      <input id="popupLegendSearch" type="text" placeholder="Lookup by code prefix (example: I, IV, P, PM, AE)">
+      <button id="popupLegendClear" type="button">Clear</button>
+    </div>
+    <p class="q-legend-empty" id="popupLegendEmpty">No legend entries match your search.</p>
+    ${tableHtml}
+  </div>
+  <script>
+    (function () {
+      var searchInput = document.getElementById('popupLegendSearch');
+      var clearBtn = document.getElementById('popupLegendClear');
+      var emptyNote = document.getElementById('popupLegendEmpty');
+
+      function normalizeQuery(value) {
+        var cleaned = String(value || '').toUpperCase().replace(/[^A-Z*]/g, '');
+        return cleaned.endsWith('*') ? cleaned.slice(0, -1) : cleaned;
+      }
+
+      function applyFilter() {
+        var query = normalizeQuery(searchInput ? searchInput.value : '');
+        var totalVisibleRows = 0;
+        var sections = document.querySelectorAll('.q-legend-section');
+
+        for (var si = 0; si < sections.length; si++) {
+          var section = sections[si];
+          var rows = section.querySelectorAll('tbody tr');
+          var visibleInSection = 0;
+
+          for (var ri = 0; ri < rows.length; ri++) {
+            var row = rows[ri];
+            var firstCell = row.querySelector('td');
+            var code = firstCell ? String(firstCell.textContent || '').trim().toUpperCase() : '';
+            var keep = !query || code.indexOf(query) === 0;
+            row.style.display = keep ? '' : 'none';
+            if (keep) {
+              visibleInSection += 1;
+              totalVisibleRows += 1;
+            }
+          }
+
+          section.style.display = visibleInSection > 0 ? '' : 'none';
+        }
+
+        if (emptyNote) {
+          emptyNote.style.display = totalVisibleRows > 0 ? 'none' : 'block';
+        }
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', function () {
+          searchInput.value = String(searchInput.value || '').toUpperCase().replace(/[^A-Z*]/g, '');
+          applyFilter();
+        });
+      }
+
+      if (clearBtn && searchInput) {
+        clearBtn.addEventListener('click', function () {
+          searchInput.value = '';
+          applyFilter();
+          searchInput.focus();
+        });
+      }
+
+      applyFilter();
+    })();
+  <\/script>
+</body>
+ </html>`);
+        popupDoc.close();
+        qLegendPopupWindow.focus();
+        setQCodeLegendPopoutStatus("Pop-out opened in a separate window. If not visible, check your taskbar or other monitor.", "ok");
+        return true;
+      } catch (error) {
+        console.warn("[FetchNotams] Q legend popup failed, using modal fallback.", error);
+        setQCodeLegendPopoutStatus("Pop-out failed to open due to a browser/runtime error. Keep using the in-page legend.", "warn");
+        return false;
+      }
+    }
+
+    function launchQCodeLegend(event) {
+      if (event) {
+        event.preventDefault();
+      }
+      const now = Date.now();
+      if (now - qLegendLastLaunchAtMs < 200) {
+        return;
+      }
+      qLegendLastLaunchAtMs = now;
+      renderQSubjectLegendTable();
+      // Keep trigger behavior deterministic: open in-page modal first.
+      openQCodeLegend();
+    }
+
+    function closeQCodeLegend() {
+      el.qLegendModal.classList.remove("open");
+      el.qLegendModal.setAttribute("aria-hidden", "true");
+    }
+
+    function parseNotamItems(payload) {
+      const arr = Array.isArray(payload?.data) ? payload.data : [];
+      const mapped = arr
+        .filter(item => item && item.type === "notam")
+        .map(item => ({
+          pk: String(item.pk || ""),
+          location: String(item.location || "CXXX"),
+          startValidity: item.startValidity || null,
+          endValidity: item.endValidity || null,
+          raw: parseTextBlock(item.text)
+        }))
+        .filter(item => item.raw);
+
+      mapped.sort((a, b) => {
+        const ta = a.startValidity ? new Date(a.startValidity).getTime() : 0;
+        const tb = b.startValidity ? new Date(b.startValidity).getTime() : 0;
+        return tb - ta;
+      });
+
+      return mapped;
+    }
+
+    function setStatusClass(target, state) {
+      target.classList.remove("status-ok", "status-warn", "status-err");
+      if (state) target.classList.add(state);
+    }
+
+    function setLoading(active, message) {
+      if (typeof message === "string" && el.loadingText) {
+        el.loadingText.textContent = message;
+      }
+      el.loadingState.classList.toggle("active", active);
+      el.loadingState.setAttribute("aria-busy", active ? "true" : "false");
+    }
+
+    function render(items, site, sourceLabel) {
+      const maxCount = Number(el.maxItems.value) || 100;
+      const qFilterEnabled = isQFilterEnabled();
+      const qCategoryModes = getQCategoryModeMap();
+      const icaoFilter = normalizeCode(el.icaoSelect.value, 4);
+
+      const icaoFiltered = icaoFilter
+        ? items.filter(item => item.location.includes(icaoFilter) || item.raw.includes(icaoFilter))
+        : items;
+
+      const filtered = qFilterEnabled
+        ? icaoFiltered.filter(item => {
+          const qInfo = parseQLine(item.raw || "");
+          if (!qInfo) return true;
+          const mode = qCategoryModes.get(qInfo.category) || "include";
+          return mode !== "exclude";
+        })
+        : icaoFiltered;
+
+      currentFilteredItems = filtered;
+
+      const displayItems = filtered.slice(0, maxCount);
+      updateViewAllOnMapButton(displayItems);
+      const html = displayItems
+        .map(item => {
+          const title = item.pk ? item.pk : "NO-ID";
+          const start = toPrettyDate(item.startValidity);
+          const end = toPrettyDate(item.endValidity);
+          return `
+            <li class="notam-item">
+              <div class="notam-line1">
+                <span class="notam-id">${escapeHtml(title)}</span>
+                <span class="notam-loc">${escapeHtml(item.location)}</span>
+                <span class="notam-time">Start (EDT/ET): ${escapeHtml(start)} | End (EDT/ET): ${escapeHtml(end)}</span>
+              </div>
+              <pre class="notam-preview">${buildNotamDescriptionHtml(item.raw)}</pre>
+            </li>
+          `;
+        })
+        .join("");
+
+      el.resultsList.innerHTML = html;
+      el.totalValue.textContent = String(items.length);
+      el.shownValue.textContent = String(displayItems.length);
+      el.notamsInScopeInline.textContent = String(filtered.length);
+      el.resultsHeaderText.textContent = `${site}: ${filtered.length} match(es), showing ${displayItems.length}.`;
+      el.sourceValue.textContent = sourceLabel;
+      updateQFilterSummary();
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    async function fetchLive(site) {
+      const url = buildApiUrl(site);
+      const t0 = performance.now();
+
+      try {
+        const payload = await fetchWithTimeout(url, DIRECT_TIMEOUT_MS);
+        const elapsed = Math.round(performance.now() - t0);
+        return {
+          payload,
+          source: "Live (direct)",
+          elapsedMs: elapsed
+        };
+      } catch (directError) {
+        const proxyErrors = [];
+
+        for (const proxy of PROXY_PROVIDERS) {
+          try {
+            const proxiedUrl = proxy.buildUrl(url);
+            const payload = await fetchWithTimeout(proxiedUrl, PROXY_TIMEOUT_MS);
+            const elapsed = Math.round(performance.now() - t0);
+            return {
+              payload,
+              source: `Live via ${proxy.label}`,
+              elapsedMs: elapsed,
+              warning: `Direct fetch failed: ${directError.message || "unknown"}`
+            };
+          } catch (proxyError) {
+            proxyErrors.push(`${proxy.name}: ${proxyError.message || "unknown"}`);
+          }
+        }
+
+        throw new Error(
+          `Direct and proxy fetch failed. Direct: ${directError.message || "unknown"}. Proxies: ${proxyErrors.join(" | ")}.`
+        );
+      }
+    }
+
+    async function loadAndRender({ fromCacheOnly = false } = {}) {
+      const site = normalizeCode(el.firSelect.value, 4);
+      if (!site || site.length < 3) {
+        alert("Select a valid FIR (4 chars). Example: CZYZ");
+        return;
+      }
+
+      const cached = loadCache(site);
+      const hasCache = !!(cached && Array.isArray(cached.items));
+
+      el.firSelect.value = site;
+      updateSelectionSummary();
+      setLoading(
+        true,
+        fromCacheOnly
+          ? "Loading NOTAMs from cache..."
+          : (hasCache
+              ? "Refreshing NOTAMs in background..."
+              : "Loading NOTAMs (cache first, live refresh in progress)...")
+      );
+
+      const now = Date.now();
+
+      if (cached && Array.isArray(cached.items)) {
+        currentItems = cached.items;
+        refreshIcaoOptionsFromItems(currentItems);
+        updateAirportUniverseInfo(currentItems);
+        render(currentItems, site, "Cache");
+        el.updatedValue.textContent = toPrettyDate(cached.fetchedAt || cached.savedAt);
+        updateLastFetchBanner(cached.fetchedAt || cached.savedAt, "Cache");
+        el.fetchTimeValue.textContent = "0 ms";
+        setStatusClass(el.sourceValue, "status-ok");
+      }
+
+      if (fromCacheOnly) {
+        el.notamsInScopeInline.textContent = String(currentItems.length);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const fresh = await fetchLive(site);
+        const parsedItems = parseNotamItems(fresh.payload);
+
+        currentItems = parsedItems;
+        refreshIcaoOptionsFromItems(currentItems);
+        updateAirportUniverseInfo(currentItems);
+        render(currentItems, site, fresh.source);
+
+        el.fetchTimeValue.textContent = `${fresh.elapsedMs} ms`;
+        const nowIso = new Date().toISOString();
+        el.updatedValue.textContent = toPrettyDate(nowIso);
+        updateLastFetchBanner(nowIso, "Fetch");
+
+        if (fresh.source.includes("proxy")) {
+          setStatusClass(el.sourceValue, "status-warn");
+        } else {
+          setStatusClass(el.sourceValue, "status-ok");
+        }
+
+        saveCache(site, {
+          site,
+          fetchedAt: nowIso,
+          savedAt: now,
+          items: parsedItems
+        });
+      } catch (error) {
+        const hasFreshCache = cached && Array.isArray(cached.items) && (now - Number(cached.savedAt || 0) <= CACHE_TTL_MS);
+        if (hasFreshCache) {
+          refreshIcaoOptionsFromItems(cached.items);
+          updateAirportUniverseInfo(cached.items);
+          render(cached.items, site, "Cache (live failed)");
+          el.fetchTimeValue.textContent = "timeout/fail";
+          el.updatedValue.textContent = `${toPrettyDate(cached.fetchedAt)} (cached)`;
+          setStatusClass(el.sourceValue, "status-warn");
+          el.resultsHeaderText.textContent = `${site}: Live fetch failed, showing recent cache.`;
+        } else {
+          currentItems = [];
+          refreshIcaoOptionsFromItems([]);
+          updateAirportUniverseInfo([]);
+          el.notamsInScopeInline.textContent = "0";
+          render([], site, "No data");
+          el.fetchTimeValue.textContent = "failed";
+          el.updatedValue.textContent = "-";
+          setStatusClass(el.sourceValue, "status-err");
+          el.resultsHeaderText.textContent = `${site}: ${error.message}`;
+        }
+      } finally {
+        setLoading(false);
+        if (!hasAutoFocusedIcao && el.icaoSelect) {
+          hasAutoFocusedIcao = true;
+          requestAnimationFrame(() => el.icaoSelect.focus());
+        }
+      }
+    }
+
+    el.form.addEventListener("submit", event => {
+      event.preventDefault();
+      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      const cacheAgeMs = getCacheAgeMs(site);
+      const firChanged = site !== lastFetchActionSite;
+
+      if (!firChanged && cacheAgeMs >= 0 && cacheAgeMs < LIVE_FETCH_COOLDOWN_MS) {
+        const mins = Math.floor(cacheAgeMs / 60000);
+        const wantsLiveRefresh = window.confirm(
+          `Last fetch for ${site} was ${mins} minute(s) ago. Do you really want to refresh live now?\n\n` +
+          "Select Cancel to use cache instead."
+        );
+
+        if (!wantsLiveRefresh) {
+          loadAndRender({ fromCacheOnly: true });
+          el.resultsHeaderText.textContent = `${site}: Using cache (${mins}m old). Live fetch cooldown is 30m.`;
+          return;
+        }
+      }
+
+      lastFetchActionSite = site;
+      loadAndRender();
+    });
+
+    el.firSelect.addEventListener("change", () => {
+      updateSelectionSummary();
+      lastFetchActionSite = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      loadAndRender();
+    });
+
+    el.icaoSelect.addEventListener("change", () => {
+      persistLastIcao(el.icaoSelect.value);
+      updateSelectionSummary();
+      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      render(currentItems, site, el.sourceValue.textContent || "-");
+    });
+
+    el.clearIcaoBtn.addEventListener("click", () => {
+      setIcaoSelection("");
+      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      render(currentItems, site, el.sourceValue.textContent || "-");
+    });
+
+    el.maxItems.addEventListener("change", () => {
+      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      render(currentItems, site, el.sourceValue.textContent || "-");
+    });
+
+    el.toggleQFilterBtn.addEventListener("click", () => {
+      setQFilterToggleState(!isQFilterEnabled());
+      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      render(currentItems, site, el.sourceValue.textContent || "-");
+    });
+
+    document.querySelectorAll(".qcat-toggle").forEach(node => {
+      node.addEventListener("click", () => {
+        const nextState = String(node.dataset.state || "include").toLowerCase() === "exclude" ? "include" : "exclude";
+        setQCategoryButtonState(node, nextState);
+        const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+        render(currentItems, site, el.sourceValue.textContent || "-");
+      });
+    });
+
+    el.qSetAllExcludeBtn.addEventListener("click", () => {
+      document.querySelectorAll(".qcat-toggle").forEach(node => {
+        setQCategoryButtonState(node, "exclude");
+      });
+      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      render(currentItems, site, el.sourceValue.textContent || "-");
+    });
+
+    el.qSetAllIncludeBtn.addEventListener("click", () => {
+      document.querySelectorAll(".qcat-toggle").forEach(node => {
+        setQCategoryButtonState(node, "include");
+      });
+      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      render(currentItems, site, el.sourceValue.textContent || "-");
+    });
+
+    if (el.openQLegend) {
+      el.openQLegend.addEventListener("click", launchQCodeLegend);
+    }
+
+    // Overlay-safe fallback: if another element steals click target, hit-test button bounds.
+    document.addEventListener("pointerup", event => {
+      if (!el.openQLegend || !event.isPrimary) return;
+      if (el.qLegendModal.classList.contains("open")) return;
+
+      const target = event.target;
+      if (target instanceof Element && (target === el.openQLegend || el.openQLegend.contains(target))) {
+        return;
+      }
+
+      const rect = el.openQLegend.getBoundingClientRect();
+      const x = event.clientX;
+      const y = event.clientY;
+      const inside = x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+      if (!inside) return;
+
+      launchQCodeLegend(event);
+    }, true);
+
+    el.closeQLegend.addEventListener("click", () => {
+      closeQCodeLegend();
+    });
+
+    el.popoutQLegend.addEventListener("click", () => {
+      renderQSubjectLegendTable();
+      openQCodeLegendPopup();
+    });
+
+    el.qLegendSearch.addEventListener("input", () => {
+      el.qLegendSearch.value = String(el.qLegendSearch.value || "").toUpperCase().replace(/[^A-Z*]/g, "");
+      renderQSubjectLegendTable();
+    });
+
+    el.qLegendClearSearch.addEventListener("click", () => {
+      el.qLegendSearch.value = "";
+      renderQSubjectLegendTable();
+      el.qLegendSearch.focus();
+    });
+
+    el.qLegendModal.addEventListener("click", event => {
+      const target = event.target;
+      if (target instanceof Element && target.hasAttribute("data-close-qlegend")) {
+        if (Date.now() - qLegendOpenedAtMs < 300) {
+          return;
+        }
+        closeQCodeLegend();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && el.qLegendModal.classList.contains("open")) {
+        closeQCodeLegend();
+      }
+    });
+
+    el.clearCacheBtn.addEventListener("click", () => {
+      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      localStorage.removeItem(cacheKeyForSite(site));
+      currentItems = [];
+      refreshIcaoOptionsFromItems([]);
+      updateAirportUniverseInfo([]);
+      render([], site, "Cache cleared");
+      el.fetchTimeValue.textContent = "-";
+      el.updatedValue.textContent = "-";
+      setStatusClass(el.sourceValue, "");
+      el.resultsHeaderText.textContent = `${site}: cache cleared. Loading fresh data...`;
+      loadAndRender();
+    });
+
+    el.refreshFromCacheBtn.addEventListener("click", () => {
+      loadAndRender({ fromCacheOnly: true });
+    });
+
+    el.viewAllOnMapBtn.addEventListener("click", () => {
+      const payloadInfo = pendingMapPayloadInfo;
+      const records = payloadInfo?.records || [];
+      if (!records.length) {
+        alert("No obstacle coordinates found in the current displayed results.");
+        return;
+      }
+
+      const payloadKey = storeMapPayload(records);
+      const url = buildBatchMapUrlFromPayloadKey(payloadKey, payloadInfo);
+      if (!url) {
+        alert("No obstacle coordinates found in the current displayed results.");
+        return;
+      }
+
+      const popup = window.open(url, "_blank");
+      if (popup) {
+        popup.focus();
+      } else {
+        window.location.href = url;
+      }
+    });
+
+    refreshIcaoOptionsFromItems([]);
+    setQFilterToggleState(true);
+    renderQSubjectLegendTable();
+    updateQFilterSummary();
+    loadAndRender();
+  </script>
+</body>
+</html>

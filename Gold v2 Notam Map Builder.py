@@ -669,9 +669,13 @@ window.onload = function() {{
     var filteredNotams = [];
     var rawNotams = [];
     var activeSource = 'RAW';
+    var linkedRealtimeNotams = [];
+    var linkedRealtimeMode = false;
     var linkedObstacleLocation = null;
+    var linkedObstacleBatch = [];
     var linkedObstacleAutoOpenPending = false;
     var linkedObstacleMarker = null;
+    var linkedObstacleBatchLayer = L.layerGroup().addTo(map);
     var linkedObstacleGlow = null;
     var pilotToObstacleLine = null;
     var notamDataReady = false;
@@ -794,6 +798,144 @@ window.onload = function() {{
       }}
   }}
 
+  function parseLinkedObstacleBatchFromQuery() {{
+      try {{
+          var params = new URLSearchParams(window.location.search || '');
+          var values = [];
+          var keys = ['markers', 'marker', 'm'];
+          for (var ki = 0; ki < keys.length; ki++) {{
+              var key = keys[ki];
+              var list = params.getAll(key) || [];
+              for (var vi = 0; vi < list.length; vi++) {{
+                  if (list[vi]) {{
+                      values.push(list[vi]);
+                  }}
+              }}
+          }}
+
+          var seen = Object.create(null);
+          var out = [];
+
+          for (var i = 0; i < values.length; i++) {{
+              var chunks = String(values[i]).split(/[|;]/);
+              for (var ci = 0; ci < chunks.length; ci++) {{
+                  var pair = splitCoordinatePair(chunks[ci]);
+                  if (!pair) {{
+                      continue;
+                  }}
+                  var lat = Number(pair.lat);
+                  var lon = Number(pair.lon);
+                  if (!isFinite(lat) || !isFinite(lon)) {{
+                      continue;
+                  }}
+                  if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {{
+                      continue;
+                  }}
+                  var keyText = lat.toFixed(6) + ',' + lon.toFixed(6);
+                  if (seen[keyText]) {{
+                      continue;
+                  }}
+                  seen[keyText] = true;
+                  out.push(L.latLng(lat, lon));
+              }}
+          }}
+
+          return out;
+      }} catch (err) {{
+          return [];
+      }}
+  }}
+
+  function getLinkedRealtimeNotamsFromQuery() {{
+      try {{
+          var params = new URLSearchParams(window.location.search || '');
+          var payloadKey = (params.get('payload_key') || '').trim();
+          if (!payloadKey) {{
+              return [];
+          }}
+
+          var raw = localStorage.getItem(payloadKey);
+          if (!raw) {{
+              return [];
+          }}
+
+          var parsed = JSON.parse(raw);
+          var records = Array.isArray(parsed && parsed.records) ? parsed.records : [];
+          return normalizeNotamRecords(records);
+      }} catch (err) {{
+          return [];
+      }}
+  }}
+
+  function renderLinkedObstacleBatchMarkers() {{
+      if (!linkedObstacleBatchLayer) {{
+          return;
+      }}
+
+      linkedObstacleBatchLayer.clearLayers();
+      if (!linkedObstacleBatch.length) {{
+          return;
+      }}
+
+      for (var i = 0; i < linkedObstacleBatch.length; i++) {{
+          var ll = linkedObstacleBatch[i];
+          if (linkedObstacleLocation &&
+              Math.abs(ll.lat - linkedObstacleLocation.lat) < 0.0000005 &&
+              Math.abs(ll.lng - linkedObstacleLocation.lng) < 0.0000005) {{
+              continue;
+          }}
+
+          var mk = L.circleMarker([ll.lat, ll.lng], {{
+              radius: 7,
+              color: '#ff7a00',
+              weight: 2,
+              fillColor: '#ffb74d',
+              fillOpacity: 0.88
+          }}).addTo(linkedObstacleBatchLayer);
+
+          var idx = i + 1;
+          mk.bindTooltip('Obstacle Alert ' + idx, {{ direction: 'top' }});
+          mk.bindPopup(
+              "<div class='notam-popup'>" +
+              "<div class='notam-title'>Obstacle Alert " + idx + "</div>" +
+              "<div><span class='notam-label'>Position:</span> " + formatCoord(ll.lat) + ', ' + formatCoord(ll.lng) + "</div>" +
+              "</div>",
+              {{ maxWidth: 320 }}
+          );
+      }}
+  }}
+
+  function fitMapToLinkedObstacleBatch() {{
+      if (!linkedObstacleBatch.length) {{
+          return;
+      }}
+
+      var bounds = L.latLngBounds(linkedObstacleBatch.map(function(ll) {{
+          return [ll.lat, ll.lng];
+      }}));
+
+      if (!bounds.isValid()) {{
+          return;
+      }}
+
+      map.fitBounds(bounds.pad(0.15), {{ padding: [34, 34], maxZoom: 11 }});
+  }}
+
+  function appendLinkedSetToCountText() {{
+      var countText = document.getElementById('obstacleCountText');
+      if (!countText) {{
+          return;
+      }}
+
+      var base = countText.textContent || '';
+      base = base.replace(/\\s*\\|\\s*Linked set:\\s*\\d+\\s*$/i, '');
+      if (linkedObstacleBatch.length > 1) {{
+          countText.textContent = base + ' | Linked set: ' + linkedObstacleBatch.length;
+      }} else {{
+          countText.textContent = base;
+      }}
+  }}
+
   function updatePilotObstacleContext(pilotLL) {{
       if (!linkedObstacleLocation || !pilotLL) {{
           if (linkedObstacleGlow && map.hasLayer(linkedObstacleGlow)) {{
@@ -805,6 +947,7 @@ window.onload = function() {{
           if (pilotToObstacleLine && map.hasLayer(pilotToObstacleLine)) {{
               map.removeLayer(pilotToObstacleLine);
           }}
+          appendLinkedSetToCountText();
           return;
       }}
 
@@ -839,7 +982,7 @@ window.onload = function() {{
       if (!map.hasLayer(linkedObstacleMarker)) {{
           linkedObstacleMarker.addTo(map);
       }}
-      linkedObstacleMarker.bindTooltip('Focus Obstacle', {{ direction: 'top' }});
+      linkedObstacleMarker.bindTooltip('Obstacle Alert', {{ direction: 'top' }});
 
       var path = [[pilotLL.lat, pilotLL.lng], [linkedObstacleLocation.lat, linkedObstacleLocation.lng]];
       if (!pilotToObstacleLine) {{
@@ -876,7 +1019,7 @@ window.onload = function() {{
               break;
           }}
       }}
-      var distHeader = '<div class="notam-popup"><div class="notam-title">Focus Obstacle</div>' +
+      var distHeader = '<div class="notam-popup"><div class="notam-title">Obstacle Alert</div>' +
           '<div><span class="notam-label">Distance from Pilot:</span> ' + km.toFixed(1) + ' km (' + nm.toFixed(1) + ' NM)</div>' +
           '<hr style="margin:6px 0">';
       var popupBody = matchedItem
@@ -1320,6 +1463,9 @@ window.onload = function() {{
   }}
 
   function getActiveNotams() {{
+      if (linkedRealtimeMode && linkedRealtimeNotams.length) {{
+          return linkedRealtimeNotams;
+      }}
       return activeSource === 'RAW' ? rawNotams : filteredNotams;
   }}
 
@@ -1371,11 +1517,17 @@ window.onload = function() {{
       var sourceText = document.getElementById('notamSourceText');
       var sourceBtn = document.getElementById('sourceBtn');
       if (sourceText) {{
-          sourceText.textContent = 'NOTAM Src: ' + activeSource;
-          sourceText.style.color = activeSource === 'RAW' ? 'green' : 'red';
+          if (linkedRealtimeMode && linkedRealtimeNotams.length) {{
+              sourceText.textContent = 'NOTAM Src: LINKED LIVE';
+              sourceText.style.color = '#0b5ea8';
+          }} else {{
+              sourceText.textContent = 'NOTAM Src: ' + activeSource;
+              sourceText.style.color = activeSource === 'RAW' ? 'green' : 'red';
+          }}
       }}
       if (sourceBtn) {{
-          sourceBtn.textContent = 'Switch Filter Group';
+          sourceBtn.disabled = !!(linkedRealtimeMode && linkedRealtimeNotams.length);
+          sourceBtn.textContent = sourceBtn.disabled ? 'Linked Live View' : 'Switch Filter Group';
       }}
   }}
 
@@ -1386,7 +1538,8 @@ window.onload = function() {{
       lastObstacleTapIndex = 0;
       var countText = document.getElementById('obstacleCountText');
 
-      if (!notamDataReady) {{
+      var usingLinkedRealtime = !!(linkedRealtimeMode && linkedRealtimeNotams.length);
+      if (!usingLinkedRealtime && !notamDataReady) {{
           if (countText) {{
               countText.textContent = notamDataError ? ('NOTAM load failed: ' + notamDataError) : 'Loading NOTAM data...';
           }}
@@ -1394,14 +1547,16 @@ window.onload = function() {{
       }}
 
       var activeNotams = getActiveNotams();
-      var candidates = getLikelyNotamCandidates(activeNotams, ll, radiusKm);
+      var candidates = usingLinkedRealtime ? activeNotams : getLikelyNotamCandidates(activeNotams, ll, radiusKm);
       var shownCount = 0;
 
       for (var i = 0; i < candidates.length; i++) {{
           var item = candidates[i];
-          var km = haversineKm(ll.lat, ll.lng, item.lat, item.lon);
-          if (km > radiusKm) {{
-              continue;
+          if (!usingLinkedRealtime) {{
+              var km = haversineKm(ll.lat, ll.lng, item.lat, item.lon);
+              if (km > radiusKm) {{
+                  continue;
+              }}
           }}
 
           shownCount += 1;
@@ -1428,11 +1583,14 @@ window.onload = function() {{
       }}
 
       if (countText) {{
-          countText.textContent = 'Obstacles (' + radiusLabel() + ' km): ' + shownCount;
+          countText.textContent = usingLinkedRealtime
+              ? ('Obstacle Alerts (linked): ' + shownCount)
+              : ('Obstacles (' + radiusLabel() + ' km): ' + shownCount);
       }}
       window._notamObstacleCount = shownCount;
       updateNotamsToggleVisual();
       updatePilotObstacleContext(ll);
+      appendLinkedSetToCountText();
   }}
 
   function applyPilotLocation(ll, shouldCenter) {{
@@ -1831,6 +1989,9 @@ window.onload = function() {{
   }};
 
     document.getElementById('sourceBtn').onclick = function() {{
+          if (linkedRealtimeMode && linkedRealtimeNotams.length) {{
+              return;
+          }}
           activeSource = activeSource === 'FILTERED' ? 'RAW' : 'FILTERED';
             updateSourceDisplay();
             refreshObstacles(marker.getLatLng());
@@ -1892,16 +2053,44 @@ window.onload = function() {{
 
     var startupPilotLocation = marker.getLatLng();
     var restoredPilotLocation = getStoredPilotLocation();
-    linkedObstacleLocation = getLinkedObstacleFromQuery();
-    linkedObstacleAutoOpenPending = !!(linkedObstacleLocation && linkedFocusRequested);
+    linkedRealtimeNotams = getLinkedRealtimeNotamsFromQuery();
+    linkedRealtimeMode = linkedRealtimeNotams.length > 0;
+
     if (restoredPilotLocation) {{
             startupPilotLocation = restoredPilotLocation;
     }}
+
+    linkedObstacleBatch = parseLinkedObstacleBatchFromQuery();
+    linkedObstacleLocation = getLinkedObstacleFromQuery();
+    if (!linkedObstacleLocation && linkedObstacleBatch.length) {{
+            linkedObstacleLocation = linkedObstacleBatch[0];
+    }}
+
+    if (linkedRealtimeMode) {{
+            linkedObstacleBatch = [];
+            linkedObstacleLocation = null;
+            linkedObstacleAutoOpenPending = false;
+    }} else {{
+            linkedObstacleAutoOpenPending = !!(linkedObstacleLocation && linkedFocusRequested);
+    }}
+
     var startupLocationMissing = !hasUsablePilotLocation(startupPilotLocation);
 
     applyPilotLocation(startupPilotLocation, !startupLocationMissing);
     applyAirportDefaultsFromLocation(startupPilotLocation);
-
+    if (!linkedRealtimeMode) {{
+            renderLinkedObstacleBatchMarkers();
+            if (linkedFocusRequested && linkedObstacleBatch.length > 1) {{
+                    fitMapToLinkedObstacleBatch();
+            }}
+    }} else if (linkedFocusRequested && linkedRealtimeNotams.length > 1) {{
+            var linkedRealtimeBounds = L.latLngBounds(linkedRealtimeNotams.map(function(item) {{
+                    return [item.lat, item.lon];
+            }}));
+            if (linkedRealtimeBounds.isValid()) {{
+                    map.fitBounds(linkedRealtimeBounds.pad(0.15), {{ padding: [34, 34], maxZoom: 11 }});
+            }}
+    }}
 
     updatePilotDisplay(startupPilotLocation);
     updateSourceDisplay();
@@ -1914,7 +2103,9 @@ window.onload = function() {{
     updateRadiusDisplay();
     scheduleRefreshObstacles(startupPilotLocation);
     loadNotamData().then(function() {{
-                        scheduleRefreshObstacles(marker.getLatLng());
+                        if (!linkedRealtimeMode) {{
+                                scheduleRefreshObstacles(marker.getLatLng());
+                        }}
                         console.info('[NOTAM MAP] NOTAM data loaded and obstacle layer refreshed');
         }}).catch(function(err) {{
                         console.error('[NOTAM MAP] loadNotamData failed', err);
@@ -1975,6 +2166,40 @@ window.onload = function() {{
     return m
 
 
+def normalize_output_html_head(output_path: Path) -> None:
+    try:
+        text = output_path.read_text(encoding="utf-8")
+    except Exception as err:
+        print(f"Warning: could not read generated HTML for head normalization: {err}")
+        return
+
+    original = text
+
+    if "<html>" in text:
+        text = text.replace("<html>", "<html lang=\"en\">", 1)
+
+    text = text.replace(
+        '<meta http-equiv="content-type" content="text/html; charset=UTF-8" />',
+        '<meta charset="utf-8" />\n    <title>NOTAM Map</title>\n    <meta name="viewport" content="width=device-width, initial-scale=1.0" />',
+        1,
+    )
+
+    text = re.sub(
+        r"\s*<meta\s+name=\"viewport\"\s+content=\"width=device-width,\s*initial-scale=1\.0,\s*maximum-scale=1\.0,\s*user-scalable=no\"\s*/>",
+        "",
+        text,
+        count=1,
+        flags=re.IGNORECASE,
+    )
+
+    if text != original:
+        try:
+            output_path.write_text(text, encoding="utf-8")
+            print(f"Normalized HTML metadata in -> {output_path.name}")
+        except Exception as err:
+            print(f"Warning: could not write head-normalized HTML: {err}")
+
+
 def main():
     basemap_key = choose_basemap_key()
     if basemap_key.startswith("google_"):
@@ -2005,6 +2230,7 @@ def main():
         out_name += ".html"
 
     m.save(out_name)
+    normalize_output_html_head(Path(out_name))
     print(f"Map saved as -> {out_name}")
 
 

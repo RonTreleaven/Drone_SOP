@@ -696,6 +696,40 @@ window.onload = function() {{
     return m
 
 
+def normalize_output_html_head(output_path: Path) -> None:
+    try:
+        text = output_path.read_text(encoding="utf-8")
+    except Exception as err:
+        print(f"Warning: could not read generated HTML for head normalization: {err}")
+        return
+
+    original = text
+
+    if "<html>" in text:
+        text = text.replace("<html>", "<html lang=\"en\">", 1)
+
+    text = text.replace(
+        '<meta http-equiv="content-type" content="text/html; charset=UTF-8" />',
+        '<meta charset="utf-8" />\n    <title>NOTAM Map</title>\n    <meta name="viewport" content="width=device-width, initial-scale=1.0" />',
+        1,
+    )
+
+    text = re.sub(
+        r"\s*<meta\s+name=\"viewport\"\s+content=\"width=device-width,\s*initial-scale=1\.0,\s*maximum-scale=1\.0,\s*user-scalable=no\"\s*/>",
+        "",
+        text,
+        count=1,
+        flags=re.IGNORECASE,
+    )
+
+    if text != original:
+        try:
+            output_path.write_text(text, encoding="utf-8")
+            print(f"Normalized HTML metadata in -> {output_path.name}")
+        except Exception as err:
+            print(f"Warning: could not write head-normalized HTML: {err}")
+
+
 def main():
     pilot_lat, pilot_lon = get_pilot_location()
     print(f"Using pilot location: {pilot_lat}, {pilot_lon}")
@@ -713,6 +747,7 @@ def main():
         out_name += ".html"
 
     m.save(out_name)
+    normalize_output_html_head(Path(out_name))
     print(f"Map saved as -> {out_name}")
 
 
