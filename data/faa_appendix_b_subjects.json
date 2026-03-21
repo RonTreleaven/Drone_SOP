@@ -1,0 +1,1070 @@
+[
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AA",
+    "meaning": "Minimum altitude (specify en route/crossing/safe)",
+    "phraseology": "mnm alt"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AC",
+    "meaning": "Class B, C, D, or E Surface Area",
+    "phraseology": "ctr"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AD",
+    "meaning": "Air defense identification zone",
+    "phraseology": "adiz"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AE",
+    "meaning": "Control area",
+    "phraseology": "cta"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AF",
+    "meaning": "Flight information region",
+    "phraseology": "fir"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AH",
+    "meaning": "Upper control area",
+    "phraseology": "uta"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AL",
+    "meaning": "Minimum usable flight level",
+    "phraseology": "mnm usable fl"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AN",
+    "meaning": "Area navigation route",
+    "phraseology": "rnav rte"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AO",
+    "meaning": "Oceanic control area",
+    "phraseology": "oca"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AP",
+    "meaning": "Reporting point (specify name or coded designator)",
+    "phraseology": "rep"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AR",
+    "meaning": "ATS route (specify)",
+    "phraseology": "ats route"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AT",
+    "meaning": "Terminal control area",
+    "phraseology": "tma"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AU",
+    "meaning": "Upper flight information region",
+    "phraseology": "uir"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AV",
+    "meaning": "Upper advisory area",
+    "phraseology": "uda"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AX",
+    "meaning": "Significant point",
+    "phraseology": "sig"
+  },
+  {
+    "category": "ATM Airspace Organization (A)",
+    "code": "AZ",
+    "meaning": "Aerodrome traffic zone",
+    "phraseology": "atz"
+  },
+  {
+    "category": "CNS Communications and Surveillance Facilities (C)",
+    "code": "CA",
+    "meaning": "Air/ground facility (specify service and frequency)",
+    "phraseology": "a/g fac"
+  },
+  {
+    "category": "CNS Communications and Surveillance Facilities (C)",
+    "code": "CB",
+    "meaning": "Automatic dependent surveillance \u2014 broadcast (details)",
+    "phraseology": "ads-b"
+  },
+  {
+    "category": "CNS Communications and Surveillance Facilities (C)",
+    "code": "CC",
+    "meaning": "Automatic dependent surveillance \u2014 contract (details)",
+    "phraseology": "ads-c"
+  },
+  {
+    "category": "CNS Communications and Surveillance Facilities (C)",
+    "code": "CD",
+    "meaning": "Controller-pilot data link communications (details)",
+    "phraseology": "cpdlc"
+  },
+  {
+    "category": "CNS Communications and Surveillance Facilities (C)",
+    "code": "CE",
+    "meaning": "En route surveillance radar",
+    "phraseology": "rsr"
+  },
+  {
+    "category": "CNS Communications and Surveillance Facilities (C)",
+    "code": "CG",
+    "meaning": "Ground controlled approach system (GCA)",
+    "phraseology": "gca"
+  },
+  {
+    "category": "CNS Communications and Surveillance Facilities (C)",
+    "code": "CL",
+    "meaning": "Selective calling system (SELCAL)",
+    "phraseology": "selcal"
+  },
+  {
+    "category": "CNS Communications and Surveillance Facilities (C)",
+    "code": "CM",
+    "meaning": "Surface movement radar",
+    "phraseology": "smr"
+  },
+  {
+    "category": "CNS Communications and Surveillance Facilities (C)",
+    "code": "CP",
+    "meaning": "Precision approach radar (PAR) (specify runway)",
+    "phraseology": "par"
+  },
+  {
+    "category": "CNS Communications and Surveillance Facilities (C)",
+    "code": "CR",
+    "meaning": "Surveillance radar element of precision approach radar system\n(specify wavelength)",
+    "phraseology": "sre"
+  },
+  {
+    "category": "CNS Communications and Surveillance Facilities (C)",
+    "code": "CS",
+    "meaning": "Secondary surveillance radar (SSR)",
+    "phraseology": "ssr"
+  },
+  {
+    "category": "CNS Communications and Surveillance Facilities (C)",
+    "code": "CT",
+    "meaning": "Terminal area surveillance radar (TAR)",
+    "phraseology": "tar"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FA",
+    "meaning": "Aerodrome",
+    "phraseology": "ad"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FB",
+    "meaning": "Friction measuring device (specify type)",
+    "phraseology": "Friction measuring device"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FC",
+    "meaning": "Ceiling measurement equipment",
+    "phraseology": "ceiling measurement eqpt"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FD",
+    "meaning": "Docking system (specify AGNIS, BOLDS, etc.)",
+    "phraseology": "dckg system"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FE",
+    "meaning": "Oxygen (specify type)",
+    "phraseology": "oxygen"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FF",
+    "meaning": "Fire fighting and rescue",
+    "phraseology": "fire and rescue"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FG",
+    "meaning": "Ground movement control",
+    "phraseology": "gnd mov ctl"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FH",
+    "meaning": "Helicopter alighting area/platform",
+    "phraseology": "hel alighting area"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FI",
+    "meaning": "Aircraft de-icing (specify)",
+    "phraseology": "acft de-ice"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FJ",
+    "meaning": "Oils (specify type)",
+    "phraseology": "oil"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FL",
+    "meaning": "Landing direction indicator",
+    "phraseology": "ldi"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FM",
+    "meaning": "Meteorological service (specify type)",
+    "phraseology": "met"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FO",
+    "meaning": "Fog dispersal system",
+    "phraseology": "fog dispersal"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FP",
+    "meaning": "Heliport",
+    "phraseology": "heliport"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FS",
+    "meaning": "Snow removal equipment",
+    "phraseology": "snow removal eqpt"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FT",
+    "meaning": "Transmissometer (specify runway and, where applicable, designator(s) of transmissometer(s))",
+    "phraseology": "transmissometer"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FU",
+    "meaning": "Fuel availability",
+    "phraseology": "fuel avbl"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FW",
+    "meaning": "Wind direction indicator",
+    "phraseology": "wdi"
+  },
+  {
+    "category": "AGA Facilities and Services (F)",
+    "code": "FZ",
+    "meaning": "Customs/immigration",
+    "phraseology": "Cust/immigration"
+  },
+  {
+    "category": "CNS GNSS Services (G)",
+    "code": "GA",
+    "meaning": "GNSS airfield-specific operations (specify operation)",
+    "phraseology": "gnss airfield"
+  },
+  {
+    "category": "CNS GNSS Services (G)",
+    "code": "GW",
+    "meaning": "GNSS area-wide operations (specify operation)",
+    "phraseology": "gnss area"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "IC",
+    "meaning": "Instrument landing system (specify runway)",
+    "phraseology": "ils"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "ID",
+    "meaning": "DME associated with ILS",
+    "phraseology": "ils dme"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "IG",
+    "meaning": "Glide path (ILS) (specify runway)",
+    "phraseology": "ils gp"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "II",
+    "meaning": "Inner marker (ILS) (specify runway)",
+    "phraseology": "ils im"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "IL",
+    "meaning": "Localizer (ILS) (specify runway)",
+    "phraseology": "ils loc"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "IM",
+    "meaning": "Middle marker (ILS) (specify runway)",
+    "phraseology": "ils mm"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "IN",
+    "meaning": "Localizer (not associated with ILS)",
+    "phraseology": "loc"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "IO",
+    "meaning": "Outer marker (ILS) (specify runway)",
+    "phraseology": "ils om"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "IS",
+    "meaning": "ILS Category I (specify runway)",
+    "phraseology": "ils cat I"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "IT",
+    "meaning": "ILS Category II (specify runway)",
+    "phraseology": "ils cat II"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "IU",
+    "meaning": "ILS Category III (specify runway)",
+    "phraseology": "ils cat III"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "IW",
+    "meaning": "Microwave landing system (MLS) (specify runway)",
+    "phraseology": "mls"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "IX",
+    "meaning": "Locator, outer (ILS) (specify runway)",
+    "phraseology": "ils lo"
+  },
+  {
+    "category": "CNS Instrument and Microwave Landing System (I)",
+    "code": "IY",
+    "meaning": "Locator, middle (ILS) (specify runway)",
+    "phraseology": "ils lm"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LA",
+    "meaning": "Approach lighting system (specify runway and type)",
+    "phraseology": "als"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LB",
+    "meaning": "Aerodrome beacon",
+    "phraseology": "abn"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LC",
+    "meaning": "Runway centre line lights (specify runway)",
+    "phraseology": "rcll"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LD",
+    "meaning": "Landing direction indicator lights",
+    "phraseology": "ldi lgt"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LE",
+    "meaning": "Runway edge lights (specify runway)",
+    "phraseology": "redl"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LF",
+    "meaning": "Sequenced flashing lights (specify runway)",
+    "phraseology": "sequenced flg lgt"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LG",
+    "meaning": "Pilot-controlled lighting",
+    "phraseology": "pcl"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LH",
+    "meaning": "High intensity runway lights (specify runway)",
+    "phraseology": "high intst rwy lgt"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LI",
+    "meaning": "Runway end identifier lights (specify runway)",
+    "phraseology": "rwy end id lgt"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LJ",
+    "meaning": "Runway alignment indicator lights (specify runway)",
+    "phraseology": "rai lgt"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LK",
+    "meaning": "Category II components of approach lighting system (specify runway)",
+    "phraseology": "category II components als"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LL",
+    "meaning": "Low intensity runway lights (specify runway)",
+    "phraseology": "low intst rwy lgt"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LM",
+    "meaning": "Medium intensity runway lights (specify runway)",
+    "phraseology": "medium intst rwy lgt"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LP",
+    "meaning": "Precision approach path indicator (specify runway)",
+    "phraseology": "papi"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LR",
+    "meaning": "All landing area lighting facilities",
+    "phraseology": "ldg area lgt fac"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LS",
+    "meaning": "Stopway lights (specify runway)",
+    "phraseology": "stwl"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LT",
+    "meaning": "Threshold lights (specify runway)",
+    "phraseology": "thr lgt"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LU",
+    "meaning": "Helicopter approach path indicator",
+    "phraseology": "hapi"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LV",
+    "meaning": "Visual approach slope indicator system (specify type and runway)",
+    "phraseology": "vasis"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LW",
+    "meaning": "Heliport lighting",
+    "phraseology": "heliport lgt"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LX",
+    "meaning": "Taxiway centre line lights (specify taxiway)",
+    "phraseology": "twy cl lgt"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LY",
+    "meaning": "Taxiway edge lights (specify taxiway)",
+    "phraseology": "twy edge lgt"
+  },
+  {
+    "category": "AGA Lighting Facilities (L)",
+    "code": "LZ",
+    "meaning": "Runway touchdown zone lights (specify runway)",
+    "phraseology": "rtzl"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MA",
+    "meaning": "Movement area",
+    "phraseology": "mov area"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MB",
+    "meaning": "Bearing strength (specify part of landing area or movement area)",
+    "phraseology": "bearing strength"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MC",
+    "meaning": "Clearway (specify runway)",
+    "phraseology": "cwy"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MD",
+    "meaning": "Declared distances (specify runway)",
+    "phraseology": "declared dist"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MG",
+    "meaning": "Taxiing guidance system",
+    "phraseology": "tgs"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MH",
+    "meaning": "Runway arresting gear (specify runway)",
+    "phraseology": "rag"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MK",
+    "meaning": "Parking area",
+    "phraseology": "prkg area"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MM",
+    "meaning": "Daylight markings (specify threshold, centre line, etc.)",
+    "phraseology": "day markings"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MN",
+    "meaning": "Apron",
+    "phraseology": "apron"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MO",
+    "meaning": "Stopbar (specify runway)",
+    "phraseology": "rag"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MP",
+    "meaning": "Aircraft stands (specify)",
+    "phraseology": "acft stand"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MR",
+    "meaning": "Runway (specify runway)",
+    "phraseology": "rwy"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MS",
+    "meaning": "Stopway (specify runway)",
+    "phraseology": "swy"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MT",
+    "meaning": "Threshold (specify runway)",
+    "phraseology": "thr"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MU",
+    "meaning": "Runway turning bay (specify runway)",
+    "phraseology": "rwy turning bay"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MW",
+    "meaning": "Strip/shoulder (specify runway)",
+    "phraseology": "Strip/shoulder"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MX",
+    "meaning": "Taxiway(s) (specify)",
+    "phraseology": "twy"
+  },
+  {
+    "category": "AGA Movement and Landing Area (M)",
+    "code": "MY",
+    "meaning": "Rapid exit taxiway (specify)",
+    "phraseology": "Rapid exit twy"
+  },
+  {
+    "category": "COM Terminal and En Route Navigation Facilities (N)",
+    "code": "NA",
+    "meaning": "All radio navigation facilities (except...)",
+    "phraseology": "all rdo nav fac"
+  },
+  {
+    "category": "COM Terminal and En Route Navigation Facilities (N)",
+    "code": "NB",
+    "meaning": "Nondirectional radio beacon",
+    "phraseology": "ndb"
+  },
+  {
+    "category": "COM Terminal and En Route Navigation Facilities (N)",
+    "code": "NC",
+    "meaning": "DECCA",
+    "phraseology": "decca"
+  },
+  {
+    "category": "COM Terminal and En Route Navigation Facilities (N)",
+    "code": "ND",
+    "meaning": "Distance measuring equipment (DME)",
+    "phraseology": "dme"
+  },
+  {
+    "category": "COM Terminal and En Route Navigation Facilities (N)",
+    "code": "NF",
+    "meaning": "Fan marker",
+    "phraseology": "fan mkr"
+  },
+  {
+    "category": "COM Terminal and En Route Navigation Facilities (N)",
+    "code": "NL",
+    "meaning": "Locator (specify identification)",
+    "phraseology": "l"
+  },
+  {
+    "category": "COM Terminal and En Route Navigation Facilities (N)",
+    "code": "NM",
+    "meaning": "VOR/DME",
+    "phraseology": "vor/dme"
+  },
+  {
+    "category": "COM Terminal and En Route Navigation Facilities (N)",
+    "code": "NN",
+    "meaning": "TACAN",
+    "phraseology": "tacan"
+  },
+  {
+    "category": "COM Terminal and En Route Navigation Facilities (N)",
+    "code": "NO",
+    "meaning": "OMEGA",
+    "phraseology": "omega"
+  },
+  {
+    "category": "COM Terminal and En Route Navigation Facilities (N)",
+    "code": "NT",
+    "meaning": "VORTAC",
+    "phraseology": "vortac"
+  },
+  {
+    "category": "COM Terminal and En Route Navigation Facilities (N)",
+    "code": "NV",
+    "meaning": "VOR",
+    "phraseology": "vor"
+  },
+  {
+    "category": "Other Information (O)",
+    "code": "OA",
+    "meaning": "Aeronautical information service",
+    "phraseology": "ais"
+  },
+  {
+    "category": "Other Information (O)",
+    "code": "OB",
+    "meaning": "Obstacle (specify details)",
+    "phraseology": "obst"
+  },
+  {
+    "category": "Other Information (O)",
+    "code": "OE",
+    "meaning": "Aircraft entry requirements",
+    "phraseology": "acft entry rqmnts"
+  },
+  {
+    "category": "Other Information (O)",
+    "code": "OL",
+    "meaning": "Obstacle lights on ... (specify)",
+    "phraseology": "obst lgt"
+  },
+  {
+    "category": "Other Information (O)",
+    "code": "OR",
+    "meaning": "Rescue coordination centre",
+    "phraseology": "rcc"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PA",
+    "meaning": "Standard instrument arrival (specify route designator)",
+    "phraseology": "star"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PB",
+    "meaning": "Standard VFR arrival",
+    "phraseology": "stc vfr arr"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PC",
+    "meaning": "Contingency procedures",
+    "phraseology": "contingency proc"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PD",
+    "meaning": "Standard instrument departure (specify route designator)",
+    "phraseology": "sid"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PE",
+    "meaning": "Standard VFR departure",
+    "phraseology": "stf vfr dep"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PF",
+    "meaning": "Flow control procedure",
+    "phraseology": "flow ctl proc"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PH",
+    "meaning": "Holding procedure",
+    "phraseology": "hldg proc"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PI",
+    "meaning": "Instrument approach procedure (specify type and runway)",
+    "phraseology": "instr apch proc"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PK",
+    "meaning": "VFR approach procedure",
+    "phraseology": "vfr apch proc"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PL",
+    "meaning": "Flight plan processing (filing and related contingency)",
+    "phraseology": "fpl"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PM",
+    "meaning": "Aerodrome operating minima (specify procedure and amended minimum)",
+    "phraseology": "opr minima"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PN",
+    "meaning": "Noise operating restriction",
+    "phraseology": "noise opr restrictions"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PO",
+    "meaning": "Obstacle clearance altitude and height (specify procedure)",
+    "phraseology": "oca och"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PR",
+    "meaning": "Radio failure procedure",
+    "phraseology": "rdo failure proc"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PT",
+    "meaning": "Transition altitude or transition level (specify)",
+    "phraseology": "ta/trl"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PU",
+    "meaning": "Missed approach procedure (specify runway)",
+    "phraseology": "missed apch proc"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PX",
+    "meaning": "Minimum holding altitude (specify fix)",
+    "phraseology": "mnm hldg alt"
+  },
+  {
+    "category": "ATM Air Traffic Procedures (P)",
+    "code": "PZ",
+    "meaning": "ADIZ procedure",
+    "phraseology": "adiz proc"
+  },
+  {
+    "category": "Navigation Warnings:  Airspace Restrictions (R)",
+    "code": "RA",
+    "meaning": "Airspace reservation (specify)",
+    "phraseology": "airspace reservation"
+  },
+  {
+    "category": "Navigation Warnings:  Airspace Restrictions (R)",
+    "code": "RD",
+    "meaning": "Danger area (specify)",
+    "phraseology": "..d.."
+  },
+  {
+    "category": "Navigation Warnings:  Airspace Restrictions (R)",
+    "code": "RM",
+    "meaning": "Military operating area",
+    "phraseology": "moa"
+  },
+  {
+    "category": "Navigation Warnings:  Airspace Restrictions (R)",
+    "code": "RO",
+    "meaning": "Overflying of ... (specify)",
+    "phraseology": "overflying"
+  },
+  {
+    "category": "Navigation Warnings:  Airspace Restrictions (R)",
+    "code": "RP",
+    "meaning": "Prohibited area (specify)",
+    "phraseology": "..p.."
+  },
+  {
+    "category": "Navigation Warnings:  Airspace Restrictions (R)",
+    "code": "RR",
+    "meaning": "Restricted area (specify)",
+    "phraseology": "..r.."
+  },
+  {
+    "category": "Navigation Warnings:  Airspace Restrictions (R)",
+    "code": "RT",
+    "meaning": "Temporary restricted area (specify area)",
+    "phraseology": "tempo restricted area"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "SA",
+    "meaning": "Automatic terminal information service",
+    "phraseology": "atis"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "SB",
+    "meaning": "ATS reporting office",
+    "phraseology": "aro"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "SC",
+    "meaning": "Area control centre",
+    "phraseology": "acc"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "SE",
+    "meaning": "Flight information service",
+    "phraseology": "fis"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "SF",
+    "meaning": "Aerodrome flight information service",
+    "phraseology": "afis"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "SL",
+    "meaning": "Flow control centre",
+    "phraseology": "flow ctl centre"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "SO",
+    "meaning": "Oceanic area control centre",
+    "phraseology": "oac"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "SP",
+    "meaning": "Approach control service",
+    "phraseology": "app"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "SS",
+    "meaning": "Flight service station",
+    "phraseology": "fss"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "ST",
+    "meaning": "Aerodrome control tower",
+    "phraseology": "twr"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "SU",
+    "meaning": "Upper area control centre",
+    "phraseology": "uac"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "SV",
+    "meaning": "VOLMET broadcast",
+    "phraseology": "volmet"
+  },
+  {
+    "category": "ATM Air Traffic and VOLMET Services (S)",
+    "code": "SY",
+    "meaning": "Upper advisory service (specify)",
+    "phraseology": "upper advisory ser"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WA",
+    "meaning": "Air display",
+    "phraseology": "air display"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WB",
+    "meaning": "Aerobatics",
+    "phraseology": "aerobatics"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WC",
+    "meaning": "Captive balloon or kite",
+    "phraseology": "captive balloon/kite"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WD",
+    "meaning": "Demolition of explosives",
+    "phraseology": "demolition of explosives"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WE",
+    "meaning": "Exercises (specify)",
+    "phraseology": "exer"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WF",
+    "meaning": "Air refueling",
+    "phraseology": "air refueling"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WG",
+    "meaning": "Glider flying",
+    "phraseology": "gld fly"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WH",
+    "meaning": "Blasting",
+    "phraseology": "blasting"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WJ",
+    "meaning": "Banner/target towing",
+    "phraseology": "banner/target towing"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WL",
+    "meaning": "Ascent of free balloon",
+    "phraseology": "ascent of free balloon"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WM",
+    "meaning": "Missile, gun or rocket firing",
+    "phraseology": "Missile/gun/rocket/frng"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WP",
+    "meaning": "Parachute jumping exercise, paragliding, or hang gliding",
+    "phraseology": "Pje/paragliding/hang gliding"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WR",
+    "meaning": "Radioactive materials or toxic chemicals (specify)",
+    "phraseology": "pje"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WS",
+    "meaning": "Burning or blowing gas",
+    "phraseology": "burning or blowing gas"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WT",
+    "meaning": "Mass movement of aircraft",
+    "phraseology": "mass mov of acft"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WU",
+    "meaning": "Unmanned aircraft",
+    "phraseology": "formation flt"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WV",
+    "meaning": "Formation flight",
+    "phraseology": "formation flt"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WW",
+    "meaning": "Significant volcanic activity",
+    "phraseology": "formation flt"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WY",
+    "meaning": "Aerial survey",
+    "phraseology": "model flying"
+  },
+  {
+    "category": "Navigation Warnings:  Warnings (W)",
+    "code": "WZ",
+    "meaning": "Model flying",
+    "phraseology": "model flying"
+  }
+]

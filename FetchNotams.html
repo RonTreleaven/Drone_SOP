@@ -29,33 +29,87 @@
     }
 
     .selection-stats {
-      display: grid;
-      grid-template-columns: auto auto;
-      gap: 2px 14px;
-      align-items: baseline;
       color: #1f3e72;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 700;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .selection-stats .k {
-      text-align: right;
       color: #2a4d7f;
       font-weight: 700;
+      margin-right: 4px;
     }
 
     .selection-stats .v {
-      min-width: 52px;
       color: #123f76;
       font-weight: 800;
+      margin-right: 10px;
     }
 
-    .selectors-grid {
-      display: grid;
-      grid-template-columns: 1.3fr 1fr 120px 180px;
-      gap: 10px;
+    .search-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
       align-items: end;
       margin-bottom: 8px;
+    }
+
+    .search-container .field-group {
+      flex: 1 1 180px;
+      min-width: 160px;
+    }
+
+    .search-container .field-group.compact {
+      flex: 0 0 120px;
+      min-width: 120px;
+      max-width: 140px;
+    }
+
+    .search-container .field-group.compact select {
+      width: 100%;
+    }
+
+    .search-container .field-group.mode-inline {
+      flex: 0 1 180px;
+      min-width: 160px;
+    }
+
+    .search-container .field-group.mode-inline .mode-toggle {
+      white-space: nowrap;
+    }
+
+    .icao-picker {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .icao-picker select {
+      min-width: 120px;
+    }
+
+    .search-container .btn {
+      min-width: 140px;
+    }
+
+    .search-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .search-row-end {
+      flex: 1 1 240px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .search-row-end .selection-stats {
+      justify-content: flex-end;
     }
 
     .selection-cache-row {
@@ -97,22 +151,24 @@
       border-radius: 8px;
       padding: 8px 10px;
       min-height: 52px;
+      text-align: center;
     }
 
     .status-pill .k {
       display: block;
-      font-size: 0.74rem;
+      font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.02em;
-      color: #4c5b73;
+      color: #1f3e72;
       margin-bottom: 4px;
+      font-weight: 800;
     }
 
     .status-pill .v {
-      color: var(--accent-2);
-      font-weight: 700;
+      color: #0b3f74;
+      font-weight: 800;
       word-break: break-word;
-      text-align: center;
+      font-size: 1rem;
     }
 
     .status-ok { color: var(--ok); }
@@ -170,6 +226,78 @@
       margin-bottom: 5px;
     }
 
+    .notam-line2 {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin: 0 0 6px;
+      font-size: 0.82rem;
+      color: #34465f;
+    }
+
+    .qcode-pill,
+    .priority-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      font-size: 0.74rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .qcode-pill {
+      background: #f1f6ff;
+      border-color: #c7d7f2;
+      color: #1f3e72;
+    }
+
+    .qcode-pill.missing {
+      background: #ffecec;
+      border-color: #e0a08e;
+      color: #8a2e17;
+    }
+
+    .priority-pill {
+      background: #eff8ef;
+      border-color: #9fc9a6;
+      color: #1d5f2f;
+    }
+
+    .priority-pill.high {
+      background: #fff0e8;
+      border-color: #e0a08e;
+      color: #8a2e17;
+    }
+
+    .priority-pill.medium {
+      background: #fff7e8;
+      border-color: #e4b45d;
+      color: #7a4b00;
+    }
+
+    .priority-pill.low {
+      background: #eef2f9;
+      border-color: #c7d0e0;
+      color: #3b4a63;
+    }
+
+    .qcode-meaning {
+      font-weight: 600;
+      color: #36465c;
+    }
+
+    .qcode-missing-note {
+      font-weight: 700;
+      color: #8a2e17;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
     .notam-id {
       font-weight: 700;
       color: var(--accent-2);
@@ -223,6 +351,11 @@
       background: #c3e3ff;
       border-color: #4f90ca;
       outline: none;
+    }
+
+    #firInput,
+    #icaoInput {
+      text-transform: uppercase;
     }
 
     .loading {
@@ -384,6 +517,44 @@
       font-size: 0.84rem;
     }
 
+    .section-collapsible {
+      border: 1px solid #d3deef;
+      border-radius: 10px;
+      background: #ffffff;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .section-collapsible .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      background: #f6f8fb;
+      border-bottom: 1px solid #e1e6ee;
+      font-weight: 700;
+      color: #1f3652;
+    }
+
+    .section-collapsible .section-body {
+      padding: 10px 12px;
+    }
+
+    .section-collapsible.collapsed .section-body {
+      display: none;
+    }
+
+    .section-toggle {
+      border: 1px solid #9bb6da;
+      background: #ffffff;
+      color: #1c3f6b;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
     .filter-toggle-btn {
       border: 1px solid #9fc9a6;
       background: #eff8ef;
@@ -400,6 +571,24 @@
       border-color: #d9a6a0;
       background: #fff1ef;
       color: #7f2116;
+    }
+
+    .btn-attn {
+      background: #1f7a3f;
+      border-color: #16612f;
+      color: #ffffff;
+    }
+
+    .btn-attn:hover,
+    .btn-attn:focus-visible {
+      background: #1a6a35;
+      border-color: #145529;
+    }
+
+    .btn-muted {
+      background: #e6ebf2;
+      border-color: #c7d2e3;
+      color: #1f3652;
     }
 
     .q-legend-modal {
@@ -533,6 +722,13 @@
       font-size: 0.88rem;
     }
 
+    .q-legend-info {
+      margin: 0 0 10px;
+      color: #b3261e;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
     .q-legend-popout-status {
       display: none;
       margin: 0 0 10px;
@@ -610,8 +806,9 @@
     }
 
     @media (max-width: 920px) {
-      .selectors-grid {
-        grid-template-columns: 1fr 1fr;
+      .search-container {
+        flex-direction: column;
+        align-items: stretch;
       }
 
       .q-filter-grid {
@@ -638,8 +835,8 @@
         grid-template-columns: auto 1fr;
       }
 
-      .selectors-grid {
-        grid-template-columns: 1fr;
+      .search-container .field-group {
+        width: 100%;
       }
 
       .q-filter-grid {
@@ -680,91 +877,95 @@
     <h1>Real-Time NOTAM Fetch Prototype</h1>
     <p class="subtle" id="lastFetchBanner">Last Fetch: - EDT | - UTC</p>
 
-    <section class="selection-block" aria-label="Selections">
-      <div class="selection-top">
-        <div class="selection-stats">
-          <span class="k">FIR Selected:</span><span class="v" id="currentFirValue">CZYZ</span>
-          <span class="k">ICAO Selected:</span><span class="v" id="currentIcaoValue">-</span>
-          <span class="k">NOTAMS in scope:</span><span class="v" id="notamsInScopeInline">0</span>
-          <span class="k">Airports in Scope:</span><span class="v" id="airportsFoundInline">0</span>
+    <section class="selection-block" aria-label="FIR and NOTAM Inputs">
+      <form id="fetchForm" class="search-container">
+        <div class="field-group">
+          <label for="firInput">FIR</label>
+          <input id="firInput" type="text" placeholder="Enter FIR code (e.g., CZYZ)" maxlength="4" list="firList">
+          <datalist id="firList">
+            <option value="CZVR">CZVR -Vancouver</option>
+            <option value="CZEG">CZEG - Edmonton</option>
+            <option value="CZWG">CZWG - Winnipeg</option>
+            <option value="CZYZ">CZYZ - Toronto</option>
+            <option value="CZUL">CZUL - Montreal</option>
+            <option value="CZQM">CZQM - Moncton</option>
+            <option value="CZQX">CZQX - Gander</option>
+          </datalist>
         </div>
-        <button class="btn" type="submit" form="fetchForm">Fetch Live</button>
-      </div>
 
-    <form id="fetchForm" class="selectors-grid">
-      <div class="field-group">
-        <label for="firSelect">FIR Selected</label>
-        <select id="firSelect">
-          <option value="CZVR">CZVR - Vancouver FIR</option>
-          <option value="CZEG">CZEG - Edmonton FIR</option>
-          <option value="CZWG">CZWG - Winnipeg FIR</option>
-          <option value="CZYZ" selected>CZYZ - Toronto FIR</option>
-          <option value="CZUL">CZUL - Montreal FIR</option>
-          <option value="CZQM">CZQM - Moncton FIR</option>
-          <option value="CZQX">CZQX - Gander FIR</option>
-        </select>
-      </div>
-
-      <div class="field-group">
-        <label for="icaoSelect">ICAO Selected</label>
-        <div class="icao-controls">
-          <select id="icaoSelect">
-            <option value="" selected>All Airports</option>
-          </select>
-          <button class="btn btn-small" type="button" id="clearIcaoBtn">Clear ICAO</button>
+        <div class="field-group">
+          <label for="icaoInput">ICAO</label>
+          <div class="icao-picker">
+            <input id="icaoInput" type="text" placeholder="Enter ICAO code (e.g., CYYZ)" maxlength="4" list="icaoList">
+            <select id="icaoSelect">
+              <option value="">Pick ICAO</option>
+            </select>
+          </div>
+          <datalist id="icaoList"></datalist>
         </div>
-      </div>
 
-      <div class="field-group">
-        <label for="maxItems">Show max</label>
-        <select id="maxItems">
-          <option value="50">50</option>
-          <option value="100" selected>100</option>
-          <option value="200">200</option>
-        </select>
-      </div>
+        <div class="field-group">
+          <label for="notamInput">NOTAM No.</label>
+          <input id="notamInput" type="text" placeholder="Enter NOTAM number (e.g., J1968/26)">
+        </div>
 
-      <div class="field-group">
-        <label for="useWxRecallMode">Request Mode</label>
-        <label class="mode-toggle">
-          <input id="useWxRecallMode" type="checkbox">
-          Use WXRecall API bundle
-        </label>
-      </div>
-    </form>
-    <div class="selection-cache-row">
-      <button class="btn" type=     "button" id="refreshFromCacheBtn">Use Cache</button>
-    </div>
 
-    <div id="loadingState" class="loading" role="status" aria-live="polite" aria-busy="false">
-      <span class="loading-spinner" aria-hidden="true"></span>
-      <span class="loading-text">Loading NOTAMs (cache first, live refresh in progress)...</span>
-    </div>
+        <div class="search-actions">
+          <button class="btn btn-attn" type="submit" id="fetchNotamsBtn">Fetch NOTAMS</button>
+          <button class="btn" type="button" id="clearEntriesBtn">Clear Entries</button>
+          <button class="btn" type="button" id="refreshFromCacheBtn">Use Cache</button>
+        </div>
+        <div class="search-row-end">
+          <div class="selection-stats" id="scopeSummaryLine">
+            <span class="k">Scope:</span><span class="v" id="currentFirValue">-</span>
+            <span class="k">ICAO:</span><span class="v" id="currentIcaoValue">-</span>
+            <span class="k">NOTAMs:</span><span class="v" id="notamsInScopeInline">0</span>
+            <span class="k">Airports:</span><span class="v" id="airportsFoundInline">0</span>
+          </div>
+        </div>
+      </form>
     </section>
 
-    <div class="q-filter-box">
-      <div class="q-filter-head">
-        <span class="q-filter-title">Q-Code Category Filter</span>
-        <button class="filter-toggle-btn" type="button" id="toggleQFilterBtn" data-state="off">Filters OFF</button>
-        <button class="btn btn-small q-help-btn" type="button" id="openQLegend" title="Open Q-code legend">
-          <span class="q-help-icon" aria-hidden="true">?</span>
-          <span>Q-code Legend</span>
-        </button>
+    <section class="selection-block" aria-label="Scope Summary">
+      <div id="loadingState" class="loading" role="status" aria-live="polite" aria-busy="false">
+        <span class="loading-spinner" aria-hidden="true"></span>
+        <span class="loading-text">Loading NOTAMs (cache first, live refresh in progress)...</span>
       </div>
-      <div class="q-filter-grid">
-        <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="F" data-state="exclude">F*: Exclude</button></div>
-        <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="L" data-state="exclude">L*: Exclude</button></div>
-        <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="M" data-state="exclude">M*: Exclude</button></div>
-        <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="P" data-state="exclude">P*: Exclude</button></div>
-        <div class="q-filter-chip"><button class="qcat-toggle include" type="button" data-qcat="O" data-state="include">O*: Include</button></div>
-        <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="X" data-state="exclude">X*: Exclude</button></div>
+    </section>
+
+    <section class="section-collapsible" id="qFilterSection">
+      <div class="section-head">
+        <span>Q-Code Category Filters</span>
+        <div>
+          <button class="filter-toggle-btn" type="button" id="toggleQFilterBtn" data-state="off">Filters OFF</button>
+          <button class="btn btn-small q-help-btn" type="button" id="openQLegend" title="Open Q-code legend">
+            <span class="q-help-icon" aria-hidden="true">?</span>
+            <span>Q-code Legend</span>
+          </button>
+          <button class="section-toggle" type="button" data-collapse-target="#qFilterSection">Hide</button>
+        </div>
       </div>
-      <div class="q-filter-actions">
-        <button class="btn btn-small" type="button" id="qSetAllExcludeBtn">Set All Exclude</button>
-        <button class="btn btn-small" type="button" id="qSetAllIncludeBtn">Set All Include</button>
+      <div class="section-body">
+        <div class="q-filter-grid">
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="F" data-state="exclude">F*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="L" data-state="exclude">L*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="M" data-state="exclude">M*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="N" data-state="exclude">N*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="P" data-state="exclude">P*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle include" type="button" data-qcat="O" data-state="include">O*: Include</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="X" data-state="exclude">X*: Exclude</button></div>
+        </div>
+        <div class="q-filter-actions">
+          <button class="btn btn-small" type="button" id="qSetAllExcludeBtn">Set All Exclude</button>
+          <button class="btn btn-small" type="button" id="qSetAllIncludeBtn">Set All Include</button>
+          <label class="mode-toggle">
+            <input id="sortByPriority" type="checkbox" checked>
+            Sort by priority
+          </label>
+        </div>
+        <p class="q-filter-summary" id="qFilterSummary">Q filter is off. Live results are unchanged.</p>
       </div>
-      <p class="q-filter-summary" id="qFilterSummary">Q filter is off. Live results are unchanged.</p>
-    </div>
+    </section>
 
     <div id="qLegendModal" class="q-legend-modal" aria-hidden="true">
       <div class="q-legend-backdrop" data-close-qlegend></div>
@@ -800,31 +1001,50 @@
             </ul>
           </div>
 
-          <p class="q-legend-note">Q subject codes are listed alphabetically for quick lookup. The filter toggles on this page are category-based by first subject letter (F, L, M, P, O, X).</p>
+          <p class="q-legend-note">Enter a 2-letter Subject code and 2-letter Condition code to look up a combined meaning. Category toggles on this page are based on the first letter of the subject (F, L, M, P, O, X).</p>
           <p class="q-legend-popout-status" id="qLegendPopoutStatus" role="status" aria-live="polite"></p>
           <div class="q-legend-tools">
-            <input id="qLegendSearch" type="text" placeholder="Lookup by code prefix (example: I, IV, P, PM, AE)">
+            <input id="qLegendSearch" type="text" placeholder="Subject (2 letters, example: LI)">
+            <input id="qLegendConditionSearch" type="text" placeholder="Condition (2 letters, example: AS)">
             <button class="btn btn-small" type="button" id="qLegendClearSearch">Clear</button>
           </div>
+          <p class="q-legend-info" id="qLegendInfo">Enter both subject and condition codes to see a combined meaning.</p>
           <div id="qLegendBody"></div>
         </div>
       </div>
     </div>
 
-    <div class="status-row">
-      <div class="status-pill"><span class="k">Source</span><span class="v" id="sourceValue">-</span></div>
-      <div class="status-pill"><span class="k">Fetch Time</span><span class="v" id="fetchTimeValue">-</span></div>
-      <div class="status-pill"><span class="k">Total NOTAMs</span><span class="v" id="totalValue">0</span></div>
-      <div class="status-pill"><span class="k">Displayed</span><span class="v" id="shownValue">0</span></div>
-      <div class="status-pill"><span class="k">Updated</span><span class="v" id="updatedValue">-</span></div>
-    </div>
+    <section class="section-collapsible" id="scoreboardSection">
+      <div class="section-head">
+        <span>Scoreboard</span>
+        <button class="section-toggle" type="button" data-collapse-target="#scoreboardSection">Hide</button>
+      </div>
+      <div class="section-body">
+        <div class="status-row">
+          <div class="status-pill"><span class="k">Source</span><span class="v" id="sourceValue">-</span></div>
+          <div class="status-pill"><span class="k">Fetch Time</span><span class="v" id="fetchTimeValue">-</span></div>
+          <div class="status-pill"><span class="k">Total NOTAMs</span><span class="v" id="totalValue">0</span></div>
+          <div class="status-pill"><span class="k">Displayed</span><span class="v" id="shownValue">0</span></div>
+          <div class="status-pill"><span class="k">Updated</span><span class="v" id="updatedValue">-</span></div>
+          <div class="status-pill"><span class="k">Unknown Q-Codes</span><span class="v" id="unknownQCodesValue">0</span></div>
+        </div>
+      </div>
+    </section>
 
     <div class="results-wrap">
       <div class="results-header">
         <span id="resultsHeaderText">No data loaded yet.</span>
         <div class="results-header-actions">
+          <div class="field-group compact">
+            <label for="maxItems">Show max</label>
+            <select id="maxItems">
+              <option value="0" selected>All</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+          </div>
           <button class="btn" type="button" id="viewAllOnMapBtn" disabled>View all on map</button>
-          <button class="btn" type="button" id="clearCacheBtn">Clear Site Cache</button>
         </div>
       </div>
       <ul class="results-list" id="resultsList"></ul>
@@ -839,9 +1059,9 @@
     const PROXY_TIMEOUT_MS = 14000;
     const PROXY_PROVIDERS = [
       {
-        name: "allorigins",
-        label: "AllOrigins",
-        buildUrl: targetUrl => `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`
+        name: "cloudflare",
+        label: "Cloudflare Worker",
+        buildUrl: targetUrl => `https://navcan-proxy.rontreleaven.workers.dev/?url=${encodeURIComponent(targetUrl)}`
       },
       {
         name: "corsproxy",
@@ -852,37 +1072,32 @@
     const CACHE_TTL_MS = 5 * 60 * 1000;
     const LIVE_FETCH_COOLDOWN_MS = 30 * 60 * 1000;
     const FRESH_BANNER_WINDOW_MS = 60 * 60 * 1000;
+    const LAST_FIR_STORAGE_KEY = "fetchnotams:lastFir";
     const LAST_ICAO_STORAGE_KEY = "fetchnotams:lastIcao";
     const MAP_PAYLOAD_STORAGE_PREFIX = "fetchnotams:map:payload:";
     const MAP_PAYLOAD_TTL_MS = 2 * 60 * 60 * 1000;
     const FIR_CODES = ["CZVR", "CZEG", "CZWG", "CZYZ", "CZUL", "CZQM", "CZQX"];
     const FIR_CODE_SET = new Set(FIR_CODES);
     const DISPLAY_TIME_ZONE = "America/Toronto";
-    const WXRECALL_ALPHA_TYPES = [
-      "sigmet",
-      "airmet",
-      "notam",
-      "metar",
-      "taf",
-      "pirep",
-      "upperwind",
-      "space_weather"
-    ];
 
     const el = {
       form: document.getElementById("fetchForm"),
-      firSelect: document.getElementById("firSelect"),
+      fetchNotamsBtn: document.getElementById("fetchNotamsBtn"),
+      firInput: document.getElementById("firInput"),
+      icaoInput: document.getElementById("icaoInput"),
+      notamInput: document.getElementById("notamInput"),
+      icaoList: document.getElementById("icaoList"),
       icaoSelect: document.getElementById("icaoSelect"),
       currentFirValue: document.getElementById("currentFirValue"),
       currentIcaoValue: document.getElementById("currentIcaoValue"),
-      clearIcaoBtn: document.getElementById("clearIcaoBtn"),
+      clearEntriesBtn: document.getElementById("clearEntriesBtn"),
       airportsFoundInline: document.getElementById("airportsFoundInline"),
       notamsInScopeInline: document.getElementById("notamsInScopeInline"),
       maxItems: document.getElementById("maxItems"),
-      useWxRecallMode: document.getElementById("useWxRecallMode"),
       toggleQFilterBtn: document.getElementById("toggleQFilterBtn"),
       qSetAllExcludeBtn: document.getElementById("qSetAllExcludeBtn"),
       qSetAllIncludeBtn: document.getElementById("qSetAllIncludeBtn"),
+      sortByPriority: document.getElementById("sortByPriority"),
       qFilterSummary: document.getElementById("qFilterSummary"),
       openQLegend:
         document.getElementById("openQLegend") ||
@@ -893,7 +1108,9 @@
       closeQLegend: document.getElementById("closeQLegend"),
       popoutQLegend: document.getElementById("popoutQLegend"),
       qLegendSearch: document.getElementById("qLegendSearch"),
+      qLegendConditionSearch: document.getElementById("qLegendConditionSearch"),
       qLegendClearSearch: document.getElementById("qLegendClearSearch"),
+      qLegendInfo: document.getElementById("qLegendInfo"),
       qLegendBody: document.getElementById("qLegendBody"),
       qLegendPopoutStatus: document.getElementById("qLegendPopoutStatus"),
       lastFetchBanner: document.getElementById("lastFetchBanner"),
@@ -904,10 +1121,10 @@
       totalValue: document.getElementById("totalValue"),
       shownValue: document.getElementById("shownValue"),
       updatedValue: document.getElementById("updatedValue"),
+      unknownQCodesValue: document.getElementById("unknownQCodesValue"),
       resultsHeaderText: document.getElementById("resultsHeaderText"),
       resultsList: document.getElementById("resultsList"),
       viewAllOnMapBtn: document.getElementById("viewAllOnMapBtn"),
-      clearCacheBtn: document.getElementById("clearCacheBtn"),
       refreshFromCacheBtn: document.getElementById("refreshFromCacheBtn")
     };
 
@@ -919,66 +1136,288 @@
     let qLegendLastLaunchAtMs = 0;
     let lastSelectedIcao = normalizeCode(localStorage.getItem(LAST_ICAO_STORAGE_KEY) || "", 4);
     let hasAutoFocusedIcao = false;
-    let lastFetchActionSite = normalizeCode(document.getElementById("firSelect")?.value || "CZYZ", 4) || "CZYZ";
+    let lastFetchActionSite = "";
 
-    const TRACKED_Q_CATEGORIES = ["F", "L", "M", "P", "O", "X"];
-    const Q_SUBJECT_CODES = [
-      { code: "AA", meaning: "Airspace subject (AA)" },
-      { code: "AC", meaning: "Control zone / CTR" },
-      { code: "AD", meaning: "ADIZ" },
-      { code: "AE", meaning: "Control area / CTA" },
-      { code: "AF", meaning: "FIR" },
-      { code: "AN", meaning: "Airspace subject (AN)" },
-      { code: "AO", meaning: "Airspace subject (AO)" },
-      { code: "AR", meaning: "Airspace reservation / restriction" },
-      { code: "AT", meaning: "TMA" },
-      { code: "AZ", meaning: "ATZ" },
-      { code: "FA", meaning: "Runway friction / braking" },
-      { code: "FC", meaning: "Runway closure" },
-      { code: "FI", meaning: "Runway lighting" },
-      { code: "FJ", meaning: "Runway markings" },
-      { code: "LY", meaning: "Aerodrome lighting" },
-      { code: "MX", meaning: "Miscellaneous aerodrome information" },
-      { code: "OB", meaning: "Obstacle" },
-      { code: "OL", meaning: "Obstacle lights" },
-      { code: "PI", meaning: "Instrument approach procedure" },
-      { code: "PM", meaning: "Approach minima" },
-      { code: "RA", meaning: "Airspace reservation" },
-      { code: "RD", meaning: "Danger area" },
+    const TRACKED_Q_CATEGORIES = ["F", "L", "M", "N", "P", "O", "X"];
+    let Q_SUBJECT_CODES = [
+      // Airspace organization (A)
+      { code: "AA", meaning: "Minimum altitude (specify en route/crossing/safe)" },
+      { code: "AC", meaning: "Class B/C/D/E surface area" },
+      { code: "AD", meaning: "Air defense identification zone" },
+      { code: "AE", meaning: "Control area" },
+      { code: "AF", meaning: "Flight information region" },
+      { code: "AH", meaning: "Upper control area" },
+      { code: "AL", meaning: "Minimum usable flight level" },
+      { code: "AN", meaning: "Area navigation route" },
+      { code: "AO", meaning: "Oceanic control area" },
+      { code: "AP", meaning: "Reporting point (specify)" },
+      { code: "AR", meaning: "ATS route (specify)" },
+      { code: "AT", meaning: "Terminal control area" },
+      { code: "AU", meaning: "Upper flight information region" },
+      { code: "AV", meaning: "Upper advisory area" },
+      { code: "AX", meaning: "Significant point" },
+      { code: "AZ", meaning: "Aerodrome traffic zone" },
+      // Communications and surveillance (C)
+      { code: "CA", meaning: "Air/ground facility (specify service/frequency)" },
+      { code: "CB", meaning: "ADS-B (specify)" },
+      { code: "CC", meaning: "ADS-C (specify)" },
+      { code: "CD", meaning: "CPDLC (specify)" },
+      { code: "CE", meaning: "En-route surveillance radar" },
+      { code: "CG", meaning: "Ground controlled approach system" },
+      { code: "CL", meaning: "SELCAL" },
+      { code: "CM", meaning: "Surface movement radar" },
+      { code: "CP", meaning: "Precision approach radar (specify runway)" },
+      { code: "CR", meaning: "Surveillance radar element of PAR (specify wavelength)" },
+      { code: "CS", meaning: "Secondary surveillance radar" },
+      { code: "CT", meaning: "Terminal area surveillance radar" },
+      // Facilities and services (F)
+      { code: "FA", meaning: "Aerodrome" },
+      { code: "FB", meaning: "Friction measuring device (specify type)" },
+      { code: "FC", meaning: "Ceiling measurement equipment" },
+      { code: "FD", meaning: "Docking system (AGNIS, BOLDS, etc.)" },
+      { code: "FE", meaning: "Oxygen (specify type)" },
+      { code: "FF", meaning: "Fire fighting and rescue" },
+      { code: "FG", meaning: "Ground movement control" },
+      { code: "FH", meaning: "Helicopter alighting area/platform" },
+      { code: "FI", meaning: "Aircraft de-icing (specify)" },
+      { code: "FJ", meaning: "Oils (specify type)" },
+      { code: "FL", meaning: "Landing direction indicator" },
+      { code: "FM", meaning: "Meteorological service (specify type)" },
+      { code: "FO", meaning: "Fog dispersal system" },
+      { code: "FP", meaning: "Heliport" },
+      { code: "FS", meaning: "Snow removal equipment" },
+      { code: "FT", meaning: "Transmissometer (specify runway)" },
+      { code: "FU", meaning: "Fuel availability" },
+      { code: "FW", meaning: "Wind direction indicator" },
+      { code: "FZ", meaning: "Customs/immigration" },
+      // GNSS services (G)
+      { code: "GA", meaning: "GNSS airfield-specific operations (specify)" },
+      { code: "GW", meaning: "GNSS area-wide operations (specify)" },
+      // Instrument and microwave landing systems (I)
+      { code: "IC", meaning: "Instrument landing system (specify runway)" },
+      { code: "ID", meaning: "DME associated with ILS" },
+      { code: "IG", meaning: "Glide path (ILS) (specify runway)" },
+      { code: "II", meaning: "Inner marker (ILS) (specify runway)" },
+      { code: "IL", meaning: "Localizer (ILS) (specify runway)" },
+      { code: "IM", meaning: "Middle marker (ILS) (specify runway)" },
+      { code: "IN", meaning: "Localizer (not associated with ILS)" },
+      { code: "IO", meaning: "Outer marker (ILS) (specify runway)" },
+      { code: "IS", meaning: "ILS Category I (specify runway)" },
+      { code: "IT", meaning: "ILS Category II (specify runway)" },
+      { code: "IU", meaning: "ILS Category III (specify runway)" },
+      { code: "IW", meaning: "Microwave landing system (specify runway)" },
+      { code: "IX", meaning: "Locator, outer (ILS) (specify runway)" },
+      { code: "IY", meaning: "Locator, middle (ILS) (specify runway)" },
+      // Lighting facilities (L)
+      { code: "LA", meaning: "Approach lighting system (specify runway/type)" },
+      { code: "LB", meaning: "Aerodrome beacon" },
+      { code: "LC", meaning: "Runway centre line lights (specify runway)" },
+      { code: "LD", meaning: "Landing direction indicator lights" },
+      { code: "LE", meaning: "Runway edge lights (specify runway)" },
+      { code: "LF", meaning: "Sequenced flashing lights (specify runway)" },
+      { code: "LG", meaning: "Pilot-controlled lighting" },
+      { code: "LH", meaning: "High intensity runway lights (specify runway)" },
+      { code: "LI", meaning: "Runway end identifier lights (specify runway)" },
+      { code: "LJ", meaning: "Runway alignment indicator lights (specify runway)" },
+      { code: "LK", meaning: "Category II components of approach lighting (specify runway)" },
+      { code: "LL", meaning: "Low intensity runway lights (specify runway)" },
+      { code: "LM", meaning: "Medium intensity runway lights (specify runway)" },
+      { code: "LP", meaning: "Precision approach path indicator (specify runway)" },
+      { code: "LR", meaning: "All landing area lighting facilities" },
+      { code: "LS", meaning: "Stopway lights (specify runway)" },
+      { code: "LT", meaning: "Threshold lights (specify runway)" },
+      { code: "LU", meaning: "Helicopter approach path indicator" },
+      { code: "LV", meaning: "Visual approach slope indicator system (specify type/runway)" },
+      { code: "LW", meaning: "Heliport lighting" },
+      { code: "LX", meaning: "Taxiway centre line lights (specify taxiway)" },
+      { code: "LY", meaning: "Taxiway edge lights (specify taxiway)" },
+      { code: "LZ", meaning: "Runway touchdown zone lights (specify runway)" },
+      // Movement and landing area (M)
+      { code: "MA", meaning: "Movement area" },
+      { code: "MB", meaning: "Bearing strength (specify part of landing/movement area)" },
+      { code: "MC", meaning: "Clearway (specify runway)" },
+      { code: "MD", meaning: "Declared distances (specify runway)" },
+      { code: "MG", meaning: "Taxiing guidance system" },
+      { code: "MH", meaning: "Runway arresting gear (specify runway)" },
+      { code: "MK", meaning: "Parking area" },
+      { code: "MM", meaning: "Daylight markings (specify threshold/centre line/etc.)" },
+      { code: "MN", meaning: "Apron" },
+      { code: "MO", meaning: "Stopbar (specify runway)" },
+      { code: "MP", meaning: "Aircraft stands (specify)" },
+      { code: "MR", meaning: "Runway (specify runway)" },
+      { code: "MS", meaning: "Stopway (specify runway)" },
+      { code: "MT", meaning: "Threshold (specify runway)" },
+      { code: "MU", meaning: "Runway turning bay (specify runway)" },
+      { code: "MW", meaning: "Strip/shoulder (specify runway)" },
+      { code: "MX", meaning: "Taxiway(s) (specify)" },
+      { code: "MY", meaning: "Rapid exit taxiway (specify)" },
+      // Terminal and en route navigation facilities (N)
+      { code: "NA", meaning: "All radio navigation facilities (except...)" },
+      { code: "NB", meaning: "Nondirectional radio beacon" },
+      { code: "NC", meaning: "DECCA" },
+      { code: "ND", meaning: "Distance measuring equipment" },
+      { code: "NF", meaning: "Fan marker" },
+      { code: "NL", meaning: "Locator (specify identification)" },
+      { code: "NM", meaning: "VOR/DME" },
+      { code: "NN", meaning: "TACAN" },
+      { code: "NO", meaning: "OMEGA" },
+      { code: "NT", meaning: "VORTAC" },
+      { code: "NV", meaning: "VOR" },
+      // Other information (O)
+      { code: "OA", meaning: "Aeronautical information service" },
+      { code: "OB", meaning: "Obstacle (specify details)" },
+      { code: "OE", meaning: "Aircraft entry requirements" },
+      { code: "OL", meaning: "Obstacle lights (specify)" },
+      { code: "OR", meaning: "Rescue coordination centre" },
+      // Air traffic procedures (P)
+      { code: "PA", meaning: "Standard instrument arrival (specify route designator)" },
+      { code: "PB", meaning: "Standard VFR arrival" },
+      { code: "PC", meaning: "Contingency procedures" },
+      { code: "PD", meaning: "Standard instrument departure (specify route designator)" },
+      { code: "PE", meaning: "Standard VFR departure" },
+      { code: "PF", meaning: "Flow control procedure" },
+      { code: "PH", meaning: "Holding procedure" },
+      { code: "PI", meaning: "Instrument approach procedure (specify type/runway)" },
+      { code: "PK", meaning: "VFR approach procedure" },
+      { code: "PL", meaning: "Flight plan processing" },
+      { code: "PM", meaning: "Aerodrome operating minima (specify)" },
+      { code: "PN", meaning: "Noise operating restriction" },
+      { code: "PO", meaning: "Obstacle clearance altitude/height (specify procedure)" },
+      { code: "PR", meaning: "Radio failure procedure" },
+      { code: "PT", meaning: "Transition altitude/level (specify)" },
+      { code: "PU", meaning: "Missed approach procedure (specify runway)" },
+      { code: "PX", meaning: "Minimum holding altitude (specify fix)" },
+      { code: "PZ", meaning: "ADIZ procedure" },
+      // Navigation warnings: airspace restrictions (R)
+      { code: "RA", meaning: "Airspace reservation (specify)" },
+      { code: "RD", meaning: "Danger area (specify)" },
       { code: "RM", meaning: "Military operating area" },
-      { code: "RO", meaning: "Overflying restrictions" },
-      { code: "RP", meaning: "Prohibited area" },
-      { code: "RR", meaning: "Restricted area" },
-      { code: "RT", meaning: "Temporary restricted area" },
+      { code: "RO", meaning: "Overflying restriction (specify)" },
+      { code: "RP", meaning: "Prohibited area (specify)" },
+      { code: "RR", meaning: "Restricted area (specify)" },
+      { code: "RT", meaning: "Temporary restricted area (specify area)" },
+      // Air traffic and VOLMET services (S)
+      { code: "SA", meaning: "Automatic terminal information service" },
+      { code: "SB", meaning: "ATS reporting office" },
+      { code: "SC", meaning: "Area control centre" },
+      { code: "SE", meaning: "Flight information service" },
+      { code: "SF", meaning: "Aerodrome flight information service" },
+      { code: "SL", meaning: "Flow control centre" },
+      { code: "SO", meaning: "Oceanic area control centre" },
+      { code: "SP", meaning: "Approach control service" },
+      { code: "SS", meaning: "Flight service station" },
+      { code: "ST", meaning: "Aerodrome control tower" },
+      { code: "SU", meaning: "Upper area control centre" },
+      { code: "SV", meaning: "VOLMET broadcast" },
+      { code: "SY", meaning: "Upper advisory service (specify)" },
+      // Navigation warnings: warnings (W)
       { code: "WA", meaning: "Air display" },
       { code: "WB", meaning: "Aerobatics" },
-      { code: "WC", meaning: "Captive balloon / kite" },
+      { code: "WC", meaning: "Captive balloon or kite" },
       { code: "WD", meaning: "Demolition of explosives" },
-      { code: "WE", meaning: "Exercises" },
+      { code: "WE", meaning: "Exercises (specify)" },
+      { code: "WF", meaning: "Air refueling" },
       { code: "WG", meaning: "Glider flying" },
       { code: "WH", meaning: "Blasting" },
-      { code: "WJ", meaning: "Banner / target towing" },
-      { code: "WL", meaning: "Free balloon" },
-      { code: "WM", meaning: "Missile / gun / rocket firing" },
-      { code: "WP", meaning: "Parachute / paragliding" },
-      { code: "WR", meaning: "Radioactive / toxic materials" },
-      { code: "WS", meaning: "Burning / blowing gas" },
+      { code: "WJ", meaning: "Banner/target towing" },
+      { code: "WL", meaning: "Ascent of free balloon" },
+      { code: "WM", meaning: "Missile, gun or rocket firing" },
+      { code: "WP", meaning: "Parachute/paragliding/hang gliding" },
+      { code: "WR", meaning: "Radioactive materials or toxic chemicals" },
+      { code: "WS", meaning: "Burning or blowing gas" },
       { code: "WT", meaning: "Mass movement of aircraft" },
       { code: "WU", meaning: "Unmanned aircraft" },
       { code: "WV", meaning: "Formation flight" },
       { code: "WW", meaning: "Significant volcanic activity" },
       { code: "WY", meaning: "Aerial survey" },
-      { code: "WZ", meaning: "Model flying" }
+      { code: "WZ", meaning: "Model flying" },
+      // Other / unspecified
+      { code: "XX", meaning: "Other / unspecified" }
     ];
-    const Q_CONDITION_CODES = [
+    let Q_CONDITION_CODES = [
+      // Availability (A)
+      { code: "AC", meaning: "Withdrawn for maintenance" },
+      { code: "AD", meaning: "Available for daylight operation" },
+      { code: "AF", meaning: "Flight checked and found reliable" },
+      { code: "AG", meaning: "Operating but ground checked only (awaiting flight check)" },
+      { code: "AH", meaning: "Hours of service are now (specify)" },
+      { code: "AK", meaning: "Resumed normal operations" },
+      { code: "AL", meaning: "Operative subject to previous limitations/conditions" },
+      { code: "AM", meaning: "Military operations only" },
+      { code: "AN", meaning: "Available for night operation" },
+      { code: "AO", meaning: "Operational" },
+      { code: "AP", meaning: "Available, prior permission required" },
+      { code: "AR", meaning: "Available on request" },
       { code: "AS", meaning: "Unserviceable" },
-      { code: "AU", meaning: "Not available" },
+      { code: "AU", meaning: "Not available (specify reason if needed)" },
+      { code: "AW", meaning: "Completely withdrawn" },
+      { code: "AX", meaning: "Previously promulgated shutdown canceled" },
+      // Changes (C)
+      { code: "CA", meaning: "Activated" },
+      { code: "CC", meaning: "Completed" },
+      { code: "CD", meaning: "Deactivated" },
+      { code: "CE", meaning: "Erected" },
+      { code: "CF", meaning: "Operating frequency changed to" },
+      { code: "CG", meaning: "Downgraded to" },
       { code: "CH", meaning: "Changed" },
-      { code: "CL", meaning: "Closed" },
-      { code: "CS", meaning: "Construction" },
-      { code: "CT", meaning: "Temporary" },
-      { code: "CA", meaning: "Cancelled" },
-      { code: "AW", meaning: "Work in progress" },
+      { code: "CI", meaning: "Identification/call sign changed to" },
+      { code: "CL", meaning: "Realigned" },
+      { code: "CM", meaning: "Displaced" },
+      { code: "CN", meaning: "Canceled" },
+      { code: "CO", meaning: "Operating" },
+      { code: "CP", meaning: "Operating on reduced power" },
+      { code: "CR", meaning: "Temporarily replaced by" },
+      { code: "CS", meaning: "Installed" },
+      { code: "CT", meaning: "On test, do not use" },
+      // Hazard conditions (H)
+      { code: "HA", meaning: "Braking action (poor/medium/good)" },
+      { code: "HB", meaning: "Friction coefficient is ..." },
+      { code: "HC", meaning: "Covered by compacted snow to depth of" },
+      { code: "HD", meaning: "Covered by dry snow to a depth of" },
+      { code: "HE", meaning: "Covered by water to a depth of" },
+      { code: "HF", meaning: "Totally free of snow and ice" },
+      { code: "HG", meaning: "Grass cutting in progress" },
+      { code: "HH", meaning: "Hazard due to (specify)" },
+      { code: "HI", meaning: "Covered by ice" },
+      { code: "HJ", meaning: "Launch planned (balloon/space)" },
+      { code: "HK", meaning: "Bird migration in progress" },
+      { code: "HL", meaning: "Snow clearance completed" },
+      { code: "HM", meaning: "Marked by (specify)" },
+      { code: "HN", meaning: "Covered by wet snow or slush" },
+      { code: "HO", meaning: "Obscured by snow" },
+      { code: "HP", meaning: "Snow clearance in progress" },
+      { code: "HQ", meaning: "Operation canceled (balloon/space)" },
+      { code: "HR", meaning: "Standing water" },
+      { code: "HS", meaning: "Sanding in progress" },
+      { code: "HT", meaning: "Approach according to signal area only" },
+      { code: "HU", meaning: "Launch in progress (balloon/space)" },
+      { code: "HV", meaning: "Work completed" },
+      { code: "HW", meaning: "Work in progress" },
+      { code: "HX", meaning: "Concentration of birds" },
+      { code: "HY", meaning: "Snow banks exist (specify height)" },
+      { code: "HZ", meaning: "Covered by frozen ruts and ridges" },
+      // Limitations (L)
+      { code: "LA", meaning: "Operating on auxiliary power supply" },
+      { code: "LB", meaning: "Reserved for aircraft based therein" },
+      { code: "LC", meaning: "Closed" },
+      { code: "LD", meaning: "Unsafe" },
+      { code: "LE", meaning: "Operating without auxiliary power supply" },
+      { code: "LF", meaning: "Interference from" },
+      { code: "LG", meaning: "Operating without identification" },
+      { code: "LH", meaning: "Unserviceable for aircraft heavier than" },
+      { code: "LI", meaning: "Closed to IFR operations" },
+      { code: "LK", meaning: "Operating as a fixed light" },
+      { code: "LL", meaning: "Usable for length/width of..." },
+      { code: "LN", meaning: "Closed to all night operations" },
+      { code: "LP", meaning: "Prohibited to" },
+      { code: "LR", meaning: "Aircraft restricted to runways/taxiways" },
+      { code: "LS", meaning: "Subject to interruption" },
+      { code: "LT", meaning: "Limited to" },
+      { code: "LV", meaning: "Closed to VFR operations" },
+      { code: "LW", meaning: "Will take place" },
+      { code: "LX", meaning: "Operating but caution advised due to" },
+      // Other / unspecified
+      { code: "TT", meaning: "Trigger (AIP/AIRAC notification)" },
       { code: "XX", meaning: "Other / unspecified" }
     ];
     const Q_TRAFFIC_CODES = [
@@ -994,6 +1433,88 @@
       { code: "AW", meaning: "Aerodrome + Warnings" },
       { code: "EW", meaning: "Enroute + Warnings" },
       { code: "AEW", meaning: "Aerodrome + Enroute + Warnings" }
+    ];
+    let Q_SUBJECT_CODE_MAP = new Map(Q_SUBJECT_CODES.map(entry => [entry.code, entry.meaning]));
+    let Q_CONDITION_CODE_MAP = new Map(Q_CONDITION_CODES.map(entry => [entry.code, entry.meaning]));
+    const Q_LEGEND_DATA_SOURCES = {
+      subjects: "data/faa_appendix_b_subjects.json",
+      conditions: "data/faa_appendix_b_conditions.json"
+    };
+    const Q_SUBJECT_CUSTOM = [
+      { code: "NX", meaning: "Navaid (general)", category: "Terminal and En Route Navigation Facilities (N)" },
+      { code: "XX", meaning: "Other / unspecified subject", category: "Custom / Other (X)" }
+    ];
+    const SUBJECT_CATEGORY_LABELS = {
+      A: "Airspace Organization (A)",
+      C: "Communications and Surveillance Facilities (C)",
+      F: "Facilities and Services (F)",
+      G: "GNSS Services (G)",
+      I: "Instrument and Microwave Landing System (I)",
+      L: "Lighting Facilities (L)",
+      M: "Movement and Landing Area (M)",
+      N: "Terminal and En Route Navigation Facilities (N)",
+      O: "Other Information (O)",
+      P: "Air Traffic Procedures (P)",
+      R: "Navigation Warnings: Airspace Restrictions (R)",
+      S: "Air Traffic and VOLMET Services (S)",
+      W: "Navigation Warnings: Warnings (W)",
+      X: "Custom / Other (X)",
+      K: "Checklists (K)"
+    };
+    const CONDITION_CATEGORY_LABELS = {
+      A: "Availability (A)",
+      C: "Changes (C)",
+      H: "Hazard Conditions (H)",
+      L: "Limitations (L)",
+      X: "Other (XX)"
+    };
+    const Q_PRIORITY_BY_CATEGORY = {
+      O: 90,
+      W: 85,
+      R: 82,
+      A: 55,
+      S: 52,
+      N: 48,
+      C: 45,
+      P: 38,
+      G: 36,
+      I: 28,
+      F: 16,
+      L: 12,
+      M: 12,
+      X: 10,
+      K: 10
+    };
+    const Q_PRIORITY_BY_CONDITION = {
+      CL: 22,
+      CA: 20,
+      CN: 18,
+      AS: 18,
+      AU: 16,
+      CH: 12,
+      CT: 10,
+      CR: 10,
+      HW: 10,
+      LW: 8,
+      TT: 6,
+      XX: 0
+    };
+    const Q_PRIORITY_OVERRIDES = [
+      { subject: "OB", score: 95, label: "Critical", reason: "Obstacle" },
+      { subject: "OL", score: 92, label: "High", reason: "Obstacle lighting" },
+      { subject: "WU", score: 92, label: "High", reason: "Unmanned aircraft activity" },
+      { subject: "WP", score: 88, label: "High", reason: "Parachute/paragliding" },
+      { subject: "WH", score: 88, label: "High", reason: "Blasting" },
+      { subject: "WM", score: 88, label: "High", reason: "Firing activity" },
+      { subject: "WA", score: 86, label: "High", reason: "Air display" },
+      { subject: "WB", score: 86, label: "High", reason: "Aerobatics" },
+      { subject: "WC", score: 86, label: "High", reason: "Captive balloon/kite" },
+      { subject: "WR", score: 86, label: "High", reason: "Radioactive/toxic materials" },
+      { subject: "RT", score: 90, label: "High", reason: "Temporary restricted area" },
+      { subject: "RR", score: 90, label: "High", reason: "Restricted area" },
+      { subject: "RP", score: 90, label: "High", reason: "Prohibited area" },
+      { subject: "RD", score: 86, label: "High", reason: "Danger area" },
+      { subject: "RA", score: 84, label: "High", reason: "Airspace reservation" }
     ];
 
     function goBack(event) {
@@ -1022,40 +1543,49 @@
       localStorage.setItem(LAST_ICAO_STORAGE_KEY, normalized);
     }
 
+    function persistLastFir(code) {
+      const normalized = normalizeCode(code, 4);
+      if (!normalized) return;
+      localStorage.setItem(LAST_FIR_STORAGE_KEY, normalized);
+    }
+
     function updateSelectionSummary() {
-      const selectedFir = normalizeCode(el.firSelect.value, 4) || "CZYZ";
-      const selectedIcao = normalizeCode(el.icaoSelect.value, 4) || "-";
-      el.currentFirValue.textContent = selectedFir;
-      el.currentIcaoValue.textContent = selectedIcao;
+      const selectedFir = normalizeCode(el.firInput.value, 4);
+      const selectedIcao = normalizeCode(el.icaoInput.value, 4);
+      el.currentFirValue.textContent = selectedFir || "-";
+      el.currentIcaoValue.textContent = selectedIcao || "-";
     }
 
     function setIcaoSelection(code) {
       const normalized = normalizeCode(code, 4);
       if (!normalized) {
-        el.icaoSelect.value = "";
+        el.icaoInput.value = "";
+        if (el.icaoSelect) el.icaoSelect.value = "";
         updateSelectionSummary();
         return;
       }
-      const exists = Array.from(el.icaoSelect.options).some(opt => normalizeCode(opt.value, 4) === normalized);
-      if (!exists) {
-        const option = document.createElement("option");
-        option.value = normalized;
-        option.textContent = normalized;
-        el.icaoSelect.appendChild(option);
-      }
-      el.icaoSelect.value = normalized;
+      el.icaoInput.value = normalized;
+      if (el.icaoSelect) el.icaoSelect.value = normalized;
       updateSelectionSummary();
       persistLastIcao(normalized);
     }
 
     function refreshIcaoOptionsFromItems(items) {
       const airports = buildAirportUniverseFromItems(items || []);
-      const selectedBefore = normalizeCode(el.icaoSelect.value, 4);
+      const selectedBefore = normalizeCode(el.icaoInput.value, 4);
       const preferredIcao = selectedBefore || lastSelectedIcao;
       const optionsHtml = airports
-        .map(code => `<option value="${escapeHtml(code)}">${escapeHtml(code)}</option>`)
+        .map(code => `<option value="${escapeHtml(code)}"></option>`)
         .join("");
-      el.icaoSelect.innerHTML = `<option value="">All Airports</option>${optionsHtml}`;
+      if (el.icaoList) {
+        el.icaoList.innerHTML = optionsHtml;
+      }
+      if (el.icaoSelect) {
+        const selectHtml = airports
+          .map(code => `<option value="${escapeHtml(code)}">${escapeHtml(code)}</option>`)
+          .join("");
+        el.icaoSelect.innerHTML = `<option value=\"\">Pick ICAO</option>${selectHtml}`;
+      }
 
       if (preferredIcao) {
         setIcaoSelection(preferredIcao);
@@ -1178,13 +1708,7 @@
       const params = new URLSearchParams();
       params.append("site", site);
 
-      if (el.useWxRecallMode.checked) {
-        for (const alpha of WXRECALL_ALPHA_TYPES) {
-          params.append("alpha", alpha);
-        }
-      } else {
-        params.append("alpha", "notam");
-      }
+      params.append("alpha", "notam");
 
       params.append("notam_choice", "default");
       params.append("_", String(Date.now()));
@@ -1193,6 +1717,10 @@
 
     function cacheKeyForSite(site) {
       return `fetchnotams:site:${site}`;
+    }
+
+    function getLastFir() {
+      return normalizeCode(localStorage.getItem(LAST_FIR_STORAGE_KEY) || "", 4);
     }
 
     function loadCache(site) {
@@ -1209,7 +1737,7 @@
       localStorage.setItem(cacheKeyForSite(site), JSON.stringify(payload));
     }
 
-    async function fetchWithTimeout(url, timeoutMs) {
+    async function fetchWithTimeout(url, timeoutMs, options = {}) {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
       try {
@@ -1217,7 +1745,8 @@
           method: "GET",
           signal: controller.signal,
           cache: "no-store",
-          credentials: "omit"
+          credentials: "omit",
+          headers: options.headers || undefined
         });
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}`);
@@ -1242,13 +1771,120 @@
     }
 
     function parseQLine(rawText) {
-      const m = (rawText || "").match(/Q\)\s*([A-Z]{4})\/(Q[A-Z]{4})\//i);
+      const m = (rawText || "").match(/Q\)\s*([^\n\r]+)/i);
       if (!m) return null;
-      const qcode = String(m[2] || "").toUpperCase();
+      const line = String(m[1] || "").trim();
+      if (!line) return null;
+      const parts = line.split("/").map(part => String(part || "").trim());
+      const fir = normalizeCode(parts[0], 4);
+      const qcode = normalizeCode(parts[1], 5);
+      if (!qcode || qcode.length !== 5 || qcode[0] !== "Q") return null;
       const subject = qcode.slice(1, 3);
       const category = subject.slice(0, 1);
-      const status = qcode.slice(3, 5);
-      return { qcode, subject, category, status };
+      const condition = qcode.slice(3, 5);
+      const traffic = String(parts[2] || "").toUpperCase().replace(/[^A-Z]/g, "");
+      const purpose = String(parts[3] || "").toUpperCase().replace(/[^A-Z]/g, "");
+      const scope = String(parts[4] || "").toUpperCase().replace(/[^A-Z]/g, "");
+      return { fir, qcode, subject, category, condition, traffic, purpose, scope };
+    }
+
+    function extractNotamNumber(rawText) {
+      const value = String(rawText || "");
+      if (!value) return "";
+      const m = value.match(/\(([A-Z]\d{4}\/\d{2})\s+NOTAM/i);
+      if (m) return m[1];
+      const m2 = value.match(/\b([A-Z]\d{4}\/\d{2})\b/);
+      return m2 ? m2[1] : "";
+    }
+
+    function rebuildQCodeMaps() {
+      Q_SUBJECT_CODE_MAP = new Map(Q_SUBJECT_CODES.map(entry => [entry.code, entry.meaning]));
+      Q_CONDITION_CODE_MAP = new Map(Q_CONDITION_CODES.map(entry => [entry.code, entry.meaning]));
+    }
+
+    async function loadQCodeLegendData() {
+      try {
+        const [subjectsRes, conditionsRes] = await Promise.all([
+          fetch(Q_LEGEND_DATA_SOURCES.subjects, { cache: "no-store" }),
+          fetch(Q_LEGEND_DATA_SOURCES.conditions, { cache: "no-store" })
+        ]);
+        if (!subjectsRes.ok || !conditionsRes.ok) {
+          return false;
+        }
+        const subjectsData = await subjectsRes.json();
+        const conditionsData = await conditionsRes.json();
+
+        if (Array.isArray(subjectsData) && subjectsData.length) {
+          Q_SUBJECT_CODES = subjectsData
+            .filter(entry => entry && typeof entry.code === "string")
+            .map(entry => ({
+              code: String(entry.code || "").toUpperCase().trim(),
+              meaning: String(entry.meaning || "").trim(),
+              category: String(entry.category || "").trim()
+            }))
+            .filter(entry => entry.code.length === 2);
+        }
+
+        if (Array.isArray(Q_SUBJECT_CUSTOM) && Q_SUBJECT_CUSTOM.length) {
+          const existing = new Set(Q_SUBJECT_CODES.map(entry => entry.code));
+          Q_SUBJECT_CUSTOM.forEach(entry => {
+            const code = String(entry.code || "").toUpperCase().trim();
+            if (!code || code.length !== 2 || existing.has(code)) return;
+            Q_SUBJECT_CODES.push({
+              code,
+              meaning: String(entry.meaning || "").trim(),
+              category: String(entry.category || "").trim()
+            });
+            existing.add(code);
+          });
+        }
+
+        if (Array.isArray(conditionsData) && conditionsData.length) {
+          Q_CONDITION_CODES = conditionsData
+            .filter(entry => entry && typeof entry.code === "string")
+            .map(entry => ({
+              code: String(entry.code || "").toUpperCase().trim(),
+              meaning: String(entry.meaning || "").trim(),
+              category: String(entry.category || "").trim()
+            }))
+            .filter(entry => entry.code.length === 2);
+        }
+
+        rebuildQCodeMaps();
+        return true;
+      } catch (error) {
+        console.warn("[FetchNotams] Q-code legend JSON load failed, using embedded lists.", error);
+        return false;
+      }
+    }
+
+    function getQSubjectMeaning(code) {
+      if (!code) return "";
+      return Q_SUBJECT_CODE_MAP.get(code) || "";
+    }
+
+    function getQConditionMeaning(code) {
+      if (!code) return "";
+      return Q_CONDITION_CODE_MAP.get(code) || "";
+    }
+
+    function scoreQCode(qInfo) {
+      if (!qInfo) return { score: 0, label: "Unknown", reason: "" };
+      const override = Q_PRIORITY_OVERRIDES.find(entry => entry.subject === qInfo.subject);
+      if (override) {
+        return { score: override.score, label: override.label, reason: override.reason };
+      }
+      const base = Q_PRIORITY_BY_CATEGORY[qInfo.category] || 0;
+      const conditionBoost = Q_PRIORITY_BY_CONDITION[qInfo.condition] || 0;
+      const score = base + conditionBoost;
+      let label = "Low";
+      if (score >= 85) label = "High";
+      else if (score >= 60) label = "Medium";
+      return { score, label, reason: "" };
+    }
+
+    function isPrioritySortEnabled() {
+      return !!el.sortByPriority?.checked;
     }
 
     function dmsTokenToDecimal(token, isLat) {
@@ -1517,11 +2153,12 @@
       const included = TRACKED_Q_CATEGORIES.filter(category => modeMap.get(category) !== "exclude");
       const excludedText = excluded.length > 0 ? excluded.join(",") : "none";
       const includedText = included.length > 0 ? included.join(",") : "none";
+      const sortText = isPrioritySortEnabled() ? "Priority sort on." : "Priority sort off.";
       if (!enabled) {
-        el.qFilterSummary.textContent = "Q filter is off. Live results are unchanged.";
+        el.qFilterSummary.textContent = `Q filter is off. Live results are unchanged. ${sortText}`;
         return;
       }
-      el.qFilterSummary.textContent = `Q filter on: include ${includedText} | exclude ${excludedText}.`;
+      el.qFilterSummary.textContent = `Q filter on: include ${includedText} | exclude ${excludedText}. ${sortText}`;
     }
 
     function filterLegendRows(rows, query) {
@@ -1562,17 +2199,65 @@
       `;
     }
 
+    function normalizeSubjectCategoryLabel(rawTitle, code) {
+      if (rawTitle) {
+        return String(rawTitle)
+          .replace(/^ATM\\s+/i, "")
+          .replace(/^CNS\\s+/i, "")
+          .replace(/^AGA\\s+/i, "")
+          .replace(/^COM\\s+/i, "")
+          .trim();
+      }
+      const letter = code ? code.slice(0, 1) : "";
+      return SUBJECT_CATEGORY_LABELS[letter] || "Other";
+    }
+
+    function normalizeConditionCategoryLabel(rawTitle, code) {
+      if (rawTitle) {
+        return String(rawTitle).trim();
+      }
+      const letter = code ? code.slice(0, 1) : "";
+      return CONDITION_CATEGORY_LABELS[letter] || "Other";
+    }
+
     function renderQSubjectLegendTable() {
-      const rawQuery = String(el.qLegendSearch?.value || "").toUpperCase();
-      const query = rawQuery.replace(/[^A-Z*]/g, "").replace(/\*+/g, "*").trim();
-      const subjectRows = filterLegendRows([...Q_SUBJECT_CODES].sort((a, b) => a.code.localeCompare(b.code)), query);
-      const conditionRows = filterLegendRows([...Q_CONDITION_CODES].sort((a, b) => a.code.localeCompare(b.code)), query);
-      const trafficRows = filterLegendRows([...Q_TRAFFIC_CODES].sort((a, b) => a.code.localeCompare(b.code)), query);
-      const scopeRows = filterLegendRows([...Q_SCOPE_CODES].sort((a, b) => a.code.localeCompare(b.code)), query);
+      const rawSubject = String(el.qLegendSearch?.value || "").toUpperCase();
+      const rawCondition = String(el.qLegendConditionSearch?.value || "").toUpperCase();
+      const subjectQuery = rawSubject.replace(/[^A-Z*]/g, "").replace(/\*+/g, "*").trim();
+      const conditionQuery = rawCondition.replace(/[^A-Z*]/g, "").replace(/\*+/g, "*").trim();
+      const subjectRows = filterLegendRows([...Q_SUBJECT_CODES].sort((a, b) => a.code.localeCompare(b.code)), subjectQuery);
+      const conditionRows = filterLegendRows([...Q_CONDITION_CODES].sort((a, b) => a.code.localeCompare(b.code)), conditionQuery);
+      const miscQuery = "";
+      const trafficRows = filterLegendRows([...Q_TRAFFIC_CODES].sort((a, b) => a.code.localeCompare(b.code)), miscQuery);
+      const scopeRows = filterLegendRows([...Q_SCOPE_CODES].sort((a, b) => a.code.localeCompare(b.code)), miscQuery);
+
+      const subjectGroups = new Map();
+      for (const entry of subjectRows) {
+        const label = normalizeSubjectCategoryLabel(entry.category, entry.code);
+        if (!subjectGroups.has(label)) subjectGroups.set(label, []);
+        subjectGroups.get(label).push(entry);
+      }
+      const subjectSections = Array.from(subjectGroups.entries())
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([label, rows]) =>
+          renderLegendSection(`Q Subject Codes (2nd and 3rd) - ${label}`, rows, "Subject")
+        );
+
+      const conditionGroups = new Map();
+      for (const entry of conditionRows) {
+        const label = normalizeConditionCategoryLabel(entry.category, entry.code);
+        if (!conditionGroups.has(label)) conditionGroups.set(label, []);
+        conditionGroups.get(label).push(entry);
+      }
+      const conditionSections = Array.from(conditionGroups.entries())
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([label, rows]) =>
+          renderLegendSection(`Q Condition Codes (4th and 5th) - ${label}`, rows, "Condition")
+        );
 
       const sections = [
-        renderLegendSection("Q Subject Codes (2nd and 3rd characters)", subjectRows, "Subject"),
-        renderLegendSection("Q Condition Codes (4th and 5th characters)", conditionRows, "Condition"),
+        ...subjectSections,
+        ...conditionSections,
         renderLegendSection("Q Traffic Codes", trafficRows, "Traffic"),
         renderLegendSection("Q Scope Codes", scopeRows, "Scope")
       ].filter(Boolean);
@@ -1580,6 +2265,25 @@
       el.qLegendBody.innerHTML = sections.length > 0
         ? sections.join("")
         : '<p class="q-legend-note">No legend entries match your search.</p>';
+
+      if (el.qLegendInfo) {
+        const subjectCode = subjectQuery.replace(/\*/g, "");
+        const conditionCode = conditionQuery.replace(/\*/g, "");
+        const subjectMeaning = subjectCode && subjectCode.length === 2 ? getQSubjectMeaning(subjectCode) : "";
+        const conditionMeaning = conditionCode && conditionCode.length === 2 ? getQConditionMeaning(conditionCode) : "";
+        if (subjectCode && conditionCode) {
+          const combined = `${subjectCode}${conditionCode}`;
+          const subjectText = subjectMeaning || "Unknown subject";
+          const conditionText = conditionMeaning || "Unknown condition";
+          el.qLegendInfo.textContent = `${combined} = ${subjectText}, ${conditionText}`;
+        } else if (subjectCode) {
+          el.qLegendInfo.textContent = `${subjectCode} = ${subjectMeaning || "Unknown subject"}. Enter a condition to see the pair meaning.`;
+        } else if (conditionCode) {
+          el.qLegendInfo.textContent = `${conditionCode} = ${conditionMeaning || "Unknown condition"}. Enter a subject to see the pair meaning.`;
+        } else {
+          el.qLegendInfo.textContent = "Enter both subject and condition codes to see a combined meaning.";
+        }
+      }
     }
 
     function openQCodeLegend() {
@@ -1587,6 +2291,9 @@
       el.qLegendModal.setAttribute("aria-hidden", "false");
       qLegendOpenedAtMs = Date.now();
       setQCodeLegendPopoutStatus("", "");
+      if (el.qLegendSearch) {
+        requestAnimationFrame(() => el.qLegendSearch.focus());
+      }
     }
 
     function setQCodeLegendPopoutStatus(message, tone = "") {
@@ -1660,6 +2367,7 @@
     .q-legend-context-line .seg-limits { color: #fff08d; }
     .q-legend-context-line .seg-coord { color: #8aeff3; }
     .q-legend-note { margin: 0 0 10px; color: #4f5f74; font-size: 0.88rem; }
+    .q-legend-info { margin: 0 0 10px; color: #b3261e; font-size: 1rem; font-weight: 800; }
     .q-legend-tools { display: flex; gap: 8px; align-items: center; margin: 0 0 10px; }
     .q-legend-tools input { flex: 1; min-width: 220px; padding: 8px 10px; border: 1px solid #c7ced8; border-radius: 8px; font-size: 0.95rem; }
     .q-legend-tools button { border: 1px solid #c7ced8; background: #ffffff; border-radius: 8px; padding: 8px 10px; cursor: pointer; font-weight: 600; color: #1f3652; }
@@ -1680,8 +2388,10 @@
     </div>
     ${contextHtml}
     ${noteHtml}
+    <p class="q-legend-info" id="popupLegendInfo">Enter both subject and condition codes to see a combined meaning.</p>
     <div class="q-legend-tools">
-      <input id="popupLegendSearch" type="text" placeholder="Lookup by code prefix (example: I, IV, P, PM, AE)">
+      <input id="popupLegendSubject" type="text" placeholder="Subject (2 letters, example: LI)">
+      <input id="popupLegendCondition" type="text" placeholder="Condition (2 letters, example: AS)">
       <button id="popupLegendClear" type="button">Clear</button>
     </div>
     <p class="q-legend-empty" id="popupLegendEmpty">No legend entries match your search.</p>
@@ -1689,7 +2399,8 @@
   </div>
   <script>
     (function () {
-      var searchInput = document.getElementById('popupLegendSearch');
+      var subjectInput = document.getElementById('popupLegendSubject');
+      var conditionInput = document.getElementById('popupLegendCondition');
       var clearBtn = document.getElementById('popupLegendClear');
       var emptyNote = document.getElementById('popupLegendEmpty');
 
@@ -1699,12 +2410,17 @@
       }
 
       function applyFilter() {
-        var query = normalizeQuery(searchInput ? searchInput.value : '');
+        var subjectQuery = normalizeQuery(subjectInput ? subjectInput.value : '');
+        var conditionQuery = normalizeQuery(conditionInput ? conditionInput.value : '');
         var totalVisibleRows = 0;
         var sections = document.querySelectorAll('.q-legend-section');
 
         for (var si = 0; si < sections.length; si++) {
           var section = sections[si];
+          var heading = section.querySelector('h3');
+          var title = heading ? String(heading.textContent || '') : '';
+          var isSubject = title.indexOf('Subject') !== -1;
+          var isCondition = title.indexOf('Condition') !== -1;
           var rows = section.querySelectorAll('tbody tr');
           var visibleInSection = 0;
 
@@ -1712,7 +2428,12 @@
             var row = rows[ri];
             var firstCell = row.querySelector('td');
             var code = firstCell ? String(firstCell.textContent || '').trim().toUpperCase() : '';
-            var keep = !query || code.indexOf(query) === 0;
+            var keep = true;
+            if (isSubject && subjectQuery) {
+              keep = code.indexOf(subjectQuery) === 0;
+            } else if (isCondition && conditionQuery) {
+              keep = code.indexOf(conditionQuery) === 0;
+            }
             row.style.display = keep ? '' : 'none';
             if (keep) {
               visibleInSection += 1;
@@ -1723,27 +2444,92 @@
           section.style.display = visibleInSection > 0 ? '' : 'none';
         }
 
+        var infoEl = document.getElementById('popupLegendInfo');
+        if (infoEl) {
+          var subjectCode = subjectQuery.replace(/\\*/g, '').slice(0, 2);
+          var conditionCode = conditionQuery.replace(/\\*/g, '').slice(0, 2);
+          var subjectMeaning = '';
+          var conditionMeaning = '';
+
+          var sectionsAll = document.querySelectorAll('.q-legend-section');
+          var subjectSection = null;
+          var conditionSection = null;
+          for (var si2 = 0; si2 < sectionsAll.length; si2++) {
+            var head2 = sectionsAll[si2].querySelector('h3');
+            var title2 = head2 ? String(head2.textContent || '') : '';
+            if (!subjectSection && title2.indexOf('Subject') !== -1) subjectSection = sectionsAll[si2];
+            if (!conditionSection && title2.indexOf('Condition') !== -1) conditionSection = sectionsAll[si2];
+          }
+
+          if (subjectSection && subjectCode.length === 2) {
+            var sRows = subjectSection.querySelectorAll('tbody tr');
+            for (var i2 = 0; i2 < sRows.length; i2++) {
+              var sCodeCell = sRows[i2].querySelector('td');
+              if (!sCodeCell) continue;
+              var sCodeText = String(sCodeCell.textContent || '').trim().toUpperCase();
+              if (sCodeText === subjectCode) {
+                var sMeaningCell = sRows[i2].querySelectorAll('td')[1];
+                subjectMeaning = sMeaningCell ? String(sMeaningCell.textContent || '').trim() : '';
+                break;
+              }
+            }
+          }
+
+          if (conditionSection && conditionCode.length === 2) {
+            var cRows = conditionSection.querySelectorAll('tbody tr');
+            for (var j2 = 0; j2 < cRows.length; j2++) {
+              var cCodeCell = cRows[j2].querySelector('td');
+              if (!cCodeCell) continue;
+              var cCodeText = String(cCodeCell.textContent || '').trim().toUpperCase();
+              if (cCodeText === conditionCode) {
+                var cMeaningCell = cRows[j2].querySelectorAll('td')[1];
+                conditionMeaning = cMeaningCell ? String(cMeaningCell.textContent || '').trim() : '';
+                break;
+              }
+            }
+          }
+
+          if (subjectCode && conditionCode) {
+            infoEl.textContent = subjectCode + conditionCode + ' = ' + (subjectMeaning || 'Unknown subject') + ', ' + (conditionMeaning || 'Unknown condition');
+          } else if (subjectCode) {
+            infoEl.textContent = subjectCode + ' = ' + (subjectMeaning || 'Unknown subject') + '. Enter a condition to see the pair meaning.';
+          } else if (conditionCode) {
+            infoEl.textContent = conditionCode + ' = ' + (conditionMeaning || 'Unknown condition') + '. Enter a subject to see the pair meaning.';
+          } else {
+            infoEl.textContent = 'Enter both subject and condition codes to see a combined meaning.';
+          }
+        }
+
         if (emptyNote) {
           emptyNote.style.display = totalVisibleRows > 0 ? 'none' : 'block';
         }
       }
 
-      if (searchInput) {
-        searchInput.addEventListener('input', function () {
-          searchInput.value = String(searchInput.value || '').toUpperCase().replace(/[^A-Z*]/g, '');
+      if (subjectInput) {
+        subjectInput.addEventListener('input', function () {
+          subjectInput.value = String(subjectInput.value || '').toUpperCase().replace(/[^A-Z*]/g, '');
           applyFilter();
         });
       }
 
-      if (clearBtn && searchInput) {
-        clearBtn.addEventListener('click', function () {
-          searchInput.value = '';
+      if (conditionInput) {
+        conditionInput.addEventListener('input', function () {
+          conditionInput.value = String(conditionInput.value || '').toUpperCase().replace(/[^A-Z*]/g, '');
           applyFilter();
-          searchInput.focus();
+        });
+      }
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+          if (subjectInput) subjectInput.value = '';
+          if (conditionInput) conditionInput.value = '';
+          applyFilter();
+          if (subjectInput) subjectInput.focus();
         });
       }
 
       applyFilter();
+      if (subjectInput) subjectInput.focus();
     })();
   <\/script>
 </body>
@@ -1813,40 +2599,133 @@
       el.loadingState.setAttribute("aria-busy", active ? "true" : "false");
     }
 
+    function setFetchButtonState(state) {
+      if (!el.fetchNotamsBtn) return;
+      el.fetchNotamsBtn.classList.remove("btn-attn", "btn-muted");
+      if (state === "attention") {
+        el.fetchNotamsBtn.classList.add("btn-attn");
+      } else if (state === "muted") {
+        el.fetchNotamsBtn.classList.add("btn-muted");
+      }
+    }
+
+    function setUseCacheButtonState(isFresh) {
+      if (!el.refreshFromCacheBtn) return;
+      el.refreshFromCacheBtn.classList.toggle("btn-attn", !!isFresh);
+    }
+
+    function resetToNoData(message = "No data loaded yet.", buttonState = "attention") {
+      currentItems = [];
+      refreshIcaoOptionsFromItems([]);
+      updateAirportUniverseInfo([]);
+      render([], normalizeCode(el.firInput.value, 4) || "-", message);
+      el.fetchTimeValue.textContent = "-";
+      el.updatedValue.textContent = "-";
+      setStatusClass(el.sourceValue, "");
+      setFetchButtonState(buttonState);
+    }
+
     function render(items, site, sourceLabel) {
-      const maxCount = Number(el.maxItems.value) || 100;
+      const maxCountRaw = Number(el.maxItems.value);
+      const maxCount = Number.isFinite(maxCountRaw) ? maxCountRaw : 100;
       const qFilterEnabled = isQFilterEnabled();
       const qCategoryModes = getQCategoryModeMap();
-      const icaoFilter = normalizeCode(el.icaoSelect.value, 4);
+      const icaoFilter = normalizeCode(el.icaoInput.value, 4);
+      const notamFilterRaw = String(el.notamInput?.value || "").toUpperCase().replace(/\s+/g, "");
 
       const icaoFiltered = icaoFilter
         ? items.filter(item => item.location.includes(icaoFilter) || item.raw.includes(icaoFilter))
         : items;
 
-      const filtered = qFilterEnabled
+      const inputFiltered = notamFilterRaw
         ? icaoFiltered.filter(item => {
-          const qInfo = parseQLine(item.raw || "");
-          if (!qInfo) return true;
-          const mode = qCategoryModes.get(qInfo.category) || "include";
-          return mode !== "exclude";
-        })
+            const notamNumber = extractNotamNumber(item.raw || "").toUpperCase().replace(/\s+/g, "");
+            return notamNumber.includes(notamFilterRaw);
+          })
         : icaoFiltered;
+
+      const filtered = qFilterEnabled
+        ? inputFiltered.filter(item => {
+            const qInfo = parseQLine(item.raw || "");
+            if (!qInfo) return true;
+            const mode = qCategoryModes.get(qInfo.category) || "include";
+            return mode !== "exclude";
+          })
+        : inputFiltered;
 
       currentFilteredItems = filtered;
 
-      const displayItems = filtered.slice(0, maxCount);
-      updateViewAllOnMapButton(displayItems);
+      const missingQCodes = new Set();
+      const decorated = filtered.map(item => {
+        const qInfo = parseQLine(item.raw || "");
+        const priority = scoreQCode(qInfo);
+        let missingSubject = false;
+        let missingCondition = false;
+        let missingQCode = false;
+
+        if (qInfo?.subject) {
+          missingSubject = !Q_SUBJECT_CODE_MAP.has(qInfo.subject);
+        }
+        if (qInfo?.condition) {
+          missingCondition = !Q_CONDITION_CODE_MAP.has(qInfo.condition);
+        }
+        if (!qInfo || missingSubject || missingCondition) {
+          missingQCode = true;
+          if (qInfo?.qcode) {
+            missingQCodes.add(qInfo.qcode);
+          } else {
+            missingQCodes.add("Q????");
+          }
+        }
+
+        return { item, qInfo, priority, missingSubject, missingCondition, missingQCode };
+      });
+
+      if (isPrioritySortEnabled()) {
+        decorated.sort((a, b) => {
+          if (b.priority.score !== a.priority.score) {
+            return b.priority.score - a.priority.score;
+          }
+          const ta = a.item.startValidity ? new Date(a.item.startValidity).getTime() : 0;
+          const tb = b.item.startValidity ? new Date(b.item.startValidity).getTime() : 0;
+          return tb - ta;
+        });
+      }
+
+      const displayItems = maxCount === 0 ? decorated : decorated.slice(0, maxCount);
+      updateViewAllOnMapButton(displayItems.map(entry => entry.item));
       const html = displayItems
-        .map(item => {
-          const title = item.pk ? item.pk : "NO-ID";
+        .map(entry => {
+          const item = entry.item;
+          const qInfo = entry.qInfo;
+          const priority = entry.priority;
+          const notamNumber = extractNotamNumber(item.raw || "");
+          const title = notamNumber || (item.pk ? item.pk : "NO-ID");
           const start = toPrettyDate(item.startValidity);
           const end = toPrettyDate(item.endValidity);
+          const subjectMeaning = qInfo ? getQSubjectMeaning(qInfo.subject) : "";
+          const conditionMeaning = qInfo ? getQConditionMeaning(qInfo.condition) : "";
+          const qLine = qInfo
+            ? `${qInfo.qcode}${subjectMeaning ? ` (${qInfo.subject}: ${subjectMeaning})` : ""}${conditionMeaning ? ` · ${qInfo.condition}: ${conditionMeaning}` : ""}`
+            : "Q-code not found";
+          const labelKey = String(priority.label || "").toLowerCase();
+          const priorityTone = (labelKey === "high" || labelKey === "critical")
+            ? "high"
+            : (labelKey === "medium" ? "medium" : "low");
+          const missingNote = entry.missingQCode ? "Unknown Q-code" : "";
+          const qcodeClass = entry.missingQCode ? "missing" : "";
           return `
             <li class="notam-item">
               <div class="notam-line1">
                 <span class="notam-id">${escapeHtml(title)}</span>
                 <span class="notam-loc">${escapeHtml(item.location)}</span>
                 <span class="notam-time">Start (EDT/ET): ${escapeHtml(start)} | End (EDT/ET): ${escapeHtml(end)}</span>
+              </div>
+              <div class="notam-line2">
+                <span class="qcode-pill ${qcodeClass}">${escapeHtml(qInfo ? qInfo.qcode : "Q----")}</span>
+                <span class="priority-pill ${priorityTone}">${escapeHtml(priority.label)}</span>
+                ${missingNote ? `<span class="qcode-missing-note">${escapeHtml(missingNote)}</span>` : ""}
+                <span class="qcode-meaning">${escapeHtml(qLine)}</span>
               </div>
               <pre class="notam-preview">${buildNotamDescriptionHtml(item.raw)}</pre>
             </li>
@@ -1857,8 +2736,19 @@
       el.resultsList.innerHTML = html;
       el.totalValue.textContent = String(items.length);
       el.shownValue.textContent = String(displayItems.length);
-      el.notamsInScopeInline.textContent = String(filtered.length);
-      el.resultsHeaderText.textContent = `${site}: ${filtered.length} match(es), showing ${displayItems.length}.`;
+      el.notamsInScopeInline.textContent = String(inputFiltered.length);
+      updateAirportUniverseInfo(inputFiltered);
+      const icaoLabel = normalizeCode(el.icaoInput.value, 4) || "-";
+      el.resultsHeaderText.textContent = `${site}/${icaoLabel}: NOTAMs as filtered = ${filtered.length}, showing ${displayItems.length}.`;
+      if (el.unknownQCodesValue) {
+        el.unknownQCodesValue.textContent = String(missingQCodes.size);
+      }
+      const hasFirInput = !!normalizeCode(el.firInput.value, 4);
+      if (!hasFirInput) {
+        setFetchButtonState("default");
+      } else {
+        setFetchButtonState(items.length > 0 ? "muted" : "attention");
+      }
       el.sourceValue.textContent = sourceLabel;
       updateQFilterSummary();
     }
@@ -1890,7 +2780,7 @@
         for (const proxy of PROXY_PROVIDERS) {
           try {
             const proxiedUrl = proxy.buildUrl(url);
-            const payload = await fetchWithTimeout(proxiedUrl, PROXY_TIMEOUT_MS);
+            const payload = await fetchWithTimeout(proxiedUrl, PROXY_TIMEOUT_MS, { headers: proxy.headers });
             const elapsed = Math.round(performance.now() - t0);
             return {
               payload,
@@ -1910,16 +2800,27 @@
     }
 
     async function loadAndRender({ fromCacheOnly = false } = {}) {
-      const site = normalizeCode(el.firSelect.value, 4);
+      let site = normalizeCode(el.firInput.value, 4);
       if (!site || site.length < 3) {
-        alert("Select a valid FIR (4 chars). Example: CZYZ");
-        return;
+        if (fromCacheOnly) {
+          const fallbackFir = getLastFir();
+          if (!fallbackFir) {
+            alert("No cached FIR available. Enter a FIR code first.");
+            return;
+          }
+          site = fallbackFir;
+          el.firInput.value = site;
+        } else {
+          alert("Select a valid FIR (4 chars). Example: CZYZ");
+          return;
+        }
       }
 
       const cached = loadCache(site);
       const hasCache = !!(cached && Array.isArray(cached.items));
 
-      el.firSelect.value = site;
+      el.firInput.value = site;
+      persistLastFir(site);
       updateSelectionSummary();
       setLoading(
         true,
@@ -1975,6 +2876,7 @@
           savedAt: now,
           items: parsedItems
         });
+        persistLastFir(site);
       } catch (error) {
         const hasFreshCache = cached && Array.isArray(cached.items) && (now - Number(cached.savedAt || 0) <= CACHE_TTL_MS);
         if (hasFreshCache) {
@@ -1998,16 +2900,20 @@
         }
       } finally {
         setLoading(false);
-        if (!hasAutoFocusedIcao && el.icaoSelect) {
+        if (!hasAutoFocusedIcao && el.icaoInput) {
           hasAutoFocusedIcao = true;
-          requestAnimationFrame(() => el.icaoSelect.focus());
+          requestAnimationFrame(() => el.icaoInput.focus());
         }
       }
     }
 
-    el.form.addEventListener("submit", event => {
+    el.form.addEventListener("submit", async event => {
       event.preventDefault();
-      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      const site = normalizeCode(el.firInput.value, 4);
+      if (!site) {
+        alert("Enter a FIR code (4 chars). Example: CZYZ");
+        return;
+      }
       const cacheAgeMs = getCacheAgeMs(site);
       const firChanged = site !== lastFetchActionSite;
 
@@ -2019,8 +2925,8 @@
         );
 
         if (!wantsLiveRefresh) {
-          loadAndRender({ fromCacheOnly: true });
-          el.resultsHeaderText.textContent = `${site}: Using cache (${mins}m old). Live fetch cooldown is 30m.`;
+          await loadAndRender({ fromCacheOnly: true });
+          render(currentItems, site, el.sourceValue.textContent || "-");
           return;
         }
       }
@@ -2029,33 +2935,65 @@
       loadAndRender();
     });
 
-    el.firSelect.addEventListener("change", () => {
+    el.firInput.addEventListener("input", () => {
+      el.firInput.value = normalizeCode(el.firInput.value, 4);
       updateSelectionSummary();
-      lastFetchActionSite = normalizeCode(el.firSelect.value, 4) || "CZYZ";
-      loadAndRender();
     });
 
-    el.icaoSelect.addEventListener("change", () => {
-      persistLastIcao(el.icaoSelect.value);
+    el.icaoInput.addEventListener("input", () => {
+      el.icaoInput.value = normalizeCode(el.icaoInput.value, 4);
+      if (el.icaoSelect && el.icaoSelect.value !== el.icaoInput.value) {
+        el.icaoSelect.value = el.icaoInput.value;
+      }
+      persistLastIcao(el.icaoInput.value);
       updateSelectionSummary();
-      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
       render(currentItems, site, el.sourceValue.textContent || "-");
     });
 
-    el.clearIcaoBtn.addEventListener("click", () => {
-      setIcaoSelection("");
-      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
-      render(currentItems, site, el.sourceValue.textContent || "-");
-    });
+    if (el.icaoSelect) {
+      el.icaoSelect.addEventListener("change", () => {
+        setIcaoSelection(el.icaoSelect.value);
+        const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+        render(currentItems, site, el.sourceValue.textContent || "-");
+      });
+    }
+
+    if (el.notamInput) {
+      el.notamInput.addEventListener("input", () => {
+        const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+        render(currentItems, site, el.sourceValue.textContent || "-");
+      });
+    }
+
+    if (el.clearEntriesBtn) {
+      el.clearEntriesBtn.addEventListener("click", () => {
+        el.firInput.value = "";
+        el.icaoInput.value = "";
+        if (el.notamInput) el.notamInput.value = "";
+        updateSelectionSummary();
+        lastFetchActionSite = "";
+        lastSelectedIcao = "";
+        localStorage.removeItem(LAST_ICAO_STORAGE_KEY);
+        resetToNoData("No data loaded yet.", "default");
+        const lastFir = getLastFir();
+        const cache = lastFir ? loadCache(lastFir) : null;
+        const cacheAgeMs = cache?.fetchedAt ? (Date.now() - new Date(cache.fetchedAt).getTime()) : Infinity;
+        setUseCacheButtonState(cacheAgeMs >= 0 && cacheAgeMs <= FRESH_BANNER_WINDOW_MS);
+        el.icaoInput.value = "";
+        el.icaoInput.dispatchEvent(new Event("input"));
+      });
+    }
+
 
     el.maxItems.addEventListener("change", () => {
-      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
       render(currentItems, site, el.sourceValue.textContent || "-");
     });
 
     el.toggleQFilterBtn.addEventListener("click", () => {
       setQFilterToggleState(!isQFilterEnabled());
-      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
       render(currentItems, site, el.sourceValue.textContent || "-");
     });
 
@@ -2063,7 +3001,7 @@
       node.addEventListener("click", () => {
         const nextState = String(node.dataset.state || "include").toLowerCase() === "exclude" ? "include" : "exclude";
         setQCategoryButtonState(node, nextState);
-        const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+        const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
         render(currentItems, site, el.sourceValue.textContent || "-");
       });
     });
@@ -2072,7 +3010,7 @@
       document.querySelectorAll(".qcat-toggle").forEach(node => {
         setQCategoryButtonState(node, "exclude");
       });
-      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
       render(currentItems, site, el.sourceValue.textContent || "-");
     });
 
@@ -2080,9 +3018,16 @@
       document.querySelectorAll(".qcat-toggle").forEach(node => {
         setQCategoryButtonState(node, "include");
       });
-      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
+      const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
       render(currentItems, site, el.sourceValue.textContent || "-");
     });
+
+    if (el.sortByPriority) {
+      el.sortByPriority.addEventListener("change", () => {
+        const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+        render(currentItems, site, el.sourceValue.textContent || "-");
+      });
+    }
 
     if (el.openQLegend) {
       el.openQLegend.addEventListener("click", launchQCodeLegend);
@@ -2120,9 +3065,18 @@
       el.qLegendSearch.value = String(el.qLegendSearch.value || "").toUpperCase().replace(/[^A-Z*]/g, "");
       renderQSubjectLegendTable();
     });
+    if (el.qLegendConditionSearch) {
+      el.qLegendConditionSearch.addEventListener("input", () => {
+        el.qLegendConditionSearch.value = String(el.qLegendConditionSearch.value || "").toUpperCase().replace(/[^A-Z*]/g, "");
+        renderQSubjectLegendTable();
+      });
+    }
 
     el.qLegendClearSearch.addEventListener("click", () => {
       el.qLegendSearch.value = "";
+      if (el.qLegendConditionSearch) {
+        el.qLegendConditionSearch.value = "";
+      }
       renderQSubjectLegendTable();
       el.qLegendSearch.focus();
     });
@@ -2143,22 +3097,24 @@
       }
     });
 
-    el.clearCacheBtn.addEventListener("click", () => {
-      const site = normalizeCode(el.firSelect.value, 4) || "CZYZ";
-      localStorage.removeItem(cacheKeyForSite(site));
-      currentItems = [];
-      refreshIcaoOptionsFromItems([]);
-      updateAirportUniverseInfo([]);
-      render([], site, "Cache cleared");
-      el.fetchTimeValue.textContent = "-";
-      el.updatedValue.textContent = "-";
-      setStatusClass(el.sourceValue, "");
-      el.resultsHeaderText.textContent = `${site}: cache cleared. Loading fresh data...`;
-      loadAndRender();
-    });
+    if (el.refreshFromCacheBtn) {
+      el.refreshFromCacheBtn.addEventListener("click", async () => {
+        await loadAndRender({ fromCacheOnly: true });
+        const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+        render(currentItems, site, el.sourceValue.textContent || "-");
+        setUseCacheButtonState(false);
+      });
+    }
 
-    el.refreshFromCacheBtn.addEventListener("click", () => {
-      loadAndRender({ fromCacheOnly: true });
+    document.querySelectorAll("[data-collapse-target]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const targetSelector = btn.getAttribute("data-collapse-target");
+        if (!targetSelector) return;
+        const section = document.querySelector(targetSelector);
+        if (!section) return;
+        section.classList.toggle("collapsed");
+        btn.textContent = section.classList.contains("collapsed") ? "Show" : "Hide";
+      });
     });
 
     el.viewAllOnMapBtn.addEventListener("click", () => {
@@ -2186,9 +3142,20 @@
 
     refreshIcaoOptionsFromItems([]);
     setQFilterToggleState(true);
-    renderQSubjectLegendTable();
-    updateQFilterSummary();
-    loadAndRender();
+    loadQCodeLegendData().finally(() => {
+      renderQSubjectLegendTable();
+      updateQFilterSummary();
+    });
+
+    const initialFir = getLastFir();
+    if (initialFir) {
+      el.firInput.value = initialFir;
+      updateSelectionSummary();
+      loadAndRender({ fromCacheOnly: true });
+    } else {
+      resetToNoData("No data loaded yet.", "attention");
+      updateSelectionSummary();
+    }
   </script>
 </body>
 </html>

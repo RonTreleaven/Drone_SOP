@@ -535,7 +535,8 @@
         </ul>
       </div>
       <div class="q-legend-tools">
-        <input id="qLegendSearch" type="text" placeholder="Search code or meaning (example: RT, runway, restricted)">
+        <input id="qLegendSearch" type="text" placeholder="Subject (2 letters, example: LI)">
+        <input id="qLegendConditionSearch" type="text" placeholder="Condition (2 letters, example: AS)">
         <button class="btn btn-small" type="button" id="qLegendShowAllToggle">Show All</button>
         <button class="btn btn-small" type="button" id="qLegendClearSearch">Clear</button>
       </div>
@@ -1025,9 +1026,10 @@
       return `${escapeHtml(before)}<span class="e-highlight">${linkifyDmsCoordinatePairs(eSection)}</span>${escapeHtml(after)}`;
     }
 
-    function renderQLegend(searchText) {
+    function renderQLegend(subjectText, conditionText) {
       const container = document.getElementById("qLegendBody");
-      const filter = (searchText || "").trim().toUpperCase();
+      const subjectFilter = (subjectText || "").trim().toUpperCase().replace(/[^A-Z]/g, "");
+      const conditionFilter = (conditionText || "").trim().toUpperCase().replace(/[^A-Z]/g, "");
       const html = [];
 
       const showAllBtn = document.getElementById("qLegendShowAllToggle");
@@ -1036,16 +1038,23 @@
       }
 
       qLegendSections.forEach(section => {
+        const sectionId = section.id || "";
         const rows = section.entries.filter(entry => {
-          if (!filter) return true;
-          return entry.code.toUpperCase() === filter;
+          if (sectionId === "subject" && subjectFilter) {
+            return entry.code.toUpperCase().startsWith(subjectFilter);
+          }
+          if (sectionId === "condition" && conditionFilter) {
+            return entry.code.toUpperCase().startsWith(conditionFilter);
+          }
+          if (sectionId === "subject" && !subjectFilter) return true;
+          if (sectionId === "condition" && !conditionFilter) return true;
+          return true;
         });
 
         if (rows.length === 0) return;
 
         const hasStatus = rows.some(row => Boolean(row.status));
-        const sectionId = section.id || "";
-        const hasActiveSearch = filter.length > 0;
+        const hasActiveSearch = subjectFilter.length > 0 || conditionFilter.length > 0;
         const isCollapsed = section.collapsible && !hasActiveSearch && !qLegendShowAll && qLegendCollapsed[sectionId] === true;
         html.push(`<section class="q-legend-section${isCollapsed ? " collapsed" : ""}" data-legend-section="${escapeHtml(sectionId)}">`);
         html.push(`<div class="q-legend-section-head">`);
@@ -1074,7 +1083,10 @@
           const id = btn.getAttribute("data-legend-toggle");
           if (!id) return;
           qLegendCollapsed[id] = !qLegendCollapsed[id];
-          renderQLegend(document.getElementById("qLegendSearch").value);
+          renderQLegend(
+            document.getElementById("qLegendSearch").value,
+            document.getElementById("qLegendConditionSearch").value
+          );
         });
       });
     }
@@ -1083,7 +1095,10 @@
       const modal = document.getElementById("qLegendModal");
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
-      renderQLegend(document.getElementById("qLegendSearch").value);
+      renderQLegend(
+        document.getElementById("qLegendSearch").value,
+        document.getElementById("qLegendConditionSearch").value
+      );
       document.getElementById("qLegendSearch").focus();
     }
 
@@ -1100,24 +1115,32 @@
         el.addEventListener("click", closeQLegend);
       });
       document.getElementById("qLegendSearch").addEventListener("input", function () {
-        renderQLegend(this.value);
+        renderQLegend(this.value, document.getElementById("qLegendConditionSearch").value);
+      });
+      document.getElementById("qLegendConditionSearch").addEventListener("input", function () {
+        renderQLegend(document.getElementById("qLegendSearch").value, this.value);
       });
       document.getElementById("qLegendClearSearch").addEventListener("click", function () {
         const input = document.getElementById("qLegendSearch");
+        const conditionInput = document.getElementById("qLegendConditionSearch");
         input.value = "";
-        renderQLegend("");
+        conditionInput.value = "";
+        renderQLegend("", "");
         input.focus();
       });
       document.getElementById("qLegendShowAllToggle").addEventListener("click", function () {
         qLegendShowAll = !qLegendShowAll;
-        renderQLegend(document.getElementById("qLegendSearch").value);
+        renderQLegend(
+          document.getElementById("qLegendSearch").value,
+          document.getElementById("qLegendConditionSearch").value
+        );
       });
       document.addEventListener("keydown", function (event) {
         if (event.key === "Escape" && document.getElementById("qLegendModal").classList.contains("open")) {
           closeQLegend();
         }
       });
-      renderQLegend("");
+      renderQLegend("", "");
     }
 
     function parseQualifierFields(rawText) {

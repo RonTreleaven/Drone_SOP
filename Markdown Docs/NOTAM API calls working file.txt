@@ -1,0 +1,44 @@
+http://localhost:8000/NotamsMap.html?src=fetchnotams&focus=1&payload_key=fetchnotams%3Amap%3Apayload%3Ammy71ph3-sxeyco&lat=43.95&lon=-78.966667
+
+
+
+Payloads
+
+https://plan.navcanada.ca/weather/api/alpha/?site=<FIR>&alpha=notam&notam_choice=default  
+
+this retrieves NOTAMS as the alpha= API call
+
+
+
+&alpha=notam&alpha=notam_summary&alpha=notam_unl&alpha=notam_unl_summary&alpha=notam_tfr&alpha=metar&alpha=taf&alpha=significant_weather&alpha=upperwind&alpha=space_weather&notam_choice=default 
+all of the choices for data requests from NAV Can API
+	
+	
+&alpha=notam&alpha=metar&alpha=taf
+
+
+https://plan.navcanada.ca/weather/api/alpha/?site=<FIR>&alpha=notam&notam_choice=default&alpha=notam&alpha=metar&alpha=taf
+
+
+
+This successfully gets METARS from ICAO Code of Airports
+
+https://plan.navcanada.ca/weather/api/alpha/?site=CYOO&alpha=metar
+
+NOTAM By FIR
+https://plan.navcanada.ca/weather/api/alpha/?site=CZYZ&alpha=notam&notam_choice=default
+
+NOTAMS by ICAO of Weather Stations:
+https://plan.navcanada.ca/weather/api/alpha/?site=CYOO&alpha=notam&notam_choice=default
+
+
+
+Important note about the “bundle” list
+Several of the alpha types we request in WXRecall mode return 404 from the API:
+
+notam_summary, notam_unl, notam_unl_summary, notam_tfr, significant_weather
+That might be part of the errors you’re seeing (even if not classic CORS). If you want, I can adjust the bundle list to only request the alpha types that actually return 200.
+
+Tell me which FIR you want the full bundle for next, or if you want me to narrow the WXRecall list to only working alpha types.
+
+

@@ -1,0 +1,470 @@
+[
+  {
+    "category": "Availability (A)",
+    "code": "AC",
+    "meaning": "Withdrawn for maintenance",
+    "phraseology": "withdrawn maint"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AD",
+    "meaning": "Available for daylight operation",
+    "phraseology": "avbl day ops"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AF",
+    "meaning": "Flight checked and found reliable",
+    "phraseology": "fltck okay"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AG",
+    "meaning": "Operating but ground checked only, awaiting flight check",
+    "phraseology": "opr but gnd ck only, awaiting fltck"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AH",
+    "meaning": "Hours of service are now\u2026(specify)",
+    "phraseology": "hr ser"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AK",
+    "meaning": "Resumed normal operations",
+    "phraseology": "okay"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AL",
+    "meaning": "Operative (or reoperative) subject to previously published limitations/conditions",
+    "phraseology": "Opr subj previous cond"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AM",
+    "meaning": "Military operations only",
+    "phraseology": "mil ops only"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AN",
+    "meaning": "Available for night operation",
+    "phraseology": "avbl night ops"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AO",
+    "meaning": "Operational",
+    "phraseology": "opr"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AP",
+    "meaning": "Available, prior permission required",
+    "phraseology": "avbl, ppr"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AR",
+    "meaning": "Available on request",
+    "phraseology": "avbl o/r"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AS",
+    "meaning": "Unserviceable",
+    "phraseology": "u/s"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AU",
+    "meaning": "Not available (specify reason if appropriate)",
+    "phraseology": "not avbl"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AW",
+    "meaning": "Completely withdrawn",
+    "phraseology": "withdrawn"
+  },
+  {
+    "category": "Availability (A)",
+    "code": "AX",
+    "meaning": "Previously promulgated shutdown has been canceled",
+    "phraseology": "promulgated shutdown cnl"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CA",
+    "meaning": "Activated",
+    "phraseology": "act"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CC",
+    "meaning": "Completed",
+    "phraseology": "cmpl"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CD",
+    "meaning": "Deactivated",
+    "phraseology": "deactivated"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CE",
+    "meaning": "Erected",
+    "phraseology": "erected"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CF",
+    "meaning": "Operating frequency(ies) changed to",
+    "phraseology": "opr freq changed to"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CG",
+    "meaning": "Downgraded to",
+    "phraseology": "downgraded to"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CH",
+    "meaning": "Changed",
+    "phraseology": "changed"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CI",
+    "meaning": "Identification or radio call sign changed to",
+    "phraseology": "Ident/rdo call sign changed to"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CL",
+    "meaning": "Realigned",
+    "phraseology": "realigned"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CM",
+    "meaning": "Displaced",
+    "phraseology": "displaced"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CN",
+    "meaning": "Canceled",
+    "phraseology": "cnl"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CO",
+    "meaning": "Operating",
+    "phraseology": "opr"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CP",
+    "meaning": "Operating on reduced power",
+    "phraseology": "opr reduced pwr"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CR",
+    "meaning": "Temporarily replaced by",
+    "phraseology": "tempo rplcd by"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CS",
+    "meaning": "Installed",
+    "phraseology": "instl"
+  },
+  {
+    "category": "Changes (C)",
+    "code": "CT",
+    "meaning": "On test, do not use",
+    "phraseology": "on test, do not use"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HA",
+    "meaning": "Braking action is ...",
+    "phraseology": "ba is\u2026"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HB",
+    "meaning": "Friction coefficient is ... (specify friction measurement device used)",
+    "phraseology": "friction coefficient is"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HC",
+    "meaning": "Covered by compacted snow to depth of",
+    "phraseology": "cov compacted snow depth"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HD",
+    "meaning": "Covered by dry snow to a depth of",
+    "phraseology": "cov dry snow depth"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HE",
+    "meaning": "Covered by water to a depth of",
+    "phraseology": "cov water depth"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HF",
+    "meaning": "Totally free of snow and ice",
+    "phraseology": "free of sn and ice"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HG",
+    "meaning": "Grass cutting in progress",
+    "phraseology": "grass cutting inpr"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HH",
+    "meaning": "Hazard due to (specify)",
+    "phraseology": "hazard due"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HI",
+    "meaning": "Covered by ice",
+    "phraseology": "cov ice"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HJ",
+    "meaning": "Launch planned ... (specify balloon flight identification or project code name, launch site, planned period of launch(es)-date/ time, expected climb direction, estimate time to pass 18 000 m (60 000 ft), or reaching cruise level if at or below 18 000 m (60 000 ft), together with estimated location)",
+    "phraseology": "launch plan"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HK",
+    "meaning": "Bird migration in progress",
+    "phraseology": "bird migration inpr"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HL",
+    "meaning": "Snow clearance completed",
+    "phraseology": "sn clr cmpl"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HM",
+    "meaning": "Marked by",
+    "phraseology": "marked by"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HN",
+    "meaning": "Covered by wet snow or slush to a depth of",
+    "phraseology": "cov wet sn/slush depth"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HO",
+    "meaning": "Obscured by snow",
+    "phraseology": "obscured by sn"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HP",
+    "meaning": "Snow clearance in progress",
+    "phraseology": "sn clr inpr"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HQ",
+    "meaning": "Operation canceled ... (specify balloon flight identification or project code name)",
+    "phraseology": "opr cnl"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HR",
+    "meaning": "Standing water",
+    "phraseology": "standing water"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HS",
+    "meaning": "Sanding in progress",
+    "phraseology": "sanding inpr"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HT",
+    "meaning": "Approach according to signal area only",
+    "phraseology": "apch according signal"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HU",
+    "meaning": "Launch in progress ... (specify balloon flight identification or project code name, launch site, date/time of launch(es), estimated time passing 18 000 m (60 000 ft), or reaching cruising level if at or below 18 000 m (60 000 ft), together with estimated location, estimated date/time of termination of the flight, and planned location of ground contact when applicable)",
+    "phraseology": "launch inpr"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HV",
+    "meaning": "Work completed",
+    "phraseology": "work cmpl"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HW",
+    "meaning": "Work in progress",
+    "phraseology": "wip"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HX",
+    "meaning": "Concentration of birds",
+    "phraseology": "bird concentration"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HY",
+    "meaning": "Snow banks exist (specify height)",
+    "phraseology": "sn banks hgt"
+  },
+  {
+    "category": "Hazard Conditions (H)",
+    "code": "HZ",
+    "meaning": "Covered by frozen ruts and ridges",
+    "phraseology": "cov frozen ruts and ridges"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LA",
+    "meaning": "Operating on auxiliary power supply",
+    "phraseology": "opr aux pwr"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LB",
+    "meaning": "Reserved for aircraft based therein",
+    "phraseology": "reserved for acft based therein"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LC",
+    "meaning": "Closed",
+    "phraseology": "clsd"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LD",
+    "meaning": "Unsafe",
+    "phraseology": "unsafe"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LE",
+    "meaning": "Operating without auxiliary power supply",
+    "phraseology": "opr wo aux pwr"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LF",
+    "meaning": "Interference from",
+    "phraseology": "interference fm"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LG",
+    "meaning": "Operating without identification",
+    "phraseology": "opr without ident"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LH",
+    "meaning": "Unserviceable for aircraft heavier than",
+    "phraseology": "u/s acft heavier than"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LI",
+    "meaning": "Closed to IFR operations",
+    "phraseology": "clsd ifr ops"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LK",
+    "meaning": "Operating as a fixed light",
+    "phraseology": "opr as f lgt"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LL",
+    "meaning": "Usable for length of...and width of...",
+    "phraseology": "usable len\u2026/wid\u2026"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LN",
+    "meaning": "Closed to all night operations",
+    "phraseology": "clsd to all ngt ops"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LP",
+    "meaning": "Prohibited to",
+    "phraseology": "prohibited to"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LR",
+    "meaning": "Aircraft restricted to runways and taxiways",
+    "phraseology": "acft restricted to rwy and twy"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LS",
+    "meaning": "Subject to interruption",
+    "phraseology": "subj intrp"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LT",
+    "meaning": "Limited to",
+    "phraseology": "ltd to"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LV",
+    "meaning": "Closed to VFR operations",
+    "phraseology": "clsd vfr ops"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LW",
+    "meaning": "Will take place",
+    "phraseology": "will take place"
+  },
+  {
+    "category": "Limitations (L)",
+    "code": "LX",
+    "meaning": "Operating but caution advised due to",
+    "phraseology": "opr but ctn adz due to"
+  },
+  {
+    "category": "Other (XX)",
+    "code": "XX",
+    "meaning": "Where 4th and 5th letter Code does not cover the situation, use XX and supplement by plain language",
+    "phraseology": "(plain language following the NOTAM Code)"
+  }
+]

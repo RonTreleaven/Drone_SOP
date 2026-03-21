@@ -1,0 +1,59 @@
+{
+  "site": "CZYZ",
+  "alphas": [
+    "notam",
+    "metar",
+    "taf",
+    "upperwind",
+    "space_weather"
+  ],
+  "item_count": 574,
+  "types": {
+    "upperwind": 54,
+    "notam": 444,
+    "metar": 44,
+    "taf": 32
+  },
+  "sample_keys_by_type": {
+    "upperwind": [
+      "type",
+      "pk",
+      "location",
+      "startValidity",
+      "endValidity",
+      "text",
+      "hasError",
+      "position"
+    ],
+    "notam": [
+      "type",
+      "pk",
+      "location",
+      "startValidity",
+      "endValidity",
+      "text",
+      "hasError",
+      "position"
+    ],
+    "metar": [
+      "type",
+      "pk",
+      "location",
+      "startValidity",
+      "endValidity",
+      "text",
+      "hasError",
+      "position"
+    ],
+    "taf": [
+      "type",
+      "pk",
+      "location",
+      "startValidity",
+      "endValidity",
+      "text",
+      "hasError",
+      "position"
+    ]
+  }
+}
