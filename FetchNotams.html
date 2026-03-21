@@ -138,6 +138,78 @@
       font-weight: 600;
     }
 
+    .view-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+
+    .view-toggle .icon {
+      display: inline-block;
+      position: relative;
+    }
+
+    .view-toggle .icon-phone {
+      width: 10px;
+      height: 16px;
+      border: 2px solid currentColor;
+      border-radius: 3px;
+    }
+
+    .view-toggle .icon-phone::after {
+      content: "";
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      width: 4px;
+      height: 2px;
+      transform: translateX(-50%);
+      background: currentColor;
+      border-radius: 2px;
+    }
+
+    .view-toggle .icon-desktop {
+      width: 16px;
+      height: 12px;
+      border: 2px solid currentColor;
+      border-radius: 2px;
+    }
+
+    .view-toggle .icon-desktop::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      width: 8px;
+      height: 2px;
+      transform: translateX(-50%);
+      background: currentColor;
+      border-radius: 2px;
+    }
+
+    .view-toggle .icon-phone,
+    .view-toggle .icon-desktop {
+      display: none;
+    }
+
+    .view-mobile .view-toggle .icon-phone {
+      display: inline-block;
+    }
+
+    .view-desktop .view-toggle .icon-desktop {
+      display: inline-block;
+    }
+
     .status-row {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -820,71 +892,106 @@
       }
     }
 
-    @media (max-width: 560px) {
-      .card {
-        margin: 16px;
-        padding: 16px;
+    .view-mobile .card {
+      margin: 16px;
+      padding: 16px;
+    }
+
+    .view-mobile .search-container {
+      gap: 10px 8px;
+    }
+
+    .view-mobile .selection-top {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .view-mobile .selection-stats {
+      grid-template-columns: auto 1fr;
+    }
+
+    .view-mobile .search-container .field-group {
+      width: auto;
+    }
+
+    .view-mobile .search-container .field-group.code-field {
+      flex: 1 1 160px;
+      min-width: 140px;
+      max-width: 240px;
+    }
+
+    .view-mobile .search-container .field-group.code-field input {
+      width: 100%;
+      min-width: 6ch;
+    }
+
+    .view-mobile .search-container .field-group.code-field #notamInput {
+      width: 100%;
+      min-width: 10ch;
+    }
+
+    .view-mobile .search-container .field-group.notam-field {
+      flex: 1 1 100%;
+      max-width: none;
+    }
+
+    .view-mobile .q-filter-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .view-mobile .icao-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .view-mobile .icao-picker {
+      flex-wrap: wrap;
+    }
+
+    .view-mobile .icao-picker input {
+      flex: 1 1 120px;
+      min-width: 6ch;
+    }
+
+    .view-mobile .icao-picker select {
+      flex: 0 0 110px;
+      min-width: 0;
+      width: auto;
+    }
+
+    .view-mobile .status-row {
+      grid-template-columns: 1fr;
+    }
+
+    .view-mobile .search-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+    }
+
+    .view-mobile .search-actions .btn {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .view-mobile .btn {
+      width: 100%;
+    }
+
+    .view-mobile .selection-cache-row .btn {
+      min-width: 0;
+    }
+
+    @media (orientation: landscape) {
+      .view-mobile .notam-preview {
+        font-size: 0.86rem;
+        line-height: 1.3;
       }
 
-      .search-container {
-        gap: 10px 8px;
-      }
-
-      .selection-top {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .selection-stats {
-        grid-template-columns: auto 1fr;
-      }
-
-      .search-container .field-group {
-        width: 100%;
-      }
-
-      .search-container .field-group.code-field {
-        width: auto;
-        flex: 0 0 auto;
-        min-width: 0;
-      }
-
-      .search-container .field-group.code-field input {
-        width: 8ch;
-      }
-
-      .search-container .field-group.code-field #notamInput {
-        width: 11ch;
-      }
-
-      .q-filter-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .icao-controls {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .icao-picker {
-        flex-wrap: nowrap;
-      }
-
-      .icao-picker select {
-        min-width: 0;
-        width: 10ch;
-      }
-
-      .status-row {
-        grid-template-columns: 1fr;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .selection-cache-row .btn {
-        min-width: 0;
+      .view-mobile .notam-line2,
+      .view-mobile .notam-time {
+        font-size: 0.78rem;
       }
     }
   </style>
@@ -897,7 +1004,12 @@
     <a href="tools.html" class="active">Tools</a> |
     <a href="flight-log.html">Flight Log</a> |
     <a href="summary.html">Summary</a> |
-    <a href="emergencies.html">Emergency Procedures</a>
+    <a href="emergencies.html">Emergency Procedures</a> |
+    <button class="view-toggle" type="button" id="viewToggleBtn" aria-pressed="false" title="Switch to desktop view">
+      <span class="icon icon-phone" aria-hidden="true"></span>
+      <span class="icon icon-desktop" aria-hidden="true"></span>
+      <span class="toggle-label">Mobile</span>
+    </button>
   </nav>
 
   <div class="card">
@@ -931,7 +1043,7 @@
           <datalist id="icaoList"></datalist>
         </div>
 
-        <div class="field-group code-field">
+        <div class="field-group code-field notam-field">
           <label for="notamInput">NOTAM No.</label>
           <input id="notamInput" type="text" placeholder="Enter NOTAM number (e.g., J1968/26)">
         </div>
@@ -1077,7 +1189,6 @@
       <ul class="results-list" id="resultsList"></ul>
     </div>
 
-    <p class="note">Performance strategy on this page: timeout-limited fetch, cache-first rendering, simple DOM output, and optional proxy fallback if direct browser fetch is blocked.</p>
   </div>
 
   <script>
@@ -1101,6 +1212,7 @@
     const FRESH_BANNER_WINDOW_MS = 60 * 60 * 1000;
     const LAST_FIR_STORAGE_KEY = "fetchnotams:lastFir";
     const LAST_ICAO_STORAGE_KEY = "fetchnotams:lastIcao";
+    const VIEW_MODE_KEY = "fetchnotams:viewMode";
     const MAP_PAYLOAD_STORAGE_PREFIX = "fetchnotams:map:payload:";
     const MAP_PAYLOAD_TTL_MS = 2 * 60 * 60 * 1000;
     const FIR_CODES = ["CZVR", "CZEG", "CZWG", "CZYZ", "CZUL", "CZQM", "CZQX"];
@@ -1153,7 +1265,48 @@
       resultsList: document.getElementById("resultsList"),
       viewAllOnMapBtn: document.getElementById("viewAllOnMapBtn"),
       refreshFromCacheBtn: document.getElementById("refreshFromCacheBtn")
+      ,
+      viewToggleBtn: document.getElementById("viewToggleBtn")
     };
+
+    function getAutoViewMode() {
+      return window.matchMedia("(max-width: 900px)").matches ? "mobile" : "desktop";
+    }
+
+    function applyViewMode(mode) {
+      const isMobile = mode === "mobile";
+      document.body.classList.toggle("view-mobile", isMobile);
+      document.body.classList.toggle("view-desktop", !isMobile);
+      if (!el.viewToggleBtn) return;
+      el.viewToggleBtn.setAttribute("aria-pressed", isMobile ? "true" : "false");
+      el.viewToggleBtn.title = isMobile ? "Switch to desktop view" : "Switch to mobile view";
+      const label = el.viewToggleBtn.querySelector(".toggle-label");
+      if (label) label.textContent = isMobile ? "Mobile" : "Desktop";
+    }
+
+    function initViewMode() {
+      const stored = localStorage.getItem(VIEW_MODE_KEY);
+      if (stored === "mobile" || stored === "desktop") {
+        applyViewMode(stored);
+      } else {
+        applyViewMode(getAutoViewMode());
+      }
+
+      window.addEventListener("resize", () => {
+        const pref = localStorage.getItem(VIEW_MODE_KEY);
+        if (pref === "mobile" || pref === "desktop") return;
+        applyViewMode(getAutoViewMode());
+      });
+
+      if (el.viewToggleBtn) {
+        el.viewToggleBtn.addEventListener("click", () => {
+          const isMobile = document.body.classList.contains("view-mobile");
+          const next = isMobile ? "desktop" : "mobile";
+          localStorage.setItem(VIEW_MODE_KEY, next);
+          applyViewMode(next);
+        });
+      }
+    }
 
     let currentItems = [];
     let currentFilteredItems = [];
@@ -3167,6 +3320,7 @@
       }
     });
 
+    initViewMode();
     refreshIcaoOptionsFromItems([]);
     setQFilterToggleState(true);
     loadQCodeLegendData().finally(() => {
