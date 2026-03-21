@@ -826,6 +826,10 @@
         padding: 16px;
       }
 
+      .search-container {
+        gap: 10px 8px;
+      }
+
       .selection-top {
         flex-direction: column;
         align-items: stretch;
@@ -839,6 +843,20 @@
         width: 100%;
       }
 
+      .search-container .field-group.code-field {
+        width: auto;
+        flex: 0 0 auto;
+        min-width: 0;
+      }
+
+      .search-container .field-group.code-field input {
+        width: 8ch;
+      }
+
+      .search-container .field-group.code-field #notamInput {
+        width: 11ch;
+      }
+
       .q-filter-grid {
         grid-template-columns: 1fr 1fr;
       }
@@ -846,6 +864,15 @@
       .icao-controls {
         flex-direction: column;
         align-items: stretch;
+      }
+
+      .icao-picker {
+        flex-wrap: nowrap;
+      }
+
+      .icao-picker select {
+        min-width: 0;
+        width: 10ch;
       }
 
       .status-row {
@@ -879,7 +906,7 @@
 
     <section class="selection-block" aria-label="FIR and NOTAM Inputs">
       <form id="fetchForm" class="search-container">
-        <div class="field-group">
+        <div class="field-group code-field">
           <label for="firInput">FIR</label>
           <input id="firInput" type="text" placeholder="Enter FIR code (e.g., CZYZ)" maxlength="4" list="firList">
           <datalist id="firList">
@@ -893,7 +920,7 @@
           </datalist>
         </div>
 
-        <div class="field-group">
+        <div class="field-group code-field">
           <label for="icaoInput">ICAO</label>
           <div class="icao-picker">
             <input id="icaoInput" type="text" placeholder="Enter ICAO code (e.g., CYYZ)" maxlength="4" list="icaoList">
@@ -904,7 +931,7 @@
           <datalist id="icaoList"></datalist>
         </div>
 
-        <div class="field-group">
+        <div class="field-group code-field">
           <label for="notamInput">NOTAM No.</label>
           <input id="notamInput" type="text" placeholder="Enter NOTAM number (e.g., J1968/26)">
         </div>
