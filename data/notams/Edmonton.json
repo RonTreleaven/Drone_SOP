@@ -1,5 +1,13 @@
 [
   {
+    "raw": "(R0286/26 NOTAMR R1414/25\nQ) CZEG/QOLAS/IV/M/AE/000/027/5319N11327W005\nA) CYEG B) 2603220403 C) 2606192100\nE) OBST LGT U/S TOWER 531910N 1132643W (APRX 4.9NM ENE AD) 316FT \nAGL, 2675FT AMSL.)",
+    "startValidity": "2026-03-22T04:03:00",
+    "endValidity": "2026-06-19T21:00:00",
+    "coordinates_dd": [
+      "53.319444, -113.445278"
+    ]
+  },
+  {
     "raw": "(F1252/26 NOTAMN\nQ) CZEG/QRRCD/IV/BO/W/290/999/5503N10953W053\nA) CZEG B) 2603202156 C) 2603231400\nE) RESTRICTED AREA CYR204 COLD LAKE DEACTIVATED.\nF) FL290 G) UNL)",
     "startValidity": "2026-03-20T21:56:00",
     "endValidity": "2026-03-23T14:00:00",
@@ -1033,14 +1041,6 @@
     "endValidity": "2026-03-23T18:00:00",
     "coordinates_dd": [
       "49.076111, -112.027778"
-    ]
-  },
-  {
-    "raw": "(R1414/25 NOTAMR R1050/25\nQ) CZEG/QOLAS/IV/M/AE/000/027/5319N11327W005\nA) CYEG B) 2512230711 C) 2603222100\nE) OBST LGT U/S TOWER 531910N 1132643W (APRX 4.9NM ENE AD) 316FT \nAGL, 2675FT AMSL.)",
-    "startValidity": "2025-12-23T07:11:00",
-    "endValidity": "2026-03-22T21:00:00",
-    "coordinates_dd": [
-      "53.319444, -113.445278"
     ]
   },
   {
