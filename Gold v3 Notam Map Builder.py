@@ -1,13 +1,10 @@
-# Airport NOTAM map (repo-driven gathering of NOTAMS daily)
+﻿# Airport NOTAM map (repo-driven gathering of NOTAMS daily)
 # Rewritten to load NOTAMs from GitHub repo clone data/notams/All_CA.json
 
 #########################################################################
 # This creates the base "Notam Map.html" or user defined name for one-off runs
 # Notam Map.html is the basemap, and will pull NOTAM data for /data/Notams/*.json files
 #
-#  Updated March 22nd to have Live NOTAM polled.  FetchNotams grabs NAV Can detail 
-#  thru api and Cloudfare workers, exposing a payload, while also retaining the fallback 
-#  to use All_CA*.json files.abs
 
 import html
 import json
@@ -674,6 +671,10 @@ window.onload = function() {{
     var activeSource = 'RAW';
     var linkedRealtimeNotams = [];
     var linkedRealtimeMode = false;
+    var linkedRealtimeIntent = 'none';
+    var linkedRealtimePayloadSource = '';
+    var linkedRealtimePayloadCreatedAt = 0;
+    var linkedRealtimePayloadFir = '';
     var linkedObstacleLocation = null;
     var linkedObstacleBatch = [];
     var linkedObstacleAutoOpenPending = false;
@@ -698,6 +699,9 @@ window.onload = function() {{
     var isCompactTouchLayout = window.matchMedia && window.matchMedia('(max-width: 768px)').matches && (('ontouchstart' in window) || navigator.maxTouchPoints > 0);
         var basemapLayers = {basemap_layers_js};
     var basemapStorageKey = 'notam-map.basemap';
+    var livePayloadStoragePrefix = 'fetchnotams:map:payload:';
+    var liveUnfilteredPayloadStorageKey = 'fetchnotams:map:live:latest';
+    var livePayloadTtlMs = 2 * 60 * 60 * 1000;
     var defaultBasemapName = {json.dumps(basemap['name'])};
     var currentBasemapName = defaultBasemapName;
 
@@ -850,23 +854,310 @@ window.onload = function() {{
   }}
 
   function getLinkedRealtimeNotamsFromQuery() {{
-      try {{
-          var params = new URLSearchParams(window.location.search || '');
-          var payloadKey = (params.get('payload_key') || '').trim();
-          if (!payloadKey) {{
-              return [];
+      var params = new URLSearchParams(window.location.search || '');
+      var payloadKey = (params.get('payload_key') || '').trim();
+      var src = (params.get('src') || '').trim().toLowerCase();
+      if (payloadKey) {{
+          linkedRealtimeIntent = 'linked';
+          linkedRealtimePayloadSource = 'query';
+          return readLivePayloadRecords(payloadKey);
+      }}
+      if (src === 'fetchnotams') {{
+          var latestKey = findLatestLivePayloadKey();
+          if (latestKey) {{
+              linkedRealtimeIntent = 'linked';
+              linkedRealtimePayloadSource = 'cache';
+              return readLivePayloadRecords(latestKey);
           }}
+      }}
+      linkedRealtimeIntent = 'none';
+      linkedRealtimePayloadSource = '';
+      linkedRealtimePayloadCreatedAt = 0;
+      linkedRealtimePayloadFir = '';
+      return [];
+  }}
 
+  function getLivePayloadMeta(payloadKey) {{
+      if (!payloadKey) {{
+          return {{ createdAt: 0, fir: '', ageMinutes: null }};
+      }}
+      try {{
+          var raw = localStorage.getItem(payloadKey);
+          if (!raw) {{
+              return {{ createdAt: 0, fir: '', ageMinutes: null }};
+          }}
+          var parsed = JSON.parse(raw);
+          var createdAt = Number(parsed && parsed.createdAt) || 0;
+          var fir = String(parsed && parsed.fir || '').trim().toUpperCase();
+          var ageMinutes = createdAt ? Math.max(0, Math.round((Date.now() - createdAt) / 60000)) : null;
+          return {{
+              createdAt: createdAt,
+              fir: fir,
+              ageMinutes: ageMinutes
+          }};
+      }} catch (err) {{
+          return {{ createdAt: 0, fir: '', ageMinutes: null }};
+      }}
+  }}
+
+  function formatLivePayloadMeta(meta) {{
+      var firText = (meta && meta.fir) ? meta.fir : 'FIR n/a';
+      var ageText = (meta && Number.isFinite(meta.ageMinutes)) ? (meta.ageMinutes + ' min old') : 'age n/a';
+      return firText + ', ' + ageText;
+  }}
+
+  function findStartupLivePayloadKey() {{
+      try {{
+          var raw = localStorage.getItem(liveUnfilteredPayloadStorageKey);
+          if (!raw) {{
+              return '';
+          }}
+          var parsed = JSON.parse(raw);
+          var createdAt = Number(parsed && parsed.createdAt) || 0;
+          var records = Array.isArray(parsed && parsed.records) ? parsed.records : [];
+          if (!records.length || !createdAt) {{
+              return '';
+          }}
+          if (livePayloadTtlMs > 0 && (Date.now() - createdAt) > livePayloadTtlMs) {{
+              return '';
+          }}
+          return liveUnfilteredPayloadStorageKey;
+      }} catch (err) {{
+          return '';
+      }}
+  }}
+
+  function getStartupLiveNotamsFromCache() {{
+      var startupKey = findStartupLivePayloadKey();
+      if (!startupKey) {{
+          return [];
+      }}
+      linkedRealtimeIntent = 'startup-live';
+      linkedRealtimePayloadSource = 'startup';
+      return readLivePayloadRecords(startupKey);
+  }}
+
+  function readLivePayloadRecords(payloadKey) {{
+      linkedRealtimePayloadCreatedAt = 0;
+      linkedRealtimePayloadFir = '';
+      if (!payloadKey) {{
+          return [];
+      }}
+      try {{
           var raw = localStorage.getItem(payloadKey);
           if (!raw) {{
               return [];
           }}
-
           var parsed = JSON.parse(raw);
+          linkedRealtimePayloadCreatedAt = Number(parsed && parsed.createdAt) || 0;
+          linkedRealtimePayloadFir = String(parsed && parsed.fir || '').trim().toUpperCase();
           var records = Array.isArray(parsed && parsed.records) ? parsed.records : [];
           return normalizeNotamRecords(records);
       }} catch (err) {{
           return [];
+      }}
+  }}
+
+  // --- Inline FIR cache refresh ---
+  var mapFetchApiBase = 'https://plan.navcanada.ca/weather/api/alpha/';
+  var mapFetchProxyUrl = 'https://navcan-proxy.rontreleaven.workers.dev/?url=';
+  var mapFetchProxyTimeout = 14000;
+  var mapFetchLastFirKey = 'fetchnotams:lastFir';
+
+  function mapNormalizeCode(str) {{
+      return String(str || '').trim().toUpperCase().slice(0, 4);
+  }}
+
+  function mapDmsToDecimal(token, isLat) {{
+      var clean = String(token || '').toUpperCase().trim();
+      var dir = clean.slice(-1);
+      var body = clean.slice(0, -1);
+      if (isLat && !/[NS]/.test(dir)) return null;
+      if (!isLat && !/[EW]/.test(dir)) return null;
+      var degDigits = isLat ? 2 : 3;
+      if (!/^\\d+$/.test(body)) return null;
+      if (body.length !== degDigits + 2 && body.length !== degDigits + 4) return null;
+      var deg = Number(body.slice(0, degDigits));
+      var min = Number(body.slice(degDigits, degDigits + 2));
+      var sec = body.length === degDigits + 4 ? Number(body.slice(degDigits + 2, degDigits + 4)) : 0;
+      if (min >= 60 || sec >= 60) return null;
+      var dd = deg + (min / 60) + (sec / 3600);
+      if (dir === 'S' || dir === 'W') dd = -dd;
+      return dd;
+  }}
+
+  function mapExtractCoordsFromText(text) {{
+      var value = String(text || '');
+      var pairRegex = /(\\d{{4,6}}[NS])\\s*(\\d{{5,7}}[EW])/gi;
+      var found = [];
+      var match;
+      while ((match = pairRegex.exec(value)) !== null) {{
+          var lat = mapDmsToDecimal((match[1] || '').toUpperCase(), true);
+          var lon = mapDmsToDecimal((match[2] || '').toUpperCase(), false);
+          if (lat == null || lon == null) continue;
+          if (lat < -90 || lat > 90 || lon < -180 || lon > 180) continue;
+          found.push({{ lat: lat, lon: lon }});
+      }}
+      return found;
+  }}
+
+  function mapExtractPrimaryCoord(rawText) {{
+      var value = String(rawText || '');
+      if (!value) return null;
+      var eMatch = value.match(/E\\)\\s*([\\s\\S]*?)(?=(?:\\n|\\r\\n?)[A-Z]\\)|$)/);
+      var eSection = eMatch ? String(eMatch[0] || '') : '';
+      var eCoords = mapExtractCoordsFromText(eSection);
+      if (eCoords.length > 0) return eCoords[0];
+      var anyCoords = mapExtractCoordsFromText(value);
+      return anyCoords.length > 0 ? anyCoords[0] : null;
+  }}
+
+  function mapParseTextBlock(value) {{
+      if (typeof value !== 'string') return '';
+      try {{
+          var parsed = JSON.parse(value);
+          if (parsed && typeof parsed === 'object') {{
+              return parsed.raw || parsed.english || parsed.french || '';
+          }}
+      }} catch (e) {{ return value; }}
+      return '';
+  }}
+
+  function mapParseApiResponse(payload) {{
+      var arr = Array.isArray(payload && payload.data) ? payload.data : [];
+      var records = [];
+      for (var i = 0; i < arr.length; i++) {{
+          var item = arr[i];
+          if (!item || item.type !== 'notam') continue;
+          var raw = mapParseTextBlock(item.text);
+          if (!raw) continue;
+          var coord = mapExtractPrimaryCoord(raw);
+          if (!coord) continue;
+          records.push({{
+              lat: Number(coord.lat.toFixed(6)),
+              lon: Number(coord.lon.toFixed(6)),
+              start: item.startValidity || null,
+              end: item.endValidity || null,
+              raw: raw
+          }});
+      }}
+      return records;
+  }}
+
+  async function mapFetchFir(firCode) {{
+      var params = new URLSearchParams();
+      params.append('site', firCode);
+      params.append('alpha', 'notam');
+      params.append('notam_choice', 'default');
+      params.append('_', String(Date.now()));
+      var targetUrl = mapFetchApiBase + '?' + params.toString();
+      var proxiedUrl = mapFetchProxyUrl + encodeURIComponent(targetUrl);
+      var controller = new AbortController();
+      var timer = setTimeout(function() {{ controller.abort(); }}, mapFetchProxyTimeout);
+      try {{
+          var res = await fetch(proxiedUrl, {{ method: 'GET', signal: controller.signal, cache: 'no-store', credentials: 'omit' }});
+          clearTimeout(timer);
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return await res.json();
+      }} catch (err) {{
+          clearTimeout(timer);
+          throw err;
+      }}
+  }}
+
+  async function refreshFirCache(firCode) {{
+      var statusEl = document.getElementById('refreshFirStatus');
+      var fetchBtn = document.getElementById('refreshFirFetchBtn');
+      firCode = mapNormalizeCode(firCode);
+      if (!firCode || firCode.length < 3) {{
+          if (statusEl) statusEl.textContent = 'Enter a valid FIR code (e.g. CZYZ).';
+          return;
+      }}
+      if (fetchBtn) fetchBtn.disabled = true;
+      if (statusEl) {{ statusEl.textContent = 'Fetching ' + firCode + '...'; statusEl.style.color = '#555'; }}
+      try {{
+          var payload = await mapFetchFir(firCode);
+          var records = mapParseApiResponse(payload);
+          if (!records.length) {{
+              if (statusEl) {{ statusEl.textContent = 'No mappable NOTAMs found for ' + firCode + '.'; statusEl.style.color = '#b07d00'; }}
+              if (fetchBtn) fetchBtn.disabled = false;
+              return;
+          }}
+          var livePayload = {{ createdAt: Date.now(), records: records, scope: 'live-unfiltered', fir: firCode }};
+          localStorage.setItem(liveUnfilteredPayloadStorageKey, JSON.stringify(livePayload));
+          localStorage.setItem(mapFetchLastFirKey, firCode);
+          if (statusEl) {{ statusEl.textContent = '\\u2713 ' + records.length + ' NOTAMs from ' + firCode + '. Applying...'; statusEl.style.color = '#2d6a2d'; }}
+          setTimeout(function() {{
+              linkedRealtimeNotams = getStartupLiveNotamsFromCache();
+              linkedRealtimeMode = linkedRealtimeNotams.length > 0;
+              updateSourceDisplay();
+              scheduleRefreshObstacles(marker.getLatLng());
+              hideRefreshFirPanel();
+          }}, 700);
+      }} catch (err) {{
+          if (statusEl) {{ statusEl.textContent = 'Fetch failed: ' + (err && err.message ? err.message : 'unknown'); statusEl.style.color = '#c0392b'; }}
+          if (fetchBtn) fetchBtn.disabled = false;
+      }}
+  }}
+
+  function showRefreshFirPanel() {{
+      var panel = document.getElementById('refreshFirPanel');
+      if (!panel) return;
+      var lastFir = localStorage.getItem(mapFetchLastFirKey) || 'CZYZ';
+      var input = document.getElementById('refreshFirInput');
+      if (input && !input.value) input.value = lastFir;
+      panel.style.display = 'block';
+      var statusEl = document.getElementById('refreshFirStatus');
+      if (statusEl) statusEl.textContent = '';
+      var fetchBtn = document.getElementById('refreshFirFetchBtn');
+      if (fetchBtn) fetchBtn.disabled = false;
+      if (input) setTimeout(function() {{ input.focus(); }}, 50);
+  }}
+
+  function hideRefreshFirPanel() {{
+      var panel = document.getElementById('refreshFirPanel');
+      if (panel) panel.style.display = 'none';
+  }}
+
+  function findLatestLivePayloadKey() {{
+      try {{
+          var now = Date.now();
+          var latestKey = '';
+          var latestTs = 0;
+          for (var i = 0; i < localStorage.length; i++) {{
+              var key = localStorage.key(i);
+              if (!key || key.indexOf(livePayloadStoragePrefix) !== 0) {{
+                  continue;
+              }}
+              var raw = localStorage.getItem(key);
+              if (!raw) {{
+                  continue;
+              }}
+              var parsed = null;
+              try {{
+                  parsed = JSON.parse(raw);
+              }} catch (_err) {{
+                  continue;
+              }}
+              var createdAt = Number(parsed && parsed.createdAt) || 0;
+              var records = Array.isArray(parsed && parsed.records) ? parsed.records : [];
+              if (!records.length) {{
+                  continue;
+              }}
+              if (!createdAt) {{
+                  continue;
+              }}
+              if (livePayloadTtlMs > 0 && now - createdAt > livePayloadTtlMs) {{
+                  continue;
+              }}
+              if (createdAt > latestTs) {{
+                  latestTs = createdAt;
+                  latestKey = key;
+              }}
+          }}
+          return latestKey;
+      }} catch (err) {{
+          return '';
       }}
   }}
 
@@ -1519,13 +1810,42 @@ window.onload = function() {{
   function updateSourceDisplay() {{
       var sourceText = document.getElementById('notamSourceText');
       var sourceBtn = document.getElementById('sourceBtn');
+      var liveText = document.getElementById('livePayloadText');
       if (sourceText) {{
           if (linkedRealtimeMode && linkedRealtimeNotams.length) {{
-              sourceText.textContent = 'NOTAM Src: LINKED LIVE';
+              var liveLabel = 'LIVE (payload)';
+              if (linkedRealtimeIntent === 'startup-live') {{
+                  liveLabel = 'LIVE (startup)';
+              }} else if (linkedRealtimePayloadSource === 'cache') {{
+                  liveLabel = 'LIVE (cached)';
+              }}
+              sourceText.textContent = 'NOTAM Src: ' + liveLabel;
               sourceText.style.color = '#0b5ea8';
           }} else {{
-              sourceText.textContent = 'NOTAM Src: ' + activeSource;
+              sourceText.textContent = 'NOTAM Src: JSON (' + activeSource + ')';
               sourceText.style.color = activeSource === 'RAW' ? 'green' : 'red';
+          }}
+      }}
+      if (liveText) {{
+          if (linkedRealtimeMode && linkedRealtimeNotams.length) {{
+              var activeMeta = {{
+                  fir: linkedRealtimePayloadFir,
+                  ageMinutes: linkedRealtimePayloadCreatedAt ? Math.max(0, Math.round((Date.now() - linkedRealtimePayloadCreatedAt) / 60000)) : null
+              }};
+              liveText.textContent = linkedRealtimeIntent === 'startup-live'
+                  ? ('Live payload: active (startup cache) | ' + formatLivePayloadMeta(activeMeta))
+                  : ('Live payload: active (linked) | ' + formatLivePayloadMeta(activeMeta));
+              liveText.style.color = '#0b5ea8';
+          }} else {{
+              var startupKey = findStartupLivePayloadKey();
+              if (startupKey) {{
+                  var startupMeta = getLivePayloadMeta(startupKey);
+                  liveText.textContent = 'Live payload: available (open live) | ' + formatLivePayloadMeta(startupMeta);
+                  liveText.style.color = '#8a6d3b';
+              }} else {{
+                  liveText.textContent = 'Live payload: none (open FetchNotams)';
+                  liveText.style.color = '#6c757d';
+              }}
           }}
       }}
       if (sourceBtn) {{
@@ -1542,6 +1862,7 @@ window.onload = function() {{
       var countText = document.getElementById('obstacleCountText');
 
       var usingLinkedRealtime = !!(linkedRealtimeMode && linkedRealtimeNotams.length);
+      var bypassRadius = usingLinkedRealtime && linkedRealtimeIntent === 'linked';
       if (!usingLinkedRealtime && !notamDataReady) {{
           if (countText) {{
               countText.textContent = notamDataError ? ('NOTAM load failed: ' + notamDataError) : 'Loading NOTAM data...';
@@ -1550,12 +1871,12 @@ window.onload = function() {{
       }}
 
       var activeNotams = getActiveNotams();
-      var candidates = usingLinkedRealtime ? activeNotams : getLikelyNotamCandidates(activeNotams, ll, radiusKm);
+      var candidates = bypassRadius ? activeNotams : getLikelyNotamCandidates(activeNotams, ll, radiusKm);
       var shownCount = 0;
 
       for (var i = 0; i < candidates.length; i++) {{
           var item = candidates[i];
-          if (!usingLinkedRealtime) {{
+          if (!bypassRadius) {{
               var km = haversineKm(ll.lat, ll.lng, item.lat, item.lon);
               if (km > radiusKm) {{
                   continue;
@@ -1586,7 +1907,7 @@ window.onload = function() {{
       }}
 
       if (countText) {{
-          countText.textContent = usingLinkedRealtime
+          countText.textContent = bypassRadius
               ? ('Obstacle Alerts (linked): ' + shownCount)
               : ('Obstacles (' + radiusLabel() + ' km): ' + shownCount);
       }}
@@ -1840,7 +2161,7 @@ window.onload = function() {{
       var d = L.DomUtil.create('div','pilot-input');
       L.DomEvent.disableClickPropagation(d);
       d.style.marginTop = '88px';
-        d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls"><i class="fa-solid fa-bars"></i></button><div class="controls-row">Lat <input id="pLat" size="10" maxlength="12" placeholder="43.000000"> Lon <input id="pLon" size="10" maxlength="13" placeholder="-79.000000"></div><div class="controls-meta dd-hint">DD: 43.653200, -79.383200</div><div class="action-grid"><button id="upd">Set Lat/Lon</button><button id="centerPilot">Center Map</button><button id="getPilotLoc">Get Location</button><button id="sourceBtn">Switch Filter Group</button></div><div class="controls-row" style="margin-top:5px;">Radius km <input id="radiusKmInput" size="6" maxlength="6" placeholder="10"> <button id="setRadiusBtn">Change NOTAM Radius</button></div><div id="currentPilotText" class="controls-meta status-line">Current Pilot: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Src: RAW</div><div id="currentBasemapText" class="controls-meta status-line">Basemap: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div>';
+                d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls"><i class="fa-solid fa-bars"></i></button><div class="controls-row">Lat <input id="pLat" size="10" maxlength="12" placeholder="43.000000"> Lon <input id="pLon" size="10" maxlength="13" placeholder="-79.000000"></div><div class="controls-meta dd-hint">DD: 43.653200, -79.383200</div><div class="action-grid"><button id="upd">Set Lat/Lon</button><button id="centerPilot">Center Map</button><button id="getPilotLoc">Get Location</button><button id="sourceBtn">Switch Filter Group</button><button id="openLiveFetch">Open FetchNotams</button><button id="refreshFirCacheBtn">Refresh FIR</button></div><div class="controls-row" style="margin-top:5px;">Radius km <input id="radiusKmInput" size="6" maxlength="6" placeholder="10"> <button id="setRadiusBtn">Change NOTAM Radius</button></div><div id="currentPilotText" class="controls-meta status-line">Current Pilot: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Src: RAW</div><div id="livePayloadText" class="controls-meta status-line">Live payload: --</div><div id="currentBasemapText" class="controls-meta status-line">Basemap: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div><div id="refreshFirPanel" style="display:none;padding:5px 2px 2px 2px;border-top:1px solid #ccc;margin-top:5px;"><div style="font-size:0.82em;font-weight:600;margin-bottom:3px;color:#555;">Refresh NOTAMs Cache</div><div style="display:flex;gap:4px;align-items:center;"><span style="font-size:0.8em;">FIR:</span><input id="refreshFirInput" size="5" maxlength="4" placeholder="CZYZ" style="width:50px;font-size:0.8em;padding:2px 3px;border:1px solid #aaa;border-radius:3px;"><button id="refreshFirFetchBtn" style="font-size:0.8em;padding:2px 7px;background:#2d6a2d;color:#fff;border:none;border-radius:3px;cursor:pointer;">Fetch</button><button id="refreshFirCancelBtn" style="font-size:0.8em;padding:2px 6px;background:#888;color:#fff;border:none;border-radius:3px;cursor:pointer;">&#x2715;</button></div><div id="refreshFirStatus" style="font-size:0.78em;margin-top:4px;color:#555;min-height:1.1em;"></div></div></div>';
       return d;
   }};
   ctl.addTo(map);
@@ -2000,6 +2321,27 @@ window.onload = function() {{
             refreshObstacles(marker.getLatLng());
     }};
 
+      document.getElementById('openLiveFetch').onclick = function() {{
+          var popup = window.open('FetchNotams.html', '_blank');
+          if (popup) {{
+              popup.focus();
+          }}
+      }};
+
+      document.getElementById('refreshFirCacheBtn').onclick = function() {{
+          showRefreshFirPanel();
+      }};
+      document.getElementById('refreshFirCancelBtn').onclick = function() {{
+          hideRefreshFirPanel();
+      }};
+      document.getElementById('refreshFirFetchBtn').onclick = async function() {{
+          var input = document.getElementById('refreshFirInput');
+          await refreshFirCache(input ? input.value : '');
+      }};
+      document.getElementById('refreshFirInput').addEventListener('keydown', function(ev) {{
+          if (ev.key === 'Enter') {{ ev.preventDefault(); document.getElementById('refreshFirFetchBtn').click(); }}
+      }});
+
       document.getElementById('setRadiusBtn').onclick = function() {{
           var val = parseFloat(document.getElementById('radiusKmInput').value);
           if (isNaN(val)) {{
@@ -2057,6 +2399,9 @@ window.onload = function() {{
     var startupPilotLocation = marker.getLatLng();
     var restoredPilotLocation = getStoredPilotLocation();
     linkedRealtimeNotams = getLinkedRealtimeNotamsFromQuery();
+        if (!linkedRealtimeNotams.length) {{
+            linkedRealtimeNotams = getStartupLiveNotamsFromCache();
+        }}
     linkedRealtimeMode = linkedRealtimeNotams.length > 0;
 
     if (restoredPilotLocation) {{
@@ -2069,7 +2414,7 @@ window.onload = function() {{
             linkedObstacleLocation = linkedObstacleBatch[0];
     }}
 
-    if (linkedRealtimeMode) {{
+        if (linkedRealtimeMode && linkedRealtimeIntent === 'linked') {{
             linkedObstacleBatch = [];
             linkedObstacleLocation = null;
             linkedObstacleAutoOpenPending = false;
@@ -2086,7 +2431,7 @@ window.onload = function() {{
             if (linkedFocusRequested && linkedObstacleBatch.length > 1) {{
                     fitMapToLinkedObstacleBatch();
             }}
-    }} else if (linkedFocusRequested && linkedRealtimeNotams.length > 1) {{
+        }} else if (linkedRealtimeIntent === 'linked' && linkedFocusRequested && linkedRealtimeNotams.length > 1) {{
             var linkedRealtimeBounds = L.latLngBounds(linkedRealtimeNotams.map(function(item) {{
                     return [item.lat, item.lon];
             }}));
@@ -2195,6 +2540,47 @@ def normalize_output_html_head(output_path: Path) -> None:
         flags=re.IGNORECASE,
     )
 
+    mojibake_replacements = {
+        "Â°": "°",
+        "â€™": "'",
+        "â€˜": "'",
+        "â€œ": '"',
+        "â€�": '"',
+        "â€“": "-",
+        "â€”": "-",
+        "Ã€": "À",
+        "Ã‡": "Ç",
+        "Ãˆ": "È",
+        "Ã‰": "É",
+        "ÃŠ": "Ê",
+        "Ã‹": "Ë",
+        "ÃŽ": "Î",
+        "Ã”": "Ô",
+        "Ã›": "Û",
+        "Ãœ": "Ü",
+        "Ã ": "à",
+        "Ã¢": "â",
+        "Ã¤": "ä",
+        "Ã§": "ç",
+        "Ã¨": "è",
+        "Ã©": "é",
+        "Ãª": "ê",
+        "Ã«": "ë",
+        "Ã¬": "ì",
+        "Ã®": "î",
+        "Ã¯": "ï",
+        "Ã´": "ô",
+        "Ã¶": "ö",
+        "Ã¹": "ù",
+        "Ã»": "û",
+        "Ã¼": "ü",
+        "Ã¿": "ÿ",
+        "Å’": "Œ",
+        "Å“": "œ",
+    }
+    for bad, good in mojibake_replacements.items():
+        text = text.replace(bad, good)
+
     if text != original:
         try:
             output_path.write_text(text, encoding="utf-8")
@@ -2239,3 +2625,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+

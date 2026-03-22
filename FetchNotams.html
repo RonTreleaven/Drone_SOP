@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -1342,6 +1342,7 @@
     const LAST_ICAO_STORAGE_KEY = "fetchnotams:lastIcao";
     const VIEW_MODE_KEY = "fetchnotams:viewMode";
     const MAP_PAYLOAD_STORAGE_PREFIX = "fetchnotams:map:payload:";
+    const MAP_LIVE_UNFILTERED_STORAGE_KEY = "fetchnotams:map:live:latest";
     const MAP_PAYLOAD_TTL_MS = 2 * 60 * 60 * 1000;
     const FIR_CODES = ["CZVR", "CZEG", "CZWG", "CZYZ", "CZUL", "CZQM", "CZQX"];
     const FIR_CODE_SET = new Set(FIR_CODES);
@@ -2340,6 +2341,21 @@
       return key;
     }
 
+    function storeLatestLivePayloadFromItems(items, maxMarkers = 1200, firCode = "") {
+      const payloadInfo = buildMapPayloadFromItems(items, maxMarkers);
+      const records = payloadInfo?.records || [];
+      if (!records.length) return 0;
+
+      const payload = {
+        createdAt: Date.now(),
+        records,
+        scope: "live-unfiltered",
+        fir: normalizeCode(firCode, 4)
+      };
+      localStorage.setItem(MAP_LIVE_UNFILTERED_STORAGE_KEY, JSON.stringify(payload));
+      return records.length;
+    }
+
     function buildBatchMapUrlFromPayloadKey(payloadKey, payloadInfo) {
       const records = payloadInfo?.records || [];
       if (!records.length || !payloadKey) return "";
@@ -3177,7 +3193,7 @@
           const subjectMeaning = qInfo ? getQSubjectMeaning(qInfo.subject) : "";
           const conditionMeaning = qInfo ? getQConditionMeaning(qInfo.condition) : "";
           const qLine = qInfo
-            ? `${qInfo.qcode}${subjectMeaning ? ` (${qInfo.subject}: ${subjectMeaning})` : ""}${conditionMeaning ? ` · ${qInfo.condition}: ${conditionMeaning}` : ""}`
+            ? `${qInfo.qcode}${subjectMeaning ? ` (${qInfo.subject}: ${subjectMeaning})` : ""}${conditionMeaning ? ` - ${qInfo.condition}: ${conditionMeaning}` : ""}`
             : "Q-code not found";
           const labelKey = String(priority.label || "").toLowerCase();
           const priorityTone = (labelKey === "high" || labelKey === "critical")
@@ -3306,6 +3322,7 @@
 
       if (cached && Array.isArray(cached.items)) {
         currentItems = cached.items;
+        storeLatestLivePayloadFromItems(currentItems, 1200, site);
         refreshIcaoOptionsFromItems(currentItems);
         updateAirportUniverseInfo(currentItems);
         render(currentItems, site, "Cache");
@@ -3326,6 +3343,7 @@
         const parsedItems = parseNotamItems(fresh.payload);
 
         currentItems = parsedItems;
+        storeLatestLivePayloadFromItems(currentItems, 1200, site);
         refreshIcaoOptionsFromItems(currentItems);
         updateAirportUniverseInfo(currentItems);
         render(currentItems, site, fresh.source);
@@ -3635,3 +3653,4 @@
   </script>
 </body>
 </html>
+
