@@ -3238,14 +3238,6 @@
       const t0 = performance.now();
 
       try {
-        const payload = await fetchWithTimeout(url, DIRECT_TIMEOUT_MS);
-        const elapsed = Math.round(performance.now() - t0);
-        return {
-          payload,
-          source: "Live (direct)",
-          elapsedMs: elapsed
-        };
-      } catch (directError) {
         const proxyErrors = [];
 
         for (const proxy of PROXY_PROVIDERS) {
@@ -3256,16 +3248,24 @@
             return {
               payload,
               source: `Live via ${proxy.label}`,
-              elapsedMs: elapsed,
-              warning: `Direct fetch failed: ${directError.message || "unknown"}`
+              elapsedMs: elapsed
             };
           } catch (proxyError) {
             proxyErrors.push(`${proxy.name}: ${proxyError.message || "unknown"}`);
           }
         }
 
+        const payload = await fetchWithTimeout(url, DIRECT_TIMEOUT_MS);
+        const elapsed = Math.round(performance.now() - t0);
+        return {
+          payload,
+          source: "Live (direct)",
+          elapsedMs: elapsed,
+          warning: `Proxy fetch failed: ${proxyErrors.join(" | ")}`
+        };
+      } catch (fetchError) {
         throw new Error(
-          `Direct and proxy fetch failed. Direct: ${directError.message || "unknown"}. Proxies: ${proxyErrors.join(" | ")}.`
+          `Proxy and direct fetch failed. ${fetchError.message || "unknown"}`
         );
       }
     }
