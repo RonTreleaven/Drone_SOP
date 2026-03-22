@@ -78,3 +78,12 @@ If you’re looking through settings now, the most useful order is:
 5. `Extensions`
 
 If you want, next I can do a no-tools walkthrough of the specific `User` vs `Workspace` settings you should care about most for Copilot and agent control.
+
+
+# Read these dox
+
+[OpenAI Codex - GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/openai-codex?versionId=free-pro-team@latest&productId=billing&restPage=concepts%2Cproduct-billing%2Cgithub-copilot-premium-requests)
+
+## [Introduction](https://docs.github.com/en/copilot/concepts/agents/openai-codex?versionId=free-pro-team@latest&productId=billing&restPage=concepts%2Cproduct-billing%2Cgithub-copilot-premium-requests#introduction)
+
+The OpenAI Codex coding agent and the VS Code OpenAI Codex integration use the Codex SDK and can be powered by your existing Copilot subscription. For more information about how OpenAI Codex works, see the [OpenAI Codex documentation](https://developers.openai.com/codex).
