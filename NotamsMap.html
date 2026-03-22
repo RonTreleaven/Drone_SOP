@@ -243,6 +243,7 @@ window.onload = function() {
     var activeSource = 'RAW';
     var linkedRealtimeNotams = [];
     var linkedRealtimeMode = false;
+    var linkedRealtimePayloadSource = '';
     var linkedObstacleLocation = null;
     var linkedObstacleBatch = [];
     var linkedObstacleAutoOpenPending = false;
@@ -277,6 +278,8 @@ window.onload = function() {
       "Google Terrain": tile_layer_4af08153823d4afbc9b5fcec357bd0ad
     };
     var basemapStorageKey = 'notam-map.basemap';
+    var livePayloadStoragePrefix = 'fetchnotams:map:payload:';
+    var livePayloadTtlMs = 2 * 60 * 60 * 1000;
     var defaultBasemapName = "CartoDB Voyager";
     var currentBasemapName = defaultBasemapName;
 
@@ -428,25 +431,79 @@ window.onload = function() {
       }
   }
 
-  function getLinkedRealtimeNotamsFromQuery() {
+  function readLivePayloadRecords(payloadKey) {
+      if (!payloadKey) {
+          return [];
+      }
       try {
-          var params = new URLSearchParams(window.location.search || '');
-          var payloadKey = (params.get('payload_key') || '').trim();
-          if (!payloadKey) {
-              return [];
-          }
-
           var raw = localStorage.getItem(payloadKey);
           if (!raw) {
               return [];
           }
-
           var parsed = JSON.parse(raw);
           var records = Array.isArray(parsed && parsed.records) ? parsed.records : [];
           return normalizeNotamRecords(records);
       } catch (err) {
           return [];
       }
+  }
+
+  function findLatestLivePayloadKey() {
+      try {
+          var now = Date.now();
+          var latestKey = '';
+          var latestTs = 0;
+          for (var i = 0; i < localStorage.length; i++) {
+              var key = localStorage.key(i);
+              if (!key || key.indexOf(livePayloadStoragePrefix) !== 0) {
+                  continue;
+              }
+              var raw = localStorage.getItem(key);
+              if (!raw) {
+                  continue;
+              }
+              var parsed = null;
+              try {
+                  parsed = JSON.parse(raw);
+              } catch (_err) {
+                  continue;
+              }
+              var createdAt = Number(parsed && parsed.createdAt) || 0;
+              var records = Array.isArray(parsed && parsed.records) ? parsed.records : [];
+              if (!records.length) {
+                  continue;
+              }
+              if (!createdAt) {
+                  continue;
+              }
+              if (livePayloadTtlMs > 0 && now - createdAt > livePayloadTtlMs) {
+                  continue;
+              }
+              if (createdAt > latestTs) {
+                  latestTs = createdAt;
+                  latestKey = key;
+              }
+          }
+          return latestKey;
+      } catch (err) {
+          return '';
+      }
+  }
+
+  function getLinkedRealtimeNotamsFromQuery() {
+      var params = new URLSearchParams(window.location.search || '');
+      var payloadKey = (params.get('payload_key') || '').trim();
+      if (payloadKey) {
+          linkedRealtimePayloadSource = 'query';
+          return readLivePayloadRecords(payloadKey);
+      }
+      var latestKey = findLatestLivePayloadKey();
+      if (latestKey) {
+          linkedRealtimePayloadSource = 'cache';
+          return readLivePayloadRecords(latestKey);
+      }
+      linkedRealtimePayloadSource = '';
+      return [];
   }
 
   function renderLinkedObstacleBatchMarkers() {
@@ -1100,13 +1157,30 @@ window.onload = function() {
   function updateSourceDisplay() {
       var sourceText = document.getElementById('notamSourceText');
       var sourceBtn = document.getElementById('sourceBtn');
+      var liveText = document.getElementById('livePayloadText');
       if (sourceText) {
           if (linkedRealtimeMode && linkedRealtimeNotams.length) {
-              sourceText.textContent = 'NOTAM Src: LINKED LIVE';
+              var liveLabel = linkedRealtimePayloadSource === 'cache' ? 'LIVE (cached)' : 'LIVE (payload)';
+              sourceText.textContent = 'NOTAM Src: ' + liveLabel;
               sourceText.style.color = '#0b5ea8';
           } else {
               sourceText.textContent = 'NOTAM Src: ' + activeSource;
               sourceText.style.color = activeSource === 'RAW' ? 'green' : 'red';
+          }
+      }
+      if (liveText) {
+          if (linkedRealtimeMode && linkedRealtimeNotams.length) {
+              liveText.textContent = 'Live payload: active';
+              liveText.style.color = '#0b5ea8';
+          } else {
+              var latestKey = findLatestLivePayloadKey();
+              if (latestKey) {
+                  liveText.textContent = 'Live payload: available (open live)';
+                  liveText.style.color = '#8a6d3b';
+              } else {
+                  liveText.textContent = 'Live payload: none (daily JSON)';
+                  liveText.style.color = '#6c757d';
+              }
           }
       }
       if (sourceBtn) {
@@ -1421,7 +1495,7 @@ window.onload = function() {
       var d = L.DomUtil.create('div','pilot-input');
       L.DomEvent.disableClickPropagation(d);
       d.style.marginTop = '88px';
-        d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls"><i class="fa-solid fa-bars"></i></button><div class="controls-row">Lat <input id="pLat" size="10" maxlength="12" placeholder="43.000000"> Lon <input id="pLon" size="10" maxlength="13" placeholder="-79.000000"></div><div class="controls-meta dd-hint">DD: 43.653200, -79.383200</div><div class="action-grid"><button id="upd">Set Lat/Lon</button><button id="centerPilot">Center Map</button><button id="getPilotLoc">Get Location</button><button id="sourceBtn">Switch Filter Group</button></div><div class="controls-row" style="margin-top:5px;">Radius km <input id="radiusKmInput" size="6" maxlength="6" placeholder="10"> <button id="setRadiusBtn">Change NOTAM Radius</button></div><div id="currentPilotText" class="controls-meta status-line">Current Pilot: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Src: RAW</div><div id="currentBasemapText" class="controls-meta status-line">Basemap: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div>';
+        d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls"><i class="fa-solid fa-bars"></i></button><div class="controls-row">Lat <input id="pLat" size="10" maxlength="12" placeholder="43.000000"> Lon <input id="pLon" size="10" maxlength="13" placeholder="-79.000000"></div><div class="controls-meta dd-hint">DD: 43.653200, -79.383200</div><div class="action-grid"><button id="upd">Set Lat/Lon</button><button id="centerPilot">Center Map</button><button id="getPilotLoc">Get Location</button><button id="sourceBtn">Switch Filter Group</button><button id="openLiveFetch">Fetch Live NOTAMs</button></div><div class="controls-row" style="margin-top:5px;">Radius km <input id="radiusKmInput" size="6" maxlength="6" placeholder="10"> <button id="setRadiusBtn">Change NOTAM Radius</button></div><div id="currentPilotText" class="controls-meta status-line">Current Pilot: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Src: RAW</div><div id="livePayloadText" class="controls-meta status-line">Live payload: --</div><div id="currentBasemapText" class="controls-meta status-line">Basemap: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div>';
       return d;
   };
   ctl.addTo(map);
@@ -1580,6 +1654,13 @@ window.onload = function() {
             updateSourceDisplay();
             refreshObstacles(marker.getLatLng());
     };
+
+      document.getElementById('openLiveFetch').onclick = function() {
+          var popup = window.open('FetchNotams.html', '_blank');
+          if (popup) {
+              popup.focus();
+          }
+      };
 
       document.getElementById('setRadiusBtn').onclick = function() {
           var val = parseFloat(document.getElementById('radiusKmInput').value);
