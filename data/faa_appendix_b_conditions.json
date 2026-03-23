@@ -462,6 +462,12 @@
     "phraseology": "opr but ctn adz due to"
   },
   {
+    "category": "Limitations (L)",
+    "code": "TT",
+    "meaning": "Trigger (AIP/AIRAC notification)",
+    "phraseology": "trigger"
+  },
+  {
     "category": "Other (XX)",
     "code": "XX",
     "meaning": "Where 4th and 5th letter Code does not cover the situation, use XX and supplement by plain language",
