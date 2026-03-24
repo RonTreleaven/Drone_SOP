@@ -1237,6 +1237,7 @@ updatePilotLocationButtonLabel()
 
 function saveWeatherArtifact(payload){
 const now = new Date().toISOString()
+const parsedKp = parseKpReading(payload.kp?.kp ?? payload.kp?.kpRaw ?? payload.kp?.kpNumeric ?? null)
 
 latestWeatherArtifact = {
 timestamp: now,
@@ -1254,8 +1255,9 @@ visibilitySm: payload.risk?.visibility ?? null,
 ceilingFt: payload.risk?.ceiling ?? null,
 riskScore: payload.risk?.score ?? 0,
 riskLabel: getRiskLabel(payload.risk?.score ?? 0),
-kpIndex: payload.kp?.kp ?? null,
-kpCondition: getKpCondition(payload.kp?.kp ?? null),
+kpIndex: parsedKp.raw || (payload.kp?.kp ?? null),
+kpNumeric: parsedKp.numeric,
+kpCondition: getKpCondition(parsedKp.raw || parsedKp.numeric),
 location: payload.location || null,
 nearestStations: Array.isArray(payload.nearestStations) ? payload.nearestStations : []
 }
@@ -1272,11 +1274,48 @@ return "RISKY"
 }
 
 
+function parseKpReading(kpValue){
+if(kpValue == null) return { raw:"", numeric:null, qualifier:"", qualifierLabel:"" }
+
+const raw = String(kpValue).trim()
+if(!raw) return { raw:"", numeric:null, qualifier:"", qualifierLabel:"" }
+
+const suffixMatch = raw.match(/^(-?\d+(?:\.\d+)?)([A-Za-z]+)$/)
+if(suffixMatch){
+const qualifier = suffixMatch[2].toUpperCase()
+return {
+raw,
+numeric: Number(suffixMatch[1]),
+qualifier,
+qualifierLabel: getKpQualifierLabel(qualifier)
+}
+}
+
+const numeric = Number(raw)
+return {
+raw,
+numeric: Number.isFinite(numeric) ? numeric : null,
+qualifier:"",
+qualifierLabel:""
+}
+}
+
+
+function getKpQualifierLabel(code){
+if(code === "M") return "Magnetic"
+if(code === "P") return "Predicted"
+if(code === "Z") return "Stable"
+if(code === "E") return "Estimated"
+return ""
+}
+
+
 function getKpCondition(kpValue){
-if(kpValue == null) return "Unavailable"
-if(kpValue >= 7) return "Severe Storm"
-if(kpValue >= 5) return "Storm"
-if(kpValue >= 4) return "Elevated"
+const parsed = parseKpReading(kpValue)
+if(!Number.isFinite(parsed.numeric)) return "Unavailable"
+if(parsed.numeric >= 7) return "Severe Storm"
+if(parsed.numeric >= 5) return "Storm"
+if(parsed.numeric >= 4) return "Elevated"
 return "Nominal"
 }
 
@@ -1399,6 +1438,8 @@ return
 const ageMs = Date.now() - new Date(committedWeatherArtifact.timestamp).getTime()
 const isStale = Number.isFinite(ageMs) && ageMs > 3600000
 const hoursSince = formatHoursSince(committedWeatherArtifact.timestamp)
+const kpDisplayValue = committedWeatherArtifact.kpIndex ?? committedWeatherArtifact.kpNumeric ?? "-"
+const kpCondition = getKpCondition(kpDisplayValue)
 
 const completeLine = completed
 ? `<div class="${isStale ? "status-alert" : "status-ok"}">Record State: ${hoursSince ? `${hoursSince} since last saved weather assessment${isStale ? ". Re-poll recommended." : ""}` : "Saved"}</div>`
@@ -1415,7 +1456,7 @@ el.innerHTML = `
 ${completeLine}
 <div>ICAO: ${committedWeatherArtifact.icao || "-"}</div>
 <div>Risk: ${committedWeatherArtifact.riskLabel} (score ${committedWeatherArtifact.riskScore})</div>
-<div>Kp: ${committedWeatherArtifact.kpIndex ?? "-"} (${committedWeatherArtifact.kpCondition})</div>
+<div>Kp: ${kpDisplayValue} (${kpCondition})</div>
 `
 
 if(rerunBtn){
@@ -1461,8 +1502,9 @@ source: artifact.metarSource || "",
 sourceUrl: artifact.metarSourceUrl || ""
 })
 
-if(Number.isFinite(Number(artifact.kpIndex))){
-displayKp({ kp: Number(artifact.kpIndex) })
+const savedKpReading = artifact.kpIndex ?? artifact.kpNumeric ?? null
+if(parseKpReading(savedKpReading).raw || Number.isFinite(parseKpReading(savedKpReading).numeric)){
+displayKp({ kp: savedKpReading })
 }
 
 const fallbackRisk = {
@@ -2320,7 +2362,7 @@ dotEl.className = "risk-key-dot risk-key-red"
 
 
 /* -------------------------
-   NOAA SPACE WEATHER
+/   NOAA SPACE WEATHER
 ------------------------- */
 
 async function fetchKpIndex(){
@@ -2338,7 +2380,14 @@ return null
 
 const data = await r.json()
 
-return data[data.length-1]
+const latest = data[data.length-1]
+const parsed = parseKpReading(latest?.kp)
+
+return {
+...latest,
+kpRaw: parsed.raw || latest?.kp || null,
+kpNumeric: parsed.numeric
+}
 
 }
 catch{
@@ -2357,10 +2406,13 @@ el.innerHTML="Unavailable"
 return
 }
 
-const kpValue = kp.kp
-
-const note = getKpCondition(Number(kpValue))
+const parsedKp = parseKpReading(kp.kpRaw ?? kp.kpNumeric ?? kp.kp)
+const kpValue = parsedKp.raw || (Number.isFinite(parsedKp.numeric) ? String(parsedKp.numeric) : "Unavailable")
+const note = getKpCondition(parsedKp.raw || parsedKp.numeric)
 let badgeClass = "kp-nominal"
+const qualifierLine = parsedKp.qualifier
+? `<b>Feed Qualifier:</b> ${parsedKp.qualifier} (${parsedKp.qualifierLabel || "Qualifier"})<br>`
+: ""
 
 if(note === "Severe Storm") badgeClass = "kp-severe"
 else if(note === "Storm") badgeClass = "kp-storm"
@@ -2370,6 +2422,7 @@ el.innerHTML = `
 <div class="kp-badge ${badgeClass}">${note}</div><br>
 <b>Kp Index:</b> ${kpValue}<br>
 <b>Condition:</b> ${note}
+${qualifierLine}
 <div class="subtle">Source: NOAA SWPC Planetary K-index (1-minute feed)</div>
 <div class="kp-key-spacer" aria-hidden="true"></div>
 <div class="kp-key-line" aria-label="Kp condition key">
