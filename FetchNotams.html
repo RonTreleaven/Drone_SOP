@@ -682,6 +682,89 @@
       cursor: pointer;
     }
 
+    [data-section-head-target] {
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+      border-radius: 4px;
+    }
+
+    [data-section-head-target]:hover,
+    [data-section-head-target]:focus-visible {
+      color: #2b5cab;
+      text-decoration: underline dotted 2px;
+      outline: none;
+    }
+
+    .fir-reference-note {
+      margin: 0 0 8px;
+      color: #4f5f74;
+      font-size: 0.88rem;
+    }
+
+    .fir-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      background: #fff;
+    }
+
+    .fir-table th,
+    .fir-table td {
+      border: 1px solid #d7e2f3;
+      padding: 7px 8px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .fir-table th {
+      background: #f3f8ff;
+      color: #1f3652;
+      font-weight: 700;
+    }
+
+    .fir-table tbody tr {
+      cursor: pointer;
+    }
+
+    .fir-table tbody tr:hover {
+      background: #eef5ff;
+    }
+
+    .fir-table tbody tr.active {
+      background: #dff0e6;
+    }
+
+    .fir-source-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      border: 1px solid #c7d2e3;
+      background: #f3f6fb;
+      color: #2f4a70;
+    }
+
+    .fir-source-pill.current {
+      border-color: #9fc9a6;
+      background: #eff8ef;
+      color: #1d5f2f;
+    }
+
+    .fir-source-pill.cached {
+      border-color: #a7c6ee;
+      background: #eaf3ff;
+      color: #1f4f84;
+    }
+
+    .fir-source-pill.none {
+      border-color: #d9dfe8;
+      background: #f5f7fa;
+      color: #5f6f83;
+    }
+
     .filter-toggle-btn {
       border: 1px solid #9fc9a6;
       background: #eff8ef;
@@ -1139,6 +1222,35 @@
     <h1>Fetch NOTAMS by FIR and ICAO codes</h1>
     <p class="subtle" id="lastFetchBanner">Last Fetch: - EDT | - UTC</p>
 
+    <section class="section-collapsible collapsed" id="firReferenceSection">
+      <div class="section-head">
+        <span data-section-head-target="#firReferenceSection">Canadian FIR Reference</span>
+        <button class="section-toggle" type="button" data-collapse-target="#firReferenceSection">Show</button>
+      </div>
+      <div class="section-body">
+        <p class="fir-reference-note">Click a FIR row to populate the FIR field. Selected FIR count uses current in-memory data when available; other FIR rows use cache.</p>
+        <table class="fir-table" aria-label="Canadian FIR reference and NOTAM counts">
+          <thead>
+            <tr>
+              <th>Region</th>
+              <th>FIR</th>
+              <th>NOTAM Count</th>
+              <th>Data Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-fir-row="CZVR"><td>Vancouver</td><td>CZVR</td><td data-fir-count="CZVR">0</td><td><span class="fir-source-pill none" data-fir-source="CZVR">None</span></td></tr>
+            <tr data-fir-row="CZEG"><td>Edmonton</td><td>CZEG</td><td data-fir-count="CZEG">0</td><td><span class="fir-source-pill none" data-fir-source="CZEG">None</span></td></tr>
+            <tr data-fir-row="CZWG"><td>Winnipeg</td><td>CZWG</td><td data-fir-count="CZWG">0</td><td><span class="fir-source-pill none" data-fir-source="CZWG">None</span></td></tr>
+            <tr data-fir-row="CZYZ"><td>Toronto</td><td>CZYZ</td><td data-fir-count="CZYZ">0</td><td><span class="fir-source-pill none" data-fir-source="CZYZ">None</span></td></tr>
+            <tr data-fir-row="CZUL"><td>Montreal</td><td>CZUL</td><td data-fir-count="CZUL">0</td><td><span class="fir-source-pill none" data-fir-source="CZUL">None</span></td></tr>
+            <tr data-fir-row="CZQM"><td>Moncton</td><td>CZQM</td><td data-fir-count="CZQM">0</td><td><span class="fir-source-pill none" data-fir-source="CZQM">None</span></td></tr>
+            <tr data-fir-row="CZQX"><td>Gander</td><td>CZQX</td><td data-fir-count="CZQX">0</td><td><span class="fir-source-pill none" data-fir-source="CZQX">None</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="selection-block" aria-label="FIR and NOTAM Inputs">
       <form id="fetchForm" class="search-container">
         <div class="field-group code-field">
@@ -1194,7 +1306,7 @@
 
     <section class="section-collapsible collapsed" id="qFilterSection">
       <div class="section-head">
-        <span>Q-Code Category Filters</span>
+        <span data-section-head-target="#qFilterSection">Q-Code Category Filters</span>
         <div class="section-head-actions">
           <button class="btn btn-small q-help-btn" type="button" id="openQLegend" title="Open Q-code legend">
             <span class="q-help-icon" aria-hidden="true">?</span>
@@ -1283,7 +1395,7 @@
 
     <section class="section-collapsible collapsed" id="scoreboardSection">
       <div class="section-head">
-        <span>Scoreboard</span>
+        <span data-section-head-target="#scoreboardSection">Scoreboard</span>
         <button class="section-toggle" type="button" data-collapse-target="#scoreboardSection">Show</button>
       </div>
       <div class="section-body">
@@ -1319,6 +1431,7 @@
 
   </div>
 
+  <script src="assets/js/qcode-legend.js"></script>
   <script>
     const API_BASE = "https://plan.navcanada.ca/weather/api/alpha/";
     const DIRECT_TIMEOUT_MS = 5000;
@@ -1439,6 +1552,7 @@
     }
 
     let currentItems = [];
+    let currentDataSite = "";
     let currentFilteredItems = [];
     let pendingMapPayloadInfo = null;
     let qLegendPopupWindow = null;
@@ -1747,37 +1861,18 @@
     let Q_SUBJECT_CODE_MAP = new Map(Q_SUBJECT_CODES.map(entry => [entry.code, entry.meaning]));
     let Q_CONDITION_CODE_MAP = new Map(Q_CONDITION_CODES.map(entry => [entry.code, entry.meaning]));
     const Q_LEGEND_DATA_SOURCES = {
-      subjects: "data/faa_appendix_b_subjects.json",
-      conditions: "data/faa_appendix_b_conditions.json"
+      subjects: "data/Subjects.json",
+      conditions: "data/Conditions.json"
     };
-    const Q_SUBJECT_CUSTOM = [
-      { code: "NX", meaning: "Navaid (general)", category: "Terminal and En Route Navigation Facilities (N)" },
-      { code: "XX", meaning: "Other / unspecified subject", category: "Custom / Other (X)" }
-    ];
-    const SUBJECT_CATEGORY_LABELS = {
-      A: "Airspace Organization (A)",
-      C: "Communications and Surveillance Facilities (C)",
-      F: "Facilities and Services (F)",
-      G: "GNSS Services (G)",
-      I: "Instrument and Microwave Landing System (I)",
-      L: "Lighting Facilities (L)",
-      M: "Movement and Landing Area (M)",
-      N: "Terminal and En Route Navigation Facilities (N)",
-      O: "Other Information (O)",
-      P: "Air Traffic Procedures (P)",
-      R: "Navigation Warnings: Airspace Restrictions (R)",
-      S: "Air Traffic and VOLMET Services (S)",
-      W: "Navigation Warnings: Warnings (W)",
-      X: "Custom / Other (X)",
-      K: "Checklists (K)"
-    };
-    const CONDITION_CATEGORY_LABELS = {
-      A: "Availability (A)",
-      C: "Changes (C)",
-      H: "Hazard Conditions (H)",
-      L: "Limitations (L)",
-      X: "Other (XX)"
-    };
+    const qLegendController = window.QCodeLegend
+      ? window.QCodeLegend.createController({
+          subjectCodes: Q_SUBJECT_CODES,
+          conditionCodes: Q_CONDITION_CODES,
+          trafficCodes: Q_TRAFFIC_CODES,
+          scopeCodes: Q_SCOPE_CODES,
+          dataSources: Q_LEGEND_DATA_SOURCES
+        })
+      : null;
     const Q_PRIORITY_BY_CATEGORY = {
       O: 90,
       W: 85,
@@ -1864,6 +1959,76 @@
       const selectedIcao = normalizeCode(el.icaoInput.value, 4);
       el.currentFirValue.textContent = selectedFir || "-";
       el.currentIcaoValue.textContent = selectedIcao || "-";
+      updateFirReferenceCounts();
+    }
+
+    function updateFirReferenceCounts() {
+      const selectedFir = normalizeCode(el.firInput?.value, 4);
+      const hasCurrentSiteData = !!currentDataSite && Array.isArray(currentItems);
+
+      FIR_CODES.forEach(firCode => {
+        const row = document.querySelector(`[data-fir-row="${firCode}"]`);
+        const countCell = document.querySelector(`[data-fir-count="${firCode}"]`);
+        const sourceEl = document.querySelector(`[data-fir-source="${firCode}"]`);
+        if (!row || !countCell || !sourceEl) return;
+
+        let count = 0;
+        let sourceText = "None";
+        let sourceClass = "none";
+
+        if (hasCurrentSiteData && currentDataSite === firCode) {
+          count = currentItems.length;
+          sourceText = "Current";
+          sourceClass = "current";
+        } else {
+          const cache = loadCache(firCode);
+          const cacheItems = Array.isArray(cache?.items) ? cache.items : [];
+          if (cacheItems.length > 0) {
+            count = cacheItems.length;
+            sourceText = "Cached";
+            sourceClass = "cached";
+          }
+        }
+
+        countCell.textContent = String(count);
+        sourceEl.textContent = sourceText;
+        sourceEl.classList.remove("current", "cached", "none");
+        sourceEl.classList.add(sourceClass);
+        row.classList.toggle("active", !!selectedFir && selectedFir === firCode);
+      });
+    }
+
+    function setupFirReferenceTable() {
+      document.querySelectorAll("[data-fir-row]").forEach(row => {
+        row.addEventListener("click", () => {
+          const firCode = normalizeCode(row.getAttribute("data-fir-row") || "", 4);
+          if (!firCode || !el.firInput) return;
+          el.firInput.value = firCode;
+          persistLastFir(firCode);
+          updateSelectionSummary();
+          applyFirButtonStates(firCode);
+          if (el.firInput) el.firInput.focus();
+        });
+      });
+    }
+
+    function initializeFirReferencePanel() {
+      const section = document.getElementById("firReferenceSection");
+      if (!section) return;
+
+      const hasCurrentLive = !!currentDataSite && Array.isArray(currentItems) && currentItems.length > 0;
+      const hasAnyCache = FIR_CODES.some(code => {
+        const cache = loadCache(code);
+        return Array.isArray(cache?.items) && cache.items.length > 0;
+      });
+
+      section.classList.toggle("collapsed", hasCurrentLive || hasAnyCache);
+      const toggleBtn = section.querySelector("[data-collapse-target='#firReferenceSection']");
+      if (toggleBtn) {
+        toggleBtn.textContent = section.classList.contains("collapsed") ? "Show" : "Hide";
+      }
+
+      updateFirReferenceCounts();
     }
 
     function setIcaoSelection(code) {
@@ -2105,59 +2270,12 @@
     }
 
     async function loadQCodeLegendData() {
-      try {
-        const [subjectsRes, conditionsRes] = await Promise.all([
-          fetch(Q_LEGEND_DATA_SOURCES.subjects, { cache: "no-store" }),
-          fetch(Q_LEGEND_DATA_SOURCES.conditions, { cache: "no-store" })
-        ]);
-        if (!subjectsRes.ok || !conditionsRes.ok) {
-          return false;
-        }
-        const subjectsData = await subjectsRes.json();
-        const conditionsData = await conditionsRes.json();
-
-        if (Array.isArray(subjectsData) && subjectsData.length) {
-          Q_SUBJECT_CODES = subjectsData
-            .filter(entry => entry && typeof entry.code === "string")
-            .map(entry => ({
-              code: String(entry.code || "").toUpperCase().trim(),
-              meaning: String(entry.meaning || "").trim(),
-              category: String(entry.category || "").trim()
-            }))
-            .filter(entry => entry.code.length === 2);
-        }
-
-        if (Array.isArray(Q_SUBJECT_CUSTOM) && Q_SUBJECT_CUSTOM.length) {
-          const existing = new Set(Q_SUBJECT_CODES.map(entry => entry.code));
-          Q_SUBJECT_CUSTOM.forEach(entry => {
-            const code = String(entry.code || "").toUpperCase().trim();
-            if (!code || code.length !== 2 || existing.has(code)) return;
-            Q_SUBJECT_CODES.push({
-              code,
-              meaning: String(entry.meaning || "").trim(),
-              category: String(entry.category || "").trim()
-            });
-            existing.add(code);
-          });
-        }
-
-        if (Array.isArray(conditionsData) && conditionsData.length) {
-          Q_CONDITION_CODES = conditionsData
-            .filter(entry => entry && typeof entry.code === "string")
-            .map(entry => ({
-              code: String(entry.code || "").toUpperCase().trim(),
-              meaning: String(entry.meaning || "").trim(),
-              category: String(entry.category || "").trim()
-            }))
-            .filter(entry => entry.code.length === 2);
-        }
-
-        rebuildQCodeMaps();
-        return true;
-      } catch (error) {
-        console.warn("[FetchNotams] Q-code legend JSON load failed, using embedded lists.", error);
-        return false;
-      }
+      if (!qLegendController) return false;
+      const loaded = await qLegendController.loadData();
+      Q_SUBJECT_CODES = qLegendController.getSubjectCodes();
+      Q_CONDITION_CODES = qLegendController.getConditionCodes();
+      rebuildQCodeMaps();
+      return loaded;
     }
 
     function getQSubjectMeaning(code) {
@@ -2364,6 +2482,7 @@
       const params = new URLSearchParams();
       params.set("src", "fetchnotams");
       params.set("focus", "1");
+      params.set("airports", "off");
       params.set("payload_key", payloadKey);
       params.set("lat", String(first.lat));
       params.set("lon", String(first.lon));
@@ -2506,226 +2625,13 @@
       el.qFilterSummary.textContent = `Q filter on: include ${includedText} | exclude ${excludedText}. ${sortText}`;
     }
 
-    function filterLegendRows(rows, query) {
-      if (!query) return rows;
-      const normalized = query.endsWith("*") ? query.slice(0, -1) : query;
-      if (!normalized) return rows;
-
-      return rows.filter(entry => {
-        const code = String(entry.code || "").toUpperCase();
-        // Strict code-prefix lookup for category/subject/traffic/scope codes.
-        return code.startsWith(normalized);
-      });
-    }
-
-    function renderLegendSection(title, rows, codeHeader = "Code", options = {}) {
-      if (!rows.length) return "";
-      const sectionId = options.sectionId || title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-      const isCollapsed = options.collapsed !== false;
-      const highlightPrefix = String(options.highlightPrefix || "").toUpperCase();
-      const body = rows
-        .map(entry => {
-          const codeText = String(entry.code || "").toUpperCase();
-          const isHit = highlightPrefix && codeText.startsWith(highlightPrefix);
-          return `
-          <tr class="${isHit ? "q-legend-hit" : ""}">
-            <td class="q-legend-col-code">${escapeHtml(entry.code)}</td>
-            <td>${escapeHtml(entry.meaning)}</td>
-          </tr>
-        `;
-        })
-        .join("");
-      return `
-        <section class="q-legend-section ${isCollapsed ? "collapsed" : ""}" data-section-id="${escapeHtml(sectionId)}">
-          <div class="q-legend-section-head">
-            <h3>${escapeHtml(title)}</h3>
-            <button class="q-legend-toggle" type="button" data-action="toggle">Show</button>
-          </div>
-          <table class="q-legend-table">
-            <thead>
-              <tr>
-                <th>${escapeHtml(codeHeader)}</th>
-                <th>Meaning</th>
-              </tr>
-            </thead>
-            <tbody>${body}</tbody>
-          </table>
-        </section>
-      `;
-    }
-
-    function normalizeSubjectCategoryLabel(rawTitle, code) {
-      if (rawTitle) {
-        return String(rawTitle)
-          .replace(/^ATM\\s+/i, "")
-          .replace(/^CNS\\s+/i, "")
-          .replace(/^AGA\\s+/i, "")
-          .replace(/^COM\\s+/i, "")
-          .trim();
-      }
-      const letter = code ? code.slice(0, 1) : "";
-      return SUBJECT_CATEGORY_LABELS[letter] || "Other";
-    }
-
-    function normalizeConditionCategoryLabel(rawTitle, code) {
-      if (rawTitle) {
-        return String(rawTitle).trim();
-      }
-      const letter = code ? code.slice(0, 1) : "";
-      return CONDITION_CATEGORY_LABELS[letter] || "Other";
-    }
-
     function getSubjectCategoryTooltip(letter) {
-      const raw = SUBJECT_CATEGORY_LABELS[letter] || "Other";
-      const normalized = normalizeSubjectCategoryLabel(raw, letter);
-      return stripTrailingCategoryLetter(normalized);
-    }
-
-    function formatConditionSectionTitle(label, code) {
-      const letter = code ? String(code).slice(0, 1).toUpperCase() : "";
-      const cleanLabel = stripTrailingCategoryLetter(label);
-      return `Condition - [${letter}*] ${cleanLabel}`;
-    }
-
-    function stripTrailingCategoryLetter(label) {
-      return String(label || "").replace(/\s*\([A-Z]\)\s*$/i, "").trim();
-    }
-
-    function formatSubjectSectionTitle(label, code) {
-      const letter = code ? String(code).slice(0, 1).toUpperCase() : "";
-      const cleanLabel = stripTrailingCategoryLetter(label);
-      return `Subject - [${letter}*] ${cleanLabel}`;
-    }
-
-    function updateLegendSectionToggles(root = document) {
-      const sections = root.querySelectorAll(".q-legend-section");
-      sections.forEach(section => {
-        const btn = section.querySelector(".q-legend-toggle");
-        if (!btn) return;
-        const isCollapsed = section.classList.contains("collapsed");
-        btn.textContent = isCollapsed ? "Show" : "Hide";
-      });
-
-      if (el.qLegendShowAll) {
-        const hasCollapsed = Array.from(sections).some(section => section.classList.contains("collapsed"));
-        el.qLegendShowAll.textContent = hasCollapsed ? "Show all" : "Hide all";
-      }
-    }
-
-    function initLegendToggleHandlers() {
-      if (el.qLegendBody && !el.qLegendBody.dataset.toggleBound) {
-        el.qLegendBody.dataset.toggleBound = "1";
-        el.qLegendBody.addEventListener("click", event => {
-          const target = event.target;
-          if (!(target instanceof Element)) return;
-          if (!target.classList.contains("q-legend-toggle")) return;
-          const section = target.closest(".q-legend-section");
-          if (!section) return;
-          section.classList.toggle("collapsed");
-          updateLegendSectionToggles();
-        });
-      }
-
-      const showAllBtn = document.getElementById("qLegendShowAll");
-      if (showAllBtn && !showAllBtn.dataset.bound) {
-        showAllBtn.dataset.bound = "1";
-        showAllBtn.addEventListener("click", () => {
-          const sections = Array.from(document.querySelectorAll(".q-legend-section"));
-          const hasCollapsed = sections.some(section => section.classList.contains("collapsed"));
-          sections.forEach(section => {
-            section.classList.toggle("collapsed", !hasCollapsed);
-          });
-          showAllBtn.textContent = hasCollapsed ? "Hide all" : "Show all";
-          updateLegendSectionToggles();
-        });
-      }
-    }
-
-    function buildLegendSections(subjectQuery, conditionQuery) {
-      const subjectPrefix = subjectQuery.replace(/\*/g, "");
-      const conditionPrefix = conditionQuery.replace(/\*/g, "");
-      const subjectRows = filterLegendRows([...Q_SUBJECT_CODES].sort((a, b) => a.code.localeCompare(b.code)), subjectQuery);
-      const conditionRows = filterLegendRows([...Q_CONDITION_CODES].sort((a, b) => a.code.localeCompare(b.code)), conditionQuery);
-      const miscQuery = "";
-      const trafficRows = filterLegendRows([...Q_TRAFFIC_CODES].sort((a, b) => a.code.localeCompare(b.code)), miscQuery);
-      const scopeRows = filterLegendRows([...Q_SCOPE_CODES].sort((a, b) => a.code.localeCompare(b.code)), miscQuery);
-
-      const subjectGroups = new Map();
-      for (const entry of subjectRows) {
-        const label = normalizeSubjectCategoryLabel(entry.category, entry.code);
-        const letter = String(entry.code || "").slice(0, 1).toUpperCase();
-        if (!subjectGroups.has(letter)) subjectGroups.set(letter, { label, rows: [] });
-        subjectGroups.get(letter).rows.push(entry);
-      }
-      const subjectSections = Array.from(subjectGroups.entries())
-        .sort((a, b) => a[0].localeCompare(b[0]))
-        .map(([letter, group]) => {
-          const rows = group.rows;
-          const hasMatch = subjectPrefix && rows.some(entry => String(entry.code || "").toUpperCase().startsWith(subjectPrefix));
-          return renderLegendSection(formatSubjectSectionTitle(group.label, letter), rows, "Subject", {
-            collapsed: subjectPrefix ? !hasMatch : true,
-            highlightPrefix: subjectPrefix
-          });
-        });
-
-      const conditionGroups = new Map();
-      for (const entry of conditionRows) {
-        const label = normalizeConditionCategoryLabel(entry.category, entry.code);
-        const letter = String(entry.code || "").slice(0, 1).toUpperCase();
-        if (!conditionGroups.has(letter)) conditionGroups.set(letter, { label, rows: [] });
-        conditionGroups.get(letter).rows.push(entry);
-      }
-      const conditionSections = Array.from(conditionGroups.entries())
-        .sort((a, b) => a[0].localeCompare(b[0]))
-        .map(([letter, group]) => {
-          const rows = group.rows;
-          const hasMatch = conditionPrefix && rows.some(entry => String(entry.code || "").toUpperCase().startsWith(conditionPrefix));
-          return renderLegendSection(formatConditionSectionTitle(group.label, letter), rows, "Condition", {
-            collapsed: conditionPrefix ? !hasMatch : true,
-            highlightPrefix: conditionPrefix
-          });
-        });
-
-      const sections = [
-        ...subjectSections,
-        ...conditionSections,
-        renderLegendSection("Traffic Codes", trafficRows, "Traffic"),
-        renderLegendSection("Scope Codes", scopeRows, "Scope")
-      ].filter(Boolean);
-
-      return sections;
+      return qLegendController ? qLegendController.getSubjectCategoryTooltip(letter) : "Other";
     }
 
     function renderQSubjectLegendTable() {
-      const rawSubject = String(el.qLegendSearch?.value || "").toUpperCase();
-      const rawCondition = String(el.qLegendConditionSearch?.value || "").toUpperCase();
-      const subjectQuery = rawSubject.replace(/[^A-Z*]/g, "").replace(/\*+/g, "*").trim();
-      const conditionQuery = rawCondition.replace(/[^A-Z*]/g, "").replace(/\*+/g, "*").trim();
-      const sections = buildLegendSections(subjectQuery, conditionQuery);
-
-      el.qLegendBody.innerHTML = sections.length > 0
-        ? sections.join("")
-        : '<p class="q-legend-note">No legend entries match your search.</p>';
-
-      updateLegendSectionToggles();
-
-      if (el.qLegendInfo) {
-        const subjectCode = subjectQuery.replace(/\*/g, "");
-        const conditionCode = conditionQuery.replace(/\*/g, "");
-        const subjectMeaning = subjectCode && subjectCode.length === 2 ? getQSubjectMeaning(subjectCode) : "";
-        const conditionMeaning = conditionCode && conditionCode.length === 2 ? getQConditionMeaning(conditionCode) : "";
-        if (subjectCode && conditionCode) {
-          const combined = `${subjectCode}${conditionCode}`;
-          const subjectText = subjectMeaning || "Unknown subject";
-          const conditionText = conditionMeaning || "Unknown condition";
-          el.qLegendInfo.textContent = `${combined} = ${subjectText}, ${conditionText}`;
-        } else if (subjectCode) {
-          el.qLegendInfo.textContent = `${subjectCode} = ${subjectMeaning || "Unknown subject"}. Enter a condition to see the pair meaning.`;
-        } else if (conditionCode) {
-          el.qLegendInfo.textContent = `${conditionCode} = ${conditionMeaning || "Unknown condition"}. Enter a subject to see the pair meaning.`;
-        } else {
-          el.qLegendInfo.textContent = "Enter both subject and condition codes to see a combined meaning.";
-        }
+      if (qLegendController) {
+        qLegendController.render();
       }
     }
 
@@ -2754,7 +2660,7 @@
     function openQCodeLegendPopup() {
       try {
         const popupWidth = 860;
-        const popupHeight = 820;
+        const popupHeight = 900;
         const left = Math.max(20, window.screenX + window.outerWidth - popupWidth - 30);
         const top = Math.max(20, window.screenY + 70);
         const features = [
@@ -2770,257 +2676,14 @@
           "status=no"
         ].join(",");
 
-        if (!qLegendPopupWindow || qLegendPopupWindow.closed) {
-          qLegendPopupWindow = window.open("", "NotamQCodeLegendWindow", features);
-        }
+        qLegendPopupWindow = window.open("QCodeLegend.html", "NotamQCodeLegendWindow", features);
 
         if (!qLegendPopupWindow || qLegendPopupWindow.closed) {
           setQCodeLegendPopoutStatus("Pop-out blocked by browser settings. Allow pop-ups for this page, then click Pop out again.", "warn");
           return false;
         }
-
-        const contextHtml = document.querySelector(".q-legend-context")?.outerHTML || "";
-        const noteHtml = document.querySelector(".q-legend-note")?.outerHTML || "";
-        const tableHtml = buildLegendSections("", "").join("") || "";
-        const popupDoc = qLegendPopupWindow.document;
-
-        popupDoc.open();
-        popupDoc.write(`<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NOTAM Q-Code Legend</title>
-  <style>
-    body { margin: 0; font-family: Segoe UI, Tahoma, Arial, sans-serif; background: #f4f8ff; color: #1f3652; }
-    .wrap { padding: 14px; }
-    .head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
-    .title { margin: 0; font-size: 1.1rem; }
-    .hint { color: #4f5f74; font-size: 0.85rem; }
-    .q-legend-context { padding: 10px 12px; border: 1px solid #d7e2f3; border-radius: 8px; background: #f8fbff; margin-bottom: 10px; }
-    .q-legend-context-title { margin: 0 0 6px; font-size: 0.92rem; color: #1f3652; }
-    .q-legend-context-line { margin: 0 0 8px; padding: 8px 10px; border-radius: 8px; background: #0f1b2d; color: #f0f5fb; font-family: Consolas, Courier New, monospace; font-size: 0.94rem; white-space: nowrap; overflow-x: auto; }
-    .q-legend-context-list { margin: 0; padding-left: 16px; font-size: 0.82rem; color: #344860; line-height: 1.4; }
-    .seg-fir, .seg-qcode, .seg-traffic, .seg-purpose, .seg-scope, .seg-limits, .seg-coord { font-weight: 700; }
-    .q-legend-context-line .seg-fir { color: #86d7ff; }
-    .q-legend-context-line .seg-qcode { color: #ffd37a; }
-    .q-legend-context-line .seg-traffic { color: #86f0a6; }
-    .q-legend-context-line .seg-purpose { color: #ffb7d8; }
-    .q-legend-context-line .seg-scope { color: #d0c3ff; }
-    .q-legend-context-line .seg-limits { color: #fff08d; }
-    .q-legend-context-line .seg-coord { color: #8aeff3; }
-    .q-legend-note { margin: 0 0 10px; color: #4f5f74; font-size: 0.88rem; }
-    .q-legend-info { margin: 0 0 10px; color: #b3261e; font-size: 1rem; font-weight: 800; }
-    .q-legend-tools { display: flex; gap: 8px; align-items: center; margin: 0 0 10px; flex-wrap: wrap; }
-    .q-legend-actions { display: flex; gap: 8px; margin: 0 0 12px; flex-wrap: wrap; }
-    .q-legend-actions button { border-radius: 8px; padding: 6px 10px; font-weight: 700; }
-    .q-legend-tools input { flex: 1; min-width: 220px; padding: 8px 10px; border: 1px solid #c7ced8; border-radius: 8px; font-size: 0.95rem; }
-    .q-legend-tools button { border: 1px solid #c7ced8; background: #ffffff; border-radius: 8px; padding: 8px 10px; cursor: pointer; font-weight: 600; color: #1f3652; }
-    .q-legend-empty { display: none; margin: 0 0 10px; color: #b3261e; font-size: 0.88rem; font-weight: 600; }
-    .q-legend-section { margin-bottom: 14px; }
-    .q-legend-section h3 { margin: 0; font-size: 0.96rem; color: #1f3652; }
-    .q-legend-section-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 8px; background: #f6f8fb; border: 1px solid #e1e6ee; border-radius: 8px; margin-bottom: 8px; }
-    .q-legend-section-head .q-legend-toggle { margin-left: auto; }
-    .q-legend-toggle { border: 1px solid #9bb6da; background: #ffffff; color: #1c3f6b; border-radius: 6px; padding: 4px 8px; font-weight: 700; cursor: pointer; }
-    .q-legend-section.collapsed .q-legend-table { display: none; }
-    .q-legend-hit td { background: #e6f6ea; }
-    .q-legend-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; background: #fff; }
-    .q-legend-table th, .q-legend-table td { border: 1px solid #e1e6ee; padding: 7px 8px; text-align: left; vertical-align: top; }
-    .q-legend-table th { background: #f6f8fb; font-weight: 700; position: sticky; top: 0; z-index: 1; }
-    .q-legend-col-code { font-weight: 700; color: #163e70; white-space: nowrap; }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <div class="head">
-      <h1 class="title">NOTAM Q-Code Legend</h1>
-      <div class="hint">Tip: You can move and resize this window.</div>
-    </div>
-    ${contextHtml}
-    ${noteHtml}
-    <p class="q-legend-info" id="popupLegendInfo">Enter both subject and condition codes to see a combined meaning.</p>
-    <div class="q-legend-tools">
-      <input id="popupLegendSubject" type="text" placeholder="Subject (2 letters, example: LI)">
-      <input id="popupLegendCondition" type="text" placeholder="Condition (2 letters, example: AS)">
-      <button id="popupLegendClear" type="button">Clear</button>
-    </div>
-    <div class="q-legend-actions">
-      <button id="popupLegendToggleAll" type="button">Show all</button>
-    </div>
-    <p class="q-legend-empty" id="popupLegendEmpty">No legend entries match your search.</p>
-    ${tableHtml}
-  </div>
-  <script>
-    (function () {
-      var subjectInput = document.getElementById('popupLegendSubject');
-      var conditionInput = document.getElementById('popupLegendCondition');
-      var clearBtn = document.getElementById('popupLegendClear');
-      var emptyNote = document.getElementById('popupLegendEmpty');
-
-      function normalizeQuery(value) {
-        var cleaned = String(value || '').toUpperCase().replace(/[^A-Z*]/g, '');
-        return cleaned.endsWith('*') ? cleaned.slice(0, -1) : cleaned;
-      }
-
-      function updateToggleAllLabel() {
-        var sectionsAll = document.querySelectorAll('.q-legend-section');
-        var hasCollapsed = Array.prototype.some.call(sectionsAll, function (s) { return s.classList.contains('collapsed'); });
-        var toggleAllBtn = document.getElementById('popupLegendToggleAll');
-        if (toggleAllBtn) {
-          toggleAllBtn.textContent = hasCollapsed ? 'Show all' : 'Hide all';
-        }
-      }
-
-      function applyFilter() {
-        var subjectQuery = normalizeQuery(subjectInput ? subjectInput.value : '');
-        var conditionQuery = normalizeQuery(conditionInput ? conditionInput.value : '');
-        var totalVisibleRows = 0;
-        var sections = document.querySelectorAll('.q-legend-section');
-
-        for (var si = 0; si < sections.length; si++) {
-          var section = sections[si];
-          var heading = section.querySelector('h3');
-          var title = heading ? String(heading.textContent || '') : '';
-          var isSubject = title.indexOf('Subject') !== -1;
-          var isCondition = title.indexOf('Condition') !== -1;
-          var rows = section.querySelectorAll('tbody tr');
-          var visibleInSection = 0;
-
-          for (var ri = 0; ri < rows.length; ri++) {
-            var row = rows[ri];
-            var firstCell = row.querySelector('td');
-            var code = firstCell ? String(firstCell.textContent || '').trim().toUpperCase() : '';
-            var keep = true;
-            if (isSubject && subjectQuery) {
-              keep = code.indexOf(subjectQuery) === 0;
-            } else if (isCondition && conditionQuery) {
-              keep = code.indexOf(conditionQuery) === 0;
-            }
-            row.style.display = keep ? '' : 'none';
-            row.classList.toggle('q-legend-hit', keep && ((isSubject && subjectQuery) || (isCondition && conditionQuery)));
-            if (keep) {
-              visibleInSection += 1;
-              totalVisibleRows += 1;
-            }
-          }
-
-          section.style.display = visibleInSection > 0 ? '' : 'none';
-          if ((isSubject && subjectQuery) || (isCondition && conditionQuery)) {
-            section.classList.toggle('collapsed', visibleInSection === 0);
-          }
-          var toggleBtn = section.querySelector('.q-legend-toggle');
-          if (toggleBtn) {
-            var isCollapsed = section.classList.contains('collapsed');
-            toggleBtn.textContent = isCollapsed ? 'Show' : 'Hide';
-          }
-        }
-
-        updateToggleAllLabel();
-
-        var infoEl = document.getElementById('popupLegendInfo');
-        if (infoEl) {
-          var subjectCode = subjectQuery.replace(/\\*/g, '').slice(0, 2);
-          var conditionCode = conditionQuery.replace(/\\*/g, '').slice(0, 2);
-          var subjectMeaning = '';
-          var conditionMeaning = '';
-
-          function findMeaningFor(code, kind) {
-            if (!code || code.length !== 2) return '';
-            var sectionsAll = document.querySelectorAll('.q-legend-section');
-            for (var si2 = 0; si2 < sectionsAll.length; si2++) {
-              var head2 = sectionsAll[si2].querySelector('h3');
-              var title2 = head2 ? String(head2.textContent || '') : '';
-              if (title2.indexOf(kind) === -1) continue;
-              var rows = sectionsAll[si2].querySelectorAll('tbody tr');
-              for (var i2 = 0; i2 < rows.length; i2++) {
-                var codeCell = rows[i2].querySelector('td');
-                if (!codeCell) continue;
-                var codeText = String(codeCell.textContent || '').trim().toUpperCase();
-                if (codeText === code) {
-                  var meaningCell = rows[i2].querySelectorAll('td')[1];
-                  return meaningCell ? String(meaningCell.textContent || '').trim() : '';
-                }
-              }
-            }
-            return '';
-          }
-
-          subjectMeaning = findMeaningFor(subjectCode, 'Subject');
-          conditionMeaning = findMeaningFor(conditionCode, 'Condition');
-
-          if (subjectCode && conditionCode) {
-            infoEl.textContent = subjectCode + conditionCode + ' = ' + (subjectMeaning || 'Unknown subject') + ', ' + (conditionMeaning || 'Unknown condition');
-          } else if (subjectCode) {
-            infoEl.textContent = subjectCode + ' = ' + (subjectMeaning || 'Unknown subject') + '. Enter a condition to see the pair meaning.';
-          } else if (conditionCode) {
-            infoEl.textContent = conditionCode + ' = ' + (conditionMeaning || 'Unknown condition') + '. Enter a subject to see the pair meaning.';
-          } else {
-            infoEl.textContent = 'Enter both subject and condition codes to see a combined meaning.';
-          }
-        }
-
-        if (emptyNote) {
-          emptyNote.style.display = totalVisibleRows > 0 ? 'none' : 'block';
-        }
-      }
-
-      if (subjectInput) {
-        subjectInput.addEventListener('input', function () {
-          subjectInput.value = String(subjectInput.value || '').toUpperCase().replace(/[^A-Z*]/g, '');
-          applyFilter();
-        });
-      }
-
-      if (conditionInput) {
-        conditionInput.addEventListener('input', function () {
-          conditionInput.value = String(conditionInput.value || '').toUpperCase().replace(/[^A-Z*]/g, '');
-          applyFilter();
-        });
-      }
-
-      if (clearBtn) {
-        clearBtn.addEventListener('click', function () {
-          if (subjectInput) subjectInput.value = '';
-          if (conditionInput) conditionInput.value = '';
-          applyFilter();
-          if (subjectInput) subjectInput.focus();
-        });
-      }
-
-      var toggleAllBtn = document.getElementById('popupLegendToggleAll');
-      if (toggleAllBtn) {
-        toggleAllBtn.addEventListener('click', function () {
-          var sectionsAll = document.querySelectorAll('.q-legend-section');
-          var hasCollapsed = Array.prototype.some.call(sectionsAll, function (s) { return s.classList.contains('collapsed'); });
-          for (var k = 0; k < sectionsAll.length; k++) {
-            sectionsAll[k].classList.toggle('collapsed', !hasCollapsed);
-          }
-          updateToggleAllLabel();
-        });
-      }
-
-      document.addEventListener('click', function (event) {
-        var target = event.target;
-        if (!target || !target.classList || !target.classList.contains('q-legend-toggle')) return;
-        var section = target.closest('.q-legend-section');
-        if (!section) return;
-        section.classList.toggle('collapsed');
-        target.textContent = section.classList.contains('collapsed') ? 'Show' : 'Hide';
-        updateToggleAllLabel();
-      });
-
-      applyFilter();
-      setTimeout(function () {
-        window.scrollTo(0, 0);
-        if (subjectInput) subjectInput.focus();
-      }, 0);
-    })();
-  <\/script>
-</body>
- </html>`);
-        popupDoc.close();
         qLegendPopupWindow.focus();
-        setQCodeLegendPopoutStatus("Pop-out opened in a separate window. If not visible, check your taskbar or other monitor.", "ok");
+        setQCodeLegendPopoutStatus("Standalone Q-Code Legend opened in a separate window.", "ok");
         return true;
       } catch (error) {
         console.warn("[FetchNotams] Q legend popup failed, using modal fallback.", error);
@@ -3101,8 +2764,21 @@
       el.refreshFromCacheBtn.classList.toggle("btn-attn", !!isFresh);
     }
 
+    function applyFirButtonStates(firCode) {
+      const ageMs = getCacheAgeMs(firCode);
+      const hasFreshCache = Number.isFinite(ageMs) && ageMs < FRESH_BANNER_WINDOW_MS;
+      if (hasFreshCache) {
+        setUseCacheButtonState(true);
+        setFetchButtonState("muted");
+      } else {
+        setUseCacheButtonState(false);
+        setFetchButtonState("attention");
+      }
+    }
+
     function resetToNoData(message = "No data loaded yet.", buttonState = "attention") {
       currentItems = [];
+      currentDataSite = "";
       refreshIcaoOptionsFromItems([]);
       updateAirportUniverseInfo([]);
       render([], normalizeCode(el.firInput.value, 4) || "-", message);
@@ -3110,6 +2786,7 @@
       el.updatedValue.textContent = "-";
       setStatusClass(el.sourceValue, "");
       setFetchButtonState(buttonState);
+      updateFirReferenceCounts();
     }
 
     function render(items, site, sourceLabel) {
@@ -3238,6 +2915,7 @@
       }
       el.sourceValue.textContent = sourceLabel;
       updateQFilterSummary();
+      updateFirReferenceCounts();
     }
 
     function escapeHtml(value) {
@@ -3322,6 +3000,7 @@
 
       if (cached && Array.isArray(cached.items)) {
         currentItems = cached.items;
+        currentDataSite = site;
         storeLatestLivePayloadFromItems(currentItems, 1200, site);
         refreshIcaoOptionsFromItems(currentItems);
         updateAirportUniverseInfo(currentItems);
@@ -3343,6 +3022,7 @@
         const parsedItems = parseNotamItems(fresh.payload);
 
         currentItems = parsedItems;
+        currentDataSite = site;
         storeLatestLivePayloadFromItems(currentItems, 1200, site);
         refreshIcaoOptionsFromItems(currentItems);
         updateAirportUniverseInfo(currentItems);
@@ -3378,6 +3058,7 @@
           el.resultsHeaderText.textContent = `${site}: Live fetch failed, showing recent cache.`;
         } else {
           currentItems = [];
+          currentDataSite = "";
           refreshIcaoOptionsFromItems([]);
           updateAirportUniverseInfo([]);
           el.notamsInScopeInline.textContent = "0";
@@ -3425,8 +3106,10 @@
     });
 
     el.firInput.addEventListener("input", () => {
-      el.firInput.value = normalizeCode(el.firInput.value, 4);
+      const firCode = normalizeCode(el.firInput.value, 4);
+      el.firInput.value = firCode;
       updateSelectionSummary();
+      applyFirButtonStates(firCode);
     });
 
     el.icaoInput.addEventListener("input", () => {
@@ -3521,6 +3204,20 @@
       el.openQLegend.addEventListener("click", launchQCodeLegend);
     }
 
+    setupFirReferenceTable();
+    initializeFirReferencePanel();
+
+    if (qLegendController) {
+      qLegendController.bindUi({
+        bodyEl: el.qLegendBody,
+        infoEl: el.qLegendInfo,
+        subjectInput: el.qLegendSearch,
+        conditionInput: el.qLegendConditionSearch,
+        clearBtn: el.qLegendClearSearch,
+        showAllBtn: el.qLegendShowAll
+      });
+    }
+
     // Overlay-safe fallback: if another element steals click target, hit-test button bounds.
     document.addEventListener("pointerup", event => {
       if (!el.openQLegend || !event.isPrimary) return;
@@ -3548,28 +3245,6 @@
       renderQSubjectLegendTable();
       openQCodeLegendPopup();
     });
-
-    el.qLegendSearch.addEventListener("input", () => {
-      el.qLegendSearch.value = String(el.qLegendSearch.value || "").toUpperCase().replace(/[^A-Z*]/g, "");
-      renderQSubjectLegendTable();
-    });
-    if (el.qLegendConditionSearch) {
-      el.qLegendConditionSearch.addEventListener("input", () => {
-        el.qLegendConditionSearch.value = String(el.qLegendConditionSearch.value || "").toUpperCase().replace(/[^A-Z*]/g, "");
-        renderQSubjectLegendTable();
-      });
-    }
-
-    el.qLegendClearSearch.addEventListener("click", () => {
-      el.qLegendSearch.value = "";
-      if (el.qLegendConditionSearch) {
-        el.qLegendConditionSearch.value = "";
-      }
-      renderQSubjectLegendTable();
-      el.qLegendSearch.focus();
-    });
-
-    initLegendToggleHandlers();
 
     el.qLegendModal.addEventListener("click", event => {
       const target = event.target;
@@ -3604,6 +3279,19 @@
         if (!section) return;
         section.classList.toggle("collapsed");
         btn.textContent = section.classList.contains("collapsed") ? "Show" : "Hide";
+      });
+    });
+
+    document.querySelectorAll("[data-section-head-target]").forEach(headSpan => {
+      headSpan.addEventListener("click", () => {
+        const targetSelector = headSpan.getAttribute("data-section-head-target");
+        if (!targetSelector) return;
+        const section = document.querySelector(targetSelector);
+        if (!section) return;
+        section.classList.toggle("collapsed");
+        const isCollapsed = section.classList.contains("collapsed");
+        const toggleBtn = section.querySelector(".section-toggle[data-collapse-target]");
+        if (toggleBtn) toggleBtn.textContent = isCollapsed ? "Show" : "Hide";
       });
     });
 
@@ -3650,6 +3338,7 @@
       resetToNoData("No data loaded yet.", "attention");
       updateSelectionSummary();
     }
+    updateFirReferenceCounts();
   </script>
 </body>
 </html>

@@ -175,6 +175,136 @@
   .center-map-control {
     border-radius: 8px;
   }
+  .airport-circles-flyout {
+    position: absolute;
+    left: 42px;
+    top: -2px;
+    z-index: 1200;
+    width: 228px;
+    max-width: calc(100vw - 70px);
+    max-height: 52vh;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid #d8e2ee;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 8px 8px 6px;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  .airport-circles-flyout.collapsed {
+    display: none;
+  }
+  .airport-circles-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .airport-circles-title {
+    font-weight: 700;
+    color: #1f3b63;
+  }
+  .airport-circles-close {
+    border: 1px solid #9bb6da;
+    border-radius: 6px;
+    background: #fff;
+    color: #1f3b63;
+    padding: 2px 8px;
+    font-size: 11px;
+    cursor: pointer;
+  }
+  .airport-circles-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+    padding: 4px 2px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+  }
+  .airport-circles-row-label {
+    flex: 1;
+    color: #1f3b63;
+  }
+  .airport-circles-row-status {
+    font-weight: 700;
+    color: #4a5568;
+  }
+  .airport-circles-hint {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #6b7280;
+  }
+  .notams-flyout {
+    position: absolute;
+    left: 42px;
+    top: -2px;
+    z-index: 1200;
+    width: 214px;
+    max-width: calc(100vw - 70px);
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid #d8e2ee;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 8px;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  .notams-flyout.collapsed {
+    display: none;
+  }
+  .notams-flyout-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .notams-flyout-title {
+    font-weight: 700;
+    color: #1f3b63;
+  }
+  .notams-flyout-close {
+    border: 1px solid #9bb6da;
+    border-radius: 6px;
+    background: #fff;
+    color: #1f3b63;
+    padding: 2px 8px;
+    font-size: 11px;
+    cursor: pointer;
+  }
+  .notams-flyout-btn {
+    width: 100%;
+    margin: 4px 0 0;
+    border: 1px solid #9bb6da;
+    border-radius: 6px;
+    background: #fff;
+    color: #1f3b63;
+    padding: 6px 8px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+  }
+  .notams-flyout-meta {
+    margin-top: 6px;
+    font-size: 11px;
+    color: #5b6574;
+  }
+  @media (max-width: 768px) {
+    .airport-circles-flyout {
+      width: 206px;
+      left: 40px;
+      max-height: 46vh;
+    }
+    .notams-flyout {
+      width: 196px;
+      left: 40px;
+    }
+  }
 </style>
     
 <script>
@@ -184,6 +314,8 @@ window.onload = function() {
   var launchParams = new URLSearchParams(window.location.search || '');
   var launchedFromQFilter = (launchParams.get('src') || '').toLowerCase() === 'qfilter';
   var linkedFocusRequested = /^(1|true|yes|on)$/i.test((launchParams.get('focus') || '').trim());
+  var launchAirportsMode = (launchParams.get('airports') || '').trim().toLowerCase();
+  var forceAirportsOffOnLaunch = /^(0|off|false|no)$/i.test(launchAirportsMode);
 
   window.closeMapTab = function() {
       if (window.opener && !window.opener.closed) {
@@ -256,11 +388,14 @@ window.onload = function() {
     var pilotToObstacleLine = null;
     var notamDataReady = false;
     var notamDataError = '';
+    var setAirportCircleFlyoutOpen = null;
+    var setNotamsFlyoutOpen = null;
     var currentZoom = map.getZoom();
     var provinceCodeCache = Object.create(null);
     var refreshQueued = false;
     var pendingRefreshLatLng = null;
     var obstacleMarkers = [];
+    var allNotamDetailsShown = false;
     var lastObstacleTapKey = '';
     var lastObstacleTapIndex = 0;
     var obstacleIcon = L.AwesomeMarkers.icon({
@@ -1053,7 +1188,8 @@ window.onload = function() {
       return byName[text.toLowerCase()] || null;
   }
 
-  function applyAirportDefaultsForProvince(provinceCode) {
+  function applyAirportDefaultsForProvince(provinceCode, keepVisible) {
+      var shouldShow = keepVisible !== false;
       var code = normalizeProvinceCode(provinceCode);
       var typeMap = code ? airportLayerIndex[code] : null;
       selectedAirportLayers = [];
@@ -1071,7 +1207,9 @@ window.onload = function() {
       }
 
       setAllAirportLayersVisible(false);
-      setSelectedAirportLayersVisible(true);
+      if (shouldShow) {
+          setSelectedAirportLayersVisible(true);
+      }
       updateAirportsToggleLabel();
   }
 
@@ -1098,21 +1236,21 @@ window.onload = function() {
       }
   }
 
-  async function applyAirportDefaultsFromLocation(ll) {
+  async function applyAirportDefaultsFromLocation(ll, keepVisible) {
       var code = await detectProvinceCodeForLocation(ll);
       if (code && airportLayerIndex[code]) {
-          applyAirportDefaultsForProvince(code);
+          applyAirportDefaultsForProvince(code, keepVisible);
           return;
       }
 
       if (airportLayerIndex['CA-ON']) {
-          applyAirportDefaultsForProvince('CA-ON');
+          applyAirportDefaultsForProvince('CA-ON', keepVisible);
           return;
       }
 
       for (var fallbackCode in airportLayerIndex) {
           if (Object.prototype.hasOwnProperty.call(airportLayerIndex, fallbackCode)) {
-              applyAirportDefaultsForProvince(fallbackCode);
+              applyAirportDefaultsForProvince(fallbackCode, keepVisible);
               return;
           }
       }
@@ -1156,6 +1294,69 @@ window.onload = function() {
           ctl.classList.add('inactive'); // grey: toggle off and no nearby obstacles
       }
       // when toggle is on, keep the same normal look as Airports toggle
+      if (typeof updateNotamsFlyoutStatus === 'function') {
+          updateNotamsFlyoutStatus();
+      }
+  }
+
+  function updateNotamsFlyoutStatus() {
+      var status = document.getElementById('notamsFlyoutStatus');
+      var toggleBtn = document.getElementById('notamsFlyoutToggleBtn');
+      var detailBtn = document.getElementById('showAllNotamDetailBtn');
+      var count = window._notamObstacleCount || 0;
+      if (status) {
+          status.textContent = 'In-scope markers: ' + String(count);
+      }
+      if (toggleBtn) {
+          toggleBtn.textContent = notamsVisible ? 'Hide NOTAM markers' : 'Show NOTAM markers';
+      }
+      if (detailBtn) {
+          detailBtn.textContent = allNotamDetailsShown ? 'Hide all NOTAM detail' : 'Show all NOTAM detail';
+      }
+  }
+
+  function toggleAllNotamDetails() {
+      if (!obstacleMarkers || obstacleMarkers.length === 0) {
+          alert('No in-scope NOTAM markers to show.');
+          return;
+      }
+
+      if (!notamsVisible) {
+          setNotamsVisible(true);
+      }
+
+      if (!allNotamDetailsShown) {
+          if (obstacleMarkers.length > 40) {
+              var proceed = window.confirm('Open detail popups for ' + obstacleMarkers.length + ' NOTAM markers?');
+              if (!proceed) {
+                  return;
+              }
+          }
+
+          for (var i = 0; i < obstacleMarkers.length; i++) {
+              var mkOpen = obstacleMarkers[i];
+              if (!mkOpen || !mkOpen.getPopup) continue;
+              var popupOpen = mkOpen.getPopup();
+              if (!popupOpen) continue;
+              popupOpen.options.autoClose = false;
+              popupOpen.options.closeOnClick = false;
+              popupOpen.options.maxWidth = 420;
+              mkOpen.openPopup();
+          }
+          allNotamDetailsShown = true;
+      } else {
+          for (var j = 0; j < obstacleMarkers.length; j++) {
+              var mkClose = obstacleMarkers[j];
+              if (!mkClose || !mkClose.closePopup) continue;
+              mkClose.closePopup();
+          }
+          if (map && map.closePopup) {
+              map.closePopup();
+          }
+          allNotamDetailsShown = false;
+      }
+
+      updateNotamsFlyoutStatus();
   }
 
   function applyBasemapByName(name) {
@@ -1543,6 +1744,7 @@ window.onload = function() {
   function refreshObstacles(ll) {
       obstacleLayer.clearLayers();
       obstacleMarkers = [];
+      allNotamDetailsShown = false;
       lastObstacleTapKey = '';
       lastObstacleTapIndex = 0;
       var countText = document.getElementById('obstacleCountText');
@@ -1778,13 +1980,20 @@ window.onload = function() {
       var d = L.DomUtil.create('div', 'left-mini-toggle-control');
       d.id = 'airportsToggleCtl';
       var btn = L.DomUtil.create('a', 'left-mini-toggle-btn', d);
+      btn.id = 'airportsToggleBtn';
       btn.href = '#';
-      btn.title = 'Toggle airport types by province';
-      btn.setAttribute('aria-label', 'Toggle Airports Layer');
+      btn.title = 'Airport circles panel';
+      btn.setAttribute('aria-label', 'Airport circles panel');
+      btn.setAttribute('aria-haspopup', 'dialog');
+      btn.setAttribute('aria-expanded', 'false');
       btn.innerHTML = '<i class="fa-solid fa-plane-departure"></i><span id="airportsToggleText" style="display:none">Toggle Airports Layer</span>';
       L.DomEvent.disableClickPropagation(d);
       L.DomEvent.on(btn, 'click', function(ev) {
           L.DomEvent.stop(ev);
+          if (typeof setAirportCircleFlyoutOpen === 'function') {
+              setAirportCircleFlyoutOpen();
+              return;
+          }
           setSelectedAirportLayersVisible(!anySelectedAirportLayerVisible());
           updateAirportsToggleLabel();
       });
@@ -1797,18 +2006,113 @@ window.onload = function() {
       var d = L.DomUtil.create('div', 'left-mini-toggle-control');
       d.id = 'notamsToggleCtl';
       var btn = L.DomUtil.create('a', 'left-mini-toggle-btn', d);
+      btn.id = 'notamsToggleBtn';
       btn.href = '#';
-      btn.title = 'Toggle NOTAM obstacles';
-      btn.setAttribute('aria-label', 'Toggle NOTAMs');
+      btn.title = 'NOTAM tools';
+      btn.setAttribute('aria-label', 'NOTAM tools');
+      btn.setAttribute('aria-haspopup', 'dialog');
+      btn.setAttribute('aria-expanded', 'false');
       btn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
       L.DomEvent.disableClickPropagation(d);
       L.DomEvent.on(btn, 'click', function(ev) {
           L.DomEvent.stop(ev);
+          if (typeof setNotamsFlyoutOpen === 'function') {
+              setNotamsFlyoutOpen();
+              return;
+          }
           setNotamsVisible(!notamsVisible);
       });
       return d;
   };
   notamsToggleCtl.addTo(map);
+
+  var notamsFlyoutEl = null;
+  var notamsFlyoutOpen = false;
+
+  function syncNotamsFlyoutState() {
+      if (!notamsFlyoutEl) return;
+      notamsFlyoutEl.classList.toggle('collapsed', !notamsFlyoutOpen);
+      var btn = document.getElementById('notamsToggleBtn');
+      if (btn) {
+          btn.setAttribute('aria-expanded', notamsFlyoutOpen ? 'true' : 'false');
+      }
+      if (notamsFlyoutOpen) {
+          updateNotamsFlyoutStatus();
+      }
+  }
+
+  setNotamsFlyoutOpen = function(forceOpen) {
+      if (!notamsFlyoutEl) return;
+      if (typeof forceOpen === 'boolean') {
+          notamsFlyoutOpen = forceOpen;
+      } else {
+          notamsFlyoutOpen = !notamsFlyoutOpen;
+      }
+      syncNotamsFlyoutState();
+  };
+
+  var notamsToggleCtlEl = document.getElementById('notamsToggleCtl');
+  if (notamsToggleCtlEl) {
+      notamsToggleCtlEl.style.position = 'relative';
+      notamsFlyoutEl = document.createElement('div');
+      notamsFlyoutEl.className = 'notams-flyout collapsed';
+      notamsFlyoutEl.setAttribute('role', 'dialog');
+      notamsFlyoutEl.setAttribute('aria-label', 'NOTAM tools panel');
+
+      var head = document.createElement('div');
+      head.className = 'notams-flyout-head';
+      var title = document.createElement('div');
+      title.className = 'notams-flyout-title';
+      title.textContent = 'NOTAM Tools';
+      var closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.className = 'notams-flyout-close';
+      closeBtn.textContent = 'Close';
+      closeBtn.addEventListener('click', function(ev) {
+          L.DomEvent.stop(ev);
+          setNotamsFlyoutOpen(false);
+      });
+      head.appendChild(title);
+      head.appendChild(closeBtn);
+      notamsFlyoutEl.appendChild(head);
+
+      var toggleBtn = document.createElement('button');
+      toggleBtn.type = 'button';
+      toggleBtn.id = 'notamsFlyoutToggleBtn';
+      toggleBtn.className = 'notams-flyout-btn';
+      toggleBtn.textContent = 'Hide NOTAM markers';
+      toggleBtn.addEventListener('click', function() {
+          setNotamsVisible(!notamsVisible);
+      });
+      notamsFlyoutEl.appendChild(toggleBtn);
+
+      var detailBtn = document.createElement('button');
+      detailBtn.type = 'button';
+      detailBtn.id = 'showAllNotamDetailBtn';
+      detailBtn.className = 'notams-flyout-btn';
+      detailBtn.textContent = 'Show all NOTAM detail';
+      detailBtn.addEventListener('click', function() {
+          toggleAllNotamDetails();
+      });
+      notamsFlyoutEl.appendChild(detailBtn);
+
+      var status = document.createElement('div');
+      status.id = 'notamsFlyoutStatus';
+      status.className = 'notams-flyout-meta';
+      status.textContent = 'In-scope markers: 0';
+      notamsFlyoutEl.appendChild(status);
+
+      notamsToggleCtlEl.appendChild(notamsFlyoutEl);
+      L.DomEvent.disableClickPropagation(notamsFlyoutEl);
+      L.DomEvent.disableScrollPropagation(notamsFlyoutEl);
+
+      syncNotamsFlyoutState();
+      map.on('click', function() {
+          if (notamsFlyoutOpen) {
+              setNotamsFlyoutOpen(false);
+          }
+      });
+  }
 
   basemapControl.addTo(map);
   var basemapCtlContainer = basemapControl.getContainer ? basemapControl.getContainer() : null;
@@ -2113,7 +2417,7 @@ window.onload = function() {
     var startupLocationMissing = !hasUsablePilotLocation(startupPilotLocation);
 
     applyPilotLocation(startupPilotLocation, !startupLocationMissing);
-    applyAirportDefaultsFromLocation(startupPilotLocation);
+    applyAirportDefaultsFromLocation(startupPilotLocation, !forceAirportsOffOnLaunch);
     if (!linkedRealtimeMode) {
             renderLinkedObstacleBatchMarkers();
             if (linkedFocusRequested && linkedObstacleBatch.length > 1) {
@@ -2219,38 +2523,87 @@ window.onload = function() {
             });
         });
 
-        var circleLegendControl = L.control({ position: 'bottomleft' });
-        circleLegendControl.onAdd = function() {
-            var container = L.DomUtil.create('div');
-            container.style.background = 'rgba(255, 255, 255, 0.96)';
-            container.style.border = '1px solid #d8e2ee';
-            container.style.borderRadius = '8px';
-            container.style.boxShadow = '0 2px 6px rgba(0,0,0,0.18)';
-            container.style.padding = '8px 8px 6px';
-            container.style.minWidth = '220px';
-            container.style.fontSize = '12px';
-            container.style.lineHeight = '1.25';
+        var airportCircleFlyoutEl = null;
+        var airportCircleFlyoutOpen = false;
+
+        function syncAirportCircleFlyoutState() {
+            if (!airportCircleFlyoutEl) return;
+            airportCircleFlyoutEl.classList.toggle('collapsed', !airportCircleFlyoutOpen);
+            var btn = document.getElementById('airportsToggleBtn');
+            if (btn) {
+                btn.setAttribute('aria-expanded', airportCircleFlyoutOpen ? 'true' : 'false');
+            }
+        }
+
+        setAirportCircleFlyoutOpen = function(forceOpen) {
+            if (!airportCircleFlyoutEl) return;
+            if (typeof forceOpen === 'boolean') {
+                airportCircleFlyoutOpen = forceOpen;
+            } else {
+                airportCircleFlyoutOpen = !airportCircleFlyoutOpen;
+            }
+            syncAirportCircleFlyoutState();
+        };
+
+        function buildAirportCircleFlyoutContent(container) {
+            container.innerHTML = '';
+
+            var head = document.createElement('div');
+            head.className = 'airport-circles-head';
 
             var title = document.createElement('div');
+            title.className = 'airport-circles-title';
             title.textContent = 'Airport Circle Layers';
-            title.style.fontWeight = '700';
-            title.style.color = '#1f3b63';
-            title.style.marginBottom = '6px';
-            container.appendChild(title);
+
+            var closeBtn = document.createElement('button');
+            closeBtn.type = 'button';
+            closeBtn.className = 'airport-circles-close';
+            closeBtn.textContent = 'Close';
+            closeBtn.setAttribute('aria-label', 'Close airport circles panel');
+            closeBtn.addEventListener('click', function(ev) {
+                L.DomEvent.stop(ev);
+                setAirportCircleFlyoutOpen(false);
+            });
+
+            head.appendChild(title);
+            head.appendChild(closeBtn);
+            container.appendChild(head);
+
+            var provinceRow = document.createElement('button');
+            provinceRow.type = 'button';
+            provinceRow.className = 'airport-circles-row';
+            var provinceSwatch = document.createElement('span');
+            provinceSwatch.style.width = '12px';
+            provinceSwatch.style.height = '12px';
+            provinceSwatch.style.borderRadius = '50%';
+            provinceSwatch.style.background = '#1f3b63';
+            provinceSwatch.style.border = '1px solid rgba(0,0,0,0.2)';
+            var provinceLabel = document.createElement('span');
+            provinceLabel.className = 'airport-circles-row-label';
+            provinceLabel.textContent = 'Airports by Province';
+            var provinceStatus = document.createElement('span');
+            provinceStatus.className = 'airport-circles-row-status';
+            function updateProvinceRowStatus() {
+                var on = anySelectedAirportLayerVisible();
+                provinceStatus.textContent = on ? 'On' : 'Off';
+                provinceRow.style.opacity = on ? '1' : '0.55';
+            }
+            provinceRow.appendChild(provinceSwatch);
+            provinceRow.appendChild(provinceLabel);
+            provinceRow.appendChild(provinceStatus);
+            provinceRow.addEventListener('click', function() {
+                setSelectedAirportLayersVisible(!anySelectedAirportLayerVisible());
+                updateAirportsToggleLabel();
+                updateProvinceRowStatus();
+            });
+            updateProvinceRowStatus();
+            container.appendChild(provinceRow);
 
             circleTypes.forEach(function(type) {
                 var cfg = circleConfig[type];
                 var row = document.createElement('button');
                 row.type = 'button';
-                row.style.display = 'flex';
-                row.style.alignItems = 'center';
-                row.style.width = '100%';
-                row.style.gap = '8px';
-                row.style.padding = '4px 2px';
-                row.style.border = 'none';
-                row.style.background = 'transparent';
-                row.style.cursor = 'pointer';
-                row.style.textAlign = 'left';
+                row.className = 'airport-circles-row';
 
                 var swatch = document.createElement('span');
                 swatch.style.width = '12px';
@@ -2260,14 +2613,12 @@ window.onload = function() {
                 swatch.style.border = '1px solid rgba(0,0,0,0.2)';
 
                 var label = document.createElement('span');
+                label.className = 'airport-circles-row-label';
                 label.textContent = cfg.label + ' (' + cfg.radiusNm + ' NM)';
-                label.style.flex = '1';
-                label.style.color = '#1f3b63';
 
                 var status = document.createElement('span');
                 status.setAttribute('data-role', 'status');
-                status.style.fontWeight = '700';
-                status.style.color = '#4a5568';
+                status.className = 'airport-circles-row-status';
                 status.textContent = 'On';
 
                 row.appendChild(swatch);
@@ -2282,18 +2633,29 @@ window.onload = function() {
             });
 
             var hint = document.createElement('div');
-            hint.textContent = 'Click a row to toggle';
-            hint.style.marginTop = '4px';
-            hint.style.fontSize = '11px';
-            hint.style.color = '#6b7280';
+            hint.className = 'airport-circles-hint';
+            hint.textContent = 'Tap a row to toggle and close when done';
             container.appendChild(hint);
+        }
 
-            L.DomEvent.disableClickPropagation(container);
-            L.DomEvent.disableScrollPropagation(container);
-            return container;
-        };
-
-        circleLegendControl.addTo(map);
+        var airportsToggleCtlEl = document.getElementById('airportsToggleCtl');
+        if (airportsToggleCtlEl) {
+            airportsToggleCtlEl.style.position = 'relative';
+            airportCircleFlyoutEl = document.createElement('div');
+            airportCircleFlyoutEl.className = 'airport-circles-flyout collapsed';
+            airportCircleFlyoutEl.setAttribute('role', 'dialog');
+            airportCircleFlyoutEl.setAttribute('aria-label', 'Airport circle layers panel');
+            buildAirportCircleFlyoutContent(airportCircleFlyoutEl);
+            airportsToggleCtlEl.appendChild(airportCircleFlyoutEl);
+            L.DomEvent.disableClickPropagation(airportCircleFlyoutEl);
+            L.DomEvent.disableScrollPropagation(airportCircleFlyoutEl);
+            syncAirportCircleFlyoutState();
+            map.on('click', function() {
+                if (airportCircleFlyoutOpen) {
+                    setAirportCircleFlyoutOpen(false);
+                }
+            });
+        }
 
         var layerToTypeMap = {};
         Object.keys(airportLayerIndex).forEach(function(provinceCode) {
@@ -2320,7 +2682,7 @@ window.onload = function() {
 
         window._airportCircleLayersByType = circleLayersByType;
         window._airportCircleEnabledByType = circleEnabledByType;
-        window._airportCircleLegendControl = circleLegendControl;
+        window._airportCircleLegendControl = null;
     })();
     // End airspace circles + legend
 
@@ -2328,7 +2690,7 @@ window.onload = function() {
     updateSourceDisplay();
         setAllAirportLayersVisible(false);
         updateAirportsToggleLabel();
-        applyAirportDefaultsFromLocation(startupPilotLocation);
+        applyAirportDefaultsFromLocation(startupPilotLocation, !forceAirportsOffOnLaunch);
         applyBasemapByName(getStoredBasemapName()) || applyBasemapByName(defaultBasemapName);
         updateBasemapDisplay();
     updateNotamsToggleVisual();
@@ -162923,6 +163285,11 @@ window.onload = function() {
         
 </script>
 </html>
+
+
+
+
+
 
 
 

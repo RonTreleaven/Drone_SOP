@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOTAM Q-Code Legend</title>
+  <link rel="stylesheet" href="assets/css/qcode-legend.css">
+</head>
+<body class="q-legend-page">
+  <main class="q-legend-page-wrap">
+    <nav class="q-legend-page-nav" aria-label="Legend navigation">
+      <button type="button" class="q-legend-nav-btn" id="qLegendBackBtn">Back</button>
+      <button type="button" class="q-legend-nav-btn" id="qLegendCloseBtn">Close</button>
+    </nav>
+
+    <header class="q-legend-page-header">
+      <h1>NOTAM Q-Code Legend</h1>
+      <p class="q-legend-page-sub">Standalone reference for pilots researching Q-code meanings.</p>
+    </header>
+
+    <section class="q-legend-context" aria-label="Q-line quick reference">
+      <p class="q-legend-context-title"><strong>Q Line Anatomy Example</strong></p>
+      <p class="q-legend-context-line">
+        Q)
+        <span class="seg-fir">CZYZ</span> /
+        <span class="seg-qcode">QOLAS</span> /
+        <span class="seg-traffic">IV</span> /
+        <span class="seg-purpose">M</span> /
+        <span class="seg-scope">AE</span> /
+        <span class="seg-limits">000 / 014</span> /
+        <span class="seg-coord">4447N07822W005</span>
+      </p>
+      <ul class="q-legend-context-list">
+        <li><strong class="seg-fir">CZYZ</strong>: FIR</li>
+        <li><strong class="seg-qcode">QOLAS</strong>: Q + subject OL + condition AS</li>
+        <li><strong class="seg-traffic">IV</strong>: IFR + VFR</li>
+        <li><strong class="seg-purpose">M</strong>: Miscellaneous purpose</li>
+        <li><strong class="seg-scope">AE</strong>: Aerodrome + En-route</li>
+        <li><strong class="seg-limits">000 / 014</strong>: Surface to 1,400 ft</li>
+        <li><strong class="seg-coord">4447N07822W005</strong>: Center and radius</li>
+      </ul>
+    </section>
+
+    <p class="q-legend-note">Enter a 2-letter Subject code and 2-letter Condition code to look up a combined meaning.</p>
+    <div class="q-legend-tools">
+      <input id="qLegendSearch" type="text" placeholder="Subject (2 letters, example: LI)">
+      <input id="qLegendConditionSearch" type="text" placeholder="Condition (2 letters, example: AS)">
+      <button type="button" id="qLegendClearSearch">Clear</button>
+    </div>
+    <div class="q-legend-actions">
+      <button type="button" id="qLegendShowAll">Show all</button>
+    </div>
+    <p class="q-legend-info" id="qLegendInfo">Enter both subject and condition codes to see a combined meaning.</p>
+    <div id="qLegendBody"></div>
+  </main>
+
+  <script src="assets/js/qcode-legend.js"></script>
+  <script>
+    function goBack(event) {
+      if (event) event.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+        return;
+      }
+      window.location.href = "tools.html";
+    }
+
+    function closeLegend(event) {
+      if (event) event.preventDefault();
+      window.close();
+      setTimeout(() => {
+        if (!window.closed) {
+          window.location.href = "tools.html";
+        }
+      }, 120);
+    }
+
+    document.getElementById("qLegendBackBtn").addEventListener("click", goBack);
+    document.getElementById("qLegendCloseBtn").addEventListener("click", closeLegend);
+
+    const legend = window.QCodeLegend.createController({
+      dataSources: {
+        subjects: "data/Subjects.json",
+        conditions: "data/Conditions.json"
+      }
+    });
+
+    legend.bindUi({
+      bodyEl: document.getElementById("qLegendBody"),
+      infoEl: document.getElementById("qLegendInfo"),
+      subjectInput: document.getElementById("qLegendSearch"),
+      conditionInput: document.getElementById("qLegendConditionSearch"),
+      clearBtn: document.getElementById("qLegendClearSearch"),
+      showAllBtn: document.getElementById("qLegendShowAll")
+    });
+
+    legend.loadData();
+  </script>
+</body>
+</html>
