@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Drone SOP – Tools (Mock Layouts)</title>
+  <title>Drone SOP – Toolbox</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -302,21 +302,68 @@
           window.location.href = 'index.html';
         }
       }
+
+      function buildWindyUrl(lat, lon, zoom) {
+        return `https://www.windy.com/?${lat},${lon},${zoom}`;
+      }
+
+      function parseStoredPilotLocation() {
+        const stored = localStorage.getItem('pilotLocationDD');
+        if (!stored) return null;
+
+        const parts = stored.split(',').map(part => part.trim());
+        if (parts.length < 2) return null;
+
+        const lat = Number(parts[0]);
+        const lon = Number(parts[1]);
+        if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+
+        return { lat: lat.toFixed(6), lon: lon.toFixed(6) };
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const windyLink = document.getElementById('windy-link');
+        if (!windyLink) return;
+
+        const defaultZoom = 12;
+        const storedLocation = parseStoredPilotLocation();
+        if (storedLocation) {
+          windyLink.href = buildWindyUrl(storedLocation.lat, storedLocation.lon, defaultZoom);
+          return;
+        }
+
+        windyLink.addEventListener('click', (event) => {
+          if (!navigator.geolocation) return;
+
+          event.preventDefault();
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const lat = position.coords.latitude.toFixed(6);
+              const lon = position.coords.longitude.toFixed(6);
+              localStorage.setItem('pilotLocationDD', `${lat}, ${lon}`);
+              window.open(buildWindyUrl(lat, lon, defaultZoom), '_blank', 'noopener');
+            },
+            () => {
+              window.open('https://www.windy.com/', '_blank', 'noopener');
+            }
+          );
+        });
+      });
     </script>
 
     <section class="hero">
       <div class="brand">
         <img src="assets/img/logo_25.svg" alt="Logo">
         <div>
-          <h1>Tools Hub — Layout Explorations</h1>
-          <p class="sub">Three mock layouts below. Each has a short guidance block per section, then grouped tool links. Pick the direction that feels closest to your vision.</p>
+          <h1>Drone Toolbox</h1>
+          <p class="sub">Perform a Pre-Flight site survey to know your airspace, NOTAM obstacles, restrictions, hazards and local weather.</p>
         </div>
       </div>
     </section>
 
     <!-- Layout B (refined) -->
     <section class="mock-block">
-      <div class="mock-title">Layout B — Compact Cards With Collapsible Sections</div>
+      <div class="mock-title">Select Section for Pre-Flight Planning</div>
       <div class="columns">
         <article class="section-card">
           <details open>
@@ -326,16 +373,17 @@
             </summary>
             <p class="section-note">Pre-Flight Planning tools for Weather Checks, NOTAM fetches and Canadian Airports Mapping of obstacles, warnings and hazzards</p>
             <ul class="tool-list">
-              <li><span class="tool-icon">WX</span><a class="tool-link" href="DWCheck.html">Drone Risk and Weather Survey</a></li>
-              <li><span class="tool-icon">MAP</span><a class="tool-link" href="NotamsMap.html">CA Airports & NOTAM Locator</a></li>
-              <li><span class="tool-icon">NAV</span><a class="tool-link" href="FetchNotams.html">Fetch Live Notams</a></li>
-              <li><span class="tool-icon">Q</span><a class="tool-link" href="Notam Q Filter.html">NOTAM Q-Filter (Deep Dive)</a></li>
               <li><span class="tool-icon">WF</span><a class="tool-link" href="https://nrc.canada.ca/en/drone-tool-2/" target="_blank" rel="noopener">Where to Fly — NAV CAN Drone Site Selection Tool</a></li>
+              <li><span class="tool-icon">NAV</span><a class="tool-link" href="FetchNotams.html">Fetch Live Notams</a></li>
+              <li><span class="tool-icon">WX</span><a class="tool-link" href="DWCheck.html">Drone Risk and Weather Survey</a></li>
+              <li><span class="tool-icon">MAP</span><a class="tool-link" href="NotamsMap.html">Canadian Airports & NOTAMs Locator</a></li>
               <li><span class="tool-icon">N/W</span><a class="tool-link" href="https://plan.navcanada.ca/wxrecall/" target="_blank" rel="noopener">NavCan Weather & NOTAM</a></li>
               <li><span class="tool-icon">MET</span><a class="tool-link" href="https://spaces.navcanada.ca/workspace/flightplanning/" target="_blank" rel="noopener">NavCan Flight Planning (METAR/TAF)</a></li>
               <li><span class="tool-icon">SV</span><a class="tool-link" href="https://skyvector.com" target="_blank" rel="noopener">SkyVector Aeronautical Charts</a></li>
               <li><span class="tool-icon">FP</span><a class="tool-link" href="https://www.fltplan.com/" target="_blank" rel="noopener">FltPlan.com Charts</a></li>
               <li><span class="tool-icon">MAP</span><a class="tool-link" href="https://mapviewer.fltplan.com/" target="_blank" rel="noopener">FltPlan Map Builder (Canada)</a></li>
+                          
+              
             </ul>
           </details>
         </article>
@@ -346,11 +394,12 @@
               <span class="summary-title">Utilities</span>
               <span class="summary-sub">Reference and quick utility tools</span>
             </summary>
-            <p class="section-note">Additional Utilities to assist drone pilot with NOTAMS, DMS and Geolocation</p>
+            <p class="section-note">Utilities to assist drone pilots with NOTAMS Codes, DMS and Geolocation</p>
             <ul class="tool-list">
-              <li><span class="tool-icon">Q</span><a class="tool-link" href="QCodeLegend.html">NOTAM Q-Code Legend (Standalone)</a></li>
-              <li><span class="tool-icon">DMS</span><a class="tool-link" href="DMS2DD.html">NOTAM DMS to DD Google Maps</a></li>
-              <li><span class="tool-icon">GPS</span><a class="tool-link" href="GeoLocateMe.html">What's my GPS Location?</a></li>
+              <li><span class="tool-icon">Q</span><a class="tool-link" href="QCodeLegend.html">NOTAM Q-Code Legend</a></li>
+              <li><span class="tool-icon">DMS</span><a class="tool-link" href="DMS2DD.html">NOTAM DMS to DD Convertor </a></li>
+              <li><span class="tool-icon">GPS</span><a class="tool-link" href="GeoLocateMe.html">Get GPS Location (DD/DMS/Map URL)</a></li>
+              <li><span class="tool-icon">Q</span><a class="tool-link" id="windy-link" href="https://www.windy.com/" target="_blank" rel="noopener">Windy</a></li>
             </ul>
           </details>
         </article>
