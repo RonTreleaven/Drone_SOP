@@ -42,7 +42,6 @@
       font-weight: 700;
       margin-right: 4px;
     }
-
     .selection-stats .v {
       color: #123f76;
       font-weight: 800;
@@ -1200,9 +1199,83 @@
         font-size: 0.78rem;
       }
     }
+
+    @media (max-width: 720px) {
+      .fetch-notams-page .top-nav {
+        padding: 8px 10px;
+        font-size: 0.92rem;
+        line-height: 1.65;
+      }
+
+      .fetch-notams-page .top-nav a {
+        display: inline-block;
+        margin: 2px 6px;
+      }
+
+      .fetch-notams-page .top-nav .back-link {
+        margin-bottom: 4px;
+      }
+
+      .fetch-notams-page .top-nav .view-toggle {
+        margin-top: 6px;
+      }
+
+      .view-mobile .card {
+        margin: 10px;
+        padding: 12px;
+      }
+
+      .view-mobile .results-list {
+        max-height: 56vh;
+      }
+
+      .view-mobile .results-header-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .view-mobile .results-header-actions .field-group.compact,
+      .view-mobile .results-header-actions .btn {
+        flex: 1 1 100%;
+        min-width: 0;
+        max-width: none;
+      }
+
+      .view-mobile .status-row {
+        grid-template-columns: 1fr;
+      }
+
+      .view-mobile .section-body {
+        overflow-x: auto;
+      }
+
+      .view-mobile .fir-table {
+        min-width: 560px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .view-mobile .search-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .view-mobile .q-filter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .view-mobile .q-filter-chip,
+      .view-mobile .qcat-toggle {
+        font-size: 0.8rem;
+      }
+
+      .view-mobile .selection-stats {
+        gap: 6px;
+        font-size: 0.86rem;
+      }
+    }
   </style>
 </head>
-<body>
+<body class="fetch-notams-page">
   <nav class="top-nav">
     <a href="#" class="back-link" onclick="goBack(event)"><span class="back-icon" aria-hidden="true">&#8592;</span>BACK</a> |
     <a href="index.html">Home</a> |
@@ -1514,6 +1587,40 @@
 
     function getAutoViewMode() {
       return window.matchMedia("(max-width: 900px)").matches ? "mobile" : "desktop";
+    }
+
+    function detectDeviceType() {
+      const ua = navigator.userAgent || "";
+      const touchPoints = navigator.maxTouchPoints || 0;
+      const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+      const viewportWidth = Math.min(window.innerWidth || 0, window.screen.width || Number.MAX_SAFE_INTEGER);
+
+      const isiPadOS = /Macintosh/i.test(ua) && touchPoints > 1;
+      const isTabletUA = /iPad|Tablet|PlayBook|Silk|(Android(?!.*Mobile))/i.test(ua);
+      const isPhoneUA = /iPhone|iPod|Android.*Mobile|Windows Phone|Mobile/i.test(ua);
+
+      if (isiPadOS || isTabletUA || (coarsePointer && viewportWidth >= 768 && viewportWidth <= 1100)) {
+        return "tablet";
+      }
+
+      if (isPhoneUA || (coarsePointer && viewportWidth < 768)) {
+        return "phone";
+      }
+
+      return "desktop";
+    }
+
+    function applyDeviceType(type) {
+      document.body.classList.remove("device-phone", "device-tablet", "device-desktop");
+      document.body.classList.add(`device-${type}`);
+      document.body.dataset.deviceType = type;
+    }
+
+    function initDeviceType() {
+      const update = () => applyDeviceType(detectDeviceType());
+      update();
+      window.addEventListener("resize", update);
+      window.addEventListener("orientationchange", update);
     }
 
     function applyViewMode(mode) {
@@ -3318,6 +3425,7 @@
       }
     });
 
+    initDeviceType();
     initViewMode();
     refreshIcaoOptionsFromItems([]);
     setQFilterToggleState(true);
