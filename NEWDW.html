@@ -534,6 +534,82 @@ font-size:14px;
 margin-top:10px;
 }
 
+.diagnostic-actions{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+align-items:center;
+margin-bottom:10px;
+}
+
+.diagnostic-status{
+font-size:13px;
+color:#445;
+}
+
+.diagnostic-status.running{
+color:#0b57d0;
+font-weight:600;
+}
+
+.diagnostic-results{
+display:grid;
+gap:10px;
+}
+
+.diagnostic-card{
+border:1px solid #d7dde4;
+border-radius:8px;
+padding:10px;
+background:#f7f9fc;
+}
+
+.diagnostic-card.pass{
+border-color:#8fd19e;
+background:#f1fbf3;
+}
+
+.diagnostic-card.fail{
+border-color:#f1aeb5;
+background:#fff5f5;
+}
+
+.diagnostic-card.warn{
+border-color:#ffe69c;
+background:#fff9db;
+}
+
+.diagnostic-card h4{
+margin:0 0 6px 0;
+font-size:14px;
+}
+
+.diagnostic-meta{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+gap:6px 10px;
+font-size:13px;
+color:#223;
+margin-bottom:8px;
+}
+
+.diagnostic-snippet{
+margin:0;
+padding:8px;
+font-size:12px;
+background:#fff;
+border:1px solid #e3e8ef;
+border-radius:6px;
+white-space:pre-wrap;
+word-break:break-word;
+}
+
+.diagnostic-url{
+font-size:12px;
+word-break:break-all;
+margin-top:6px;
+}
+
 </style>
 </head>
 
@@ -606,6 +682,17 @@ margin-top:10px;
 <h3>Current Weather Report</h3>
 <pre id="metarText"></pre>
 <div id="weatherSummaryPanel" class="weather-summary-empty">Run METAR Weather Check to load structured observation details.</div>
+</div>
+
+<div class="panel">
+<h3>METAR Source Diagnostics</h3>
+<div class="diagnostic-actions">
+<button type="button" id="runMetarDiagnosticsBtn" onclick="runMetarDiagnostics()">Test METAR Sources</button>
+<div id="metarDiagnosticsStatus" class="diagnostic-status">Use the current ICAO or enter one above, then run a source test.</div>
+</div>
+<div id="metarDiagnosticsResults" class="diagnostic-results">
+<div class="subtle">No source diagnostics run yet.</div>
+</div>
 </div>
 
 <div class="panel">
@@ -701,9 +788,21 @@ errors: []
 }
 
 const WEATHER_PROXY_PROVIDERS = [
-{ name: "cloudflare", buildUrl: url => `https://navcan-proxy.rontreleaven.workers.dev/?url=${encodeURIComponent(url)}` },
-{ name: "allorigins", buildUrl: url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}` },
-{ name: "codetabs", buildUrl: url => `https://api.codetabs.com/v1/proxy?quest=${url}` }
+{
+name: "cloudflare",
+label: "Cloudflare Worker",
+buildUrl: targetUrl => `https://navcan-proxy.rontreleaven.workers.dev/?url=${encodeURIComponent(targetUrl)}`
+},
+{
+name: "allorigins",
+label: "AllOrigins",
+buildUrl: targetUrl => `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`
+},
+{
+name: "codetabs",
+label: "CodeTabs",
+buildUrl: targetUrl => `https://api.codetabs.com/v1/proxy?quest=${targetUrl}`
+}
 ]
 
 const WEATHER_INTENSITY_MAP = {
@@ -1633,6 +1732,187 @@ attempts: [
 // CODETABS (SECONDARY - reliable fallback)
 { run: () => fetchMetarFromTextSource(buildProxyUrl("codetabs",noaaTxtUrl),"NOAA via CodeTabs"), label: "NOAA via CodeTabs", url: buildProxyUrl("codetabs",noaaTxtUrl), mode: "text" }
 ]
+}
+}
+
+
+function buildStationDiagnosticsConfig(){
+const remoteUrl = "https://aviationweather.gov/data/cache/stations.cache.json"
+return [
+// LOCAL CACHE (fastest fallback)
+{ label: "Station cache local", url: "./data/notams/stations.cache.json", mode: "json" },
+
+// CLOUDFLARE WORKER (PRIMARY)
+{ label: "Station cache via Cloudflare Worker", url: buildProxyUrl("cloudflare",remoteUrl), mode: "json" },
+
+// DEAD SOURCES (commented out)
+// { label: "Station cache remote", url: remoteUrl, mode: "json" },  // CORS-blocked
+// { label: "Station cache via AllOrigins", url: buildProxyUrl("allorigins",remoteUrl), mode: "json" }  // abort signal
+]
+}
+
+
+function setMetarDiagnosticsStatus(message,isRunning=false){
+const statusEl = document.getElementById("metarDiagnosticsStatus")
+if(!statusEl) return
+statusEl.textContent = message
+statusEl.classList.toggle("running", !!isRunning)
+}
+
+
+function renderMetarDiagnosticsResults(results){
+const container = document.getElementById("metarDiagnosticsResults")
+if(!container) return
+
+if(!Array.isArray(results) || !results.length){
+container.innerHTML = '<div class="subtle">No source diagnostics run yet.</div>'
+return
+}
+
+container.innerHTML = results.map(result => {
+const stateClass = result.ok ? "pass" : (result.warning ? "warn" : "fail")
+const detailLine = result.detail || "No detail captured"
+return `
+<div class="diagnostic-card ${stateClass}">
+<h4>${escapeHtml(result.label)}</h4>
+<div class="diagnostic-meta">
+<div><b>Status:</b> ${escapeHtml(result.statusText || "Unavailable")}</div>
+<div><b>Mode:</b> ${escapeHtml(result.mode || "unknown")}</div>
+<div><b>Content-Type:</b> ${escapeHtml(result.contentType || "Unavailable")}</div>
+<div><b>CORS:</b> ${escapeHtml(result.cors || "Unavailable")}</div>
+<div><b>Result:</b> ${escapeHtml(detailLine)}</div>
+<div><b>Outcome:</b> ${escapeHtml(result.ok ? "Pass" : (result.warning ? "Warning" : "Fail"))}</div>
+</div>
+<pre class="diagnostic-snippet">${escapeHtml(result.snippet || "")}</pre>
+<div class="diagnostic-url">${renderSourceCallHtml(result.url || "Unavailable")}</div>
+</div>`
+}).join("")
+}
+
+
+async function testDiagnosticSource(source){
+try{
+const response = await fetchWithTimeout(source.url, source.timeoutMs || 8000)
+const contentType = response.headers.get("content-type") || ""
+const cors = response.headers.get("access-control-allow-origin") || "<missing>"
+const statusText = `${response.status} ${response.statusText || ""}`.trim()
+const bodyText = await response.text()
+const snippet = bodyText.slice(0,220)
+
+if(!response.ok){
+return {
+label: source.label,
+url: source.url,
+mode: source.mode,
+statusText,
+contentType,
+cors,
+snippet,
+detail: `HTTP ${response.status}`,
+ok: false,
+warning: false
+}
+}
+
+if(source.mode === "json"){
+try{
+const parsed = JSON.parse(bodyText)
+const isUseful = Array.isArray(parsed) ? parsed.length > 0 : !!parsed
+return {
+label: source.label,
+url: source.url,
+mode: source.mode,
+statusText,
+contentType,
+cors,
+snippet,
+detail: isUseful ? (Array.isArray(parsed) ? `${parsed.length} record(s)` : "JSON object") : "Empty JSON",
+ok: isUseful,
+warning: !isUseful
+}
+}
+catch(err){
+return {
+label: source.label,
+url: source.url,
+mode: source.mode,
+statusText,
+contentType,
+cors,
+snippet,
+detail: `JSON parse failed: ${err?.message || "unknown"}`,
+ok: false,
+warning: false
+}
+}
+}
+
+const rawLine = extractRawMetarLine(bodyText)
+return {
+label: source.label,
+url: source.url,
+mode: source.mode,
+statusText,
+contentType,
+cors,
+snippet,
+detail: rawLine ? `Parsed METAR line: ${rawLine.slice(0,80)}` : "No METAR line found",
+ok: !!rawLine,
+warning: false
+}
+}
+catch(err){
+return {
+label: source.label,
+url: source.url,
+mode: source.mode,
+statusText: "Request failed",
+contentType: "Unavailable",
+cors: "Unavailable",
+snippet: "",
+detail: err?.message || "unknown error",
+ok: false,
+warning: false
+}
+}
+}
+
+
+async function runMetarDiagnostics(){
+clearError()
+const button = document.getElementById("runMetarDiagnosticsBtn")
+const input = document.getElementById("icao")
+const cleanIcao = String(input?.value || "").trim().toUpperCase()
+
+if(!cleanIcao){
+showError("Enter an ICAO code before running METAR source diagnostics.")
+return
+}
+
+if(button) button.disabled = true
+setMetarDiagnosticsStatus(`Testing METAR and station sources for ${cleanIcao}...`,true)
+
+try{
+const metarSources = buildMetarSourceConfig(cleanIcao).attempts.map(source => ({
+label: source.label,
+url: source.url,
+mode: source.mode,
+timeoutMs: source.mode === "json" ? 7000 : 8500
+}))
+const stationSources = buildStationDiagnosticsConfig()
+const results = []
+
+for(const source of [...metarSources, ...stationSources]){
+results.push(await testDiagnosticSource(source))
+renderMetarDiagnosticsResults(results)
+}
+
+const successCount = results.filter(result => result.ok).length
+setMetarDiagnosticsStatus(`Diagnostics complete: ${successCount}/${results.length} sources passed for ${cleanIcao}.`)
+}
+finally{
+if(button) button.disabled = false
+document.getElementById("icao").disabled = false
 }
 }
 
