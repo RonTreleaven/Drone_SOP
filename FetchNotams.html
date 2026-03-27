@@ -1223,6 +1223,37 @@
       }
     }
 
+    /* Desktop: compact 2-row form — overrides the 920px column breakpoint */
+    .view-desktop .search-container {
+      display: grid;
+      grid-template-columns: 110px 110px minmax(160px, 1fr) auto;
+      gap: 8px 12px;
+      align-items: end;
+    }
+
+    .view-desktop .search-container .search-actions {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 6px;
+      align-items: flex-end;
+    }
+
+    .view-desktop .search-container .search-row-end {
+      grid-column: 1 / -1;
+      justify-content: flex-start;
+      padding-top: 2px;
+    }
+
+    .view-desktop .search-container .btn {
+      min-width: 0;
+    }
+
+    .view-desktop .search-actions .action-btn {
+      padding: 7px 12px;
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+
     .view-mobile .card {
       width: min(100% - 20px, 560px);
       margin: 16px auto;
@@ -1422,12 +1453,11 @@
       }
 
       .view-mobile #qFilterSection .section-head {
-        align-items: flex-start;
+        align-items: center;
       }
 
       .view-mobile #qFilterSection .section-head-actions {
-        width: 100%;
-        justify-content: flex-start;
+        justify-content: flex-end;
         flex-wrap: wrap;
         gap: 6px;
       }
