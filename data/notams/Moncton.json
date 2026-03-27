@@ -1,5 +1,13 @@
 [
   {
+    "raw": "(V0379/26 NOTAMR V1574/25\nQ) CZQM/QOLAS/IV/M/AE/000/002/4459N06455W005\nA) CYZX B) 2603261646 C) 2606261600EST\nE) OBST LGT U/S ANTENNA 445926N 0645432W (APRX 3223FT ENE AD) 30FT \nAGL, 122FT AMSL.)",
+    "startValidity": "2026-03-26T16:46:00",
+    "endValidity": null,
+    "coordinates_dd": [
+      "44.990556, -64.908889"
+    ]
+  },
+  {
     "raw": "(H1510/26 NOTAMR H1466/26\nQ) CZQM/QRDCA/IV/BO/W/000/300/4315N06215W019\nA) CZQM B) 2603281700 C) 2603282000\nE) DANGER AREA CYD746 HALIFAX ACT.\nF) SFC G) FL300)",
     "startValidity": "2026-03-25T22:19:00.062",
     "endValidity": "2026-03-28T20:00:00",
@@ -403,14 +411,6 @@
     "endValidity": null,
     "coordinates_dd": [
       "46.286667, -63.131111"
-    ]
-  },
-  {
-    "raw": "(V1574/25 NOTAMR V1124/25\nQ) CZQM/QOLAS/IV/M/AE/000/002/4459N06455W005\nA) CYZX B) 2512291205 C) 2603281600EST\nE) OBST LGT U/S ANTENNA 445926N 0645432W (APRX 3223FT ENE AD) 30FT \nAGL, 122FT AMSL.)",
-    "startValidity": "2025-12-29T12:05:00",
-    "endValidity": null,
-    "coordinates_dd": [
-      "44.990556, -64.908889"
     ]
   }
 ]
