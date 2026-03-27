@@ -1,3 +1,16 @@
+/**
+ * Added a Cloudfare CORS proxy for NOTAM retrieval
+ * and updates to allow additional Hosts.  March 26, 2026 NavCan worker.
+ * 
+ * - Run "npm run dev" in your terminal to start a development server
+ * - Open a browser tab at http://localhost:8787/ to see your worker in action
+ * - Run "npm run deploy" to publish your worker
+ *
+ * Learn more at https://developers.cloudflare.com/workers/
+ */
+
+
+
 const ALLOWED_HOSTS = new Set([
   "plan.navcanada.ca",
   "aviationweather.gov",
