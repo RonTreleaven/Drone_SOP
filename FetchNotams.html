@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Fetch NOTAMS by FIR and ICAO codes</title>
   <link rel="stylesheet" href="./assets/css/notams-common.css">
   <style>
@@ -209,6 +209,113 @@
     .view-toggle .icon-phone,
     .view-toggle .icon-desktop {
       display: none;
+    }
+
+    .mobile-pane-toggle {
+      display: none;
+      position: fixed;
+      right: 12px;
+      bottom: 14px;
+      right: calc(12px + env(safe-area-inset-right));
+      bottom: calc(14px + env(safe-area-inset-bottom));
+      z-index: 920;
+      border: 1px solid #6f8fbf;
+      background: #1f4f84;
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      min-height: 44px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 20px rgba(8, 30, 56, 0.35);
+      touch-action: manipulation;
+      transition: transform 140ms ease, opacity 140ms ease, left 140ms ease, right 140ms ease;
+    }
+
+    .view-mobile .mobile-pane-toggle {
+      display: inline-flex;
+    }
+
+    .view-mobile .mobile-pane-toggle.dock-left {
+      right: auto;
+      left: 12px;
+      left: calc(12px + env(safe-area-inset-left));
+    }
+
+    .view-mobile .mobile-pane-toggle.hidden-for-input {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+    }
+
+    .mobile-pane-toggle .toggle-icon {
+      position: relative;
+      display: none;
+      width: 14px;
+      height: 14px;
+      flex: 0 0 14px;
+    }
+
+    .mobile-pane-toggle .icon-details {
+      border: 2px solid currentColor;
+      border-radius: 2px;
+    }
+
+    .mobile-pane-toggle .icon-details::before,
+    .mobile-pane-toggle .icon-details::after {
+      content: "";
+      position: absolute;
+      left: 2px;
+      right: 2px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 2px;
+    }
+
+    .mobile-pane-toggle .icon-details::before {
+      top: 3px;
+    }
+
+    .mobile-pane-toggle .icon-details::after {
+      bottom: 3px;
+    }
+
+    .mobile-pane-toggle .icon-inputs {
+      border: 2px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .mobile-pane-toggle .icon-inputs::before,
+    .mobile-pane-toggle .icon-inputs::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      background: currentColor;
+      transform: translate(-50%, -50%);
+      border-radius: 2px;
+    }
+
+    .mobile-pane-toggle .icon-inputs::before {
+      width: 8px;
+      height: 2px;
+    }
+
+    .mobile-pane-toggle .icon-inputs::after {
+      width: 2px;
+      height: 8px;
+    }
+
+    .view-mobile:not(.mobile-detail-focus) .mobile-pane-toggle .icon-details {
+      display: inline-block;
+    }
+
+    .view-mobile.mobile-detail-focus .mobile-pane-toggle .icon-inputs {
+      display: inline-block;
     }
 
     .view-mobile .view-toggle .icon-phone {
@@ -509,6 +616,11 @@
       gap: 8px;
     }
 
+    .q-help-btn .legend-text {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
     .section-head-actions {
       display: inline-flex;
       align-items: center;
@@ -536,6 +648,20 @@
       font-weight: 700;
       line-height: 1;
       border: 1px solid #153756;
+    }
+
+    #qFilterSection .q-help-btn {
+      padding: 4px 8px;
+    }
+
+    #qFilterSection .q-help-icon {
+      width: 30px;
+      height: 30px;
+      font-size: 1rem;
+    }
+
+    #qFilterSection .q-help-btn .legend-text {
+      font-size: 0.84rem;
     }
 
     .q-filter-grid {
@@ -1146,6 +1272,35 @@
 
     .view-mobile .q-filter-grid {
       grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+
+    .view-mobile .q-filter-chip {
+      padding: 3px 4px;
+      font-size: 0.78rem;
+      gap: 4px;
+    }
+
+    .view-mobile .qcat-toggle {
+      padding: 5px 6px;
+      font-size: 0.78rem;
+    }
+
+    .view-mobile .q-filter-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .view-mobile .q-filter-actions .btn {
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 0.78rem;
+    }
+
+    .view-mobile .q-filter-summary {
+      font-size: 0.78rem;
+      line-height: 1.25;
     }
 
     .view-mobile .icao-controls {
@@ -1265,10 +1420,32 @@
       .view-mobile .fir-table {
         min-width: 560px;
       }
+
+      .view-mobile #qFilterSection .section-head {
+        align-items: flex-start;
+      }
+
+      .view-mobile #qFilterSection .section-head-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .view-mobile .section-head-actions .btn,
+      .view-mobile .section-head-actions .filter-toggle-btn,
+      .view-mobile .section-head-actions .section-toggle {
+        width: auto;
+        min-width: 0;
+      }
     }
 
     @media (max-width: 520px) {
       .view-mobile .q-filter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .view-mobile .q-filter-actions {
         grid-template-columns: 1fr;
       }
 
@@ -1281,6 +1458,21 @@
         gap: 6px;
         font-size: 0.86rem;
       }
+    }
+
+    .view-mobile.mobile-detail-focus .selection-block,
+    .view-mobile.mobile-detail-focus #firReferenceSection,
+    .view-mobile.mobile-detail-focus #qFilterSection,
+    .view-mobile.mobile-detail-focus #scoreboardSection {
+      display: none;
+    }
+
+    .view-mobile.mobile-detail-focus .results-wrap {
+      margin-top: 4px;
+    }
+
+    .view-mobile.mobile-detail-focus .card {
+      padding-bottom: 70px;
     }
   </style>
 </head>
@@ -1388,11 +1580,11 @@
 
     <section class="section-collapsible collapsed" id="qFilterSection">
       <div class="section-head">
-        <span data-section-head-target="#qFilterSection">Q-Code Category Filters</span>
+        <span data-section-head-target="#qFilterSection">Q-Code Filters</span>
         <div class="section-head-actions">
-          <button class="btn btn-small q-help-btn" type="button" id="openQLegend" title="Open Q-code legend">
+          <button class="btn btn-small q-help-btn" type="button" id="openQLegend" title="Open legend">
             <span class="q-help-icon" aria-hidden="true">?</span>
-            <span>Q-code Legend</span>
+            <span class="legend-text">Legend</span>
           </button>
           <button class="filter-toggle-btn" type="button" id="toggleQFilterBtn" data-state="off">Filters OFF</button>
           <button class="section-toggle" type="button" data-collapse-target="#qFilterSection">Show</button>
@@ -1513,6 +1705,12 @@
 
   </div>
 
+  <button class="mobile-pane-toggle" type="button" id="mobilePaneToggle" aria-pressed="false" title="Switch to detail view">
+    <span class="toggle-icon icon-inputs" aria-hidden="true"></span>
+    <span class="toggle-icon icon-details" aria-hidden="true"></span>
+    <span class="toggle-label">Detail</span>
+  </button>
+
   <script src="assets/js/qcode-legend.js"></script>
   <script>
     const API_BASE = "https://plan.navcanada.ca/weather/api/alpha/";
@@ -1536,6 +1734,7 @@
     const LAST_FIR_STORAGE_KEY = "fetchnotams:lastFir";
     const LAST_ICAO_STORAGE_KEY = "fetchnotams:lastIcao";
     const VIEW_MODE_KEY = "fetchnotams:viewMode";
+    const MOBILE_PANE_MODE_KEY = "fetchnotams:mobilePaneMode";
     const MAP_PAYLOAD_STORAGE_PREFIX = "fetchnotams:map:payload:";
     const MAP_LIVE_UNFILTERED_STORAGE_KEY = "fetchnotams:map:live:latest";
     const MAP_PAYLOAD_TTL_MS = 2 * 60 * 60 * 1000;
@@ -1591,7 +1790,8 @@
       viewAllOnMapBtn: document.getElementById("viewAllOnMapBtn"),
       refreshFromCacheBtn: document.getElementById("refreshFromCacheBtn")
       ,
-      viewToggleBtn: document.getElementById("viewToggleBtn")
+      viewToggleBtn: document.getElementById("viewToggleBtn"),
+      mobilePaneToggle: document.getElementById("mobilePaneToggle")
     };
 
     function getAutoViewMode() {
@@ -1641,6 +1841,83 @@
       el.viewToggleBtn.title = isMobile ? "Switch to desktop view" : "Switch to mobile view";
       const label = el.viewToggleBtn.querySelector(".toggle-label");
       if (label) label.textContent = isMobile ? "Mobile" : "Desktop";
+      syncMobilePaneMode();
+    }
+
+    function applyMobilePaneMode(mode) {
+      const detailMode = mode === "details";
+      const canApply = document.body.classList.contains("view-mobile");
+      document.body.classList.toggle("mobile-detail-focus", canApply && detailMode);
+      if (!el.mobilePaneToggle) return;
+      el.mobilePaneToggle.setAttribute("aria-pressed", detailMode ? "true" : "false");
+      el.mobilePaneToggle.title = detailMode ? "Switch to input view" : "Switch to detail view";
+      const label = el.mobilePaneToggle.querySelector(".toggle-label");
+      if (label) label.textContent = detailMode ? "Inputs" : "Detail";
+      scheduleMobileDockUpdate();
+    }
+
+    function syncMobilePaneMode() {
+      const isMobileView = document.body.classList.contains("view-mobile");
+      if (!el.mobilePaneToggle) return;
+      el.mobilePaneToggle.hidden = !isMobileView;
+      if (!isMobileView) {
+        document.body.classList.remove("mobile-detail-focus");
+        el.mobilePaneToggle.classList.remove("dock-left", "hidden-for-input");
+        return;
+      }
+      const storedMode = localStorage.getItem(MOBILE_PANE_MODE_KEY);
+      const mode = storedMode === "details" ? "details" : "inputs";
+      applyMobilePaneMode(mode);
+      scheduleMobileDockUpdate();
+    }
+
+    function rectsIntersect(a, b, pad = 8) {
+      if (!a || !b) return false;
+      const ax1 = a.left - pad;
+      const ay1 = a.top - pad;
+      const ax2 = a.right + pad;
+      const ay2 = a.bottom + pad;
+      return !(ax2 < b.left || ax1 > b.right || ay2 < b.top || ay1 > b.bottom);
+    }
+
+    function scheduleMobileDockUpdate() {
+      if (mobileDockRafId) {
+        cancelAnimationFrame(mobileDockRafId);
+      }
+      mobileDockRafId = requestAnimationFrame(() => {
+        mobileDockRafId = 0;
+        updateMobilePaneDockPosition();
+      });
+    }
+
+    function updateMobilePaneDockPosition() {
+      const toggle = el.mobilePaneToggle;
+      if (!toggle) return;
+
+      const isMobileView = document.body.classList.contains("view-mobile");
+      if (!isMobileView || toggle.hidden) {
+        toggle.classList.remove("dock-left");
+        return;
+      }
+
+      toggle.classList.remove("dock-left");
+      const toggleRect = toggle.getBoundingClientRect();
+      const targetNodes = [
+        el.viewAllOnMapBtn,
+        document.querySelector("#qFilterSection .section-head-actions"),
+        document.querySelector(".results-header-actions")
+      ];
+
+      const shouldDockLeft = targetNodes.some(node => {
+        if (!(node instanceof Element)) return false;
+        const style = window.getComputedStyle(node);
+        if (style.display === "none" || style.visibility === "hidden") return false;
+        const rect = node.getBoundingClientRect();
+        if (rect.width < 1 || rect.height < 1) return false;
+        return rectsIntersect(toggleRect, rect, 10);
+      });
+
+      toggle.classList.toggle("dock-left", shouldDockLeft);
     }
 
     function initViewMode() {
@@ -1665,6 +1942,33 @@
           applyViewMode(next);
         });
       }
+
+      if (el.mobilePaneToggle) {
+        el.mobilePaneToggle.addEventListener("click", () => {
+          const inDetail = document.body.classList.contains("mobile-detail-focus");
+          const nextMode = inDetail ? "inputs" : "details";
+          localStorage.setItem(MOBILE_PANE_MODE_KEY, nextMode);
+          applyMobilePaneMode(nextMode);
+        });
+      }
+
+      window.addEventListener("scroll", scheduleMobileDockUpdate, { passive: true });
+      window.addEventListener("resize", scheduleMobileDockUpdate);
+
+      document.addEventListener("focusin", event => {
+        if (!el.mobilePaneToggle) return;
+        if (!document.body.classList.contains("view-mobile")) return;
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        if (!target.closest("input, select, textarea")) return;
+        el.mobilePaneToggle.classList.add("hidden-for-input");
+      });
+
+      document.addEventListener("focusout", () => {
+        if (!el.mobilePaneToggle) return;
+        el.mobilePaneToggle.classList.remove("hidden-for-input");
+        scheduleMobileDockUpdate();
+      });
     }
 
     let currentItems = [];
@@ -1677,6 +1981,7 @@
     let lastSelectedIcao = normalizeCode(localStorage.getItem(LAST_ICAO_STORAGE_KEY) || "", 4);
     let hasAutoFocusedIcao = false;
     let lastFetchActionSite = "";
+    let mobileDockRafId = 0;
 
     const TRACKED_Q_CATEGORIES = ["A", "C", "F", "G", "I", "L", "M", "N", "O", "P", "R", "S", "W", "X"];
     let Q_SUBJECT_CODES = [
@@ -2974,6 +3279,7 @@
 
       const displayItems = maxCount === 0 ? decorated : decorated.slice(0, maxCount);
       updateViewAllOnMapButton(displayItems.map(entry => entry.item));
+      scheduleMobileDockUpdate();
       const html = displayItems
         .map(entry => {
           const item = entry.item;
