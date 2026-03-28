@@ -334,19 +334,19 @@
     ]
   },
   {
-    "raw": "(R0064/26 NOTAMR R1168/25\nQ) CZVR/QOLAS/IV/M/AE/000/024/4907N12151W005\nA) CYCW B) 2601200816 C) 2604122100EST\nE) OBST LGT U/S TOWER 490636N 1215047W (APRX 4.5NM ESE AD) 125FT \nAGL, 2385FT AMSL.)",
-    "startValidity": "2026-01-20T08:16:00",
-    "endValidity": null,
-    "coordinates_dd": [
-      "49.110000, -121.846389"
-    ]
-  },
-  {
     "raw": "(R0065/26 NOTAMR R1166/25\nQ) CZVR/QOLAS/IV/M/E/000/019/5459N12718W002\nA) CZVR B) 2601200816 C) 2604122100EST\nE) OBST LGT U/S TOWER 545855N 1271748W (APRX 10NM NW SMITHERS AD \n(CYYD)) 120FT AGL, 1820FT AMSL.)",
     "startValidity": "2026-01-20T08:16:00",
     "endValidity": null,
     "coordinates_dd": [
       "54.981944, -127.296667"
+    ]
+  },
+  {
+    "raw": "(R0064/26 NOTAMR R1168/25\nQ) CZVR/QOLAS/IV/M/AE/000/024/4907N12151W005\nA) CYCW B) 2601200816 C) 2604122100EST\nE) OBST LGT U/S TOWER 490636N 1215047W (APRX 4.5NM ESE AD) 125FT \nAGL, 2385FT AMSL.)",
+    "startValidity": "2026-01-20T08:16:00",
+    "endValidity": null,
+    "coordinates_dd": [
+      "49.110000, -121.846389"
     ]
   },
   {
