@@ -3244,6 +3244,52 @@ window.onload = function() {
 }
 </style>
 
+<style id="pilot-mobile-visibility-tuning">
+@media (max-width: 768px) {
+  /* Keep open/close control visible in both expanded and collapsed states. */
+  .pilot-flyout.pilot-flyout-v2 .pilot-flyout-toggle {
+    right: 8px;
+    top: 8px;
+    border-left: 1px solid #d8e2ee;
+    border-radius: 8px;
+    z-index: 6;
+  }
+
+  .pilot-flyout.pilot-flyout-v2 {
+    padding: 8px 8px 6px;
+  }
+
+  .pilot-flyout-v2 .pilot-header-row {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #f4f6f8;
+    border-bottom: 1px solid #d8e2ee;
+    margin-bottom: 5px;
+    padding: 2px 40px 4px 0;
+  }
+
+  /* Leave a sliver visible so the hamburger is always discoverable. */
+  .pilot-input .pilot-flyout.pilot-flyout-v2.collapsed {
+    transform: translateX(calc(-100% + 42px));
+  }
+
+  /* Tighten vertical rhythm so status lines appear higher. */
+  .pilot-flyout-v2 .latlon-grid { gap: 4px; }
+  .pilot-flyout-v2 .coord-field input { min-height: 30px; }
+  .pilot-flyout-v2 .latlon-quick-actions { gap: 4px; }
+  .pilot-flyout-v2 .pilot-icon-btn { height: 30px; }
+  .pilot-flyout-v2 .dd-hint { margin-top: 3px; }
+  .pilot-flyout-v2 .action-grid { margin-top: 6px; gap: 4px; }
+  .pilot-flyout-v2 .action-grid button { height: 30px; }
+  .pilot-flyout-v2 .radius-row { margin-top: 6px; gap: 4px; }
+  .pilot-flyout-v2 .radius-row input,
+  .pilot-flyout-v2 .radius-row button { min-height: 28px; }
+  .pilot-flyout-v2 .pilot-status-block { margin-top: 6px; padding-top: 5px; }
+  .pilot-flyout-v2 .controls-meta { margin-top: 2px; line-height: 1.25; }
+}
+</style>
+
 <button id="backToQFilterBtn" type="button" onclick="closeMapTab()" aria-label="Back" title="Back to previous page"><i class="fa-solid fa-arrow-left"></i></button>
     
             <div class="folium-map" id="map_4de0f99cd6b91f88cb3d63b317e2f057" ></div>
