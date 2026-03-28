@@ -304,6 +304,26 @@
   .pilot-input .pilot-flyout.collapsed .pilot-flyout-toggle {
     pointer-events: auto;
   }
+  @media (max-width: 768px) {
+    .pilot-flyout-v2 #pLat,
+    .pilot-flyout-v2 #pLon,
+    .pilot-flyout-v2 #radiusKmInput,
+    .pilot-flyout-v2 #refreshFirInput {
+      font-size: 16px;
+      line-height: 1.25;
+    }
+    .pilot-input.keyboard-active {
+      position: fixed;
+      top: calc(8px + env(safe-area-inset-top, 0px));
+      left: calc(8px + env(safe-area-inset-left, 0px));
+      margin-top: 0 !important;
+      z-index: 2800;
+    }
+    .pilot-input.keyboard-active .pilot-flyout {
+      max-height: calc(100dvh - 16px - var(--pilot-kb-offset, 0px));
+      overflow-y: auto;
+    }
+  }
   /* Obstacles toggle hint state (off + nearby NOTAMS) */
   .left-mini-toggle-control.notams-hint .left-mini-toggle-btn {
     color: #b85c00;
@@ -2613,8 +2633,100 @@ window.onload = function() {
       setPilotFlyoutCollapsed(true);
   })();
 
+  var mapInteractionCache = null;
+  var pilotInputIds = ['pLat', 'pLon', 'radiusKmInput', 'refreshFirInput'];
+
+  function hasFocusedPilotInput() {
+      var ae = document.activeElement;
+      return !!(ae && pilotInputIds.indexOf(ae.id) !== -1);
+  }
+
+  function updatePilotKeyboardOffset() {
+      if (!window.visualViewport) {
+          document.documentElement.style.setProperty('--pilot-kb-offset', '0px');
+          return;
+      }
+      var vv = window.visualViewport;
+      var occludedBottom = Math.max(0, window.innerHeight - (vv.height + vv.offsetTop));
+      document.documentElement.style.setProperty('--pilot-kb-offset', occludedBottom + 'px');
+  }
+
+  function setMapInteractionLocked(locked) {
+      if (locked) {
+          if (mapInteractionCache) {
+              return;
+          }
+          mapInteractionCache = {
+              dragging: map.dragging && map.dragging.enabled(),
+              touchZoom: map.touchZoom && map.touchZoom.enabled(),
+              scrollWheelZoom: map.scrollWheelZoom && map.scrollWheelZoom.enabled(),
+              doubleClickZoom: map.doubleClickZoom && map.doubleClickZoom.enabled(),
+              boxZoom: map.boxZoom && map.boxZoom.enabled(),
+              keyboard: map.keyboard && map.keyboard.enabled(),
+              tap: map.tap && map.tap.enabled && map.tap.enabled()
+          };
+          if (map.dragging) map.dragging.disable();
+          if (map.touchZoom) map.touchZoom.disable();
+          if (map.scrollWheelZoom) map.scrollWheelZoom.disable();
+          if (map.doubleClickZoom) map.doubleClickZoom.disable();
+          if (map.boxZoom) map.boxZoom.disable();
+          if (map.keyboard) map.keyboard.disable();
+          if (map.tap && map.tap.disable) map.tap.disable();
+          return;
+      }
+
+      if (!mapInteractionCache) {
+          return;
+      }
+      if (map.dragging && mapInteractionCache.dragging) map.dragging.enable();
+      if (map.touchZoom && mapInteractionCache.touchZoom) map.touchZoom.enable();
+      if (map.scrollWheelZoom && mapInteractionCache.scrollWheelZoom) map.scrollWheelZoom.enable();
+      if (map.doubleClickZoom && mapInteractionCache.doubleClickZoom) map.doubleClickZoom.enable();
+      if (map.boxZoom && mapInteractionCache.boxZoom) map.boxZoom.enable();
+      if (map.keyboard && mapInteractionCache.keyboard) map.keyboard.enable();
+      if (map.tap && map.tap.enable && mapInteractionCache.tap) map.tap.enable();
+      mapInteractionCache = null;
+  }
+
+  function applyPilotInputFocusMode() {
+      var pilotPanel = document.querySelector('.pilot-input');
+      var active = hasFocusedPilotInput();
+      if (pilotPanel) {
+          pilotPanel.classList.toggle('keyboard-active', active);
+      }
+      if (active) {
+          updatePilotKeyboardOffset();
+      } else {
+          document.documentElement.style.setProperty('--pilot-kb-offset', '0px');
+      }
+      setMapInteractionLocked(active);
+  }
+
+  function bindPilotInputFocusHandlers() {
+      for (var i = 0; i < pilotInputIds.length; i++) {
+          var el = document.getElementById(pilotInputIds[i]);
+          if (!el) {
+              continue;
+          }
+          el.addEventListener('focus', applyPilotInputFocusMode);
+          el.addEventListener('blur', function() {
+              setTimeout(applyPilotInputFocusMode, 0);
+          });
+      }
+  }
+
+  bindPilotInputFocusHandlers();
+
   function stabilizeViewportLayout() {
+      if (hasFocusedPilotInput()) {
+          updatePilotKeyboardOffset();
+          if (map && map.invalidateSize) {
+              map.invalidateSize(false);
+          }
+          return;
+      }
       window.scrollTo(0, 0);
+      document.documentElement.style.setProperty('--pilot-kb-offset', '0px');
       if (map && map.invalidateSize) {
           map.invalidateSize(false);
       }
@@ -2626,6 +2738,12 @@ window.onload = function() {
       window.visualViewport.addEventListener('resize', stabilizeViewportLayout);
       window.visualViewport.addEventListener('scroll', stabilizeViewportLayout);
   }
+
+  map.on('click', function() {
+      if (hasFocusedPilotInput() && document.activeElement && typeof document.activeElement.blur === 'function') {
+          document.activeElement.blur();
+      }
+  });
 
   function preventBrowserZoomGestures(ev) {
       if (ev) {
