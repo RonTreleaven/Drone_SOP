@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     
@@ -128,6 +128,145 @@
   }
 </style>
 <style>
+
+  .pilot-flyout.pilot-flyout-v2 {
+    width: 312px;
+    max-width: calc(100vw - 58px);
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .pilot-flyout-v2 .pilot-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 7px;
+  }
+  .pilot-flyout-v2 .pilot-header-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1f3b63;
+    letter-spacing: 0.01em;
+  }
+  .pilot-flyout-v2 .pilot-icon-btn {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #b7c9de;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1f3b63;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    flex: 0 0 34px;
+  }
+  .pilot-flyout-v2 .pilot-icon-btn:hover { background: #f3f8ff; }
+  .pilot-flyout-v2 .latlon-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    gap: 6px;
+    align-items: end;
+  }
+  .pilot-flyout-v2 .coord-field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .pilot-flyout-v2 .coord-field span {
+    font-size: 11px;
+    font-weight: 700;
+    color: #435b78;
+  }
+  .pilot-flyout-v2 .coord-field input {
+    width: 100%;
+    max-width: none;
+    min-height: 34px;
+    border: 1px solid #b8cbe2;
+    border-radius: 7px;
+    padding: 5px 7px;
+    font-size: 13px;
+    line-height: 1.2;
+  }
+  .pilot-flyout-v2 .latlon-quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .pilot-flyout-v2 #clearPilotLatLon {
+    border-color: #d7a4a1;
+    background: #fff1ef;
+    color: #91251d;
+  }
+  .pilot-flyout-v2 #upd {
+    border-color: #9fc9a6;
+    background: #eff8ef;
+    color: #1d5f2f;
+  }
+  .pilot-flyout-v2 .dd-hint {
+    margin-top: 5px;
+    font-size: 11px;
+    color: #5e6c7d;
+  }
+  .pilot-flyout-v2 .action-grid {
+    margin-top: 8px;
+    gap: 6px;
+  }
+  .pilot-flyout-v2 .action-grid button {
+    height: 32px;
+    font-size: 11px;
+    line-height: 1.1;
+    border-radius: 7px;
+  }
+  .pilot-flyout-v2 #refreshFirCacheBtn.refresh-fir-stale {
+    background: #c62828;
+    border-color: #8f1d1d;
+    color: #fff;
+    font-weight: 700;
+  }
+  .pilot-flyout-v2 #refreshFirCacheBtn.refresh-fir-stale:hover {
+    background: #b71c1c;
+  }
+  .pilot-flyout-v2 .radius-row {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: auto 66px 1fr;
+    gap: 6px;
+    align-items: center;
+  }
+  .pilot-flyout-v2 .radius-row .radius-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #435b78;
+    white-space: nowrap;
+  }
+  .pilot-flyout-v2 .radius-row input {
+    width: 100%;
+    max-width: none;
+    min-height: 30px;
+    border: 1px solid #b8cbe2;
+    border-radius: 7px;
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+  .pilot-flyout-v2 .radius-row button {
+    min-height: 30px;
+    font-size: 11px;
+    border-radius: 7px;
+  }
+  .pilot-flyout-v2 .pilot-status-block {
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid #d8e2ee;
+  }
+  .pilot-flyout-v2 .controls-meta {
+    margin-top: 4px;
+    line-height: 1.3;
+    font-size: 11px;
+  }
+  .pilot-flyout-v2 #currentPilotText { color: #1d4f83; }
   @media (max-width: 768px) {
     #backToQFilterBtn {
       width: 32px;
@@ -294,6 +433,145 @@
     font-size: 11px;
     color: #5b6574;
   }
+
+  .pilot-flyout.pilot-flyout-v2 {
+    width: 312px;
+    max-width: calc(100vw - 58px);
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .pilot-flyout-v2 .pilot-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 7px;
+  }
+  .pilot-flyout-v2 .pilot-header-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1f3b63;
+    letter-spacing: 0.01em;
+  }
+  .pilot-flyout-v2 .pilot-icon-btn {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #b7c9de;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1f3b63;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    flex: 0 0 34px;
+  }
+  .pilot-flyout-v2 .pilot-icon-btn:hover { background: #f3f8ff; }
+  .pilot-flyout-v2 .latlon-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    gap: 6px;
+    align-items: end;
+  }
+  .pilot-flyout-v2 .coord-field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .pilot-flyout-v2 .coord-field span {
+    font-size: 11px;
+    font-weight: 700;
+    color: #435b78;
+  }
+  .pilot-flyout-v2 .coord-field input {
+    width: 100%;
+    max-width: none;
+    min-height: 34px;
+    border: 1px solid #b8cbe2;
+    border-radius: 7px;
+    padding: 5px 7px;
+    font-size: 13px;
+    line-height: 1.2;
+  }
+  .pilot-flyout-v2 .latlon-quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .pilot-flyout-v2 #clearPilotLatLon {
+    border-color: #d7a4a1;
+    background: #fff1ef;
+    color: #91251d;
+  }
+  .pilot-flyout-v2 #upd {
+    border-color: #9fc9a6;
+    background: #eff8ef;
+    color: #1d5f2f;
+  }
+  .pilot-flyout-v2 .dd-hint {
+    margin-top: 5px;
+    font-size: 11px;
+    color: #5e6c7d;
+  }
+  .pilot-flyout-v2 .action-grid {
+    margin-top: 8px;
+    gap: 6px;
+  }
+  .pilot-flyout-v2 .action-grid button {
+    height: 32px;
+    font-size: 11px;
+    line-height: 1.1;
+    border-radius: 7px;
+  }
+  .pilot-flyout-v2 #refreshFirCacheBtn.refresh-fir-stale {
+    background: #c62828;
+    border-color: #8f1d1d;
+    color: #fff;
+    font-weight: 700;
+  }
+  .pilot-flyout-v2 #refreshFirCacheBtn.refresh-fir-stale:hover {
+    background: #b71c1c;
+  }
+  .pilot-flyout-v2 .radius-row {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: auto 66px 1fr;
+    gap: 6px;
+    align-items: center;
+  }
+  .pilot-flyout-v2 .radius-row .radius-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #435b78;
+    white-space: nowrap;
+  }
+  .pilot-flyout-v2 .radius-row input {
+    width: 100%;
+    max-width: none;
+    min-height: 30px;
+    border: 1px solid #b8cbe2;
+    border-radius: 7px;
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+  .pilot-flyout-v2 .radius-row button {
+    min-height: 30px;
+    font-size: 11px;
+    border-radius: 7px;
+  }
+  .pilot-flyout-v2 .pilot-status-block {
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid #d8e2ee;
+  }
+  .pilot-flyout-v2 .controls-meta {
+    margin-top: 4px;
+    line-height: 1.3;
+    font-size: 11px;
+  }
+  .pilot-flyout-v2 #currentPilotText { color: #1d4f83; }
   @media (max-width: 768px) {
     .airport-circles-flyout {
       width: 206px;
@@ -419,6 +697,7 @@ window.onload = function() {
     var livePayloadStoragePrefix = 'fetchnotams:map:payload:';
     var liveUnfilteredPayloadStorageKey = 'fetchnotams:map:live:latest';
     var livePayloadTtlMs = 2 * 60 * 60 * 1000;
+    var refreshFirStaleMs = 24 * 60 * 60 * 1000;
     var defaultBasemapName = "CartoDB Voyager";
     var currentBasemapName = defaultBasemapName;
 
@@ -623,6 +902,70 @@ window.onload = function() {
       return firText + ', ' + ageText;
   }
 
+  function getLatestKnownLivePayloadCreatedAt() {
+      var latestCreatedAt = Number(linkedRealtimePayloadCreatedAt) || 0;
+      try {
+          var startupRaw = localStorage.getItem(liveUnfilteredPayloadStorageKey);
+          if (startupRaw) {
+              var startupParsed = JSON.parse(startupRaw);
+              var startupCreatedAt = Number(startupParsed && startupParsed.createdAt) || 0;
+              var startupRecords = Array.isArray(startupParsed && startupParsed.records) ? startupParsed.records : [];
+              if (startupCreatedAt && startupRecords.length) {
+                  latestCreatedAt = Math.max(latestCreatedAt, startupCreatedAt);
+              }
+          }
+
+          for (var i = 0; i < localStorage.length; i++) {
+              var key = localStorage.key(i);
+              if (!key || key.indexOf(livePayloadStoragePrefix) !== 0) {
+                  continue;
+              }
+              var raw = localStorage.getItem(key);
+              if (!raw) {
+                  continue;
+              }
+              var parsed = JSON.parse(raw);
+              var createdAt = Number(parsed && parsed.createdAt) || 0;
+              var records = Array.isArray(parsed && parsed.records) ? parsed.records : [];
+              if (!createdAt || !records.length) {
+                  continue;
+              }
+              latestCreatedAt = Math.max(latestCreatedAt, createdAt);
+          }
+      } catch (err) {
+          return latestCreatedAt;
+      }
+      return latestCreatedAt;
+  }
+
+  function updateRefreshFirButtonState() {
+      var refreshBtn = document.getElementById('refreshFirCacheBtn');
+      if (!refreshBtn) {
+          return;
+      }
+
+      var createdAt = getLatestKnownLivePayloadCreatedAt();
+      refreshBtn.classList.remove('refresh-fir-stale');
+
+      if (!createdAt) {
+          refreshBtn.title = 'Refresh FIR (no cached live payload found)';
+          return;
+      }
+
+      var ageMs = Math.max(0, Date.now() - createdAt);
+      if (ageMs > refreshFirStaleMs) {
+          refreshBtn.classList.add('refresh-fir-stale');
+      }
+
+      var ageHours = Math.floor(ageMs / (60 * 60 * 1000));
+      if (ageHours < 1) {
+          var ageMins = Math.max(1, Math.floor(ageMs / 60000));
+          refreshBtn.title = 'Refresh FIR (cache age: ' + ageMins + ' min)';
+      } else {
+          refreshBtn.title = 'Refresh FIR (cache age: ' + ageHours + ' hr)';
+      }
+  }
+
   function findStartupLivePayloadKey() {
       try {
           var raw = localStorage.getItem(liveUnfilteredPayloadStorageKey);
@@ -808,6 +1151,7 @@ window.onload = function() {
               linkedRealtimeNotams = getStartupLiveNotamsFromCache();
               linkedRealtimeMode = linkedRealtimeNotams.length > 0;
               updateSourceDisplay();
+              updateRefreshFirButtonState();
               scheduleRefreshObstacles(marker.getLatLng());
               hideRefreshFirPanel();
           }, 700);
@@ -1101,12 +1445,15 @@ window.onload = function() {
       var latInput = document.getElementById('pLat');
       var lonInput = document.getElementById('pLon');
       var pilotText = document.getElementById('currentPilotText');
+      var latStr = formatCoord(ll.lat);
+      var lonStr = formatCoord(ll.lng);
       if (latInput && lonInput) {
-          latInput.value = formatCoord(ll.lat);
-          lonInput.value = formatCoord(ll.lng);
+          latInput.value = latStr;
+          lonInput.value = lonStr;
       }
       if (pilotText) {
-          pilotText.textContent = 'Current Pilot Location: ' + formatCoord(ll.lat) + ', ' + formatCoord(ll.lng);
+          var googleMapsHref = 'https://www.google.com/maps?q=' + encodeURIComponent(latStr + ',' + lonStr);
+          pilotText.innerHTML = 'Current Pilot Location: <a href="' + googleMapsHref + '" target="_blank" rel="noopener noreferrer">' + latStr + ', ' + lonStr + '</a>';
       }
   }
 
@@ -1739,6 +2086,7 @@ window.onload = function() {
           sourceBtn.disabled = !!(linkedRealtimeMode && linkedRealtimeNotams.length);
           sourceBtn.textContent = sourceBtn.disabled ? 'Linked Live View' : 'Switch Filter Group';
       }
+      updateRefreshFirButtonState();
   }
 
   function refreshObstacles(ll) {
@@ -1810,7 +2158,12 @@ window.onload = function() {
       marker.setLatLng(ll).openPopup();
       c1.setLatLng(ll); c3.setLatLng(ll); c100.setLatLng(ll);
       c1Touch.setLatLng(ll); c3Touch.setLatLng(ll); c100Touch.setLatLng(ll);
-      marker.setPopupContent("Pilot<br>Lat: " + ll.lat.toFixed(6) + "<br>Lon: " + ll.lng.toFixed(6));
+      var pilotLatLon = ll.lat.toFixed(5) + ', ' + ll.lng.toFixed(5);
+      var pilotMapUrl = 'https://www.google.com/maps?q=' + encodeURIComponent(ll.lat + ',' + ll.lng);
+      marker.setPopupContent(
+          'Pilot Location<br>' +
+          '<a href="' + pilotMapUrl + '" target="_blank" rel="noopener noreferrer">' + pilotLatLon + ' (lat, lon)</a>'
+      );
       savePilotLocationToStorage(ll, 'notams-map');
       if (shouldCenter) {
           centerMapToPilotRadius();
@@ -1949,7 +2302,7 @@ window.onload = function() {
       applyPilotLocation(ll, false);
   });
 
-  var homeCtl = L.control({position:'bottomright'});
+    var homeCtl = L.control({position:'bottomright'});
   homeCtl.onAdd = function() {
       var d = L.DomUtil.create('div', 'home-logo-control');
       L.DomEvent.disableClickPropagation(d);
@@ -2153,7 +2506,7 @@ window.onload = function() {
       var d = L.DomUtil.create('div','pilot-input');
       L.DomEvent.disableClickPropagation(d);
       d.style.marginTop = '88px';
-                d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls"><i class="fa-solid fa-bars"></i></button><div class="controls-row">Lat <input id="pLat" size="10" maxlength="12" placeholder="43.000000"> Lon <input id="pLon" size="10" maxlength="13" placeholder="-79.000000"></div><div class="controls-meta dd-hint">DD: 43.653200, -79.383200</div><div class="action-grid"><button id="upd">Set Lat/Lon</button><button id="centerPilot">Center Map</button><button id="getPilotLoc">Get Location</button><button id="sourceBtn">Switch Filter Group</button><button id="openLiveFetch">Open FetchNotams</button><button id="refreshFirCacheBtn">Refresh FIR</button></div><div class="controls-row" style="margin-top:5px;">Radius km <input id="radiusKmInput" size="6" maxlength="6" placeholder="10"> <button id="setRadiusBtn">Change NOTAM Radius</button></div><div id="currentPilotText" class="controls-meta status-line">Current Pilot: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Src: RAW</div><div id="livePayloadText" class="controls-meta status-line">Live payload: --</div><div id="currentBasemapText" class="controls-meta status-line">Basemap: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div><div id="refreshFirPanel" style="display:none;padding:5px 2px 2px 2px;border-top:1px solid #ccc;margin-top:5px;"><div style="font-size:0.82em;font-weight:600;margin-bottom:3px;color:#555;">Refresh NOTAMs Cache</div><div style="display:flex;gap:4px;align-items:center;"><span style="font-size:0.8em;">FIR:</span><input id="refreshFirInput" size="5" maxlength="4" placeholder="CZYZ" style="width:50px;font-size:0.8em;padding:2px 3px;border:1px solid #aaa;border-radius:3px;"><button id="refreshFirFetchBtn" style="font-size:0.8em;padding:2px 7px;background:#2d6a2d;color:#fff;border:none;border-radius:3px;cursor:pointer;">Fetch</button><button id="refreshFirCancelBtn" style="font-size:0.8em;padding:2px 6px;background:#888;color:#fff;border:none;border-radius:3px;cursor:pointer;">&#x2715;</button></div><div id="refreshFirStatus" style="font-size:0.78em;margin-top:4px;color:#555;min-height:1.1em;"></div></div></div>';
+                                d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout pilot-flyout-v2"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls"><i class="fa-solid fa-bars"></i></button><div class="pilot-header-row"><div class="pilot-header-title">Pilot Controls</div><button id="centerPilot" class="pilot-icon-btn" title="Center map on pilot"><i class="fa-solid fa-crosshairs"></i></button></div><div class="latlon-grid"><label class="coord-field"><span>Lat</span><input id="pLat" size="12" maxlength="12" placeholder="43.000000"></label><label class="coord-field"><span>Lon</span><input id="pLon" size="13" maxlength="13" placeholder="-79.000000"></label><div class="latlon-quick-actions"><button id="clearPilotLatLon" class="pilot-icon-btn" title="Clear Lat/Lon"><i class="fa-solid fa-xmark"></i></button><button id="upd" class="pilot-icon-btn" title="Set Lat/Lon"><i class="fa-solid fa-check"></i></button></div></div><div class="controls-meta dd-hint">Decimal Degrees: 43.653200, -79.383200</div><div class="action-grid"><button id="getPilotLoc">Get Pilot Location</button><button id="sourceBtn">Switch Filter Group</button><button id="openLiveFetch">Open FetchNotams</button><button id="refreshFirCacheBtn">Refresh FIR</button></div><div class="radius-row"><span class="radius-label">Radius km</span><input id="radiusKmInput" size="6" maxlength="6" placeholder="10"><button id="setRadiusBtn">Change Radius</button></div><div class="pilot-status-block"><div id="currentPilotText" class="controls-meta status-line">Current Pilot Location: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Source: RAW</div><div id="livePayloadText" class="controls-meta status-line">Live payload: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div><div id="refreshFirPanel" style="display:none;padding:5px 2px 2px 2px;border-top:1px solid #ccc;margin-top:5px;"><div style="font-size:0.82em;font-weight:600;margin-bottom:3px;color:#555;">Refresh NOTAMs Cache</div><div style="display:flex;gap:4px;align-items:center;"><span style="font-size:0.8em;">FIR:</span><input id="refreshFirInput" size="5" maxlength="4" placeholder="CZYZ" style="width:50px;font-size:0.8em;padding:2px 3px;border:1px solid #aaa;border-radius:3px;"><button id="refreshFirFetchBtn" style="font-size:0.8em;padding:2px 7px;background:#2d6a2d;color:#fff;border:none;border-radius:3px;cursor:pointer;">Fetch</button><button id="refreshFirCancelBtn" style="font-size:0.8em;padding:2px 6px;background:#888;color:#fff;border:none;border-radius:3px;cursor:pointer;">&#x2715;</button></div><div id="refreshFirStatus" style="font-size:0.78em;margin-top:4px;color:#555;min-height:1.1em;"></div></div></div>';
       return d;
   };
   ctl.addTo(map);
@@ -2218,7 +2571,7 @@ window.onload = function() {
       getPilotLocBtn.classList.toggle('needs-location', needsLocation);
       getPilotLocBtn.title = needsLocation
           ? 'Pilot location required. Click to use device location.'
-          : 'Get Location';
+          : 'Get Pilot Location';
 
       if (needsLocation) {
           setPilotFlyoutCollapsed(false);
@@ -2300,6 +2653,30 @@ window.onload = function() {
       applyAirportDefaultsFromLocation(ll);
   };
 
+
+  document.getElementById('clearPilotLatLon').onclick = function() {
+      var latInput = document.getElementById('pLat');
+      var lonInput = document.getElementById('pLon');
+      if (latInput) latInput.value = '';
+      if (lonInput) lonInput.value = '';
+      var pilotText = document.getElementById('currentPilotText');
+      if (pilotText) {
+          pilotText.textContent = 'Current Pilot Location: cleared (tap Get Pilot Location or enter coordinates)';
+      }
+      try {
+          localStorage.removeItem('pilotLocationDD');
+          localStorage.removeItem('pilotLocationDMS');
+          localStorage.removeItem('pilotLatitude');
+          localStorage.removeItem('pilotLongitude');
+          localStorage.removeItem('pilotLocationSource');
+      } catch (err) {
+          console.warn('[NOTAM MAP] unable to clear pilot location from localStorage', err);
+      }
+      updatePilotLocationPromptState(null);
+      if (latInput) {
+          latInput.focus();
+      }
+  };
   document.getElementById('centerPilot').onclick = function() {
       centerMapToPilotRadius();
   };
@@ -2333,6 +2710,7 @@ window.onload = function() {
       document.getElementById('refreshFirInput').addEventListener('keydown', function(ev) {
           if (ev.key === 'Enter') { ev.preventDefault(); document.getElementById('refreshFirFetchBtn').click(); }
       });
+      updateRefreshFirButtonState();
 
       document.getElementById('setRadiusBtn').onclick = function() {
           var val = parseFloat(document.getElementById('radiusKmInput').value);
@@ -163285,6 +163663,11 @@ window.onload = function() {
         
 </script>
 </html>
+
+
+
+
+
 
 
 
