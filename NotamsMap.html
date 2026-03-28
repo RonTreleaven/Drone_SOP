@@ -2622,12 +2622,7 @@ window.onload = function() {
       if (!flyout || !toggle) {
           return;
       }
-
-      // Match neighboring map control button size and improve tap target.
-      toggle.style.width = '34px';
-      toggle.style.height = '34px';
-      toggle.style.right = '-34px';
-      toggle.style.fontSize = '16px';
+      // Keep positioning in CSS so mobile media-query rules stay in control.
 
       toggle.onclick = function(ev) {
           if (ev) {
@@ -3246,13 +3241,17 @@ window.onload = function() {
 
 <style id="pilot-mobile-visibility-tuning">
 @media (max-width: 768px) {
+  .pilot-input {
+    z-index: 2900;
+  }
+
   /* Keep open/close control visible in both expanded and collapsed states. */
   .pilot-flyout.pilot-flyout-v2 .pilot-flyout-toggle {
     right: 8px;
     top: 8px;
     border-left: 1px solid #d8e2ee;
     border-radius: 8px;
-    z-index: 6;
+    z-index: 12;
   }
 
   .pilot-flyout.pilot-flyout-v2 {
@@ -3271,7 +3270,7 @@ window.onload = function() {
 
   /* Leave a sliver visible so the hamburger is always discoverable. */
   .pilot-input .pilot-flyout.pilot-flyout-v2.collapsed {
-    transform: translateX(calc(-100% + 42px));
+    transform: translateX(calc(-100% + 56px));
   }
 
   /* Tighten vertical rhythm so status lines appear higher. */
