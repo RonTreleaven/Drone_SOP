@@ -2,8 +2,10 @@ name: Fetch NOTAMs
 
 on:
   schedule:
-    - cron: '0 10,16,20 * * *'  # runs daily at 11:00 UTC (6:00AM, 12:00 noon, 4:00PM EST)
-  workflow_dispatch:        # allows manual trigger from GitHub UI
+    - cron: '0 10 * * *'  # runs at 10 UTC, 6AM EDT
+    - cron: '0 16 * * *'  # runs at 16 UTC, 12 noon
+    - cron: '0 20 * * *'  # runs at 20 UTC, 4PM EDT
+  workflow_dispatch:
 
 jobs:
   fetch:
