@@ -3247,8 +3247,11 @@ window.onload = function() {
 
   /* Keep open/close control visible in both expanded and collapsed states. */
   .pilot-flyout.pilot-flyout-v2 .pilot-flyout-toggle {
-    right: 8px;
+    right: 0;
     top: 8px;
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
     border-left: 1px solid #d8e2ee;
     border-radius: 8px;
     z-index: 12;
@@ -3265,12 +3268,14 @@ window.onload = function() {
     background: #f4f6f8;
     border-bottom: 1px solid #d8e2ee;
     margin-bottom: 5px;
-    padding: 2px 40px 4px 0;
+    padding: 2px 48px 4px 0;
   }
 
   /* Leave a sliver visible so the hamburger is always discoverable. */
   .pilot-input .pilot-flyout.pilot-flyout-v2.collapsed {
-    transform: translateX(calc(-100% + 56px));
+    transform: translateX(-100%);
+    margin-left: 42px;
+    box-shadow: none;
   }
 
   /* Tighten vertical rhythm so status lines appear higher. */
