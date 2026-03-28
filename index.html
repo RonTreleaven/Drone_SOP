@@ -94,6 +94,24 @@
       font-size: 0.82rem;
       color: #5a6a79;
     }
+    .waiver-accept {
+      margin-top: 0.45rem;
+      border: 1px solid #0f6d5a;
+      background: #0f6d5a;
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .waiver-accept:hover {
+      background: #0c5a4b;
+    }
+    .waiver-accept.is-complete {
+      border-color: #2e7d32;
+      background: #2e7d32;
+    }
     .sub {
       margin: 0.55rem 0 1.1rem;
       color: var(--muted);
@@ -155,6 +173,18 @@
     }
     .mini-btn:hover {
       background: #edf6ff;
+    }
+    .mini-btn.mini-btn-danger {
+      border-color: #9f1f1f;
+      color: #9f1f1f;
+      background: #fff5f5;
+      display: none;
+    }
+    .mini-btn.mini-btn-danger:hover {
+      background: #ffe9e9;
+    }
+    .mini-btn.mini-btn-danger.is-visible {
+      display: inline-flex;
     }
     .mini-btn.is-highlighted {
       border-color: #0f6d5a;
@@ -245,6 +275,24 @@
     .trash-reset-btn.is-armed .trash-icon .can-full {
       opacity: 1;
     }
+    body.terms-gate-active .top-nav,
+    body.terms-gate-active .start-flow,
+    body.terms-gate-active .actions,
+    body.terms-gate-active #clear-all-data {
+      opacity: 0.38;
+      pointer-events: none;
+      -webkit-user-select: none;
+      user-select: none;
+      filter: grayscale(0.12);
+    }
+    body.terms-gate-active .intro-card {
+      box-shadow: 0 0 0 3px rgba(15, 109, 90, 0.22);
+    }
+    body.terms-gate-active .waiver-note,
+    body.terms-gate-active .waiver-ack,
+    body.terms-gate-active .waiver-list {
+      color: #193b57;
+    }
   </style>
 </head>
 <body>
@@ -318,6 +366,7 @@
         </p>
         <div class="loc-init">
           <button id="init-pilot-location" class="mini-btn" type="button">Set Pilot Location</button>
+          <button id="full-reset-data" class="mini-btn mini-btn-danger" type="button" title="Clear all data including terms acceptance">Full Reset</button>
           <span id="pilot-location-status" class="loc-status">No pilot location set yet.</span>
         </div>
       </section>
@@ -344,6 +393,8 @@
     </main>
   </div>
   <script>
+    const TERMS_ACCEPTED_KEY = 'droneSopTermsAcceptedV1';
+
     function toDMS(deg, isLat) {
       const abs = Math.abs(deg);
       const d = Math.floor(abs);
@@ -391,9 +442,33 @@
       toolsCard.classList.toggle('is-highlighted', hasPilotLocation);
     }
 
-    async function clearAllDataAndReload() {
+    function snapshotTermsAcceptance() {
+      return {
+        accepted: localStorage.getItem(TERMS_ACCEPTED_KEY),
+        acceptedAt: localStorage.getItem('termsAcceptedAt')
+      };
+    }
+
+    function restoreTermsAcceptance(snapshot) {
+      if (!snapshot) return;
+      if (snapshot.accepted != null) {
+        localStorage.setItem(TERMS_ACCEPTED_KEY, snapshot.accepted);
+      }
+      if (snapshot.acceptedAt != null) {
+        localStorage.setItem('termsAcceptedAt', snapshot.acceptedAt);
+      }
+    }
+
+    async function clearAllDataAndReload(options = {}) {
+      const preserveTerms = options.preserveTerms !== false;
+      const termsSnapshot = preserveTerms ? snapshotTermsAcceptance() : null;
+
       localStorage.clear();
       sessionStorage.clear();
+
+      if (preserveTerms) {
+        restoreTermsAcceptance(termsSnapshot);
+      }
 
       if (window.caches && typeof window.caches.keys === 'function') {
         try {
@@ -412,6 +487,38 @@
       return sessionStorage.length > 0 || localStorage.length > 0;
     }
 
+    function hasAcceptedTerms() {
+      return localStorage.getItem(TERMS_ACCEPTED_KEY) === 'yes';
+    }
+
+    function markTermsAccepted() {
+      localStorage.setItem(TERMS_ACCEPTED_KEY, 'yes');
+      localStorage.setItem('termsAcceptedAt', new Date().toISOString());
+    }
+
+    function setTermsGateActive(active) {
+      document.body.classList.toggle('terms-gate-active', active);
+    }
+
+    function syncTermsGateState() {
+      const accepted = hasAcceptedTerms();
+      setTermsGateActive(!accepted);
+      const acceptBtn = document.querySelector('.waiver-accept');
+      if (!acceptBtn) return;
+
+      if (accepted) {
+        acceptBtn.classList.add('is-complete');
+        acceptBtn.textContent = 'Terms Accepted';
+        acceptBtn.disabled = true;
+        acceptBtn.setAttribute('aria-disabled', 'true');
+      } else {
+        acceptBtn.classList.remove('is-complete');
+        acceptBtn.textContent = 'Accept & Continue';
+        acceptBtn.disabled = false;
+        acceptBtn.removeAttribute('aria-disabled');
+      }
+    }
+
     let wipeArmTimer = null;
 
     function setWipeArmed(isArmed) {
@@ -420,7 +527,7 @@
 
       clearBtn.classList.toggle('is-armed', isArmed);
       clearBtn.setAttribute('aria-pressed', isArmed ? 'true' : 'false');
-      clearBtn.title = isArmed ? 'Confirm data to be trashed...' : 'Clear all forms';
+      clearBtn.title = isArmed ? 'Confirm mission/session data clear...' : 'Clear forms data';
 
       const status = document.getElementById('pilot-location-status');
       if (status) {
@@ -442,17 +549,30 @@
 
     function updateClearDataVisibility() {
       const clearBtn = document.getElementById('clear-all-data');
+      const fullResetBtn = document.getElementById('full-reset-data');
       if (!clearBtn) return;
       const visible = hasStoredSessionData();
       clearBtn.classList.toggle('is-visible', visible);
+      if (fullResetBtn) {
+        fullResetBtn.classList.toggle('is-visible', visible);
+      }
       if (!visible) setWipeArmed(false);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       const btn = document.getElementById('init-pilot-location');
       const clearBtn = document.getElementById('clear-all-data');
+      const fullResetBtn = document.getElementById('full-reset-data');
       const status = document.getElementById('pilot-location-status');
-      if (!btn || !status || !clearBtn) return;
+      const acceptBtn = document.querySelector('.waiver-accept');
+      if (!btn || !status || !clearBtn || !acceptBtn || !fullResetBtn) return;
+
+      syncTermsGateState();
+
+      acceptBtn.addEventListener('click', () => {
+        markTermsAccepted();
+        syncTermsGateState();
+      });
 
       const hasPilotLocation = updateStatusFromStorage();
       updateHighlightState(hasPilotLocation);
@@ -486,14 +606,24 @@
       clearBtn.addEventListener('click', async () => {
         if (!clearBtn.classList.contains('is-armed')) {
           armWipeAction();
-          status.textContent = 'Click trashcan twice refresh all forms and confirm..  .';
+          status.textContent = 'Click trashcan twice to clear forms data (terms acceptance is kept).';
           return;
         }
 
-        status.textContent = 'Clearing all saved data...';
+        status.textContent = 'Clearing forms/session data (keeping terms acceptance)...';
         status.classList.remove('is-armed');
         setWipeArmed(false);
-        await clearAllDataAndReload();
+        await clearAllDataAndReload({ preserveTerms: true });
+      });
+
+      fullResetBtn.addEventListener('click', async () => {
+        const confirmed = window.confirm('Full Reset will clear all saved data, including terms acceptance. Continue?');
+        if (!confirmed) {
+          return;
+        }
+        status.textContent = 'Performing full reset...';
+        setWipeArmed(false);
+        await clearAllDataAndReload({ preserveTerms: false });
       });
     });
   </script>
