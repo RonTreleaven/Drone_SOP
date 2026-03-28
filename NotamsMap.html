@@ -312,15 +312,22 @@
       font-size: 16px;
       line-height: 1.25;
     }
+    .pilot-input {
+      margin-top: 64px !important;
+    }
+    .pilot-input .pilot-flyout {
+      max-height: calc(100dvh - 170px - env(safe-area-inset-bottom, 0px));
+      overflow-y: auto;
+    }
     .pilot-input.keyboard-active {
       position: fixed;
-      top: calc(8px + env(safe-area-inset-top, 0px));
+      top: calc(52px + env(safe-area-inset-top, 0px));
       left: calc(8px + env(safe-area-inset-left, 0px));
       margin-top: 0 !important;
       z-index: 2800;
     }
     .pilot-input.keyboard-active .pilot-flyout {
-      max-height: calc(100dvh - 16px - var(--pilot-kb-offset, 0px));
+      max-height: calc(100dvh - 64px - var(--pilot-kb-offset, 0px));
       overflow-y: auto;
     }
   }
