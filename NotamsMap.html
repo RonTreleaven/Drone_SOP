@@ -299,10 +299,8 @@
     pointer-events: auto;
   }
   .pilot-input .pilot-flyout.collapsed {
+    display: none;
     pointer-events: none;
-  }
-  .pilot-input .pilot-flyout.collapsed .pilot-flyout-toggle {
-    pointer-events: auto;
   }
   @media (max-width: 768px) {
     .pilot-flyout-v2 #pLat,
@@ -2406,6 +2404,29 @@ window.onload = function() {
   };
   notamsToggleCtl.addTo(map);
 
+  var pilotToggleCtl = L.control({position:'topleft'});
+  pilotToggleCtl.onAdd = function() {
+      var d = L.DomUtil.create('div', 'left-mini-toggle-control');
+      d.id = 'pilotToggleCtl';
+      var btn = L.DomUtil.create('a', 'left-mini-toggle-btn', d);
+      btn.id = 'pilotToggleBtn';
+      btn.href = '#';
+      btn.title = 'Pilot controls';
+      btn.setAttribute('aria-label', 'Pilot controls');
+      btn.setAttribute('aria-haspopup', 'dialog');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      L.DomEvent.disableClickPropagation(d);
+      L.DomEvent.on(btn, 'click', function(ev) {
+          L.DomEvent.stop(ev);
+          var flyout = document.getElementById('pilotFlyout');
+          if (!flyout) return;
+          setPilotFlyoutCollapsed(!flyout.classList.contains('collapsed'));
+      });
+      return d;
+  };
+  pilotToggleCtl.addTo(map);
+
   var notamsFlyoutEl = null;
   var notamsFlyoutOpen = false;
 
@@ -2533,7 +2554,7 @@ window.onload = function() {
       var d = L.DomUtil.create('div','pilot-input');
       L.DomEvent.disableClickPropagation(d);
       d.style.marginTop = '88px';
-                                d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout pilot-flyout-v2"><button id="pilotFlyoutToggle" class="pilot-flyout-toggle" title="Pilot controls"><i class="fa-solid fa-bars"></i></button><div class="pilot-header-row"><div class="pilot-header-title">Pilot Controls</div><button id="centerPilot" class="pilot-icon-btn" title="Center map on pilot"><i class="fa-solid fa-crosshairs"></i></button></div><div class="latlon-grid"><label class="coord-field"><span>Lat</span><input id="pLat" size="12" maxlength="12" placeholder="43.000000"></label><label class="coord-field"><span>Lon</span><input id="pLon" size="13" maxlength="13" placeholder="-79.000000"></label><div class="latlon-quick-actions"><button id="clearPilotLatLon" class="pilot-icon-btn" title="Clear Lat/Lon"><i class="fa-solid fa-xmark"></i></button><button id="upd" class="pilot-icon-btn" title="Set Lat/Lon"><i class="fa-solid fa-check"></i></button></div></div><div class="controls-meta dd-hint">Decimal Degrees: 43.653200, -79.383200</div><div class="action-grid"><button id="getPilotLoc">Get Pilot Location</button><button id="sourceBtn">Switch Filter Group</button><button id="openLiveFetch">Open FetchNotams</button><button id="refreshFirCacheBtn">Refresh FIR</button></div><div class="radius-row"><span class="radius-label">Radius km</span><input id="radiusKmInput" size="6" maxlength="6" placeholder="10"><button id="setRadiusBtn">Change Radius</button></div><div class="pilot-status-block"><div id="currentPilotText" class="controls-meta status-line">Current Pilot Location: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Source: RAW</div><div id="livePayloadText" class="controls-meta status-line">Live payload: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div><div id="refreshFirPanel" style="display:none;padding:5px 2px 2px 2px;border-top:1px solid #ccc;margin-top:5px;"><div style="font-size:0.82em;font-weight:600;margin-bottom:3px;color:#555;">Refresh NOTAMs Cache</div><div style="display:flex;gap:4px;align-items:center;"><span style="font-size:0.8em;">FIR:</span><input id="refreshFirInput" size="5" maxlength="4" placeholder="CZYZ" style="width:50px;font-size:0.8em;padding:2px 3px;border:1px solid #aaa;border-radius:3px;"><button id="refreshFirFetchBtn" style="font-size:0.8em;padding:2px 7px;background:#2d6a2d;color:#fff;border:none;border-radius:3px;cursor:pointer;">Fetch</button><button id="refreshFirCancelBtn" style="font-size:0.8em;padding:2px 6px;background:#888;color:#fff;border:none;border-radius:3px;cursor:pointer;">&#x2715;</button></div><div id="refreshFirStatus" style="font-size:0.78em;margin-top:4px;color:#555;min-height:1.1em;"></div></div></div>';
+                                d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout pilot-flyout-v2"><div class="pilot-header-row"><div class="pilot-header-title">Pilot Controls</div><button id="pilotFlyoutClose" class="pilot-icon-btn" title="Close Pilot Controls"><i class="fa-solid fa-xmark"></i></button></div><div class="latlon-grid"><label class="coord-field"><span>Lat</span><input id="pLat" size="12" maxlength="12" placeholder="43.000000"></label><label class="coord-field"><span>Lon</span><input id="pLon" size="13" maxlength="13" placeholder="-79.000000"></label><div class="latlon-quick-actions"><button id="clearPilotLatLon" class="pilot-icon-btn" title="Clear Lat/Lon"><i class="fa-solid fa-xmark"></i></button><button id="upd" class="pilot-icon-btn" title="Set Lat/Lon"><i class="fa-solid fa-check"></i></button></div></div><div class="controls-meta dd-hint">Decimal Degrees: 43.653200, -79.383200</div><div class="action-grid"><button id="getPilotLoc">Get Pilot Location</button><button id="sourceBtn">Switch Filter Group</button><button id="openLiveFetch">Open FetchNotams</button><button id="refreshFirCacheBtn">Refresh FIR</button></div><div class="radius-row"><span class="radius-label">Radius km</span><input id="radiusKmInput" size="6" maxlength="6" placeholder="10"><button id="setRadiusBtn">Change Radius</button></div><div class="pilot-status-block"><div id="currentPilotText" class="controls-meta status-line">Current Pilot Location: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Source: RAW</div><div id="livePayloadText" class="controls-meta status-line">Live payload: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div><div id="refreshFirPanel" style="display:none;padding:5px 2px 2px 2px;border-top:1px solid #ccc;margin-top:5px;"><div style="font-size:0.82em;font-weight:600;margin-bottom:3px;color:#555;">Refresh NOTAMs Cache</div><div style="display:flex;gap:4px;align-items:center;"><span style="font-size:0.8em;">FIR:</span><input id="refreshFirInput" size="5" maxlength="4" placeholder="CZYZ" style="width:50px;font-size:0.8em;padding:2px 3px;border:1px solid #aaa;border-radius:3px;"><button id="refreshFirFetchBtn" style="font-size:0.8em;padding:2px 7px;background:#2d6a2d;color:#fff;border:none;border-radius:3px;cursor:pointer;">Fetch</button><button id="refreshFirCancelBtn" style="font-size:0.8em;padding:2px 6px;background:#888;color:#fff;border:none;border-radius:3px;cursor:pointer;">&#x2715;</button></div><div id="refreshFirStatus" style="font-size:0.78em;margin-top:4px;color:#555;min-height:1.1em;"></div></div></div>';
       return d;
   };
   ctl.addTo(map);
@@ -2547,6 +2568,7 @@ window.onload = function() {
           '.map-layers-control',
           '#notamsToggleCtl',
           '#airportsToggleCtl',
+          '#pilotToggleCtl',
           '.center-map-control',
           '.pilot-input'
       ];
@@ -2576,15 +2598,14 @@ window.onload = function() {
 
   function setPilotFlyoutCollapsed(collapsed) {
       var flyout = document.getElementById('pilotFlyout');
-      var toggle = document.getElementById('pilotFlyoutToggle');
-      if (!flyout || !toggle) {
+      var toggleBtn = document.getElementById('pilotToggleBtn');
+      if (!flyout) {
           return;
       }
       flyout.classList.toggle('collapsed', !!collapsed);
-      toggle.setAttribute('aria-expanded', String(!flyout.classList.contains('collapsed')));
-      toggle.innerHTML = flyout.classList.contains('collapsed')
-          ? '<i class="fa-solid fa-bars"></i>'
-          : '<i class="fa-solid fa-xmark"></i>';
+      if (toggleBtn) {
+          toggleBtn.setAttribute('aria-expanded', String(!flyout.classList.contains('collapsed')));
+      }
   }
 
 
@@ -2618,21 +2639,30 @@ window.onload = function() {
 
   (function wirePilotFlyoutBehavior() {
       var flyout = document.getElementById('pilotFlyout');
-      var toggle = document.getElementById('pilotFlyoutToggle');
-      if (!flyout || !toggle) {
+      var toggleBtn = document.getElementById('pilotToggleBtn');
+      var closeBtn = document.getElementById('pilotFlyoutClose');
+      if (!flyout || !toggleBtn) {
           return;
       }
-      // Keep positioning in CSS so mobile media-query rules stay in control.
 
-      toggle.onclick = function(ev) {
-          if (ev) {
-              ev.preventDefault();
-          }
-          setPilotFlyoutCollapsed(!flyout.classList.contains('collapsed'));
-      };
+      if (closeBtn) {
+          closeBtn.onclick = function(ev) {
+              if (ev) {
+                  ev.preventDefault();
+                  ev.stopPropagation();
+              }
+              setPilotFlyoutCollapsed(true);
+          };
+      }
 
-      // Start collapsed; expand/collapse only on hamburger click/tap.
+      // Start closed. Open/close from dedicated pilot hamburger button.
       setPilotFlyoutCollapsed(true);
+
+      map.on('click', function() {
+          if (!flyout.classList.contains('collapsed')) {
+              setPilotFlyoutCollapsed(true);
+          }
+      });
   })();
 
   var mapInteractionCache = null;
@@ -2797,9 +2827,12 @@ window.onload = function() {
           latInput.focus();
       }
   };
-  document.getElementById('centerPilot').onclick = function() {
-      centerMapToPilotRadius();
-  };
+  var centerPilotBtn = document.getElementById('centerPilot');
+  if (centerPilotBtn) {
+      centerPilotBtn.onclick = function() {
+          centerMapToPilotRadius();
+      };
+  }
 
     document.getElementById('sourceBtn').onclick = function() {
           if (linkedRealtimeMode && linkedRealtimeNotams.length) {
@@ -3241,22 +3274,6 @@ window.onload = function() {
 
 <style id="pilot-mobile-visibility-tuning">
 @media (max-width: 768px) {
-  .pilot-input {
-    z-index: 2900;
-  }
-
-  /* Keep open/close control visible in both expanded and collapsed states. */
-  .pilot-flyout.pilot-flyout-v2 .pilot-flyout-toggle {
-    right: 0;
-    top: 8px;
-    width: 42px;
-    height: 42px;
-    font-size: 18px;
-    border-left: 1px solid #d8e2ee;
-    border-radius: 8px;
-    z-index: 12;
-  }
-
   .pilot-flyout.pilot-flyout-v2 {
     padding: 8px 8px 6px;
   }
@@ -3268,17 +3285,9 @@ window.onload = function() {
     background: #f4f6f8;
     border-bottom: 1px solid #d8e2ee;
     margin-bottom: 5px;
-    padding: 2px 48px 4px 0;
+    padding: 2px 6px 4px 0;
   }
 
-  /* Leave a sliver visible so the hamburger is always discoverable. */
-  .pilot-input .pilot-flyout.pilot-flyout-v2.collapsed {
-    transform: translateX(-100%);
-    margin-left: 42px;
-    box-shadow: none;
-  }
-
-  /* Tighten vertical rhythm so status lines appear higher. */
   .pilot-flyout-v2 .latlon-grid { gap: 4px; }
   .pilot-flyout-v2 .coord-field input { min-height: 30px; }
   .pilot-flyout-v2 .latlon-quick-actions { gap: 4px; }
