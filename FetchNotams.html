@@ -1396,9 +1396,20 @@
     /* Desktop: compact 2-row form — overrides the 920px column breakpoint */
     .view-desktop .search-container {
       display: grid;
-      grid-template-columns: 110px 110px minmax(160px, 1fr) auto;
+      grid-template-columns: 132px 132px 132px auto;
       gap: 8px 12px;
       align-items: end;
+    }
+
+    .view-desktop .search-container .field-group.code-field {
+      min-width: 0;
+      max-width: 132px;
+    }
+
+    .view-desktop .search-container .field-group.code-field input {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
     }
 
     .view-desktop .search-container .search-actions {
@@ -2992,13 +3003,23 @@
     function dmsTokenToDecimal(token, isLat) {
       const clean = (token || "").toUpperCase().trim();
       const dir = clean.slice(-1);
-      const body = clean.slice(0, -1);
+      let body = clean.slice(0, -1);
 
       if (isLat && !/[NS]/.test(dir)) return null;
       if (!isLat && !/[EW]/.test(dir)) return null;
 
       const degDigits = isLat ? 2 : 3;
       if (!/^\d+$/.test(body)) return null;
+
+      // Tolerate malformed DMS that omits one leading zero.
+      // Examples: 795219W -> 0795219W, 9530N -> 09530N.
+      if (isLat && body.length === 5) {
+        body = `0${body}`;
+      }
+      if (!isLat && body.length === 6) {
+        body = `0${body}`;
+      }
+
       if (body.length !== degDigits + 2 && body.length !== degDigits + 4) return null;
 
       const deg = Number(body.slice(0, degDigits));
@@ -3014,7 +3035,7 @@
 
     function linkifyDmsCoordinatePairs(text) {
       const value = text || "";
-      const pairRegex = /(\d{4,6}[NS])\s*(\d{5,7}[EW])/gi;
+      const pairRegex = /(\d{4,6}[NS])(?:\s*[,;/]?\s*)(\d{5,7}[EW])/gi;
       let lastIndex = 0;
       let match;
       const out = [];
@@ -3043,7 +3064,7 @@
 
     function extractDmsCoordinatePairsFromText(text) {
       const value = String(text || "");
-      const pairRegex = /(\d{4,6}[NS])\s*(\d{5,7}[EW])/gi;
+      const pairRegex = /(\d{4,6}[NS])(?:\s*[,;/]?\s*)(\d{5,7}[EW])/gi;
       const found = [];
       let match;
 

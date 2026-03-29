@@ -771,6 +771,7 @@ window.onload = function() {
     var linkedObstacleBatchLayer = L.layerGroup().addTo(map);
     var linkedObstacleGlow = null;
     var pilotToObstacleLine = null;
+    var linkedFocusViewportApplied = false;
     var notamDataReady = false;
     var notamDataError = '';
     var setAirportCircleFlyoutOpen = null;
@@ -960,12 +961,20 @@ window.onload = function() {
       var params = new URLSearchParams(window.location.search || '');
       var payloadKey = (params.get('payload_key') || '').trim();
       var src = (params.get('src') || '').trim().toLowerCase();
+      var hasExplicitFocusCoord = false;
+      var latRaw = params.get('lat') || params.get('latitude');
+      var lonRaw = params.get('lon') || params.get('lng') || params.get('longitude');
+      if (latRaw != null && lonRaw != null) {
+          var lat = Number(latRaw);
+          var lon = Number(lonRaw);
+          hasExplicitFocusCoord = isFinite(lat) && isFinite(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
+      }
       if (payloadKey) {
           linkedRealtimeIntent = 'linked';
           linkedRealtimePayloadSource = 'query';
           return readLivePayloadRecords(payloadKey);
       }
-      if (src === 'fetchnotams') {
+      if (src === 'fetchnotams' && !hasExplicitFocusCoord) {
           var latestKey = findLatestLivePayloadKey();
           if (latestKey) {
               linkedRealtimeIntent = 'linked';
@@ -1398,6 +1407,30 @@ window.onload = function() {
       }
   }
 
+  function applyFocusedMidpointViewport(pilotLL) {
+      if (!linkedFocusRequested || linkedFocusViewportApplied) {
+          return;
+      }
+      if (!linkedObstacleLocation || !pilotLL) {
+          return;
+      }
+
+      var km = haversineKm(pilotLL.lat, pilotLL.lng, linkedObstacleLocation.lat, linkedObstacleLocation.lng);
+      var pad = km > 80 ? 0.20 : (km > 25 ? 0.28 : 0.40);
+      var maxZoom = km > 120 ? 9 : (km > 55 ? 10 : (km > 20 ? 11 : 12));
+      var bounds = L.latLngBounds([
+          [pilotLL.lat, pilotLL.lng],
+          [linkedObstacleLocation.lat, linkedObstacleLocation.lng]
+      ]);
+
+      if (!bounds.isValid()) {
+          return;
+      }
+
+      linkedFocusViewportApplied = true;
+      map.fitBounds(bounds.pad(pad), { padding: [44, 44], maxZoom: maxZoom, animate: false });
+  }
+
   function updatePilotObstacleContext(pilotLL) {
       if (!linkedObstacleLocation || !pilotLL) {
           if (linkedObstacleGlow && map.hasLayer(linkedObstacleGlow)) {
@@ -1500,6 +1533,8 @@ window.onload = function() {
           linkedObstacleMarker.openPopup();
           linkedObstacleAutoOpenPending = false;
       }
+
+      applyFocusedMidpointViewport(pilotLL);
 
       var countText = document.getElementById('obstacleCountText');
       if (countText) {
@@ -2273,7 +2308,7 @@ window.onload = function() {
           '<a href="' + pilotMapUrl + '" target="_blank" rel="noopener noreferrer">' + pilotLatLon + ' (lat, lon)</a>'
       );
       savePilotLocationToStorage(ll, 'notams-map');
-      if (shouldCenter) {
+      if (shouldCenter && !(linkedFocusRequested && linkedObstacleLocation && !linkedFocusViewportApplied)) {
           centerMapToPilotRadius();
       }
       scheduleRefreshObstacles(ll);
