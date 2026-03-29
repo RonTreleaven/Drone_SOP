@@ -27,58 +27,76 @@ const FIRS = {
   "7": { name: "Winnipeg", icao: "CZWG" },
 };
 
-const KEYWORDS = [
-  "PARAJUMP",
-  "PARACHUTE",
-  "ADVISORY",
-  "CRANE",
-  "GPS",
-  "RESTRICTED",
-  "OBST",
-  "TFR",
-  "DANGER",
-  "RPAS",
-  "UAS",
-  "DRONE",
-  "CYR",
-  "AIRSHOW",
-];
+const LIVE_QCODE_ALLOWLIST = new Set(["QOBCE", "QOLAS"]);
+const LIVE_Q_SUBJECT_ALLOWLIST = new Set(["OB", "OL"]);
 
-function extractDms(text) {
-  const regex = /(\d{6}[NS])\s*(\d{7}[EW])/g;
-  const matches = [];
-  let m;
-  while ((m = regex.exec(text)) !== null) {
-    matches.push([m[1], m[2]]);
+function mapDmsToDecimal(token, isLat) {
+  const clean = String(token || "").toUpperCase().trim();
+  const dir = clean.slice(-1);
+  const body = clean.slice(0, -1);
+  if (isLat && !/[NS]/.test(dir)) return null;
+  if (!isLat && !/[EW]/.test(dir)) return null;
+  const degDigits = isLat ? 2 : 3;
+  if (!/^\d+$/.test(body)) return null;
+  if (body.length !== degDigits + 2 && body.length !== degDigits + 4) return null;
+  const deg = Number(body.slice(0, degDigits));
+  const min = Number(body.slice(degDigits, degDigits + 2));
+  const sec = body.length === degDigits + 4 ? Number(body.slice(degDigits + 2, degDigits + 4)) : 0;
+  if (min >= 60 || sec >= 60) return null;
+  let dd = deg + (min / 60) + (sec / 3600);
+  if (dir === "S" || dir === "W") dd = -dd;
+  return dd;
+}
+
+function mapExtractCoordsFromText(text) {
+  const value = String(text || "");
+  const pairRegex = /(\d{4,6}[NS])\s*(\d{5,7}[EW])/gi;
+  const found = [];
+  let match;
+  while ((match = pairRegex.exec(value)) !== null) {
+    const lat = mapDmsToDecimal((match[1] || "").toUpperCase(), true);
+    const lon = mapDmsToDecimal((match[2] || "").toUpperCase(), false);
+    if (lat == null || lon == null) continue;
+    if (lat < -90 || lat > 90 || lon < -180 || lon > 180) continue;
+    found.push({ lat, lon });
   }
-  return matches;
+  return found;
 }
 
-function dmsToDd(dmsLat, dmsLon) {
-  const latDeg = Number(dmsLat.slice(0, 2));
-  const latMin = Number(dmsLat.slice(2, 4));
-  const latSec = Number(dmsLat.slice(4, 6));
-  const latDir = dmsLat.slice(-1);
-  let latDd = latDeg + latMin / 60 + latSec / 3600;
-  if (latDir === "S") latDd = -latDd;
-
-  const lonDeg = Number(dmsLon.slice(0, 3));
-  const lonMin = Number(dmsLon.slice(3, 5));
-  const lonSec = Number(dmsLon.slice(5, 7));
-  const lonDir = dmsLon.slice(-1);
-  let lonDd = lonDeg + lonMin / 60 + lonSec / 3600;
-  if (lonDir === "W") lonDd = -lonDd;
-
-  return [Number(latDd.toFixed(6)), Number(lonDd.toFixed(6))];
+function mapExtractPrimaryCoord(rawText) {
+  const value = String(rawText || "");
+  if (!value) return null;
+  const eMatch = value.match(/E\)\s*([\s\S]*?)(?=(?:\n|\r\n?)[A-Z]\)|$)/);
+  const eSection = eMatch ? String(eMatch[0] || "") : "";
+  const eCoords = mapExtractCoordsFromText(eSection);
+  if (eCoords.length > 0) return eCoords[0];
+  const anyCoords = mapExtractCoordsFromText(value);
+  return anyCoords.length > 0 ? anyCoords[0] : null;
 }
 
-function parseRawText(textField) {
+function parseNotamText(textField) {
+  if (typeof textField !== "string") return "";
   try {
     const parsed = JSON.parse(textField || "{}");
-    return parsed.raw || "";
+    if (parsed && typeof parsed === "object") {
+      return String(parsed.raw || parsed.english || parsed.french || "");
+    }
   } catch {
-    return "";
+    return String(textField || "");
   }
+  return "";
+}
+
+function extractQCode(rawText) {
+  const match = String(rawText || "").match(/Q\)\s*[^/\s]+\/([A-Z]{5})\//i);
+  return match ? String(match[1] || "").toUpperCase() : "";
+}
+
+function shouldKeepFiltered(rawText) {
+  const qCode = extractQCode(rawText);
+  if (!qCode) return false;
+  if (LIVE_QCODE_ALLOWLIST.has(qCode)) return true;
+  return LIVE_Q_SUBJECT_ALLOWLIST.has(qCode.slice(1, 3));
 }
 
 async function fetchNotams(icao) {
@@ -131,28 +149,27 @@ function filterAndTransform(data) {
   const notamsList = [];
 
   for (const item of all) {
-    const rawText = parseRawText(item?.text);
+    const rawText = parseNotamText(item?.text);
     if (!rawText) continue;
 
-    const matches = extractDms(rawText);
-    const coordsDd = matches.map(([lat, lon]) => {
-      const [latDd, lonDd] = dmsToDd(lat, lon);
-      return `${latDd.toFixed(6)}, ${lonDd.toFixed(6)}`;
-    });
+    const primaryCoord = mapExtractPrimaryCoord(rawText);
+    const coordsDd = primaryCoord
+      ? [`${Number(primaryCoord.lat).toFixed(6)}, ${Number(primaryCoord.lon).toFixed(6)}`]
+      : [];
+    const qCode = extractQCode(rawText);
 
     const normalized = {
       raw: rawText,
       startValidity: item?.startValidity || null,
       endValidity: item?.endValidity || null,
+      q_code: qCode || null,
       coordinates_dd: coordsDd,
     };
 
     // Keep a complete, unfiltered copy for search/reporting use-cases.
     rawNotamsList.push(normalized);
 
-    const upper = rawText.toUpperCase();
-    const hasKeyword = KEYWORDS.some((k) => upper.includes(k));
-    if (!hasKeyword) continue;
+    if (!shouldKeepFiltered(rawText)) continue;
 
     notamsList.push(normalized);
   }

@@ -57,6 +57,16 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
     border-radius: 8px;
   }
+  .map-layers-control .leaflet-control-layers-toggle {
+    background: #ffffff !important;
+    border: 1px solid #d8e2ee !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .map-layers-control .leaflet-control-layers-toggle:hover,
+  .map-layers-control .leaflet-control-layers-toggle:focus,
+  .map-layers-control .leaflet-control-layers-toggle:focus-visible {
+    background: #ffffff !important;
+  }
   .map-layers-control .leaflet-control-layers-list {
     max-height: 56vh;
     overflow-y: auto;
@@ -80,6 +90,68 @@
     display: block;
   }
 
+  .home-logo-control {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .airport-type-control.leaflet-control-layers {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .airport-type-control .leaflet-control-layers-toggle {
+    background-image: none !important;
+    width: 34px;
+    height: 34px;
+    position: relative;
+    border-radius: 8px;
+    background: #ffffff !important;
+    border: 1px solid #d8e2ee !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .airport-type-control .leaflet-control-layers-toggle::before {
+    content: '\f072';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 34px;
+    display: block;
+    text-align: center;
+    color: #12406d;
+  }
+  .airport-type-control.leaflet-control-layers-expanded {
+    background: #ffffff !important;
+    border: 1px solid #d8e2ee !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
+    border-radius: 8px;
+    min-width: 220px;
+    max-width: 320px;
+    padding: 7px 9px;
+  }
+  .airport-type-control .leaflet-control-layers-list {
+    max-height: 56vh;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+  }
+  .airport-type-control .airport-type-close-btn {
+    display: none;
+    margin-top: 8px;
+    width: 100%;
+    border: 1px solid #d8e2ee;
+    border-radius: 6px;
+    background: #f7fafc;
+    color: #1f3b63;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 8px;
+    cursor: pointer;
+  }
+  .airport-type-control.leaflet-control-layers-expanded .airport-type-close-btn {
+    display: block;
+  }
   #getPilotLoc.needs-location {
     background: #2e7d32;
     border: 1px solid #1b5e20;
@@ -132,7 +204,7 @@
   .pilot-flyout.pilot-flyout-v2 {
     width: 312px;
     max-width: calc(100vw - 58px);
-    padding: 10px;
+    padding: 8px 10px 10px;
     border-radius: 10px;
   }
   .pilot-flyout-v2 .pilot-header-row {
@@ -140,7 +212,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    margin-bottom: 7px;
+    margin-bottom: 4px;
   }
   .pilot-flyout-v2 .pilot-header-title {
     font-size: 12px;
@@ -167,12 +239,12 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
     gap: 6px;
-    align-items: end;
+    align-items: start;
   }
   .pilot-flyout-v2 .coord-field {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
     min-width: 0;
   }
   .pilot-flyout-v2 .coord-field span {
@@ -211,7 +283,7 @@
     color: #1d5f2f;
   }
   .pilot-flyout-v2 .dd-hint {
-    margin-top: 5px;
+    margin: 0 0 3px;
     font-size: 11px;
     color: #5e6c7d;
   }
@@ -312,7 +384,7 @@
     .pilot-flyout-v2 #pLon,
     .pilot-flyout-v2 #radiusKmInput,
     .pilot-flyout-v2 #refreshFirInput {
-      font-size: 16px;
+      font-size: 18px;
       line-height: 1.25;
     }
     .pilot-input {
@@ -467,7 +539,7 @@
   .pilot-flyout.pilot-flyout-v2 {
     width: 312px;
     max-width: calc(100vw - 58px);
-    padding: 10px;
+    padding: 8px 10px 10px;
     border-radius: 10px;
   }
   .pilot-flyout-v2 .pilot-header-row {
@@ -475,7 +547,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    margin-bottom: 7px;
+    margin-bottom: 4px;
   }
   .pilot-flyout-v2 .pilot-header-title {
     font-size: 12px;
@@ -502,12 +574,12 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
     gap: 6px;
-    align-items: end;
+    align-items: start;
   }
   .pilot-flyout-v2 .coord-field {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
     min-width: 0;
   }
   .pilot-flyout-v2 .coord-field span {
@@ -546,7 +618,7 @@
     color: #1d5f2f;
   }
   .pilot-flyout-v2 .dd-hint {
-    margin-top: 5px;
+    margin: 0 0 3px;
     font-size: 11px;
     color: #5e6c7d;
   }
@@ -1480,6 +1552,7 @@ window.onload = function() {
       var latInput = document.getElementById('pLat');
       var lonInput = document.getElementById('pLon');
       var pilotText = document.getElementById('currentPilotText');
+      var ddText = document.getElementById('decimalDegreesText');
       var latStr = formatCoord(ll.lat);
       var lonStr = formatCoord(ll.lng);
       if (latInput && lonInput) {
@@ -1489,6 +1562,9 @@ window.onload = function() {
       if (pilotText) {
           var googleMapsHref = 'https://www.google.com/maps?q=' + encodeURIComponent(latStr + ',' + lonStr);
           pilotText.innerHTML = 'Current Pilot Location: <a href="' + googleMapsHref + '" target="_blank" rel="noopener noreferrer">' + latStr + ', ' + lonStr + '</a>';
+      }
+      if (ddText) {
+          ddText.textContent = 'Decimal Degrees: ' + latStr + ', ' + lonStr;
       }
   }
 
@@ -1921,8 +1997,6 @@ window.onload = function() {
       return 2 * 6371.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
 
-
-
   // Enrich airport markers with distance from pilot
   function enrichAirportMarkersWithDistance(pLat, pLon) {
       if (!airportLayerIndex) return;
@@ -2023,7 +2097,6 @@ window.onload = function() {
           });
       });
   }
-
 
   function getActiveNotams() {
       if (linkedRealtimeMode && linkedRealtimeNotams.length) {
@@ -2557,6 +2630,52 @@ window.onload = function() {
       }
   }
 
+  (function setupAirportTypeControl() {
+      var airportTypeCtlContainer = document.querySelector('.leaflet-top.leaflet-right .leaflet-control-layers');
+      if (!airportTypeCtlContainer) {
+          return;
+      }
+
+      airportTypeCtlContainer.classList.add('airport-type-control');
+      airportTypeCtlContainer.title = 'Airport / Type Layers';
+      L.DomEvent.disableClickPropagation(airportTypeCtlContainer);
+      L.DomEvent.disableScrollPropagation(airportTypeCtlContainer);
+
+      var airportTypeToggle = airportTypeCtlContainer.querySelector('.leaflet-control-layers-toggle');
+      if (airportTypeToggle) {
+          airportTypeToggle.title = 'Airport / Type Layers';
+          airportTypeToggle.setAttribute('aria-label', 'Airport / Type Layers');
+          L.DomEvent.on(airportTypeToggle, 'click', function(ev) {
+              L.DomEvent.stop(ev);
+              airportTypeCtlContainer.classList.toggle('leaflet-control-layers-expanded');
+          });
+      }
+
+      var airportTypeList = airportTypeCtlContainer.querySelector('.leaflet-control-layers-list');
+      if (airportTypeList) {
+          L.DomEvent.on(airportTypeList, 'touchstart', L.DomEvent.stopPropagation);
+          L.DomEvent.on(airportTypeList, 'touchmove', L.DomEvent.stopPropagation);
+      }
+
+      if (!airportTypeCtlContainer.querySelector('.airport-type-close-btn')) {
+          var airportTypeCloseBtn = L.DomUtil.create('button', 'airport-type-close-btn', airportTypeCtlContainer);
+          airportTypeCloseBtn.type = 'button';
+          airportTypeCloseBtn.textContent = 'Close';
+          airportTypeCloseBtn.setAttribute('aria-label', 'Close Airport / Type layers panel');
+          airportTypeCloseBtn.title = 'Close';
+          L.DomEvent.on(airportTypeCloseBtn, 'click', function(ev) {
+              L.DomEvent.stop(ev);
+              airportTypeCtlContainer.classList.remove('leaflet-control-layers-expanded');
+          });
+      }
+
+      map.on('click', function() {
+          if (airportTypeCtlContainer.classList.contains('leaflet-control-layers-expanded')) {
+              airportTypeCtlContainer.classList.remove('leaflet-control-layers-expanded');
+          }
+      });
+  })();
+
     zoomControl.addTo(map);
 
   var ctl = L.control({position:'topleft'});
@@ -2564,7 +2683,7 @@ window.onload = function() {
       var d = L.DomUtil.create('div','pilot-input');
       L.DomEvent.disableClickPropagation(d);
       d.style.marginTop = '88px';
-                                d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout pilot-flyout-v2"><div class="pilot-header-row"><div class="pilot-header-title">Pilot Controls</div><button id="pilotFlyoutClose" class="pilot-icon-btn" title="Close Pilot Controls"><i class="fa-solid fa-xmark"></i></button></div><div class="latlon-grid"><label class="coord-field"><span>Lat</span><input id="pLat" size="12" maxlength="12" placeholder="43.000000"></label><label class="coord-field"><span>Lon</span><input id="pLon" size="13" maxlength="13" placeholder="-79.000000"></label><div class="latlon-quick-actions"><button id="clearPilotLatLon" class="pilot-icon-btn" title="Clear Lat/Lon"><i class="fa-solid fa-xmark"></i></button><button id="upd" class="pilot-icon-btn" title="Set Lat/Lon"><i class="fa-solid fa-check"></i></button></div></div><div class="controls-meta dd-hint">Decimal Degrees: 43.653200, -79.383200</div><div class="action-grid"><button id="getPilotLoc">Get Pilot Location</button><button id="sourceBtn">Switch Filter Group</button><button id="openLiveFetch">Open FetchNotams</button><button id="refreshFirCacheBtn">Refresh FIR</button></div><div class="radius-row"><span class="radius-label">Radius km</span><input id="radiusKmInput" size="6" maxlength="6" placeholder="10"><button id="setRadiusBtn">Change Radius</button></div><div class="pilot-status-block"><div id="currentPilotText" class="controls-meta status-line">Current Pilot Location: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Source: RAW</div><div id="livePayloadText" class="controls-meta status-line">Live payload: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div><div id="refreshFirPanel" style="display:none;padding:5px 2px 2px 2px;border-top:1px solid #ccc;margin-top:5px;"><div style="font-size:0.82em;font-weight:600;margin-bottom:3px;color:#555;">Refresh NOTAMs Cache</div><div style="display:flex;gap:4px;align-items:center;"><span style="font-size:0.8em;">FIR:</span><input id="refreshFirInput" size="5" maxlength="4" placeholder="CZYZ" style="width:50px;font-size:0.8em;padding:2px 3px;border:1px solid #aaa;border-radius:3px;"><button id="refreshFirFetchBtn" style="font-size:0.8em;padding:2px 7px;background:#2d6a2d;color:#fff;border:none;border-radius:3px;cursor:pointer;">Fetch</button><button id="refreshFirCancelBtn" style="font-size:0.8em;padding:2px 6px;background:#888;color:#fff;border:none;border-radius:3px;cursor:pointer;">&#x2715;</button></div><div id="refreshFirStatus" style="font-size:0.78em;margin-top:4px;color:#555;min-height:1.1em;"></div></div></div>';
+                                d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout pilot-flyout-v2"><div class="pilot-header-row"><div class="pilot-header-title">Pilot Controls</div><button id="pilotFlyoutClose" class="pilot-icon-btn" title="Close Pilot Controls"><i class="fa-solid fa-xmark"></i></button></div><div id="decimalDegreesText" class="controls-meta dd-hint">Decimal Degrees: --, --</div><div class="latlon-grid"><label class="coord-field"><span>Lat</span><input id="pLat" size="12" maxlength="12" placeholder="43.000000"></label><label class="coord-field"><span>Lon</span><input id="pLon" size="13" maxlength="13" placeholder="-79.000000"></label><div class="latlon-quick-actions"><button id="clearPilotLatLon" class="pilot-icon-btn" title="Clear Lat/Lon"><i class="fa-solid fa-xmark"></i></button><button id="upd" class="pilot-icon-btn" title="Set Lat/Lon"><i class="fa-solid fa-check"></i></button></div></div><div class="action-grid"><button id="getPilotLoc">Get Pilot Location</button><button id="sourceBtn">Switch Filter Group</button><button id="openLiveFetch">Open FetchNotams</button><button id="refreshFirCacheBtn">Refresh FIR</button></div><div class="radius-row"><span class="radius-label">Radius km</span><input id="radiusKmInput" size="6" maxlength="6" placeholder="10"><button id="setRadiusBtn">Change Radius</button></div><div class="pilot-status-block"><div id="currentPilotText" class="controls-meta status-line">Current Pilot Location: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Source: RAW</div><div id="livePayloadText" class="controls-meta status-line">Live payload: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div><div id="refreshFirPanel" style="display:none;padding:5px 2px 2px 2px;border-top:1px solid #ccc;margin-top:5px;"><div style="font-size:0.82em;font-weight:600;margin-bottom:3px;color:#555;">Refresh NOTAMs Cache</div><div style="display:flex;gap:4px;align-items:center;"><span style="font-size:0.8em;">FIR:</span><input id="refreshFirInput" size="5" maxlength="4" placeholder="CZYZ" style="width:50px;font-size:0.8em;padding:2px 3px;border:1px solid #aaa;border-radius:3px;"><button id="refreshFirFetchBtn" style="font-size:0.8em;padding:2px 7px;background:#2d6a2d;color:#fff;border:none;border-radius:3px;cursor:pointer;">Fetch</button><button id="refreshFirCancelBtn" style="font-size:0.8em;padding:2px 6px;background:#888;color:#fff;border:none;border-radius:3px;cursor:pointer;">&#x2715;</button></div><div id="refreshFirStatus" style="font-size:0.78em;margin-top:4px;color:#555;min-height:1.1em;"></div></div></div>';
       return d;
   };
   ctl.addTo(map);
@@ -2617,7 +2736,6 @@ window.onload = function() {
           toggleBtn.setAttribute('aria-expanded', String(!flyout.classList.contains('collapsed')));
       }
   }
-
 
   function updatePilotLocationPromptState(ll) {
       var getPilotLocBtn = document.getElementById('getPilotLoc');
@@ -2813,15 +2931,18 @@ window.onload = function() {
       applyAirportDefaultsFromLocation(ll);
   };
 
-
   document.getElementById('clearPilotLatLon').onclick = function() {
       var latInput = document.getElementById('pLat');
       var lonInput = document.getElementById('pLon');
+      var pilotText = document.getElementById('currentPilotText');
+      var ddText = document.getElementById('decimalDegreesText');
       if (latInput) latInput.value = '';
       if (lonInput) lonInput.value = '';
-      var pilotText = document.getElementById('currentPilotText');
       if (pilotText) {
           pilotText.textContent = 'Current Pilot Location: cleared (tap Get Pilot Location or enter coordinates)';
+      }
+      if (ddText) {
+          ddText.textContent = 'Decimal Degrees: --, --';
       }
       try {
           localStorage.removeItem('pilotLocationDD');
@@ -2972,7 +3093,6 @@ window.onload = function() {
                     map.fitBounds(linkedRealtimeBounds.pad(0.15), { padding: [34, 34], maxZoom: 11 });
             }
     }
-
 
     // Airspace circles + legend toggles by airport type
     (function buildAirportCircles() {
@@ -3272,7 +3392,7 @@ window.onload = function() {
     align-items: center;
     justify-content: center;
     padding: 0;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1;
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
@@ -3294,15 +3414,15 @@ window.onload = function() {
     z-index: 5;
     background: #f4f6f8;
     border-bottom: 1px solid #d8e2ee;
-    margin-bottom: 5px;
-    padding: 2px 6px 4px 0;
+    margin-bottom: 3px;
+    padding: 1px 6px 2px 0;
   }
 
-  .pilot-flyout-v2 .latlon-grid { gap: 4px; }
+  .pilot-flyout-v2 .latlon-grid { gap: 4px; align-items: start; }
   .pilot-flyout-v2 .coord-field input { min-height: 30px; }
-  .pilot-flyout-v2 .latlon-quick-actions { gap: 4px; }
+  .pilot-flyout-v2 .latlon-quick-actions { gap: 3px; }
   .pilot-flyout-v2 .pilot-icon-btn { height: 30px; }
-  .pilot-flyout-v2 .dd-hint { margin-top: 3px; }
+  .pilot-flyout-v2 .dd-hint { margin: 0 0 2px; }
   .pilot-flyout-v2 .action-grid { margin-top: 6px; gap: 4px; }
   .pilot-flyout-v2 .action-grid button { height: 30px; }
   .pilot-flyout-v2 .radius-row { margin-top: 6px; gap: 4px; }
@@ -163857,16 +163977,4 @@ window.onload = function() {
         
 </script>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
 

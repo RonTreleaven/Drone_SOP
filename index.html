@@ -293,6 +293,40 @@
     body.terms-gate-active .waiver-list {
       color: #193b57;
     }
+    .disclaimer-panel {
+      margin-top: 0.75rem;
+      border: 1px solid #f0c040;
+      border-left: 4px solid #e6a800;
+      border-radius: 8px;
+      background: #fffdf0;
+      overflow: hidden;
+    }
+    .disclaimer-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.55rem 0.75rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #7a5200;
+      list-style: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .disclaimer-summary::-webkit-details-marker { display: none; }
+    .disclaimer-summary::after {
+      content: '\25B8';
+      font-size: 0.85rem;
+      transition: transform 0.2s;
+      color: #a07030;
+    }
+    details[open] .disclaimer-summary::after {
+      transform: rotate(90deg);
+    }
+    .disclaimer-body {
+      padding: 0 0.75rem 0.75rem;
+    }
   </style>
 </head>
 <body>
@@ -348,16 +382,21 @@
           New to drone ops? Review
           <a href="https://tc.canada.ca/en/aviation/drone-safety/learn-rules-you-fly-your-drone/flying-your-drone-safely-legally?utm_campaign=tc-drone-safety-ongoing&utm_medium=vurl&utm_source=canada-ca-safe-legal-drones" target="_blank" rel="noopener">Transport Canada: Flying Your Drone Safely and Legally</a>.
         </p>
-        <h2>Use at your own risk!</h2>
-        <p class="waiver-intro">Before continuing:</p>
-				<p class="waiver-note">This tool is provided for <strong>informational and planning support only</strong>. It does not replace official sources such as NAV CANADA, nor does it constitute legal or operational authorization.</p>
-				<p class="waiver-ack">By proceeding, you acknowledge that:</p>
-				<ul class="waiver-list">
-				<li>You are responsible for verifying all flight information through official sources</li>
-				<li>You understand and will comply with applicable regulations</li>
-				<li>You assume full responsibility for the safe conduct of your drone operations</li>
-				</ul>
-				<button class="waiver-accept">Accept &amp; Continue</button>
+        <details id="disclaimer-panel" class="disclaimer-panel" open>
+          <summary class="disclaimer-summary">
+            <span>⚠&#xA0; Disclaimer – Use at your own risk</span>
+          </summary>
+          <div class="disclaimer-body">
+            <p class="waiver-note">This tool is provided for <strong>informational and planning support only</strong>. It does not replace official sources such as NAV CANADA, nor does it constitute legal or operational authorization.</p>
+            <p class="waiver-ack">By proceeding, you acknowledge that:</p>
+            <ul class="waiver-list">
+              <li>You are responsible for verifying all flight information through official sources</li>
+              <li>You understand and will comply with applicable regulations</li>
+              <li>You assume full responsibility for the safe conduct of your drone operations</li>
+            </ul>
+            <button class="waiver-accept">Accept &amp; Continue</button>
+          </div>
+        </details>
       </section>
 
       <section class="start-flow" aria-label="Start flow guidance">
@@ -366,7 +405,6 @@
         </p>
         <div class="loc-init">
           <button id="init-pilot-location" class="mini-btn" type="button">Set Pilot Location</button>
-          <button id="full-reset-data" class="mini-btn mini-btn-danger" type="button" title="Clear all data including terms acceptance">Full Reset</button>
           <span id="pilot-location-status" class="loc-status">No pilot location set yet.</span>
         </div>
       </section>
@@ -511,6 +549,8 @@
         acceptBtn.textContent = 'Terms Accepted';
         acceptBtn.disabled = true;
         acceptBtn.setAttribute('aria-disabled', 'true');
+        const disclaimer = document.getElementById('disclaimer-panel');
+        if (disclaimer) disclaimer.removeAttribute('open');
       } else {
         acceptBtn.classList.remove('is-complete');
         acceptBtn.textContent = 'Accept & Continue';
@@ -565,7 +605,7 @@
       const fullResetBtn = document.getElementById('full-reset-data');
       const status = document.getElementById('pilot-location-status');
       const acceptBtn = document.querySelector('.waiver-accept');
-      if (!btn || !status || !clearBtn || !acceptBtn || !fullResetBtn) return;
+      if (!btn || !status || !clearBtn || !acceptBtn) return;
 
       syncTermsGateState();
 
@@ -616,15 +656,17 @@
         await clearAllDataAndReload({ preserveTerms: true });
       });
 
-      fullResetBtn.addEventListener('click', async () => {
-        const confirmed = window.confirm('Full Reset will clear all saved data, including terms acceptance. Continue?');
-        if (!confirmed) {
-          return;
-        }
-        status.textContent = 'Performing full reset...';
-        setWipeArmed(false);
-        await clearAllDataAndReload({ preserveTerms: false });
-      });
+      if (fullResetBtn) {
+        fullResetBtn.addEventListener('click', async () => {
+          const confirmed = window.confirm('Full Reset will clear all saved data, including terms acceptance. Continue?');
+          if (!confirmed) {
+            return;
+          }
+          status.textContent = 'Performing full reset...';
+          setWipeArmed(false);
+          await clearAllDataAndReload({ preserveTerms: false });
+        });
+      }
     });
   </script>
 </body>
