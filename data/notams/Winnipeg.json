@@ -54,21 +54,21 @@
     ]
   },
   {
-    "raw": "(U0543/26 NOTAMR U0220/26\nQ) CZWG/QOLAS/IV/M/E/000/019/4941N10037W002\nA) CZWG B) 2603230823 C) 2605072359\nE) OBST LGT U/S TOWER 494044N 1003712W (APRX 15NM ESE VIRDEN \n(GABRIELLE FARM) AD (CKR7)) 429FT AGL, 1853FT AMSL.)",
-    "startValidity": "2026-03-23T08:23:00",
-    "endValidity": "2026-05-07T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.678889, -100.620000"
-    ]
-  },
-  {
     "raw": "(U0544/26 NOTAMR U0219/26\nQ) CZWG/QOLAS/IV/M/E/000/030/5023N10556W002\nA) CZWG B) 2603230823 C) 2605072359\nE) OBST LGT U/S TOWER 502324N 1055537W (APRX 15NM W MOOSE JAW/AIR \nVICE MARSHAL C.M. MCEWEN AD (CYMJ)) 570FT AGL, 2946FT AMSL.)",
     "startValidity": "2026-03-23T08:23:00",
     "endValidity": "2026-05-07T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.390000, -105.926944"
+    ]
+  },
+  {
+    "raw": "(U0543/26 NOTAMR U0220/26\nQ) CZWG/QOLAS/IV/M/E/000/019/4941N10037W002\nA) CZWG B) 2603230823 C) 2605072359\nE) OBST LGT U/S TOWER 494044N 1003712W (APRX 15NM ESE VIRDEN \n(GABRIELLE FARM) AD (CKR7)) 429FT AGL, 1853FT AMSL.)",
+    "startValidity": "2026-03-23T08:23:00",
+    "endValidity": "2026-05-07T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.678889, -100.620000"
     ]
   },
   {
@@ -243,21 +243,21 @@
     ]
   },
   {
-    "raw": "(U0408/26 NOTAMR U0406/26\nQ) CZWG/QOLAS/IV/M/E/000/011/4847N08834W002\nA) CZWG B) 2603061607 C) 2606051700EST\nE) OBST LGT U/S TOWER 484703N 0883339W (APRX 16NM NE THUNDER \nBAY/ELDORADO AD (CED8)) 330FT AGL, 1045FT AMSL.)",
-    "startValidity": "2026-03-06T16:07:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "48.784167, -88.560833"
-    ]
-  },
-  {
     "raw": "(U0409/26 NOTAMR U0405/26\nQ) CZWG/QOLAS/IV/M/E/000/020/4839N09043W002\nA) CZWG B) 2603061607 C) 2606051700EST\nE) OBST LGT U/S TOWER 483913N 0904251W (APRX 12NM W KASHABOWIE/UPPER \nSHEBANDOWAN LAKE (WATER) AD (CKF5)) 410FT AGL, 1971FT AMSL.)",
     "startValidity": "2026-03-06T16:07:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.653611, -90.714167"
+    ]
+  },
+  {
+    "raw": "(U0408/26 NOTAMR U0406/26\nQ) CZWG/QOLAS/IV/M/E/000/011/4847N08834W002\nA) CZWG B) 2603061607 C) 2606051700EST\nE) OBST LGT U/S TOWER 484703N 0883339W (APRX 16NM NE THUNDER \nBAY/ELDORADO AD (CED8)) 330FT AGL, 1045FT AMSL.)",
+    "startValidity": "2026-03-06T16:07:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "48.784167, -88.560833"
     ]
   },
   {
@@ -756,21 +756,21 @@
     ]
   },
   {
-    "raw": "(U0073/26 NOTAMR U1792/25\nQ) CZWG/QOLAS/IV/M/AE/000/015/5126N09015W005\nA) CYPL B) 2601141320 C) 2604141400EST\nE) OBST LGT U/S TOWER 512531N 0901500W (APRX 1.87NM SW AD) 104FT \nAGL, 1410FT AMSL.)",
-    "startValidity": "2026-01-14T13:20:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.425278, -90.250000"
-    ]
-  },
-  {
     "raw": "(J0284/26 NOTAMR J6427/25\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2601141320 C) 2604141400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
     "startValidity": "2026-01-14T13:20:00",
     "endValidity": null,
     "q_code": "QOBCE",
     "coordinates_dd": [
       "52.467222, -92.960833"
+    ]
+  },
+  {
+    "raw": "(U0073/26 NOTAMR U1792/25\nQ) CZWG/QOLAS/IV/M/AE/000/015/5126N09015W005\nA) CYPL B) 2601141320 C) 2604141400EST\nE) OBST LGT U/S TOWER 512531N 0901500W (APRX 1.87NM SW AD) 104FT \nAGL, 1410FT AMSL.)",
+    "startValidity": "2026-01-14T13:20:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.425278, -90.250000"
     ]
   },
   {
