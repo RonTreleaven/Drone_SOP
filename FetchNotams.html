@@ -887,26 +887,26 @@
       position: relative;
     }
 
-    .qcat-toggle::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: calc(100% + 6px);
+    #qcatFloatTooltip {
+      position: fixed;
+      z-index: 200;
       background: #1f3652;
       color: #ffffff;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      white-space: nowrap;
-      opacity: 0;
+      padding: 5px 10px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      line-height: 1.35;
+      max-width: 220px;
+      white-space: normal;
+      text-align: center;
       pointer-events: none;
-      transition: opacity 120ms ease;
-      z-index: 25;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.28);
+      opacity: 0;
+      transition: opacity 130ms ease;
     }
 
-    .qcat-toggle:hover::after,
-    .qcat-toggle:focus-visible::after {
+    #qcatFloatTooltip.is-visible {
       opacity: 1;
     }
 
@@ -1559,10 +1559,7 @@
       line-height: 1.15;
     }
 
-    .view-mobile .qcat-toggle::after {
-      bottom: auto;
-      top: calc(100% + 6px);
-    }
+
 
     .view-mobile .q-filter-actions {
       display: grid;
@@ -3463,9 +3460,95 @@
         const category = normalizeCode(node.dataset.qcat || "", 1);
         if (!category) return;
         const label = getSubjectCategoryTooltip(category);
-        const text = `${category} = ${label}`;
+        const shortLabel = label.includes(":") ? label.split(":")[0].trim() : label;
+        const text = `${category} = ${shortLabel}`;
         node.dataset.tooltip = text;
-        node.title = text;
+        node.removeAttribute("title");
+      });
+    }
+
+    function initQCatTooltips() {
+      const tooltip = document.createElement("div");
+      tooltip.id = "qcatFloatTooltip";
+      tooltip.setAttribute("role", "tooltip");
+      tooltip.setAttribute("aria-hidden", "true");
+      document.body.appendChild(tooltip);
+
+      let hideTimer = null;
+
+      function showTooltip(btn, isTouchTrigger) {
+        const text = btn.getAttribute("data-tooltip");
+        if (!text) return;
+        clearTimeout(hideTimer);
+        tooltip.textContent = text;
+        // Position off-screen first to measure dimensions
+        tooltip.style.top = "-9999px";
+        tooltip.style.left = "-9999px";
+        tooltip.classList.add("is-visible");
+        tooltip.setAttribute("aria-hidden", "false");
+        // Reposition after browser has painted dimensions
+        requestAnimationFrame(() => positionTooltip(btn));
+        if (isTouchTrigger) {
+          hideTimer = setTimeout(hideTooltip, 2000);
+        }
+      }
+
+      function positionTooltip(btn) {
+        const btnRect = btn.getBoundingClientRect();
+        const ttRect = tooltip.getBoundingClientRect();
+        const margin = 8;
+        const gap = 6;
+
+        // Prefer above, fall back to below if it would clip the top
+        let top = btnRect.top - ttRect.height - gap;
+        if (top < margin) {
+          top = btnRect.bottom + gap;
+        }
+        // Clamp to bottom of viewport
+        top = Math.min(top, window.innerHeight - ttRect.height - margin);
+
+        // Center on button, then clamp horizontally
+        let left = btnRect.left + btnRect.width / 2 - ttRect.width / 2;
+        left = Math.max(margin, Math.min(left, window.innerWidth - ttRect.width - margin));
+
+        tooltip.style.top = `${top}px`;
+        tooltip.style.left = `${left}px`;
+      }
+
+      function hideTooltip() {
+        clearTimeout(hideTimer);
+        tooltip.classList.remove("is-visible");
+        tooltip.setAttribute("aria-hidden", "true");
+      }
+
+      let wasTouch = false;
+
+      document.querySelectorAll(".qcat-toggle").forEach(btn => {
+        btn.addEventListener("pointerdown", (e) => {
+          wasTouch = e.pointerType === "touch" || e.pointerType === "pen";
+          if (wasTouch) {
+            showTooltip(btn, true);
+          }
+        });
+        btn.addEventListener("mouseenter", () => {
+          if (!wasTouch) showTooltip(btn, false);
+        });
+        btn.addEventListener("mouseleave", () => {
+          if (!wasTouch) hideTooltip();
+        });
+        btn.addEventListener("focus", () => {
+          if (!wasTouch) showTooltip(btn, false);
+        });
+        btn.addEventListener("blur", () => {
+          if (!wasTouch) hideTooltip();
+        });
+      });
+
+      // Reset touch flag on pointer up so hover still works if user picks up mouse
+      document.addEventListener("pointerup", () => {
+        if (wasTouch) {
+          setTimeout(() => { wasTouch = false; }, 300);
+        }
       });
     }
 
@@ -4246,6 +4329,7 @@
     });
     resetQFilterDefaults();
     updateQCategoryTooltips();
+    initQCatTooltips();
 
     const initialFir = getLastFir();
     if (initialFir) {
