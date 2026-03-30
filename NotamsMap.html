@@ -94,7 +94,8 @@
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-  }
+  }
+
 
   .airport-type-control.leaflet-control-layers {
     background: transparent !important;
@@ -735,7 +736,18 @@ window.onload = function() {
   var c1 = circle_fde4a75e6f0cf403456ffd27e01821fd;
   var c3 = circle_4ab70abf0d4ddea2ebd7896b1a59fc53;
   var c100 = circle_e8eeddd52b21be476199f9c9554747c2;
-    var obstacleLayer = feature_group_4a7263655ca02393086e7af91626c78b;
+    var obstacleLayer = L.markerClusterGroup({
+        maxClusterRadius: 50,
+        iconCreateFunction: function(cluster) {
+            var count = cluster.getChildCount();
+            var css = 'background-color: #d9534f; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px; border: 2px solid #fff; box-shadow: 0 0 0 2px rgba(217, 83, 79, 0.3);';
+            return L.divIcon({
+                html: '<div style="' + css + '">' + count + '</div>',
+                className: 'notam-cluster',
+                iconSize: L.point(40, 40)
+            });
+        }
+    }).addTo(map);
         var airportLayers = [feature_group_sub_group_9f4088d50be0a9597fd8de8cb8b98861, feature_group_sub_group_c7f0c90012a5e8f986cbe3fb018c359f, feature_group_sub_group_4db07c4801c5dc70e1526abfa0753d57, feature_group_sub_group_b0da2d421fb64389bc7c670a617c5786, feature_group_sub_group_323c2279df0902f5bcbf1f2d2e5b289d, feature_group_sub_group_b01a48e0810c3ca9f1c6ae3d78a830c1, feature_group_sub_group_0bef28c21729ff613801a38b972c65cc, feature_group_sub_group_3dc193fed286c4a60d74a5c8528976cf, feature_group_sub_group_c3a1fd80053961a88c213bce2c465867, feature_group_sub_group_7816c478971d036a09bf81cb03b3dda5, feature_group_sub_group_938655eaf64015924fdfdf8f99b5a0dc, feature_group_sub_group_3b0d4e1ddf9657b417f6163ccbf06546, feature_group_sub_group_768c171b87dd0abccf21796ee0e1b90f, feature_group_sub_group_eeeebce8006d85803cb2ae89ced7f864, feature_group_sub_group_b3d666fe0ff5ff0bf269308e53149bef, feature_group_sub_group_fbe99f73652b2f37239bb15fc9c9589f, feature_group_sub_group_1ef0e4a1a883818e30f4d9012a868244, feature_group_sub_group_8745aaf604597343b73b085d7cd8df7d, feature_group_sub_group_018789aa3ddf10108ccec05f96e76c64, feature_group_sub_group_fe4e750a6df62ed6fdb11cd1a4a06ea8, feature_group_sub_group_d1fc1d20e19ebdcbcaafa997ee4a9a47, feature_group_sub_group_da0770634bda3f05312d6c58b3a6af4d, feature_group_sub_group_a83ffa5fffb22015fb674260f47a077b, feature_group_sub_group_f279d3ae8aba003b5c2e2cd5ee792858, feature_group_sub_group_2881e3c68254fffb1d21889e7ce2533a, feature_group_sub_group_df4116e3e98953cb9d37e5bd2dbd97f3, feature_group_sub_group_af77f3c929746d3e4230168ac5aed02b, feature_group_sub_group_5749ca35d69e0d440259bab43a148f93, feature_group_sub_group_db342aefa5fcbaa3eee0e9d7d913a6cd, feature_group_sub_group_a249e673bf575aecbc11ebb2b00935a2, feature_group_sub_group_323ee44ab51742b3297019c72a6d4c23, feature_group_sub_group_26f3daec56cc8a6c9c45d81a8f9f0021, feature_group_sub_group_8c9bbbf43e1cd413ca670681ce07ebd3, feature_group_sub_group_69c9e37ee3a6dae93971ef8be58a03d6, feature_group_sub_group_856f378381087394850cf45eb42c768d, feature_group_sub_group_ff0bef61460b591a733f128b78c5570b, feature_group_sub_group_03bdac232a86cfbc4c5d9f8c32318344, feature_group_sub_group_134a9a0a9c84972399e9ec36a8123511, feature_group_sub_group_3de49185b9201a5751e5f60c87ad936c, feature_group_sub_group_ee4735398984ec07d1e1edd502ef8dca, feature_group_sub_group_e0cf9e2aca0ae2197c204ba2ea9aa107, feature_group_sub_group_952927db89ed9d1d50a08a96fa4044c9, feature_group_sub_group_aee54db73303660fe98f768dc6b68f26, feature_group_sub_group_73802090a5b9a2d6ace955cbae083659, feature_group_sub_group_f1b0a8709947eae69d3a9ed8d64194f7, feature_group_sub_group_b779b05aafaccc16ee2d9b9a17737280, feature_group_sub_group_cc3f9f9218e1647215bde1250c75270d, feature_group_sub_group_7ec1eee8fff3c9550b08d1c8fca7a82b, feature_group_sub_group_059ac684f0b1fafcfdbd3370c0e145d9, feature_group_sub_group_0b2267277cd8ae99090770c44813aa5e, feature_group_sub_group_95d6ab382b940b28a66812d9e95e87f2, feature_group_sub_group_cbeadf81649701aaedea47fcadc1a330, feature_group_sub_group_4d4c02608c756c526e4a610e40389f15, feature_group_sub_group_156932ec7a83d26fe685c9fb1db0f39c, feature_group_sub_group_97ff8a124ded6a2f221970db8e7debdf, feature_group_sub_group_07474adcce9aecde68fa493f79474866, feature_group_sub_group_47ff9050bc7a8da898f8bcbccc3633f6, feature_group_sub_group_2ee9badafccc9de859d53b7929ee4ba3, feature_group_sub_group_57e1f8376d04f8487dc77b66ef0b1019, feature_group_sub_group_fe32541be61b887d25fc5691d53b4ce9, feature_group_sub_group_5e56bf6b1493852c51a489fe92ef8941, feature_group_sub_group_6a52c15356ea5985f3939145bea516a9, feature_group_sub_group_ab7bcce395a03fce38efbe4a81317f96, feature_group_sub_group_954ab24b9ac3e975364f08493e55cee7, feature_group_sub_group_2bbee84ad562032a3ca6fb579475e585, feature_group_sub_group_097e0ede5e488231e40ab691ea68bc83, feature_group_sub_group_43136a6be00e604efbc1c9eae6e3cb55, feature_group_sub_group_e3d513ddbb5054bf33110a32d002b820, feature_group_sub_group_fd24ea0cd06bb0d96a886c1f6aa8677d, feature_group_sub_group_9d8788fda2ddfe585e8d1c629b01afb2, feature_group_sub_group_c586c69b5d982afe3b9ac074b4671fd6, feature_group_sub_group_16292da84a992f1dcff543568d48fdf5];
         var airportLayerIndex = {
       "CA-AB": {"balloonport": feature_group_sub_group_9f4088d50be0a9597fd8de8cb8b98861, "closed": feature_group_sub_group_c7f0c90012a5e8f986cbe3fb018c359f, "heliport": feature_group_sub_group_4db07c4801c5dc70e1526abfa0753d57, "large_airport": feature_group_sub_group_b0da2d421fb64389bc7c670a617c5786, "medium_airport": feature_group_sub_group_323c2279df0902f5bcbf1f2d2e5b289d, "seaplane_base": feature_group_sub_group_b01a48e0810c3ca9f1c6ae3d78a830c1, "small_airport": feature_group_sub_group_0bef28c21729ff613801a38b972c65cc},

@@ -122,33 +122,60 @@
     }
 
     .search-row-end .selection-stats {
-      justify-content: flex-start;
       width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #d6e0f0;
-      border-radius: 10px;
-      background: linear-gradient(180deg, #f8fbff 0%, #edf4ff 100%);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 1px 2px rgba(22, 54, 92, 0.08);
-      gap: 8px 12px;
+    }
+
+    #scopeSummaryLine {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid #29425f;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #102033 0%, #152a42 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 8px 18px rgba(8, 20, 34, 0.18);
+      overflow: hidden;
+    }
+
+    #scopeSummaryLine .scope-stat {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      padding: 9px 12px 10px;
+      position: relative;
+      text-align: center;
+    }
+
+    #scopeSummaryLine .scope-stat + .scope-stat {
+      border-left: 1px solid rgba(154, 180, 209, 0.18);
     }
 
     #scopeSummaryLine .k {
-      color: #22497a;
-      font-size: 0.82rem;
+      color: #9fb4cd;
+      font-size: 0.68rem;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
-      margin-right: 2px;
+      letter-spacing: 0.08em;
+      margin-right: 0;
+      line-height: 1;
     }
 
     #scopeSummaryLine .v {
-      color: #1b3557;
+      color: #ffffff;
       font-weight: 800;
-      margin-right: 10px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid #d5bb63;
-      background: linear-gradient(180deg, #fff2c8 0%, #ffe39c 100%);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 1px 1px rgba(38, 52, 73, 0.15);
+      margin-right: 0;
+      font-size: 1rem;
+      line-height: 1.05;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.22);
+    }
+
+    #scopeSummaryLine .v.scope-count {
+      color: #ffd24a;
+    }
+
+    #scopeSummaryLine .v.scope-code {
+      color: #ffffff;
     }
 
     .selection-cache-row {
@@ -423,36 +450,36 @@
     }
 
     .results-info-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px 12px;
-      padding: 8px 12px;
-      border: 1px solid #d6e0f0;
-      border-radius: 10px;
-      background: linear-gradient(180deg, #f8fbff 0%, #edf4ff 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 1px 2px rgba(22,54,92,0.08);
-      font-size: 0.82rem;
+      padding: 0;
+      border: 1px solid #314963;
+      border-radius: 11px;
+      background: linear-gradient(180deg, #172637 0%, #1b3045 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 10px rgba(8,20,34,0.12);
+      overflow: hidden;
+      font-size: 0.8rem;
       font-weight: 700;
     }
 
     .results-info-bar .k {
-      color: #22497a;
-      font-size: 0.82rem;
+      color: #97aec8;
+      font-size: 0.64rem;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
-      margin-right: 2px;
+      letter-spacing: 0.08em;
+      margin-right: 0;
+      line-height: 1;
     }
 
     .results-info-bar .v {
-      color: #1b3557;
+      color: #eaf3ff;
       font-weight: 800;
-      margin-right: 8px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid #d5bb63;
-      background: linear-gradient(180deg, #fff2c8 0%, #ffe39c 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.75), 0 1px 1px rgba(38,52,73,0.15);
+      margin-right: 0;
+      font-size: 0.94rem;
+      line-height: 1.08;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.18);
+    }
+
+    .results-info-bar .v.results-count {
+      color: #cfe6ff;
     }
 
     #notamResultsSection .section-body {
@@ -460,9 +487,27 @@
     }
 
     #resultsHeaderText {
-      color: #22497a;
-      font-size: 0.82rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      color: #d9e5f2;
+      font-size: 0.8rem;
       font-weight: 700;
+    }
+
+    #resultsHeaderText .results-stat {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 10px 9px;
+      text-align: center;
+    }
+
+    #resultsHeaderText .results-stat + .results-stat {
+      border-left: 1px solid rgba(154, 180, 209, 0.15);
     }
 
     #notamResultsSection .results-header-actions {
@@ -470,15 +515,6 @@
       flex-wrap: nowrap;
       flex: 1 1 auto;
       min-width: 0;
-    }
-
-    #notamResultsSection .field-group.compact label {
-      font-size: 0.76rem;
-    }
-
-    #notamResultsSection #maxItems {
-      font-size: 0.8rem;
-      padding: 3px 6px;
     }
 
     #notamResultsSection #viewAllOnMapBtn {
@@ -611,6 +647,18 @@
       letter-spacing: 0.02em;
     }
 
+    .notam-distance {
+      font-weight: 600;
+      color: #0b5ea8;
+      background: #f0f7ff;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-left: 12px;
+      display: inline-block;
+      border: 1px solid #c9e0ff;
+    }
+
     .notam-id {
       font-weight: 700;
       color: var(--accent-2);
@@ -669,6 +717,11 @@
     #firInput,
     #icaoInput {
       text-transform: uppercase;
+    }
+
+    input::placeholder {
+      font-size: 0.75rem;
+      opacity: 0.8;
     }
 
     .loading {
@@ -1582,8 +1635,7 @@
     }
 
     .view-mobile .search-row-end .selection-stats {
-      justify-content: flex-start;
-      padding: 9px 10px;
+      padding: 0;
     }
 
     @media (orientation: landscape) {
@@ -1631,17 +1683,42 @@
       .view-mobile .results-header-actions {
         gap: 6px;
         justify-content: flex-start;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        min-width: 0;
+        flex: 1 1 auto;
+        overflow: hidden;
       }
 
-      .view-mobile .results-header-actions .field-group.compact {
+      .view-mobile #notamResultsSection .section-head {
+        gap: 8px;
+        align-items: center;
+      }
+
+      .view-mobile #notamResultsSection .section-toggle {
         flex: 0 0 auto;
-        min-width: 0;
+      }
+
+      .view-mobile #notamResultsSection #viewAllOnMapBtn {
+        margin-left: 0;
       }
 
       .view-mobile .results-header-actions .btn {
         flex: 1 1 auto;
         min-width: 0;
+        font-size: 0.74rem;
+        padding: 4px 8px;
+      }
+
+      .view-mobile #resultsHeaderText .results-stat {
+        padding: 8px 7px 9px;
+      }
+
+      .view-mobile .results-info-bar .k {
+        font-size: 0.6rem;
+      }
+
+      .view-mobile .results-info-bar .v {
+        font-size: 0.88rem;
       }
 
       .view-mobile .status-row {
@@ -1692,6 +1769,22 @@
         gap: 6px;
         font-size: 0.86rem;
       }
+
+      #scopeSummaryLine {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      #scopeSummaryLine .scope-stat {
+        padding: 8px 8px 9px;
+      }
+
+      #scopeSummaryLine .k {
+        font-size: 0.62rem;
+      }
+
+      #scopeSummaryLine .v {
+        font-size: 0.92rem;
+      }
     }
 
     .view-mobile.mobile-detail-focus .selection-block,
@@ -1737,7 +1830,7 @@
         <button class="section-toggle" type="button" data-collapse-target="#firReferenceSection">Show</button>
       </div>
       <div class="section-body">
-        <p class="fir-reference-note">Click a FIR row to populate the FIR field. Selected FIR count uses current in-memory data when available; other FIR rows use cache.</p>
+        <p class="fir-reference-note">Double tap/click Region or FIR to fetch NOTAMs and airport list.<br>Airport choices appear after that FIR is loaded as Current.</p>
         <table class="fir-table" aria-label="Canadian FIR reference and NOTAM counts">
           <thead>
             <tr>
@@ -1770,7 +1863,7 @@
           <div class="field-group code-field">
             <label for="firInput" class="label-hint">FIR</label>
             <div class="list-input-wrap">
-              <input id="firInput" type="text" placeholder="FIR ICAO (CZYZ)" maxlength="4" list="firList">
+              <input id="firInput" type="text" placeholder="FIR" maxlength="4" list="firList">
             </div>
             <datalist id="firList">
               <option value="CZVR">CZVR -Vancouver</option>
@@ -1787,7 +1880,7 @@
             <label for="icaoInput" class="label-hint">ICAO</label>
             <div class="icao-picker">
               <div class="list-input-wrap">
-                <input id="icaoInput" type="text" placeholder="FIR ICAO (CYYZ)" maxlength="4" list="icaoList">
+                <input id="icaoInput" type="text" placeholder="ICAO code" maxlength="4" list="icaoList">
               </div>
             </div>
             <datalist id="icaoList"></datalist>
@@ -1795,7 +1888,7 @@
 
           <div class="field-group code-field notam-field">
             <label for="notamInput" class="label-hint">NOTAM No. <span class="notam-query-badge" aria-hidden="true">?</span></label>
-            <input id="notamInput" type="text" placeholder="Enter NOTAM number (e.g., J1968/26)">
+            <input id="notamInput" type="text" placeholder="G0000/YY">
           </div>
 
           <div class="search-actions">
@@ -1805,10 +1898,22 @@
           </div>
           <div class="search-row-end">
             <div class="selection-stats" id="scopeSummaryLine">
-              <span class="k">FIR:</span><span class="v" id="currentFirValue">-</span>
-              <span class="k">ICAO:</span><span class="v" id="currentIcaoValue">-</span>
-              <span class="k">NOTAMs:</span><span class="v" id="notamsInScopeInline">0</span>
-              <span class="k">Airports:</span><span class="v" id="airportsFoundInline">0</span>
+              <div class="scope-stat">
+                <span class="k">FIR</span>
+                <span class="v scope-code" id="currentFirValue">-</span>
+              </div>
+              <div class="scope-stat">
+                <span class="k">ICAO</span>
+                <span class="v scope-code" id="currentIcaoValue">-</span>
+              </div>
+              <div class="scope-stat">
+                <span class="k">NOTAMs</span>
+                <span class="v scope-count" id="notamsInScopeInline">0</span>
+              </div>
+              <div class="scope-stat">
+                <span class="k">Airports</span>
+                <span class="v scope-count" id="airportsFoundInline">0</span>
+              </div>
             </div>
           </div>
         </form>
@@ -1913,7 +2018,7 @@
 
     <section class="section-collapsible collapsed" id="scoreboardSection">
       <div class="section-head">
-        <span data-section-head-target="#scoreboardSection">Data source/time detail</span>
+        <span data-section-head-target="#scoreboardSection">Data source/timestamp record</span>
         <button class="section-toggle" type="button" data-collapse-target="#scoreboardSection">Show</button>
       </div>
       <div class="section-body">
@@ -1931,15 +2036,6 @@
     <section class="section-collapsible" id="notamResultsSection">
       <div class="section-head">
         <div class="results-header-actions">
-          <div class="field-group compact">
-            <label for="maxItems">Show #</label>
-            <select id="maxItems">
-              <option value="0" selected>All</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-            </select>
-          </div>
           <button class="btn" type="button" id="viewAllOnMapBtn" disabled>View all on map</button>
         </div>
         <button class="section-toggle" type="button" data-collapse-target="#notamResultsSection">Hide</button>
@@ -2005,7 +2101,6 @@
       clearEntriesBtn: document.getElementById("clearEntriesBtn"),
       airportsFoundInline: document.getElementById("airportsFoundInline"),
       notamsInScopeInline: document.getElementById("notamsInScopeInline"),
-      maxItems: document.getElementById("maxItems"),
       toggleQFilterBtn: document.getElementById("toggleQFilterBtn"),
       qSetAllExcludeBtn: document.getElementById("qSetAllExcludeBtn"),
       qSetAllIncludeBtn: document.getElementById("qSetAllIncludeBtn"),
@@ -2233,6 +2328,8 @@
     let hasAutoFocusedIcao = false;
     let lastFetchActionSite = "";
     let mobileDockRafId = 0;
+    let lastFirRowTap = { code: "", at: 0 };
+    let lastFirRowFetchAt = 0;
 
     const TRACKED_Q_CATEGORIES = ["A", "C", "F", "G", "I", "L", "M", "N", "O", "P", "R", "S", "W", "X"];
     let Q_SUBJECT_CODES = [
@@ -2671,6 +2768,22 @@
     }
 
     function setupFirReferenceTable() {
+      function triggerFetchFromFirRow(firCode) {
+        const normalized = normalizeCode(firCode, 4);
+        if (!normalized || !el.form) return;
+
+        const now = Date.now();
+        // Guard against duplicate trigger paths (touch double-tap + dblclick).
+        if (now - lastFirRowFetchAt < 450) return;
+        lastFirRowFetchAt = now;
+
+        el.firInput.value = normalized;
+        persistLastFir(normalized);
+        updateSelectionSummary();
+        applyFirButtonStates(normalized);
+        el.form.requestSubmit();
+      }
+
       document.querySelectorAll("[data-fir-row]").forEach(row => {
         row.addEventListener("click", () => {
           const firCode = normalizeCode(row.getAttribute("data-fir-row") || "", 4);
@@ -2680,6 +2793,34 @@
           updateSelectionSummary();
           applyFirButtonStates(firCode);
           if (el.firInput) el.firInput.focus();
+        });
+
+        row.addEventListener("dblclick", event => {
+          const targetCell = event.target instanceof Element ? event.target.closest("td") : null;
+          if (!(targetCell instanceof HTMLTableCellElement)) return;
+          if (targetCell.cellIndex > 1) return;
+
+          const firCode = normalizeCode(row.getAttribute("data-fir-row") || "", 4);
+          triggerFetchFromFirRow(firCode);
+        });
+
+        row.addEventListener("pointerup", event => {
+          if (!event.isPrimary) return;
+          if (event.pointerType !== "touch" && event.pointerType !== "pen") return;
+
+          const targetCell = event.target instanceof Element ? event.target.closest("td") : null;
+          if (!(targetCell instanceof HTMLTableCellElement)) return;
+          if (targetCell.cellIndex > 1) return;
+
+          const firCode = normalizeCode(row.getAttribute("data-fir-row") || "", 4);
+          if (!firCode) return;
+
+          const now = Date.now();
+          const isDoubleTap = lastFirRowTap.code === firCode && (now - lastFirRowTap.at) <= 420;
+          lastFirRowTap = { code: firCode, at: now };
+          if (!isDoubleTap) return;
+
+          triggerFetchFromFirRow(firCode);
         });
       });
     }
@@ -2693,6 +2834,11 @@
       if (toggleBtn) {
         toggleBtn.textContent = section.classList.contains("collapsed") ? "Show" : "Hide";
       }
+    }
+
+    function ensureNotamResultsSectionVisible(items) {
+      if (!Array.isArray(items) || items.length < 1) return;
+      setSectionCollapsed("#notamResultsSection", false);
     }
 
     function hasAnyFirCacheData() {
@@ -3096,6 +3242,44 @@
       return anyCoords.length > 0 ? anyCoords[0] : null;
     }
 
+    function getPilotLocation() {
+      const lat = localStorage.getItem('pilotLatitude');
+      const lon = localStorage.getItem('pilotLongitude');
+      if (!lat || !lon) return null;
+      const latNum = parseFloat(lat);
+      const lonNum = parseFloat(lon);
+      if (isNaN(latNum) || isNaN(lonNum)) return null;
+      return { lat: latNum, lon: lonNum };
+    }
+
+    function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Earth's radius in km
+      const toRad = Math.PI / 180;
+      const dLat = (lat2 - lat1) * toRad;
+      const dLon = (lon2 - lon1) * toRad;
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * toRad) * Math.cos(lat2 * toRad) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+
+    function calculateDistanceFromPilot(notamLat, notamLon) {
+      const pilot = getPilotLocation();
+      if (!pilot) return null;
+      const distKm = calculateHaversineDistance(pilot.lat, pilot.lon, notamLat, notamLon);
+      const distNm = distKm / 1.852; // Convert km to nautical miles
+      return { km: distKm, nm: distNm };
+    }
+
+    function formatDistanceDisplay(distance) {
+      if (!distance) return "";
+      const nm = distance.nm.toFixed(1);
+      const km = distance.km.toFixed(1);
+      return `${nm}nm (${km}km)`;
+    }
+
     function pruneOldMapPayloads() {
       const now = Date.now();
       const staleKeys = [];
@@ -3493,12 +3677,13 @@
     }
 
     function render(items, site, sourceLabel) {
-      const maxCountRaw = Number(el.maxItems.value);
-      const maxCount = Number.isFinite(maxCountRaw) ? maxCountRaw : 100;
+      const maxCount = 0;
       const qFilterEnabled = isQFilterEnabled();
       const qCategoryModes = getQCategoryModeMap();
       const icaoFilter = normalizeCode(el.icaoInput.value, 4);
       const notamFilterRaw = String(el.notamInput?.value || "").toUpperCase().replace(/\s+/g, "");
+
+      ensureNotamResultsSectionVisible(items);
 
       const icaoFiltered = icaoFilter
         ? items.filter(item => item.location.includes(icaoFilter) || item.raw.includes(icaoFilter))
@@ -3582,6 +3767,17 @@
             : (labelKey === "medium" ? "medium" : "low");
           const missingNote = entry.missingQCode ? "Unknown Q-code" : "";
           const qcodeClass = entry.missingQCode ? "missing" : "";
+          
+          // Calculate distance from pilot location if available
+          const notamCoord = extractPrimaryCoordinateFromNotam(item.raw || "");
+          let distanceHtml = "";
+          if (notamCoord) {
+            const distance = calculateDistanceFromPilot(notamCoord.lat, notamCoord.lon);
+            if (distance) {
+              distanceHtml = `<span class="notam-distance">Distance from Pilot: ${formatDistanceDisplay(distance)}</span>`;
+            }
+          }
+          
           return `
             <li class="notam-item">
               <div class="notam-line1">
@@ -3594,6 +3790,7 @@
                 <span class="priority-pill ${priorityTone}">${escapeHtml(priority.label)}</span>
                 ${missingNote ? `<span class="qcode-missing-note">${escapeHtml(missingNote)}</span>` : ""}
                 <span class="qcode-meaning">${escapeHtml(qLine)}</span>
+                ${distanceHtml}
               </div>
               <pre class="notam-preview">${buildNotamDescriptionHtml(item.raw)}</pre>
             </li>
@@ -3608,9 +3805,18 @@
       updateAirportUniverseInfo(inputFiltered);
       const icaoLabel = normalizeCode(el.icaoInput.value, 4) || "-";
       el.resultsHeaderText.innerHTML = `
-        <span class="k">FIR/ICAO:</span><span class="v">${site}/${icaoLabel}</span>
-        <span class="k">Filtered:</span><span class="v">${filtered.length}</span>
-        <span class="k">Showing:</span><span class="v">${displayItems.length}</span>
+        <div class="results-stat">
+          <span class="k">FIR / ICAO</span>
+          <span class="v">${site}/${icaoLabel}</span>
+        </div>
+        <div class="results-stat">
+          <span class="k">Filtered</span>
+          <span class="v results-count">${filtered.length}</span>
+        </div>
+        <div class="results-stat">
+          <span class="k">Showing</span>
+          <span class="v results-count">${displayItems.length}</span>
+        </div>
       `;
       if (el.unknownQCodesValue) {
         el.unknownQCodesValue.textContent = String(missingQCodes.size);
@@ -3858,12 +4064,6 @@
       });
     }
 
-
-    el.maxItems.addEventListener("change", () => {
-      const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
-      render(currentItems, site, el.sourceValue.textContent || "-");
-    });
-
     el.toggleQFilterBtn.addEventListener("click", () => {
       setQFilterToggleState(!isQFilterEnabled());
       const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
@@ -3979,6 +4179,12 @@
         const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
         render(currentItems, site, el.sourceValue.textContent || "-");
         setUseCacheButtonState(false);
+        
+        // Hide Input Selections and Show Q-Code Filters if NOTAMs were returned
+        if (currentItems.length > 0) {
+          setSectionCollapsed("#inputSelectionsSection", true);
+          setSectionCollapsed("#qFilterSection", false);
+        }
       });
     }
 

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Coordinate Converter (fixed)</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width:820px; margin:20px; }
+  label { display:block; margin-top:12px; font-weight:600; }
+  textarea,input { width:100%; box-sizing:border-box; padding:8px; font-size:14px; }
+  pre { background:#f6f6f6; padding:8px; overflow:auto; }
+  .row { display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; }
+  .col { flex:1; min-width:140px; }
+  button { padding:6px 10px; }
+  .out { display:flex; align-items:center; gap:8px; }
+</style>
+</head>
+<body>
+<h2>Coordinate Converter (DD, DMS, NOTAM) — Fixed</h2>
+<label>Input (freeform; examples: 44.234,-79.633 | 4414N07938W | 452405N0753911W | 44°14'05"N 79°38'11"W)</label>
+<textarea id="input" rows="3"></textarea>
+
+<div class="row">
+  <div class="col"><button id="convert">Convert</button></div>
+  <div class="col"><button id="clear">Clear</button></div>
+  <div class="col"><button id="demo">Load Demo</button></div>
+</div>
+
+<label>Detected / Parsed</label>
+<pre id="parsed">(no parse yet)</pre>
+
+<label>Outputs</label>
+<div class="out"><div id="map">Map (lat, lon):</div><button data-copy="map" class="copy">Copy</button></div>
+<div class="out"><div id="kml">KML (lon,lat):</div><button data-copy="kml" class="copy">Copy</button></div>
+<div class="out"><div id="dms">DMS (for Google):</div><button data-copy="dms" class="copy">Copy</button></div>
+<div class="out"><div id="notam">NOTAM compact DM:</div><button data-copy="notam" class="copy">Copy</button></div>
+
+<script>
+const CoordUtils = (() => {
+  function parseSingle(token, isLatGuess) {
+    if (!token) return null;
+    token = String(token).trim();
+    const cardMatch = token.match(/([NSWE])$/i);
+    const card = cardMatch ? cardMatch[1].toUpperCase() : null;
+    let core = card ? token.slice(0, -1) : token;
+
+    // preserve if core is digits-only (we'll interpret by length)
+    const raw = core;
+    // normalize separators
+    core = core.replace(/[°º∘]/g,'')
+               .replace(/[’‘′`]/g, "'")
+               .replace(/[“”″"]/g, '"') 
+               .replace(/[,;:]/g, ' ')
+               .trim();
+
+    const parts = core.split(/\s+/).filter(Boolean);
+
+    // Case: explicit decimal number
+    if (parts.length === 1 && /^[-+]?(\d+(\.\d*)?|\.\d+)$/.test(parts[0])) {
+      let v = Number(parts[0]);
+      if (card) { if (card==='S'||card==='W') v = -Math.abs(v); else v = Math.abs(v); }
+      return v;
+    }
+
+    // Case: digits-only compact without separators (e.g., 452405 or 0753911)
+    if (/^\d+$/.test(raw)) {
+      const s = raw;
+      // Latitude-like lengths: 6 (DDMMSS), 4 (DDMM)
+      if (s.length === 6) {
+        const deg = Number(s.slice(0,2));
+        const min = Number(s.slice(2,4)) || 0;
+        const sec = Number(s.slice(4,6)) || 0;
+        let dd = deg + (min/60) + (sec/3600);
+        if (card === 'S') dd = -dd;
+        return dd;
+      }
+      if (s.length === 4) {
+        const deg = Number(s.slice(0,2));
+        const min = Number(s.slice(2,4)) || 0;
+        let dd = deg + (min/60);
+        if (card === 'S') dd = -dd;
+        return dd;
+      }
+      // Longitude-like: 7 (DDDMMSS), 5 (DDDMM)
+      if (s.length === 7) {
+        const deg = Number(s.slice(0,3));
+        const min = Number(s.slice(3,5)) || 0;
+        const sec = Number(s.slice(5,7)) || 0;
+        let dd = deg + (min/60) + (sec/3600);
+        if (card === 'W') dd = -dd;
+        return dd;
+      }
+      if (s.length === 5) {
+        const deg = Number(s.slice(0,3));
+        const min = Number(s.slice(3,5)) || 0;
+        let dd = deg + (min/60);
+        if (card === 'W') dd = -dd;
+        return dd;
+      }
+      // Fallback: if ambiguous, use isLatGuess to choose lat vs lon parse
+      if (s.length === 6 || s.length === 4) { // prefer lat parse
+        const deg = Number(s.slice(0, s.length===4?2:2));
+        const min = Number(s.slice(s.length===4?2:2, s.length===4?4:4)) || 0;
+        const sec = s.length===6 ? Number(s.slice(4,6)) : 0;
+        let dd = deg + (min/60) + (sec/3600);
+        if (card === 'S') dd = -dd;
+        return dd;
+      }
+      if (s.length === 7 || s.length === 5) { // prefer lon parse
+        const deg = Number(s.slice(0, s.length===5?3:3));
+        const min = Number(s.slice(s.length===5?3:3, s.length===5?5:5)) || 0;
+        const sec = s.length===7 ? Number(s.slice(5,7)) : 0;
+        let dd = deg + (min/60) + (sec/3600);
+        if (card === 'W') dd = -dd;
+        return dd;
+      }
+    }
+
+    // Case: parts as D M S
+    if (parts.length >= 2) {
+      const deg = Number(parts[0]);
+      const min = Number(parts[1]) || 0;
+      const sec = Number(parts[2]) || 0;
+      let sign = 1;
+      if (card) { if (card==='S'||card==='W') sign = -1; }
+      else if (String(parts[0]).startsWith('-')) sign = -1;
+      const dd = Math.abs(deg) + (min/60) + (sec/3600);
+      return sign * dd;
+    }
+
+    return null;
+  }
+
+  function parseCoordinateString(input) {
+    if (!input) return null;
+    input = String(input).trim();
+    // Handle concatenated NOTAM pair: 452405N0753911W or with space between lat/lon parts
+    const concatPair = input.match(/^\s*(\d{4,6}[NS])\s*[, ]?\s*(\d{5,7}[EW])(?:\d{3})?\s*$/i);
+    if (concatPair) {
+      const lat = parseSingle(concatPair[1], true);
+      const lon = parseSingle(concatPair[2], false);
+      return lat!==null && lon!==null ? {lat, lon} : null;
+    }
+
+    // Split by comma first
+    const commaParts = input.split(',');
+    if (commaParts.length === 2) {
+      const a = parseSingle(commaParts[0].trim(), true);
+      const b = parseSingle(commaParts[1].trim(), false);
+      if (a!==null && b!==null) return {lat:a, lon:b};
+    }
+
+    // Split tokens and try to find NS and EW tokens
+    const tokens = input.split(/\s+/).filter(Boolean);
+    const nsIdx = tokens.findIndex(t => /[NS]$/i.test(t));
+    const ewIdx = tokens.findIndex(t => /[EW]$/i.test(t));
+    if (nsIdx !== -1 && ewIdx !== -1) {
+      const lat = parseSingle(tokens[nsIdx], true);
+      const lon = parseSingle(tokens[ewIdx], false);
+      if (lat!==null && lon!==null) return {lat, lon};
+    }
+
+    // If exactly two tokens, parse both and assign by range
+    if (tokens.length === 2) {
+      const a = parseSingle(tokens[0], true);
+      const b = parseSingle(tokens[1], false);
+      if (a!==null && b!==null) {
+        if (Math.abs(a) <= 90 && Math.abs(b) <= 180) return {lat:a, lon:b};
+        if (Math.abs(b) <= 90 && Math.abs(a) <= 180) return {lat:b, lon:a};
+      }
+    }
+
+    // Fallback: look for two decimals in text
+    const coordRegex = /(-?\d+(?:\.\d+)?)[ ,]+(-?\d+(?:\.\d+)?)/;
+    const m = input.match(coordRegex);
+    if (m) return { lat: Number(m[1]), lon: Number(m[2]) };
+
+    return null;
+  }
+
+  function ddToDmsParts(value) {
+    let absv = Math.abs(value);
+    const deg = Math.floor(absv);
+    absv = (absv - deg) * 60;
+    const min = Math.floor(absv);
+    let sec = Math.round((absv - min) * 60);
+    // normalize
+    let sDeg = deg, sMin = min;
+    if (sec === 60) { sec = 0; sMin += 1; }
+    if (sMin === 60) { sMin = 0; sDeg += 1; }
+    return {deg: sDeg, min: sMin, sec};
+  }
+
+  function toDmsString(lat, lon) {
+    const latP = ddToDmsParts(lat);
+    const lonP = ddToDmsParts(lon);
+    const latCard = lat < 0 ? 'S' : 'N';
+    const lonCard = lon < 0 ? 'W' : 'E';
+    const latStr = String(latP.deg).padStart(2,'0') + '°' + String(latP.min).padStart(2,'0') + '\'' + String(latP.sec).padStart(2,'0') + '"' + latCard;
+    const lonStr = String(lonP.deg).padStart(3,'0') + '°' + String(lonP.min).padStart(2,'0') + '\'' + String(lonP.sec).padStart(2,'0') + '"' + lonCard;
+    return `${latStr} ${lonStr}`;
+  }
+
+  function toMapString(lat,lon,dec=6){ return `${lat.toFixed(dec)}, ${lon.toFixed(dec)}`; }
+  function toKmlString(lat,lon,dec=6){ return `${lon.toFixed(dec)},${lat.toFixed(dec)}`; }
+  function toNotamCompact(lat,lon){
+    const latSign = lat<0?'S':'N', lonSign = lon<0?'W':'E';
+    const a = Math.abs(lat), b = Math.abs(lon);
+    let latDeg = Math.floor(a), latMin = Math.round((a - latDeg) * 60);
+    let lonDeg = Math.floor(b), lonMin = Math.round((b - lonDeg) * 60);
+    if (latMin===60){ latDeg +=1; latMin=0; }
+    if (lonMin===60){ lonDeg +=1; lonMin=0; }
+    const latStr = String(latDeg).padStart(2,'0') + String(latMin).padStart(2,'0') + latSign;
+    const lonStr = String(lonDeg).padStart(3,'0') + String(lonMin).padStart(2,'0') + lonSign;
+    return latStr + lonStr;
+  }
+
+  return { parseCoordinateString, toMapString, toKmlString, toNotamCompact, toDmsString };
+})();
+
+/* UI */
+const inp = document.getElementById('input');
+const outParsed = document.getElementById('parsed');
+const outMap = document.getElementById('map');
+const outKml = document.getElementById('kml');
+const outDms = document.getElementById('dms');
+const outNotam = document.getElementById('notam');
+const btn = document.getElementById('convert');
+const clearBtn = document.getElementById('clear');
+const demoBtn = document.getElementById('demo');
+
+function showResult(res){
+  if (!res) {
+    outParsed.textContent = 'Parse failed — input not recognized';
+    outMap.textContent = 'Map (lat, lon):';
+    outKml.textContent = 'KML (lon,lat):';
+    outDms.textContent = 'DMS (for Google):';
+    outNotam.textContent = 'NOTAM compact DM:';
+    return;
+  }
+  outParsed.textContent = JSON.stringify(res, null, 2);
+  outMap.textContent = 'Map (lat, lon): ' + CoordUtils.toMapString(res.lat, res.lon, 6);
+  outKml.textContent = 'KML (lon,lat): ' + CoordUtils.toKmlString(res.lat, res.lon, 6);
+  outDms.textContent = 'DMS (for Google): ' + CoordUtils.toDmsString(res.lat, res.lon);
+  outNotam.textContent = 'NOTAM compact DM: ' + CoordUtils.toNotamCompact(res.lat, res.lon);
+}
+
+btn.addEventListener('click', () => {
+  const v = inp.value.trim();
+  const r = CoordUtils.parseCoordinateString(v);
+  showResult(r);
+});
+
+clearBtn.addEventListener('click', () => {
+  inp.value = '';
+  outParsed.textContent = '(no parse yet)';
+  outMap.textContent = 'Map (lat, lon):';
+  outKml.textContent = 'KML (lon,lat):';
+  outDms.textContent = 'DMS (for Google):';
+  outNotam.textContent = 'NOTAM compact DM:';
+});
+
+demoBtn.addEventListener('click', () => {
+  inp.value = '452405N 0753911W';
+  btn.click();
+});
+
+document.addEventListener('click', async (e) => {
+  if (!e.target.matches('button.copy')) return;
+  const which = e.target.getAttribute('data-copy');
+  let text = '';
+  if (which === 'map') text = outMap.textContent.replace(/^Map \(lat, lon\):\s*/,'');
+  if (which === 'kml') text = outKml.textContent.replace(/^KML \(lon,lat\):\s*/,'');
+  if (which === 'dms') text = outDms.textContent.replace(/^DMS \(for Google\):\s*/,'');
+  if (which === 'notam') text = outNotam.textContent.replace(/^NOTAM compact DM:\s*/,'');
+  try {
+    await navigator.clipboard.writeText(text);
+    e.target.textContent = 'Copied';
+    setTimeout(()=> e.target.textContent = 'Copy', 1200);
+  } catch (err) { alert('Copy failed — select and copy manually.'); }
+});
+
+/* start demo */
+inp.value = '452405N 0753911W';
+btn.click();
+</script>
+</body>
+</html>
