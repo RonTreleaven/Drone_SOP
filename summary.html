@@ -6,18 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Flight Summary</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <script src="assets/js/site-nav.js" defer></script>
 </head>
 <body>
 
-  <nav class="top-nav">
-    <a href="#" class="back-link" onclick="goBack(event)"><span class="back-icon" aria-hidden="true">&#8592;</span>BACK</a> |
-      <a href="index.html">Home</a> |
-      <a href="Sections.html">SOP Sections</a> |
-      <a href="tools.html">Tools</a> |
-      <a href="flight-log.html">Flight Log</a> |
-    <a href="summary.html" class="active">Summary</a> |
-    <a href="emergencies.html">Emergency Procedures</a>
-  </nav>
+  <nav class="top-nav shared-site-nav" data-nav-variant="workflow" data-active="summary" data-show-back="true" data-back-fallback="tools.html"></nav>
   <script>
     function goBack(event) {
       event.preventDefault();

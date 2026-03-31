@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drone SOP – Toolbox</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <script src="assets/js/site-nav.js" defer></script>
   <style>
     :root {
       --bg-a: #f2f8fb;
@@ -283,15 +285,7 @@
 </head>
 <body>
   <div class="shell">
-    <nav class="top-nav">
-      <a href="#" class="back-link" onclick="goBack(event)"><span class="back-icon" aria-hidden="true">&#8592;</span>BACK</a> |
-      <a href="index.html">Home</a> |
-      <a href="tools.html" class="active">Tools</a> |
-      <a href="Sections.html">SOP Sections</a> |
-      <a href="flight-log.html">Flight Log</a> |
-      <a href="summary.html">Summary</a> |
-      <a href="emergencies.html">Emergency Procedures</a>
-    </nav>
+    <nav class="top-nav shared-site-nav" data-nav-variant="workflow" data-active="tools" data-show-back="true" data-back-fallback="index.html"></nav>
     <script>
       function goBack(event) {
         event.preventDefault();

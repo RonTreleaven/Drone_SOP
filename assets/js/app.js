@@ -343,22 +343,34 @@ function renderIndex(sections) {
   intro.innerHTML = '<strong>Choose a profile:</strong> Micro, Basic, or Advanced. Then accept defaults or add more sections.';
 
   const presetWrap = document.createElement('div');
+  presetWrap.className = 'profile-badge-wrap';
   presetWrap.style.display = 'flex';
-  presetWrap.style.gap = '0.5rem';
+  presetWrap.style.gap = '1.5rem';
   presetWrap.style.flexWrap = 'wrap';
   presetWrap.style.marginBottom = '0.8rem';
 
-  const microBtn = document.createElement('button');
-  microBtn.type = 'button';
-  microBtn.textContent = 'MICRO';
+  const profileButtons = new Map();
 
-  const basicBtn = document.createElement('button');
-  basicBtn.type = 'button';
-  basicBtn.textContent = 'BASIC';
+  function createProfileBadgeButton(profileKey, label, imagePath) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'profile-badge-btn';
+    button.dataset.profile = profileKey;
+    button.setAttribute('aria-label', `${label} profile`);
 
-  const advBtn = document.createElement('button');
-  advBtn.type = 'button';
-  advBtn.textContent = 'ADVANCED';
+    const img = document.createElement('img');
+    img.src = imagePath;
+    img.alt = `${label} profile`;
+    img.className = 'profile-badge-img';
+
+    button.appendChild(img);
+    profileButtons.set(profileKey, button);
+    return button;
+  }
+
+  const microBtn = createProfileBadgeButton('micro', 'Micro', 'assets/img/badge_micro.svg');
+  const basicBtn = createProfileBadgeButton('basic', 'Basic', 'assets/img/badge_basic.svg');
+  const advBtn = createProfileBadgeButton('advanced', 'Advanced', 'assets/img/badge_advanced.svg');
 
   presetWrap.append(microBtn, basicBtn, advBtn);
 
@@ -447,6 +459,14 @@ function renderIndex(sections) {
     updateBeginButtonState();
   }
 
+  function updateProfileButtonState(profileKey) {
+    profileButtons.forEach((button, key) => {
+      const isActive = !!profileKey && key === profileKey;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+  }
+
   function applyPreset(profileKey) {
     chosen.clear();
     activePresetIds = (presets[profileKey] || []).filter(id => checkboxById.has(id));
@@ -455,9 +475,10 @@ function renderIndex(sections) {
     });
 
     syncCheckboxesFromChosen();
+    updateProfileButtonState(profileKey);
     acceptDefaultsBtn.disabled = chosen.size === 0;
     addMoreBtn.disabled = chosen.size === 0;
-    promptLine.textContent = 'Defaults loaded. Accept defaults to start now, or add/remove sections before starting.';
+    promptLine.textContent = 'Defaults loaded. Accept and continue, or select any additional procedures for your mission.';
     updateStartActionHighlights();
   }
 
@@ -477,10 +498,11 @@ function renderIndex(sections) {
     }
 
     const selectedList = getChosenInSectionOrder();
-    const matchingPreset = Object.values(presets).find(profileIds =>
+    const matchingPresetEntry = Object.entries(presets).find(([, profileIds]) =>
       profileIds.length === selectedList.length && profileIds.every(id => selectedList.includes(id))
     );
-    activePresetIds = matchingPreset ? [...matchingPreset] : null;
+    activePresetIds = matchingPresetEntry ? [...matchingPresetEntry[1]] : null;
+    updateProfileButtonState(matchingPresetEntry ? matchingPresetEntry[0] : null);
     updateStartActionHighlights();
   }
 

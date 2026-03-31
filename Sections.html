@@ -9,18 +9,12 @@
   <title>Drone SOP - Checklists and Procedures</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <script src="assets/js/site-nav.js" defer></script>
 </head>
 <body>
 
-  <nav class="top-nav">
-    <a href="#" class="back-link" onclick="goBack(event)"><span class="back-icon" aria-hidden="true">&#8592;</span>BACK</a> |
-    <a href="index.html">Home</a> |
-    <a href="Sections.html" class="active">SOP Sections</a> |
-    <a href="tools.html">Tools</a> |
-    <a href="flight-log.html">Flight Log</a> |
-    <a href="summary.html">Summary</a> |
-    <a href="emergencies.html">Emergency Procedures</a>
-  </nav>
+  <nav class="top-nav shared-site-nav" data-nav-variant="workflow" data-active="sections" data-show-back="true" data-back-fallback="index.html"></nav>
 
   <script>
     function goBack(event) {
@@ -40,7 +34,6 @@
   </header>
 
   <main>
-    <p>Choose a profile (Micro, Basic, or Advanced), accept the default sections, or add additional sections before starting review.</p>
 	<div id="section-selector"></div>
 	<button id="begin-btn" disabled>Start Review</button>
   </main>	

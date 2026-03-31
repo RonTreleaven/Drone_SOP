@@ -143,6 +143,41 @@ button {
 }
 button:hover:not(:disabled) { background: #005fa3; }
 
+.profile-badge-wrap {
+  align-items: center;
+}
+
+.profile-badge-btn {
+  margin: 0;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  line-height: 0;
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+}
+
+.profile-badge-btn:hover,
+.profile-badge-btn:focus-visible {
+  transform: translateY(-2px);
+  border-color: #7db2db;
+  box-shadow: 0 5px 14px rgba(16, 32, 51, 0.22);
+  outline: none;
+}
+
+.profile-badge-btn.active {
+  border-color: #2f9e44;
+  box-shadow: 0 0 0 3px rgba(47, 158, 68, 0.3), 0 5px 14px rgba(16, 32, 51, 0.22);
+}
+
+.profile-badge-img {
+  width: 94px;
+  height: auto;
+  display: block;
+}
+
 /* ---- Print Styles ---- */
 @media print {
   /* hide nav + interactive buttons */
@@ -211,6 +246,10 @@ main {
   }
   .site-logo {
     margin-bottom: 0.5rem;
+  }
+
+  .profile-badge-img {
+    width: 82px;
   }
 }
 .checklist {
