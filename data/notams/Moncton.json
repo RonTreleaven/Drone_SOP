@@ -261,21 +261,21 @@
     ]
   },
   {
-    "raw": "(V0102/26 NOTAMR V1217/25\nQ) CZQM/QOLAS/IV/M/E/000/006/4534N06623W002\nA) CZQM B) 2601231328 C) 2604241700EST\nE) OBST LGT U/S TOWER 453426N 0662244W (APRX 16NM S GAGETOWN (HELI) \nAD (CYCX)) 180FT AGL, 558FT AMSL.)",
-    "startValidity": "2026-01-23T13:28:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.573889, -66.378889"
-    ]
-  },
-  {
     "raw": "(V0103/26 NOTAMR V1218/25\nQ) CZQM/QOLAS/IV/M/E/000/017/4529N06614W002\nA) CZQM B) 2601231328 C) 2604241700EST\nE) OBST LGT U/S TOWER 452841N 0661404W (APRX 12NM NNW SAINT JOHN \n(SAINT JOHN REGIONAL HOSPITAL) (HELI) AD (CSN6)) 180FT AGL, \n1640FT AMSL.)",
     "startValidity": "2026-01-23T13:28:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.478056, -66.234444"
+    ]
+  },
+  {
+    "raw": "(V0102/26 NOTAMR V1217/25\nQ) CZQM/QOLAS/IV/M/E/000/006/4534N06623W002\nA) CZQM B) 2601231328 C) 2604241700EST\nE) OBST LGT U/S TOWER 453426N 0662244W (APRX 16NM S GAGETOWN (HELI) \nAD (CYCX)) 180FT AGL, 558FT AMSL.)",
+    "startValidity": "2026-01-23T13:28:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.573889, -66.378889"
     ]
   },
   {
