@@ -12,71 +12,396 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
 <style>
-#map { height: 400px; margin-top: 15px; border-radius: 8px; } // Set map height and add some spacing
+:root {
+  --accent: #2F5496;
+  --accent-strong: #1f3e72;
+  --accent-soft: #eaf1fb;
+  --card-border: #d9e3f3;
+  --text-soft: #51627d;
+  --success: #1f7a3f;
+  --warning: #9a6a00;
+  --danger: #b3261e;
+}
 
-.tool-card {
-  background: #1e293b;
-  padding: 15px;
+body {
+  background: linear-gradient(180deg, #f4f6f8 0%, #eaf1fb 100%);
+}
+
+.mission-card {
+  max-width: 1100px;
+}
+
+.hero {
+  margin-bottom: 22px;
+}
+
+.hero h1 {
+  margin-bottom: 10px;
+}
+
+.hero p {
+  margin: 0;
+  color: var(--text-soft);
+  text-align: center;
+  font-size: 1rem;
+}
+
+.search-shell {
+  background: #f9fbff;
+  border: 1px solid var(--card-border);
   border-radius: 10px;
-  color: #e2e8f0;
+  padding: 16px;
 }
 
-input {
-  padding: 8px;
-  width: 70%;
+.search-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 12px;
+  align-items: end;
 }
 
-button {
-  padding: 8px 12px;
-  margin-left: 5px;
-  cursor: pointer;
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-group label {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+#address {
+  width: 100%;
+}
+
+.btn.lookup-btn {
+  min-width: 140px;
+}
+
+.search-note {
+  margin: 10px 0 0;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+
+.history-row {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+}
+
+#lookupHistory {
+  width: 100%;
+}
+
+.btn.secondary-btn {
+  background: #6b7a90;
+}
+
+.btn.secondary-btn:hover {
+  background: #4f5e73;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.panel h2 {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-size: 1rem;
 }
 
 .result {
   margin-top: 10px;
+}
+
+.result:first-child {
+  margin-top: 0;
+}
+
+.result-box {
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  padding: 12px;
+  word-break: break-word;
+}
+
+.result-box.dim {
+  color: var(--text-soft);
+}
+
+.result-box.ok {
+  border-left-color: var(--success);
+}
+
+.result-box.warn {
+  border-left-color: var(--warning);
+}
+
+.links-stack {
+  display: grid;
+  gap: 10px;
+}
+
+.action-link {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid var(--card-border);
+  background: #fff;
+  color: var(--accent-strong);
+}
+
+.action-link:hover {
+  background: #eef5ff;
+}
+
+.copy-row {
+  display: none;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.copy-card {
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 12px;
+  background: #f9fbff;
+}
+
+.copy-card label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.copy-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.copy-control input {
+  min-width: 0;
+  width: 100%;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.94rem;
+}
+
+.copy-btn {
+  min-width: 74px;
+  width: auto;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.map-panel {
+  margin-top: 18px;
+}
+
+#map {
+  height: 430px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.modal-shell {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 41, 59, 0.85);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-card {
+  background: #fff;
+  color: #222;
+  padding: 24px 32px;
+  border-radius: 12px;
+  min-width: 320px;
+  max-width: 90vw;
+  box-shadow: 0 4px 24px #0008;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--accent-strong);
+}
+
+.modal-copy-row {
+  margin-bottom: 10px;
+}
+
+.modal-help {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #444;
+}
+
+.modal-title {
+  margin-top: 0;
+}
+
+@media (max-width: 780px) {
+  .search-row,
+  .results-grid,
+  .copy-row {
+    grid-template-columns: 1fr;
+  }
+
+  .btn.lookup-btn {
+    width: 100%;
+  }
+
+  .modal-card {
+    min-width: auto;
+    width: min(92vw, 420px);
+    padding: 20px;
+  }
+
+  .copy-control {
+    grid-template-columns: minmax(0, 1fr) 86px;
+  }
+
+  .copy-control input {
+    font-size: 0.94rem;
+    padding: 10px;
+  }
+
+  .copy-btn {
+    min-width: 86px;
+    padding: 8px 10px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="tool-card">
-  <h2>📍 Mission Location Lookup</h2>
+<nav class="top-nav">
+  <a href="#" class="back-link" onclick="goBack(event)"><span class="back-icon" aria-hidden="true">&#8592;</span>BACK</a> |
+  <a href="index.html">Home</a> |
+  <a href="Sections.html">SOP Sections</a> |
+  <a href="tools.html" class="active">Tools</a> |
+  <a href="flight-log.html">Flight Log</a> |
+  <a href="summary.html">Summary</a> |
+  <a href="emergencies.html">Emergency Procedures</a>
+</nav>
 
-  <input type="text" id="address" placeholder="Enter address or postal code: ##,Street,City,Provice">
-  <button onclick="runLookup()">Lookup</button>
+<div class="card mission-card">
+  <div class="hero">
+    <h1>Mission Location Lookup</h1>
+    <p>Quickly identify a mission address, capture precise coordinates, and open the supporting survey and planning links you need.</p>
+  </div>
 
-  <div class="result" id="result"></div>
-  <div class="result" id="airspace"></div>
-
-  <div id="map"></div>
-
-  <div class="result" id="dsstLink"></div>
-  <!-- Modal for DSST copy -->
-  <div id="dsstModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(30,41,59,0.85); z-index:9999; align-items:center; justify-content:center;">
-    <div style="background:#fff; color:#222; padding:24px 32px; border-radius:12px; min-width:320px; max-width:90vw; box-shadow:0 4px 24px #0008; position:relative;">
-      <button onclick="closeDSSTModal()" style="position:absolute; top:8px; right:12px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
-      <h3 style="margin-top:0;">Copy Lat/Lon for DSST</h3>
-      <div style="margin-bottom:10px;">
-        <label style="margin-right:4px;">Lat:</label>
-        <input type="text" id="modalLat" readonly style="width:110px; margin-right:4px;">
-        <button onclick="copySingle('modalLat', this)">Copy</button>
+  <div class="section search-shell">
+    <div class="search-row">
+      <div class="field-group">
+        <label for="address">Address or postal code</label>
+        <input type="text" id="address" placeholder="Enter address or postal code: ##, Street, City, Province">
       </div>
-      <div>
-        <label style="margin-right:4px;">Lon:</label>
-        <input type="text" id="modalLon" readonly style="width:110px; margin-right:4px;">
-        <button onclick="copySingle('modalLon', this)">Copy</button>
+      <button class="btn lookup-btn" onclick="runLookup()">Lookup</button>
+      <button class="btn secondary-btn" onclick="clearInputs()">Clear Inputs</button>
+    </div>
+    <div class="history-row">
+      <div class="field-group">
+        <label for="lookupHistory">Recent lookups (last 10)</label>
+        <select id="lookupHistory" onchange="applyHistoryLookup()">
+          <option value="">Choose a recent lookup...</option>
+        </select>
       </div>
-      <div style="margin-top:12px; font-size:13px; color:#444;">Paste these values into the DSST tool's Latitude and Longitude fields.</div>
+    </div>
+    <p class="search-note">Use a specific civic address when possible to improve geocode precision for mission planning and site surveys.</p>
+  </div>
+
+  <div class="results-grid section">
+    <div class="panel">
+      <h2>Lookup Summary</h2>
+      <div class="result result-box dim" id="result">Search a location to populate formatted address and coordinates.</div>
+      <div class="result result-box dim" id="airspace">Airspace status will appear here after lookup.</div>
+    </div>
+
+    <div class="panel">
+      <h2>Mission Actions</h2>
+      <div class="result links-stack" id="dsstLink"></div>
+      <div class="result copy-row" id="latlonCopyRow">
+        <div class="copy-card">
+          <label for="latCopy">Latitude</label>
+          <div class="copy-control">
+            <input type="text" id="latCopy" readonly>
+            <button class="btn copy-btn" onclick="copySingle('latCopy', this)">Copy</button>
+          </div>
+        </div>
+        <div class="copy-card">
+          <label for="lonCopy">Longitude</label>
+          <div class="copy-control">
+            <input type="text" id="lonCopy" readonly>
+            <button class="btn copy-btn" onclick="copySingle('lonCopy', this)">Copy</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="result" id="latlonCopyRow" style="display:none; margin-top:10px;">
-    <label for="latCopy" style="margin-right:4px;">Lat:</label>
-    <input type="text" id="latCopy" readonly style="width:110px; margin-right:4px;">
-    <button onclick="copySingle('latCopy', this)">Copy</button>
-    <label for="lonCopy" style="margin-left:12px; margin-right:4px;">Lon:</label>
-    <input type="text" id="lonCopy" readonly style="width:110px; margin-right:4px;">
-    <button onclick="copySingle('lonCopy', this)">Copy</button>
+
+  <div class="panel map-panel section">
+    <h2>Map Preview</h2>
+    <div id="map"></div>
+  </div>
+</div>
+
+<!-- Modal for DSST copy -->
+<div id="dsstModal" class="modal-shell">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeDSSTModal()">&times;</button>
+    <h3 class="modal-title">Copy Lat/Lon for DSST</h3>
+    <div class="modal-copy-row">
+      <label>Lat:</label>
+      <div class="copy-control">
+        <input type="text" id="modalLat" readonly>
+        <button class="btn copy-btn" onclick="copySingle('modalLat', this)">Copy</button>
+      </div>
+    </div>
+    <div>
+      <label>Lon:</label>
+      <div class="copy-control">
+        <input type="text" id="modalLon" readonly>
+        <button class="btn copy-btn" onclick="copySingle('modalLon', this)">Copy</button>
+      </div>
+    </div>
+    <div class="modal-help">Paste these values into the DSST tool's Latitude and Longitude fields.</div>
   </div>
 </div>
 
@@ -93,8 +418,15 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+  renderLookupHistory();
 });
-const API_KEY = "AIzaSyBFKbcvjFqzHOfvOxRuGn7jP2JJt4CTmhg";
+const GEOCODE_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.GEOCODE_ENDPOINT)
+  ? window.DRONE_SOP_CONFIG.GEOCODE_ENDPOINT
+  : "https://navcan-proxy.rontreleaven.workers.dev/geocode";  //hidden behind proxy to hide API key
+const LOOKUP_HISTORY_KEY = "missionLookupHistory";
+const LOOKUP_HISTORY_COOKIE = "missionLookupHistory";
+const LOOKUP_HISTORY_TTL_DAYS = 365;
+const MAX_LOOKUP_HISTORY = 10;
 
 let map = L.map('map').setView([43.7, -79.4], 10); // Toronto default
 let marker;
@@ -107,17 +439,25 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // MAIN LOOKUP FUNCTION
 // -------------------------
 async function runLookup() {
-  const address = document.getElementById("address").value;
+  const address = document.getElementById("address").value.trim();
 
   if (!address) return;
 
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&components=country:CA&key=${API_KEY}`;
+  const url = `${GEOCODE_ENDPOINT}?address=${encodeURIComponent(address)}&components=${encodeURIComponent("country:CA")}`;
 
-  const res = await fetch(url);
-  const data = await res.json();
+  let data;
+  try {
+    const res = await fetch(url);
+    data = await res.json();
+  } catch (err) {
+    document.getElementById("result").innerText = "Geocode lookup failed.";
+    document.getElementById("result").className = "result result-box warn";
+    return;
+  }
 
   if (data.status !== "OK") {
     document.getElementById("result").innerText = "Location not found.";
+    document.getElementById("result").className = "result result-box warn";
     return;
   }
 
@@ -129,6 +469,7 @@ async function runLookup() {
   updateResults(result, lat, lng);
   buildDSSTLink(lat, lng);
   showLatLonCopy(lat, lng);
+  saveLookupHistory(address);
 
   checkAirspace(lat, lng); // future-ready
 }
@@ -149,17 +490,17 @@ function updateMap(lat, lng) {
 function updateResults(result, lat, lng) {
   document.getElementById("result").innerHTML = `
     <strong>${result.formatted_address}</strong><br>
-    Lat: ${lat.toFixed(4)} | Lon: ${lng.toFixed(4)}<br>
-    <span style="color:#a0eaff;">Full Lat/Lon:</span> ${lat} , ${lng}
+    DD (6) Lat: ${lat.toFixed(6)} | Lon: ${lng.toFixed(6)}
   `;
+  document.getElementById("result").className = "result result-box";
 }
 
 // Show copyable Lat/Lon
 function showLatLonCopy(lat, lng) {
   const copyRow = document.getElementById("latlonCopyRow");
-  document.getElementById("latCopy").value = lat.toFixed(4);
-  document.getElementById("lonCopy").value = lng.toFixed(4);
-  copyRow.style.display = "block";
+  document.getElementById("latCopy").value = lat.toFixed(6);
+  document.getElementById("lonCopy").value = lng.toFixed(6);
+  copyRow.style.display = "grid";
 }
 
 // Copy Lat/Lon to clipboard
@@ -181,9 +522,7 @@ function copySingle(inputId, btn) {
 function buildDSSTLink(lat, lng) {
   const url = `https://nrc.canada.ca/en/drone-tool-2/map.html`;
   document.getElementById("dsstLink").innerHTML = `
-    <span style="font-weight:bold;">
-      🔗 <a href="#" onclick="openDSSTModal(${lat.toFixed(4)}, ${lng.toFixed(4)}); window.open('${url}', '_blank'); return false;" style="color:#fff; text-decoration:underline;">Open in NAV CANADA DSST</a>
-    </span>
+    <a class="action-link" href="${url}" target="_blank" rel="noopener noreferrer" onclick="openDSSTModal(${lat.toFixed(6)}, ${lng.toFixed(6)})">Open in NAV CANADA DSST</a>
   `;
   buildNotamsMapLink(lat, lng);
 }
@@ -198,10 +537,10 @@ function buildNotamsMapLink(lat, lng) {
     notamsLink.id = 'notamsMapLink';
     notamsLink.className = 'result';
     // Insert after latlonCopyRow
-    const latlonRow = document.getElementById('latlonCopyRow');
-    latlonRow.parentNode.insertBefore(notamsLink, latlonRow.nextSibling);
+    const actionPanel = document.getElementById('dsstLink').parentNode;
+    actionPanel.appendChild(notamsLink);
   }
-  notamsLink.innerHTML = `🗺️ <a href="${notamsUrl}" target="_blank" style="color:#38bdf8; font-weight:bold; text-decoration:underline;">Open in NotamsMap with this location</a>`;
+  notamsLink.innerHTML = `<a class="action-link" href="${notamsUrl}" target="_blank">Open in NotamsMap with this location</a>`;
 
   // Add Google Maps hotlink with full precision
   let gmapsLink = document.getElementById('gmapsHotlink');
@@ -209,16 +548,16 @@ function buildNotamsMapLink(lat, lng) {
     gmapsLink = document.createElement('div');
     gmapsLink.id = 'gmapsHotlink';
     gmapsLink.className = 'result';
-    notamsLink.parentNode.insertBefore(gmapsLink, notamsLink.nextSibling);
+    notamsLink.parentNode.appendChild(gmapsLink);
   }
   const gmapsUrl = `https://www.google.com/maps?q=${lat},${lng}`;
-  gmapsLink.innerHTML = `🌐 <a href="${gmapsUrl}" target="_blank" style="color:#34d399; font-weight:bold; text-decoration:underline;">Open in Google Maps (full precision)</a>`;
+  gmapsLink.innerHTML = `<a class="action-link" href="${gmapsUrl}" target="_blank" rel="noopener noreferrer">Open in Google Maps (full precision)</a>`;
 }
 
 // Show DSST modal with lat/lon
 function openDSSTModal(lat, lng) {
-  document.getElementById('modalLat').value = lat.toFixed(4);
-  document.getElementById('modalLon').value = lng.toFixed(4);
+  document.getElementById('modalLat').value = Number(lat).toFixed(6);
+  document.getElementById('modalLon').value = Number(lng).toFixed(6);
   document.getElementById('dsstModal').style.display = 'flex';
 }
 
@@ -230,36 +569,110 @@ function closeDSSTModal() {
 // AIRSPACE CHECK (GeoJSON-ready)
 // -------------------------
 let airspaceData = null;
+let airspaceLoaded = false;
+let airspaceLoadError = "";
 
-// Load your GeoJSON here
+// Load your local GeoJSON dataset (placeholder file is included until real data is provided).
 fetch('./data/canadian_airspace.geojson')
-  .then(res => res.json())
-  .then(data => airspaceData = data);
+  .then(res => {
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+    return res.json();
+  })
+  .then(data => {
+    const isFeatureCollection = data && data.type === "FeatureCollection" && Array.isArray(data.features);
+    if (!isFeatureCollection) {
+      throw new Error("Invalid GeoJSON structure");
+    }
+    airspaceData = data;
+    airspaceLoaded = true;
+  })
+  .catch(err => {
+    airspaceLoadError = err && err.message ? err.message : "Unknown airspace data error";
+    airspaceLoaded = true;
+  });
 
 // Simple point-in-polygon
 function checkAirspace(lat, lng) {
-  if (!airspaceData) {
+  if (!airspaceLoaded) {
     document.getElementById("airspace").innerText = "Airspace data loading...";
+    document.getElementById("airspace").className = "result result-box dim";
+    return;
+  }
+
+  if (!airspaceData || airspaceLoadError) {
+    document.getElementById("airspace").innerHTML = `Airspace dataset unavailable (${airspaceLoadError || "not loaded"}). Verify in NAV CANADA DSST.`;
+    document.getElementById("airspace").className = "result result-box warn";
+    return;
+  }
+
+  if (!airspaceData.features || airspaceData.features.length === 0) {
+    document.getElementById("airspace").innerHTML = "Airspace dataset is installed but empty. Add polygon features to data/canadian_airspace.geojson.";
+    document.getElementById("airspace").className = "result result-box warn";
     return;
   }
 
   let inside = false;
   let zoneName = "";
+  let zoneClass = "";
 
   airspaceData.features.forEach(feature => {
-    if (pointInPolygon([lng, lat], feature.geometry.coordinates[0])) {
+    if (isPointInsideFeature([lng, lat], feature)) {
       inside = true;
       zoneName = feature.properties.name || "Controlled Airspace";
+      zoneClass = feature.properties.class || feature.properties.airspace_class || "";
     }
   });
 
+  const zoneLabel = zoneClass ? `${zoneName} (Class ${zoneClass})` : zoneName;
   document.getElementById("airspace").innerHTML = inside
-    ? `🛑 Inside: <strong>${zoneName}</strong>`
+    ? `🛑 Inside: <strong>${zoneLabel}</strong>`
     : `✅ No controlled airspace detected`;
+  document.getElementById("airspace").className = inside ? "result result-box warn" : "result result-box ok";
+}
+
+function isPointInsideFeature(point, feature) {
+  if (!feature || !feature.geometry) return false;
+  const geometry = feature.geometry;
+
+  if (geometry.type === "Polygon") {
+    return isPointInsidePolygonGeometry(point, geometry.coordinates);
+  }
+
+  if (geometry.type === "MultiPolygon") {
+    for (let i = 0; i < geometry.coordinates.length; i++) {
+      if (isPointInsidePolygonGeometry(point, geometry.coordinates[i])) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+function isPointInsidePolygonGeometry(point, polygonCoords) {
+  if (!Array.isArray(polygonCoords) || polygonCoords.length === 0) {
+    return false;
+  }
+
+  // First ring is exterior; subsequent rings are holes.
+  const exteriorRing = polygonCoords[0];
+  if (!pointInRing(point, exteriorRing)) {
+    return false;
+  }
+
+  for (let i = 1; i < polygonCoords.length; i++) {
+    if (pointInRing(point, polygonCoords[i])) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 // Ray-casting algorithm
-function pointInPolygon(point, vs) {
+function pointInRing(point, vs) {
   let x = point[0], y = point[1];
   let inside = false;
 
@@ -274,6 +687,136 @@ function pointInPolygon(point, vs) {
   }
 
   return inside;
+}
+
+function goBack(event) {
+  event.preventDefault();
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = "tools.html";
+  }
+}
+
+function getLookupHistory() {
+  let fromLocal = [];
+  try {
+    const raw = localStorage.getItem(LOOKUP_HISTORY_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      fromLocal = Array.isArray(parsed) ? parsed : [];
+    }
+  } catch {
+    fromLocal = [];
+  }
+
+  if (fromLocal.length > 0) {
+    return fromLocal;
+  }
+
+  const rawCookie = getCookie(LOOKUP_HISTORY_COOKIE);
+  if (!rawCookie) {
+    return [];
+  }
+
+  try {
+    const parsed = JSON.parse(rawCookie);
+    const fromCookie = Array.isArray(parsed) ? parsed : [];
+    if (fromCookie.length > 0) {
+      try {
+        localStorage.setItem(LOOKUP_HISTORY_KEY, JSON.stringify(fromCookie));
+      } catch {
+        // Ignore localStorage write failures.
+      }
+    }
+    return fromCookie;
+  } catch {
+    return [];
+  }
+}
+
+function saveLookupHistory(address) {
+  const cleanAddress = address.trim();
+  if (!cleanAddress) return;
+
+  const lowered = cleanAddress.toLowerCase();
+  const history = getLookupHistory().filter(item => String(item).toLowerCase() !== lowered);
+  history.unshift(cleanAddress);
+  const capped = history.slice(0, MAX_LOOKUP_HISTORY);
+
+  const serialized = JSON.stringify(capped);
+  try {
+    localStorage.setItem(LOOKUP_HISTORY_KEY, serialized);
+  } catch {
+    // Ignore localStorage write failures.
+  }
+  setCookie(LOOKUP_HISTORY_COOKIE, serialized, LOOKUP_HISTORY_TTL_DAYS);
+  renderLookupHistory();
+}
+
+function renderLookupHistory() {
+  const select = document.getElementById("lookupHistory");
+  if (!select) return;
+
+  const history = getLookupHistory();
+  select.innerHTML = '<option value="">Choose a recent lookup...</option>';
+
+  history.forEach(item => {
+    const opt = document.createElement("option");
+    opt.value = item;
+    opt.textContent = item;
+    select.appendChild(opt);
+  });
+}
+
+function applyHistoryLookup() {
+  const select = document.getElementById("lookupHistory");
+  const chosen = select ? select.value : "";
+  if (!chosen) return;
+  document.getElementById("address").value = chosen;
+  runLookup();
+}
+
+function clearInputs() {
+  document.getElementById("address").value = "";
+  document.getElementById("result").innerText = "Search a location to populate formatted address and coordinates.";
+  document.getElementById("result").className = "result result-box dim";
+  document.getElementById("airspace").innerText = "Airspace status will appear here after lookup.";
+  document.getElementById("airspace").className = "result result-box dim";
+  document.getElementById("latlonCopyRow").style.display = "none";
+  document.getElementById("dsstLink").innerHTML = "";
+
+  const notamsLink = document.getElementById("notamsMapLink");
+  if (notamsLink) notamsLink.remove();
+  const gmapsLink = document.getElementById("gmapsHotlink");
+  if (gmapsLink) gmapsLink.remove();
+
+  if (marker) {
+    map.removeLayer(marker);
+    marker = null;
+  }
+  map.setView([43.7, -79.4], 10);
+
+  const historySelect = document.getElementById("lookupHistory");
+  if (historySelect) historySelect.value = "";
+  document.getElementById("address").focus();
+}
+
+function setCookie(name, value, days) {
+  const maxAge = days * 24 * 60 * 60;
+  document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${maxAge}; SameSite=Lax`;
+}
+
+function getCookie(name) {
+  const target = `${name}=`;
+  const parts = document.cookie.split(";");
+  for (let i = 0; i < parts.length; i++) {
+    const c = parts[i].trim();
+    if (c.indexOf(target) === 0) {
+      return decodeURIComponent(c.substring(target.length));
+    }
+  }
+  return "";
 }
 </script>
 

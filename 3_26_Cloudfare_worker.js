@@ -37,6 +37,8 @@ function withCors(upstreamHeaders) {
 
 export default {
   async fetch(request, env, ctx) {
+    const reqUrl = new URL(request.url);
+
     if (request.method === "OPTIONS") {
       return new Response(null, {
         status: 204,
@@ -51,7 +53,66 @@ export default {
       });
     }
 
-    const reqUrl = new URL(request.url);
+    if (reqUrl.pathname === "/geocode") {
+      const address = (reqUrl.searchParams.get("address") || "").trim();
+      const components = (reqUrl.searchParams.get("components") || "").trim();
+
+      if (!address) {
+        return new Response(JSON.stringify({ status: "INVALID_REQUEST", error_message: "Missing address" }), {
+          status: 400,
+          headers: {
+            ...corsHeaders(),
+            "Content-Type": "application/json"
+          }
+        });
+      }
+
+      if (!env.GOOGLE_GEOCODING_API_KEY) {
+        return new Response(JSON.stringify({ status: "ERROR", error_message: "Worker secret GOOGLE_GEOCODING_API_KEY is not configured" }), {
+          status: 500,
+          headers: {
+            ...corsHeaders(),
+            "Content-Type": "application/json"
+          }
+        });
+      }
+
+      const googleUrl = new URL("https://maps.googleapis.com/maps/api/geocode/json");
+      googleUrl.searchParams.set("address", address);
+      if (components) {
+        googleUrl.searchParams.set("components", components);
+      }
+      googleUrl.searchParams.set("key", env.GOOGLE_GEOCODING_API_KEY);
+
+      try {
+        const upstream = await fetch(googleUrl.toString(), {
+          method: "GET",
+          redirect: "follow",
+          headers: {
+            "Accept": "application/json",
+            "User-Agent": "Drone-SOP-Geocode-Worker"
+          }
+        });
+
+        return new Response(upstream.body, {
+          status: upstream.status,
+          statusText: upstream.statusText,
+          headers: withCors(upstream.headers)
+        });
+      } catch (err) {
+        return new Response(
+          JSON.stringify({ status: "ERROR", error_message: `Geocode upstream fetch failed: ${err?.message || "unknown error"}` }),
+          {
+            status: 502,
+            headers: {
+              ...corsHeaders(),
+              "Content-Type": "application/json"
+            }
+          }
+        );
+      }
+    }
+
     const target = reqUrl.searchParams.get("url");
     if (!target) {
       return new Response("Missing url= parameter", {

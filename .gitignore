@@ -18,3 +18,11 @@ test file archived/
 
 # Markdown Folder exlusion
 Markdown Docs
+
+# Local secrets and Cloudflare local env
+api_key/
+api_key/Google Cloud API.txt
+.dev.vars
+.env
+.env.*
+.wrangler/
