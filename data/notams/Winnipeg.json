@@ -90,21 +90,21 @@
     ]
   },
   {
-    "raw": "(U0543/26 NOTAMR U0220/26\nQ) CZWG/QOLAS/IV/M/E/000/019/4941N10037W002\nA) CZWG B) 2603230823 C) 2605072359\nE) OBST LGT U/S TOWER 494044N 1003712W (APRX 15NM ESE VIRDEN \n(GABRIELLE FARM) AD (CKR7)) 429FT AGL, 1853FT AMSL.)",
-    "startValidity": "2026-03-23T08:23:00",
-    "endValidity": "2026-05-07T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.678889, -100.620000"
-    ]
-  },
-  {
     "raw": "(U0544/26 NOTAMR U0219/26\nQ) CZWG/QOLAS/IV/M/E/000/030/5023N10556W002\nA) CZWG B) 2603230823 C) 2605072359\nE) OBST LGT U/S TOWER 502324N 1055537W (APRX 15NM W MOOSE JAW/AIR \nVICE MARSHAL C.M. MCEWEN AD (CYMJ)) 570FT AGL, 2946FT AMSL.)",
     "startValidity": "2026-03-23T08:23:00",
     "endValidity": "2026-05-07T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.390000, -105.926944"
+    ]
+  },
+  {
+    "raw": "(U0543/26 NOTAMR U0220/26\nQ) CZWG/QOLAS/IV/M/E/000/019/4941N10037W002\nA) CZWG B) 2603230823 C) 2605072359\nE) OBST LGT U/S TOWER 494044N 1003712W (APRX 15NM ESE VIRDEN \n(GABRIELLE FARM) AD (CKR7)) 429FT AGL, 1853FT AMSL.)",
+    "startValidity": "2026-03-23T08:23:00",
+    "endValidity": "2026-05-07T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.678889, -100.620000"
     ]
   },
   {
@@ -141,15 +141,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.680000, -105.446944"
-    ]
-  },
-  {
-    "raw": "(U0509/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/028/5313N10817W002\nA) CZWG B) 2603191207 C) 2606111800\nE) OBST LGT U/S TOWER 531307N 1081658W (APRX 10NM SSE GLASLYN AD \n(CJE5)) 351FT AGL, 2713FT AMSL.)",
-    "startValidity": "2026-03-19T12:07:00",
-    "endValidity": "2026-06-11T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.218611, -108.282778"
     ]
   },
   {
@@ -279,21 +270,21 @@
     ]
   },
   {
-    "raw": "(U0410/26 NOTAMR U0407/26\nQ) CZWG/QOLAS/IV/M/E/000/014/4806N08929W002\nA) CZWG B) 2603061607 C) 2606051700EST\nE) OBST LGT U/S TOWER 480530N 0892924W (APRX 12NM S THUNDER \nBAY/MARTIN'S LANDING AD (CML5)) 328FT AGL, 1354FT AMSL.)",
-    "startValidity": "2026-03-06T16:07:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "48.091667, -89.490000"
-    ]
-  },
-  {
     "raw": "(U0409/26 NOTAMR U0405/26\nQ) CZWG/QOLAS/IV/M/E/000/020/4839N09043W002\nA) CZWG B) 2603061607 C) 2606051700EST\nE) OBST LGT U/S TOWER 483913N 0904251W (APRX 12NM W KASHABOWIE/UPPER \nSHEBANDOWAN LAKE (WATER) AD (CKF5)) 410FT AGL, 1971FT AMSL.)",
     "startValidity": "2026-03-06T16:07:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.653611, -90.714167"
+    ]
+  },
+  {
+    "raw": "(U0410/26 NOTAMR U0407/26\nQ) CZWG/QOLAS/IV/M/E/000/014/4806N08929W002\nA) CZWG B) 2603061607 C) 2606051700EST\nE) OBST LGT U/S TOWER 480530N 0892924W (APRX 12NM S THUNDER \nBAY/MARTIN'S LANDING AD (CML5)) 328FT AGL, 1354FT AMSL.)",
+    "startValidity": "2026-03-06T16:07:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "48.091667, -89.490000"
     ]
   },
   {
