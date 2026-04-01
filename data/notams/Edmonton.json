@@ -594,15 +594,6 @@
     ]
   },
   {
-    "raw": "(U0300/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/047/4936N10951W002\nA) CZWG B) 2602191753 C) 2605201800\nE) OBST LGT U/S TOWER 493531N 1095124W (APRX 24NM SSW MAPLE CREEK AD \n(CJQ4)) 450FT AGL, 4614FT AMSL.)",
-    "startValidity": "2026-02-19T17:53:00",
-    "endValidity": "2026-05-20T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.591944, -109.856667"
-    ]
-  },
-  {
     "raw": "(R0170/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/026/5351N11322W002\nA) CZEG B) 2602191001 C) 2604192359\nE) OBST LGT U/S TOWER 535054N 1132215W (APRX 7NM ENE \nEDMONTON/MORINVILLE (MIKE'S FIELD) AD (CMN6)) 350FT AGL, 2600FT \nAMSL.)",
     "startValidity": "2026-02-19T10:01:00",
     "endValidity": "2026-04-19T23:59:00",
@@ -708,15 +699,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "54.421111, -117.759722"
-    ]
-  },
-  {
-    "raw": "(U0217/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/031/5020N10947W002\nA) CZWG B) 2602072106 C) 2605051800\nE) OBST LGT U/S TOWER 502025N 1094717W (APRX 29NM NNW MAPLE CREEK AD \n(CJQ4)) 358FT AGL, 3058FT AMSL.)",
-    "startValidity": "2026-02-07T21:06:00",
-    "endValidity": "2026-05-05T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.340278, -109.788056"
     ]
   },
   {

@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(V0401/26 NOTAMR V0003/26\nQ) CZQX/QOLAS/IV/M/E/000/016/4849N05643W002\nA) CZQX B) 2604011411 C) 2607012359EST\nE) OBST LGT U/S TOWER 484912N 0564315W (APRX 35NM SSE DEER LAKE AD \n(CYDF)) 413FT AGL, 1528FT AMSL.)",
+    "startValidity": "2026-04-01T14:11:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "48.820000, -56.720833"
+    ]
+  },
+  {
     "raw": "(V0195/26 NOTAMR V1391/25\nQ) CZQX/QOLAS/IV/M/E/000/011/4730N05343W002\nA) CZQX B) 2602231303 C) 2605181400EST\nE) OBST LGT U/S TOWER 473028N 0534329W (APRX 22NM WSW HARBOUR GRACE \nAD (CHG2)) 300FT AGL, 1100FT AMSL.)",
     "startValidity": "2026-02-23T13:03:00",
     "endValidity": null,
@@ -42,15 +51,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.597500, -54.699444"
-    ]
-  },
-  {
-    "raw": "(V0003/26 NOTAMR V1140/25\nQ) CZQX/QOLAS/IV/M/E/000/016/4849N05643W002\nA) CZQX B) 2601021735 C) 2604022359EST\nE) OBST LGT U/S TOWER 484912N 0564315W (APRX 35NM SSE DEER LAKE AD \n(CYDF)) 413FT AGL, 1528FT AMSL.)",
-    "startValidity": "2026-01-02T17:35:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "48.820000, -56.720833"
     ]
   }
 ]
