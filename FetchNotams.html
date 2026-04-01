@@ -385,11 +385,26 @@
       display: inline-block;
     }
 
+    .fetch-notams-page .shared-site-nav[data-nav-variant="utility"] .nav-primary {
+      min-width: 0;
+    }
+
+    .fetch-notams-page .shared-site-nav[data-nav-variant="utility"] .nav-extras {
+      width: auto;
+      margin-left: auto;
+    }
+
     .status-row {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
       margin: 10px 0 14px;
+    }
+
+    #scoreboardSection .status-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      margin: 8px 0 12px;
     }
 
     .status-pill {
@@ -399,6 +414,14 @@
       padding: 8px 10px;
       min-height: 52px;
       text-align: center;
+    }
+
+    #scoreboardSection .status-pill {
+      border: 1px solid #314963;
+      background: linear-gradient(180deg, #172637 0%, #1b3045 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 10px rgba(8,20,34,0.12);
+      min-height: 56px;
+      padding: 8px 8px 9px;
     }
 
     .status-pill .k {
@@ -411,6 +434,14 @@
       font-weight: 800;
     }
 
+    #scoreboardSection .status-pill .k {
+      color: #97aec8;
+      font-size: 0.66rem;
+      margin-bottom: 4px;
+      letter-spacing: 0.08em;
+      line-height: 1;
+    }
+
     .status-pill .v {
       color: #00a85a;
       font-weight: 800;
@@ -418,24 +449,17 @@
       font-size: 1.1rem;
     }
 
+    #scoreboardSection .status-pill .v {
+      color: #ffd24a;
+      font-size: 0.96rem;
+      line-height: 1.08;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.18);
+      font-variant-numeric: tabular-nums;
+    }
+
     #scoreboardSection .section-head {
       font-size: 0.92rem;
       padding: 8px 12px;
-    }
-
-    #scoreboardSection .status-pill {
-      min-height: 48px;
-      padding: 7px 9px;
-    }
-
-    #scoreboardSection .status-pill .k {
-      font-size: 0.72rem;
-      margin-bottom: 3px;
-      letter-spacing: 0.015em;
-    }
-
-    #scoreboardSection .status-pill .v {
-      font-size: 0.98rem;
     }
 
     .status-ok { color: var(--ok); }
@@ -472,7 +496,7 @@
     }
 
     .results-info-bar .v {
-      color: #eaf3ff;
+      color: #ffd24a;
       font-weight: 800;
       margin-right: 0;
       font-size: 0.94rem;
@@ -481,7 +505,7 @@
     }
 
     .results-info-bar .v.results-count {
-      color: #cfe6ff;
+      color: #ffd24a;
     }
 
     #notamResultsSection .section-body {
@@ -793,7 +817,7 @@
     .q-help-btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .q-help-btn .legend-text {
@@ -831,17 +855,17 @@
     }
 
     #qFilterSection .q-help-btn {
-      padding: 4px 8px;
+      padding: 3px 7px;
     }
 
     #qFilterSection .q-help-icon {
-      width: 30px;
-      height: 30px;
-      font-size: 1rem;
+      width: 22px;
+      height: 22px;
+      font-size: 0.82rem;
     }
 
     #qFilterSection .q-help-btn .legend-text {
-      font-size: 0.84rem;
+      font-size: 0.8rem;
     }
 
     .q-filter-grid {
@@ -1600,42 +1624,61 @@
       width: auto;
     }
 
-    .view-mobile .status-row {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+      .view-mobile .status-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
 
-    .view-mobile .search-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr; /* fixed 2-column layout avoids collapse on narrow mobile widths */
-      gap: 8px;
-      width: 100%;
-    }
+      .view-mobile #scoreboardSection .status-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 5px;
+      }
 
-    .view-mobile .search-actions #refreshFromCacheBtn {
-      grid-column: 1 / -1;
-      margin-bottom: 8px;
-    }
+      .view-mobile #scoreboardSection .status-pill {
+        min-height: 52px;
+        padding: 7px 6px 8px;
+      }
 
-    .view-mobile .search-actions .btn {
-      width: 100%;
-      min-width: 0;
-    }
+      .view-mobile #scoreboardSection .status-pill .k {
+        font-size: 0.59rem;
+        margin-bottom: 3px;
+      }
 
-    .view-mobile .btn {
-      width: 100%;
-    }
+      .view-mobile #scoreboardSection .status-pill .v {
+        font-size: 0.86rem;
+      }
 
-    .view-mobile .selection-cache-row .btn {
-      min-width: 0;
-    }
+      .view-mobile .search-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* fixed 2-column layout avoids collapse on narrow mobile widths */
+        gap: 8px;
+        width: 100%;
+      }
 
-    .view-mobile .search-row-end {
-      justify-content: flex-start;
-    }
+      .view-mobile .search-actions #refreshFromCacheBtn {
+        grid-column: 1 / -1;
+        margin-bottom: 8px;
+      }
 
-    .view-mobile .search-row-end .selection-stats {
-      padding: 0;
-    }
+      .view-mobile .search-actions .btn {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .view-mobile .btn {
+        width: 100%;
+      }
+
+      .view-mobile .selection-cache-row .btn {
+        min-width: 0;
+      }
+
+      .view-mobile .search-row-end {
+        justify-content: flex-start;
+      }
+
+      .view-mobile .search-row-end .selection-stats {
+        padding: 0;
+      }
 
     @media (orientation: landscape) {
       .view-mobile .notam-preview {
@@ -1662,11 +1705,15 @@
       }
 
       .fetch-notams-page .top-nav .back-link {
-        margin-bottom: 4px;
+        margin-bottom: 0;
+      }
+
+      .fetch-notams-page .shared-site-nav[data-nav-variant="utility"] .nav-extras {
+        justify-content: flex-end;
       }
 
       .fetch-notams-page .top-nav .view-toggle {
-        margin-top: 6px;
+        margin-top: 0;
       }
 
       .view-mobile .card {
@@ -1677,6 +1724,13 @@
 
       .view-mobile .results-list {
         max-height: 56vh;
+      }
+
+      .view-mobile .notam-distance {
+        display: block;
+        flex-basis: 100%;
+        margin-left: 0;
+        margin-top: 4px;
       }
 
       .view-mobile .results-header-actions {
@@ -1739,7 +1793,30 @@
       .view-mobile #qFilterSection .section-head-actions {
         justify-content: flex-end;
         flex-wrap: wrap;
-        gap: 6px;
+        gap: 4px;
+      }
+
+      .view-mobile #qFilterSection .q-help-btn {
+        padding: 2px 6px;
+        gap: 4px;
+      }
+
+      .view-mobile #qFilterSection .q-help-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 0.75rem;
+      }
+
+      .view-mobile #qFilterSection .q-help-btn .legend-text {
+        font-size: 0.74rem;
+      }
+
+      .view-mobile #qFilterSection .filter-toggle-btn {
+        min-width: 0;
+        padding: 3px 6px;
+        font-size: 0.7rem;
+        line-height: 1;
+        border-radius: 6px;
       }
 
       .view-mobile .section-head-actions .btn,
@@ -1813,7 +1890,7 @@
   </nav>
 
   <div class="card">
-    <h1>Fetch NOTAMS by FIR and ICAO codes</h1>
+    <h1>Fetch NOTAMS</h1>
     <p class="subtle" id="lastFetchBanner">Last Fetch: - EDT | - UTC</p>
 
     <section class="section-collapsible collapsed" id="firReferenceSection">
@@ -2027,6 +2104,7 @@
 
     <section class="section-collapsible" id="notamResultsSection">
       <div class="section-head">
+        <span data-section-head-target="#notamResultsSection">NOTAMS</span>
         <div class="results-header-actions">
           <button class="btn" type="button" id="viewAllOnMapBtn" disabled>View all on map</button>
         </div>
@@ -2058,7 +2136,7 @@
     const PROXY_PROVIDERS = [
       {
         name: "cloudflare",
-        label: "Cloudflare Worker",
+        label: "Cloudflare API",
         buildUrl: targetUrl => `https://navcan-proxy.rontreleaven.workers.dev/?url=${encodeURIComponent(targetUrl)}`
       },
       {
@@ -3267,9 +3345,9 @@
 
     function formatDistanceDisplay(distance) {
       if (!distance) return "";
-      const nm = distance.nm.toFixed(1);
       const km = distance.km.toFixed(1);
-      return `${nm}nm (${km}km)`;
+      const nm = distance.nm.toFixed(1);
+      return `${km}km (${nm}nm)`;
     }
 
     function pruneOldMapPayloads() {
@@ -3792,6 +3870,10 @@
         let missingSubject = false;
         let missingCondition = false;
         let missingQCode = false;
+        const notamCoord = extractPrimaryCoordinateFromNotam(item.raw || "");
+        const distance = notamCoord
+          ? calculateDistanceFromPilot(notamCoord.lat, notamCoord.lon)
+          : null;
 
         if (qInfo?.subject) {
           missingSubject = !Q_SUBJECT_CODE_MAP.has(qInfo.subject);
@@ -3808,19 +3890,29 @@
           }
         }
 
-        return { item, qInfo, priority, missingSubject, missingCondition, missingQCode };
+        return { item, qInfo, priority, missingSubject, missingCondition, missingQCode, distance };
       });
 
-      if (isPrioritySortEnabled()) {
-        decorated.sort((a, b) => {
-          if (b.priority.score !== a.priority.score) {
-            return b.priority.score - a.priority.score;
-          }
-          const ta = a.item.startValidity ? new Date(a.item.startValidity).getTime() : 0;
-          const tb = b.item.startValidity ? new Date(b.item.startValidity).getTime() : 0;
-          return tb - ta;
-        });
-      }
+      decorated.sort((a, b) => {
+        const aHasDistance = !!a.distance;
+        const bHasDistance = !!b.distance;
+
+        if (aHasDistance && bHasDistance && a.distance.km !== b.distance.km) {
+          return a.distance.km - b.distance.km;
+        }
+
+        if (aHasDistance !== bHasDistance) {
+          return aHasDistance ? -1 : 1;
+        }
+
+        if (isPrioritySortEnabled() && b.priority.score !== a.priority.score) {
+          return b.priority.score - a.priority.score;
+        }
+
+        const ta = a.item.startValidity ? new Date(a.item.startValidity).getTime() : 0;
+        const tb = b.item.startValidity ? new Date(b.item.startValidity).getTime() : 0;
+        return tb - ta;
+      });
 
       const displayItems = maxCount === 0 ? decorated : decorated.slice(0, maxCount);
       updateViewAllOnMapButton(displayItems.map(entry => entry.item));
@@ -3846,14 +3938,9 @@
           const missingNote = entry.missingQCode ? "Unknown Q-code" : "";
           const qcodeClass = entry.missingQCode ? "missing" : "";
           
-          // Calculate distance from pilot location if available
-          const notamCoord = extractPrimaryCoordinateFromNotam(item.raw || "");
           let distanceHtml = "";
-          if (notamCoord) {
-            const distance = calculateDistanceFromPilot(notamCoord.lat, notamCoord.lon);
-            if (distance) {
-              distanceHtml = `<span class="notam-distance">Distance from Pilot: ${formatDistanceDisplay(distance)}</span>`;
-            }
+          if (entry.distance) {
+            distanceHtml = `<span class="notam-distance">Distance from current Pilot Location: ${formatDistanceDisplay(entry.distance)}</span>`;
           }
           
           return `
@@ -3861,7 +3948,7 @@
               <div class="notam-line1">
                 <span class="notam-id">${escapeHtml(title)}</span>
                 <span class="notam-loc">${escapeHtml(item.location)}</span>
-                <span class="notam-time">Start (EDT/ET): ${escapeHtml(start)} | End (EDT/ET): ${escapeHtml(end)}</span>
+                <span class="notam-time">Start: ${escapeHtml(start)} | End: ${escapeHtml(end)}</span>
               </div>
               <div class="notam-line2">
                 <span class="qcode-pill ${qcodeClass}">${escapeHtml(qInfo ? qInfo.qcode : "Q----")}</span>
@@ -3933,7 +4020,7 @@
             const elapsed = Math.round(performance.now() - t0);
             return {
               payload,
-              source: `Live via ${proxy.label}`,
+              source: `API > ${proxy.label}`,
               elapsedMs: elapsed
             };
           } catch (proxyError) {

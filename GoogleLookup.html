@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Geocode Lookup</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, button { padding: 8px; font-size: 16px; }
+    #result { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h2>Address / Postal Code → Lat/Lon</h2>
+
+<input type="text" id="address" placeholder="Enter address or postal code" size="40">
+<button onclick="geocode()">Lookup</button>
+
+<div id="result"></div>
+
+<script>
+const API_KEY = "AIzaSyBFKbcvjFqzHOfvOxRuGn7jP2JJt4CTmhg";
+
+async function geocode() {
+  const address = document.getElementById("address").value;
+  const resultDiv = document.getElementById("result");
+
+  if (!address) {
+    resultDiv.innerText = "Please enter an address or postal code.";
+    return;
+  }
+
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${API_KEY}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.status === "OK") {
+      const location = data.results[0].geometry.location;
+      resultDiv.innerHTML = `
+        Latitude: ${location.lat}<br>
+        Longitude: ${location.lng}
+      `;
+    } else {
+      resultDiv.innerText = "Error: " + data.status;
+    }
+  } catch (error) {
+    resultDiv.innerText = "Request failed.";
+    console.error(error);
+  }
+}
+</script>
+
+</body>
+</html>

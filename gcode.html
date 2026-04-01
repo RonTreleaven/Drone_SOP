@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mission Location Tool</title>
+
+<link rel="stylesheet" href="./assets/css/notams-common.css">
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<style>
+#map { height: 400px; margin-top: 15px; border-radius: 8px; } // Set map height and add some spacing
+
+.tool-card {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 10px;
+  color: #e2e8f0;
+}
+
+input {
+  padding: 8px;
+  width: 70%;
+}
+
+button {
+  padding: 8px 12px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.result {
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="tool-card">
+  <h2>📍 Mission Location Lookup</h2>
+
+  <input type="text" id="address" placeholder="Enter address or postal code: ##,Street,City,Provice">
+  <button onclick="runLookup()">Lookup</button>
+
+  <div class="result" id="result"></div>
+  <div class="result" id="airspace"></div>
+
+  <div id="map"></div>
+
+  <div class="result" id="dsstLink"></div>
+  <!-- Modal for DSST copy -->
+  <div id="dsstModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(30,41,59,0.85); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:#fff; color:#222; padding:24px 32px; border-radius:12px; min-width:320px; max-width:90vw; box-shadow:0 4px 24px #0008; position:relative;">
+      <button onclick="closeDSSTModal()" style="position:absolute; top:8px; right:12px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
+      <h3 style="margin-top:0;">Copy Lat/Lon for DSST</h3>
+      <div style="margin-bottom:10px;">
+        <label style="margin-right:4px;">Lat:</label>
+        <input type="text" id="modalLat" readonly style="width:110px; margin-right:4px;">
+        <button onclick="copySingle('modalLat', this)">Copy</button>
+      </div>
+      <div>
+        <label style="margin-right:4px;">Lon:</label>
+        <input type="text" id="modalLon" readonly style="width:110px; margin-right:4px;">
+        <button onclick="copySingle('modalLon', this)">Copy</button>
+      </div>
+      <div style="margin-top:12px; font-size:13px; color:#444;">Paste these values into the DSST tool's Latitude and Longitude fields.</div>
+    </div>
+  </div>
+  <div class="result" id="latlonCopyRow" style="display:none; margin-top:10px;">
+    <label for="latCopy" style="margin-right:4px;">Lat:</label>
+    <input type="text" id="latCopy" readonly style="width:110px; margin-right:4px;">
+    <button onclick="copySingle('latCopy', this)">Copy</button>
+    <label for="lonCopy" style="margin-left:12px; margin-right:4px;">Lon:</label>
+    <input type="text" id="lonCopy" readonly style="width:110px; margin-right:4px;">
+    <button onclick="copySingle('lonCopy', this)">Copy</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+// Allow ENTER key to trigger runLookup
+document.addEventListener('DOMContentLoaded', function() {
+  var addressInput = document.getElementById('address');
+  if (addressInput) {
+    addressInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        runLookup();
+      }
+    });
+  }
+});
+const API_KEY = "AIzaSyBFKbcvjFqzHOfvOxRuGn7jP2JJt4CTmhg";
+
+let map = L.map('map').setView([43.7, -79.4], 10); // Toronto default
+let marker;
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19
+}).addTo(map);
+
+// -------------------------
+// MAIN LOOKUP FUNCTION
+// -------------------------
+async function runLookup() {
+  const address = document.getElementById("address").value;
+
+  if (!address) return;
+
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&components=country:CA&key=${API_KEY}`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (data.status !== "OK") {
+    document.getElementById("result").innerText = "Location not found.";
+    return;
+  }
+
+  const result = data.results[0];
+  const lat = result.geometry.location.lat;
+  const lng = result.geometry.location.lng;
+
+  updateMap(lat, lng);
+  updateResults(result, lat, lng);
+  buildDSSTLink(lat, lng);
+  showLatLonCopy(lat, lng);
+
+  checkAirspace(lat, lng); // future-ready
+}
+
+// -------------------------
+// MAP HANDLING
+// -------------------------
+function updateMap(lat, lng) {
+  if (marker) map.removeLayer(marker);
+
+  marker = L.marker([lat, lng]).addTo(map);
+  map.setView([lat, lng], 14);
+}
+
+// -------------------------
+// RESULTS DISPLAY
+// -------------------------
+function updateResults(result, lat, lng) {
+  document.getElementById("result").innerHTML = `
+    <strong>${result.formatted_address}</strong><br>
+    Lat: ${lat.toFixed(4)} | Lon: ${lng.toFixed(4)}<br>
+    <span style="color:#a0eaff;">Full Lat/Lon:</span> ${lat} , ${lng}
+  `;
+}
+
+// Show copyable Lat/Lon
+function showLatLonCopy(lat, lng) {
+  const copyRow = document.getElementById("latlonCopyRow");
+  document.getElementById("latCopy").value = lat.toFixed(4);
+  document.getElementById("lonCopy").value = lng.toFixed(4);
+  copyRow.style.display = "block";
+}
+
+// Copy Lat/Lon to clipboard
+// Copy single field to clipboard
+function copySingle(inputId, btn) {
+  const copyInput = document.getElementById(inputId);
+  copyInput.select();
+  copyInput.setSelectionRange(0, 99999); // For mobile
+  document.execCommand("copy");
+  // Optional: show feedback
+  const oldText = btn.innerText;
+  btn.innerText = "Copied!";
+  setTimeout(() => { btn.innerText = oldText; }, 1200);
+ }
+
+// -------------------------
+// DSST LINK
+// -------------------------
+function buildDSSTLink(lat, lng) {
+  const url = `https://nrc.canada.ca/en/drone-tool-2/map.html`;
+  document.getElementById("dsstLink").innerHTML = `
+    <span style="font-weight:bold;">
+      🔗 <a href="#" onclick="openDSSTModal(${lat.toFixed(4)}, ${lng.toFixed(4)}); window.open('${url}', '_blank'); return false;" style="color:#fff; text-decoration:underline;">Open in NAV CANADA DSST</a>
+    </span>
+  `;
+  buildNotamsMapLink(lat, lng);
+}
+
+// Add NotamsMap.html link below lat/lon copy fields
+function buildNotamsMapLink(lat, lng) {
+  // Use 6 decimal places for precision
+  const notamsUrl = `NotamsMap.html?center=${lat.toFixed(6)},${lng.toFixed(6)}`;
+  let notamsLink = document.getElementById('notamsMapLink');
+  if (!notamsLink) {
+    notamsLink = document.createElement('div');
+    notamsLink.id = 'notamsMapLink';
+    notamsLink.className = 'result';
+    // Insert after latlonCopyRow
+    const latlonRow = document.getElementById('latlonCopyRow');
+    latlonRow.parentNode.insertBefore(notamsLink, latlonRow.nextSibling);
+  }
+  notamsLink.innerHTML = `🗺️ <a href="${notamsUrl}" target="_blank" style="color:#38bdf8; font-weight:bold; text-decoration:underline;">Open in NotamsMap with this location</a>`;
+
+  // Add Google Maps hotlink with full precision
+  let gmapsLink = document.getElementById('gmapsHotlink');
+  if (!gmapsLink) {
+    gmapsLink = document.createElement('div');
+    gmapsLink.id = 'gmapsHotlink';
+    gmapsLink.className = 'result';
+    notamsLink.parentNode.insertBefore(gmapsLink, notamsLink.nextSibling);
+  }
+  const gmapsUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+  gmapsLink.innerHTML = `🌐 <a href="${gmapsUrl}" target="_blank" style="color:#34d399; font-weight:bold; text-decoration:underline;">Open in Google Maps (full precision)</a>`;
+}
+
+// Show DSST modal with lat/lon
+function openDSSTModal(lat, lng) {
+  document.getElementById('modalLat').value = lat.toFixed(4);
+  document.getElementById('modalLon').value = lng.toFixed(4);
+  document.getElementById('dsstModal').style.display = 'flex';
+}
+
+function closeDSSTModal() {
+  document.getElementById('dsstModal').style.display = 'none';
+}
+
+// -------------------------
+// AIRSPACE CHECK (GeoJSON-ready)
+// -------------------------
+let airspaceData = null;
+
+// Load your GeoJSON here
+fetch('./data/canadian_airspace.geojson')
+  .then(res => res.json())
+  .then(data => airspaceData = data);
+
+// Simple point-in-polygon
+function checkAirspace(lat, lng) {
+  if (!airspaceData) {
+    document.getElementById("airspace").innerText = "Airspace data loading...";
+    return;
+  }
+
+  let inside = false;
+  let zoneName = "";
+
+  airspaceData.features.forEach(feature => {
+    if (pointInPolygon([lng, lat], feature.geometry.coordinates[0])) {
+      inside = true;
+      zoneName = feature.properties.name || "Controlled Airspace";
+    }
+  });
+
+  document.getElementById("airspace").innerHTML = inside
+    ? `🛑 Inside: <strong>${zoneName}</strong>`
+    : `✅ No controlled airspace detected`;
+}
+
+// Ray-casting algorithm
+function pointInPolygon(point, vs) {
+  let x = point[0], y = point[1];
+  let inside = false;
+
+  for (let i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+    let xi = vs[i][0], yi = vs[i][1];
+    let xj = vs[j][0], yj = vs[j][1];
+
+    let intersect = ((yi > y) !== (yj > y))
+      && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+
+    if (intersect) inside = !inside;
+  }
+
+  return inside;
+}
+</script>
+
+</body>
+</html>

@@ -25,7 +25,7 @@ jobs:
           node-version: '24'
 
       - name: Run NOTAM script
-        run: node scripts/JS_Notam_All_CABuilder.js
+        run: node scripts/JS_Notam_All_CABuilder.js # This script should generate the following files in data/notams: All_CA.json, All_CA_raw.json, All_CA.meta.json
 
       - name: Verify generated files
         run: |
