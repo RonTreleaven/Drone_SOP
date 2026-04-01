@@ -38,6 +38,12 @@ The builder accepts:
 - ND-GeoJSON files
 - remote `http/https` URLs
 
+![OpenAIP Logo](openaip_logo.svg)
+
+[OpenAIP - Data Exports](https://www.openaip.net/data/exports?page=1&limit=50&sortBy=createdAt&sortDesc=true&format=geojson&contentType=airspace&country=CA) (short cut) CA GeoJSON download.  ca_asp.geojson
+
+
+
 ## Standard build commands
 
 Preferred local-file workflow:
