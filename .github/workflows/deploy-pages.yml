@@ -1,0 +1,71 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build site artifact
+        run: |
+          mkdir -p _site/assets/js _site/assets/css _site/assets/img \
+                   _site/assets/Emergency _site/assets/CFS _site/assets/pdf \
+                   _site/data/notams _site/sections
+
+          # Root-level HTML pages
+          cp *.html _site/
+
+          # Root-level JS (e.g. cords.js)
+          cp *.js _site/ 2>/dev/null || true
+
+          # Root-level images and favicons
+          cp *.png *.ico *.svg _site/ 2>/dev/null || true
+
+          # Assets — explicit subfolders only (excludes logs/ and MD/)
+          cp assets/css/*.css   _site/assets/css/   2>/dev/null || true
+          cp assets/js/*.js     _site/assets/js/    2>/dev/null || true
+          cp assets/js/*.css    _site/assets/js/    2>/dev/null || true
+          cp -r assets/img      _site/assets/
+          cp -r assets/Emergency _site/assets/      2>/dev/null || true
+          cp -r assets/CFS      _site/assets/       2>/dev/null || true
+          cp -r assets/pdf      _site/assets/       2>/dev/null || true
+
+          # Sections (SOP procedure pages)
+          cp sections/*.html _site/sections/
+
+          # Data — reference JSON/GeoJSON files (root of data/)
+          cp data/*.json data/*.geojson _site/data/ 2>/dev/null || true
+
+          # Data — live NOTAM JSON files (auto-updated by fetch-notams CRON)
+          cp data/notams/*.json _site/data/notams/  2>/dev/null || true
+
+          # Disable Jekyll processing
+          touch _site/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -12,6 +12,7 @@ exclude:
   - data/airspace/
   - "test file archived/"
   - "**/__pycache__/"
+  - Dev/
   - scripts/
   - weather_station_code/
   - "*.py"

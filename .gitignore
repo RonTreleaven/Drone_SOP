@@ -27,6 +27,9 @@ api_key/Google Cloud API.txt
 .env.*
 .wrangler/
 
+# Dev/test folder — not for public tracking
+Dev/
+
 # Local dev scripts and helpers
 *.cmd
 *.bak_*
