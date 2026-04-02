@@ -423,6 +423,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const GEOCODE_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.GEOCODE_ENDPOINT)
   ? window.DRONE_SOP_CONFIG.GEOCODE_ENDPOINT
   : "https://navcan-proxy.rontreleaven.workers.dev/geocode";  //hidden behind proxy to hide API key
+const NOMINATIM_ENDPOINT = "https://nominatim.openstreetmap.org/search";
 const LOOKUP_HISTORY_KEY = "missionLookupHistory";
 const LOOKUP_HISTORY_COOKIE = "missionLookupHistory";
 const LOOKUP_HISTORY_TTL_DAYS = 365;
@@ -443,35 +444,134 @@ async function runLookup() {
 
   if (!address) return;
 
-  const url = `${GEOCODE_ENDPOINT}?address=${encodeURIComponent(address)}&components=${encodeURIComponent("country:CA")}`;
-
-  let data;
   try {
-    const res = await fetch(url);
-    data = await res.json();
+    const geocodeResult = await geocodeAddress(address);
+
+    if (!geocodeResult) {
+      showLookupMessage("Location not found.", "warn");
+      return;
+    }
+
+    const result = geocodeResult.result;
+    const lat = result.geometry.location.lat;
+    const lng = result.geometry.location.lng;
+
+    updateMap(lat, lng);
+    updateResults(result, lat, lng, geocodeResult.sourceLabel);
+    buildDSSTLink(lat, lng);
+    showLatLonCopy(lat, lng);
+    saveLookupHistory(address);
+
+    checkAirspace(lat, lng); // future-ready
   } catch (err) {
-    document.getElementById("result").innerText = "Geocode lookup failed.";
-    document.getElementById("result").className = "result result-box warn";
+    console.error("Geocode lookup failed", err);
+    const message = err && err.message ? err.message : "Geocode lookup failed.";
+    showLookupMessage(message, "warn");
     return;
   }
+}
 
-  if (data.status !== "OK") {
-    document.getElementById("result").innerText = "Location not found.";
-    document.getElementById("result").className = "result result-box warn";
-    return;
+async function geocodeAddress(address) {
+  try {
+    const proxyResult = await geocodeViaProxy(address);
+    if (proxyResult) {
+      return {
+        result: proxyResult,
+        sourceLabel: "Google geocoder"
+      };
+    }
+  } catch (proxyError) {
+    console.warn("Primary geocoder unavailable, using fallback.", proxyError);
   }
 
-  const result = data.results[0];
-  const lat = result.geometry.location.lat;
-  const lng = result.geometry.location.lng;
+  const fallbackResult = await geocodeViaNominatim(address);
+  if (!fallbackResult) {
+    return null;
+  }
 
-  updateMap(lat, lng);
-  updateResults(result, lat, lng);
-  buildDSSTLink(lat, lng);
-  showLatLonCopy(lat, lng);
-  saveLookupHistory(address);
+  return {
+    result: fallbackResult,
+    sourceLabel: "OpenStreetMap fallback"
+  };
+}
 
-  checkAirspace(lat, lng); // future-ready
+async function geocodeViaProxy(address) {
+  const url = `${GEOCODE_ENDPOINT}?address=${encodeURIComponent(address)}&components=${encodeURIComponent("country:CA")}`;
+  const res = await fetch(url, {
+    headers: {
+      "Accept": "application/json"
+    }
+  });
+
+  const data = await readJsonResponse(res);
+  if (!res.ok) {
+    const backendMessage = data && data.error_message ? data.error_message : `Geocode proxy error (${res.status})`;
+    throw new Error(backendMessage);
+  }
+
+  if (data.status === "ZERO_RESULTS") {
+    return null;
+  }
+
+  if (data.status !== "OK" || !Array.isArray(data.results) || data.results.length === 0) {
+    throw new Error(data.error_message || "Geocode proxy returned an invalid response.");
+  }
+
+  return data.results[0];
+}
+
+async function geocodeViaNominatim(address) {
+  const url = `${NOMINATIM_ENDPOINT}?format=jsonv2&limit=1&countrycodes=ca&q=${encodeURIComponent(address)}`;
+  const res = await fetch(url, {
+    headers: {
+      "Accept": "application/json"
+    }
+  });
+
+  const data = await readJsonResponse(res);
+  if (!res.ok) {
+    throw new Error(`Fallback geocoder error (${res.status})`);
+  }
+
+  if (!Array.isArray(data) || data.length === 0) {
+    return null;
+  }
+
+  const first = data[0];
+  const lat = Number(first.lat);
+  const lng = Number(first.lon);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    throw new Error("Fallback geocoder returned invalid coordinates.");
+  }
+
+  return {
+    formatted_address: first.display_name || address,
+    geometry: {
+      location: {
+        lat,
+        lng
+      }
+    }
+  };
+}
+
+async function readJsonResponse(res) {
+  const text = await res.text();
+  if (!text) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error("Geocoder returned invalid JSON.");
+  }
+}
+
+function showLookupMessage(message, tone) {
+  document.getElementById("result").innerText = message;
+  document.getElementById("result").className = `result result-box ${tone}`;
 }
 
 // -------------------------
@@ -487,10 +587,12 @@ function updateMap(lat, lng) {
 // -------------------------
 // RESULTS DISPLAY
 // -------------------------
-function updateResults(result, lat, lng) {
+function updateResults(result, lat, lng, sourceLabel) {
+  const sourceLine = sourceLabel ? `<br><span style="color: var(--text-soft); font-size: 0.92rem;">Source: ${sourceLabel}</span>` : "";
   document.getElementById("result").innerHTML = `
     <strong>${result.formatted_address}</strong><br>
     DD (6) Lat: ${lat.toFixed(6)} | Lon: ${lng.toFixed(6)}
+    ${sourceLine}
   `;
   document.getElementById("result").className = "result result-box";
 }
