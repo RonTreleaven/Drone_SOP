@@ -26,3 +26,13 @@ api_key/Google Cloud API.txt
 .env
 .env.*
 .wrangler/
+
+# Local dev scripts and helpers
+*.cmd
+*.bak_*
+
+# Weather station research data (large/local only)
+weather_station_code/*.csv
+weather_station_code/*.xlsx
+weather_station_code/*.gz
+weather_station_code/*cache*

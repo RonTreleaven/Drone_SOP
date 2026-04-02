@@ -12,3 +12,12 @@ exclude:
   - data/airspace/
   - "test file archived/"
   - "**/__pycache__/"
+  - scripts/
+  - weather_station_code/
+  - "*.py"
+  - "*.bak_*"
+  - "*.cmd"
+  - "*.ps1"
+  - 3_26_Cloudfare_worker.js
+  - "assets/logs/"
+  - "assets/MD/"
