@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0324/26 NOTAMR R0276/26\nQ) CZEG/QOLAS/IV/M/AE/000/025/5613N11737W005\nA) CXXX B) 2604031214 C) 2607022359\nE) CFD5 GRIMSHAW \nOBST LGT U/S TOWER 561303N 1173645W (APRX 1.35NM N AD) 350FT AGL, \n2488FT AMSL.)",
+    "startValidity": "2026-04-03T12:14:00",
+    "endValidity": "2026-07-02T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "56.217500, -117.612500"
+    ]
+  },
+  {
     "raw": "(R0323/26 NOTAMR R0138/26\nQ) CZEG/QOLAS/IV/M/E/000/042/5402N11543W002\nA) CZEG B) 2604030457 C) 2606032359\nE) OBST LGT U/S TOWER 540205N 1154257W (APRX 7NM SE WHITECOURT AD \n(CYZU)) 320FT AGL, 4133FT AMSL.)",
     "startValidity": "2026-04-03T04:57:00",
     "endValidity": "2026-06-03T23:59:00",
@@ -204,15 +213,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "65.290000, -126.880278"
-    ]
-  },
-  {
-    "raw": "(R0276/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/025/5613N11737W005\nA) CXXX B) 2603181300 C) 2606172359\nE) CFD5 GRIMSHAW \nOBST LGT U/S TOWER 561303N 1173645W (APRX 1.35NM N AD) 350FT AGL, \n2488FT AMSL.)",
-    "startValidity": "2026-03-18T13:00:00",
-    "endValidity": "2026-06-17T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "56.217500, -117.612500"
     ]
   },
   {
