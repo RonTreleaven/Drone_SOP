@@ -270,6 +270,21 @@ body {
   white-space: nowrap;
 }
 
+#setPilotLocationBtn {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+#pilotLocationMsg {
+  display: none;
+  font-size: 0.82rem;
+  color: #c0392b;
+  margin-top: 0.3rem;
+}
+#pilotLocationMsg.success {
+  color: #27ae60;
+}
+
 .map-panel {
   margin-top: 18px;
 }
@@ -645,6 +660,8 @@ body {
             </div>
           </div>
         </div>
+        <button class="btn" id="setPilotLocationBtn" type="button" onclick="setPilotLocation()">Set New Pilot Location</button>
+        <div id="pilotLocationMsg"></div>
         <div class="result links-stack" id="dsstLink"></div>
       </div>
     </div>
@@ -1860,6 +1877,46 @@ function showLatLonCopy(lat, lng) {
   document.getElementById("latCopy").value = lat.toFixed(6);
   document.getElementById("lonCopy").value = lng.toFixed(6);
   copyRow.style.display = "grid";
+}
+
+// Set New Pilot Location from current marker position
+function setPilotLocation() {
+  const msg = document.getElementById("pilotLocationMsg");
+  if (!marker) {
+    msg.textContent = "No map marker — do a lookup first.";
+    msg.style.display = "block";
+    setTimeout(() => { msg.style.display = "none"; }, 3000);
+    return;
+  }
+  msg.classList.remove("success");
+  const pos = marker.getPosition();
+  const lat = pos.lat();
+  const lng = pos.lng();
+  const latShort = lat.toFixed(6);
+  const lngShort = lng.toFixed(6);
+  const latDMS = pilotToDMS(lat, true);
+  const lngDMS = pilotToDMS(lng, false);
+  localStorage.setItem("pilotLocationDD", `${latShort}, ${lngShort}`);
+  localStorage.setItem("pilotLocationDMS", `${latDMS}, ${lngDMS}`);
+  localStorage.setItem("pilotLatitude", latShort);
+  localStorage.setItem("pilotLongitude", lngShort);
+  localStorage.setItem("pilotLocationSource", "ggcode-marker");
+  showLatLonCopy(lat, lng);
+  buildDSSTLink(lat, lng);
+  msg.textContent = `\u2713 Pilot location updated: ${latShort}, ${lngShort}`;
+  msg.classList.add("success");
+  msg.style.display = "block";
+  setTimeout(() => { msg.style.display = "none"; msg.classList.remove("success"); }, 4000);
+}
+
+function pilotToDMS(deg, isLat) {
+  const abs = Math.abs(deg);
+  const d = Math.floor(abs);
+  const mFloat = (abs - d) * 60;
+  const m = Math.floor(mFloat);
+  const s = ((mFloat - m) * 60).toFixed(1);
+  const dir = isLat ? (deg >= 0 ? "N" : "S") : (deg >= 0 ? "E" : "W");
+  return `${d}\u00B0${m}'${s}"${dir}`;
 }
 
 // Copy Lat/Lon to clipboard
