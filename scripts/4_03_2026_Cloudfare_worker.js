@@ -1,7 +1,7 @@
 /**
  * Added a Cloudfare CORS proxy for NOTAM retrieval
- * and updates to allow additional Hosts.  March 26, 2026 NavCan worker.
- * 
+ * and updates to allow additional Hosts.  March 26, 2026 NavCan worker. 
+ * April 3, 2026 -ggcode and partial completions looksup
  * - Run "npm run dev" in your terminal to start a development server
  * - Open a browser tab at http://localhost:8787/ to see your worker in action
  * - Run "npm run deploy" to publish your worker

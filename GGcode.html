@@ -1,0 +1,2208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mission Location Tool</title>
+
+<link rel="stylesheet" href="./assets/css/notams-common.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@tmcw/togeojson@7.1.2/dist/togeojson.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+<style>
+:root {
+  --accent: #2F5496;
+  --accent-strong: #1f3e72;
+  --accent-soft: #eaf1fb;
+  --card-border: #d9e3f3;
+  --text-soft: #51627d;
+  --success: #1f7a3f;
+  --warning: #9a6a00;
+  --danger: #b3261e;
+}
+
+body {
+  background: linear-gradient(180deg, #f4f6f8 0%, #eaf1fb 100%);
+}
+
+.mission-card {
+  max-width: 1100px;
+}
+
+.hero {
+  margin-bottom: 22px;
+}
+
+.hero h1 {
+  margin-bottom: 10px;
+}
+
+.hero p {
+  margin: 0;
+  color: var(--text-soft);
+  text-align: center;
+  font-size: 1rem;
+}
+
+.search-shell {
+  background: #f9fbff;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.search-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-group label {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+#address {
+  width: 100%;
+}
+
+.address-input-wrap {
+  position: relative;
+}
+
+.autocomplete-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+  max-height: 250px;
+  overflow-y: auto;
+  display: none;
+}
+
+.autocomplete-menu.open {
+  display: block;
+}
+
+.autocomplete-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 10px 12px;
+  cursor: pointer;
+  color: #1d2f4f;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.active {
+  background: var(--accent-soft);
+}
+
+.btn.lookup-btn {
+  min-width: 140px;
+}
+
+.button-row {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.button-row .btn {
+  width: 100%;
+  min-width: 0;
+}
+
+.search-note {
+  margin: 10px 0 0;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+
+.history-row {
+  margin-top: 12px;
+  display: block;
+}
+
+#lookupHistory {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 10px;
+  font-size: 1rem;
+}
+
+.lookup-summary-panel {
+  margin-top: 14px;
+}
+
+.btn.secondary-btn {
+  background: #6b7a90;
+}
+
+.btn.secondary-btn:hover {
+  background: #4f5e73;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.panel h2 {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.result {
+  margin-top: 10px;
+}
+
+.result:first-child {
+  margin-top: 0;
+}
+
+.result-box {
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  padding: 12px;
+  word-break: break-word;
+}
+
+.result-box.dim {
+  color: var(--text-soft);
+}
+
+.result-box.ok {
+  border-left-color: var(--success);
+}
+
+.result-box.warn {
+  border-left-color: var(--warning);
+}
+
+.links-stack {
+  display: grid;
+  gap: 10px;
+}
+
+.action-link {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid var(--card-border);
+  background: #fff;
+  color: var(--accent-strong);
+}
+
+.action-link:hover {
+  background: #eef5ff;
+}
+
+.copy-row {
+  display: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.copy-card {
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 12px;
+  background: #f9fbff;
+}
+
+.copy-card label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.copy-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.copy-control input {
+  min-width: 0;
+  width: 100%;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.94rem;
+}
+
+.copy-btn {
+  min-width: 74px;
+  width: auto;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.map-panel {
+  margin-top: 18px;
+}
+
+#mapShell {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#map {
+  height: 560px;
+  width: 100%;
+}
+
+.route-tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, max-content));
+  gap: 8px;
+  align-items: center;
+  position: absolute;
+  left: 10px;
+  top: 102px;
+  z-index: 7;
+  width: min(84vw, 320px);
+  max-height: calc(100% - 112px);
+  overflow: auto;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 8px;
+  margin: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.route-tools.mobile-collapsed {
+  display: none;
+}
+
+.mobile-tools-toggle {
+  display: block;
+  width: 172px;
+  min-width: 172px;
+  position: absolute;
+  left: 10px;
+  top: 56px;
+  margin: 0;
+  z-index: 8;
+  border-radius: 6px;
+  font-weight: 700;
+  background: var(--accent-strong);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.22);
+}
+
+.mobile-tools-toggle:hover {
+  background: var(--accent);
+}
+
+.map-fullscreen-fab {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 8;
+  min-width: 42px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #d6e1f3;
+  color: #355995;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.map-fullscreen-fab:hover {
+  background: #f0f5ff;
+}
+
+.route-tools .btn {
+  min-width: 0;
+}
+
+#routeFile {
+  max-width: 220px;
+}
+
+.route-tools input,
+.route-tools select,
+.route-tools label {
+  font-size: 0.88rem;
+}
+
+.mission-setting {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+}
+
+.mission-setting input,
+.mission-setting select {
+  max-width: 110px;
+}
+
+#mapShell:fullscreen {
+  border-radius: 0;
+}
+
+#mapShell:fullscreen #map {
+  height: 100vh;
+}
+
+.modal-shell {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 41, 59, 0.85);
+  z-index: 9999;
+}
+
+.modal-card {
+  background: #fff;
+  color: #222;
+  padding: 24px 32px;
+  border-radius: 12px;
+  min-width: 320px;
+  max-width: 90vw;
+  box-shadow: 0 4px 24px #0008;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--accent-strong);
+}
+
+.modal-copy-row {
+  margin-bottom: 10px;
+}
+
+.modal-help {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #444;
+}
+
+.modal-title {
+  margin-top: 0;
+}
+
+.collapsible-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  padding: 10px 14px;
+  background: var(--accent-soft);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--accent-strong);
+  font-weight: 700;
+  font-size: 0.97rem;
+  text-align: left;
+}
+
+.collapsible-header:hover {
+  background: #daeaf9;
+}
+
+.collapsible-header .toggle-icon {
+  display: inline-block;
+  font-size: 0.75rem;
+  transition: transform 0.22s;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.collapsible-header.collapsed .toggle-icon {
+  transform: rotate(-90deg);
+}
+
+.collapsible-body {
+  overflow: hidden;
+  max-height: 1500px;
+  opacity: 1;
+  transition: max-height 0.3s ease, opacity 0.25s, padding-top 0.3s;
+  padding-top: 12px;
+}
+
+.collapsible-body.collapsed {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+}
+
+@media (max-width: 780px) {
+  .search-row,
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .btn.lookup-btn {
+    width: 100%;
+  }
+
+  .button-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .modal-card {
+    min-width: auto;
+    width: min(92vw, 420px);
+    padding: 20px;
+  }
+
+  .copy-control {
+    grid-template-columns: minmax(0, 1fr) 86px;
+  }
+
+  .copy-control input {
+    font-size: 0.94rem;
+    padding: 10px;
+  }
+
+  .copy-btn {
+    min-width: 86px;
+    padding: 8px 10px;
+  }
+
+  .route-tools {
+    grid-template-columns: 1fr;
+    width: min(76vw, 286px);
+    top: 102px;
+    transition: opacity 0.16s ease;
+    opacity: 1;
+    padding: 6px;
+    gap: 6px;
+  }
+
+  .mobile-tools-toggle {
+    width: 172px;
+    min-width: 172px;
+    top: 56px;
+    left: 10px;
+    margin: 0;
+    padding: 7px 10px;
+    font-size: 0.9rem;
+  }
+
+  .route-tools .btn {
+    padding: 8px 9px;
+    font-size: 0.86rem;
+  }
+
+  .route-tools input,
+  .route-tools select,
+  .route-tools label {
+    font-size: 0.84rem;
+  }
+
+  .mission-setting {
+    gap: 4px;
+  }
+
+  .mission-setting input,
+  .mission-setting select {
+    max-width: 94px;
+  }
+
+  .map-fullscreen-fab {
+    display: block;
+  }
+
+  #routeFile {
+    max-width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="top-nav">
+  <a href="#" class="back-link" onclick="goBack(event)"><span class="back-icon" aria-hidden="true">&#8592;</span>BACK</a> |
+  <a href="index.html">Home</a> |
+  <a href="Sections.html">SOP Sections</a> |
+  <a href="tools.html" class="active">Tools</a> |
+  <a href="flight-log.html">Flight Log</a> |
+  <a href="summary.html">Summary</a> |
+  <a href="emergencies.html">Emergency Procedures</a>
+</nav>
+
+<div class="card mission-card">
+  <div class="hero">
+    <h1>Mission Location Lookup</h1>
+    <p>Quickly identify a mission address, capture precise coordinates, and open the supporting survey and planning links you need.</p>
+  </div>
+
+  <div class="section search-shell">
+    <button class="collapsible-header" id="searchHeader" onclick="toggleSection('searchBody')">
+      Address / Postal Code Lookup
+      <span class="toggle-icon">&#9660;</span>
+    </button>
+    <div class="collapsible-body" id="searchBody">
+      <div class="search-row">
+        <div class="field-group">
+          <label for="address">Address or postal code</label>
+          <div class="address-input-wrap" id="addressInputWrap">
+            <input type="text" id="address" autocomplete="off" placeholder="Enter address or postal code: ##, Street, City, Province" aria-autocomplete="list" aria-controls="addressSuggestions">
+            <div id="addressSuggestions" class="autocomplete-menu" role="listbox" aria-label="Address suggestions"></div>
+          </div>
+        </div>
+      </div>
+      <div class="history-row">
+        <div class="field-group">
+          <label for="lookupHistory">Recent lookups (last 10)</label>
+          <select id="lookupHistory" onchange="applyHistoryLookup()">
+            <option value="">Choose a recent lookup...</option>
+          </select>
+        </div>
+      </div>
+      <div class="button-row">
+        <button class="btn lookup-btn" onclick="runLookup()">Lookup</button>
+        <button class="btn secondary-btn" onclick="clearInputs()">Clear Inputs</button>
+      </div>
+      <p class="search-note">Use a specific civic address when possible to improve geocode precision for mission planning and site surveys.</p>
+
+      <div class="panel lookup-summary-panel">
+        <h2>Lookup Summary</h2>
+        <div class="result result-box dim" id="result">Search a location to populate formatted address and coordinates.</div>
+        <div class="result result-box dim" id="airspace">Airspace status will appear here after lookup.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <button class="collapsible-header" id="resultsHeader" onclick="toggleSection('resultsBody')">
+      Mission Actions
+      <span class="toggle-icon">&#9660;</span>
+    </button>
+    <div class="collapsible-body" id="resultsBody">
+      <div class="panel">
+        <h2>Mission Actions</h2>
+        <div class="result copy-row" id="latlonCopyRow">
+          <div class="copy-card">
+            <label for="latCopy">Latitude</label>
+            <div class="copy-control">
+              <input type="text" id="latCopy" readonly>
+              <button class="btn copy-btn" onclick="copySingle('latCopy', this)">Copy</button>
+            </div>
+          </div>
+          <div class="copy-card">
+            <label for="lonCopy">Longitude</label>
+            <div class="copy-control">
+              <input type="text" id="lonCopy" readonly>
+              <button class="btn copy-btn" onclick="copySingle('lonCopy', this)">Copy</button>
+            </div>
+          </div>
+        </div>
+        <div class="result links-stack" id="dsstLink"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel map-panel section">
+    <h2>Map Preview</h2>
+    <div id="mapShell">
+      <button class="btn map-fullscreen-fab" id="toggleMapFullscreenTopBtn" type="button" title="Toggle full screen" aria-label="Toggle full screen">⤢</button>
+      <button class="btn mobile-tools-toggle" id="toggleRouteToolsBtn" type="button" aria-controls="routeTools" aria-expanded="false">☰ Tools</button>
+      <div class="route-tools" id="routeTools">
+        <button class="btn" id="drawRouteBtn" type="button">Draw Route</button>
+        <button class="btn secondary-btn" id="toggleRouteEditBtn" type="button">Lock Route</button>
+        <button class="btn" id="exportRouteGeoJSONBtn" type="button">Export GeoJSON</button>
+        <button class="btn" id="exportRouteKMLBtn" type="button">Export KML</button>
+        <button class="btn" id="exportDJIKMZBtn" type="button">Export KMZ</button>
+        <label class="mission-setting" for="djiExecHeight">H(m)
+          <input id="djiExecHeight" type="number" min="5" max="500" step="1" value="60" />
+        </label>
+        <label class="mission-setting" for="djiWaypointSpeed">Speed(m/s)
+          <input id="djiWaypointSpeed" type="number" min="0.5" max="15" step="0.1" value="2.5" />
+        </label>
+        <label class="mission-setting" for="djiFinishAction">Finish
+          <select id="djiFinishAction">
+            <option value="goHome" selected>Go Home</option>
+            <option value="noAction">No Action</option>
+            <option value="autoLand">Auto Land</option>
+          </select>
+        </label>
+        <label class="mission-setting" for="djiGimbalPitch">Gimbal
+          <select id="djiGimbalPitch">
+            <option value="none" selected>Keep</option>
+            <option value="-45">-45</option>
+            <option value="-90">-90</option>
+          </select>
+        </label>
+        <label class="mission-setting" for="djiTakePhotoEachWp">
+          <input id="djiTakePhotoEachWp" type="checkbox" checked /> Photo each WP
+        </label>
+        <button class="btn secondary-btn" id="toggleMapFullscreenBtn" type="button">Full Screen</button>
+        <input id="routeFile" type="file" accept=".gpx,.kml,.kmz,.geojson,.json" aria-label="Import route file" />
+      </div>
+      <div id="map"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for DSST copy -->
+<div id="dsstModal" class="modal-shell">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeDSSTModal()">&times;</button>
+    <h3 class="modal-title">Copy Lat/Lon for DSST</h3>
+    <div class="modal-copy-row">
+      <label>Lat:</label>
+      <div class="copy-control">
+        <input type="text" id="modalLat" readonly>
+        <button class="btn copy-btn" onclick="copySingle('modalLat', this)">Copy</button>
+      </div>
+    </div>
+    <div>
+      <label>Lon:</label>
+      <div class="copy-control">
+        <input type="text" id="modalLon" readonly>
+        <button class="btn copy-btn" onclick="copySingle('modalLon', this)">Copy</button>
+      </div>
+    </div>
+    <div class="modal-help">Paste these values into the DSST tool's Latitude and Longitude fields.</div>
+  </div>
+</div>
+
+<script>
+// Allow ENTER key to trigger runLookup
+document.addEventListener('DOMContentLoaded', async function() {
+  try {
+    await loadGoogleMapsApi();
+    initGoogleMap();
+  } catch (err) {
+    const message = err && err.message ? err.message : 'Google Maps failed to load.';
+    showLookupMessage(message, 'warn');
+  }
+
+  var addressInput = document.getElementById('address');
+  if (addressInput) {
+    addressInput.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        if (autocompleteSuggestions.length > 0) {
+          e.preventDefault();
+          moveAutocompleteSelection(e.key === 'ArrowDown' ? 1 : -1);
+        }
+        return;
+      }
+
+      if (e.key === 'Escape') {
+        clearAddressSuggestions();
+        return;
+      }
+
+      if (e.key === 'Enter') {
+        if (autocompleteActiveIndex >= 0 && autocompleteActiveIndex < autocompleteSuggestions.length) {
+          e.preventDefault();
+          selectAddressSuggestion(autocompleteActiveIndex);
+          return;
+        }
+        runLookup();
+      }
+    });
+    addressInput.addEventListener('focus', function() {
+      if (autocompleteSuggestions.length > 0) {
+        setAutocompleteMenuOpen(true);
+      }
+    });
+    addressInput.addEventListener('input', handleAddressInputForAutocomplete);
+  }
+
+  document.addEventListener('mousedown', function(event) {
+    const wrap = document.getElementById('addressInputWrap');
+    if (!wrap) return;
+    if (!wrap.contains(event.target)) {
+      clearAddressSuggestions();
+    }
+  });
+
+  document.getElementById('drawRouteBtn').addEventListener('click', handleDrawRouteToggle);
+  document.getElementById('toggleRouteToolsBtn').addEventListener('click', toggleRouteToolsPanel);
+  document.getElementById('toggleRouteEditBtn').addEventListener('click', toggleRouteEdit);
+  document.getElementById('exportRouteGeoJSONBtn').addEventListener('click', exportRouteGeoJSON);
+  document.getElementById('exportRouteKMLBtn').addEventListener('click', exportRouteKML);
+  document.getElementById('exportDJIKMZBtn').addEventListener('click', exportDJIKMZ);
+  document.getElementById('toggleMapFullscreenBtn').addEventListener('click', toggleMapFullscreen);
+  document.getElementById('toggleMapFullscreenTopBtn').addEventListener('click', toggleMapFullscreen);
+  document.getElementById('routeFile').addEventListener('change', handleRouteFile, false);
+
+  routeToolsMobileCollapsed = isMobileViewport();
+  applyRouteToolsPanelState();
+  window.addEventListener('resize', applyRouteToolsPanelState);
+
+  renderLookupHistory();
+});
+const GEOCODE_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.GEOCODE_ENDPOINT)
+  ? window.DRONE_SOP_CONFIG.GEOCODE_ENDPOINT
+  : "https://navcan-proxy.rontreleaven.workers.dev/geocode";  //hidden behind proxy to hide API key
+const MAPS_API_BOOTSTRAP_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.MAPS_API_BOOTSTRAP_ENDPOINT)
+  ? window.DRONE_SOP_CONFIG.MAPS_API_BOOTSTRAP_ENDPOINT
+  : "https://navcan-proxy.rontreleaven.workers.dev/maps-bootstrap";
+const MAPS_API_LIBRARIES = "drawing,geometry";
+const AUTOCOMPLETE_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.AUTOCOMPLETE_ENDPOINT)
+  ? window.DRONE_SOP_CONFIG.AUTOCOMPLETE_ENDPOINT
+  : "https://navcan-proxy.rontreleaven.workers.dev/places-autocomplete";
+const AUTOCOMPLETE_COMPONENTS = "country:CA";
+const AUTOCOMPLETE_DEBOUNCE_MS = 240;
+const AUTOCOMPLETE_MIN_CHARS = 3;
+const LOOKUP_HISTORY_KEY = "missionLookupHistory";
+const LOOKUP_HISTORY_COOKIE = "missionLookupHistory";
+const LOOKUP_HISTORY_TTL_DAYS = 365;
+const MAX_LOOKUP_HISTORY = 10;
+
+const DEFAULT_CENTER = { lat: 43.7, lng: -79.4 }; // Toronto default
+const DEFAULT_ZOOM = 10;
+let map;
+let marker;
+let drawingManager;
+let activePolyline = null;
+let routePath = [];
+let routeEditEnabled = true;
+let waypointMarkers = [];
+let googleMapsLoaderPromise = null;
+let routeToolsMobileCollapsed = false;
+let autocompleteDebounceTimer = null;
+let autocompleteAbortController = null;
+let autocompleteSuggestions = [];
+let autocompleteActiveIndex = -1;
+let autocompleteRequestId = 0;
+
+function loadGoogleMapsApi() {
+  if (window.google && window.google.maps && window.google.maps.drawing && window.google.maps.geometry) {
+    return Promise.resolve();
+  }
+
+  if (googleMapsLoaderPromise) {
+    return googleMapsLoaderPromise;
+  }
+
+  googleMapsLoaderPromise = (async () => {
+    const bootstrapUrl = `${MAPS_API_BOOTSTRAP_ENDPOINT}?libraries=${encodeURIComponent(MAPS_API_LIBRARIES)}`;
+    const res = await fetch(bootstrapUrl, {
+      headers: {
+        "Accept": "application/json"
+      }
+    });
+
+    const rawText = await res.text();
+    let data = {};
+    if (rawText) {
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        if (rawText.indexOf("Missing url= parameter") !== -1) {
+          throw new Error("Cloudflare worker is on an older version and does not support /maps-bootstrap yet. Deploy the updated worker script.");
+        }
+        throw new Error("Maps bootstrap returned non-JSON content.");
+      }
+    }
+
+    if (!res.ok) {
+      const backendMessage = data && data.error ? data.error : `Maps bootstrap error (${res.status})`;
+      throw new Error(backendMessage);
+    }
+
+    const scriptSrc = data && typeof data.scriptUrl === "string" ? data.scriptUrl.trim() : "";
+
+    if (!scriptSrc) {
+      throw new Error("Maps bootstrap did not return scriptUrl.");
+    }
+
+    await injectGoogleMapsScript(scriptSrc);
+  })().catch((err) => {
+    googleMapsLoaderPromise = null;
+    throw err;
+  });
+
+  return googleMapsLoaderPromise;
+}
+
+function injectGoogleMapsScript(src) {
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector('script[data-google-maps-loader="dynamic"]');
+    if (existing) {
+      existing.addEventListener('load', () => resolve(), { once: true });
+      existing.addEventListener('error', () => reject(new Error('Google Maps script failed to load.')), { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.defer = true;
+    script.dataset.googleMapsLoader = 'dynamic';
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('Google Maps script failed to load.'));
+    document.head.appendChild(script);
+  });
+}
+
+function initGoogleMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: DEFAULT_CENTER,
+    zoom: DEFAULT_ZOOM,
+    mapTypeId: 'roadmap',
+    fullscreenControl: false
+  });
+
+  applyRouteToolsPanelState();
+
+  drawingManager = new google.maps.drawing.DrawingManager({
+    drawingMode: null,
+    drawingControl: false,
+    polylineOptions: {
+      clickable: true,
+      editable: true,
+      draggable: true,
+      strokeColor: '#2196F3',
+      strokeWeight: 3
+    }
+  });
+  drawingManager.setMap(map);
+
+  google.maps.event.addListener(drawingManager, 'polylinecomplete', (poly) => {
+    drawingManager.setDrawingMode(null);
+    setActivePolyline(poly);
+    extractPathFromPolyline(poly);
+    updateDrawRouteButtonState();
+  });
+
+  applyRouteEditState();
+  updateDrawRouteButtonState();
+}
+
+async function toggleMapFullscreen() {
+  const shell = document.getElementById('mapShell');
+  if (!shell) return;
+
+  try {
+    if (document.fullscreenElement === shell) {
+      await document.exitFullscreen();
+    } else {
+      await shell.requestFullscreen();
+    }
+  } catch {
+    // Ignore fullscreen API failures and keep current view.
+  }
+}
+
+document.addEventListener('fullscreenchange', function() {
+  const btn = document.getElementById('toggleMapFullscreenBtn');
+  const topBtn = document.getElementById('toggleMapFullscreenTopBtn');
+  const isFull = !!document.fullscreenElement;
+  if (btn) {
+    btn.textContent = isFull ? 'Exit Full Screen' : 'Full Screen';
+  }
+  if (topBtn) {
+    topBtn.textContent = isFull ? '⤡' : '⤢';
+  }
+  applyRouteToolsPanelState();
+  if (!map) return;
+
+  setTimeout(() => {
+    google.maps.event.trigger(map, 'resize');
+    if (marker && marker.getPosition) {
+      map.setCenter(marker.getPosition());
+    } else {
+      map.setCenter(DEFAULT_CENTER);
+    }
+  }, 60);
+});
+
+function isMobileViewport() {
+  return window.matchMedia('(max-width: 780px)').matches;
+}
+
+function applyRouteToolsPanelState() {
+  const routeTools = document.getElementById('routeTools');
+  const toggleBtn = document.getElementById('toggleRouteToolsBtn');
+  if (!routeTools || !toggleBtn) return;
+
+  routeTools.classList.toggle('mobile-collapsed', routeToolsMobileCollapsed);
+  toggleBtn.textContent = routeToolsMobileCollapsed ? '☰ Tools' : '✕ Close';
+  toggleBtn.setAttribute('aria-expanded', routeToolsMobileCollapsed ? 'false' : 'true');
+}
+
+function toggleRouteToolsPanel() {
+  routeToolsMobileCollapsed = !routeToolsMobileCollapsed;
+  applyRouteToolsPanelState();
+}
+
+function setActivePolyline(poly) {
+  if (activePolyline) activePolyline.setMap(null);
+  clearWaypointMarkers();
+  activePolyline = poly;
+  applyRouteEditState();
+  updateDrawRouteButtonState();
+
+  google.maps.event.addListener(poly.getPath(), 'set_at', () => extractPathFromPolyline(poly));
+  google.maps.event.addListener(poly.getPath(), 'insert_at', () => extractPathFromPolyline(poly));
+  google.maps.event.addListener(poly.getPath(), 'remove_at', () => extractPathFromPolyline(poly));
+  google.maps.event.addListener(poly, 'dragend', () => extractPathFromPolyline(poly));
+}
+
+function applyRouteEditState() {
+  const btn = document.getElementById('toggleRouteEditBtn');
+  const hasRoute = !!activePolyline || routePath.length > 0;
+
+  if (!hasRoute) {
+    routeEditEnabled = true;
+  }
+
+  if (btn) {
+    btn.disabled = !hasRoute;
+    btn.textContent = hasRoute && !routeEditEnabled ? 'Unlock Route' : 'Lock Route';
+  }
+
+  if (activePolyline) {
+    activePolyline.setEditable(routeEditEnabled);
+    // Keep route dragging off while editing so point edits are easy and precise.
+    activePolyline.setDraggable(false);
+  }
+  waypointMarkers.forEach(m => m.setDraggable(routeEditEnabled));
+}
+
+function toggleRouteEdit() {
+  const hasRoute = !!activePolyline || routePath.length > 0;
+  if (!hasRoute) return;
+
+  routeEditEnabled = !routeEditEnabled;
+  applyRouteEditState();
+}
+
+function isRouteDrawingActive() {
+  return !!(drawingManager
+    && window.google
+    && google.maps
+    && google.maps.drawing
+    && drawingManager.getDrawingMode() === google.maps.drawing.OverlayType.POLYLINE);
+}
+
+function updateDrawRouteButtonState() {
+  const btn = document.getElementById('drawRouteBtn');
+  if (!btn) return;
+
+  const hasRoute = !!activePolyline || routePath.length > 0;
+  btn.textContent = (hasRoute || isRouteDrawingActive()) ? 'Clear Route' : 'Draw Route';
+}
+
+function clearActiveRoute() {
+  if (drawingManager) {
+    drawingManager.setDrawingMode(null);
+  }
+  if (activePolyline) {
+    activePolyline.setMap(null);
+    activePolyline = null;
+  }
+  clearWaypointMarkers();
+  routePath = [];
+  applyRouteEditState();
+  updateDrawRouteButtonState();
+}
+
+function handleDrawRouteToggle() {
+  if (!drawingManager || !window.google || !google.maps || !google.maps.drawing) return;
+
+  const hasRoute = !!activePolyline || routePath.length > 0;
+  if (hasRoute || isRouteDrawingActive()) {
+    clearActiveRoute();
+    return;
+  }
+
+  drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
+  updateDrawRouteButtonState();
+}
+
+function extractPathFromPolyline(poly) {
+  routePath = poly.getPath().getArray().map(ll => ({ lat: ll.lat(), lng: ll.lng() }));
+  rebuildWaypointMarkers(poly);
+}
+
+// Always read the current map state at export time — never rely solely on the cached array.
+function syncRoutePath() {
+  if (activePolyline) {
+    routePath = activePolyline.getPath().getArray().map(ll => ({ lat: ll.lat(), lng: ll.lng() }));
+  }
+}
+
+function clearWaypointMarkers() {
+  waypointMarkers.forEach(m => m.setMap(null));
+  waypointMarkers = [];
+}
+
+function rebuildWaypointMarkers(poly) {
+  clearWaypointMarkers();
+  const path = poly.getPath();
+  const points = path.getArray();
+
+  points.forEach((pt, idx) => {
+    const markerWp = new google.maps.Marker({
+      position: pt,
+      map,
+      draggable: routeEditEnabled,
+      title: `Waypoint ${idx + 1}`,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 5,
+        fillColor: '#ffffff',
+        fillOpacity: 1,
+        strokeColor: '#1a73e8',
+        strokeWeight: 2
+      },
+      label: {
+        text: String(idx + 1),
+        color: '#16324f',
+        fontSize: '10px',
+        fontWeight: '700'
+      }
+    });
+
+    markerWp.addListener('dragend', () => {
+      const p = markerWp.getPosition();
+      if (!p || !routeEditEnabled) return;
+      path.setAt(idx, p);
+    });
+
+    waypointMarkers.push(markerWp);
+  });
+}
+
+function exportRouteGeoJSON() {
+  syncRoutePath();
+  if (!routePath.length) {
+    alert('No route selected or defined.\n\nDefine a route before saving (Draw Route or import GPX/KML/KMZ/GeoJSON).');
+    return;
+  }
+
+  const geo = {
+    type: 'Feature',
+    properties: {},
+    geometry: {
+      type: 'LineString',
+      coordinates: routePath.map(p => [p.lng, p.lat, 0])
+    }
+  };
+
+  const blob = new Blob([JSON.stringify(geo)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const gjName = prompt('Save GeoJSON as:', 'route.geojson');
+  if (!gjName) { URL.revokeObjectURL(url); return; }
+  a.download = gjName.endsWith('.geojson') || gjName.endsWith('.json') ? gjName : gjName + '.geojson';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportRouteKML() {
+  syncRoutePath();
+  if (!routePath.length) {
+    alert('No route selected or defined.\n\nDefine a route before saving (Draw Route or import GPX/KML/KMZ/GeoJSON).');
+    return;
+  }
+
+  const coordinates = routePath.map(p => `${p.lng},${p.lat},0`).join('\n            ');
+  const kml = `<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Mission Route</name>
+    <Placemark>
+      <name>Route</name>
+      <Style>
+        <LineStyle><color>ff33aaff</color><width>3</width></LineStyle>
+      </Style>
+      <LineString>
+        <tessellate>1</tessellate>
+        <coordinates>
+            ${coordinates}
+        </coordinates>
+      </LineString>
+    </Placemark>
+  </Document>
+</kml>`;
+
+  const blob = new Blob([kml], { type: 'application/vnd.google-earth.kml+xml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const kmlName = prompt('Save KML as:', 'route.kml');
+  if (!kmlName) { URL.revokeObjectURL(url); return; }
+  a.download = kmlName.endsWith('.kml') ? kmlName : kmlName + '.kml';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function getWaypointHeading(index) {
+  if (!routePath.length) return 0;
+  const here = routePath[index];
+  const next = routePath[index + 1] || routePath[index - 1] || routePath[index];
+  if (!next || (here.lat === next.lat && here.lng === next.lng)) return 0;
+
+  return google.maps.geometry.spherical.computeHeading(
+    new google.maps.LatLng(here.lat, here.lng),
+    new google.maps.LatLng(next.lat, next.lng)
+  ) || 0;
+}
+
+function buildDJITemplateKML(createTimeMs) {
+  const settings = getDJIMissionSettings();
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:wpml="http://www.dji.com/wpmz/1.0.2">
+  <Document>
+    <wpml:author>Drone_SOP</wpml:author>
+    <wpml:createTime>${createTimeMs}</wpml:createTime>
+    <wpml:updateTime>${createTimeMs}</wpml:updateTime>
+    <wpml:missionConfig>
+      <wpml:flyToWaylineMode>safely</wpml:flyToWaylineMode>
+      <wpml:finishAction>${settings.finishAction}</wpml:finishAction>
+      <wpml:exitOnRCLost>executeLostAction</wpml:exitOnRCLost>
+      <wpml:executeRCLostAction>hover</wpml:executeRCLostAction>
+      <wpml:globalTransitionalSpeed>${settings.speed}</wpml:globalTransitionalSpeed>
+      <wpml:droneInfo>
+        <wpml:droneEnumValue>68</wpml:droneEnumValue>
+        <wpml:droneSubEnumValue>0</wpml:droneSubEnumValue>
+      </wpml:droneInfo>
+    </wpml:missionConfig>
+  </Document>
+</kml>`;
+}
+
+function getDJIMissionSettings() {
+  const height = Number(document.getElementById('djiExecHeight')?.value);
+  const speed = Number(document.getElementById('djiWaypointSpeed')?.value);
+  const finishAction = document.getElementById('djiFinishAction')?.value || 'goHome';
+  const gimbalPitch = document.getElementById('djiGimbalPitch')?.value || 'none';
+  const takePhotoEachWp = !!document.getElementById('djiTakePhotoEachWp')?.checked;
+
+  return {
+    height: Number.isFinite(height) && height > 0 ? height : 60,
+    speed: Number.isFinite(speed) && speed > 0 ? speed : 2.5,
+    finishAction,
+    gimbalPitch,
+    takePhotoEachWp
+  };
+}
+
+function buildDJIWaylinesWPML() {
+  const settings = getDJIMissionSettings();
+  let actionGroupId = 1;
+  let actionId = 1;
+  const placemarks = routePath.map((p, i) => {
+    const heading = getWaypointHeading(i).toFixed(6);
+    const isLast = i === routePath.length - 1;
+    const turnMode = isLast ? 'toPointAndStopWithContinuityCurvature' : 'toPointAndPassWithContinuityCurvature';
+
+    const actions = [];
+    if (settings.gimbalPitch !== 'none') {
+      actions.push(`
+          <wpml:action>
+            <wpml:actionId>${actionId++}</wpml:actionId>
+            <wpml:actionActuatorFunc>gimbalRotate</wpml:actionActuatorFunc>
+            <wpml:actionActuatorFuncParam>
+              <wpml:gimbalHeadingYawBase>aircraft</wpml:gimbalHeadingYawBase>
+              <wpml:gimbalRotateMode>absoluteAngle</wpml:gimbalRotateMode>
+              <wpml:gimbalPitchRotateEnable>1</wpml:gimbalPitchRotateEnable>
+              <wpml:gimbalPitchRotateAngle>${settings.gimbalPitch}</wpml:gimbalPitchRotateAngle>
+              <wpml:gimbalRollRotateEnable>0</wpml:gimbalRollRotateEnable>
+              <wpml:gimbalRollRotateAngle>0</wpml:gimbalRollRotateAngle>
+              <wpml:gimbalYawRotateEnable>0</wpml:gimbalYawRotateEnable>
+              <wpml:gimbalYawRotateAngle>0</wpml:gimbalYawRotateAngle>
+              <wpml:gimbalRotateTimeEnable>0</wpml:gimbalRotateTimeEnable>
+              <wpml:gimbalRotateTime>0</wpml:gimbalRotateTime>
+              <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
+            </wpml:actionActuatorFuncParam>
+          </wpml:action>`);
+    }
+
+    if (settings.takePhotoEachWp) {
+      actions.push(`
+          <wpml:action>
+            <wpml:actionId>${actionId++}</wpml:actionId>
+            <wpml:actionActuatorFunc>takePhoto</wpml:actionActuatorFunc>
+            <wpml:actionActuatorFuncParam>
+              <wpml:fileSuffix>WP${i + 1}</wpml:fileSuffix>
+              <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
+            </wpml:actionActuatorFuncParam>
+          </wpml:action>`);
+    }
+
+    const actionGroup = actions.length ? `
+        <wpml:actionGroup>
+          <wpml:actionGroupId>${actionGroupId++}</wpml:actionGroupId>
+          <wpml:actionGroupStartIndex>${i}</wpml:actionGroupStartIndex>
+          <wpml:actionGroupEndIndex>${i}</wpml:actionGroupEndIndex>
+          <wpml:actionGroupMode>parallel</wpml:actionGroupMode>
+          <wpml:actionTrigger>
+            <wpml:actionTriggerType>reachPoint</wpml:actionTriggerType>
+          </wpml:actionTrigger>${actions.join('')}
+        </wpml:actionGroup>` : '';
+
+    return `
+      <Placemark>
+        <Point>
+          <coordinates>${p.lng},${p.lat}</coordinates>
+        </Point>
+        <wpml:index>${i}</wpml:index>
+        <wpml:executeHeight>${settings.height}</wpml:executeHeight>
+        <wpml:waypointSpeed>${settings.speed}</wpml:waypointSpeed>
+        <wpml:waypointHeadingParam>
+          <wpml:waypointHeadingMode>smoothTransition</wpml:waypointHeadingMode>
+          <wpml:waypointHeadingAngle>${heading}</wpml:waypointHeadingAngle>
+          <wpml:waypointPoiPoint>0.000000,0.000000,0.000000</wpml:waypointPoiPoint>
+          <wpml:waypointHeadingAngleEnable>0</wpml:waypointHeadingAngleEnable>
+          <wpml:waypointHeadingPathMode>followBadArc</wpml:waypointHeadingPathMode>
+        </wpml:waypointHeadingParam>
+        <wpml:waypointTurnParam>
+          <wpml:waypointTurnMode>${turnMode}</wpml:waypointTurnMode>
+          <wpml:waypointTurnDampingDist>0</wpml:waypointTurnDampingDist>
+        </wpml:waypointTurnParam>
+        <wpml:useStraightLine>0</wpml:useStraightLine>${actionGroup}
+      </Placemark>`;
+  }).join('');
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:wpml="http://www.dji.com/wpmz/1.0.2">
+  <Document>
+    <wpml:missionConfig>
+      <wpml:flyToWaylineMode>safely</wpml:flyToWaylineMode>
+      <wpml:finishAction>${settings.finishAction}</wpml:finishAction>
+      <wpml:exitOnRCLost>executeLostAction</wpml:exitOnRCLost>
+      <wpml:executeRCLostAction>hover</wpml:executeRCLostAction>
+      <wpml:globalTransitionalSpeed>${settings.speed}</wpml:globalTransitionalSpeed>
+      <wpml:droneInfo>
+        <wpml:droneEnumValue>68</wpml:droneEnumValue>
+        <wpml:droneSubEnumValue>0</wpml:droneSubEnumValue>
+      </wpml:droneInfo>
+    </wpml:missionConfig>
+    <Folder>
+      <wpml:templateId>0</wpml:templateId>
+      <wpml:executeHeightMode>relativeToStartPoint</wpml:executeHeightMode>
+      <wpml:waylineId>0</wpml:waylineId>
+      <wpml:distance>0</wpml:distance>
+      <wpml:duration>0</wpml:duration>
+      <wpml:autoFlightSpeed>${settings.speed}</wpml:autoFlightSpeed>${placemarks}
+    </Folder>
+  </Document>
+</kml>`;
+}
+
+async function exportDJIKMZ() {
+  syncRoutePath();
+  if (!routePath.length) {
+    alert('No route selected or defined.\n\nDefine a route before saving (Draw Route or import GPX/KML/KMZ/GeoJSON).');
+    return;
+  }
+  if (typeof JSZip === 'undefined') {
+    alert('JSZip failed to load, cannot create KMZ.');
+    return;
+  }
+
+  try {
+    const createTimeMs = Date.now();
+    const templateKml = buildDJITemplateKML(createTimeMs);
+    const waylinesWpml = buildDJIWaylinesWPML();
+
+    const zip = new JSZip();
+    const wpmz = zip.folder('wpmz');
+    wpmz.file('template.kml', templateKml);
+    wpmz.file('waylines.wpml', waylinesWpml);
+
+    const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const kmzName = prompt('Save DJI KMZ as:', 'dji_waypoint_mission.kmz');
+    if (!kmzName) { URL.revokeObjectURL(url); return; }
+    a.download = kmzName.endsWith('.kmz') ? kmzName : kmzName + '.kmz';
+    a.click();
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert(`Failed to create DJI KMZ: ${err && err.message ? err.message : 'Unknown error'}`);
+  }
+}
+
+function handleRouteFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const name = file.name.toLowerCase();
+
+  // ── KMZ (ZIP archive) — read as ArrayBuffer and unzip ──────────────────
+  if (name.endsWith('.kmz')) {
+    const abReader = new FileReader();
+    abReader.onload = async (ev) => {
+      try {
+        const zip = await JSZip.loadAsync(ev.target.result);
+
+        // ── Try DJI WPMZ format first (wpmz/waylines.wpml) ────────────────
+        const wpmlFile = zip.file('wpmz/waylines.wpml');
+        if (wpmlFile) {
+          const wpmlText = await wpmlFile.async('string');
+          const wpmlXml  = (new DOMParser()).parseFromString(wpmlText, 'text/xml');
+
+          // Extract waypoint coordinates from <Placemark><Point><coordinates>
+          const placemarks = wpmlXml.querySelectorAll('Placemark Point coordinates');
+          const coords = [];
+          placemarks.forEach(el => {
+            const raw = el.textContent.trim();
+            const parts = raw.split(',');
+            if (parts.length >= 2) {
+              const lon = parseFloat(parts[0]);
+              const lat = parseFloat(parts[1]);
+              if (!isNaN(lon) && !isNaN(lat)) coords.push([lon, lat]);
+            }
+          });
+
+          if (coords.length < 2) {
+            alert('KMZ: found waylines.wpml but could not extract waypoints.');
+            return;
+          }
+
+          // Restore mission settings — use getElementsByTagNameNS (querySelector is unreliable for XML namespaces)
+          const wpmlNS = 'http://www.dji.com/wpmz/1.0.2';
+
+          const heightEls = wpmlXml.getElementsByTagNameNS(wpmlNS, 'executeHeight');
+          const speedEls  = wpmlXml.getElementsByTagNameNS(wpmlNS, 'waypointSpeed');
+          if (heightEls.length) document.getElementById('djiExecHeight').value    = parseFloat(heightEls[0].textContent) || 60;
+          if (speedEls.length)  document.getElementById('djiWaypointSpeed').value = parseFloat(speedEls[0].textContent)  || 2.5;
+
+          // Restore gimbal pitch from first gimbalRotate action
+          const actionFuncEls = wpmlXml.getElementsByTagNameNS(wpmlNS, 'actionActuatorFunc');
+          for (let i = 0; i < actionFuncEls.length; i++) {
+            if (actionFuncEls[i].textContent.trim() === 'gimbalRotate') {
+              const pitchEls = actionFuncEls[i].parentElement.getElementsByTagNameNS(wpmlNS, 'gimbalPitchRotateAngle');
+              if (pitchEls.length) {
+                const pv = String(parseFloat(pitchEls[0].textContent));
+                const gs = document.getElementById('djiGimbalPitch');
+                if ([...gs.options].some(o => o.value === pv)) gs.value = pv;
+              }
+              break;
+            }
+          }
+
+          // Restore takePhoto checkbox
+          let hasTakePhoto = false;
+          for (let i = 0; i < actionFuncEls.length; i++) {
+            if (actionFuncEls[i].textContent.trim() === 'takePhoto') { hasTakePhoto = true; break; }
+          }
+          document.getElementById('djiTakePhotoEachWp').checked = hasTakePhoto;
+
+          // Restore finishAction from template.kml
+          const tmplFile = zip.file('wpmz/template.kml');
+          if (tmplFile) {
+            const tmplText = await tmplFile.async('string');
+            const tmplXml  = (new DOMParser()).parseFromString(tmplText, 'text/xml');
+            const faEls = tmplXml.getElementsByTagNameNS(wpmlNS, 'finishAction');
+            if (faEls.length) {
+              const sel = document.getElementById('djiFinishAction');
+              const val = faEls[0].textContent.trim();
+              if ([...sel.options].some(o => o.value === val)) sel.value = val;
+            }
+          }
+
+          const gj = { type: 'FeatureCollection', features: [{
+            type: 'Feature',
+            geometry: { type: 'LineString', coordinates: coords },
+            properties: {}
+          }]};
+          importRouteFromGeoJSON(gj);
+          return;
+        }
+
+        // ── Fall back: look for any .kml inside the ZIP ───────────────────
+        let kmlEntry = null;
+        zip.forEach((relPath, f) => {
+          if (!kmlEntry && relPath.toLowerCase().endsWith('.kml')) kmlEntry = f;
+        });
+        if (!kmlEntry) { alert('No KML or WPML found inside the KMZ file.'); return; }
+
+        const kmlText = await kmlEntry.async('string');
+        const kmlXml  = (new DOMParser()).parseFromString(kmlText, 'text/xml');
+        let gj = null;
+        try { gj = window.toGeoJSON.kml(kmlXml); } catch (err) { alert('Failed to parse KML inside KMZ.'); return; }
+        importRouteFromGeoJSON(gj);
+
+      } catch (err) {
+        alert('Failed to open KMZ file: ' + err.message);
+      }
+    };
+    abReader.readAsArrayBuffer(file);
+    return;
+  }
+
+  // ── Text-based formats ─────────────────────────────────────────────────
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const text = ev.target.result;
+
+    if (name.endsWith('.geojson') || name.endsWith('.json')) {
+      try {
+        const gj = JSON.parse(text);
+        importRouteFromGeoJSON(gj);
+      } catch (err) {
+        alert('Invalid GeoJSON file.');
+      }
+      return;
+    }
+
+    let xml;
+    try {
+      xml = (new DOMParser()).parseFromString(text, 'text/xml');
+    } catch (err) {
+      alert('Failed to parse route file.');
+      return;
+    }
+
+    let gj = null;
+    try {
+      if (name.endsWith('.gpx')) gj = window.toGeoJSON.gpx(xml);
+      else if (name.endsWith('.kml')) gj = window.toGeoJSON.kml(xml);
+    } catch (err) {
+      alert('Failed to convert GPX/KML route.');
+      return;
+    }
+    if (!gj) {
+      alert('Unsupported route file.');
+      return;
+    }
+
+    importRouteFromGeoJSON(gj);
+  };
+
+  if (name.endsWith('.geojson') || name.endsWith('.json')) {
+    reader.readAsText(file);
+  } else if (name.endsWith('.gpx') || name.endsWith('.kml')) {
+    reader.readAsText(file);
+  } else {
+    alert('Use GPX, KML, KMZ, or GeoJSON route files.');
+  }
+}
+
+function importRouteFromGeoJSON(gj) {
+  let coords = null;
+  if (gj.features && gj.features.length) {
+    for (const f of gj.features) {
+      const geom = f.geometry;
+      if (!geom) continue;
+      if (geom.type === 'LineString') {
+        coords = geom.coordinates;
+        break;
+      }
+      if (geom.type === 'MultiLineString') {
+        coords = geom.coordinates[0];
+        break;
+      }
+    }
+  } else if (gj.type === 'Feature' && gj.geometry && gj.geometry.type === 'LineString') {
+    coords = gj.geometry.coordinates;
+  }
+
+  if (!coords || !coords.length) {
+    alert('No route LineString found in file.');
+    return;
+  }
+
+  const gpath = coords.map(c => new google.maps.LatLng(c[1], c[0]));
+  const poly = new google.maps.Polyline({
+    path: gpath,
+    strokeColor: '#4caf50',
+    strokeWeight: 3,
+    editable: routeEditEnabled,
+    draggable: false,
+    map
+  });
+
+  routeEditEnabled = true;
+  setActivePolyline(poly);
+  applyRouteEditState();
+  routePath = gpath.map(g => ({ lat: g.lat(), lng: g.lng() }));
+
+  const bounds = new google.maps.LatLngBounds();
+  gpath.forEach(g => bounds.extend(g));
+  map.fitBounds(bounds);
+  extractPathFromPolyline(poly);
+}
+
+function handleAddressInputForAutocomplete() {
+  const addressInput = document.getElementById('address');
+  const query = addressInput ? addressInput.value.trim() : '';
+
+  if (autocompleteDebounceTimer) {
+    clearTimeout(autocompleteDebounceTimer);
+    autocompleteDebounceTimer = null;
+  }
+
+  if (query.length < AUTOCOMPLETE_MIN_CHARS) {
+    if (autocompleteAbortController) {
+      autocompleteAbortController.abort();
+      autocompleteAbortController = null;
+    }
+    clearAddressSuggestions();
+    return;
+  }
+
+  autocompleteDebounceTimer = setTimeout(() => {
+    fetchAddressSuggestions(query);
+  }, AUTOCOMPLETE_DEBOUNCE_MS);
+}
+
+async function fetchAddressSuggestions(query) {
+  const requestId = ++autocompleteRequestId;
+
+  if (autocompleteAbortController) {
+    autocompleteAbortController.abort();
+  }
+  autocompleteAbortController = new AbortController();
+
+  const url = `${AUTOCOMPLETE_ENDPOINT}?input=${encodeURIComponent(query)}&components=${encodeURIComponent(AUTOCOMPLETE_COMPONENTS)}&types=address`;
+
+  try {
+    const res = await fetch(url, {
+      headers: {
+        "Accept": "application/json"
+      },
+      signal: autocompleteAbortController.signal
+    });
+
+    const data = await readJsonResponse(res);
+    if (requestId !== autocompleteRequestId) {
+      return;
+    }
+    if (!res.ok) {
+      clearAddressSuggestions();
+      return;
+    }
+
+    const validStatus = data && (data.status === 'OK' || data.status === 'ZERO_RESULTS');
+    if (!validStatus || !Array.isArray(data.predictions)) {
+      clearAddressSuggestions();
+      return;
+    }
+
+    const suggestions = [];
+    const seen = new Set();
+    for (const prediction of data.predictions) {
+      const desc = prediction && typeof prediction.description === 'string' ? prediction.description.trim() : '';
+      const key = desc.toLowerCase();
+      if (!desc || seen.has(key)) continue;
+      seen.add(key);
+      suggestions.push(desc);
+      if (suggestions.length >= 8) break;
+    }
+
+    renderAddressSuggestions(suggestions);
+  } catch (err) {
+    if (err && err.name === 'AbortError') {
+      return;
+    }
+    clearAddressSuggestions();
+  }
+}
+
+function clearAddressSuggestions() {
+  autocompleteSuggestions = [];
+  autocompleteActiveIndex = -1;
+  renderAddressSuggestions([]);
+}
+
+function renderAddressSuggestions(suggestions) {
+  const menu = document.getElementById('addressSuggestions');
+  const addressInput = document.getElementById('address');
+  if (!menu || !addressInput) return;
+
+  autocompleteSuggestions = Array.isArray(suggestions) ? suggestions.slice() : [];
+  autocompleteActiveIndex = autocompleteSuggestions.length ? 0 : -1;
+
+  menu.innerHTML = '';
+  autocompleteSuggestions.forEach((suggestion, index) => {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'autocomplete-item' + (index === autocompleteActiveIndex ? ' active' : '');
+    item.setAttribute('role', 'option');
+    item.setAttribute('aria-selected', index === autocompleteActiveIndex ? 'true' : 'false');
+    item.textContent = suggestion;
+
+    item.addEventListener('mouseenter', function() {
+      autocompleteActiveIndex = index;
+      updateAutocompleteActiveState();
+    });
+
+    item.addEventListener('mousedown', function(e) {
+      e.preventDefault();
+      selectAddressSuggestion(index);
+    });
+
+    menu.appendChild(item);
+  });
+
+  setAutocompleteMenuOpen(autocompleteSuggestions.length > 0);
+}
+
+function setAutocompleteMenuOpen(isOpen) {
+  const menu = document.getElementById('addressSuggestions');
+  if (!menu) return;
+
+  if (isOpen) {
+    menu.classList.add('open');
+  } else {
+    menu.classList.remove('open');
+  }
+}
+
+function moveAutocompleteSelection(direction) {
+  if (!autocompleteSuggestions.length) return;
+
+  autocompleteActiveIndex += direction;
+  if (autocompleteActiveIndex < 0) {
+    autocompleteActiveIndex = autocompleteSuggestions.length - 1;
+  }
+  if (autocompleteActiveIndex >= autocompleteSuggestions.length) {
+    autocompleteActiveIndex = 0;
+  }
+
+  updateAutocompleteActiveState();
+}
+
+function updateAutocompleteActiveState() {
+  const menu = document.getElementById('addressSuggestions');
+  if (!menu) return;
+
+  const items = menu.querySelectorAll('.autocomplete-item');
+  items.forEach((item, idx) => {
+    const isActive = idx === autocompleteActiveIndex;
+    item.classList.toggle('active', isActive);
+    item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    if (isActive) {
+      item.scrollIntoView({ block: 'nearest' });
+    }
+  });
+}
+
+function selectAddressSuggestion(index) {
+  if (index < 0 || index >= autocompleteSuggestions.length) return;
+
+  const addressInput = document.getElementById('address');
+  if (!addressInput) return;
+
+  addressInput.value = autocompleteSuggestions[index];
+  clearAddressSuggestions();
+  addressInput.focus();
+}
+
+// -------------------------
+// MAIN LOOKUP FUNCTION
+// -------------------------
+async function runLookup() {
+  const address = document.getElementById("address").value.trim();
+
+  if (!address) return;
+
+  clearAddressSuggestions();
+
+  if (!map || !window.google || !window.google.maps) {
+    showLookupMessage("Map is still initializing. Try again in a moment.", "warn");
+    return;
+  }
+
+  const url = `${GEOCODE_ENDPOINT}?address=${encodeURIComponent(address)}&components=${encodeURIComponent("country:CA")}`;
+
+  let data;
+  try {
+    const res = await fetch(url, {
+      headers: {
+        "Accept": "application/json"
+      }
+    });
+    data = await readJsonResponse(res);
+    if (!res.ok) {
+      const backendMessage = data && data.error_message ? data.error_message : `Geocode proxy error (${res.status})`;
+      throw new Error(backendMessage);
+    }
+  } catch (err) {
+    const message = err && err.message ? err.message : "Geocode lookup failed.";
+    showLookupMessage(message, "warn");
+    return;
+  }
+
+  if (data.status !== "OK") {
+    showLookupMessage("Location not found.", "warn");
+    return;
+  }
+
+  const result = data.results[0];
+  const lat = result.geometry.location.lat;
+  const lng = result.geometry.location.lng;
+
+  updateMap(lat, lng);
+  updateResults(result, lat, lng);
+  buildDSSTLink(lat, lng);
+  showLatLonCopy(lat, lng);
+  saveLookupHistory(address);
+
+  checkAirspace(lat, lng); // future-ready
+}
+
+// -------------------------
+// MAP HANDLING
+// -------------------------
+function updateMap(lat, lng) {
+  const position = { lat, lng };
+  if (!marker) {
+    marker = new google.maps.Marker({
+      position,
+      map,
+      draggable: true,
+      title: 'Mission marker'
+    });
+
+    marker.addListener('dragend', function() {
+      const p = marker.getPosition();
+      if (!p) return;
+      const draggedLat = p.lat();
+      const draggedLng = p.lng();
+      showLatLonCopy(draggedLat, draggedLng);
+      buildDSSTLink(draggedLat, draggedLng);
+      checkAirspace(draggedLat, draggedLng);
+      const resultEl = document.getElementById('result');
+      resultEl.innerHTML += `<br><em>Marker adjusted to:</em> ${draggedLat.toFixed(6)}, ${draggedLng.toFixed(6)}`;
+    });
+  } else {
+    marker.setPosition(position);
+  }
+
+  map.setCenter(position);
+  map.setZoom(14);
+}
+
+// -------------------------
+// RESULTS DISPLAY
+// -------------------------
+function updateResults(result, lat, lng) {
+  document.getElementById("result").innerHTML = `
+    <strong>${result.formatted_address}</strong><br>
+    DD (6) Lat: ${lat.toFixed(6)} | Lon: ${lng.toFixed(6)}
+  `;
+  document.getElementById("result").className = "result result-box";
+}
+
+function showLookupMessage(message, tone) {
+  document.getElementById("result").innerText = message;
+  document.getElementById("result").className = `result result-box ${tone}`;
+}
+
+async function readJsonResponse(res) {
+  const text = await res.text();
+  if (!text) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error("Service returned invalid JSON.");
+  }
+}
+
+// Show copyable Lat/Lon
+function showLatLonCopy(lat, lng) {
+  const copyRow = document.getElementById("latlonCopyRow");
+  document.getElementById("latCopy").value = lat.toFixed(6);
+  document.getElementById("lonCopy").value = lng.toFixed(6);
+  copyRow.style.display = "grid";
+}
+
+// Copy Lat/Lon to clipboard
+// Copy single field to clipboard
+function copySingle(inputId, btn) {
+  const copyInput = document.getElementById(inputId);
+  copyInput.select();
+  copyInput.setSelectionRange(0, 99999); // For mobile
+  document.execCommand("copy");
+  // Optional: show feedback
+  const oldText = btn.innerText;
+  btn.innerText = "Copied!";
+  setTimeout(() => { btn.innerText = oldText; }, 1200);
+ }
+
+// -------------------------
+// DSST LINK
+// -------------------------
+function buildDSSTLink(lat, lng) {
+  const url = `https://nrc.canada.ca/en/drone-tool-2/map.html`;
+  document.getElementById("dsstLink").innerHTML = `
+    <a class="action-link" href="${url}" target="_blank" rel="noopener noreferrer" onclick="openDSSTModal(${lat.toFixed(6)}, ${lng.toFixed(6)})">Open in NAV CANADA DSST</a>
+  `;
+  buildNotamsMapLink(lat, lng);
+}
+
+// Add NotamsMap.html link below lat/lon copy fields
+function buildNotamsMapLink(lat, lng) {
+  // Use 6 decimal places for precision
+  const notamsUrl = `NotamsMap.html?center=${lat.toFixed(6)},${lng.toFixed(6)}`;
+  let notamsLink = document.getElementById('notamsMapLink');
+  if (!notamsLink) {
+    notamsLink = document.createElement('div');
+    notamsLink.id = 'notamsMapLink';
+    notamsLink.className = 'result';
+    // Insert after latlonCopyRow
+    const actionPanel = document.getElementById('dsstLink').parentNode;
+    actionPanel.appendChild(notamsLink);
+  }
+  notamsLink.innerHTML = `<a class="action-link" href="${notamsUrl}" target="_blank">Open in NotamsMap with this location</a>`;
+
+  // Add Google Maps hotlink with full precision
+  let gmapsLink = document.getElementById('gmapsHotlink');
+  if (!gmapsLink) {
+    gmapsLink = document.createElement('div');
+    gmapsLink.id = 'gmapsHotlink';
+    gmapsLink.className = 'result';
+    notamsLink.parentNode.appendChild(gmapsLink);
+  }
+  const gmapsUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+  gmapsLink.innerHTML = `<a class="action-link" href="${gmapsUrl}" target="_blank" rel="noopener noreferrer">Open in Google Maps (full precision)</a>`;
+}
+
+// Show DSST modal with lat/lon
+function openDSSTModal(lat, lng) {
+  document.getElementById('modalLat').value = Number(lat).toFixed(6);
+  document.getElementById('modalLon').value = Number(lng).toFixed(6);
+  document.getElementById('dsstModal').style.display = 'flex';
+}
+
+function closeDSSTModal() {
+  document.getElementById('dsstModal').style.display = 'none';
+}
+
+// -------------------------
+// AIRSPACE CHECK (GeoJSON-ready)
+// -------------------------
+let airspaceData = null;
+let airspaceLoaded = false;
+let airspaceLoadError = "";
+
+// Load your local GeoJSON dataset (placeholder file is included until real data is provided).
+fetch('./data/canadian_airspace.geojson')
+  .then(res => {
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+    return res.json();
+  })
+  .then(data => {
+    const isFeatureCollection = data && data.type === "FeatureCollection" && Array.isArray(data.features);
+    if (!isFeatureCollection) {
+      throw new Error("Invalid GeoJSON structure");
+    }
+    airspaceData = data;
+    airspaceLoaded = true;
+  })
+  .catch(err => {
+    airspaceLoadError = err && err.message ? err.message : "Unknown airspace data error";
+    airspaceLoaded = true;
+  });
+
+// Simple point-in-polygon
+function checkAirspace(lat, lng) {
+  if (!airspaceLoaded) {
+    document.getElementById("airspace").innerText = "Airspace data loading...";
+    document.getElementById("airspace").className = "result result-box dim";
+    return;
+  }
+
+  if (!airspaceData || airspaceLoadError) {
+    document.getElementById("airspace").innerHTML = `Airspace dataset unavailable (${airspaceLoadError || "not loaded"}). Verify in NAV CANADA DSST.`;
+    document.getElementById("airspace").className = "result result-box warn";
+    return;
+  }
+
+  if (!airspaceData.features || airspaceData.features.length === 0) {
+    document.getElementById("airspace").innerHTML = "Airspace dataset is installed but empty. Add polygon features to data/canadian_airspace.geojson.";
+    document.getElementById("airspace").className = "result result-box warn";
+    return;
+  }
+
+  let inside = false;
+  let zoneName = "";
+  let zoneClass = "";
+
+  airspaceData.features.forEach(feature => {
+    if (isPointInsideFeature([lng, lat], feature)) {
+      inside = true;
+      zoneName = feature.properties.name || "Controlled Airspace";
+      zoneClass = feature.properties.class || feature.properties.airspace_class || "";
+    }
+  });
+
+  const zoneLabel = zoneClass ? `${zoneName} (Class ${zoneClass})` : zoneName;
+  document.getElementById("airspace").innerHTML = inside
+    ? `🛑 Inside: <strong>${zoneLabel}</strong>`
+    : `✅ No controlled airspace detected`;
+  document.getElementById("airspace").className = inside ? "result result-box warn" : "result result-box ok";
+}
+
+function isPointInsideFeature(point, feature) {
+  if (!feature || !feature.geometry) return false;
+  const geometry = feature.geometry;
+
+  if (geometry.type === "Polygon") {
+    return isPointInsidePolygonGeometry(point, geometry.coordinates);
+  }
+
+  if (geometry.type === "MultiPolygon") {
+    for (let i = 0; i < geometry.coordinates.length; i++) {
+      if (isPointInsidePolygonGeometry(point, geometry.coordinates[i])) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+function isPointInsidePolygonGeometry(point, polygonCoords) {
+  if (!Array.isArray(polygonCoords) || polygonCoords.length === 0) {
+    return false;
+  }
+
+  // First ring is exterior; subsequent rings are holes.
+  const exteriorRing = polygonCoords[0];
+  if (!pointInRing(point, exteriorRing)) {
+    return false;
+  }
+
+  for (let i = 1; i < polygonCoords.length; i++) {
+    if (pointInRing(point, polygonCoords[i])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+// Ray-casting algorithm
+function pointInRing(point, vs) {
+  let x = point[0], y = point[1];
+  let inside = false;
+
+  for (let i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+    let xi = vs[i][0], yi = vs[i][1];
+    let xj = vs[j][0], yj = vs[j][1];
+
+    let intersect = ((yi > y) !== (yj > y))
+      && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+
+    if (intersect) inside = !inside;
+  }
+
+  return inside;
+}
+
+function toggleSection(bodyId) {
+  const body = document.getElementById(bodyId);
+  if (!body) return;
+  const header = body.previousElementSibling;
+  body.classList.toggle('collapsed');
+  if (header) header.classList.toggle('collapsed');
+}
+
+function goBack(event) {
+  event.preventDefault();
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = "tools.html";
+  }
+}
+
+function getLookupHistory() {
+  let fromLocal = [];
+  try {
+    const raw = localStorage.getItem(LOOKUP_HISTORY_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      fromLocal = Array.isArray(parsed) ? parsed : [];
+    }
+  } catch {
+    fromLocal = [];
+  }
+
+  if (fromLocal.length > 0) {
+    return fromLocal;
+  }
+
+  const rawCookie = getCookie(LOOKUP_HISTORY_COOKIE);
+  if (!rawCookie) {
+    return [];
+  }
+
+  try {
+    const parsed = JSON.parse(rawCookie);
+    const fromCookie = Array.isArray(parsed) ? parsed : [];
+    if (fromCookie.length > 0) {
+      try {
+        localStorage.setItem(LOOKUP_HISTORY_KEY, JSON.stringify(fromCookie));
+      } catch {
+        // Ignore localStorage write failures.
+      }
+    }
+    return fromCookie;
+  } catch {
+    return [];
+  }
+}
+
+function saveLookupHistory(address) {
+  const cleanAddress = address.trim();
+  if (!cleanAddress) return;
+
+  const lowered = cleanAddress.toLowerCase();
+  const history = getLookupHistory().filter(item => String(item).toLowerCase() !== lowered);
+  history.unshift(cleanAddress);
+  const capped = history.slice(0, MAX_LOOKUP_HISTORY);
+
+  const serialized = JSON.stringify(capped);
+  try {
+    localStorage.setItem(LOOKUP_HISTORY_KEY, serialized);
+  } catch {
+    // Ignore localStorage write failures.
+  }
+  setCookie(LOOKUP_HISTORY_COOKIE, serialized, LOOKUP_HISTORY_TTL_DAYS);
+  renderLookupHistory();
+}
+
+function renderLookupHistory() {
+  const select = document.getElementById("lookupHistory");
+  if (!select) return;
+
+  const history = getLookupHistory();
+  select.innerHTML = '<option value="">Choose a recent lookup...</option>';
+
+  history.forEach(item => {
+    const opt = document.createElement("option");
+    opt.value = item;
+    opt.textContent = item;
+    select.appendChild(opt);
+  });
+}
+
+function applyHistoryLookup() {
+  const select = document.getElementById("lookupHistory");
+  const chosen = select ? select.value : "";
+  if (!chosen) return;
+  document.getElementById("address").value = chosen;
+  runLookup();
+}
+
+function clearInputs() {
+  if (autocompleteDebounceTimer) {
+    clearTimeout(autocompleteDebounceTimer);
+    autocompleteDebounceTimer = null;
+  }
+  if (autocompleteAbortController) {
+    autocompleteAbortController.abort();
+    autocompleteAbortController = null;
+  }
+
+  document.getElementById("address").value = "";
+  clearAddressSuggestions();
+  document.getElementById("result").innerText = "Search a location to populate formatted address and coordinates.";
+  document.getElementById("result").className = "result result-box dim";
+  document.getElementById("airspace").innerText = "Airspace status will appear here after lookup.";
+  document.getElementById("airspace").className = "result result-box dim";
+  document.getElementById("latlonCopyRow").style.display = "none";
+  document.getElementById("dsstLink").innerHTML = "";
+
+  const notamsLink = document.getElementById("notamsMapLink");
+  if (notamsLink) notamsLink.remove();
+  const gmapsLink = document.getElementById("gmapsHotlink");
+  if (gmapsLink) gmapsLink.remove();
+
+  if (marker) {
+    marker.setMap(null);
+    marker = null;
+  }
+
+  clearActiveRoute();
+
+  const routeFileInput = document.getElementById('routeFile');
+  if (routeFileInput) routeFileInput.value = '';
+
+  map.setCenter(DEFAULT_CENTER);
+  map.setZoom(DEFAULT_ZOOM);
+
+  const historySelect = document.getElementById("lookupHistory");
+  if (historySelect) historySelect.value = "";
+  document.getElementById("address").focus();
+}
+
+function setCookie(name, value, days) {
+  const maxAge = days * 24 * 60 * 60;
+  document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${maxAge}; SameSite=Lax`;
+}
+
+function getCookie(name) {
+  const target = `${name}=`;
+  const parts = document.cookie.split(";");
+  for (let i = 0; i < parts.length; i++) {
+    const c = parts[i].trim();
+    if (c.indexOf(target) === 0) {
+      return decodeURIComponent(c.substring(target.length));
+    }
+  }
+  return "";
+}
+</script>
+
+</body>
+</html>

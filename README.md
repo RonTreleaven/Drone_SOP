@@ -45,3 +45,21 @@ Detailed notes:
 
 - `data/airspace/README.md`
 
+## Cloudflare Worker Secrets (Google)
+
+`GGcode.html` and `gcode.html` use the Cloudflare worker endpoint `https://navcan-proxy.rontreleaven.workers.dev`.
+
+Required worker secrets:
+
+- `GOOGLE_GEOCODING_API_KEY` for `/geocode`, `/maps-bootstrap`, and `/places-autocomplete`
+
+Set secrets with Wrangler:
+
+```powershell
+wrangler secret put GOOGLE_GEOCODING_API_KEY
+```
+
+After setting secrets, deploy worker code from `scripts/4_03_2026_Cloudfare_worker.js` to publish `/maps-bootstrap`, `/geocode`, and `/places-autocomplete`.
+
+Note: Google Places API must be enabled for the same key used by `GOOGLE_GEOCODING_API_KEY` if you want address suggestion results.
+
