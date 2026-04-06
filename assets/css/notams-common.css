@@ -5,7 +5,7 @@ body {
   padding: 0;
 }
 
-.top-nav {
+.top-nav:not(.shared-site-nav) {
   background: #2F5496;
   color: #fff;
   padding: 10px 0;
@@ -13,12 +13,12 @@ body {
   font-size: 1.1em;
 }
 
-.top-nav a {
+.top-nav:not(.shared-site-nav) a {
   color: #fff;
   text-decoration: none;
   margin: 0 10px;
 }
-.top-nav a.active {
+.top-nav:not(.shared-site-nav) a.active {
   font-weight: 700;
   text-decoration: underline;
 }

@@ -340,7 +340,7 @@ function renderIndex(sections) {
 
   const intro = document.createElement('div');
   intro.style.marginBottom = '1rem';
-  intro.innerHTML = '<strong>Choose a profile:</strong> Micro, Basic, or Advanced. Then accept defaults or add more sections.';
+  intro.innerHTML = '<strong>Choose a profile:</strong> Micro, Basic, or Advanced.';
 
   const presetWrap = document.createElement('div');
   presetWrap.className = 'profile-badge-wrap';
@@ -368,9 +368,9 @@ function renderIndex(sections) {
     return button;
   }
 
-  const microBtn = createProfileBadgeButton('micro', 'Micro', 'assets/img/badge_micro.svg');
-  const basicBtn = createProfileBadgeButton('basic', 'Basic', 'assets/img/badge_basic.svg');
-  const advBtn = createProfileBadgeButton('advanced', 'Advanced', 'assets/img/badge_advanced.svg');
+  const microBtn = createProfileBadgeButton('micro', 'Micro', 'assets/img/Micro.svg');
+  const basicBtn = createProfileBadgeButton('basic', 'Basic', 'assets/img/Basic.svg');
+  const advBtn = createProfileBadgeButton('advanced', 'Advanced', 'assets/img/Advanced.svg');
 
   presetWrap.append(microBtn, basicBtn, advBtn);
 
@@ -478,7 +478,7 @@ function renderIndex(sections) {
     updateProfileButtonState(profileKey);
     acceptDefaultsBtn.disabled = chosen.size === 0;
     addMoreBtn.disabled = chosen.size === 0;
-    promptLine.textContent = 'Defaults loaded. Accept and continue, or select any additional procedures for your mission.';
+    promptLine.textContent = 'Defaults loaded. Accept defaults and continue, or Add/Remove additional procedures for your mission.';
     updateStartActionHighlights();
   }
 

@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mission Planning Tools</title>
+<title>Mission Automation Planner</title>
 
 <link rel="stylesheet" href="./assets/css/notams-common.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<script src="assets/js/site-nav.js" defer></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@tmcw/togeojson@7.1.2/dist/togeojson.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
@@ -26,6 +28,22 @@
 
 body {
   background: linear-gradient(180deg, #f4f6f8 0%, #eaf1fb 100%);
+}
+
+.top-nav.shared-site-nav {
+  background: transparent !important;
+  color: #1d2f4f;
+  padding: 0 !important;
+  text-align: left !important;
+  font-size: 0.95rem;
+}
+
+.top-nav.shared-site-nav a {
+  color: #0b5ea8;
+}
+
+.top-nav.shared-site-nav .nav-sep {
+  color: #7c8ea4;
 }
 
 .mission-card {
@@ -396,6 +414,16 @@ body {
   grid-column: 1 / -1;
 }
 
+.route-tools .route-status {
+  grid-column: 1 / -1;
+  font-size: 0.78rem;
+  color: #24456f;
+  background: #eef5ff;
+  border: 1px solid #c9daf2;
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
 .route-tools .mission-setting {
   grid-column: span 1;
   display: grid;
@@ -676,19 +704,11 @@ body.map-immersive {
 
 <body>
 
-<nav class="top-nav">
-  <a href="#" class="back-link" onclick="goBack(event)"><span class="back-icon" aria-hidden="true">&#8592;</span>BACK</a> |
-  <a href="index.html">Home</a> |
-  <a href="Sections.html">SOP Sections</a> |
-  <a href="tools.html" class="active">Tools</a> |
-  <a href="flight-log.html">Flight Log</a> |
-  <a href="summary.html">Summary</a> |
-  <a href="emergencies.html">Emergency Procedures</a>
-</nav>
+<nav class="top-nav shared-site-nav" data-nav-variant="utility" data-back-fallback="tools.html"></nav>
 
 <div class="card mission-card">
   <div class="hero">
-    <h1>Mission Location Lookup</h1>
+    <h1>Mission Automation Planner</h1>
     <p>Quickly identify a mission address, capture precise coordinates, and open the supporting survey and planning links you need.</p>
   </div>
 
@@ -700,7 +720,7 @@ body.map-immersive {
     <div class="collapsible-body" id="searchBody">
       <div class="search-row">
         <div class="field-group">
-          <label for="address">Enter address, city, postal code, landmark</label>
+          <label for="address">Enter an address, city, or postal code, or select "Get Pilot Position" button</label>
           <div class="address-input-wrap" id="addressInputWrap">
             <input type="text" id="address" autocomplete="off" placeholder="Enter address, city, postal code, landmark" aria-autocomplete="list" aria-controls="addressSuggestions">
             <div id="addressSuggestions" class="autocomplete-menu" role="listbox" aria-label="Address suggestions"></div>
@@ -767,10 +787,13 @@ body.map-immersive {
       <button class="btn map-fullscreen-fab" id="toggleMapFullscreenTopBtn" type="button" title="Toggle full screen" aria-label="Toggle full screen">⤢</button>
       <button class="btn mobile-tools-toggle" id="toggleRouteToolsBtn" type="button" aria-controls="routeTools" aria-expanded="false">☰ Tools</button>
       <div class="route-tools" id="routeTools">
-        <button class="btn" id="drawRouteBtn" type="button">Draw Route</button>
+        <button class="btn" id="drawRouteBtn" type="button">Waypoints</button>
+        <button class="btn" id="drawPolygonBtn" type="button">Polygon</button>
+        <button class="btn" id="drawRectangleBtn" type="button">Rectangle</button>
         <button class="btn secondary-btn" id="toggleRouteEditBtn" type="button">Lock Route</button>
         <button class="btn" id="snapRouteBtn" type="button">Snap To WP</button>
         <button class="btn" id="closePolygonBtn" type="button">Close Polygon</button>
+        <button class="btn" id="setPOIByClickBtn" type="button">POI by Click</button>
         <button class="btn" id="setPOIFromPilotBtn" type="button">POI from Pilot</button>
         <button class="btn" id="setPOIManuallyBtn" type="button">Set POI Manual</button>
         <button class="btn secondary-btn" id="clearPOIBtn" type="button">Clear POI</button>
@@ -787,6 +810,7 @@ body.map-immersive {
         <label class="mission-setting" for="orbitRadiusMeters">Orbit R(m)
           <input id="orbitRadiusMeters" type="number" min="10" max="500" step="5" value="50" />
         </label>
+        <div id="poiRadiusIndicator" class="route-status">POI radius: not set</div>
         <button class="btn" id="generatePatternBtn" type="button">Generate Pattern</button>
         <label class="mission-setting" for="djiExecHeight">H(m)
           <input id="djiExecHeight" type="number" min="5" max="500" step="1" value="60" />
@@ -907,8 +931,11 @@ document.addEventListener('DOMContentLoaded', async function() {
   });
 
   document.getElementById('drawRouteBtn').addEventListener('click', handleDrawRouteToggle);
+  document.getElementById('drawPolygonBtn').addEventListener('click', handleDrawPolygonToggle);
+  document.getElementById('drawRectangleBtn').addEventListener('click', handleDrawRectangleToggle);
   document.getElementById('snapRouteBtn').addEventListener('click', snapRouteToNearestWaypoint);
   document.getElementById('closePolygonBtn').addEventListener('click', closeCurrentRoutePolygon);
+  document.getElementById('setPOIByClickBtn').addEventListener('click', startPOIClickMode);
   document.getElementById('setPOIFromPilotBtn').addEventListener('click', setPOIFromPilotLocation);
   document.getElementById('setPOIManuallyBtn').addEventListener('click', setPOIManually);
   document.getElementById('clearPOIBtn').addEventListener('click', clearMissionPOI);
@@ -921,6 +948,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('toggleMapFullscreenBtn').addEventListener('click', toggleMapFullscreen);
   document.getElementById('toggleMapFullscreenTopBtn').addEventListener('click', toggleMapFullscreen);
   document.getElementById('routeFile').addEventListener('change', handleRouteFile, false);
+  document.getElementById('orbitRadiusMeters').addEventListener('input', syncPOICircleRadiusFromInput);
 
   routeToolsMobileCollapsed = isMobileViewport();
   applyRouteToolsPanelState();
@@ -967,6 +995,9 @@ let mapPseudoFullscreenActive = false;
 let mapPseudoFullscreenScrollY = 0;
 let routeSnapGuard = false;
 let missionPOI = null; // Mission Point of Interest marker
+let poiCircle = null;
+let pendingMapClickMode = null;
+let syncingPOIRadiusInput = false;
 const SNAP_TO_WAYPOINT_METERS = 12;
 const AUTO_CLOSE_POLYGON_METERS = 16;
 
@@ -996,6 +1027,7 @@ function setMissionPOI(lat, lng) {
   const latShort = Number(lat).toFixed(6);
   const lngShort = Number(lng).toFixed(6);
   updateMissionPOIMarker(lat, lng);
+  ensurePOICircleForCurrentPOI({ keepExistingRadius: true });
 
   document.getElementById("result").innerHTML = `
     <strong>Mission POI Set</strong><br>
@@ -1015,10 +1047,12 @@ function setMissionPOI(lat, lng) {
 }
 
 function clearMissionPOI() {
+  pendingMapClickMode = null;
   if (missionPOI) {
     missionPOI.setMap(null);
     missionPOI = null;
   }
+  clearPOICircle();
   showLookupMessage("Mission POI cleared.", "dim");
 }
 
@@ -1055,6 +1089,90 @@ function updateMissionPOIMarker(lat, lng) {
   } else {
     missionPOI.setPosition(position);
   }
+}
+
+function clearPOICircle() {
+  if (poiCircle) {
+    poiCircle.setMap(null);
+    poiCircle = null;
+  }
+  updatePOIRadiusIndicator(null);
+}
+
+function updatePOIRadiusIndicator(radiusMeters) {
+  const indicator = document.getElementById('poiRadiusIndicator');
+  if (!indicator) return;
+
+  if (!Number.isFinite(Number(radiusMeters)) || Number(radiusMeters) <= 0) {
+    indicator.textContent = 'POI radius: not set';
+    return;
+  }
+
+  const meters = Math.round(Number(radiusMeters));
+  indicator.textContent = `POI to circle edge: ${meters} m`;
+}
+
+function ensurePOICircleForCurrentPOI(options = {}) {
+  if (!map || !missionPOI) return;
+
+  const p = missionPOI.getPosition();
+  if (!p) return;
+
+  const keepExistingRadius = options.keepExistingRadius !== false;
+  const inputRadius = Number(document.getElementById('orbitRadiusMeters')?.value);
+  const fallbackRadius = Number.isFinite(inputRadius) && inputRadius >= 10 ? inputRadius : 50;
+
+  if (!poiCircle) {
+    poiCircle = new google.maps.Circle({
+      map,
+      center: p,
+      radius: fallbackRadius,
+      editable: true,
+      draggable: true,
+      strokeColor: '#ff6f00',
+      strokeOpacity: 0.95,
+      strokeWeight: 2,
+      fillColor: '#ffb74d',
+      fillOpacity: 0.16
+    });
+
+    poiCircle.addListener('center_changed', () => {
+      if (!poiCircle || !missionPOI) return;
+      const center = poiCircle.getCenter();
+      if (!center) return;
+      missionPOI.setPosition(center);
+    });
+
+    poiCircle.addListener('radius_changed', () => {
+      if (!poiCircle) return;
+      const radius = Math.max(10, Number(poiCircle.getRadius()) || 50);
+      syncingPOIRadiusInput = true;
+      const orbitInput = document.getElementById('orbitRadiusMeters');
+      if (orbitInput) orbitInput.value = String(Math.round(radius));
+      syncingPOIRadiusInput = false;
+      updatePOIRadiusIndicator(radius);
+    });
+  }
+
+  poiCircle.setCenter(p);
+  if (!keepExistingRadius || !Number.isFinite(Number(poiCircle.getRadius())) || Number(poiCircle.getRadius()) < 10) {
+    poiCircle.setRadius(fallbackRadius);
+  }
+  updatePOIRadiusIndicator(poiCircle.getRadius());
+}
+
+function syncPOICircleRadiusFromInput() {
+  if (syncingPOIRadiusInput || !poiCircle) return;
+  const radius = Number(document.getElementById('orbitRadiusMeters')?.value);
+  if (!Number.isFinite(radius) || radius < 10) return;
+  poiCircle.setRadius(radius);
+  updatePOIRadiusIndicator(radius);
+}
+
+function startPOIClickMode() {
+  if (!map) return;
+  pendingMapClickMode = 'poi';
+  showLookupMessage('POI click mode enabled. Tap/click on the map to place the POI center.', 'warn');
 }
 
 function setPOIFromPilotLocation() {
@@ -1216,6 +1334,24 @@ function initGoogleMap() {
       draggable: true,
       strokeColor: '#2196F3',
       strokeWeight: 3
+    },
+    polygonOptions: {
+      clickable: true,
+      editable: true,
+      draggable: true,
+      strokeColor: '#1a73e8',
+      strokeWeight: 3,
+      fillColor: '#5ba3ff',
+      fillOpacity: 0.12
+    },
+    rectangleOptions: {
+      clickable: true,
+      editable: true,
+      draggable: true,
+      strokeColor: '#1a73e8',
+      strokeWeight: 3,
+      fillColor: '#5ba3ff',
+      fillOpacity: 0.12
     }
   });
   drawingManager.setMap(map);
@@ -1226,6 +1362,50 @@ function initGoogleMap() {
     snapRouteToNearestWaypoint();
     extractPathFromPolyline(poly);
     updateDrawRouteButtonState();
+  });
+
+  google.maps.event.addListener(drawingManager, 'polygoncomplete', (polygon) => {
+    drawingManager.setDrawingMode(null);
+    const points = polygon.getPath().getArray().map(ll => ({ lat: ll.lat(), lng: ll.lng() }));
+    polygon.setMap(null);
+    if (points.length >= 3) {
+      if (Math.abs(points[0].lat - points[points.length - 1].lat) > 1e-8 || Math.abs(points[0].lng - points[points.length - 1].lng) > 1e-8) {
+        points.push({ ...points[0] });
+      }
+      setRouteFromLatLngPoints(points);
+    }
+    updateDrawRouteButtonState();
+  });
+
+  google.maps.event.addListener(drawingManager, 'rectanglecomplete', (rectangle) => {
+    drawingManager.setDrawingMode(null);
+    const b = rectangle.getBounds();
+    rectangle.setMap(null);
+    if (!b) return;
+
+    const ne = b.getNorthEast();
+    const sw = b.getSouthWest();
+    const nw = new google.maps.LatLng(ne.lat(), sw.lng());
+    const se = new google.maps.LatLng(sw.lat(), ne.lng());
+    const points = [
+      { lat: nw.lat(), lng: nw.lng() },
+      { lat: ne.lat(), lng: ne.lng() },
+      { lat: se.lat(), lng: se.lng() },
+      { lat: sw.lat(), lng: sw.lng() },
+      { lat: nw.lat(), lng: nw.lng() }
+    ];
+    setRouteFromLatLngPoints(points);
+    updateDrawRouteButtonState();
+  });
+
+  map.addListener('click', (event) => {
+    if (pendingMapClickMode !== 'poi') return;
+    pendingMapClickMode = null;
+    const latLng = event && event.latLng;
+    if (!latLng) return;
+    if (setMissionPOI(latLng.lat(), latLng.lng())) {
+      ensurePOICircleForCurrentPOI({ keepExistingRadius: true });
+    }
   });
 
   applyRouteEditState();
@@ -1392,8 +1572,8 @@ function applyRouteEditState() {
 
   if (activePolyline) {
     activePolyline.setEditable(routeEditEnabled);
-    // Keep route dragging off while editing so point edits are easy and precise.
-    activePolyline.setDraggable(false);
+    // Allow move/positioning while locked; keep drag off while vertex editing.
+    activePolyline.setDraggable(!routeEditEnabled);
   }
   waypointMarkers.forEach(m => m.setDraggable(routeEditEnabled));
 }
@@ -1419,7 +1599,7 @@ function updateDrawRouteButtonState() {
   if (!btn) return;
 
   const hasRoute = !!activePolyline || routePath.length > 0;
-  btn.textContent = (hasRoute || isRouteDrawingActive()) ? 'Clear Route' : 'Draw Route';
+  btn.textContent = (hasRoute || isRouteDrawingActive()) ? 'Clear Shape' : 'Waypoints';
 }
 
 function clearActiveRoute() {
@@ -1446,6 +1626,23 @@ function handleDrawRouteToggle() {
   }
 
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
+  showLookupMessage('Waypoint mode enabled. Tap map to place points.', 'dim');
+  updateDrawRouteButtonState();
+}
+
+function handleDrawPolygonToggle() {
+  if (!drawingManager || !window.google || !google.maps || !google.maps.drawing) return;
+  clearActiveRoute();
+  drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+  showLookupMessage('Polygon mode enabled. Draw an area and release to finish.', 'dim');
+  updateDrawRouteButtonState();
+}
+
+function handleDrawRectangleToggle() {
+  if (!drawingManager || !window.google || !google.maps || !google.maps.drawing) return;
+  clearActiveRoute();
+  drawingManager.setDrawingMode(google.maps.drawing.OverlayType.RECTANGLE);
+  showLookupMessage('Rectangle mode enabled. Drag on map to draw bounds.', 'dim');
   updateDrawRouteButtonState();
 }
 
@@ -1587,6 +1784,120 @@ function setRouteFromLatLngPoints(points) {
   extractPathFromPolyline(poly);
 }
 
+function getProjectedPolygonContext(polygonCoords) {
+  const openCoords = Array.isArray(polygonCoords) ? polygonCoords.slice() : [];
+  if (openCoords.length >= 2) {
+    const first = openCoords[0];
+    const last = openCoords[openCoords.length - 1];
+    if (Math.abs(first[0] - last[0]) < 1e-9 && Math.abs(first[1] - last[1]) < 1e-9) {
+      openCoords.pop();
+    }
+  }
+  if (openCoords.length < 3) {
+    return null;
+  }
+
+  let sumLat = 0;
+  let sumLng = 0;
+  openCoords.forEach(([lng, lat]) => {
+    sumLat += lat;
+    sumLng += lng;
+  });
+
+  const originLat = sumLat / openCoords.length;
+  const originLng = sumLng / openCoords.length;
+  const metersPerDegLat = 111320;
+  const metersPerDegLng = Math.cos(originLat * Math.PI / 180) * 111320;
+
+  function projectPoint(lng, lat) {
+    return {
+      x: (lng - originLng) * metersPerDegLng,
+      y: (lat - originLat) * metersPerDegLat
+    };
+  }
+
+  function unprojectPoint(x, y) {
+    return {
+      lng: originLng + (x / metersPerDegLng),
+      lat: originLat + (y / metersPerDegLat)
+    };
+  }
+
+  return {
+    originLat,
+    originLng,
+    metersPerDegLat,
+    metersPerDegLng,
+    projected: openCoords.map(([lng, lat]) => projectPoint(lng, lat)),
+    projectPoint,
+    unprojectPoint
+  };
+}
+
+function getLongestEdgeAngleRadians(projectedPoints) {
+  if (!Array.isArray(projectedPoints) || projectedPoints.length < 2) {
+    return 0;
+  }
+
+  let bestAngle = 0;
+  let bestLength = 0;
+  for (let index = 0; index < projectedPoints.length; index++) {
+    const start = projectedPoints[index];
+    const end = projectedPoints[(index + 1) % projectedPoints.length];
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const length = Math.hypot(dx, dy);
+    if (length > bestLength) {
+      bestLength = length;
+      bestAngle = Math.atan2(dy, dx);
+    }
+  }
+  return bestAngle;
+}
+
+function rotatePoint(point, angleRad) {
+  const cosA = Math.cos(angleRad);
+  const sinA = Math.sin(angleRad);
+  return {
+    x: point.x * cosA - point.y * sinA,
+    y: point.x * sinA + point.y * cosA
+  };
+}
+
+function unrotatePoint(point, angleRad) {
+  return rotatePoint(point, -angleRad);
+}
+
+function getSweepSegmentsAtY(rotatedPoints, sweepY) {
+  const xs = [];
+  for (let index = 0; index < rotatedPoints.length; index++) {
+    const start = rotatedPoints[index];
+    const end = rotatedPoints[(index + 1) % rotatedPoints.length];
+
+    if ((start.y <= sweepY && end.y > sweepY) || (end.y <= sweepY && start.y > sweepY)) {
+      const ratio = (sweepY - start.y) / (end.y - start.y);
+      xs.push(start.x + (end.x - start.x) * ratio);
+    }
+  }
+
+  xs.sort((left, right) => left - right);
+  const segments = [];
+  for (let index = 0; index + 1 < xs.length; index += 2) {
+    const startX = xs[index];
+    const endX = xs[index + 1];
+    if (Number.isFinite(startX) && Number.isFinite(endX) && (endX - startX) > 1) {
+      segments.push({ startX, endX, length: endX - startX });
+    }
+  }
+  return segments;
+}
+
+function getRecommendedPhotoEveryMeters(heightMeters, speedMetersPerSecond, frontOverlapPct) {
+  const alongTrackMeters = computeSurveySpacingMeters(heightMeters, frontOverlapPct, 0.9);
+  const timedCadenceMeters = Math.max(2, (Number(speedMetersPerSecond) || 2.5) * 3);
+  return Math.max(2, Math.min(alongTrackMeters, timedCadenceMeters));
+}
+
 function computeSurveySpacingMeters(heightMeters, overlapPct, multiplier) {
   const safeHeight = Number.isFinite(heightMeters) && heightMeters > 0 ? heightMeters : 60;
   const overlap = Math.max(20, Math.min(95, Number(overlapPct) || 70));
@@ -1601,33 +1912,48 @@ function generateLawnmowerPointsFromPolygon(polygonCoords) {
   }
 
   const height = Number(document.getElementById('djiExecHeight')?.value);
+  const speed = Number(document.getElementById('djiWaypointSpeed')?.value);
   const frontOverlap = Number(document.getElementById('frontOverlapPct')?.value);
   const sideOverlap = Number(document.getElementById('sideOverlapPct')?.value);
 
   const lineSpacingMeters = computeSurveySpacingMeters(height, sideOverlap, 1.05);
-  const alongTrackMeters = computeSurveySpacingMeters(height, frontOverlap, 0.9);
-  const cellSideKm = Math.max(0.003, Math.min(lineSpacingMeters, alongTrackMeters) / 1000);
+  const projectedContext = getProjectedPolygonContext(polygonCoords);
+  if (!projectedContext) return null;
 
-  const polygon = turf.polygon([polygonCoords]);
-  const bbox = turf.bbox(polygon);
-  const grid = turf.pointGrid(bbox, cellSideKm, { units: 'kilometers', mask: polygon });
-  if (!grid.features.length) return null;
+  const sweepAngle = getLongestEdgeAngleRadians(projectedContext.projected);
+  const rotatedPoints = projectedContext.projected.map((point) => rotatePoint(point, -sweepAngle));
+  const yValues = rotatedPoints.map((point) => point.y);
+  const minY = Math.min(...yValues);
+  const maxY = Math.max(...yValues);
 
-  const grouped = new Map();
-  grid.features.forEach((feature) => {
-    const [lng, lat] = feature.geometry.coordinates;
-    const key = lat.toFixed(4);
-    if (!grouped.has(key)) grouped.set(key, []);
-    grouped.get(key).push({ lat, lng });
-  });
+  if (!Number.isFinite(minY) || !Number.isFinite(maxY) || (maxY - minY) < 1) {
+    return null;
+  }
 
-  const sortedRows = Array.from(grouped.keys()).sort((a, b) => Number(a) - Number(b));
   const route = [];
-  sortedRows.forEach((rowKey, idx) => {
-    const rowPoints = grouped.get(rowKey).sort((a, b) => a.lng - b.lng);
-    if (idx % 2 === 1) rowPoints.reverse();
-    route.push(...rowPoints);
-  });
+  let rowIndex = 0;
+  for (let sweepY = minY + (lineSpacingMeters / 2); sweepY <= maxY + 0.001; sweepY += lineSpacingMeters) {
+    const segments = getSweepSegmentsAtY(rotatedPoints, sweepY);
+    if (!segments.length) continue;
+
+    const segment = segments.reduce((longest, current) => current.length > longest.length ? current : longest, segments[0]);
+    const start = { x: segment.startX, y: sweepY };
+    const end = { x: segment.endX, y: sweepY };
+    const ordered = (rowIndex % 2 === 0) ? [start, end] : [end, start];
+
+    ordered.forEach((point) => {
+      const unrotated = unrotatePoint(point, -sweepAngle);
+      const latLng = projectedContext.unprojectPoint(unrotated.x, unrotated.y);
+      route.push({ lat: latLng.lat, lng: latLng.lng });
+    });
+
+    rowIndex += 1;
+  }
+
+  const photoEveryInput = document.getElementById('photoByDistanceMeters');
+  if (photoEveryInput && (!Number(photoEveryInput.value) || Number(photoEveryInput.value) <= 0)) {
+    photoEveryInput.value = String(Math.round(getRecommendedPhotoEveryMeters(height, speed, frontOverlap)));
+  }
 
   return route.length >= 2 ? route : null;
 }
@@ -1737,6 +2063,46 @@ function extractPathFromPolyline(poly) {
 function syncRoutePath() {
   if (activePolyline) {
     routePath = activePolyline.getPath().getArray().map(ll => ({ lat: ll.lat(), lng: ll.lng() }));
+  }
+}
+
+function generatePOIOrbitPointsFromCircle() {
+  if (!poiCircle || !window.google || !google.maps || !google.maps.geometry) {
+    return null;
+  }
+
+  const center = poiCircle.getCenter();
+  const radiusMeters = Number(poiCircle.getRadius());
+  if (!center || !Number.isFinite(radiusMeters) || radiusMeters < 1) {
+    return null;
+  }
+
+  const points = [];
+  const count = 12;
+  for (let i = 0; i < count; i++) {
+    const heading = (360 / count) * i;
+    const offset = google.maps.geometry.spherical.computeOffset(center, radiusMeters, heading);
+    const pointHeading = google.maps.geometry.spherical.computeHeading(offset, center) || 0;
+    points.push({
+      lat: offset.lat(),
+      lng: offset.lng(),
+      heading: pointHeading
+    });
+  }
+
+  if (points.length > 0) {
+    points.push({ ...points[0] });
+  }
+  return points;
+}
+
+function ensureRoutePathForExport() {
+  syncRoutePath();
+  if (routePath.length > 0) return;
+
+  const poiOrbitPoints = generatePOIOrbitPointsFromCircle();
+  if (poiOrbitPoints && poiOrbitPoints.length >= 2) {
+    routePath = poiOrbitPoints;
   }
 }
 
@@ -1888,7 +2254,7 @@ function buildMissionExportBaseName() {
 }
 
 function exportRouteGeoJSON() {
-  syncRoutePath();
+  ensureRoutePathForExport();
   if (!routePath.length) {
     alert('No route selected or defined.\n\nDefine a route before saving (Draw Route or import GPX/KML/KMZ/GeoJSON).');
     return;
@@ -1921,7 +2287,7 @@ function exportRouteGeoJSON() {
 }
 
 function exportRouteKML() {
-  syncRoutePath();
+  ensureRoutePathForExport();
   if (!routePath.length) {
     alert('No route selected or defined.\n\nDefine a route before saving (Draw Route or import GPX/KML/KMZ/GeoJSON).');
     return;
@@ -2053,11 +2419,51 @@ function densifyRouteByDistance(pathPoints, spacingMeters) {
   return dense;
 }
 
+function getPhotoWaypointIndices(pathPoints, photoSpacingMeters) {
+  // For photogrammetry: calculate which waypoints should trigger photos based on distance spacing.
+  // This avoids adding photos at every waypoint while ensuring proper coverage.
+  if (!Array.isArray(pathPoints) || pathPoints.length < 2 || !Number.isFinite(photoSpacingMeters) || photoSpacingMeters <= 0) {
+    return new Set();
+  }
+  
+  const photoIndices = new Set([0]); // Always take photo at start
+  let cumulativeDistance = 0;
+  
+  for (let i = 1; i < pathPoints.length; i++) {
+    const prev = pathPoints[i - 1];
+    const curr = pathPoints[i];
+    const prevLL = new google.maps.LatLng(prev.lat, prev.lng);
+    const currLL = new google.maps.LatLng(curr.lat, curr.lng);
+    const segmentDist = google.maps.geometry.spherical.computeDistanceBetween(prevLL, currLL);
+    
+    cumulativeDistance += segmentDist;
+    
+    // Trigger photo when we've traveled approximately photoSpacingMeters
+    if (cumulativeDistance >= photoSpacingMeters) {
+      photoIndices.add(i);
+      cumulativeDistance -= photoSpacingMeters;
+    }
+  }
+  
+  // Always take photo at end for complete coverage
+  photoIndices.add(pathPoints.length - 1);
+  
+  return photoIndices;
+}
+
 function buildDJIWaylinesWPML() {
   const settings = getDJIMissionSettings();
   const exportPath = settings.photoByDistanceMeters > 0
     ? densifyRouteByDistance(routePath, settings.photoByDistanceMeters)
     : routePath;
+  
+  // For photogrammetry: use distance-based spacing whenever PhotoEvery(m) is set.
+  // If PhotoEvery is not set but Photo each WP is enabled, fall back to a conservative default.
+  const photoSpacing = settings.photoByDistanceMeters > 0
+    ? settings.photoByDistanceMeters
+    : (settings.takePhotoEachWp ? 20 : 0);
+  const photoWaypoints = getPhotoWaypointIndices(exportPath, photoSpacing);
+  
   let actionGroupId = 1;
   let actionId = 1;
   const placemarks = exportPath.map((p, i) => {
@@ -2073,7 +2479,7 @@ function buildDJIWaylinesWPML() {
     const turnMode = isLast ? 'toPointAndStopWithContinuityCurvature' : 'toPointAndPassWithContinuityCurvature';
 
     const actions = [];
-    if (settings.gimbalPitch !== 'none') {
+    if (settings.gimbalPitch !== 'none' && isFirst) {
       actions.push(`
           <wpml:action>
             <wpml:actionId>${actionId++}</wpml:actionId>
@@ -2094,13 +2500,14 @@ function buildDJIWaylinesWPML() {
           </wpml:action>`);
     }
 
-    if (settings.takePhotoEachWp) {
+    // Only add photo trigger at calculated photo waypoints (for photogrammetry coverage)
+    if (photoWaypoints.has(i)) {
       actions.push(`
           <wpml:action>
             <wpml:actionId>${actionId++}</wpml:actionId>
             <wpml:actionActuatorFunc>takePhoto</wpml:actionActuatorFunc>
             <wpml:actionActuatorFuncParam>
-              <wpml:fileSuffix>WP${i + 1}</wpml:fileSuffix>
+              <wpml:fileSuffix>Photo${photoWaypoints.size > 0 ? Array.from(photoWaypoints).indexOf(i) + 1 : i + 1}</wpml:fileSuffix>
               <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
             </wpml:actionActuatorFuncParam>
           </wpml:action>`);
@@ -2189,7 +2596,7 @@ function buildDJIWaylinesWPML() {
 }
 
 async function exportDJIKMZ() {
-  syncRoutePath();
+  ensureRoutePathForExport();
   if (!routePath.length) {
     alert('No route selected or defined.\n\nDefine a route before saving (Draw Route or import GPX/KML/KMZ/GeoJSON).');
     return;
@@ -3109,15 +3516,6 @@ function toggleSection(bodyId) {
   const header = body.previousElementSibling;
   body.classList.toggle('collapsed');
   if (header) header.classList.toggle('collapsed');
-}
-
-function goBack(event) {
-  event.preventDefault();
-  if (window.history.length > 1) {
-    window.history.back();
-  } else {
-    window.location.href = "tools.html";
-  }
 }
 
 function getLookupHistory() {

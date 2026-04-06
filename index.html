@@ -476,6 +476,7 @@
       border-top: 1px solid #dce8f2;
       background: #ffffff;
       display: flex;
+      flex-wrap: wrap;
       gap: 0.6rem;
     }
     .profile-save-btn,
@@ -488,6 +489,23 @@
       font-family: inherit;
       cursor: pointer;
       flex: 1;
+    }
+    .profile-import-btn,
+    .profile-export-btn {
+      border-radius: 999px;
+      min-height: 40px;
+      padding: 0.48rem 0.9rem;
+      border: 1px solid #aac4d8;
+      background: #f6fbff;
+      color: #2a4c6d;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      flex: 1;
+    }
+    .profile-import-btn:hover,
+    .profile-export-btn:hover {
+      background: #eaf4ff;
     }
     .profile-save-btn {
       border-color: #0f6d5a;
@@ -651,6 +669,16 @@
       </div>
 
       <div class="profile-field">
+        <label for="profile-pilot-cell">Cell Phone</label>
+        <input id="profile-pilot-cell" name="pilotCell" type="tel" autocomplete="tel" placeholder="Example: (416) 555-0123">
+      </div>
+
+      <div class="profile-field">
+        <label for="profile-pilot-email">Email</label>
+        <input id="profile-pilot-email" name="pilotEmail" type="email" autocomplete="email" placeholder="pilot@example.com">
+      </div>
+
+      <div class="profile-field">
         <label for="profile-mission-category">Drone Mission Category</label>
         <select id="profile-mission-category" name="droneMissionCategory">
           <option value="micro">Micro</option>
@@ -675,9 +703,12 @@
       </div>
     </form>
     <div class="profile-drawer-footer">
+      <button id="import-profile-state" class="profile-import-btn" type="button">Import Profile</button>
+      <button id="export-profile-state" class="profile-export-btn" type="button">Export Profile</button>
       <button id="cancel-profile-save" class="profile-cancel-btn" type="button">Cancel</button>
       <button id="save-profile-state" class="profile-save-btn" type="submit" form="profile-form">Save Profile</button>
     </div>
+    <input id="profile-import-file" type="file" accept="application/json,.json" hidden>
   </aside>
 
   <script>
@@ -698,6 +729,8 @@
     function getDefaultProfileState() {
       return {
         pilotName: '',
+        pilotCell: '',
+        pilotEmail: '',
         droneMissionCategory: 'basic',
         preferredDroneLabel: '',
         lastUsedMissionCategory: 'basic',
@@ -735,6 +768,8 @@
       };
 
       state.pilotName = String(state.pilotName || '').trim();
+      state.pilotCell = String(state.pilotCell || localStorage.getItem('pilotCell') || '').trim();
+      state.pilotEmail = String(state.pilotEmail || localStorage.getItem('pilotEmail') || '').trim();
       state.preferredDroneLabel = String(state.preferredDroneLabel || '').trim();
       state.droneMissionCategory = normalizeMissionCategory(state.droneMissionCategory);
       state.lastUsedMissionCategory = normalizeMissionCategory(state.lastUsedMissionCategory || state.droneMissionCategory);
@@ -759,6 +794,8 @@
 
       // Keep lightweight mirror keys for cross-page access and backward compatibility.
       localStorage.setItem('pilotName', profileState.pilotName || '');
+      localStorage.setItem('pilotCell', profileState.pilotCell || '');
+      localStorage.setItem('pilotEmail', profileState.pilotEmail || '');
       localStorage.setItem('droneMissionCategory', profileState.droneMissionCategory || 'basic');
       localStorage.setItem('lastUsedMissionCategory', profileState.lastUsedMissionCategory || profileState.droneMissionCategory || 'basic');
     }
@@ -795,14 +832,88 @@
       if (!profileState) return;
 
       const pilotInput = document.getElementById('profile-pilot-name');
+      const pilotCellInput = document.getElementById('profile-pilot-cell');
+      const pilotEmailInput = document.getElementById('profile-pilot-email');
       const categorySelect = document.getElementById('profile-mission-category');
       const droneInput = document.getElementById('profile-drone-label');
       const statusSelect = document.getElementById('profile-mission-status');
 
       if (pilotInput) pilotInput.value = profileState.pilotName || '';
+      if (pilotCellInput) pilotCellInput.value = profileState.pilotCell || '';
+      if (pilotEmailInput) pilotEmailInput.value = profileState.pilotEmail || '';
       if (categorySelect) categorySelect.value = normalizeMissionCategory(profileState.droneMissionCategory);
       if (droneInput) droneInput.value = profileState.preferredDroneLabel || '';
       if (statusSelect) statusSelect.value = normalizeMissionStatus(profileState.lastMissionStatus);
+    }
+
+    function exportProfileBackup(status) {
+      if (!profileState) {
+        status.textContent = 'No profile loaded to export.';
+        return;
+      }
+
+      const payload = {
+        backupType: 'drone-sop-profile',
+        backupVersion: 1,
+        exportedAt: new Date().toISOString(),
+        profile: {
+          pilotName: profileState.pilotName || '',
+          pilotCell: profileState.pilotCell || '',
+          pilotEmail: profileState.pilotEmail || '',
+          droneMissionCategory: normalizeMissionCategory(profileState.droneMissionCategory),
+          preferredDroneLabel: profileState.preferredDroneLabel || '',
+          lastMissionStatus: normalizeMissionStatus(profileState.lastMissionStatus)
+        }
+      };
+
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      const dateStamp = new Date().toISOString().slice(0, 10);
+      link.href = URL.createObjectURL(blob);
+      link.download = `Drone_SOP_Profile_${dateStamp}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(link.href);
+      status.textContent = 'Profile backup exported.';
+    }
+
+    async function importProfileBackup(file, status) {
+      if (!file) return;
+
+      let parsed;
+      try {
+        const text = await file.text();
+        parsed = JSON.parse(text);
+      } catch (_err) {
+        status.textContent = 'Profile import failed: file is not valid JSON.';
+        return;
+      }
+
+      const source = (parsed && typeof parsed === 'object' && parsed.profile && typeof parsed.profile === 'object')
+        ? parsed.profile
+        : parsed;
+
+      if (!source || typeof source !== 'object') {
+        status.textContent = 'Profile import failed: expected profile object.';
+        return;
+      }
+
+      profileState = profileState || getDefaultProfileState();
+      profileState.pilotName = String(source.pilotName || '').trim();
+      profileState.pilotCell = String(source.pilotCell || '').trim();
+      profileState.pilotEmail = String(source.pilotEmail || '').trim();
+      profileState.droneMissionCategory = normalizeMissionCategory(String(source.droneMissionCategory || profileState.droneMissionCategory || 'basic'));
+      profileState.lastUsedMissionCategory = profileState.droneMissionCategory;
+      profileState.preferredDroneLabel = String(source.preferredDroneLabel || '').trim();
+      profileState.lastMissionStatus = normalizeMissionStatus(String(source.lastMissionStatus || profileState.lastMissionStatus || 'draft'));
+
+      persistProfileState();
+      fillProfileForm();
+      renderProfileSummary();
+
+      const pilotName = profileState.pilotName || 'profile data';
+      status.textContent = `Profile imported for ${pilotName}.`;
     }
 
     function closeProfileDrawer() {
@@ -1077,6 +1188,9 @@
       const profileBackdrop = document.getElementById('profile-backdrop');
       const profileForm = document.getElementById('profile-form');
       const cancelProfileBtn = document.getElementById('cancel-profile-save');
+      const exportProfileBtn = document.getElementById('export-profile-state');
+      const importProfileBtn = document.getElementById('import-profile-state');
+      const profileImportFile = document.getElementById('profile-import-file');
       if (!btn || !status || !clearBtn || !acceptBtn) return;
 
       profileState = loadProfileState();
@@ -1107,6 +1221,22 @@
         cancelProfileBtn.addEventListener('click', closeProfileDrawer);
       }
 
+      if (exportProfileBtn) {
+        exportProfileBtn.addEventListener('click', () => exportProfileBackup(status));
+      }
+
+      if (importProfileBtn && profileImportFile) {
+        importProfileBtn.addEventListener('click', () => {
+          profileImportFile.click();
+        });
+
+        profileImportFile.addEventListener('change', async () => {
+          const file = profileImportFile.files && profileImportFile.files[0];
+          await importProfileBackup(file, status);
+          profileImportFile.value = '';
+        });
+      }
+
       if (profileBackdrop) {
         profileBackdrop.addEventListener('click', closeProfileDrawer);
       }
@@ -1117,11 +1247,15 @@
 
           const formData = new FormData(profileForm);
           const pilotName = String(formData.get('pilotName') || '').trim();
+          const pilotCell = String(formData.get('pilotCell') || '').trim();
+          const pilotEmail = String(formData.get('pilotEmail') || '').trim();
           const droneMissionCategory = normalizeMissionCategory(String(formData.get('droneMissionCategory') || 'basic'));
           const preferredDroneLabel = String(formData.get('preferredDroneLabel') || '').trim();
           const lastMissionStatus = normalizeMissionStatus(String(formData.get('lastMissionStatus') || 'draft'));
 
           profileState.pilotName = pilotName;
+          profileState.pilotCell = pilotCell;
+          profileState.pilotEmail = pilotEmail;
           profileState.droneMissionCategory = droneMissionCategory;
           profileState.lastUsedMissionCategory = droneMissionCategory;
           profileState.preferredDroneLabel = preferredDroneLabel;

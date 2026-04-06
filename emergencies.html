@@ -17,7 +17,7 @@
       max-width: none;
       width: 100%;
     }
-    .top-nav {
+    .top-nav:not(.shared-site-nav) {
       background: #b30000;
       color: #fff;
       padding: 10px 0;
@@ -25,26 +25,26 @@
       font-size: 1.1em;
       margin-bottom: 0;
     }
-    .top-nav a {
+    .top-nav:not(.shared-site-nav) a {
       color: #fff;
       text-decoration: none;
       margin: 0 10px;
     }
-    .top-nav a.active, .top-nav a:hover {
+    .top-nav:not(.shared-site-nav) a.active, .top-nav:not(.shared-site-nav) a:hover {
       text-decoration: underline;
       font-weight: bold;
     }
-    .top-nav .back-link {
+    .top-nav:not(.shared-site-nav) .back-link {
       background: rgba(255, 255, 255, 0.14);
       border-color: rgba(255, 255, 255, 0.55);
       color: #ffffff;
       font-size: 1rem;
     }
-    .top-nav .back-link .back-icon {
+    .top-nav:not(.shared-site-nav) .back-link .back-icon {
       background: #ffffff;
       color: #b30000;
     }
-    .top-nav .back-link:hover {
+    .top-nav:not(.shared-site-nav) .back-link:hover {
       background: rgba(255, 255, 255, 0.24);
       text-decoration: none;
     }
@@ -101,22 +101,12 @@
 <body>
   <!-- Top Navigation -->
   <nav class="top-nav shared-site-nav" data-nav-variant="utility" data-back-fallback="tools.html"></nav>
-  <script>
-    function goBack(event) {
-      event.preventDefault();
-      if (window.history.length > 1) {
-        window.history.back();
-      } else {
-        window.location.href = "tools.html"; // fallback page
-      }
-    }
-  </script>
   <div class="container">
     <h1>Emergency Procedures and Checklists</h1>
     <div class="contact-info">
-      <strong>Pilot in Command:</strong> Ron T<br>
-      <strong>Cell Phone:</strong> (416) 317-3661<br>
-      <strong>Email:</strong> <a href="mailto:itsux2bu@gmail.com">rontreleaven@gmail.com</a>
+      <strong>Pilot in Command:</strong> <span id="profilePilotName">Not set in My Profile</span><br>
+      <strong>Cell Phone:</strong> <span id="profilePilotCell">Not set in My Profile</span><br>
+      <strong>Email:</strong> <a id="profilePilotEmail" href="#">Not set in My Profile</a>
     </div>
 
     <!-- Moved Emergency Contacts section to top -->
@@ -443,6 +433,38 @@
       });
     });
   </script> -->
+  <script>
+    (function bindProfileContactInfo() {
+      const profileNameEl = document.getElementById('profilePilotName');
+      const profileCellEl = document.getElementById('profilePilotCell');
+      const profileEmailEl = document.getElementById('profilePilotEmail');
+      if (!profileNameEl || !profileCellEl || !profileEmailEl) return;
+
+      const PROFILE_STATE_KEY = 'dsop.profileState.v1';
+      let profile = null;
+
+      try {
+        profile = JSON.parse(localStorage.getItem(PROFILE_STATE_KEY) || 'null');
+      } catch (_err) {
+        profile = null;
+      }
+
+      const pilotName = String((profile && profile.pilotName) || localStorage.getItem('pilotName') || '').trim();
+      const pilotCell = String((profile && profile.pilotCell) || localStorage.getItem('pilotCell') || '').trim();
+      const pilotEmail = String((profile && profile.pilotEmail) || localStorage.getItem('pilotEmail') || '').trim();
+
+      profileNameEl.textContent = pilotName || 'Not set in My Profile';
+      profileCellEl.textContent = pilotCell || 'Not set in My Profile';
+
+      if (pilotEmail) {
+        profileEmailEl.textContent = pilotEmail;
+        profileEmailEl.href = `mailto:${pilotEmail}`;
+      } else {
+        profileEmailEl.textContent = 'Not set in My Profile';
+        profileEmailEl.removeAttribute('href');
+      }
+    })();
+  </script>
 </body>
 </html>
 
