@@ -86,6 +86,48 @@
       font-size: 1rem;
       color: #1f3b63;
     }
+    .introduction-panel {
+      border: 1px solid #cfe0ef;
+      border-radius: 8px;
+      background: #f8fcff;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+    .introduction-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.6rem 0.75rem;
+      cursor: pointer;
+      list-style: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1f3b63;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .introduction-summary::-webkit-details-marker { display: none; }
+    .introduction-summary::after {
+      content: '\25B8';
+      font-size: 0.85rem;
+      transition: transform 0.2s;
+      color: #2e5a86;
+    }
+    .introduction-panel[open] .introduction-summary::after {
+      transform: rotate(90deg);
+    }
+    .intro-toggle-state {
+      margin-left: auto;
+      color: #3c5f7f;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .introduction-body {
+      padding: 0 0.75rem 0.75rem;
+    }
     .intro-card p {
       margin: 0 0 0.45rem;
       color: var(--muted);
@@ -329,6 +371,160 @@
     .disclaimer-body {
       padding: 0 0.75rem 0.75rem;
     }
+    .profile-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(12, 25, 37, 0.5);
+      z-index: 70;
+    }
+    .profile-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(92vw, 420px);
+      height: 100vh;
+      background: #ffffff;
+      border-left: 1px solid #c9d8e6;
+      box-shadow: -10px 0 26px rgba(0, 0, 0, 0.18);
+      z-index: 80;
+      transform: translateX(104%);
+      transition: transform 0.24s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .profile-drawer.is-open {
+      transform: translateX(0);
+    }
+    .profile-drawer-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 1rem;
+      border-bottom: 1px solid #dce8f2;
+      background: #f6fbff;
+    }
+    .profile-drawer-title {
+      margin: 0;
+      font-size: 1.05rem;
+      color: #1f3b63;
+    }
+    .profile-drawer-subtitle {
+      margin: 0.2rem 0 0;
+      color: #4e647b;
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
+    .profile-close-btn {
+      border: 1px solid #94a9bd;
+      background: #ffffff;
+      color: #2a4c6d;
+      border-radius: 999px;
+      min-width: 42px;
+      height: 42px;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .profile-close-btn:hover {
+      background: #edf6ff;
+    }
+    .profile-form {
+      padding: 1rem;
+      display: grid;
+      gap: 0.75rem;
+      overflow-y: auto;
+    }
+    .profile-field {
+      display: grid;
+      gap: 0.3rem;
+    }
+    .profile-field label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #2a4c6d;
+      text-transform: uppercase;
+    }
+    .profile-field input,
+    .profile-field select {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid #b9ccdd;
+      padding: 0.55rem 0.65rem;
+      font-size: 0.94rem;
+      font-family: inherit;
+      color: #1f2833;
+      background: #ffffff;
+    }
+    .profile-field input:focus,
+    .profile-field select:focus {
+      outline: 2px solid #6ea7d3;
+      outline-offset: 1px;
+      border-color: #6ea7d3;
+    }
+    .profile-field-note {
+      margin: 0;
+      color: #57708a;
+      font-size: 0.76rem;
+      line-height: 1.35;
+    }
+    .profile-drawer-footer {
+      margin-top: auto;
+      padding: 0.85rem 1rem 1rem;
+      border-top: 1px solid #dce8f2;
+      background: #ffffff;
+      display: flex;
+      gap: 0.6rem;
+    }
+    .profile-save-btn,
+    .profile-cancel-btn {
+      border-radius: 999px;
+      min-height: 44px;
+      padding: 0.55rem 0.95rem;
+      border: 1px solid #9cb8cf;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      flex: 1;
+    }
+    .profile-save-btn {
+      border-color: #0f6d5a;
+      background: #0f6d5a;
+      color: #ffffff;
+    }
+    .profile-save-btn:hover {
+      background: #0c5a4b;
+    }
+    .profile-cancel-btn {
+      background: #f6fbff;
+      color: #2a4c6d;
+    }
+    .profile-cancel-btn:hover {
+      background: #eaf4ff;
+    }
+    .profile-quick-summary {
+      margin-top: 0.15rem;
+      font-size: 0.82rem;
+      color: #315273;
+      background: #eef7ff;
+      border: 1px solid #c6dcf0;
+      border-radius: 999px;
+      padding: 0.3rem 0.65rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    body.profile-drawer-open {
+      overflow: hidden;
+      touch-action: none;
+    }
+    @media (max-width: 420px) {
+      .profile-drawer {
+        width: 100vw;
+      }
+    }
   </style>
 </head>
 <body>
@@ -360,23 +556,27 @@
       </div>
 
       <section class="intro-card" aria-label="Site introduction and use notice">
-        <h2>Introduction</h2>
-        
-        <p>
-          This Drone Mission Hub is built around a <em>Know Before You Go</em> approach—giving you a streamlined, repeatable workflow to prepare for every flight.
-        </p>
-        <p>
-          Quickly review key factors like <strong>NOTAMs, local weather, Kp index, and airspace considerations</strong>, then step through a structured mission checklist designed for consistency and safety.
-        </p>
-        <p>
-          Optimized for mobile use, this hub helps drone operators plan and execute missions with confidence—while staying aligned with applicable regulations and best practices.
-        </p>
-        
-        
-        <p>
-          New to drone ops? Review
-          <a href="https://tc.canada.ca/en/aviation/drone-safety/learn-rules-you-fly-your-drone/flying-your-drone-safely-legally?utm_campaign=tc-drone-safety-ongoing&utm_medium=vurl&utm_source=canada-ca-safe-legal-drones" target="_blank" rel="noopener">Transport Canada: Flying Your Drone Safely and Legally</a>.
-        </p>
+        <details id="introduction-panel" class="introduction-panel" open>
+          <summary class="introduction-summary">
+            <span>Introduction</span>
+            <span id="intro-toggle-state" class="intro-toggle-state">Hide</span>
+          </summary>
+          <div class="introduction-body">
+            <p>
+              This Drone Mission Hub is built around a <em>Know Before You Go</em> approach-giving you a streamlined, repeatable workflow to prepare for every flight.
+            </p>
+            <p>
+              Quickly review key factors like <strong>NOTAMs, local weather, Kp index, and airspace considerations</strong>, then step through a structured mission checklist designed for consistency and safety.
+            </p>
+            <p>
+              Optimized for mobile use, this hub helps drone operators plan and execute missions with confidence-while staying aligned with applicable regulations and best practices.
+            </p>
+            <p>
+              New to drone ops? Review
+              <a href="https://tc.canada.ca/en/aviation/drone-safety/learn-rules-you-fly-your-drone/flying-your-drone-safely-legally?utm_campaign=tc-drone-safety-ongoing&utm_medium=vurl&utm_source=canada-ca-safe-legal-drones" target="_blank" rel="noopener">Transport Canada: Flying Your Drone Safely and Legally</a>.
+            </p>
+          </div>
+        </details>
         <details id="disclaimer-panel" class="disclaimer-panel" open>
           <summary class="disclaimer-summary">
             <span>⚠&#xA0; Disclaimer – Use at your own risk</span>
@@ -399,9 +599,11 @@
           Start by setting your current Pilot Location. Then use Tools for weather, NOTAM, and survey checks, Procedures for the right SOP checklist, Flight Log to record the mission, and Flight Summary to review and save your records.
         </p>
         <div class="loc-init">
+          <button id="open-profile-drawer" class="mini-btn" type="button">My Profile</button>
           <button id="init-pilot-location" class="mini-btn" type="button">Set Pilot Location</button>
           <span id="pilot-location-status" class="loc-status">No pilot location set yet.</span>
         </div>
+        <p id="profile-quick-summary" class="profile-quick-summary" hidden></p>
       </section>
 
       <section class="actions" aria-label="Primary links">
@@ -425,8 +627,212 @@
 
     </main>
   </div>
+
+  <div id="profile-backdrop" class="profile-backdrop" hidden></div>
+  <aside
+    id="profile-drawer"
+    class="profile-drawer"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-labelledby="profile-drawer-title"
+  >
+    <div class="profile-drawer-header">
+      <div>
+        <h2 id="profile-drawer-title" class="profile-drawer-title">My Profile</h2>
+        <p class="profile-drawer-subtitle">Save pilot defaults so repeat visits are faster.</p>
+      </div>
+      <button id="close-profile-drawer" class="profile-close-btn" type="button" aria-label="Close profile panel">Close</button>
+    </div>
+    <form id="profile-form" class="profile-form">
+      <div class="profile-field">
+        <label for="profile-pilot-name">Pilot Name</label>
+        <input id="profile-pilot-name" name="pilotName" type="text" autocomplete="name" placeholder="Enter pilot name">
+      </div>
+
+      <div class="profile-field">
+        <label for="profile-mission-category">Drone Mission Category</label>
+        <select id="profile-mission-category" name="droneMissionCategory">
+          <option value="micro">Micro</option>
+          <option value="basic">Basic</option>
+          <option value="advanced">Advanced</option>
+        </select>
+      </div>
+
+      <div class="profile-field">
+        <label for="profile-drone-label">Preferred Drone (Optional)</label>
+        <input id="profile-drone-label" name="preferredDroneLabel" type="text" autocomplete="off" placeholder="Example: Mavic 3">
+      </div>
+
+      <div class="profile-field">
+        <label for="profile-mission-status">Mission State</label>
+        <select id="profile-mission-status" name="lastMissionStatus">
+          <option value="draft">Draft</option>
+          <option value="active">Active</option>
+          <option value="closed">Closed</option>
+        </select>
+        <p class="profile-field-note">Used as a quick return-visit context marker.</p>
+      </div>
+    </form>
+    <div class="profile-drawer-footer">
+      <button id="cancel-profile-save" class="profile-cancel-btn" type="button">Cancel</button>
+      <button id="save-profile-state" class="profile-save-btn" type="submit" form="profile-form">Save Profile</button>
+    </div>
+  </aside>
+
   <script>
     const TERMS_ACCEPTED_KEY = 'droneSopTermsAcceptedV1';
+    const TERMS_VERSION_KEY = 'droneSopTermsVersion';
+    const TERMS_VERSION_VALUE = '2026-04-05';
+    const INTRO_COLLAPSED_KEY = 'droneSopIntroCollapsedV1';
+    const PROFILE_STATE_KEY = 'dsop.profileState.v1';
+
+    let profileState = null;
+
+    function toTitleCaseCategory(value) {
+      if (value === 'micro') return 'Micro';
+      if (value === 'advanced') return 'Advanced';
+      return 'Basic';
+    }
+
+    function getDefaultProfileState() {
+      return {
+        pilotName: '',
+        droneMissionCategory: 'basic',
+        preferredDroneLabel: '',
+        lastUsedMissionCategory: 'basic',
+        lastMissionStartedAt: null,
+        lastMissionStatus: 'draft',
+        termsAccepted: false,
+        termsAcceptedAt: null,
+        termsVersion: TERMS_VERSION_VALUE,
+        introCollapsed: false,
+        profileUpdatedAt: null
+      };
+    }
+
+    function normalizeMissionCategory(value) {
+      return ['micro', 'basic', 'advanced'].includes(value) ? value : 'basic';
+    }
+
+    function normalizeMissionStatus(value) {
+      return ['draft', 'active', 'closed'].includes(value) ? value : 'draft';
+    }
+
+    function loadProfileState() {
+      const defaults = getDefaultProfileState();
+      let parsed = null;
+
+      try {
+        parsed = JSON.parse(localStorage.getItem(PROFILE_STATE_KEY) || 'null');
+      } catch (_err) {
+        parsed = null;
+      }
+
+      const state = {
+        ...defaults,
+        ...(parsed && typeof parsed === 'object' ? parsed : {})
+      };
+
+      state.pilotName = String(state.pilotName || '').trim();
+      state.preferredDroneLabel = String(state.preferredDroneLabel || '').trim();
+      state.droneMissionCategory = normalizeMissionCategory(state.droneMissionCategory);
+      state.lastUsedMissionCategory = normalizeMissionCategory(state.lastUsedMissionCategory || state.droneMissionCategory);
+      state.lastMissionStatus = normalizeMissionStatus(state.lastMissionStatus);
+
+      const termsAcceptedLegacy = localStorage.getItem(TERMS_ACCEPTED_KEY) === 'yes';
+      state.termsAccepted = state.termsAccepted || termsAcceptedLegacy;
+      state.termsAcceptedAt = localStorage.getItem('termsAcceptedAt') || state.termsAcceptedAt;
+      state.termsVersion = localStorage.getItem(TERMS_VERSION_KEY) || state.termsVersion;
+
+      if (localStorage.getItem(INTRO_COLLAPSED_KEY) != null) {
+        state.introCollapsed = localStorage.getItem(INTRO_COLLAPSED_KEY) === 'yes';
+      }
+
+      return state;
+    }
+
+    function persistProfileState() {
+      if (!profileState) return;
+      profileState.profileUpdatedAt = new Date().toISOString();
+      localStorage.setItem(PROFILE_STATE_KEY, JSON.stringify(profileState));
+
+      // Keep lightweight mirror keys for cross-page access and backward compatibility.
+      localStorage.setItem('pilotName', profileState.pilotName || '');
+      localStorage.setItem('droneMissionCategory', profileState.droneMissionCategory || 'basic');
+      localStorage.setItem('lastUsedMissionCategory', profileState.lastUsedMissionCategory || profileState.droneMissionCategory || 'basic');
+    }
+
+    function syncProfileStateWithTermsAndIntro() {
+      if (!profileState) return;
+      profileState.termsAccepted = hasAcceptedTerms();
+      profileState.termsAcceptedAt = localStorage.getItem('termsAcceptedAt');
+      profileState.termsVersion = localStorage.getItem(TERMS_VERSION_KEY) || TERMS_VERSION_VALUE;
+      profileState.introCollapsed = isIntroCollapsed();
+      persistProfileState();
+    }
+
+    function renderProfileSummary() {
+      const summary = document.getElementById('profile-quick-summary');
+      if (!summary || !profileState) return;
+
+      const hasProfile = Boolean(profileState.pilotName || profileState.profileUpdatedAt);
+      if (!hasProfile) {
+        summary.hidden = true;
+        summary.textContent = '';
+        return;
+      }
+
+      const pilot = profileState.pilotName || 'Pilot';
+      const category = toTitleCaseCategory(profileState.droneMissionCategory);
+      const missionState = normalizeMissionStatus(profileState.lastMissionStatus);
+
+      summary.hidden = false;
+      summary.textContent = `Profile ready: ${pilot} | ${category} | ${missionState}`;
+    }
+
+    function fillProfileForm() {
+      if (!profileState) return;
+
+      const pilotInput = document.getElementById('profile-pilot-name');
+      const categorySelect = document.getElementById('profile-mission-category');
+      const droneInput = document.getElementById('profile-drone-label');
+      const statusSelect = document.getElementById('profile-mission-status');
+
+      if (pilotInput) pilotInput.value = profileState.pilotName || '';
+      if (categorySelect) categorySelect.value = normalizeMissionCategory(profileState.droneMissionCategory);
+      if (droneInput) droneInput.value = profileState.preferredDroneLabel || '';
+      if (statusSelect) statusSelect.value = normalizeMissionStatus(profileState.lastMissionStatus);
+    }
+
+    function closeProfileDrawer() {
+      const drawer = document.getElementById('profile-drawer');
+      const backdrop = document.getElementById('profile-backdrop');
+      if (!drawer || !backdrop) return;
+
+      drawer.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      backdrop.hidden = true;
+      document.body.classList.remove('profile-drawer-open');
+    }
+
+    function openProfileDrawer() {
+      const drawer = document.getElementById('profile-drawer');
+      const backdrop = document.getElementById('profile-backdrop');
+      const pilotInput = document.getElementById('profile-pilot-name');
+      if (!drawer || !backdrop) return;
+
+      fillProfileForm();
+
+      backdrop.hidden = false;
+      drawer.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('profile-drawer-open');
+
+      if (pilotInput) {
+        requestAnimationFrame(() => pilotInput.focus());
+      }
+    }
 
     function toDMS(deg, isLat) {
       const abs = Math.abs(deg);
@@ -478,7 +884,13 @@
     function snapshotTermsAcceptance() {
       return {
         accepted: localStorage.getItem(TERMS_ACCEPTED_KEY),
-        acceptedAt: localStorage.getItem('termsAcceptedAt')
+        acceptedAt: localStorage.getItem('termsAcceptedAt'),
+        acceptedVersion: localStorage.getItem(TERMS_VERSION_KEY),
+        introCollapsed: localStorage.getItem(INTRO_COLLAPSED_KEY),
+        profileStateRaw: localStorage.getItem(PROFILE_STATE_KEY),
+        pilotName: localStorage.getItem('pilotName'),
+        droneMissionCategory: localStorage.getItem('droneMissionCategory'),
+        lastUsedMissionCategory: localStorage.getItem('lastUsedMissionCategory')
       };
     }
 
@@ -489,6 +901,24 @@
       }
       if (snapshot.acceptedAt != null) {
         localStorage.setItem('termsAcceptedAt', snapshot.acceptedAt);
+      }
+      if (snapshot.acceptedVersion != null) {
+        localStorage.setItem(TERMS_VERSION_KEY, snapshot.acceptedVersion);
+      }
+      if (snapshot.introCollapsed != null) {
+        localStorage.setItem(INTRO_COLLAPSED_KEY, snapshot.introCollapsed);
+      }
+      if (snapshot.profileStateRaw != null) {
+        localStorage.setItem(PROFILE_STATE_KEY, snapshot.profileStateRaw);
+      }
+      if (snapshot.pilotName != null) {
+        localStorage.setItem('pilotName', snapshot.pilotName);
+      }
+      if (snapshot.droneMissionCategory != null) {
+        localStorage.setItem('droneMissionCategory', snapshot.droneMissionCategory);
+      }
+      if (snapshot.lastUsedMissionCategory != null) {
+        localStorage.setItem('lastUsedMissionCategory', snapshot.lastUsedMissionCategory);
       }
     }
 
@@ -521,12 +951,52 @@
     }
 
     function hasAcceptedTerms() {
-      return localStorage.getItem(TERMS_ACCEPTED_KEY) === 'yes';
+      return localStorage.getItem(TERMS_ACCEPTED_KEY) === 'yes'
+        && localStorage.getItem(TERMS_VERSION_KEY) === TERMS_VERSION_VALUE;
     }
 
     function markTermsAccepted() {
       localStorage.setItem(TERMS_ACCEPTED_KEY, 'yes');
       localStorage.setItem('termsAcceptedAt', new Date().toISOString());
+      localStorage.setItem(TERMS_VERSION_KEY, TERMS_VERSION_VALUE);
+      if (profileState) {
+        profileState.termsAccepted = true;
+        profileState.termsAcceptedAt = localStorage.getItem('termsAcceptedAt');
+        profileState.termsVersion = TERMS_VERSION_VALUE;
+        persistProfileState();
+      }
+    }
+
+    function setIntroCollapsed(collapsed) {
+      localStorage.setItem(INTRO_COLLAPSED_KEY, collapsed ? 'yes' : 'no');
+      if (profileState) {
+        profileState.introCollapsed = collapsed;
+        persistProfileState();
+      }
+    }
+
+    function isIntroCollapsed() {
+      return localStorage.getItem(INTRO_COLLAPSED_KEY) === 'yes';
+    }
+
+    function updateIntroToggleStateLabel() {
+      const introPanel = document.getElementById('introduction-panel');
+      const stateLabel = document.getElementById('intro-toggle-state');
+      if (!introPanel || !stateLabel) return;
+      stateLabel.textContent = introPanel.open ? 'Hide' : 'Show';
+    }
+
+    function syncIntroPanelFromStorage() {
+      const introPanel = document.getElementById('introduction-panel');
+      if (!introPanel) return;
+
+      if (isIntroCollapsed()) {
+        introPanel.removeAttribute('open');
+      } else {
+        introPanel.setAttribute('open', '');
+      }
+
+      updateIntroToggleStateLabel();
     }
 
     function setTermsGateActive(active) {
@@ -537,6 +1007,7 @@
       const accepted = hasAcceptedTerms();
       setTermsGateActive(!accepted);
       const acceptBtn = document.querySelector('.waiver-accept');
+      const disclaimer = document.getElementById('disclaimer-panel');
       if (!acceptBtn) return;
 
       if (accepted) {
@@ -544,13 +1015,13 @@
         acceptBtn.textContent = 'Terms Accepted';
         acceptBtn.disabled = true;
         acceptBtn.setAttribute('aria-disabled', 'true');
-        const disclaimer = document.getElementById('disclaimer-panel');
         if (disclaimer) disclaimer.removeAttribute('open');
       } else {
         acceptBtn.classList.remove('is-complete');
         acceptBtn.textContent = 'Accept & Continue';
         acceptBtn.disabled = false;
         acceptBtn.removeAttribute('aria-disabled');
+        if (disclaimer) disclaimer.setAttribute('open', '');
       }
     }
 
@@ -600,13 +1071,85 @@
       const fullResetBtn = document.getElementById('full-reset-data');
       const status = document.getElementById('pilot-location-status');
       const acceptBtn = document.querySelector('.waiver-accept');
+      const introPanel = document.getElementById('introduction-panel');
+      const openProfileBtn = document.getElementById('open-profile-drawer');
+      const closeProfileBtn = document.getElementById('close-profile-drawer');
+      const profileBackdrop = document.getElementById('profile-backdrop');
+      const profileForm = document.getElementById('profile-form');
+      const cancelProfileBtn = document.getElementById('cancel-profile-save');
       if (!btn || !status || !clearBtn || !acceptBtn) return;
 
+      profileState = loadProfileState();
+      persistProfileState();
+      renderProfileSummary();
+
+      syncIntroPanelFromStorage();
       syncTermsGateState();
+      syncProfileStateWithTermsAndIntro();
+
+      if (introPanel) {
+        introPanel.addEventListener('toggle', () => {
+          setIntroCollapsed(!introPanel.open);
+          updateIntroToggleStateLabel();
+          renderProfileSummary();
+        });
+      }
+
+      if (openProfileBtn) {
+        openProfileBtn.addEventListener('click', openProfileDrawer);
+      }
+
+      if (closeProfileBtn) {
+        closeProfileBtn.addEventListener('click', closeProfileDrawer);
+      }
+
+      if (cancelProfileBtn) {
+        cancelProfileBtn.addEventListener('click', closeProfileDrawer);
+      }
+
+      if (profileBackdrop) {
+        profileBackdrop.addEventListener('click', closeProfileDrawer);
+      }
+
+      if (profileForm) {
+        profileForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+
+          const formData = new FormData(profileForm);
+          const pilotName = String(formData.get('pilotName') || '').trim();
+          const droneMissionCategory = normalizeMissionCategory(String(formData.get('droneMissionCategory') || 'basic'));
+          const preferredDroneLabel = String(formData.get('preferredDroneLabel') || '').trim();
+          const lastMissionStatus = normalizeMissionStatus(String(formData.get('lastMissionStatus') || 'draft'));
+
+          profileState.pilotName = pilotName;
+          profileState.droneMissionCategory = droneMissionCategory;
+          profileState.lastUsedMissionCategory = droneMissionCategory;
+          profileState.preferredDroneLabel = preferredDroneLabel;
+          profileState.lastMissionStatus = lastMissionStatus;
+
+          persistProfileState();
+          renderProfileSummary();
+          closeProfileDrawer();
+
+          status.textContent = pilotName
+            ? `Profile saved for ${pilotName} (${toTitleCaseCategory(droneMissionCategory)}).`
+            : `Profile saved (${toTitleCaseCategory(droneMissionCategory)}).`;
+
+          updateClearDataVisibility();
+        });
+      }
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeProfileDrawer();
+        }
+      });
 
       acceptBtn.addEventListener('click', () => {
         markTermsAccepted();
         syncTermsGateState();
+        syncProfileStateWithTermsAndIntro();
+        renderProfileSummary();
       });
 
       const hasPilotLocation = updateStatusFromStorage();
@@ -641,7 +1184,7 @@
       clearBtn.addEventListener('click', async () => {
         if (!clearBtn.classList.contains('is-armed')) {
           armWipeAction();
-          status.textContent = 'Click trashcan twice to clear forms data (terms acceptance is kept).';
+          status.textContent = 'Click trashcan twice to clear forms data (terms acceptance and intro visibility are kept).';
           return;
         }
 
