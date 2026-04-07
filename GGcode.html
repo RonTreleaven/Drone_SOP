@@ -414,6 +414,156 @@ body {
   grid-column: 1 / -1;
 }
 
+.route-tools .tools-drawer .mission-setting.tool-inline-setting {
+  grid-column: auto;
+}
+
+.route-tools .tools-drawer .route-status.compact-status {
+  grid-column: auto;
+}
+
+.route-tools .drawer-toggle {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  font-weight: 700;
+}
+
+.route-tools .drawer-toggle .drawer-icon {
+  font-size: 0.72rem;
+  transition: transform 0.2s ease;
+}
+
+.route-tools .drawer-toggle.collapsed .drawer-icon {
+  transform: rotate(-90deg);
+}
+
+.route-tools .mission-settings-drawer {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  align-items: center;
+}
+
+.route-tools .mission-settings-drawer.collapsed {
+  display: none;
+}
+
+.route-tools .export-drawer {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  align-items: center;
+}
+
+.route-tools .export-drawer.collapsed {
+  display: none;
+}
+
+.route-tools .export-drawer .mission-setting,
+.route-tools .export-drawer #routeFile,
+.route-tools .export-drawer .route-status {
+  grid-column: 1 / -1;
+}
+
+.route-tools .tools-drawer {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  align-items: center;
+}
+
+.route-tools .tools-drawer.collapsed {
+  display: none;
+}
+
+.route-tools .btn.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 700;
+}
+
+.route-tools .btn.btn-active {
+  background: #1a73e8;
+  color: #fff;
+  border-color: #1558b0;
+  box-shadow: 0 0 0 2px #bfd7ff;
+}
+
+.route-tools .btn.btn-active:hover {
+  background: #1558b0;
+}
+
+.route-tools .btn.btn-pending {
+  background: #f57c00;
+  border-color: #e65100;
+  color: #fff;
+  box-shadow: 0 0 0 2px #ffe0b2;
+}
+
+.route-tools .btn.btn-pending:hover {
+  background: #e65100;
+}
+
+.tool-glyph {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+}
+
+.glyph-waypoint {
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+
+.glyph-waypoint::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.glyph-polygon {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 12px solid currentColor;
+}
+
+.glyph-rectangle {
+  border: 2px solid currentColor;
+  border-radius: 2px;
+}
+
+.glyph-orbit {
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+
+.glyph-orbit::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
 .route-tools .route-status {
   grid-column: 1 / -1;
   font-size: 0.78rem;
@@ -787,68 +937,106 @@ body.map-immersive {
       <button class="btn map-fullscreen-fab" id="toggleMapFullscreenTopBtn" type="button" title="Toggle full screen" aria-label="Toggle full screen">⤢</button>
       <button class="btn mobile-tools-toggle" id="toggleRouteToolsBtn" type="button" aria-controls="routeTools" aria-expanded="false">☰ Tools</button>
       <div class="route-tools" id="routeTools">
-        <button class="btn" id="drawRouteBtn" type="button">Waypoints</button>
-        <button class="btn" id="drawPolygonBtn" type="button">Polygon</button>
-        <button class="btn" id="drawRectangleBtn" type="button">Rectangle</button>
-        <button class="btn secondary-btn" id="toggleRouteEditBtn" type="button">Lock Route</button>
-        <button class="btn" id="snapRouteBtn" type="button">Snap To WP</button>
-        <button class="btn" id="closePolygonBtn" type="button">Close Polygon</button>
-        <button class="btn" id="setPOIByClickBtn" type="button">POI by Click</button>
-        <button class="btn" id="setPOIFromPilotBtn" type="button">POI from Pilot</button>
-        <button class="btn" id="setPOIManuallyBtn" type="button">Set POI Manual</button>
-        <button class="btn secondary-btn" id="clearPOIBtn" type="button">Clear POI</button>
-        <button class="btn" id="exportRouteGeoJSONBtn" type="button">Export GeoJSON</button>
-        <button class="btn" id="exportRouteKMLBtn" type="button">Export KML</button>
-        <button class="btn" id="exportDJIKMZBtn" type="button">Export KMZ</button>
-        <label class="mission-setting" for="patternType">Pattern
-          <select id="patternType">
-            <option value="perimeter" selected>Perimeter</option>
-            <option value="lawnmower">Lawnmower</option>
-            <option value="poi">POI Orbit</option>
-          </select>
-        </label>
-        <label class="mission-setting" for="orbitRadiusMeters">Orbit R(m)
-          <input id="orbitRadiusMeters" type="number" min="10" max="500" step="5" value="50" />
-        </label>
-        <div id="poiRadiusIndicator" class="route-status">POI radius: not set</div>
-        <button class="btn" id="generatePatternBtn" type="button">Generate Pattern</button>
-        <label class="mission-setting" for="djiExecHeight">H(m)
-          <input id="djiExecHeight" type="number" min="5" max="500" step="1" value="60" />
-        </label>
-        <label class="mission-setting" for="djiWaypointSpeed">Speed(m/s)
-          <input id="djiWaypointSpeed" type="number" min="0.5" max="15" step="0.1" value="2.5" />
-        </label>
-        <label class="mission-setting" for="frontOverlapPct">Front%
-          <input id="frontOverlapPct" type="number" min="20" max="95" step="1" value="75" />
-        </label>
-        <label class="mission-setting" for="sideOverlapPct">Side%
-          <input id="sideOverlapPct" type="number" min="20" max="95" step="1" value="70" />
-        </label>
-        <label class="mission-setting" for="djiFinishAction">Finish
-          <select id="djiFinishAction">
-            <option value="goHome" selected>Go Home</option>
-            <option value="noAction">No Action</option>
-            <option value="autoLand">Auto Land</option>
-          </select>
-        </label>
-        <label class="mission-setting" for="djiGimbalPitch">Gimbal
-          <select id="djiGimbalPitch">
-            <option value="none" selected>Keep</option>
-            <option value="-45">-45</option>
-            <option value="-90">-90</option>
-          </select>
-        </label>
-        <label class="mission-setting" for="djiTakePhotoEachWp">
-          <input id="djiTakePhotoEachWp" type="checkbox" checked /> Photo each WP
-        </label>
-        <label class="mission-setting" for="photoByDistanceMeters">PhotoEvery(m)
-          <input id="photoByDistanceMeters" type="number" min="0" max="250" step="1" value="0" />
-        </label>
-        <label class="mission-setting" for="djiStartStopVideo">
-          <input id="djiStartStopVideo" type="checkbox" /> Start/Stop Video
-        </label>
+        <button class="btn secondary-btn drawer-toggle" id="toggleDrawToolsBtn" type="button" aria-controls="drawToolsDrawer" aria-expanded="true">
+          Draw & Shape
+          <span class="drawer-icon">&#9660;</span>
+        </button>
+        <div class="tools-drawer" id="drawToolsDrawer">
+          <button class="btn icon-btn" id="drawRouteBtn" type="button" title="Waypoints" aria-label="Waypoints">
+            <span class="tool-glyph glyph-waypoint" aria-hidden="true"></span>
+            <span>WP</span>
+          </button>
+          <button class="btn icon-btn" id="drawPolygonBtn" type="button" title="Polygon" aria-label="Polygon">
+            <span class="tool-glyph glyph-polygon" aria-hidden="true"></span>
+            <span>Poly</span>
+          </button>
+          <button class="btn icon-btn" id="drawRectangleBtn" type="button" title="Rectangle" aria-label="Rectangle">
+            <span class="tool-glyph glyph-rectangle" aria-hidden="true"></span>
+            <span>Rect</span>
+          </button>
+          <button class="btn secondary-btn" id="toggleRouteEditBtn" type="button">Lock Route</button>
+          <button class="btn" id="snapRouteBtn" type="button">Snap To WP</button>
+          <button class="btn" id="closePolygonBtn" type="button">Close Polygon</button>
+          <button class="btn icon-btn" id="setPOIByClickBtn" type="button" title="Orbit by Click" aria-label="Orbit by Click">
+            <span class="tool-glyph glyph-orbit" aria-hidden="true"></span>
+            <span>Orbit</span>
+          </button>
+          <button class="btn" id="setPOIFromPilotBtn" type="button">POI from Pilot Marker</button>
+          <label class="mission-setting tool-inline-setting" for="orbitRadiusMeters">Orbit Radius(m)
+            <input id="orbitRadiusMeters" type="number" min="10" max="500" step="5" value="50" />
+          </label>
+          <div id="poiRadiusIndicator" class="route-status compact-status">POI radius: not set</div>
+          <label class="mission-setting tool-inline-setting" for="patternType">Pattern
+            <select id="patternType">
+              <option value="perimeter" selected>Perimeter</option>
+              <option value="lawnmower">Lawnmower</option>
+              <option value="poi">POI Orbit</option>
+            </select>
+          </label>
+          <button class="btn" id="generatePatternBtn" type="button">Generate Pattern</button>
+        </div>
+        <button class="btn secondary-btn drawer-toggle" id="toggleMissionSettingsBtn" type="button" aria-controls="missionSettingsDrawer" aria-expanded="true">
+          Mission Settings
+          <span class="drawer-icon">&#9660;</span>
+        </button>
+        <div class="mission-settings-drawer" id="missionSettingsDrawer">
+          <label class="mission-setting" for="djiExecHeight">H(m)
+            <input id="djiExecHeight" type="number" min="5" max="500" step="1" value="60" />
+          </label>
+          <label class="mission-setting" for="djiWaypointSpeed">Speed(m/s)
+            <input id="djiWaypointSpeed" type="number" min="0.5" max="15" step="0.1" value="2.5" />
+          </label>
+          <label class="mission-setting" for="frontOverlapPct">Front%
+            <input id="frontOverlapPct" type="number" min="20" max="95" step="1" value="75" />
+          </label>
+          <label class="mission-setting" for="sideOverlapPct">Side%
+            <input id="sideOverlapPct" type="number" min="20" max="95" step="1" value="70" />
+          </label>
+          <label class="mission-setting" for="djiFinishAction">Finish
+            <select id="djiFinishAction">
+              <option value="goHome" selected>Go Home</option>
+              <option value="noAction">No Action</option>
+              <option value="autoLand">Auto Land</option>
+            </select>
+          </label>
+          <label class="mission-setting" for="djiGimbalPitch">Gimbal
+            <select id="djiGimbalPitch">
+              <option value="none" selected>Keep</option>
+              <option value="-45">-45</option>
+              <option value="-90">-90</option>
+            </select>
+          </label>
+          <label class="mission-setting" for="djiTakePhotoEachWp">
+            <input id="djiTakePhotoEachWp" type="checkbox" /> Photo each WP
+          </label>
+          <label class="mission-setting" for="photoByDistanceMeters">PhotoEvery(m)
+            <input id="photoByDistanceMeters" type="number" min="0" max="250" step="1" value="0" />
+          </label>
+          <label class="mission-setting" for="djiStartStopVideo">
+            <input id="djiStartStopVideo" type="checkbox" /> Start/Stop Video
+          </label>
+        </div>
+        <button class="btn secondary-btn drawer-toggle" id="toggleExportDrawerBtn" type="button" aria-controls="exportDrawer" aria-expanded="true">
+          Export & Files
+          <span class="drawer-icon">&#9660;</span>
+        </button>
+        <div class="export-drawer" id="exportDrawer">
+          <button class="btn" id="exportRouteGeoJSONBtn" type="button">Export GeoJSON</button>
+          <button class="btn" id="exportRouteKMLBtn" type="button">Export KML</button>
+          <button class="btn" id="exportDJIKMZBtn" type="button">Export KMZ</button>
+          <label class="mission-setting" for="exportNameMode">DJI KMZ Name
+            <select id="exportNameMode">
+              <option value="readable" selected>Readable (default)</option>
+              <option value="uuid">UUID Slot (advanced)</option>
+            </select>
+          </label>
+          <label class="mission-setting" for="djiUuidName">UUID Slot
+            <input id="djiUuidName" type="text" placeholder="Paste RC2 UUID slot value (example: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX)" autocomplete="off" />
+          </label>
+          <div class="route-status" id="exportNamingHint">UUID is user/device-specific and is not auto-discovered in browser. Use SOP/PowerShell to inventory RC2 UUID slots.</div>
+          <input id="routeFile" type="file" accept=".gpx,.kml,.kmz,.geojson,.json" aria-label="Import route file" />
+        </div>
         <button class="btn secondary-btn" id="toggleMapFullscreenBtn" type="button">Full Screen</button>
-        <input id="routeFile" type="file" accept=".gpx,.kml,.kmz,.geojson,.json" aria-label="Import route file" />
       </div>
       <div id="map"></div>
     </div>
@@ -935,11 +1123,17 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('drawRectangleBtn').addEventListener('click', handleDrawRectangleToggle);
   document.getElementById('snapRouteBtn').addEventListener('click', snapRouteToNearestWaypoint);
   document.getElementById('closePolygonBtn').addEventListener('click', closeCurrentRoutePolygon);
-  document.getElementById('setPOIByClickBtn').addEventListener('click', startPOIClickMode);
+  document.getElementById('setPOIByClickBtn').addEventListener('click', toggleOrbitMode);
   document.getElementById('setPOIFromPilotBtn').addEventListener('click', setPOIFromPilotLocation);
-  document.getElementById('setPOIManuallyBtn').addEventListener('click', setPOIManually);
-  document.getElementById('clearPOIBtn').addEventListener('click', clearMissionPOI);
+  const setPOIManuallyBtn = document.getElementById('setPOIManuallyBtn');
+  if (setPOIManuallyBtn) {
+    setPOIManuallyBtn.addEventListener('click', setPOIManually);
+  }
   document.getElementById('generatePatternBtn').addEventListener('click', generateRoutePattern);
+  document.getElementById('toggleDrawToolsBtn').addEventListener('click', toggleDrawToolsDrawer);
+  document.getElementById('toggleMissionSettingsBtn').addEventListener('click', toggleMissionSettingsDrawer);
+  document.getElementById('toggleExportDrawerBtn').addEventListener('click', toggleExportDrawer);
+  document.getElementById('exportNameMode').addEventListener('change', applyExportNamingModeState);
   document.getElementById('toggleRouteToolsBtn').addEventListener('click', toggleRouteToolsPanel);
   document.getElementById('toggleRouteEditBtn').addEventListener('click', toggleRouteEdit);
   document.getElementById('exportRouteGeoJSONBtn').addEventListener('click', exportRouteGeoJSON);
@@ -952,6 +1146,14 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   routeToolsMobileCollapsed = isMobileViewport();
   applyRouteToolsPanelState();
+  applyDrawToolsDrawerState();
+  applyMissionSettingsDrawerState();
+  applyExportDrawerState();
+  const exportNameModeEl = document.getElementById('exportNameMode');
+  const djiUuidNameEl = document.getElementById('djiUuidName');
+  if (exportNameModeEl) exportNameModeEl.value = 'readable';
+  if (djiUuidNameEl) djiUuidNameEl.value = '';
+  applyExportNamingModeState();
   window.addEventListener('resize', applyRouteToolsPanelState);
 
   renderLookupHistory();
@@ -994,6 +1196,9 @@ let autocompleteRequestId = 0;
 let mapPseudoFullscreenActive = false;
 let mapPseudoFullscreenScrollY = 0;
 let routeSnapGuard = false;
+let drawToolsCollapsed = false;
+let missionSettingsCollapsed = false;
+let exportDrawerCollapsed = false;
 let missionPOI = null; // Mission Point of Interest marker
 let poiCircle = null;
 let pendingMapClickMode = null;
@@ -1044,16 +1249,6 @@ function setMissionPOI(lat, lng) {
   }
 
   return true;
-}
-
-function clearMissionPOI() {
-  pendingMapClickMode = null;
-  if (missionPOI) {
-    missionPOI.setMap(null);
-    missionPOI = null;
-  }
-  clearPOICircle();
-  showLookupMessage("Mission POI cleared.", "dim");
 }
 
 function clearLegacyMissionPOIStorage() {
@@ -1172,7 +1367,56 @@ function syncPOICircleRadiusFromInput() {
 function startPOIClickMode() {
   if (!map) return;
   pendingMapClickMode = 'poi';
+  updateOrbitButtonState();
   showLookupMessage('POI click mode enabled. Tap/click on the map to place the POI center.', 'warn');
+}
+
+function updateOrbitButtonState() {
+  const btn = document.getElementById('setPOIByClickBtn');
+  if (!btn) return;
+  const span = btn.querySelector('span:last-child');
+  if (missionPOI) {
+    btn.classList.add('btn-active');
+    btn.classList.remove('btn-pending');
+    if (span) span.textContent = 'Clear Orbit';
+    btn.title = 'Clear orbit / POI';
+    btn.setAttribute('aria-label', 'Clear orbit / POI');
+  } else if (pendingMapClickMode === 'poi') {
+    btn.classList.add('btn-active', 'btn-pending');
+    if (span) span.textContent = 'Cancel';
+    btn.title = 'Cancel orbit placement';
+    btn.setAttribute('aria-label', 'Cancel orbit placement');
+  } else {
+    btn.classList.remove('btn-active', 'btn-pending');
+    if (span) span.textContent = 'Orbit';
+    btn.title = 'Orbit by Click';
+    btn.setAttribute('aria-label', 'Orbit by Click');
+  }
+}
+
+function clearMissionPOI() {
+  pendingMapClickMode = null;
+  if (missionPOI) {
+    missionPOI.setMap(null);
+    missionPOI = null;
+  }
+  clearPOICircle();
+  updateOrbitButtonState();
+  showLookupMessage("Mission POI cleared.", "dim");
+}
+
+function toggleOrbitMode() {
+  if (missionPOI) {
+    clearMissionPOI();
+    return;
+  }
+  if (pendingMapClickMode === 'poi') {
+    pendingMapClickMode = null;
+    updateOrbitButtonState();
+    showLookupMessage('Orbit placement cancelled.', 'dim');
+    return;
+  }
+  startPOIClickMode();
 }
 
 function setPOIFromPilotLocation() {
@@ -1181,14 +1425,13 @@ function setPOIFromPilotLocation() {
     showLookupMessage("No pilot location set. Set pilot location first.", "warn");
     return;
   }
-
   setMissionPOI(pilot.lat, pilot.lng);
+  updateOrbitButtonState();
 }
 
 function setPOIManually() {
   const latText = window.prompt("Set Mission POI\n\nEnter latitude (-90 to 90):");
   if (latText == null) return;
-
   const lngText = window.prompt("Enter longitude (-180 to 180):");
   if (lngText == null) return;
 
@@ -1197,6 +1440,8 @@ function setPOIManually() {
 
   if (!setMissionPOI(lat, lng)) {
     showLookupMessage("Invalid Mission POI coordinates.", "warn");
+  } else {
+    updateOrbitButtonState();
   }
 }
 
@@ -1266,64 +1511,63 @@ function loadGoogleMapsApi() {
       try {
         data = JSON.parse(rawText);
       } catch {
-        if (rawText.indexOf("Missing url= parameter") !== -1) {
-          throw new Error("Cloudflare worker is on an older version and does not support /maps-bootstrap yet. Deploy the updated worker script.");
-        }
-        throw new Error("Maps bootstrap returned non-JSON content.");
+        throw new Error('Maps bootstrap returned invalid JSON.');
       }
     }
 
     if (!res.ok) {
-      const backendMessage = data && data.error ? data.error : `Maps bootstrap error (${res.status})`;
-      throw new Error(backendMessage);
+      throw new Error(data.error || `Maps bootstrap failed (${res.status}).`);
     }
 
-    const scriptSrc = data && typeof data.scriptUrl === "string" ? data.scriptUrl.trim() : "";
-
-    if (!scriptSrc) {
-      throw new Error("Maps bootstrap did not return scriptUrl.");
+    const scriptUrl = data && data.scriptUrl;
+    if (!scriptUrl) {
+      throw new Error('Maps bootstrap did not return a script URL.');
     }
 
-    await injectGoogleMapsScript(scriptSrc);
-  })().catch((err) => {
-    googleMapsLoaderPromise = null;
-    throw err;
-  });
+    await new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[data-google-maps-loader="1"]');
+      if (existing) {
+        if (window.google && window.google.maps && window.google.maps.drawing && window.google.maps.geometry) {
+          resolve();
+          return;
+        }
+        existing.addEventListener('load', () => resolve(), { once: true });
+        existing.addEventListener('error', () => reject(new Error('Google Maps script failed to load.')), { once: true });
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = scriptUrl;
+      script.async = true;
+      script.defer = true;
+      script.dataset.googleMapsLoader = '1';
+      script.addEventListener('load', () => resolve(), { once: true });
+      script.addEventListener('error', () => reject(new Error('Google Maps script failed to load.')), { once: true });
+      document.head.appendChild(script);
+    });
+
+    if (!(window.google && window.google.maps && window.google.maps.drawing && window.google.maps.geometry)) {
+      throw new Error('Google Maps libraries did not initialize correctly.');
+    }
+  })();
 
   return googleMapsLoaderPromise;
 }
 
-function injectGoogleMapsScript(src) {
-  return new Promise((resolve, reject) => {
-    const existing = document.querySelector('script[data-google-maps-loader="dynamic"]');
-    if (existing) {
-      existing.addEventListener('load', () => resolve(), { once: true });
-      existing.addEventListener('error', () => reject(new Error('Google Maps script failed to load.')), { once: true });
-      return;
-    }
-
-    const script = document.createElement('script');
-    script.src = src;
-    script.async = true;
-    script.defer = true;
-    script.dataset.googleMapsLoader = 'dynamic';
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error('Google Maps script failed to load.'));
-    document.head.appendChild(script);
-  });
-}
-
 function initGoogleMap() {
-  clearLegacyMissionPOIStorage();
+  if (map || !window.google || !google.maps) return;
 
-  map = new google.maps.Map(document.getElementById('map'), {
+  const mapEl = document.getElementById('map');
+  if (!mapEl) throw new Error('Map container was not found.');
+
+  map = new google.maps.Map(mapEl, {
     center: DEFAULT_CENTER,
     zoom: DEFAULT_ZOOM,
-    mapTypeId: 'roadmap',
-    fullscreenControl: false
+    mapTypeControl: true,
+    streetViewControl: false,
+    fullscreenControl: false,
+    gestureHandling: 'greedy'
   });
-
-  applyRouteToolsPanelState();
 
   drawingManager = new google.maps.drawing.DrawingManager({
     drawingMode: null,
@@ -1406,10 +1650,12 @@ function initGoogleMap() {
     if (setMissionPOI(latLng.lat(), latLng.lng())) {
       ensurePOICircleForCurrentPOI({ keepExistingRadius: true });
     }
+    updateOrbitButtonState();
   });
 
   applyRouteEditState();
   updateDrawRouteButtonState();
+  updateOrbitButtonState();
 }
 
 async function toggleMapFullscreen() {
@@ -1531,6 +1777,65 @@ function toggleRouteToolsPanel() {
   applyRouteToolsPanelState();
 }
 
+function applyDrawToolsDrawerState() {
+  const drawer = document.getElementById('drawToolsDrawer');
+  const toggleBtn = document.getElementById('toggleDrawToolsBtn');
+  if (!drawer || !toggleBtn) return;
+
+  drawer.classList.toggle('collapsed', drawToolsCollapsed);
+  toggleBtn.classList.toggle('collapsed', drawToolsCollapsed);
+  toggleBtn.setAttribute('aria-expanded', drawToolsCollapsed ? 'false' : 'true');
+}
+
+function toggleDrawToolsDrawer() {
+  drawToolsCollapsed = !drawToolsCollapsed;
+  applyDrawToolsDrawerState();
+}
+
+function applyMissionSettingsDrawerState() {
+  const drawer = document.getElementById('missionSettingsDrawer');
+  const toggleBtn = document.getElementById('toggleMissionSettingsBtn');
+  if (!drawer || !toggleBtn) return;
+
+  drawer.classList.toggle('collapsed', missionSettingsCollapsed);
+  toggleBtn.classList.toggle('collapsed', missionSettingsCollapsed);
+  toggleBtn.setAttribute('aria-expanded', missionSettingsCollapsed ? 'false' : 'true');
+}
+
+function toggleMissionSettingsDrawer() {
+  missionSettingsCollapsed = !missionSettingsCollapsed;
+  applyMissionSettingsDrawerState();
+}
+
+function applyExportDrawerState() {
+  const drawer = document.getElementById('exportDrawer');
+  const toggleBtn = document.getElementById('toggleExportDrawerBtn');
+  if (!drawer || !toggleBtn) return;
+
+  drawer.classList.toggle('collapsed', exportDrawerCollapsed);
+  toggleBtn.classList.toggle('collapsed', exportDrawerCollapsed);
+  toggleBtn.setAttribute('aria-expanded', exportDrawerCollapsed ? 'false' : 'true');
+}
+
+function toggleExportDrawer() {
+  exportDrawerCollapsed = !exportDrawerCollapsed;
+  applyExportDrawerState();
+}
+
+function applyExportNamingModeState() {
+  const mode = document.getElementById('exportNameMode')?.value || 'readable';
+  const uuidInput = document.getElementById('djiUuidName');
+  const hint = document.getElementById('exportNamingHint');
+  if (!uuidInput || !hint) return;
+
+  const isUuidMode = mode === 'uuid';
+  uuidInput.disabled = !isUuidMode;
+  uuidInput.style.opacity = isUuidMode ? '1' : '0.65';
+  hint.textContent = isUuidMode
+    ? 'UUID mode (advanced): use only when replacing an existing RC2 UUID mission slot. Keep a backup/rollback slot.'
+    : 'Readable mode: default export names use mission address + pattern (for working files and non-slot exports).';
+}
+
 function setActivePolyline(poly) {
   if (activePolyline) activePolyline.setMap(null);
   clearWaypointMarkers();
@@ -1594,12 +1899,34 @@ function isRouteDrawingActive() {
     && drawingManager.getDrawingMode() === google.maps.drawing.OverlayType.POLYLINE);
 }
 
-function updateDrawRouteButtonState() {
-  const btn = document.getElementById('drawRouteBtn');
-  if (!btn) return;
-
+function updateDrawingToolActiveState() {
+  if (!drawingManager || !window.google || !google.maps || !google.maps.drawing) return;
+  const mode = drawingManager.getDrawingMode();
   const hasRoute = !!activePolyline || routePath.length > 0;
-  btn.textContent = (hasRoute || isRouteDrawingActive()) ? 'Clear Shape' : 'Waypoints';
+  const isDrawing = isRouteDrawingActive();
+
+  const wpBtn = document.getElementById('drawRouteBtn');
+  const polyBtn = document.getElementById('drawPolygonBtn');
+  const rectBtn = document.getElementById('drawRectangleBtn');
+
+  if (wpBtn) {
+    const labelSpan = wpBtn.querySelector('span:last-child');
+    const active = hasRoute || isDrawing;
+    wpBtn.classList.toggle('btn-active', active);
+    if (labelSpan) labelSpan.textContent = active ? 'Clear' : 'WP';
+    wpBtn.title = active ? 'Clear current shape' : 'Waypoints';
+    wpBtn.setAttribute('aria-label', wpBtn.title);
+  }
+  if (polyBtn) {
+    polyBtn.classList.toggle('btn-active', mode === google.maps.drawing.OverlayType.POLYGON);
+  }
+  if (rectBtn) {
+    rectBtn.classList.toggle('btn-active', mode === google.maps.drawing.OverlayType.RECTANGLE);
+  }
+}
+
+function updateDrawRouteButtonState() {
+  updateDrawingToolActiveState();
 }
 
 function clearActiveRoute() {
@@ -2111,31 +2438,41 @@ function clearWaypointMarkers() {
   waypointMarkers = [];
 }
 
+function makeWpIcon(number, type) {
+  const schemes = {
+    start: { bg: '#2e7d32', stroke: '#a5d6a7', text: '#fff' },
+    end: { bg: '#b71c1c', stroke: '#ef9a9a', text: '#fff' },
+    mid: { bg: '#1565c0', stroke: '#90caf9', text: '#fff' }
+  };
+  const c = schemes[type] || schemes.mid;
+  const label = String(number);
+  const fontSize = label.length > 2 ? 8 : 11;
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">'
+    + '<circle cx="12" cy="12" r="10" fill="' + c.bg + '" stroke="' + c.stroke + '" stroke-width="1.5"/>'
+    + '<text x="12" y="16" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="' + fontSize + '" font-weight="700" fill="' + c.text + '">' + label + '</text>'
+    + '</svg>';
+
+  return {
+    url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg),
+    scaledSize: new google.maps.Size(24, 24),
+    anchor: new google.maps.Point(12, 12)
+  };
+}
+
 function rebuildWaypointMarkers(poly) {
   clearWaypointMarkers();
   const path = poly.getPath();
   const points = path.getArray();
+  const total = points.length;
 
   points.forEach((pt, idx) => {
+    const type = idx === 0 ? 'start' : (idx === total - 1 ? 'end' : 'mid');
     const markerWp = new google.maps.Marker({
       position: pt,
       map,
       draggable: routeEditEnabled,
-      title: `Waypoint ${idx + 1}`,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 5,
-        fillColor: '#ffffff',
-        fillOpacity: 1,
-        strokeColor: '#1a73e8',
-        strokeWeight: 2
-      },
-      label: {
-        text: String(idx + 1),
-        color: '#16324f',
-        fontSize: '10px',
-        fontWeight: '700'
-      }
+      title: 'WP ' + (idx + 1) + (idx === 0 ? ' (start)' : idx === total - 1 ? ' (end)' : ''),
+      icon: makeWpIcon(idx + 1, type)
     });
 
     markerWp.addListener('dragend', () => {
@@ -2253,6 +2590,25 @@ function buildMissionExportBaseName() {
   return `${placeShort}_${patternPart}_${aglPart}_${speedPart}`;
 }
 
+function normalizeUuidName(value) {
+  return String(value || '').trim().toUpperCase();
+}
+
+function isUuidLike(value) {
+  return /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/.test(normalizeUuidName(value));
+}
+
+function getDjiKmzSuggestedBaseName() {
+  const mode = document.getElementById('exportNameMode')?.value || 'readable';
+  if (mode === 'uuid') {
+    const uuidRaw = document.getElementById('djiUuidName')?.value || '';
+    if (isUuidLike(uuidRaw)) {
+      return normalizeUuidName(uuidRaw);
+    }
+  }
+  return buildMissionExportBaseName();
+}
+
 function exportRouteGeoJSON() {
   ensureRoutePathForExport();
   if (!routePath.length) {
@@ -2347,10 +2703,23 @@ function getWaypointHeading(index, pathPoints = routePath) {
   ) || 0;
 }
 
+const WPML_NS_PRIMARY = 'http://www.uav.com/wpmz/1.0.2';
+const WPML_NS_LEGACY = 'http://www.dji.com/wpmz/1.0.2';
+
+function getWpmlElements(xmlDoc, tagName) {
+  const primary = Array.from(xmlDoc.getElementsByTagNameNS(WPML_NS_PRIMARY, tagName));
+  if (primary.length) return primary;
+
+  const legacy = Array.from(xmlDoc.getElementsByTagNameNS(WPML_NS_LEGACY, tagName));
+  if (legacy.length) return legacy;
+
+  return Array.from(xmlDoc.getElementsByTagName(`wpml:${tagName}`));
+}
+
 function buildDJITemplateKML(createTimeMs) {
   const settings = getDJIMissionSettings();
   return `<?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:wpml="http://www.dji.com/wpmz/1.0.2">
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:wpml="http://www.uav.com/wpmz/1.0.2">
   <Document>
     <wpml:author>Drone_SOP</wpml:author>
     <wpml:createTime>${createTimeMs}</wpml:createTime>
@@ -2359,7 +2728,7 @@ function buildDJITemplateKML(createTimeMs) {
       <wpml:flyToWaylineMode>safely</wpml:flyToWaylineMode>
       <wpml:finishAction>${settings.finishAction}</wpml:finishAction>
       <wpml:exitOnRCLost>executeLostAction</wpml:exitOnRCLost>
-      <wpml:executeRCLostAction>hover</wpml:executeRCLostAction>
+      <wpml:executeRCLostAction>goBack</wpml:executeRCLostAction>
       <wpml:globalTransitionalSpeed>${settings.speed}</wpml:globalTransitionalSpeed>
       <wpml:droneInfo>
         <wpml:droneEnumValue>68</wpml:droneEnumValue>
@@ -2451,11 +2820,34 @@ function getPhotoWaypointIndices(pathPoints, photoSpacingMeters) {
   return photoIndices;
 }
 
+function areRoutePointsEquivalent(a, b) {
+  if (!a || !b) return false;
+  return Math.abs(a.lat - b.lat) < 1e-9 && Math.abs(a.lng - b.lng) < 1e-9;
+}
+
+function normalizeWaypointPathForExport(pathPoints) {
+  if (!Array.isArray(pathPoints) || pathPoints.length < 2) {
+    return Array.isArray(pathPoints) ? pathPoints.slice() : [];
+  }
+
+  const normalized = [pathPoints[0]];
+  for (let i = 1; i < pathPoints.length; i++) {
+    const current = pathPoints[i];
+    const previous = normalized[normalized.length - 1];
+    if (!areRoutePointsEquivalent(current, previous)) {
+      normalized.push(current);
+    }
+  }
+
+  return normalized;
+}
+
 function buildDJIWaylinesWPML() {
   const settings = getDJIMissionSettings();
+  const basePath = normalizeWaypointPathForExport(routePath);
   const exportPath = settings.photoByDistanceMeters > 0
-    ? densifyRouteByDistance(routePath, settings.photoByDistanceMeters)
-    : routePath;
+    ? densifyRouteByDistance(basePath, settings.photoByDistanceMeters)
+    : basePath;
   
   // For photogrammetry: use distance-based spacing whenever PhotoEvery(m) is set.
   // If PhotoEvery is not set but Photo each WP is enabled, fall back to a conservative default.
@@ -2463,6 +2855,11 @@ function buildDJIWaylinesWPML() {
     ? settings.photoByDistanceMeters
     : (settings.takePhotoEachWp ? 20 : 0);
   const photoWaypoints = getPhotoWaypointIndices(exportPath, photoSpacing);
+  const photoOrderByIndex = new Map();
+  let photoOrder = 1;
+  for (const idx of photoWaypoints) {
+    photoOrderByIndex.set(idx, photoOrder++);
+  }
   
   let actionGroupId = 1;
   let actionId = 1;
@@ -2507,7 +2904,7 @@ function buildDJIWaylinesWPML() {
             <wpml:actionId>${actionId++}</wpml:actionId>
             <wpml:actionActuatorFunc>takePhoto</wpml:actionActuatorFunc>
             <wpml:actionActuatorFuncParam>
-              <wpml:fileSuffix>Photo${photoWaypoints.size > 0 ? Array.from(photoWaypoints).indexOf(i) + 1 : i + 1}</wpml:fileSuffix>
+              <wpml:fileSuffix>Photo${photoOrderByIndex.get(i) || i + 1}</wpml:fileSuffix>
               <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
             </wpml:actionActuatorFuncParam>
           </wpml:action>`);
@@ -2560,6 +2957,7 @@ function buildDJIWaylinesWPML() {
           <wpml:waypointPoiPoint>0.000000,0.000000,0.000000</wpml:waypointPoiPoint>
           <wpml:waypointHeadingAngleEnable>0</wpml:waypointHeadingAngleEnable>
           <wpml:waypointHeadingPathMode>followBadArc</wpml:waypointHeadingPathMode>
+          <wpml:waypointHeadingPoiIndex>0</wpml:waypointHeadingPoiIndex>
         </wpml:waypointHeadingParam>
         <wpml:waypointTurnParam>
           <wpml:waypointTurnMode>${turnMode}</wpml:waypointTurnMode>
@@ -2570,13 +2968,13 @@ function buildDJIWaylinesWPML() {
   }).join('');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:wpml="http://www.dji.com/wpmz/1.0.2">
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:wpml="http://www.uav.com/wpmz/1.0.2">
   <Document>
     <wpml:missionConfig>
       <wpml:flyToWaylineMode>safely</wpml:flyToWaylineMode>
       <wpml:finishAction>${settings.finishAction}</wpml:finishAction>
       <wpml:exitOnRCLost>executeLostAction</wpml:exitOnRCLost>
-      <wpml:executeRCLostAction>hover</wpml:executeRCLostAction>
+      <wpml:executeRCLostAction>goBack</wpml:executeRCLostAction>
       <wpml:globalTransitionalSpeed>${settings.speed}</wpml:globalTransitionalSpeed>
       <wpml:droneInfo>
         <wpml:droneEnumValue>68</wpml:droneEnumValue>
@@ -2620,7 +3018,7 @@ async function exportDJIKMZ() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    const suggestedBaseName = buildMissionExportBaseName();
+    const suggestedBaseName = getDjiKmzSuggestedBaseName();
     const kmzName = prompt('Save DJI KMZ as:', `${suggestedBaseName}.kmz`);
     if (!kmzName) { URL.revokeObjectURL(url); return; }
     a.download = kmzName.endsWith('.kmz') ? kmzName : kmzName + '.kmz';
@@ -2637,29 +3035,28 @@ function handleRouteFile(e) {
 
   const name = file.name.toLowerCase();
 
-  // ── KMZ (ZIP archive) — read as ArrayBuffer and unzip ──────────────────
   if (name.endsWith('.kmz')) {
     const abReader = new FileReader();
     abReader.onload = async (ev) => {
       try {
         const zip = await JSZip.loadAsync(ev.target.result);
-
-        // ── Try DJI WPMZ format first (wpmz/waylines.wpml) ────────────────
         const wpmlFile = zip.file('wpmz/waylines.wpml');
+        const templateFile = zip.file('wpmz/template.kml');
+
         if (wpmlFile) {
           const wpmlText = await wpmlFile.async('string');
-          const wpmlXml  = (new DOMParser()).parseFromString(wpmlText, 'text/xml');
-
-          // Extract waypoint coordinates from <Placemark><Point><coordinates>
+          const wpmlXml = (new DOMParser()).parseFromString(wpmlText, 'text/xml');
           const placemarks = wpmlXml.querySelectorAll('Placemark Point coordinates');
           const coords = [];
-          placemarks.forEach(el => {
+
+          placemarks.forEach((el) => {
             const raw = el.textContent.trim();
             const parts = raw.split(',');
-            if (parts.length >= 2) {
-              const lon = parseFloat(parts[0]);
-              const lat = parseFloat(parts[1]);
-              if (!isNaN(lon) && !isNaN(lat)) coords.push([lon, lat]);
+            if (parts.length < 2) return;
+            const lon = parseFloat(parts[0]);
+            const lat = parseFloat(parts[1]);
+            if (!Number.isNaN(lon) && !Number.isNaN(lat)) {
+              coords.push({ lat, lng: lon });
             }
           });
 
@@ -2668,79 +3065,72 @@ function handleRouteFile(e) {
             return;
           }
 
-          // Restore mission settings — use getElementsByTagNameNS (querySelector is unreliable for XML namespaces)
-          const wpmlNS = 'http://www.dji.com/wpmz/1.0.2';
+          const heightEls = getWpmlElements(wpmlXml, 'executeHeight');
+          const speedEls = getWpmlElements(wpmlXml, 'waypointSpeed');
+          if (heightEls.length) document.getElementById('djiExecHeight').value = parseFloat(heightEls[0].textContent) || 60;
+          if (speedEls.length) document.getElementById('djiWaypointSpeed').value = parseFloat(speedEls[0].textContent) || 2.5;
 
-          const heightEls = wpmlXml.getElementsByTagNameNS(wpmlNS, 'executeHeight');
-          const speedEls  = wpmlXml.getElementsByTagNameNS(wpmlNS, 'waypointSpeed');
-          if (heightEls.length) document.getElementById('djiExecHeight').value    = parseFloat(heightEls[0].textContent) || 60;
-          if (speedEls.length)  document.getElementById('djiWaypointSpeed').value = parseFloat(speedEls[0].textContent)  || 2.5;
-
-          // Restore gimbal pitch from first gimbalRotate action
-          const actionFuncEls = wpmlXml.getElementsByTagNameNS(wpmlNS, 'actionActuatorFunc');
+          const actionFuncEls = getWpmlElements(wpmlXml, 'actionActuatorFunc');
           for (let i = 0; i < actionFuncEls.length; i++) {
-            if (actionFuncEls[i].textContent.trim() === 'gimbalRotate') {
-              const pitchEls = actionFuncEls[i].parentElement.getElementsByTagNameNS(wpmlNS, 'gimbalPitchRotateAngle');
-              if (pitchEls.length) {
-                const pv = String(parseFloat(pitchEls[0].textContent));
-                const gs = document.getElementById('djiGimbalPitch');
-                if ([...gs.options].some(o => o.value === pv)) gs.value = pv;
+            if (actionFuncEls[i].textContent.trim() !== 'gimbalRotate') continue;
+            const pitchEls = getWpmlElements(actionFuncEls[i].parentElement, 'gimbalPitchRotateAngle');
+            if (pitchEls.length) {
+              const pitchValue = String(parseFloat(pitchEls[0].textContent));
+              const gimbalSelect = document.getElementById('djiGimbalPitch');
+              if ([...gimbalSelect.options].some((o) => o.value === pitchValue)) {
+                gimbalSelect.value = pitchValue;
               }
-              break;
             }
+            break;
           }
 
-          // Restore takePhoto checkbox
           let hasTakePhoto = false;
+          let hasStartRecord = false;
           for (let i = 0; i < actionFuncEls.length; i++) {
-            if (actionFuncEls[i].textContent.trim() === 'takePhoto') { hasTakePhoto = true; break; }
+            const actionName = actionFuncEls[i].textContent.trim();
+            if (actionName === 'takePhoto') hasTakePhoto = true;
+            if (actionName === 'startRecord') hasStartRecord = true;
           }
           document.getElementById('djiTakePhotoEachWp').checked = hasTakePhoto;
+          document.getElementById('djiStartStopVideo').checked = hasStartRecord;
 
-          // Restore finishAction from template.kml
-          const tmplFile = zip.file('wpmz/template.kml');
-          if (tmplFile) {
-            const tmplText = await tmplFile.async('string');
-            const tmplXml  = (new DOMParser()).parseFromString(tmplText, 'text/xml');
-            const faEls = tmplXml.getElementsByTagNameNS(wpmlNS, 'finishAction');
-            if (faEls.length) {
-              const sel = document.getElementById('djiFinishAction');
-              const val = faEls[0].textContent.trim();
-              if ([...sel.options].some(o => o.value === val)) sel.value = val;
+          if (templateFile) {
+            const templateText = await templateFile.async('string');
+            const templateXml = (new DOMParser()).parseFromString(templateText, 'text/xml');
+            const finishEls = getWpmlElements(templateXml, 'finishAction');
+            if (finishEls.length) {
+              const finishValue = finishEls[0].textContent.trim();
+              const finishSelect = document.getElementById('djiFinishAction');
+              if ([...finishSelect.options].some((o) => o.value === finishValue)) {
+                finishSelect.value = finishValue;
+              }
             }
           }
 
-          const gj = { type: 'FeatureCollection', features: [{
-            type: 'Feature',
-            geometry: { type: 'LineString', coordinates: coords },
-            properties: {}
-          }]};
-          importRouteFromGeoJSON(gj);
+          setRouteFromLatLngPoints(coords);
+          updateDrawRouteButtonState();
           return;
         }
 
-        // ── Fall back: look for any .kml inside the ZIP ───────────────────
-        let kmlEntry = null;
-        zip.forEach((relPath, f) => {
-          if (!kmlEntry && relPath.toLowerCase().endsWith('.kml')) kmlEntry = f;
-        });
-        if (!kmlEntry) { alert('No KML or WPML found inside the KMZ file.'); return; }
+        const kmlEntry = zip.filter((relativePath, entry) => entry.name.toLowerCase().endsWith('.kml'))[0];
+        if (!kmlEntry) {
+          alert('KMZ file does not contain a supported route.');
+          return;
+        }
 
         const kmlText = await kmlEntry.async('string');
-        const kmlXml  = (new DOMParser()).parseFromString(kmlText, 'text/xml');
-        let gj = null;
-        try { gj = window.toGeoJSON.kml(kmlXml); } catch (err) { alert('Failed to parse KML inside KMZ.'); return; }
+        const xml = (new DOMParser()).parseFromString(kmlText, 'text/xml');
+        const gj = window.toGeoJSON.kml(xml);
         importRouteFromGeoJSON(gj);
-
       } catch (err) {
-        alert('Failed to open KMZ file: ' + err.message);
+        alert(`Failed to import KMZ: ${err && err.message ? err.message : 'Unknown error'}`);
       }
     };
+
     abReader.readAsArrayBuffer(file);
     return;
   }
 
-  // ── Text-based formats ─────────────────────────────────────────────────
   const reader = new FileReader();
   reader.onload = (ev) => {
     const text = ev.target.result;
@@ -2749,7 +3139,7 @@ function handleRouteFile(e) {
       try {
         const gj = JSON.parse(text);
         importRouteFromGeoJSON(gj);
-      } catch (err) {
+      } catch {
         alert('Invalid GeoJSON file.');
       }
       return;
@@ -2758,30 +3148,29 @@ function handleRouteFile(e) {
     let xml;
     try {
       xml = (new DOMParser()).parseFromString(text, 'text/xml');
-    } catch (err) {
+    } catch {
       alert('Failed to parse route file.');
       return;
     }
 
-    let gj = null;
     try {
-      if (name.endsWith('.gpx')) gj = window.toGeoJSON.gpx(xml);
-      else if (name.endsWith('.kml')) gj = window.toGeoJSON.kml(xml);
-    } catch (err) {
+      if (name.endsWith('.gpx')) {
+        importRouteFromGeoJSON(window.toGeoJSON.gpx(xml));
+        return;
+      }
+      if (name.endsWith('.kml')) {
+        importRouteFromGeoJSON(window.toGeoJSON.kml(xml));
+        return;
+      }
+    } catch {
       alert('Failed to convert GPX/KML route.');
       return;
     }
-    if (!gj) {
-      alert('Unsupported route file.');
-      return;
-    }
 
-    importRouteFromGeoJSON(gj);
+    alert('Unsupported route file.');
   };
 
-  if (name.endsWith('.geojson') || name.endsWith('.json')) {
-    reader.readAsText(file);
-  } else if (name.endsWith('.gpx') || name.endsWith('.kml')) {
+  if (name.endsWith('.geojson') || name.endsWith('.json') || name.endsWith('.gpx') || name.endsWith('.kml')) {
     reader.readAsText(file);
   } else {
     alert('Use GPX, KML, KMZ, or GeoJSON route files.');
