@@ -1,0 +1,24 @@
+﻿{
+    "capturedAt":  "2026-04-08T11:18:15",
+    "kmzPath":  "C:\\Users\\Ron Treleaven\\RC2_Missions\\REGISTRY\\slot_scan\\20260408_095048\\B32C7AB0-5A9A-4E32-A837-BCB345278710.kmz",
+    "rollbackUuid":  "B32C7AB0-5A9A-4E32-A837-BCB345278710",
+    "entries":  [
+                    "wpmz/template.kml",
+                    "wpmz/waylines.wpml"
+                ],
+    "template":  {
+                     "createTimeMs":  "1775654055189",
+                     "updateTimeMs":  "1775654055189",
+                     "author":  "fly"
+                 },
+    "waylines":  {
+                     "waypointPlacemarkCount":  5,
+                     "actionGroupCount":  5,
+                     "actionCount":  7,
+                     "cameraActionCount":  2,
+                     "poiCount":  0,
+                     "hasStartRecord":  true,
+                     "hasStopRecord":  true,
+                     "hasTakePhoto":  false
+                 }
+}

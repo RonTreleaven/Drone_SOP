@@ -33,6 +33,9 @@ const PILOT_LOCATION_KEYS = [
   'pilotLocationSource'
 ];
 
+const PROFILE_STATE_KEY = 'dsop.profileState.v1';
+const PROFILE_SESSION_STATE_KEY = 'dsop.profileState.session.v1';
+
 function safeParseJSON(key, fallback = {}) {
   try {
     return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
@@ -626,6 +629,17 @@ function renderFlightLog() {
   const RECENT_PILOTS_KEY = 'flightRecentPilots';
   const RECENT_OBSERVERS_KEY = 'flightRecentObservers';
 
+  const getProfilePilotName = () => {
+    try {
+      const profileRaw = sessionStorage.getItem(PROFILE_SESSION_STATE_KEY) || localStorage.getItem(PROFILE_STATE_KEY) || '';
+      const parsed = profileRaw ? JSON.parse(profileRaw) : null;
+      if (!parsed || typeof parsed !== 'object') return '';
+      return String(parsed.pilotName || '').trim();
+    } catch (_err) {
+      return '';
+    }
+  };
+
   const parseList = key => {
     const parsed = safeParseJSON(key, []);
     return Array.isArray(parsed) ? parsed.filter(v => typeof v === 'string' && v.trim()) : [];
@@ -717,9 +731,10 @@ function renderFlightLog() {
   const savedAt = localStorage.getItem('flightLogSavedAt') || '';
   const recentPilots = parseList(RECENT_PILOTS_KEY);
   const recentObservers = parseList(RECENT_OBSERVERS_KEY);
+  const profilePilotName = getProfilePilotName();
 
   dateIn.value = saved.date || localStorage.getItem('flightDate') || new Date().toISOString().split('T')[0];
-  pilot.value  = saved.pilot || localStorage.getItem('flightPilot') || recentPilots[0] || '';
+  pilot.value  = saved.pilot || profilePilotName || localStorage.getItem('flightPilot') || recentPilots[0] || '';
   obs.value    = saved.observers || localStorage.getItem('flightObservers') || recentObservers[0] || '';
   start.value  = saved.start || localStorage.getItem('flightStart') || formatTimeHHMM(now);
   end.value    = saved.end || localStorage.getItem('flightEnd') || formatTimeHHMM(plus30);

@@ -1,5 +1,22 @@
 # @Workspace Review & TODO List
 
+## MAM Mission State Model (2026-04-09)
+
+- Preserve privacy-first behavior: pilot PII stays local to the user's device (no server-side profile storage).
+- Reframe mission status into storage/reuse intent, not mission lifecycle wording.
+- Proposed model:
+   - `Mission Only` (current `Draft`): use values for the current mission flow only.
+   - `Workspace Reuse` (current `Active`): persist values for Drone_SOP local reuse (browser localStorage).
+   - `Private Local Copy` (candidate replacement for `Closed`): user-managed local file copy for long-term/private control.
+- UI follow-up: rename `Mission State` label to something like `Profile Usage Mode`.
+- Behavioral follow-up:
+   - `Mission Only`: auto-clear or avoid carrying forward selected fields after mission close/reset.
+   - `Workspace Reuse`: keep current localStorage behavior for convenience.
+   - `Private Local Copy`: add explicit import/export/save-as flow to user-selected local file.
+- Data policy follow-up: add a short inline notice near profile controls confirming all profile data is local-only unless the user explicitly exports.
+- MAM follow-up: evaluate whether Mission Automation settings should have the same 3-mode policy or remain independently persisted.
+
+
 
 
 @workspace review my DRONE SOP project and suggest improvements to structure, accessibility and code quality

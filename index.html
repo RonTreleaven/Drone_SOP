@@ -6,6 +6,7 @@
   <title>Drone SOP Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site-nav.css">
+  <link rel="stylesheet" href="assets/css/profile-drawer.css">
   <script src="assets/js/site-nav.js" defer></script>
   <style>
     :root {
@@ -64,6 +65,12 @@
       align-items: flex-start;
       justify-content: space-between;
       gap: 0.75rem;
+    }
+    .header-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-shrink: 0;
     }
     .brand img {
       width: 74px;
@@ -159,6 +166,16 @@
     .sub {
       margin: 0.55rem 0 1.1rem;
       color: var(--muted);
+      max-width: 68ch;
+    }
+    .profile-setup-nudge {
+      margin: -0.35rem 0 0.75rem;
+      font-size: 0.82rem;
+      color: #2d5c7e;
+      background: #eef7ff;
+      border: 1px solid #c6dcf0;
+      border-radius: 9px;
+      padding: 0.42rem 0.58rem;
       max-width: 68ch;
     }
     .start-flow {
@@ -319,10 +336,54 @@
     .trash-reset-btn.is-armed .trash-icon .can-full {
       opacity: 1;
     }
+    .profile-icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid #2c5f86;
+      background: linear-gradient(180deg, #f8fbff, #e8eff6);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 2px rgba(44, 95, 134, 0.16);
+      flex-shrink: 0;
+      transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+    .profile-icon-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 2px rgba(44, 95, 134, 0.24), 0 6px 14px rgba(44, 95, 134, 0.2);
+      background: linear-gradient(180deg, #ffffff, #e7f3ff);
+    }
+    .profile-icon-btn:focus-visible {
+      outline: 2px solid #2c5f86;
+      outline-offset: 2px;
+    }
+    .profile-icon-btn.is-highlighted {
+      border-color: #0f6d5a;
+      box-shadow: 0 0 0 3px rgba(15, 109, 90, 0.24), 0 0 9px rgba(15, 109, 90, 0.24);
+      background: linear-gradient(180deg, #f6fffb, #e8f8f0);
+    }
+    .profile-icon {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+    .profile-icon path {
+      fill: none;
+      stroke: #2c5f86;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .profile-icon-btn.is-highlighted .profile-icon path {
+      stroke: #0f6d5a;
+    }
     body.terms-gate-active .top-nav,
     body.terms-gate-active .start-flow,
     body.terms-gate-active .actions,
-    body.terms-gate-active #clear-all-data {
+    body.terms-gate-active #clear-all-data,
+    body.terms-gate-active #open-profile-drawer {
       opacity: 0.38;
       pointer-events: none;
       -webkit-user-select: none;
@@ -371,178 +432,6 @@
     .disclaimer-body {
       padding: 0 0.75rem 0.75rem;
     }
-    .profile-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(12, 25, 37, 0.5);
-      z-index: 70;
-    }
-    .profile-drawer {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: min(92vw, 420px);
-      height: 100vh;
-      background: #ffffff;
-      border-left: 1px solid #c9d8e6;
-      box-shadow: -10px 0 26px rgba(0, 0, 0, 0.18);
-      z-index: 80;
-      transform: translateX(104%);
-      transition: transform 0.24s ease;
-      display: flex;
-      flex-direction: column;
-    }
-    .profile-drawer.is-open {
-      transform: translateX(0);
-    }
-    .profile-drawer-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 0.75rem;
-      padding: 1rem;
-      border-bottom: 1px solid #dce8f2;
-      background: #f6fbff;
-    }
-    .profile-drawer-title {
-      margin: 0;
-      font-size: 1.05rem;
-      color: #1f3b63;
-    }
-    .profile-drawer-subtitle {
-      margin: 0.2rem 0 0;
-      color: #4e647b;
-      font-size: 0.84rem;
-      line-height: 1.35;
-    }
-    .profile-close-btn {
-      border: 1px solid #94a9bd;
-      background: #ffffff;
-      color: #2a4c6d;
-      border-radius: 999px;
-      min-width: 42px;
-      height: 42px;
-      font-weight: 700;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-    .profile-close-btn:hover {
-      background: #edf6ff;
-    }
-    .profile-form {
-      padding: 1rem;
-      display: grid;
-      gap: 0.75rem;
-      overflow-y: auto;
-    }
-    .profile-field {
-      display: grid;
-      gap: 0.3rem;
-    }
-    .profile-field label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      color: #2a4c6d;
-      text-transform: uppercase;
-    }
-    .profile-field input,
-    .profile-field select {
-      width: 100%;
-      min-height: 44px;
-      border-radius: 10px;
-      border: 1px solid #b9ccdd;
-      padding: 0.55rem 0.65rem;
-      font-size: 0.94rem;
-      font-family: inherit;
-      color: #1f2833;
-      background: #ffffff;
-    }
-    .profile-field input:focus,
-    .profile-field select:focus {
-      outline: 2px solid #6ea7d3;
-      outline-offset: 1px;
-      border-color: #6ea7d3;
-    }
-    .profile-field-note {
-      margin: 0;
-      color: #57708a;
-      font-size: 0.76rem;
-      line-height: 1.35;
-    }
-    .profile-drawer-footer {
-      margin-top: auto;
-      padding: 0.85rem 1rem 1rem;
-      border-top: 1px solid #dce8f2;
-      background: #ffffff;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-    }
-    .profile-save-btn,
-    .profile-cancel-btn {
-      border-radius: 999px;
-      min-height: 44px;
-      padding: 0.55rem 0.95rem;
-      border: 1px solid #9cb8cf;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
-      flex: 1;
-    }
-    .profile-import-btn,
-    .profile-export-btn {
-      border-radius: 999px;
-      min-height: 40px;
-      padding: 0.48rem 0.9rem;
-      border: 1px solid #aac4d8;
-      background: #f6fbff;
-      color: #2a4c6d;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
-      flex: 1;
-    }
-    .profile-import-btn:hover,
-    .profile-export-btn:hover {
-      background: #eaf4ff;
-    }
-    .profile-save-btn {
-      border-color: #0f6d5a;
-      background: #0f6d5a;
-      color: #ffffff;
-    }
-    .profile-save-btn:hover {
-      background: #0c5a4b;
-    }
-    .profile-cancel-btn {
-      background: #f6fbff;
-      color: #2a4c6d;
-    }
-    .profile-cancel-btn:hover {
-      background: #eaf4ff;
-    }
-    .profile-quick-summary {
-      margin-top: 0.15rem;
-      font-size: 0.82rem;
-      color: #315273;
-      background: #eef7ff;
-      border: 1px solid #c6dcf0;
-      border-radius: 999px;
-      padding: 0.3rem 0.65rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-    body.profile-drawer-open {
-      overflow: hidden;
-      touch-action: none;
-    }
-    @media (max-width: 420px) {
-      .profile-drawer {
-        width: 100vw;
-      }
-    }
   </style>
 </head>
 <body>
@@ -555,22 +444,36 @@
           <img src="assets/img/logo_25.svg" alt="Drone SOP logo">
           <h1>Drone SOP Mission Hub</h1>
         </div>
-        <button
-          id="clear-all-data"
-          class="trash-reset-btn"
-          type="button"
-          title="Clear all forms"
-          aria-label="Clear all forms"
-          aria-pressed="false"
-        >
-          <span class="trash-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
-              <path class="can-empty" d="M4 7h16M9 4h6M6 7l1 13h10l1-13M10 11v6M14 11v6" />
-              <path class="can-full" d="M4 7h16M9 4h6M7 7l1 13h8l1-13M10 11v6M14 11v6" />
+        <div class="header-controls" aria-label="Profile and reset controls">
+          <button
+            id="open-profile-drawer"
+            class="profile-icon-btn"
+            type="button"
+            title="Open Profile Manager"
+            aria-label="Open Profile Manager"
+          >
+            <svg class="profile-icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <path d="M12 12.2a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4Z" />
+              <path d="M4.5 20.2a7.6 7.6 0 0 1 15 0" />
             </svg>
-          </span>
-          <span class="wipe-label">Clear all forms</span>
-        </button>
+          </button>
+          <button
+            id="clear-all-data"
+            class="trash-reset-btn"
+            type="button"
+            title="Clear all forms"
+            aria-label="Clear all forms"
+            aria-pressed="false"
+          >
+            <span class="trash-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path class="can-empty" d="M4 7h16M9 4h6M6 7l1 13h10l1-13M10 11v6M14 11v6" />
+                <path class="can-full" d="M4 7h16M9 4h6M7 7l1 13h8l1-13M10 11v6M14 11v6" />
+              </svg>
+            </span>
+            <span class="wipe-label">Clear all forms</span>
+          </button>
+        </div>
       </div>
 
       <section class="intro-card" aria-label="Site introduction and use notice">
@@ -616,8 +519,8 @@
         <p class="sub">
           Start by setting your current Pilot Location. Then use Tools for weather, NOTAM, and survey checks, Procedures for the right SOP checklist, Flight Log to record the mission, and Flight Summary to review and save your records.
         </p>
+        <p id="profile-setup-nudge" class="profile-setup-nudge" hidden>Tip: open My Profile first to reuse pilot details and speed up repeat mission setup.</p>
         <div class="loc-init">
-          <button id="open-profile-drawer" class="mini-btn" type="button">My Profile</button>
           <button id="init-pilot-location" class="mini-btn" type="button">Set Pilot Location</button>
           <span id="pilot-location-status" class="loc-status">No pilot location set yet.</span>
         </div>
@@ -658,24 +561,24 @@
     <div class="profile-drawer-header">
       <div>
         <h2 id="profile-drawer-title" class="profile-drawer-title">My Profile</h2>
-        <p class="profile-drawer-subtitle">Save pilot defaults so repeat visits are faster.</p>
+        <p class="profile-drawer-subtitle">Save pilot defaults so repeat visits are faster and mirror a profile JSON into the RC2 workspace.</p>
       </div>
       <button id="close-profile-drawer" class="profile-close-btn" type="button" aria-label="Close profile panel">Close</button>
     </div>
-    <form id="profile-form" class="profile-form">
+    <form id="profile-form" class="profile-form" autocomplete="off">
       <div class="profile-field">
         <label for="profile-pilot-name">Pilot Name</label>
-        <input id="profile-pilot-name" name="pilotName" type="text" autocomplete="name" placeholder="Enter pilot name">
+        <input id="profile-pilot-name" name="pilotName" type="text" autocomplete="off" placeholder="Enter pilot name">
       </div>
 
       <div class="profile-field">
         <label for="profile-pilot-cell">Cell Phone</label>
-        <input id="profile-pilot-cell" name="pilotCell" type="tel" autocomplete="tel" placeholder="Example: (416) 555-0123">
+        <input id="profile-pilot-cell" name="pilotCell" type="tel" autocomplete="off" inputmode="numeric" placeholder="(###) ###-####">
       </div>
 
       <div class="profile-field">
         <label for="profile-pilot-email">Email</label>
-        <input id="profile-pilot-email" name="pilotEmail" type="email" autocomplete="email" placeholder="pilot@example.com">
+        <input id="profile-pilot-email" name="pilotEmail" type="email" autocomplete="off" placeholder="pilot@example.com">
       </div>
 
       <div class="profile-field">
@@ -689,18 +592,61 @@
 
       <div class="profile-field">
         <label for="profile-drone-label">Preferred Drone (Optional)</label>
-        <input id="profile-drone-label" name="preferredDroneLabel" type="text" autocomplete="off" placeholder="Example: Mavic 3">
+        <input id="profile-drone-label" name="preferredDroneLabel" type="text" autocomplete="off" placeholder="Example: Mini 4 Pro; Mini 3 Pro; Mavic 2 Pro">
       </div>
 
-      <div class="profile-field">
-        <label for="profile-mission-status">Mission State</label>
+      <div class="profile-field profile-mode-field">
+        <div class="profile-mode-label-row">
+          <label for="profile-mission-status">Profile Usage Mode</label>
+          <button id="profile-mode-help-btn" class="profile-help-btn" type="button" title="Usage mode help" aria-label="Usage mode help" aria-controls="profile-usage-help" aria-expanded="false">?</button>
+        </div>
         <select id="profile-mission-status" name="lastMissionStatus">
-          <option value="draft">Draft</option>
-          <option value="active">Active</option>
-          <option value="closed">Closed</option>
+          <option value="draft">Mission Only (this session)</option>
+          <option value="active">Workspace Reuse (saved to browser cache)</option>
+          <option value="closed">Private Local Copy (user-managed)</option>
         </select>
-        <p class="profile-field-note">Used as a quick return-visit context marker.</p>
+        <p id="profile-usage-indicator" class="profile-usage-indicator"></p>
+        <p id="profile-private-save-hint" class="profile-field-note" hidden>Private Local Copy does not unlock advanced export. Save a validated Workspace Reuse profile first if you need export or Mission Manager access.</p>
+        <div id="profile-usage-help" class="profile-usage-help" hidden>
+          <div class="profile-usage-help-body">
+            <p><strong>Mission Only:</strong> temporary for current session.</p>
+            <p><strong>Workspace Reuse:</strong> saved to browser cache for return visits.</p>
+            <p><strong>Private Local Copy:</strong> load from your file each session; not kept in browser cache.</p>
+          </div>
+        </div>
       </div>
+
+      <div class="profile-validation-panel">
+        <p class="profile-validation-title">Advanced Access</p>
+        <p id="profile-advanced-access-status" class="profile-validation-status"></p>
+        <div class="profile-checkbox-row profile-validation-checkbox-row">
+          <input id="profile-advanced-access-attested" class="profile-checkbox-input" type="checkbox">
+          <label class="profile-validation-check-label" for="profile-advanced-access-attested">I have read the disclaimer and the export or Mission Manager instructions for KMZ, KML, GeoJSON, and JSON workflows.</label>
+        </div>
+        <div class="profile-inline-actions">
+          <button id="validate-advanced-access" class="mini-btn" type="button">Validate User Access</button>
+        </div>
+        <p class="profile-field-note">Import stays available. Export Profile, Mission Manager, and GGcode file exports remain locked until a valid Workspace Reuse profile is saved and validated on this device.</p>
+      </div>
+
+      <details id="profile-automation-panel" class="profile-automation-panel">
+        <summary class="profile-automation-summary">Mission Automation Manager (Optional)</summary>
+        <div class="profile-automation-body">
+          <div class="profile-field">
+            <div class="profile-checkbox-row">
+              <input id="profile-mission-automation-enabled" class="profile-checkbox-input" name="missionAutomationEnabled" type="checkbox">
+              <label class="profile-checkbox-label" for="profile-mission-automation-enabled">Use Mission Automation Structure</label>
+            </div>
+            <p class="profile-field-note">Enable this if you use RC2 mission automation and want profile mirroring into your RC2_Missions workspace.</p>
+            <p id="mission-automation-state" class="profile-field-note"></p>
+          </div>
+
+          <div id="mission-manager-actions" class="profile-inline-actions" hidden>
+            <button id="open-mission-profile-drawer" class="mini-btn" type="button">Open Mission Manager</button>
+          </div>
+          <p id="mission-automation-note" class="profile-field-note">Turn this on only if you use RC2 mission automation with REGISTRY and Mission_A, Mission_B, Mission_C folders.</p>
+        </div>
+      </details>
     </form>
     <div class="profile-drawer-footer">
       <button id="import-profile-state" class="profile-import-btn" type="button">Import Profile</button>
@@ -708,7 +654,69 @@
       <button id="cancel-profile-save" class="profile-cancel-btn" type="button">Cancel</button>
       <button id="save-profile-state" class="profile-save-btn" type="submit" form="profile-form">Save Profile</button>
     </div>
-    <input id="profile-import-file" type="file" accept="application/json,.json" hidden>
+    <input id="profile-import-file" type="file" accept="application/json,.json" hidden title="Look for DroneSOP_user.json">
+  </aside>
+
+  <aside
+    id="mission-profile-drawer"
+    class="profile-drawer"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-labelledby="mission-profile-drawer-title"
+  >
+    <div class="profile-drawer-header">
+      <div>
+        <h2 id="mission-profile-drawer-title" class="profile-drawer-title">Mission Automation Manager</h2>
+        <p class="profile-drawer-subtitle">Configure mission slot UUIDs and export folder mappings for automation testing.</p>
+      </div>
+      <button id="close-mission-profile-drawer" class="profile-close-btn" type="button" aria-label="Close mission profile panel">Close</button>
+    </div>
+    <form id="mission-profile-form" class="profile-form">
+      <div class="profile-field">
+        <label for="mission-default-export-slot">Default GGcode Export Slot</label>
+        <select id="mission-default-export-slot" name="defaultExportSlot">
+          <option value="mission_a">Mission A</option>
+          <option value="mission_b">Mission B</option>
+          <option value="mission_c">Mission C</option>
+        </select>
+        <p class="profile-field-note">Used by GGcode for UUID-based KMZ naming when Profile Slot mode is selected.</p>
+      </div>
+
+      <div class="profile-field">
+        <label for="mission-uuid-mission-a">Mission A UUID Slot</label>
+        <input id="mission-uuid-mission-a" name="rc2UuidMissionA" type="text" autocomplete="off" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+      </div>
+
+      <div class="profile-field">
+        <label for="mission-uuid-mission-b">Mission B UUID Slot</label>
+        <input id="mission-uuid-mission-b" name="rc2UuidMissionB" type="text" autocomplete="off" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+      </div>
+
+      <div class="profile-field">
+        <label for="mission-uuid-mission-c">Mission C UUID Slot</label>
+        <input id="mission-uuid-mission-c" name="rc2UuidMissionC" type="text" autocomplete="off" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+      </div>
+
+      <div class="profile-field">
+        <label for="mission-export-dir-mission-a">Export Subfolder for Mission A</label>
+        <input id="mission-export-dir-mission-a" name="rc2ExportDirMissionA" type="text" autocomplete="off" placeholder="Example: Mission_A">
+      </div>
+
+      <div class="profile-field">
+        <label for="mission-export-dir-mission-b">Export Subfolder for Mission B</label>
+        <input id="mission-export-dir-mission-b" name="rc2ExportDirMissionB" type="text" autocomplete="off" placeholder="Example: Mission_B">
+      </div>
+
+      <div class="profile-field">
+        <label for="mission-export-dir-mission-c">Export Subfolder for Mission C</label>
+        <input id="mission-export-dir-mission-c" name="rc2ExportDirMissionC" type="text" autocomplete="off" placeholder="Example: Mission_C">
+      </div>
+    </form>
+    <div class="profile-drawer-footer">
+      <button id="cancel-mission-profile-save" class="profile-cancel-btn" type="button">Cancel</button>
+      <button id="save-mission-profile-state" class="profile-save-btn" type="submit" form="mission-profile-form">Save Mission Profile</button>
+    </div>
   </aside>
 
   <script>
@@ -717,8 +725,16 @@
     const TERMS_VERSION_VALUE = '2026-04-05';
     const INTRO_COLLAPSED_KEY = 'droneSopIntroCollapsedV1';
     const PROFILE_STATE_KEY = 'dsop.profileState.v1';
+    const PROFILE_SESSION_STATE_KEY = 'dsop.profileState.session.v1';
+    const MISSION_AUTOMATION_PROFILE_KEY = 'dsop.missionAutomationProfile.v1';
+    const PROFILE_ADVANCED_ACCESS_KEY = 'dsop.profileAdvancedAccess.v1';
+    const PROFILE_ADVANCED_ACCESS_VERSION = '2026-04-09';
+    const PROFILE_EXPORT_FILENAME = 'DroneSOP_user.json';
+    const PLACEHOLDER_EMAIL_TOKENS = ['garbage', 'fake', 'invalid', 'example', 'test', 'noreply', 'no-reply'];
+    let rc2ProfileRootHandle = null;
 
     let profileState = null;
+    let missionAutomationState = null;
 
     function toTitleCaseCategory(value) {
       if (value === 'micro') return 'Micro';
@@ -744,6 +760,20 @@
       };
     }
 
+    function getDefaultMissionAutomationState() {
+      return {
+        missionAutomationEnabled: false,
+        defaultExportSlot: 'mission_a',
+        rc2UuidMissionA: '',
+        rc2UuidMissionB: '',
+        rc2UuidMissionC: '',
+        rc2ExportDirMissionA: 'Mission_A',
+        rc2ExportDirMissionB: 'Mission_B',
+        rc2ExportDirMissionC: 'Mission_C',
+        profileUpdatedAt: null
+      };
+    }
+
     function normalizeMissionCategory(value) {
       return ['micro', 'basic', 'advanced'].includes(value) ? value : 'basic';
     }
@@ -752,12 +782,385 @@
       return ['draft', 'active', 'closed'].includes(value) ? value : 'draft';
     }
 
+    function toUsageModeLabel(value) {
+      const mode = normalizeMissionStatus(value);
+      if (mode === 'active') return 'Workspace Reuse';
+      if (mode === 'closed') return 'Private Local Copy';
+      return 'Mission Only';
+    }
+
+    function getUsageModeIndicatorText(modeValue) {
+      const mode = normalizeMissionStatus(modeValue);
+      if (mode === 'active') {
+        return 'Stored in browser cache for return visits on this device.';
+      }
+      if (mode === 'closed') {
+        return 'Load your private saved profile each session; not kept in browser cache.';
+      }
+      return 'Temporary session profile only; clears when the browser session ends.';
+    }
+
+    function updateProfileUsageModeUi() {
+      const modeSelect = document.getElementById('profile-mission-status');
+      const indicator = document.getElementById('profile-usage-indicator');
+      const importBtn = document.getElementById('import-profile-state');
+      const saveBtn = document.getElementById('save-profile-state');
+      const privateHint = document.getElementById('profile-private-save-hint');
+      if (!modeSelect) return;
+
+      const mode = normalizeMissionStatus(modeSelect.value || 'draft');
+      if (indicator) indicator.textContent = getUsageModeIndicatorText(mode);
+
+      if (importBtn) {
+        importBtn.textContent = mode === 'closed' ? 'Load Private Profile' : 'Import Profile';
+      }
+
+      const isPrivateMode = mode === 'closed';
+      if (saveBtn) {
+        saveBtn.disabled = isPrivateMode;
+        saveBtn.setAttribute('aria-disabled', isPrivateMode ? 'true' : 'false');
+        saveBtn.title = isPrivateMode ? 'Private Local Copy uses Export Profile instead of Save Profile.' : 'Save Profile';
+      }
+      if (privateHint) {
+        privateHint.hidden = !isPrivateMode;
+      }
+    }
+
+    function setProfileUsageHelpOpen(isOpen) {
+      const profileModeHelpBtn = document.getElementById('profile-mode-help-btn');
+      const profileUsageHelp = document.getElementById('profile-usage-help');
+      if (!profileModeHelpBtn || !profileUsageHelp) return;
+
+      profileUsageHelp.hidden = !isOpen;
+      profileModeHelpBtn.classList.toggle('is-active', isOpen);
+      profileModeHelpBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    function updateMissionAutomationUi() {
+      const missionAutomationEnabledInput = document.getElementById('profile-mission-automation-enabled');
+      const missionManagerActions = document.getElementById('mission-manager-actions');
+      const missionAutomationNote = document.getElementById('mission-automation-note');
+      const missionAutomationStateNote = document.getElementById('mission-automation-state');
+      const openMissionProfileBtn = document.getElementById('open-mission-profile-drawer');
+      const saveMissionProfileBtn = document.getElementById('save-mission-profile-state');
+      const accessState = getAdvancedAccessState();
+      if (!missionAutomationEnabledInput || !missionManagerActions) return;
+
+      const shouldShow = accessState.validated && missionAutomationEnabledInput.checked;
+      missionAutomationEnabledInput.disabled = !accessState.validated;
+      missionAutomationEnabledInput.title = accessState.validated
+        ? ''
+        : 'Mission Manager is locked until advanced access is validated.';
+      if (openMissionProfileBtn) {
+        openMissionProfileBtn.disabled = !accessState.validated;
+        openMissionProfileBtn.title = accessState.validated ? 'Open Mission Manager' : accessState.message;
+      }
+      if (saveMissionProfileBtn) {
+        saveMissionProfileBtn.disabled = !accessState.validated;
+        saveMissionProfileBtn.setAttribute('aria-disabled', accessState.validated ? 'false' : 'true');
+      }
+      missionManagerActions.hidden = !shouldShow;
+      missionManagerActions.style.display = shouldShow ? 'flex' : 'none';
+
+      if (missionAutomationStateNote) {
+        missionAutomationStateNote.textContent = !accessState.validated
+          ? `MAM status: Locked. ${accessState.message}`
+          : shouldShow
+            ? 'MAM status: On. Mission Automation profile is now managed in Mission Manager.'
+            : 'MAM status: Off. Enable this only if you use RC2 mission automation.';
+      }
+
+      if (missionAutomationNote) {
+        missionAutomationNote.textContent = !accessState.validated
+          ? 'Mission Automation Manager is locked until a valid saved profile is validated for advanced export use.'
+          : shouldShow
+            ? 'Mission Automation profile is managed in Mission Manager. Open Mission Manager is now available.'
+            : 'Turn this on only if you use RC2 mission automation with REGISTRY and Mission_A, Mission_B, Mission_C folders.';
+      }
+    }
+
+    function updateProfileSetupNudge() {
+      const nudge = document.getElementById('profile-setup-nudge');
+      if (!nudge || !profileState) return;
+      const hasNamedProfile = Boolean(String(profileState.pilotName || '').trim());
+      nudge.hidden = hasNamedProfile;
+    }
+
+    function updateProfileIconCue() {
+      const profileBtn = document.getElementById('open-profile-drawer');
+      if (!profileBtn || !profileState) return;
+      const hasNamedProfile = Boolean(String(profileState.pilotName || '').trim());
+      profileBtn.classList.toggle('is-highlighted', !hasNamedProfile);
+    }
+
+    function hasMeaningfulProfileData(state) {
+      if (!state || typeof state !== 'object') return false;
+      return Boolean(
+        String(state.pilotName || '').trim() ||
+        String(state.pilotCell || '').trim() ||
+        String(state.pilotEmail || '').trim() ||
+        String(state.preferredDroneLabel || '').trim()
+      );
+    }
+
+    function normalizePreferredDrones(value) {
+      return String(value || '')
+        .split(';')
+        .map((part) => part.trim())
+        .filter(Boolean)
+        .join('; ');
+    }
+
+    function isAnonymousProfileEmail(emailRaw) {
+      return String(emailRaw || '').trim().toLowerCase() === 'anonymous@user';
+    }
+
+    function validateProfileEmail(emailRaw) {
+      const email = String(emailRaw || '').trim();
+      if (!email) return '';
+      if (isAnonymousProfileEmail(email)) return '';
+      if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email)) {
+        return 'Enter a valid email address (name@domain.tld), or use anonymous@user.';
+      }
+      const lowered = email.toLowerCase();
+      if (PLACEHOLDER_EMAIL_TOKENS.some((token) => lowered.includes(token))) {
+        return 'Use a real contact email address (placeholder/test values are blocked).';
+      }
+      return '';
+    }
+
+    function updateProfileEmailValidity(emailInput) {
+      if (!emailInput) return '';
+      const message = validateProfileEmail(emailInput.value);
+      emailInput.setCustomValidity(message);
+      return message;
+    }
+
+    function getPhoneDigits(value) {
+      return String(value || '').replace(/\D/g, '');
+    }
+
+    function formatPhoneDisplay(value) {
+      const digits = getPhoneDigits(value).slice(0, 10);
+      if (!digits) return '';
+      if (digits.length <= 3) return `(${digits}`;
+      if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+      return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+    }
+
+    function isObviousFakePhoneDigits(digits) {
+      if (!digits) return false;
+      if (/^(\d)\1{8,}$/.test(digits)) return true;
+      const disallowed = new Set(['0123456789', '1234567890', '123456789', '9876543210', '987654321']);
+      if (disallowed.has(digits)) return true;
+      if (digits.startsWith('000')) return true;
+      if (digits.length === 10 && digits.slice(3, 6) === '000') return true;
+      return false;
+    }
+
+    function validateProfilePhone(phoneRaw) {
+      const digits = getPhoneDigits(phoneRaw);
+      if (!digits) return '';
+      if (digits.length !== 10) {
+        return 'Enter a valid 10-digit phone number.';
+      }
+      if (isObviousFakePhoneDigits(digits)) {
+        return 'Enter a real phone number (sequential/repeating test numbers are blocked).';
+      }
+      return '';
+    }
+
+    function updateProfilePhoneInput(phoneInput) {
+      if (!phoneInput) return '';
+      const formatted = formatPhoneDisplay(phoneInput.value);
+      phoneInput.value = formatted;
+      const message = validateProfilePhone(formatted);
+      phoneInput.setCustomValidity(message);
+      return message;
+    }
+
+    function buildProfileIdentitySignature(state) {
+      if (!state || typeof state !== 'object') return '';
+      return [
+        String(state.pilotName || '').trim().toLowerCase(),
+        getPhoneDigits(state.pilotCell || ''),
+        String(state.pilotEmail || '').trim().toLowerCase(),
+        normalizeMissionCategory(state.droneMissionCategory)
+      ].join('|');
+    }
+
+    function getSavedWorkspaceProfileState() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(PROFILE_STATE_KEY) || 'null');
+        if (!parsed || typeof parsed !== 'object') return null;
+        if (normalizeMissionStatus(parsed.lastMissionStatus) !== 'active') return null;
+        return {
+          ...getDefaultProfileState(),
+          ...parsed,
+          pilotName: String(parsed.pilotName || '').trim(),
+          pilotCell: formatPhoneDisplay(parsed.pilotCell || ''),
+          pilotEmail: String(parsed.pilotEmail || '').trim(),
+          preferredDroneLabel: normalizePreferredDrones(parsed.preferredDroneLabel || ''),
+          droneMissionCategory: normalizeMissionCategory(parsed.droneMissionCategory),
+          lastMissionStatus: normalizeMissionStatus(parsed.lastMissionStatus)
+        };
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    function getAdvancedAccessRecord() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(PROFILE_ADVANCED_ACCESS_KEY) || 'null');
+        return parsed && typeof parsed === 'object' ? parsed : null;
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    function clearAdvancedAccessRecord() {
+      localStorage.removeItem(PROFILE_ADVANCED_ACCESS_KEY);
+    }
+
+    function getProfileEligibilityMessage(state) {
+      if (!state || typeof state !== 'object') {
+        return 'Create a valid profile before unlocking advanced access.';
+      }
+      if (!String(state.pilotName || '').trim()) {
+        return 'Enter pilot name to unlock advanced access.';
+      }
+      const phoneDigits = getPhoneDigits(state.pilotCell || '');
+      if (!phoneDigits) {
+        return 'Enter a real 10-digit phone number to unlock advanced access.';
+      }
+      const phoneMessage = validateProfilePhone(state.pilotCell || '');
+      if (phoneMessage) {
+        return phoneMessage;
+      }
+      const email = String(state.pilotEmail || '').trim();
+      if (!email || isAnonymousProfileEmail(email)) {
+        return 'Enter a real contact email address to unlock advanced access.';
+      }
+      const emailMessage = validateProfileEmail(email);
+      if (emailMessage) {
+        return emailMessage;
+      }
+      if (!hasAcceptedTerms()) {
+        return 'Accept the disclaimer terms before unlocking advanced access.';
+      }
+      if (normalizeMissionStatus(state.lastMissionStatus) !== 'active') {
+        return 'Set Profile Usage Mode to Workspace Reuse before unlocking advanced access.';
+      }
+      return '';
+    }
+
+    function getAdvancedAccessState(state = profileState) {
+      const currentState = state || getDefaultProfileState();
+      const eligibilityMessage = getProfileEligibilityMessage(currentState);
+      const savedState = getSavedWorkspaceProfileState();
+      const currentSignature = buildProfileIdentitySignature(currentState);
+      const savedSignature = buildProfileIdentitySignature(savedState);
+      const savedMatchesCurrent = Boolean(savedState && currentSignature && savedSignature === currentSignature);
+      const record = getAdvancedAccessRecord();
+      const validated = Boolean(
+        !eligibilityMessage
+        && savedMatchesCurrent
+        && record
+        && record.version === PROFILE_ADVANCED_ACCESS_VERSION
+        && record.signature === currentSignature
+      );
+
+      let message = 'Read the advanced export note and validate this saved profile.';
+      if (eligibilityMessage) {
+        message = eligibilityMessage;
+      } else if (!savedMatchesCurrent) {
+        message = 'Click Save Profile in Workspace Reuse mode, then validate advanced access.';
+      } else if (validated) {
+        message = 'User validated for advanced exports and Mission Manager on this device.';
+      }
+
+      return {
+        validated,
+        eligibilityMessage,
+        savedMatchesCurrent,
+        currentSignature,
+        message
+      };
+    }
+
+    function updateAdvancedAccessUi() {
+      const exportBtn = document.getElementById('export-profile-state');
+      const validateBtn = document.getElementById('validate-advanced-access');
+      const attestedInput = document.getElementById('profile-advanced-access-attested');
+      const statusNote = document.getElementById('profile-advanced-access-status');
+      const accessState = getAdvancedAccessState();
+      const attested = Boolean(attestedInput && attestedInput.checked);
+      const canValidate = !accessState.validated && !accessState.eligibilityMessage && accessState.savedMatchesCurrent && attested;
+
+      if (exportBtn) {
+        exportBtn.disabled = !accessState.validated;
+        exportBtn.setAttribute('aria-disabled', accessState.validated ? 'false' : 'true');
+        exportBtn.title = accessState.validated ? 'Export Profile' : accessState.message;
+      }
+
+      if (validateBtn) {
+        validateBtn.textContent = accessState.validated ? 'User Validated' : 'Validate User Access';
+        validateBtn.disabled = accessState.validated ? true : !canValidate;
+        validateBtn.setAttribute('aria-disabled', accessState.validated ? 'true' : canValidate ? 'false' : 'true');
+        validateBtn.title = accessState.validated
+          ? 'Advanced access is already unlocked for this saved profile.'
+          : canValidate
+            ? 'Validate this saved profile for advanced exports and Mission Manager.'
+            : accessState.savedMatchesCurrent && !attested && !accessState.eligibilityMessage
+              ? 'Check the acknowledgment box before validating advanced access.'
+              : accessState.message;
+      }
+
+      if (statusNote) {
+        const statusMessage = accessState.validated
+          ? accessState.message
+          : accessState.savedMatchesCurrent && !attested && !accessState.eligibilityMessage
+            ? 'Check the acknowledgment box, then click Validate User Access.'
+            : accessState.message;
+        statusNote.textContent = statusMessage;
+        statusNote.classList.toggle('is-ok', accessState.validated);
+        statusNote.classList.toggle('is-locked', !accessState.validated);
+      }
+    }
+
+    function normalizeBoolean(value) {
+      if (typeof value === 'boolean') return value;
+      const lowered = String(value || '').trim().toLowerCase();
+      return lowered === 'true' || lowered === '1' || lowered === 'yes' || lowered === 'on';
+    }
+
+    function normalizeExportSlot(value) {
+      return ['mission_a', 'mission_b', 'mission_c'].includes(value) ? value : 'mission_a';
+    }
+
+    function normalizeUuidOrEmpty(value) {
+      const raw = String(value || '').trim().toUpperCase();
+      if (!raw) return '';
+      return /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/.test(raw) ? raw : '';
+    }
+
+    function normalizeExportDir(value, fallback) {
+      const cleaned = String(value || '')
+        .trim()
+        .replace(/[\\/:*?"<>|]/g, '')
+        .replace(/\.+$/g, '')
+        .replace(/^\.+/g, '');
+      return cleaned || fallback;
+    }
+
     function loadProfileState() {
       const defaults = getDefaultProfileState();
       let parsed = null;
 
       try {
-        parsed = JSON.parse(localStorage.getItem(PROFILE_STATE_KEY) || 'null');
+        const sessionStateRaw = sessionStorage.getItem(PROFILE_SESSION_STATE_KEY);
+        const localStateRaw = localStorage.getItem(PROFILE_STATE_KEY);
+        parsed = JSON.parse(sessionStateRaw || localStateRaw || 'null');
       } catch (_err) {
         parsed = null;
       }
@@ -787,17 +1190,185 @@
       return state;
     }
 
+    function loadMissionAutomationState() {
+      const defaults = getDefaultMissionAutomationState();
+      let parsed = null;
+
+      try {
+        parsed = JSON.parse(localStorage.getItem(MISSION_AUTOMATION_PROFILE_KEY) || 'null');
+      } catch (_err) {
+        parsed = null;
+      }
+
+      if (!parsed || typeof parsed !== 'object') {
+        try {
+          const legacy = JSON.parse(localStorage.getItem(PROFILE_STATE_KEY) || 'null');
+          if (legacy && typeof legacy === 'object') {
+            parsed = {
+              missionAutomationEnabled: legacy.missionAutomationEnabled,
+              defaultExportSlot: legacy.defaultExportSlot,
+              rc2UuidMissionA: legacy.rc2UuidMissionA,
+              rc2UuidMissionB: legacy.rc2UuidMissionB,
+              rc2UuidMissionC: legacy.rc2UuidMissionC,
+              rc2ExportDirMissionA: legacy.rc2ExportDirMissionA,
+              rc2ExportDirMissionB: legacy.rc2ExportDirMissionB,
+              rc2ExportDirMissionC: legacy.rc2ExportDirMissionC
+            };
+          }
+        } catch (_err) {
+          parsed = null;
+        }
+      }
+
+      const state = {
+        ...defaults,
+        ...(parsed && typeof parsed === 'object' ? parsed : {})
+      };
+
+      state.missionAutomationEnabled = normalizeBoolean(state.missionAutomationEnabled);
+      state.defaultExportSlot = normalizeExportSlot(state.defaultExportSlot);
+      state.rc2UuidMissionA = normalizeUuidOrEmpty(state.rc2UuidMissionA);
+      state.rc2UuidMissionB = normalizeUuidOrEmpty(state.rc2UuidMissionB);
+      state.rc2UuidMissionC = normalizeUuidOrEmpty(state.rc2UuidMissionC);
+      state.rc2ExportDirMissionA = normalizeExportDir(state.rc2ExportDirMissionA, 'Mission_A');
+      state.rc2ExportDirMissionB = normalizeExportDir(state.rc2ExportDirMissionB, 'Mission_B');
+      state.rc2ExportDirMissionC = normalizeExportDir(state.rc2ExportDirMissionC, 'Mission_C');
+
+      return state;
+    }
+
     function persistProfileState() {
       if (!profileState) return;
-      profileState.profileUpdatedAt = new Date().toISOString();
-      localStorage.setItem(PROFILE_STATE_KEY, JSON.stringify(profileState));
+      if (!hasMeaningfulProfileData(profileState)) {
+        profileState.profileUpdatedAt = null;
+        sessionStorage.removeItem(PROFILE_SESSION_STATE_KEY);
+        localStorage.removeItem(PROFILE_STATE_KEY);
+        clearAdvancedAccessRecord();
+        localStorage.removeItem('pilotName');
+        localStorage.removeItem('pilotCell');
+        localStorage.removeItem('pilotEmail');
+        localStorage.removeItem('droneMissionCategory');
+        localStorage.removeItem('lastUsedMissionCategory');
+        return;
+      }
 
-      // Keep lightweight mirror keys for cross-page access and backward compatibility.
-      localStorage.setItem('pilotName', profileState.pilotName || '');
-      localStorage.setItem('pilotCell', profileState.pilotCell || '');
-      localStorage.setItem('pilotEmail', profileState.pilotEmail || '');
-      localStorage.setItem('droneMissionCategory', profileState.droneMissionCategory || 'basic');
-      localStorage.setItem('lastUsedMissionCategory', profileState.lastUsedMissionCategory || profileState.droneMissionCategory || 'basic');
+      profileState.profileUpdatedAt = new Date().toISOString();
+      const mode = normalizeMissionStatus(profileState.lastMissionStatus);
+
+      if (mode === 'active') {
+        localStorage.setItem(PROFILE_STATE_KEY, JSON.stringify(profileState));
+        sessionStorage.removeItem(PROFILE_SESSION_STATE_KEY);
+
+        // Keep lightweight mirror keys for cross-page access and backward compatibility.
+        localStorage.setItem('pilotName', profileState.pilotName || '');
+        localStorage.setItem('pilotCell', profileState.pilotCell || '');
+        localStorage.setItem('pilotEmail', profileState.pilotEmail || '');
+        localStorage.setItem('droneMissionCategory', profileState.droneMissionCategory || 'basic');
+        localStorage.setItem('lastUsedMissionCategory', profileState.lastUsedMissionCategory || profileState.droneMissionCategory || 'basic');
+        return;
+      }
+
+      if (mode === 'draft' || mode === 'closed') {
+        sessionStorage.setItem(PROFILE_SESSION_STATE_KEY, JSON.stringify(profileState));
+      } else {
+        sessionStorage.removeItem(PROFILE_SESSION_STATE_KEY);
+      }
+
+      clearAdvancedAccessRecord();
+      localStorage.removeItem(PROFILE_STATE_KEY);
+      localStorage.removeItem('pilotName');
+      localStorage.removeItem('pilotCell');
+      localStorage.removeItem('pilotEmail');
+      localStorage.removeItem('droneMissionCategory');
+      localStorage.removeItem('lastUsedMissionCategory');
+    }
+
+    function persistMissionAutomationState() {
+      if (!missionAutomationState) return;
+      missionAutomationState.profileUpdatedAt = new Date().toISOString();
+      localStorage.setItem(MISSION_AUTOMATION_PROFILE_KEY, JSON.stringify(missionAutomationState));
+    }
+
+    function buildProfileBackupPayload() {
+      return {
+        backupType: 'drone-sop-profile',
+        backupVersion: 1,
+        exportedAt: new Date().toISOString(),
+        profile: {
+          pilotName: profileState.pilotName || '',
+          pilotCell: profileState.pilotCell || '',
+          pilotEmail: profileState.pilotEmail || '',
+          droneMissionCategory: normalizeMissionCategory(profileState.droneMissionCategory),
+          preferredDroneLabel: profileState.preferredDroneLabel || '',
+          lastMissionStatus: normalizeMissionStatus(profileState.lastMissionStatus)
+        }
+      };
+    }
+
+    function buildMissionAutomationBackupPayload() {
+      return {
+        backupType: 'drone-sop-mission-automation-profile',
+        backupVersion: 1,
+        exportedAt: new Date().toISOString(),
+        profile: {
+          missionAutomationEnabled: normalizeBoolean(missionAutomationState && missionAutomationState.missionAutomationEnabled),
+          defaultExportSlot: normalizeExportSlot(missionAutomationState && missionAutomationState.defaultExportSlot),
+          rc2UuidMissionA: normalizeUuidOrEmpty(missionAutomationState && missionAutomationState.rc2UuidMissionA),
+          rc2UuidMissionB: normalizeUuidOrEmpty(missionAutomationState && missionAutomationState.rc2UuidMissionB),
+          rc2UuidMissionC: normalizeUuidOrEmpty(missionAutomationState && missionAutomationState.rc2UuidMissionC),
+          rc2ExportDirMissionA: normalizeExportDir(missionAutomationState && missionAutomationState.rc2ExportDirMissionA, 'Mission_A'),
+          rc2ExportDirMissionB: normalizeExportDir(missionAutomationState && missionAutomationState.rc2ExportDirMissionB, 'Mission_B'),
+          rc2ExportDirMissionC: normalizeExportDir(missionAutomationState && missionAutomationState.rc2ExportDirMissionC, 'Mission_C')
+        }
+      };
+    }
+
+    function slugifyProfileFilePart(value, fallback) {
+      const cleaned = String(value || '')
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '_')
+        .replace(/^_+|_+$/g, '');
+      return cleaned || fallback;
+    }
+
+    async function ensureRc2ProfileRootHandle() {
+      if (!('showDirectoryPicker' in window)) {
+        throw new Error('Direct profile save requires Chrome or Edge with the File System Access API.');
+      }
+      if (rc2ProfileRootHandle) return rc2ProfileRootHandle;
+      rc2ProfileRootHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+      return rc2ProfileRootHandle;
+    }
+
+    async function assertRequiredRc2MissionFolders(rootHandle) {
+      const requiredFolders = ['REGISTRY', 'Mission_A', 'Mission_B', 'Mission_C'];
+      const missingFolders = [];
+      for (const folderName of requiredFolders) {
+        try {
+          await rootHandle.getDirectoryHandle(folderName, { create: false });
+        } catch (_err) {
+          missingFolders.push(folderName);
+        }
+      }
+      if (missingFolders.length) {
+        throw new Error(`Missing RC2 mission folders: ${missingFolders.join(', ')}. Run Step 1 to create RC2_Missions first.`);
+      }
+    }
+
+    async function saveProfileIntoRc2Registry() {
+      if (!profileState || !missionAutomationState) return null;
+
+      const rootHandle = await ensureRc2ProfileRootHandle();
+      await assertRequiredRc2MissionFolders(rootHandle);
+      const registryHandle = await rootHandle.getDirectoryHandle('REGISTRY', { create: true });
+      const profileDirHandle = await registryHandle.getDirectoryHandle('profile', { create: true });
+      const pilotSlug = slugifyProfileFilePart(profileState.pilotName, 'pilot');
+      const fileHandle = await profileDirHandle.getFileHandle(`mission_automation_profile_${pilotSlug}.json`, { create: true });
+      const writable = await fileHandle.createWritable();
+      await writable.write(JSON.stringify(buildMissionAutomationBackupPayload(), null, 2));
+      await writable.close();
+      return `REGISTRY/profile/mission_automation_profile_${pilotSlug}.json`;
     }
 
     function syncProfileStateWithTermsAndIntro() {
@@ -813,7 +1384,10 @@
       const summary = document.getElementById('profile-quick-summary');
       if (!summary || !profileState) return;
 
-      const hasProfile = Boolean(profileState.pilotName || profileState.profileUpdatedAt);
+      updateProfileSetupNudge();
+      updateProfileIconCue();
+
+      const hasProfile = hasMeaningfulProfileData(profileState);
       if (!hasProfile) {
         summary.hidden = true;
         summary.textContent = '';
@@ -822,60 +1396,129 @@
 
       const pilot = profileState.pilotName || 'Pilot';
       const category = toTitleCaseCategory(profileState.droneMissionCategory);
-      const missionState = normalizeMissionStatus(profileState.lastMissionStatus);
+      const usageMode = toUsageModeLabel(profileState.lastMissionStatus);
+      const missionProfileState = missionAutomationState && missionAutomationState.missionAutomationEnabled ? 'Automation On' : 'Automation Off';
+      const advancedAccessState = getAdvancedAccessState();
+      const advancedAccessLabel = advancedAccessState.validated ? 'User Validated' : 'Advanced Locked';
 
       summary.hidden = false;
-      summary.textContent = `Profile ready: ${pilot} | ${category} | ${missionState}`;
+      summary.textContent = `Profile ready: ${pilot} | ${category} | ${usageMode} | ${missionProfileState} | ${advancedAccessLabel}`;
+    }
+
+    function syncProfileStateFromForm(profileForm) {
+      if (!profileForm) return;
+      profileState = profileState || getDefaultProfileState();
+
+      const formData = new FormData(profileForm);
+      profileState.pilotName = String(formData.get('pilotName') || '').trim();
+      profileState.pilotCell = formatPhoneDisplay(formData.get('pilotCell'));
+      profileState.pilotEmail = String(formData.get('pilotEmail') || '').trim();
+      profileState.droneMissionCategory = normalizeMissionCategory(String(formData.get('droneMissionCategory') || 'basic'));
+      profileState.lastUsedMissionCategory = profileState.droneMissionCategory;
+      profileState.preferredDroneLabel = normalizePreferredDrones(formData.get('preferredDroneLabel'));
+      profileState.lastMissionStatus = normalizeMissionStatus(String(formData.get('lastMissionStatus') || 'draft'));
+
+      if (missionAutomationState) {
+        const missionAutomationEnabledInput = document.getElementById('profile-mission-automation-enabled');
+        missionAutomationState.missionAutomationEnabled = normalizeBoolean(missionAutomationEnabledInput && missionAutomationEnabledInput.checked);
+      }
     }
 
     function fillProfileForm() {
       if (!profileState) return;
 
+      const automationPanel = document.getElementById('profile-automation-panel');
       const pilotInput = document.getElementById('profile-pilot-name');
       const pilotCellInput = document.getElementById('profile-pilot-cell');
       const pilotEmailInput = document.getElementById('profile-pilot-email');
       const categorySelect = document.getElementById('profile-mission-category');
       const droneInput = document.getElementById('profile-drone-label');
       const statusSelect = document.getElementById('profile-mission-status');
+      const missionAutomationEnabledInput = document.getElementById('profile-mission-automation-enabled');
+      const advancedAccessAttestedInput = document.getElementById('profile-advanced-access-attested');
 
       if (pilotInput) pilotInput.value = profileState.pilotName || '';
-      if (pilotCellInput) pilotCellInput.value = profileState.pilotCell || '';
+      if (pilotCellInput) pilotCellInput.value = formatPhoneDisplay(profileState.pilotCell || '');
+      if (pilotCellInput) updateProfilePhoneInput(pilotCellInput);
       if (pilotEmailInput) pilotEmailInput.value = profileState.pilotEmail || '';
+      if (pilotEmailInput) updateProfileEmailValidity(pilotEmailInput);
       if (categorySelect) categorySelect.value = normalizeMissionCategory(profileState.droneMissionCategory);
       if (droneInput) droneInput.value = profileState.preferredDroneLabel || '';
       if (statusSelect) statusSelect.value = normalizeMissionStatus(profileState.lastMissionStatus);
+      if (missionAutomationEnabledInput) missionAutomationEnabledInput.checked = normalizeBoolean(missionAutomationState && missionAutomationState.missionAutomationEnabled);
+      if (advancedAccessAttestedInput) advancedAccessAttestedInput.checked = getAdvancedAccessState().validated;
+      updateProfileUsageModeUi();
+      updateAdvancedAccessUi();
+      updateMissionAutomationUi();
+
+      if (automationPanel) {
+        automationPanel.open = false;
+      }
     }
 
-    function exportProfileBackup(status) {
+    function fillMissionAutomationForm() {
+      if (!missionAutomationState) return;
+
+      const defaultSlotSelect = document.getElementById('mission-default-export-slot');
+      const uuidMissionAInput = document.getElementById('mission-uuid-mission-a');
+      const uuidMissionBInput = document.getElementById('mission-uuid-mission-b');
+      const uuidMissionCInput = document.getElementById('mission-uuid-mission-c');
+      const exportDirMissionAInput = document.getElementById('mission-export-dir-mission-a');
+      const exportDirMissionBInput = document.getElementById('mission-export-dir-mission-b');
+      const exportDirMissionCInput = document.getElementById('mission-export-dir-mission-c');
+
+      if (defaultSlotSelect) defaultSlotSelect.value = normalizeExportSlot(missionAutomationState.defaultExportSlot);
+      if (uuidMissionAInput) uuidMissionAInput.value = missionAutomationState.rc2UuidMissionA || '';
+      if (uuidMissionBInput) uuidMissionBInput.value = missionAutomationState.rc2UuidMissionB || '';
+      if (uuidMissionCInput) uuidMissionCInput.value = missionAutomationState.rc2UuidMissionC || '';
+      if (exportDirMissionAInput) exportDirMissionAInput.value = missionAutomationState.rc2ExportDirMissionA || 'Mission_A';
+      if (exportDirMissionBInput) exportDirMissionBInput.value = missionAutomationState.rc2ExportDirMissionB || 'Mission_B';
+      if (exportDirMissionCInput) exportDirMissionCInput.value = missionAutomationState.rc2ExportDirMissionC || 'Mission_C';
+    }
+
+    async function exportProfileBackup(status) {
       if (!profileState) {
         status.textContent = 'No profile loaded to export.';
         return;
       }
 
-      const payload = {
-        backupType: 'drone-sop-profile',
-        backupVersion: 1,
-        exportedAt: new Date().toISOString(),
-        profile: {
-          pilotName: profileState.pilotName || '',
-          pilotCell: profileState.pilotCell || '',
-          pilotEmail: profileState.pilotEmail || '',
-          droneMissionCategory: normalizeMissionCategory(profileState.droneMissionCategory),
-          preferredDroneLabel: profileState.preferredDroneLabel || '',
-          lastMissionStatus: normalizeMissionStatus(profileState.lastMissionStatus)
+      const payload = buildProfileBackupPayload();
+
+      if ('showSaveFilePicker' in window) {
+        try {
+          const fileHandle = await window.showSaveFilePicker({
+            suggestedName: PROFILE_EXPORT_FILENAME,
+            types: [
+              {
+                description: 'Drone SOP Profile',
+                accept: {
+                  'application/json': ['.json']
+                }
+              }
+            ]
+          });
+          const writable = await fileHandle.createWritable();
+          await writable.write(JSON.stringify(payload, null, 2));
+          await writable.close();
+          status.textContent = `Profile backup exported as ${PROFILE_EXPORT_FILENAME}.`;
+          return;
+        } catch (error) {
+          if (error && error.name === 'AbortError') {
+            status.textContent = 'Export canceled.';
+            return;
+          }
         }
-      };
+      }
 
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
       const link = document.createElement('a');
-      const dateStamp = new Date().toISOString().slice(0, 10);
       link.href = URL.createObjectURL(blob);
-      link.download = `Drone_SOP_Profile_${dateStamp}.json`;
+      link.download = PROFILE_EXPORT_FILENAME;
       document.body.appendChild(link);
       link.click();
       link.remove();
       URL.revokeObjectURL(link.href);
-      status.textContent = 'Profile backup exported.';
+      status.textContent = `Profile backup exported as ${PROFILE_EXPORT_FILENAME}.`;
     }
 
     async function importProfileBackup(file, status) {
@@ -906,14 +1549,22 @@
       profileState.droneMissionCategory = normalizeMissionCategory(String(source.droneMissionCategory || profileState.droneMissionCategory || 'basic'));
       profileState.lastUsedMissionCategory = profileState.droneMissionCategory;
       profileState.preferredDroneLabel = String(source.preferredDroneLabel || '').trim();
-      profileState.lastMissionStatus = normalizeMissionStatus(String(source.lastMissionStatus || profileState.lastMissionStatus || 'draft'));
+      const selectedMode = normalizeMissionStatus(String(document.getElementById('profile-mission-status')?.value || profileState.lastMissionStatus || 'draft'));
+      const importedMode = normalizeMissionStatus(String(source.lastMissionStatus || selectedMode || 'draft'));
+      profileState.lastMissionStatus = selectedMode === 'closed' ? 'closed' : importedMode;
+      if (missionAutomationState) {
+        missionAutomationState.missionAutomationEnabled = normalizeBoolean(source.missionAutomationEnabled || missionAutomationState.missionAutomationEnabled);
+        persistMissionAutomationState();
+      }
 
       persistProfileState();
       fillProfileForm();
       renderProfileSummary();
 
       const pilotName = profileState.pilotName || 'profile data';
-      status.textContent = `Profile imported for ${pilotName}.`;
+      status.textContent = profileState.lastMissionStatus === 'closed'
+        ? `Private profile loaded for ${pilotName}. This temporary copy is available for this session only.`
+        : `Profile imported for ${pilotName}.`;
     }
 
     function closeProfileDrawer() {
@@ -923,8 +1574,47 @@
 
       drawer.classList.remove('is-open');
       drawer.setAttribute('aria-hidden', 'true');
-      backdrop.hidden = true;
-      document.body.classList.remove('profile-drawer-open');
+      if (!document.getElementById('mission-profile-drawer')?.classList.contains('is-open')) {
+        backdrop.hidden = true;
+        document.body.classList.remove('profile-drawer-open');
+      }
+    }
+
+    function closeMissionAutomationDrawer() {
+      const drawer = document.getElementById('mission-profile-drawer');
+      const backdrop = document.getElementById('profile-backdrop');
+      if (!drawer || !backdrop) return;
+
+      drawer.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      if (!document.getElementById('profile-drawer')?.classList.contains('is-open')) {
+        backdrop.hidden = true;
+        document.body.classList.remove('profile-drawer-open');
+      }
+    }
+
+    function openMissionAutomationDrawer() {
+      const drawer = document.getElementById('mission-profile-drawer');
+      const backdrop = document.getElementById('profile-backdrop');
+      const defaultSlotSelect = document.getElementById('mission-default-export-slot');
+      const status = document.getElementById('pilot-location-status');
+      const accessState = getAdvancedAccessState();
+      if (!drawer || !backdrop) return;
+      if (!accessState.validated) {
+        if (status) status.textContent = accessState.message;
+        return;
+      }
+
+      fillMissionAutomationForm();
+
+      backdrop.hidden = false;
+      drawer.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('profile-drawer-open');
+
+      if (defaultSlotSelect) {
+        requestAnimationFrame(() => defaultSlotSelect.focus());
+      }
     }
 
     function openProfileDrawer() {
@@ -997,11 +1687,7 @@
         accepted: localStorage.getItem(TERMS_ACCEPTED_KEY),
         acceptedAt: localStorage.getItem('termsAcceptedAt'),
         acceptedVersion: localStorage.getItem(TERMS_VERSION_KEY),
-        introCollapsed: localStorage.getItem(INTRO_COLLAPSED_KEY),
-        profileStateRaw: localStorage.getItem(PROFILE_STATE_KEY),
-        pilotName: localStorage.getItem('pilotName'),
-        droneMissionCategory: localStorage.getItem('droneMissionCategory'),
-        lastUsedMissionCategory: localStorage.getItem('lastUsedMissionCategory')
+        introCollapsed: localStorage.getItem(INTRO_COLLAPSED_KEY)
       };
     }
 
@@ -1018,18 +1704,6 @@
       }
       if (snapshot.introCollapsed != null) {
         localStorage.setItem(INTRO_COLLAPSED_KEY, snapshot.introCollapsed);
-      }
-      if (snapshot.profileStateRaw != null) {
-        localStorage.setItem(PROFILE_STATE_KEY, snapshot.profileStateRaw);
-      }
-      if (snapshot.pilotName != null) {
-        localStorage.setItem('pilotName', snapshot.pilotName);
-      }
-      if (snapshot.droneMissionCategory != null) {
-        localStorage.setItem('droneMissionCategory', snapshot.droneMissionCategory);
-      }
-      if (snapshot.lastUsedMissionCategory != null) {
-        localStorage.setItem('lastUsedMissionCategory', snapshot.lastUsedMissionCategory);
       }
     }
 
@@ -1185,17 +1859,35 @@
       const introPanel = document.getElementById('introduction-panel');
       const openProfileBtn = document.getElementById('open-profile-drawer');
       const closeProfileBtn = document.getElementById('close-profile-drawer');
+      const openMissionProfileBtn = document.getElementById('open-mission-profile-drawer');
+      const closeMissionProfileBtn = document.getElementById('close-mission-profile-drawer');
       const profileBackdrop = document.getElementById('profile-backdrop');
       const profileForm = document.getElementById('profile-form');
+      const profileModeSelect = document.getElementById('profile-mission-status');
+      const profileModeHelpBtn = document.getElementById('profile-mode-help-btn');
+      const profileUsageHelp = document.getElementById('profile-usage-help');
+      const profileCellInput = document.getElementById('profile-pilot-cell');
+      const profileEmailInput = document.getElementById('profile-pilot-email');
+      const missionAutomationEnabledInput = document.getElementById('profile-mission-automation-enabled');
+      const missionProfileForm = document.getElementById('mission-profile-form');
       const cancelProfileBtn = document.getElementById('cancel-profile-save');
+      const cancelMissionProfileBtn = document.getElementById('cancel-mission-profile-save');
       const exportProfileBtn = document.getElementById('export-profile-state');
       const importProfileBtn = document.getElementById('import-profile-state');
       const profileImportFile = document.getElementById('profile-import-file');
+      const validateAdvancedAccessBtn = document.getElementById('validate-advanced-access');
+      const advancedAccessAttestedInput = document.getElementById('profile-advanced-access-attested');
       if (!btn || !status || !clearBtn || !acceptBtn) return;
 
       profileState = loadProfileState();
+      missionAutomationState = loadMissionAutomationState();
       persistProfileState();
+      persistMissionAutomationState();
       renderProfileSummary();
+      updateProfileUsageModeUi();
+      updateAdvancedAccessUi();
+      updateMissionAutomationUi();
+      setProfileUsageHelpOpen(false);
 
       syncIntroPanelFromStorage();
       syncTermsGateState();
@@ -1209,6 +1901,85 @@
         });
       }
 
+      if (profileModeSelect) {
+        profileModeSelect.addEventListener('change', () => {
+          if (profileForm) {
+            syncProfileStateFromForm(profileForm);
+          }
+          updateProfileUsageModeUi();
+          updateAdvancedAccessUi();
+          updateMissionAutomationUi();
+          renderProfileSummary();
+        });
+      }
+
+      if (profileModeHelpBtn && profileUsageHelp) {
+        profileModeHelpBtn.addEventListener('click', () => {
+          setProfileUsageHelpOpen(profileUsageHelp.hidden);
+        });
+      }
+
+      if (profileEmailInput) {
+        profileEmailInput.addEventListener('input', () => {
+          updateProfileEmailValidity(profileEmailInput);
+          if (profileForm) {
+            syncProfileStateFromForm(profileForm);
+            updateAdvancedAccessUi();
+            updateMissionAutomationUi();
+            renderProfileSummary();
+          }
+        });
+        profileEmailInput.addEventListener('blur', () => {
+          const message = updateProfileEmailValidity(profileEmailInput);
+          if (message) profileEmailInput.reportValidity();
+        });
+      }
+
+      if (profileCellInput) {
+        profileCellInput.addEventListener('input', () => {
+          updateProfilePhoneInput(profileCellInput);
+          if (profileForm) {
+            syncProfileStateFromForm(profileForm);
+            updateAdvancedAccessUi();
+            updateMissionAutomationUi();
+            renderProfileSummary();
+          }
+        });
+        profileCellInput.addEventListener('blur', () => {
+          const phoneMessage = updateProfilePhoneInput(profileCellInput);
+          if (phoneMessage) profileCellInput.reportValidity();
+        });
+      }
+
+      if (profileForm) {
+        profileForm.addEventListener('input', () => {
+          syncProfileStateFromForm(profileForm);
+          updateProfileUsageModeUi();
+          updateAdvancedAccessUi();
+          updateMissionAutomationUi();
+          renderProfileSummary();
+        });
+      }
+
+      document.addEventListener('click', (event) => {
+        if (!profileModeHelpBtn || !profileUsageHelp || profileUsageHelp.hidden) return;
+        const target = event.target;
+        if (target === profileModeHelpBtn || profileModeHelpBtn.contains(target) || profileUsageHelp.contains(target)) return;
+        setProfileUsageHelpOpen(false);
+      });
+
+      if (missionAutomationEnabledInput) {
+        missionAutomationEnabledInput.addEventListener('change', () => {
+          updateMissionAutomationUi();
+        });
+      }
+
+      if (advancedAccessAttestedInput) {
+        advancedAccessAttestedInput.addEventListener('change', () => {
+          updateAdvancedAccessUi();
+        });
+      }
+
       if (openProfileBtn) {
         openProfileBtn.addEventListener('click', openProfileDrawer);
       }
@@ -1217,16 +1988,113 @@
         closeProfileBtn.addEventListener('click', closeProfileDrawer);
       }
 
+      if (openMissionProfileBtn) {
+        openMissionProfileBtn.addEventListener('click', openMissionAutomationDrawer);
+      }
+
+      if (closeMissionProfileBtn) {
+        closeMissionProfileBtn.addEventListener('click', closeMissionAutomationDrawer);
+      }
+
       if (cancelProfileBtn) {
         cancelProfileBtn.addEventListener('click', closeProfileDrawer);
       }
 
+      if (cancelMissionProfileBtn) {
+        cancelMissionProfileBtn.addEventListener('click', closeMissionAutomationDrawer);
+      }
+
+      if (validateAdvancedAccessBtn) {
+        validateAdvancedAccessBtn.addEventListener('click', () => {
+          if (profileForm) {
+            syncProfileStateFromForm(profileForm);
+          }
+
+          if (profileCellInput) {
+            const phoneMessage = updateProfilePhoneInput(profileCellInput);
+            if (phoneMessage) {
+              status.textContent = phoneMessage;
+              profileCellInput.reportValidity();
+              updateAdvancedAccessUi();
+              return;
+            }
+          }
+
+          if (profileEmailInput) {
+            const emailMessage = updateProfileEmailValidity(profileEmailInput);
+            if (emailMessage) {
+              status.textContent = emailMessage;
+              profileEmailInput.reportValidity();
+              updateAdvancedAccessUi();
+              return;
+            }
+          }
+
+          if (!advancedAccessAttestedInput || !advancedAccessAttestedInput.checked) {
+            status.textContent = 'Read the advanced export note, then check the acknowledgment box before validating access.';
+            updateAdvancedAccessUi();
+            return;
+          }
+
+          const accessState = getAdvancedAccessState();
+          if (!accessState.savedMatchesCurrent || accessState.eligibilityMessage) {
+            status.textContent = accessState.message;
+            updateAdvancedAccessUi();
+            updateMissionAutomationUi();
+            renderProfileSummary();
+            return;
+          }
+
+          localStorage.setItem(PROFILE_ADVANCED_ACCESS_KEY, JSON.stringify({
+            version: PROFILE_ADVANCED_ACCESS_VERSION,
+            approvedAt: new Date().toISOString(),
+            signature: accessState.currentSignature
+          }));
+
+          updateAdvancedAccessUi();
+          updateMissionAutomationUi();
+          renderProfileSummary();
+          status.textContent = 'User validated for advanced exports and Mission Manager on this device.';
+        });
+      }
+
       if (exportProfileBtn) {
-        exportProfileBtn.addEventListener('click', () => exportProfileBackup(status));
+        exportProfileBtn.addEventListener('click', async () => {
+          if (profileForm) {
+            syncProfileStateFromForm(profileForm);
+            if (profileCellInput) {
+              const phoneMessage = updateProfilePhoneInput(profileCellInput);
+              if (phoneMessage) {
+                status.textContent = phoneMessage;
+                profileCellInput.reportValidity();
+                return;
+              }
+            }
+            if (profileEmailInput) {
+              const emailMessage = updateProfileEmailValidity(profileEmailInput);
+              if (emailMessage) {
+                status.textContent = emailMessage;
+                profileEmailInput.reportValidity();
+                return;
+              }
+            }
+            renderProfileSummary();
+            updateProfileUsageModeUi();
+            updateAdvancedAccessUi();
+            updateMissionAutomationUi();
+          }
+          const accessState = getAdvancedAccessState();
+          if (!accessState.validated) {
+            status.textContent = accessState.message;
+            return;
+          }
+          await exportProfileBackup(status);
+        });
       }
 
       if (importProfileBtn && profileImportFile) {
         importProfileBtn.addEventListener('click', () => {
+          status.textContent = `Import tip: look for ${PROFILE_EXPORT_FILENAME}.`;
           profileImportFile.click();
         });
 
@@ -1238,37 +2106,123 @@
       }
 
       if (profileBackdrop) {
-        profileBackdrop.addEventListener('click', closeProfileDrawer);
+        profileBackdrop.addEventListener('click', () => {
+          closeProfileDrawer();
+          closeMissionAutomationDrawer();
+        });
       }
 
       if (profileForm) {
-        profileForm.addEventListener('submit', (event) => {
+        profileForm.addEventListener('submit', async (event) => {
           event.preventDefault();
 
-          const formData = new FormData(profileForm);
-          const pilotName = String(formData.get('pilotName') || '').trim();
-          const pilotCell = String(formData.get('pilotCell') || '').trim();
-          const pilotEmail = String(formData.get('pilotEmail') || '').trim();
-          const droneMissionCategory = normalizeMissionCategory(String(formData.get('droneMissionCategory') || 'basic'));
-          const preferredDroneLabel = String(formData.get('preferredDroneLabel') || '').trim();
-          const lastMissionStatus = normalizeMissionStatus(String(formData.get('lastMissionStatus') || 'draft'));
+          syncProfileStateFromForm(profileForm);
 
-          profileState.pilotName = pilotName;
-          profileState.pilotCell = pilotCell;
-          profileState.pilotEmail = pilotEmail;
-          profileState.droneMissionCategory = droneMissionCategory;
-          profileState.lastUsedMissionCategory = droneMissionCategory;
-          profileState.preferredDroneLabel = preferredDroneLabel;
-          profileState.lastMissionStatus = lastMissionStatus;
+          if (profileCellInput) {
+            const phoneMessage = updateProfilePhoneInput(profileCellInput);
+            if (phoneMessage) {
+              status.textContent = phoneMessage;
+              profileCellInput.reportValidity();
+              return;
+            }
+          }
+
+          if (profileEmailInput) {
+            const emailMessage = updateProfileEmailValidity(profileEmailInput);
+            if (emailMessage) {
+              status.textContent = emailMessage;
+              profileEmailInput.reportValidity();
+              return;
+            }
+          }
+
+          const pilotName = profileState.pilotName;
+          const droneMissionCategory = profileState.droneMissionCategory;
+          const lastMissionStatus = normalizeMissionStatus(profileState.lastMissionStatus);
+          const missionAutomationEnabled = normalizeBoolean(missionAutomationState && missionAutomationState.missionAutomationEnabled);
+
+          if (lastMissionStatus === 'closed') {
+            status.textContent = 'Private Local Copy stays local to this session. Advanced export remains locked until a valid Workspace Reuse profile is saved and validated.';
+            updateProfileUsageModeUi();
+            return;
+          }
 
           persistProfileState();
+          if (missionAutomationState) {
+            persistMissionAutomationState();
+          }
           renderProfileSummary();
+          updateAdvancedAccessUi();
+          updateMissionAutomationUi();
+
+          const usageModeLabel = toUsageModeLabel(lastMissionStatus);
+          let profileSaveMessage = pilotName
+            ? `Profile saved for ${pilotName} (${toTitleCaseCategory(droneMissionCategory)} | ${usageModeLabel}).`
+            : `Profile saved (${toTitleCaseCategory(droneMissionCategory)} | ${usageModeLabel}).`;
+
+          if (lastMissionStatus === 'draft') {
+            profileSaveMessage += ' Mission Only mode stores profile data for this browser session only.';
+          } else if (lastMissionStatus === 'closed') {
+            profileSaveMessage += ' Private Local Copy mode keeps a temporary session copy only. Load your private profile again next session.';
+          } else {
+            profileSaveMessage += ' Workspace Reuse mode keeps profile data in browser cache for return visits on this device.';
+          }
+
+          profileSaveMessage += missionAutomationEnabled
+            ? ' Mission Automation Profile is enabled; use Mission Manager to save mission settings.'
+            : ' Mission Automation Profile is disabled; local profile save only.';
+
+          if (normalizeMissionStatus(lastMissionStatus) === 'active') {
+            profileSaveMessage += ' Advanced access remains locked until you check the acknowledgment box and click Validate User Access.';
+          }
+
           closeProfileDrawer();
+          status.textContent = profileSaveMessage;
 
-          status.textContent = pilotName
-            ? `Profile saved for ${pilotName} (${toTitleCaseCategory(droneMissionCategory)}).`
-            : `Profile saved (${toTitleCaseCategory(droneMissionCategory)}).`;
+          updateClearDataVisibility();
+        });
+      }
 
+      if (missionProfileForm) {
+        missionProfileForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const accessState = getAdvancedAccessState();
+          if (!accessState.validated) {
+            status.textContent = accessState.message;
+            return;
+          }
+          if (!missionAutomationState) {
+            missionAutomationState = getDefaultMissionAutomationState();
+          }
+
+          const formData = new FormData(missionProfileForm);
+          missionAutomationState.defaultExportSlot = normalizeExportSlot(String(formData.get('defaultExportSlot') || 'mission_a'));
+          missionAutomationState.rc2UuidMissionA = normalizeUuidOrEmpty(formData.get('rc2UuidMissionA'));
+          missionAutomationState.rc2UuidMissionB = normalizeUuidOrEmpty(formData.get('rc2UuidMissionB'));
+          missionAutomationState.rc2UuidMissionC = normalizeUuidOrEmpty(formData.get('rc2UuidMissionC'));
+          missionAutomationState.rc2ExportDirMissionA = normalizeExportDir(formData.get('rc2ExportDirMissionA'), 'Mission_A');
+          missionAutomationState.rc2ExportDirMissionB = normalizeExportDir(formData.get('rc2ExportDirMissionB'), 'Mission_B');
+          missionAutomationState.rc2ExportDirMissionC = normalizeExportDir(formData.get('rc2ExportDirMissionC'), 'Mission_C');
+
+          persistMissionAutomationState();
+          renderProfileSummary();
+
+          let missionMessage = 'Mission automation profile saved locally.';
+          if (normalizeBoolean(missionAutomationState.missionAutomationEnabled)) {
+            try {
+              const savedPath = await saveProfileIntoRc2Registry();
+              if (savedPath) missionMessage = `Mission automation profile saved to ${savedPath}.`;
+            } catch (error) {
+              const reason = error && error.name === 'AbortError'
+                ? 'Mission Automation Profile is enabled, but no RC2_Missions root was selected.'
+                : `Mission Automation Profile cannot be saved: ${error.message || 'unknown error'}.`;
+              status.textContent = reason;
+              return;
+            }
+          }
+
+          closeMissionAutomationDrawer();
+          status.textContent = missionMessage;
           updateClearDataVisibility();
         });
       }
@@ -1276,6 +2230,7 @@
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
           closeProfileDrawer();
+          closeMissionAutomationDrawer();
         }
       });
 
