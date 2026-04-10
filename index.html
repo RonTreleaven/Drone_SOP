@@ -616,17 +616,20 @@
         </div>
       </div>
 
-      <div class="profile-validation-panel">
-        <p class="profile-validation-title">Advanced Access</p>
+      <div id="profile-advanced-access-panel" class="profile-validation-panel">
+        <div class="profile-validation-header-row">
+          <p class="profile-validation-title">Advanced Access</p>
+          <p id="profile-advanced-access-pill" class="profile-validation-pill" hidden>[x] User validated successfully</p>
+        </div>
         <p id="profile-advanced-access-status" class="profile-validation-status"></p>
-        <div class="profile-checkbox-row profile-validation-checkbox-row">
+        <div id="profile-advanced-access-attest-row" class="profile-checkbox-row profile-validation-checkbox-row">
           <input id="profile-advanced-access-attested" class="profile-checkbox-input" type="checkbox">
           <label class="profile-validation-check-label" for="profile-advanced-access-attested">I have read the disclaimer and the export or Mission Manager instructions for KMZ, KML, GeoJSON, and JSON workflows.</label>
         </div>
-        <div class="profile-inline-actions">
+        <div id="profile-advanced-access-actions" class="profile-inline-actions">
           <button id="validate-advanced-access" class="mini-btn" type="button">Validate User Access</button>
         </div>
-        <p class="profile-field-note">Import stays available. Export Profile, Mission Manager, and GGcode file exports remain locked until a valid Workspace Reuse profile is saved and validated on this device.</p>
+        <p id="profile-advanced-access-note" class="profile-field-note">Import stays available. Export and Mission Manager unlock after a saved, validated Workspace Reuse profile.</p>
       </div>
 
       <details id="profile-automation-panel" class="profile-automation-panel">
@@ -637,14 +640,14 @@
               <input id="profile-mission-automation-enabled" class="profile-checkbox-input" name="missionAutomationEnabled" type="checkbox">
               <label class="profile-checkbox-label" for="profile-mission-automation-enabled">Use Mission Automation Structure</label>
             </div>
-            <p class="profile-field-note">Enable this if you use RC2 mission automation and want profile mirroring into your RC2_Missions workspace.</p>
+            <p class="profile-field-note">Enable for RC2 mission automation and profile mirroring into RC2_Missions.</p>
             <p id="mission-automation-state" class="profile-field-note"></p>
           </div>
 
           <div id="mission-manager-actions" class="profile-inline-actions" hidden>
-            <button id="open-mission-profile-drawer" class="mini-btn" type="button">Open Mission Manager</button>
+            <button id="open-mission-profile-drawer" class="mini-btn" type="button">Open Advanced Profile Details</button>
           </div>
-          <p id="mission-automation-note" class="profile-field-note">Turn this on only if you use RC2 mission automation with REGISTRY and Mission_A, Mission_B, Mission_C folders.</p>
+          <p id="mission-automation-note" class="profile-field-note">Use only for RC2 automation with REGISTRY and Mission_A/B/C folders.</p>
         </div>
       </details>
     </form>
@@ -846,36 +849,39 @@
       const accessState = getAdvancedAccessState();
       if (!missionAutomationEnabledInput || !missionManagerActions) return;
 
-      const shouldShow = accessState.validated && missionAutomationEnabledInput.checked;
+      const mamEnabled = missionAutomationEnabledInput.checked;
+      const canOpenAdvancedProfile = accessState.validated;
       missionAutomationEnabledInput.disabled = !accessState.validated;
       missionAutomationEnabledInput.title = accessState.validated
         ? ''
         : 'Mission Manager is locked until advanced access is validated.';
       if (openMissionProfileBtn) {
-        openMissionProfileBtn.disabled = !accessState.validated;
-        openMissionProfileBtn.title = accessState.validated ? 'Open Mission Manager' : accessState.message;
+        openMissionProfileBtn.disabled = !canOpenAdvancedProfile;
+        openMissionProfileBtn.title = canOpenAdvancedProfile
+          ? 'Open Advanced Profile details (Mission slots, UUIDs, and export subfolders).'
+          : accessState.message;
       }
       if (saveMissionProfileBtn) {
         saveMissionProfileBtn.disabled = !accessState.validated;
         saveMissionProfileBtn.setAttribute('aria-disabled', accessState.validated ? 'false' : 'true');
       }
-      missionManagerActions.hidden = !shouldShow;
-      missionManagerActions.style.display = shouldShow ? 'flex' : 'none';
+      missionManagerActions.hidden = !canOpenAdvancedProfile;
+      missionManagerActions.style.display = canOpenAdvancedProfile ? 'flex' : 'none';
 
       if (missionAutomationStateNote) {
         missionAutomationStateNote.textContent = !accessState.validated
           ? `MAM status: Locked. ${accessState.message}`
-          : shouldShow
-            ? 'MAM status: On. Mission Automation profile is now managed in Mission Manager.'
-            : 'MAM status: Off. Enable this only if you use RC2 mission automation.';
+          : mamEnabled
+            ? 'MAM status: On. Managed in Advanced Profile Details.'
+            : 'MAM status: Off. You can still open Advanced Profile Details to prefill slot mappings.';
       }
 
       if (missionAutomationNote) {
         missionAutomationNote.textContent = !accessState.validated
-          ? 'Mission Automation Manager is locked until a valid saved profile is validated for advanced export use.'
-          : shouldShow
-            ? 'Mission Automation profile is managed in Mission Manager. Open Mission Manager is now available.'
-            : 'Turn this on only if you use RC2 mission automation with REGISTRY and Mission_A, Mission_B, Mission_C folders.';
+          ? 'Mission Automation Manager is locked until advanced access is validated.'
+          : mamEnabled
+            ? 'MAM is active. Advanced Profile Details are available.'
+            : 'MAM is off. Advanced Profile Details are still available for setup.';
       }
     }
 
@@ -1089,13 +1095,38 @@
     }
 
     function updateAdvancedAccessUi() {
+      const panel = document.getElementById('profile-advanced-access-panel');
+      const statusNote = document.getElementById('profile-advanced-access-status');
+      const attestRow = document.getElementById('profile-advanced-access-attest-row');
+      const actionsRow = document.getElementById('profile-advanced-access-actions');
+      const note = document.getElementById('profile-advanced-access-note');
+      const validatedPill = document.getElementById('profile-advanced-access-pill');
       const exportBtn = document.getElementById('export-profile-state');
       const validateBtn = document.getElementById('validate-advanced-access');
       const attestedInput = document.getElementById('profile-advanced-access-attested');
-      const statusNote = document.getElementById('profile-advanced-access-status');
       const accessState = getAdvancedAccessState();
       const attested = Boolean(attestedInput && attestedInput.checked);
       const canValidate = !accessState.validated && !accessState.eligibilityMessage && accessState.savedMatchesCurrent && attested;
+      const isCollapsed = accessState.validated;
+
+      if (panel) {
+        panel.classList.toggle('is-collapsed', isCollapsed);
+      }
+      if (validatedPill) {
+        validatedPill.hidden = !isCollapsed;
+      }
+      if (statusNote) {
+        statusNote.hidden = isCollapsed;
+      }
+      if (attestRow) {
+        attestRow.hidden = isCollapsed;
+      }
+      if (actionsRow) {
+        actionsRow.hidden = isCollapsed;
+      }
+      if (note) {
+        note.hidden = isCollapsed;
+      }
 
       if (exportBtn) {
         exportBtn.disabled = !accessState.validated;
@@ -1595,6 +1626,7 @@
 
     function openMissionAutomationDrawer() {
       const drawer = document.getElementById('mission-profile-drawer');
+      const profileDrawer = document.getElementById('profile-drawer');
       const backdrop = document.getElementById('profile-backdrop');
       const defaultSlotSelect = document.getElementById('mission-default-export-slot');
       const status = document.getElementById('pilot-location-status');
@@ -1607,10 +1639,19 @@
 
       fillMissionAutomationForm();
 
+      if (profileDrawer) {
+        profileDrawer.classList.remove('is-open');
+        profileDrawer.setAttribute('aria-hidden', 'true');
+      }
+
       backdrop.hidden = false;
       drawer.classList.add('is-open');
       drawer.setAttribute('aria-hidden', 'false');
       document.body.classList.add('profile-drawer-open');
+
+      if (status) {
+        status.textContent = 'Advanced Profile Details opened. Configure slot UUIDs and export folder mappings here.';
+      }
 
       if (defaultSlotSelect) {
         requestAnimationFrame(() => defaultSlotSelect.focus());
