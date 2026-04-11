@@ -1,3 +1,0 @@
-FIR/ICAO: CZUL
-Total NOTAMs received from API: 448
-Saved 181 filtered NOTAMs to 19_06_25_NOTAMS_CZUL.json

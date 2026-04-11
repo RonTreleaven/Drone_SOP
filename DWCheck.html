@@ -3,22 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Drone Weather Assessment Tool</title>
+<title>Drone Weather &amp; Risk Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site-nav.css">
 <script src="assets/js/site-nav.js" defer></script>
 
 <style>
 
+:root{
+--bg-a:#f3fbff;
+--bg-b:#eef8ef;
+--ink:#1f2833;
+--muted:#506070;
+--accent:#0f6d5a;
+--accent-2:#0b5ea8;
+--panel:#ffffff;
+--line:#d6e4ef;
+--line-strong:#bfd4e6;
+--shadow-soft:0 8px 24px rgba(7,28,46,0.08);
+}
+
 body{
-font-family:Arial;
-background:#eef2f5;
-max-width:850px;
+font-family:'Montserrat',sans-serif;
+color:var(--ink);
+background:
+radial-gradient(circle at 10% 10%,rgba(11,94,168,0.10),transparent 40%),
+radial-gradient(circle at 90% 90%,rgba(15,109,90,0.10),transparent 45%),
+linear-gradient(160deg,var(--bg-a),var(--bg-b));
+max-width:980px;
 margin:auto;
-padding:20px;
+padding:20px 18px 36px;
 }
 
 h2{
-margin-bottom:10px;
+margin-bottom:12px;
+font-size:clamp(1.25rem,2.3vw,1.7rem);
 }
 
 input{
@@ -47,11 +68,12 @@ box-shadow:0 0 0 3px rgba(47,158,68,0.25);
 }
 
 .panel{
-background:white;
-padding:15px;
-border-radius:6px;
+background:var(--panel);
+padding:16px;
+border:1px solid var(--line);
+border-radius:12px;
 margin-top:15px;
-box-shadow:0 2px 4px rgba(0,0,0,0.1);
+box-shadow:var(--shadow-soft);
 }
 
 .safe{background:#c8f7c5;}
@@ -134,7 +156,7 @@ margin:5px 0;
 }
 
 .subtle{
-color:#445;
+color:var(--muted);
 font-size:14px;
 margin-top:8px;
 }
@@ -206,10 +228,23 @@ font-weight:700;
 }
 
 .mini-action-btn{
-padding:4px 9px;
+padding:5px 10px;
 font-size:12px;
 margin-left:0;
 margin-top:8px;
+border:1px solid #8eb9da;
+background:#ffffff;
+color:#134f85;
+border-radius:999px;
+font-weight:700;
+cursor:pointer;
+transition:background-color 0.18s ease,border-color 0.18s ease,transform 0.18s ease;
+}
+
+.mini-action-btn:hover{
+background:#eef7ff;
+border-color:#6e9fc6;
+transform:translateY(-1px);
 }
 
 .modal-overlay{
@@ -309,6 +344,33 @@ margin-top:0;
 display:none;
 }
 
+.panel-toggle-header{
+display:flex;
+align-items:center;
+gap:8px;
+cursor:pointer;
+-webkit-user-select:none;
+user-select:none;
+margin-bottom:8px;
+}
+
+.panel-toggle-header h3{
+margin:0;
+}
+
+.panel-collapse-icon{
+display:inline-block;
+width:20px;
+font-size:12px;
+line-height:1;
+text-align:center;
+transition:transform 0.2s ease;
+}
+
+.panel-collapse-icon.collapsed{
+transform:rotate(-90deg);
+}
+
 .risk-mini-table{
 width:100%;
 border-collapse:collapse;
@@ -318,14 +380,14 @@ margin-top:8px;
 
 .risk-mini-table th,
 .risk-mini-table td{
-border:1px solid #d7dde4;
+border:1px solid var(--line-strong);
 padding:6px;
 text-align:left;
 vertical-align:top;
 }
 
 .risk-mini-table th{
-background:#f7f9fc;
+background:#f1f7fc;
 }
 
 .compact-risk-table{
@@ -342,6 +404,96 @@ text-align:center;
 white-space:nowrap;
 }
 
+.risk-score-card{
+background:linear-gradient(180deg,#f8fcff 0%,#ffffff 100%);
+border:1px solid var(--line);
+}
+
+.risk-score-card .risk-key-title{
+margin:0 0 10px 0;
+}
+
+.risk-score-table{
+width:100%;
+min-width:0;
+border-collapse:collapse;
+font-size:12px;
+}
+
+.risk-score-table thead th{
+background:#edf6ff;
+border:1px solid var(--line);
+color:#234767;
+font-size:11px;
+font-weight:700;
+text-transform:uppercase;
+letter-spacing:0.04em;
+padding:6px 8px;
+}
+
+.risk-score-table tbody td{
+background:#ffffff;
+border:1px solid var(--line);
+padding:6px 8px;
+text-align:center;
+}
+
+.risk-score-table tbody td:first-child{
+font-weight:700;
+color:#173a59;
+}
+
+.risk-score-table tbody td:nth-child(2){
+text-align:center;
+}
+
+.risk-score-table tbody td:last-child{
+color:#2a4359;
+text-align:left;
+}
+
+.risk-score-table tbody tr.band-green td:first-child{
+box-shadow:inset 3px 0 0 #2f9e44;
+}
+
+.risk-score-table tbody tr.band-yellow td:first-child{
+box-shadow:inset 3px 0 0 #f59f00;
+}
+
+.risk-score-table tbody tr.band-red td:first-child{
+box-shadow:inset 3px 0 0 #e03131;
+}
+
+.risk-band-pill{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+min-width:64px;
+padding:2px 8px;
+border-radius:999px;
+font-size:11px;
+font-weight:700;
+border:1px solid transparent;
+}
+
+.risk-band-pill.green{
+background:#dbf8e4;
+color:#14532d;
+border-color:#8fd3a4;
+}
+
+.risk-band-pill.yellow{
+background:#fff5d6;
+color:#7a4e00;
+border-color:#e9cf8a;
+}
+
+.risk-band-pill.red{
+background:#ffe0e0;
+color:#8a1f1f;
+border-color:#e7a6a6;
+}
+
 .compact-wind-table{
 font-size:12px;
 }
@@ -353,10 +505,208 @@ padding:4px 6px;
 
 .compact-wind-table th:nth-child(2),
 .compact-wind-table th:nth-child(3),
+.compact-wind-table th:nth-child(4),
+.compact-wind-table th:nth-child(5),
+.compact-wind-table th:nth-child(6),
+.compact-wind-table th:nth-child(7),
 .compact-wind-table td:nth-child(2),
-.compact-wind-table td:nth-child(3){
+.compact-wind-table td:nth-child(3),
+.compact-wind-table td:nth-child(4),
+.compact-wind-table td:nth-child(5),
+.compact-wind-table td:nth-child(6),
+.compact-wind-table td:nth-child(7){
 text-align:center;
 white-space:nowrap;
+}
+
+.wind-guide-panel{
+background:linear-gradient(180deg,#f8fcff 0%,#ffffff 100%);
+border:1px solid var(--line);
+}
+
+.wind-guide-header{
+display:flex;
+flex-wrap:wrap;
+align-items:baseline;
+justify-content:space-between;
+gap:8px;
+margin-bottom:10px;
+cursor:pointer;
+-webkit-user-select:none;
+user-select:none;
+}
+
+.wind-guide-title{
+margin:0;
+font-size:18px;
+color:#12324d;
+}
+
+.wind-guide-kicker{
+display:inline-block;
+font-size:11px;
+letter-spacing:0.06em;
+text-transform:uppercase;
+font-weight:700;
+color:#285f8f;
+background:#dff1ff;
+border:1px solid #b7dbf8;
+border-radius:999px;
+padding:3px 9px;
+}
+
+.wind-guide-table-wrap{
+border:1px solid #d2dfeb;
+border-radius:10px;
+overflow:hidden;
+background:#ffffff;
+box-shadow:0 6px 16px rgba(15,48,77,0.08);
+}
+
+.wind-guide-table{
+width:100%;
+margin:0;
+font-size:13px;
+}
+
+.wind-guide-table th,
+.wind-guide-table td{
+padding:8px 10px;
+}
+
+.wind-guide-collapse-icon{
+display:inline-block;
+width:20px;
+font-size:12px;
+line-height:1;
+text-align:center;
+transition:transform 0.2s ease;
+}
+
+.wind-guide-collapse-icon.collapsed{
+transform:rotate(-90deg);
+}
+
+.wind-guide-controls.hidden,
+.wind-guide-table-wrap.hidden,
+.wind-guide-note.hidden{
+display:none;
+}
+
+.wind-guide-table thead th{
+background:linear-gradient(180deg,#0f4f79 0%,#0b3f63 100%);
+color:#ffffff;
+font-weight:700;
+border-color:#0b3f63;
+}
+
+.wind-guide-table tbody tr:nth-child(even){
+background:#f6fbff;
+}
+
+.wind-guide-table tbody tr:hover{
+background:#e9f4ff;
+}
+
+.wind-guide-note{
+margin-top:10px;
+font-size:13px;
+color:#2e4a63;
+}
+
+.wind-guide-controls{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+align-items:center;
+margin-bottom:10px;
+padding:8px 10px;
+border:1px solid #d2dfeb;
+border-radius:8px;
+background:#f7fbff;
+}
+
+.wind-guide-controls label{
+font-size:12px;
+font-weight:700;
+color:#1f3f5c;
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.wind-guide-filter-input{
+width:230px;
+max-width:100%;
+font-size:13px;
+padding:6px 8px;
+text-transform:none;
+}
+
+.wind-guide-sort-label{
+font-size:12px;
+font-weight:700;
+color:#1f3f5c;
+background:#e3f2ff;
+border:1px solid #bfdcf6;
+padding:5px 8px;
+border-radius:999px;
+}
+
+.wind-guide-editor-card{
+max-width:980px;
+}
+
+.wind-guide-editor-table input[type="text"],
+.wind-guide-editor-table input[type="number"]{
+width:100%;
+font-size:12px;
+padding:4px 6px;
+text-transform:none;
+}
+
+.wind-guide-editor-table .editor-model{
+min-width:180px;
+}
+
+.wind-guide-editor-table .editor-number{
+min-width:90px;
+}
+
+.wind-guide-editor-table .editor-remove-btn{
+padding:4px 8px;
+font-size:12px;
+margin:0;
+background:#ffe3e3;
+border:1px solid #c92a2a;
+color:#7f1d1d;
+border-radius:4px;
+cursor:pointer;
+}
+
+.wind-guide-editor-actions{
+display:flex;
+flex-wrap:wrap;
+justify-content:flex-end;
+gap:8px;
+}
+
+.wind-guide-editor-table-wrap{
+max-height:420px;
+overflow:auto;
+}
+
+.wind-guide-verified{
+width:18px;
+height:18px;
+cursor:pointer;
+accent-color:#1f7a34;
+}
+
+.wind-guide-source-missing{
+color:#8a1f1f;
+font-size:12px;
+font-weight:600;
 }
 
 #riskPanel{
@@ -505,10 +855,11 @@ margin-top:12px;
 }
 
 .weather-summary-item{
-background:#f7f9fc;
-border:1px solid #d7dde4;
-border-radius:8px;
-padding:10px;
+background:linear-gradient(180deg,#f9fcff 0%,#f4f9ff 100%);
+border:1px solid var(--line);
+border-radius:10px;
+padding:11px;
+box-shadow:0 2px 8px rgba(18,50,77,0.06);
 }
 
 .weather-summary-item b{
@@ -543,15 +894,13 @@ margin-top:10px;
 
 <nav class="top-nav shared-site-nav" data-nav-variant="utility" data-back-fallback="tools.html"></nav>
 
-<h2>Micro-Drone Weather Risk Assessment</h2>
+<h2>Drone Weather &amp; Risk Assessment</h2>
 
 <div class="controls">
 <input id="icao" placeholder="ICAO (CYOO)">
 <button id="locBtn" onclick="useCurrentLocation()">Get Pilot Location</button>
 <button id="checkBtn" onclick="runCheck()">Fetch METAR/KP Risk Assessment</button>
 <button id="completeBtn" type="button" onclick="markWeatherCheckComplete()">Save Weather Check</button>
-<a id="proceedFlightLogBtn" class="flow-next-link is-hidden" href="flight-log.html">Proceed to Flight Log</a>
-<a id="returnToolsBtn" class="flow-next-link is-hidden" href="tools.html">Return to Tools Menu</a>
 </div>
 
 <div id="errorBanner" class="error-banner"></div>
@@ -572,6 +921,46 @@ margin-top:10px;
 <h3>Weather Check Record</h3>
 <div id="dwCheckStatus" class="subtle">No weather check saved yet.</div>
 <button id="rerunAssessmentBtn" type="button" class="mini-action-btn is-hidden" onclick="runNewAssessment()">Run New Assessment</button>
+</div>
+
+<div class="panel risk-score-card">
+<h3 id="riskScoreKeyTitle" class="risk-key-title">
+<span id="riskScoreKeyDot" class="risk-key-dot risk-key-unknown" aria-hidden="true"></span>
+<span id="riskScoreKeyText">Risk Score: --</span>
+</h3>
+<div class="table-wrap">
+<table class="risk-mini-table compact-risk-table risk-score-table">
+<thead>
+<tr>
+<th>Score</th>
+<th>Band</th>
+<th>Operational Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="band-green">
+<td data-label="Score">0-2</td>
+<td data-label="Band"><span class="risk-band-pill green">Green</span></td>
+<td data-label="Operational Meaning">Low Risk</td>
+</tr>
+<tr class="band-yellow">
+<td data-label="Score">3-4</td>
+<td data-label="Band"><span class="risk-band-pill yellow">Yellow</span></td>
+<td data-label="Operational Meaning">Caution</td>
+</tr>
+<tr class="band-red">
+<td data-label="Score">5-6</td>
+<td data-label="Band"><span class="risk-band-pill red">Red</span></td>
+<td data-label="Operational Meaning">Risky Conditions</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="panel">
+<h3>NOAA Geomagnetic Planetary Kp Index</h3>
+<div id="kpData"></div>
 </div>
 
 <div id="riskPanel" class="panel">
@@ -596,84 +985,84 @@ margin-top:10px;
 </div>
 
 <div class="panel">
+<div class="panel-toggle-header" onclick="toggleWeatherReportCollapse()">
+<span id="weatherReportCollapseIcon" class="panel-collapse-icon collapsed">▼</span>
 <h3>Current Weather Report</h3>
+</div>
+<div id="weatherReportContent" class="is-hidden">
 <pre id="metarText"></pre>
 <div id="weatherSummaryPanel" class="weather-summary-empty">Run METAR Weather Check to load structured observation details.</div>
 </div>
-
-<div class="panel">
-<h3>NOAA Geomagnetic Planetary Kp Index</h3>
-<div id="kpData"></div>
 </div>
 
-<div class="panel">
-<h3 id="riskScoreKeyTitle" class="risk-key-title">
-<span id="riskScoreKeyDot" class="risk-key-dot risk-key-unknown" aria-hidden="true"></span>
-<span id="riskScoreKeyText">Risk Score: --</span>
-</h3>
-<div class="table-wrap">
-<table class="risk-mini-table compact-risk-table">
-<thead>
-<tr>
-<th>Score</th>
-<th>Band</th>
-<th>Operational Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0-2</td>
-<td>Green</td>
-<td>Low Risk</td>
-</tr>
-<tr>
-<td>3-4</td>
-<td>Yellow</td>
-<td>Caution</td>
-</tr>
-<tr>
-<td>5-6</td>
-<td>Red</td>
-<td>Risky Conditions</td>
-</tr>
-</tbody>
-</table>
+<div id="windGuidePanel" class="panel wind-guide-panel">
+<div class="wind-guide-header" onclick="toggleWindGuideCollapse()">
+<span class="wind-guide-collapse-icon" id="windGuideCollapseIcon">▼</span>
+<h3 class="wind-guide-title">Drone Wind Resistance Guide</h3>
+<span class="wind-guide-kicker">Reference Table</span>
 </div>
-
-<h4>Drone Wind Resistance Guide</h4>
-<div class="table-wrap">
-<table class="risk-mini-table compact-wind-table">
+<div class="wind-guide-controls" id="windGuideControls">
+<label for="windGuideModelFilter">Filter by Drone Model
+<input id="windGuideModelFilter" class="wind-guide-filter-input" type="text" placeholder="Search model (ex: Mini, Mavic, Autel)" oninput="handleWindGuideFilterChange()">
+</label>
+<label for="windGuideValidatedOnly">
+<input id="windGuideValidatedOnly" type="checkbox" onchange="handleWindGuideFilterChange()">
+Validated only
+</label>
+<span class="wind-guide-sort-label">Sort: OEM m/s (low to high)</span>
+<button type="button" class="mini-action-btn" onclick="tryOpenWindGuideEditor()">Edit Wind Guide JSON</button>
+</div>
+<div class="table-wrap wind-guide-table-wrap" id="windGuideTableWrap">
+<table class="risk-mini-table compact-wind-table wind-guide-table">
 <thead>
 <tr>
 <th>Drone Model</th>
-<th>Max Wind (KT)</th>
-<th>Max Wind (km/h)</th>
-<th>Notes</th>
+<th>OEM m/s</th>
+<th>OEM km/h</th>
+<th>OEM kt</th>
+<th>Conv mph</th>
+<th>Conv kt</th>
+<th>Validated OEM</th>
 </tr>
 </thead>
-<tbody>
+<tbody id="windGuideTableBody">
 <tr>
-<td>Mini Pro 3</td>
-<td>21</td>
-<td>38.5</td>
-<td>Micro drone. Gusts above 21 KT increase risk.</td>
-</tr>
-<tr>
-<td>Mini Pro 4</td>
-<td>21</td>
-<td>38.5</td>
-<td>Micro drone. Monitor gust spread and turbulence.</td>
-</tr>
-<tr>
-<td>Mavic 2 Pro</td>
-<td>21</td>
-<td>38.5</td>
-<td>Small RPA. Use caution near upper limits.</td>
+<td colspan="7">Loading wind guide models...</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="subtle">Reference charts only. Always follow your manufacturer's limits and any site-specific conditions.</div>
+<div class="subtle wind-guide-note" id="windGuideNote1">Reference charts only. Always follow your manufacturer's limits and any site-specific conditions.</div>
+<div class="subtle wind-guide-note" id="windGuideNote2">Data source: <b>data/drone_wind_resistance.json</b> (edit this file to add/remove models). Optional fields: <b>oemWindMs</b>, <b>oemWindKmh</b>, <b>oemWindKt</b>, <b>verified</b>.</div>
+</div>
+
+<div id="windGuideEditorModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="windGuideEditorTitle">
+<div class="modal-card wind-guide-editor-card">
+<h4 id="windGuideEditorTitle">Wind Guide JSON Editor (Admin Only)</h4>
+<div class="subtle">Edit values and save to update the Wind Guide table display. For persistent changes, commit the source JSON file to GitHub.</div>
+<div class="table-wrap wind-guide-editor-table-wrap">
+<table class="risk-mini-table wind-guide-editor-table">
+<thead>
+<tr>
+<th>Drone Model</th>
+<th>OEM m/s</th>
+<th>OEM km/h</th>
+<th>OEM kt</th>
+<th>Verified</th>
+<th>Remove</th>
+</tr>
+</thead>
+<tbody id="windGuideEditorBody"></tbody>
+</table>
+</div>
+<div class="modal-actions wind-guide-editor-actions">
+<button type="button" class="mini-action-btn" onclick="addWindGuideEditorRow()">Add Row</button>
+<button type="button" class="mini-action-btn" onclick="resetWindGuideEditorToSource()">Reset to Source</button>
+<button type="button" class="mini-action-btn" onclick="exportWindGuideEditorJson()">Export JSON</button>
+<button type="button" class="mini-action-btn" onclick="saveWindGuideEditor()">Save Changes</button>
+<button type="button" class="mini-action-btn" onclick="closeWindGuideEditor()">Close</button>
+</div>
+</div>
 </div>
 
 <script>
@@ -686,11 +1075,25 @@ let latestNearestStations = []
 let latestLocation = null
 let latestWeatherArtifact = null
 let committedWeatherArtifact = null
+let latestWindGuideModels = []
+let windGuideEditorRows = []
+let windGuideCollapsed = true
 let stationsCachePromise = null
 let lastMetarFetchInfo = {
 winnerLabel: "",
 winnerUrl: "",
 errors: []
+}
+
+const WIND_GUIDE_VALIDATION_MAP_KEY = "dwWindGuideValidationMap"
+
+function isValidIcaoCode(value){
+return /^[A-Z]{4}$/.test(String(value || "").trim().toUpperCase())
+}
+
+function isMetarCapableStation(station){
+if(!station || !Array.isArray(station.siteType)) return false
+return station.siteType.some(type => String(type || "").trim().toUpperCase() === "METAR")
 }
 
 const WEATHER_PROXY_PROVIDERS = [
@@ -792,10 +1195,540 @@ if(n <= 6) return "HIGH"
 return "DANGER"
 }
 
+function toFiniteNumber(value){
+const n = Number(value)
+return Number.isFinite(n) ? n : null
+}
+
+function toWindGuideModelId(model){
+return String(model || "")
+.toLowerCase()
+.replace(/[^a-z0-9]+/g,"-")
+.replace(/^-+|-+$/g,"")
+}
+
+function formatWindGuideNumber(value,decimals=1){
+if(!Number.isFinite(value)) return "-"
+return Number(value).toFixed(decimals)
+}
+
+function getWindGuideModelFilterText(){
+const input = document.getElementById("windGuideModelFilter")
+return String(input?.value || "").trim().toLowerCase()
+}
+
+function isWindGuideValidatedOnlyEnabled(){
+const checkbox = document.getElementById("windGuideValidatedOnly")
+return !!checkbox?.checked
+}
+
+function getFilteredSortedWindGuideModels(models){
+const modelFilter = getWindGuideModelFilterText()
+const validatedOnly = isWindGuideValidatedOnlyEnabled()
+
+return (Array.isArray(models) ? [...models] : [])
+.filter(model => {
+if(validatedOnly && !model.validated) return false
+if(!modelFilter) return true
+return String(model.model || "").toLowerCase().includes(modelFilter)
+})
+.sort((a,b) => {
+const aMs = Number.isFinite(a.oemWindMs) ? a.oemWindMs : Number.POSITIVE_INFINITY
+const bMs = Number.isFinite(b.oemWindMs) ? b.oemWindMs : Number.POSITIVE_INFINITY
+if(aMs !== bMs) return aMs - bMs
+return String(a.model || "").localeCompare(String(b.model || ""))
+})
+}
+
+function toggleWindGuideCollapse(){
+windGuideCollapsed = !windGuideCollapsed
+const icon = document.getElementById("windGuideCollapseIcon")
+const controls = document.getElementById("windGuideControls")
+const tableWrap = document.getElementById("windGuideTableWrap")
+const note1 = document.getElementById("windGuideNote1")
+const note2 = document.getElementById("windGuideNote2")
+
+if(windGuideCollapsed){
+icon.classList.add("collapsed")
+controls.classList.add("hidden")
+tableWrap.classList.add("hidden")
+note1.classList.add("hidden")
+note2.classList.add("hidden")
+}else{
+icon.classList.remove("collapsed")
+controls.classList.remove("hidden")
+tableWrap.classList.remove("hidden")
+note1.classList.remove("hidden")
+note2.classList.remove("hidden")
+}
+}
+
+function toggleWeatherReportCollapse(){
+const content = document.getElementById("weatherReportContent")
+const icon = document.getElementById("weatherReportCollapseIcon")
+if(!content || !icon) return
+
+const isNowHidden = content.classList.toggle("is-hidden")
+icon.classList.toggle("collapsed",isNowHidden)
+}
+
+function applyWindGuideFiltersAndSort(){
+renderWindGuideTable(getFilteredSortedWindGuideModels(latestWindGuideModels))
+}
+
+function handleWindGuideFilterChange(){
+applyWindGuideFiltersAndSort()
+}
+
+function readWindGuideValidationMap(){
+const raw = localStorage.getItem(WIND_GUIDE_VALIDATION_MAP_KEY)
+if(!raw) return {}
+try{
+const parsed = JSON.parse(raw)
+return parsed && typeof parsed === "object" ? parsed : {}
+}
+catch{
+return {}
+}
+}
+
+function writeWindGuideValidationMap(map){
+localStorage.setItem(WIND_GUIDE_VALIDATION_MAP_KEY,JSON.stringify(map || {}))
+}
+
+function buildWindGuideSourceHtml(url){
+const clean = String(url || "").trim()
+if(!/^https?:\/\//i.test(clean)) return '<span class="wind-guide-source-missing">Add source</span>'
+return `<a href="${escapeHtml(clean)}" target="_blank" rel="noopener noreferrer">OEM Source</a>`
+}
+
+function toWindGuideEditorRow(model){
+return {
+model: String(model?.model || "").trim(),
+oemWindMs: Number.isFinite(Number(model?.oemWindMs)) ? Number(model.oemWindMs) : null,
+oemWindKmh: Number.isFinite(Number(model?.oemWindKmh)) ? Number(model.oemWindKmh) : null,
+oemWindKt: Number.isFinite(Number(model?.oemWindKt)) ? Number(model.oemWindKt) : null,
+verified: !!model?.validated,
+notes: String(model?.notes || "").trim(),
+sourceUrl: String(model?.sourceUrl || "").trim()
+}
+}
+
+function renderWindGuideEditorRows(){
+const tbody = document.getElementById("windGuideEditorBody")
+if(!tbody) return
+
+if(!windGuideEditorRows.length){
+tbody.innerHTML = '<tr><td colspan="6">No rows in editor. Click Add Row.</td></tr>'
+return
+}
+
+tbody.innerHTML = windGuideEditorRows.map((row,index) => `
+<tr>
+<td><input type="text" class="editor-model" value="${escapeHtml(row.model)}" onchange="updateWindGuideEditorRow(${index},'model',this.value)"></td>
+<td><input type="number" class="editor-number" step="0.1" value="${row.oemWindMs == null ? "" : escapeHtml(String(row.oemWindMs))}" onchange="updateWindGuideEditorRow(${index},'oemWindMs',this.value)"></td>
+<td><input type="number" class="editor-number" step="0.1" value="${row.oemWindKmh == null ? "" : escapeHtml(String(row.oemWindKmh))}" onchange="updateWindGuideEditorRow(${index},'oemWindKmh',this.value)"></td>
+<td><input type="number" class="editor-number" step="0.1" value="${row.oemWindKt == null ? "" : escapeHtml(String(row.oemWindKt))}" onchange="updateWindGuideEditorRow(${index},'oemWindKt',this.value)"></td>
+<td style="text-align:center;"><input type="checkbox" ${row.verified ? "checked" : ""} onchange="updateWindGuideEditorRow(${index},'verified',this.checked,true)"></td>
+<td style="text-align:center;"><button type="button" class="editor-remove-btn" onclick="removeWindGuideEditorRow(${index})">Remove</button></td>
+</tr>`).join("")
+}
+
+function updateWindGuideEditorRow(index,field,value,isCheckbox=false){
+if(index < 0 || index >= windGuideEditorRows.length) return
+if(isCheckbox){
+windGuideEditorRows[index][field] = !!value
+return
+}
+
+if(field === "model"){
+windGuideEditorRows[index][field] = String(value || "")
+return
+}
+
+if(value === "" || value == null){
+windGuideEditorRows[index][field] = null
+return
+}
+
+const n = Number(value)
+windGuideEditorRows[index][field] = Number.isFinite(n) ? n : null
+}
+
+function addWindGuideEditorRow(){
+windGuideEditorRows.push({ model:"", oemWindMs:null, oemWindKmh:null, oemWindKt:null, verified:false, notes:"", sourceUrl:"" })
+renderWindGuideEditorRows()
+}
+
+function removeWindGuideEditorRow(index){
+if(index < 0 || index >= windGuideEditorRows.length) return
+windGuideEditorRows.splice(index,1)
+renderWindGuideEditorRows()
+}
+
+function isAdminMode(){
+const host = window.location.hostname
+return host === 'localhost' || host === '127.0.0.1'
+}
+
+function tryOpenWindGuideEditor(){
+if(!isAdminMode()){
+alert('Edit Wind Guide JSON is restricted to admin mode (localhost only).')
+return
+}
+openWindGuideEditor()
+}
+
+function openWindGuideEditor(){
+const modal = document.getElementById("windGuideEditorModal")
+if(!modal) return
+
+windGuideEditorRows = latestWindGuideModels.map(toWindGuideEditorRow)
+if(!windGuideEditorRows.length){
+windGuideEditorRows = DEFAULT_DRONE_WIND_GUIDE_MODELS.map(toWindGuideEditorRow)
+}
+
+renderWindGuideEditorRows()
+modal.classList.add("show")
+}
+
+function closeWindGuideEditor(){
+const modal = document.getElementById("windGuideEditorModal")
+if(!modal) return
+modal.classList.remove("show")
+}
+
+async function saveWindGuideEditor(){
+const cleaned = windGuideEditorRows
+.map(row => {
+const model = String(row.model || "").trim()
+if(!model) return null
+return {
+model,
+oemWindMs: toFiniteNumber(row.oemWindMs),
+oemWindKmh: toFiniteNumber(row.oemWindKmh),
+oemWindKt: toFiniteNumber(row.oemWindKt),
+verified: !!row.verified,
+notes: String(row.notes || "").trim() || "",
+sourceUrl: String(row.sourceUrl || "").trim()
+}
+})
+.filter(Boolean)
+
+if(!cleaned.length){
+showError("Wind Guide editor has no valid rows. Add at least one model before saving.")
+return
+}
+
+latestWindGuideModels = cleaned.map(normalizeWindGuideModel).filter(Boolean)
+await applyWindGuideFiltersAndSort()
+closeWindGuideEditor()
+}
+
+async function resetWindGuideEditorToSource(){
+const sourceModels = await loadWindGuideModels()
+windGuideEditorRows = sourceModels.map(toWindGuideEditorRow)
+renderWindGuideEditorRows()
+await initWindGuideTable()
+}
+
+function exportWindGuideEditorJson(){
+const cleaned = windGuideEditorRows
+.map(row => {
+const model = String(row.model || "").trim()
+if(!model) return null
+const payload = { model, verified: !!row.verified }
+const ms = toFiniteNumber(row.oemWindMs)
+const kmh = toFiniteNumber(row.oemWindKmh)
+const kt = toFiniteNumber(row.oemWindKt)
+if(ms != null) payload.oemWindMs = ms
+if(kmh != null) payload.oemWindKmh = kmh
+if(kt != null) payload.oemWindKt = kt
+return payload
+})
+.filter(Boolean)
+
+const payload = JSON.stringify({ models: cleaned },null,2)
+const blob = new Blob([payload],{ type:"application/json" })
+const url = URL.createObjectURL(blob)
+const anchor = document.createElement("a")
+anchor.href = url
+anchor.download = "drone_wind_resistance.edited.json"
+document.body.appendChild(anchor)
+anchor.click()
+anchor.remove()
+URL.revokeObjectURL(url)
+}
+
+const DEFAULT_DRONE_WIND_GUIDE_MODELS = [
+{
+model: "DJI Mini 3 Pro",
+oemWindMs: 10.7,
+sourceUrl: "",
+verified: false,
+notes: "Provisional from published specs. Verify OEM manual before operational use."
+},
+{
+model: "DJI Mini 4 Pro",
+oemWindMs: 10.7,
+sourceUrl: "",
+verified: false,
+notes: "Provisional from published specs. Verify OEM manual before operational use."
+},
+{
+model: "DJI Mavic 3",
+oemWindMs: 12.0,
+sourceUrl: "",
+verified: false,
+notes: "Provisional from published specs. Verify OEM manual before operational use."
+}
+]
+
+function normalizeWindGuideModel(entry){
+if(!entry || typeof entry !== "object") return null
+
+const model = String(entry.model || "").trim()
+if(!model) return null
+
+const oemMsRaw = toFiniteNumber(entry.oemWindMs)
+const oemKmhRaw = toFiniteNumber(entry.oemWindKmh ?? entry.maxWindKmh)
+const oemKtRaw = toFiniteNumber(entry.oemWindKt ?? entry.maxWindKt)
+
+const oemWindMs = oemMsRaw ?? (oemKmhRaw != null ? Number((oemKmhRaw / 3.6).toFixed(2)) : (oemKtRaw != null ? Number((oemKtRaw / 1.943844).toFixed(2)) : null))
+const oemWindKmh = oemKmhRaw ?? (oemWindMs != null ? Number((oemWindMs * 3.6).toFixed(1)) : (oemKtRaw != null ? Number((oemKtRaw * 1.852).toFixed(1)) : null))
+const oemWindKt = oemKtRaw ?? (oemWindMs != null ? Number((oemWindMs * 1.943844).toFixed(1)) : (oemKmhRaw != null ? Number((oemKmhRaw / 1.852).toFixed(1)) : null))
+
+const convertedMph = oemWindMs != null ? Number((oemWindMs * 2.236936).toFixed(1)) : null
+const convertedKt = oemWindMs != null ? Number((oemWindMs * 1.943844).toFixed(1)) : null
+
+const notes = String(entry.notes || "").trim() || "-"
+const sourceUrl = String(entry.sourceUrl || "").trim()
+const verified = entry.verified === true
+const modelId = toWindGuideModelId(model)
+
+return {
+modelId,
+model,
+oemWindMs,
+oemWindKmh,
+oemWindKt,
+convertedMph,
+convertedKt,
+sourceUrl,
+verified,
+validated: verified,
+notes
+}
+}
+
+function renderWindGuideTable(models){
+const tbody = document.getElementById("windGuideTableBody")
+if(!tbody) return
+
+if(!Array.isArray(models) || !models.length){
+tbody.innerHTML = "<tr><td colspan=\"7\">No models match the current filter.</td></tr>"
+return
+}
+
+tbody.innerHTML = models.map(model => {
+const oemMsText = formatWindGuideNumber(model.oemWindMs,2)
+const oemKmhText = formatWindGuideNumber(model.oemWindKmh,1)
+const oemKtText = formatWindGuideNumber(model.oemWindKt,1)
+const convMphText = formatWindGuideNumber(model.convertedMph,1)
+const convKtText = formatWindGuideNumber(model.convertedKt,1)
+const checked = model.validated ? "checked" : ""
+return `<tr>
+<td>${escapeHtml(model.model)}</td>
+<td>${escapeHtml(oemMsText)}</td>
+<td>${escapeHtml(oemKmhText)}</td>
+<td>${escapeHtml(oemKtText)}</td>
+<td>${escapeHtml(convMphText)}</td>
+<td>${escapeHtml(convKtText)}</td>
+<td><input type="checkbox" class="wind-guide-verified" data-model-id="${escapeHtml(model.modelId)}" ${checked} disabled></td>
+</tr>`
+}).join("")
+}
+
+function toggleWindGuideValidated(checkbox){
+if(!checkbox) return
+const modelId = String(checkbox.getAttribute("data-model-id") || "").trim()
+if(!modelId) return
+
+const validationMap = readWindGuideValidationMap()
+validationMap[modelId] = !!checkbox.checked
+writeWindGuideValidationMap(validationMap)
+
+latestWindGuideModels = latestWindGuideModels.map(model => {
+if(model.modelId !== modelId) return model
+return { ...model, validated: !!checkbox.checked }
+})
+
+applyWindGuideFiltersAndSort()
+}
+
+async function loadWindGuideModels(){
+const sources = [
+"./data/drone_wind_resistance.json",
+"data/drone_wind_resistance.json"
+]
+
+for(const source of sources){
+try{
+const response = await fetchWithTimeout(source,4000,{ cache:"no-cache" })
+if(!response.ok) continue
+
+const payload = await response.json()
+const rawModels = Array.isArray(payload)
+? payload
+: (Array.isArray(payload?.models) ? payload.models : [])
+
+const models = rawModels
+.map(normalizeWindGuideModel)
+.filter(Boolean)
+
+if(models.length) return models
+}
+catch{
+// Try next source.
+}
+}
+
+return DEFAULT_DRONE_WIND_GUIDE_MODELS
+.map(normalizeWindGuideModel)
+.filter(Boolean)
+}
+
+async function initWindGuideTable(){
+const models = await loadWindGuideModels()
+const validationMap = readWindGuideValidationMap()
+
+latestWindGuideModels = models.map(model => ({
+...model,
+validated: Object.prototype.hasOwnProperty.call(validationMap,model.modelId)
+? !!validationMap[model.modelId]
+: !!model.verified
+}))
+
+applyWindGuideFiltersAndSort()
+
+const icon = document.getElementById("windGuideCollapseIcon")
+const controls = document.getElementById("windGuideControls")
+const tableWrap = document.getElementById("windGuideTableWrap")
+const note1 = document.getElementById("windGuideNote1")
+const note2 = document.getElementById("windGuideNote2")
+
+icon.classList.add("collapsed")
+controls.classList.add("hidden")
+tableWrap.classList.add("hidden")
+note1.classList.add("hidden")
+note2.classList.add("hidden")
+}
+
 function goBack(event){
 event.preventDefault()
 if(document.referrer) window.location.href = document.referrer
 else window.location.href = "index.html"
+}
+
+function openPilotLocationPopup(event,lat,lon){
+if(event) event.preventDefault()
+const latNum = Number(lat)
+const lonNum = Number(lon)
+if(!Number.isFinite(latNum) || !Number.isFinite(lonNum)) return
+
+const mapUrl = `https://maps.google.com/?q=${latNum.toFixed(6)},${lonNum.toFixed(6)}`
+const popup = window.open("","pilotLocationMap","width=820,height=780")
+if(!popup){
+window.open(mapUrl,"_blank","noopener,noreferrer")
+return
+}
+
+const title = `Pilot Location ${latNum.toFixed(6)}, ${lonNum.toFixed(6)}`
+const escapedTitle = escapeHtml(title)
+
+popup.document.open()
+popup.document.write(`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escapedTitle}</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+<style>
+html,body{margin:0;height:100%;font-family:Arial,sans-serif;background:#eef2f5;color:#223;}
+body{display:flex;flex-direction:column;}
+.header{flex-shrink:0;padding:10px 12px;background:#ffffff;border-bottom:1px solid #d7dde4;font-size:14px;}
+.header a{color:#0b57d0;text-decoration:none;}
+#pilotPopupMap{flex:1;min-height:0;width:100%;}
+.footer{flex-shrink:0;padding:10px 12px;background:#ffffff;border-top:1px solid #d7dde4;font-size:12px;color:#445;display:flex;align-items:center;justify-content:space-between;}
+.close-btn{padding:10px 22px;font-size:15px;font-weight:600;background:#e03131;color:#fff;border:none;border-radius:6px;cursor:pointer;touch-action:manipulation;}
+.close-btn:hover{background:#c92a2a;}
+.center-btn{width:34px;height:34px;background:#fff;border:2px solid rgba(0,0,0,0.2);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;box-shadow:none;}
+.center-btn:hover{background:#f4f4f4;}
+</style>
+</head>
+<body>
+<div class="header"><b>Pilot Location:</b> ${latNum.toFixed(6)}, ${lonNum.toFixed(6)} | <a href="${mapUrl}" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></div>
+<div id="pilotPopupMap"></div>
+<div class="footer"><button class="close-btn" onclick="window.close()">Close</button><span>Current Pilot Location preview.</span></div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"><\/script>
+<script>
+const lat = ${latNum.toFixed(6)};
+const lon = ${lonNum.toFixed(6)};
+const map = L.map('pilotPopupMap').setView([lat, lon], 13);
+
+const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  maxZoom: 19,
+  attribution: '&copy; Esri &mdash; Esri, Maxar, Earthstar Geographics'
+});
+
+const topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+  maxZoom: 17,
+  attribution: 'Map data: &copy; OpenStreetMap | Style: &copy; OpenTopoMap'
+});
+
+streets.addTo(map);
+
+L.control.layers({ 'Streets': streets, 'Satellite': satellite, 'Topo': topo }, {}, { position: 'topright' }).addTo(map);
+
+const marker = L.marker([lat, lon]).addTo(map).bindPopup('<b>Pilot Location</b><br>' + lat.toFixed(6) + ', ' + lon.toFixed(6)).openPopup();
+
+const CenterControl = L.Control.extend({
+  options: { position: 'topleft' },
+  onAdd: function() {
+    const btn = L.DomUtil.create('button', 'center-btn');
+    btn.title = 'Re-center on Pilot Location';
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="7.5" fill="none" stroke="#333" stroke-width="1.8"/><circle cx="11" cy="11" r="2.2" fill="#333"/><line x1="11" y1="1" x2="11" y2="5.5" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="16.5" x2="11" y2="21" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="11" x2="5.5" y2="11" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="16.5" y1="11" x2="21" y2="11" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg>';
+    L.DomEvent.disableClickPropagation(btn);
+    L.DomEvent.on(btn, 'click', function() {
+      map.invalidateSize();
+      map.setView([lat, lon], 13);
+      marker.openPopup();
+    });
+    return btn;
+  }
+});
+new CenterControl().addTo(map);
+setTimeout(function(){ map.invalidateSize(); map.setView([lat, lon], 13); }, 100);
+<\/script>
+</body>
+</html>`)
+popup.document.close()
+popup.focus()
+}
+
+function buildPilotLocationMapLink(lat,lon,label){
+const latNum = Number(lat)
+const lonNum = Number(lon)
+if(!Number.isFinite(latNum) || !Number.isFinite(lonNum)) return escapeHtml(label)
+const mapUrl = `https://maps.google.com/?q=${latNum.toFixed(6)},${lonNum.toFixed(6)}`
+const safeLabel = escapeHtml(label)
+return `<a href="${escapeHtml(mapUrl)}" target="pilotLocationMap" rel="noopener noreferrer" onclick="openPilotLocationPopup(event, ${latNum.toFixed(6)}, ${lonNum.toFixed(6)})">${safeLabel}</a>`
 }
 
 function openScoringIndex(){
@@ -814,6 +1747,11 @@ document.addEventListener("click",event => {
 const modal = document.getElementById("scoringIndexModal")
 if(!modal || !modal.classList.contains("show")) return
 if(event.target === modal) closeScoringIndex()
+
+const windGuideModal = document.getElementById("windGuideEditorModal")
+if(windGuideModal && windGuideModal.classList.contains("show") && event.target === windGuideModal){
+closeWindGuideEditor()
+}
 })
 
 async function runCheck(){
@@ -829,10 +1767,18 @@ showError("Pilot location not defined. Click Get/Update Pilot Location first, th
 return
 }
 
-const icao = document.getElementById("icao").value.toUpperCase()
+const icaoInput = document.getElementById("icao")
+const icao = String(icaoInput?.value || "").trim().toUpperCase()
+
+if(icaoInput) icaoInput.value = icao
 
 if(!icao){
 showError("Enter ICAO code before checking conditions.")
+return
+}
+
+if(!isValidIcaoCode(icao)){
+showError("Enter a valid 4-letter ICAO code (example: CYOO) before checking conditions.")
 return
 }
 
@@ -939,9 +1885,9 @@ const stations = await fetchStationsCache()
 if(!Array.isArray(stations)) return []
 
 const candidates = stations
-.filter(s => s && s.icaoId && Number.isFinite(Number(s.lat)) && Number.isFinite(Number(s.lon)))
+.filter(s => s && isValidIcaoCode(s.icaoId) && isMetarCapableStation(s) && Number.isFinite(Number(s.lat)) && Number.isFinite(Number(s.lon)))
 .map(s => ({
-icaoId: s.icaoId,
+icaoId: String(s.icaoId).trim().toUpperCase(),
 site: s.site || "Unknown",
 lat: Number(s.lat),
 lon: Number(s.lon),
@@ -1191,6 +2137,12 @@ if(!el) return
 
 const parsed = parseLatLonText(ddText || "")
 const locationNotDefined = parsed && isPilotLocationUndefined(parsed.lat,parsed.lon)
+const ddDisplay = parsed && !locationNotDefined
+? buildPilotLocationMapLink(parsed.lat,parsed.lon,ddText)
+: escapeHtml(ddText || "")
+const dmsDisplay = parsed && !locationNotDefined
+? buildPilotLocationMapLink(parsed.lat,parsed.lon,dmsText || "Unavailable")
+: escapeHtml(dmsText || "Unavailable")
 
 if(!ddText){
 el.classList.remove("location-not-defined")
@@ -1202,7 +2154,7 @@ if(locationNotDefined){
 el.classList.add("location-not-defined")
 el.innerHTML = `
 <b>Pilot Location Not Yet Defined</b><br>
-Pilot Location: DD: [ ${ddText} ] | DMS: [ ${dmsText || "0\u00B00'0.0\"N, 0\u00B00'0.0\"E"} ]<br>
+Pilot Location: DD: [ ${escapeHtml(ddText)} ] | DMS: [ ${escapeHtml(dmsText || "0\u00B00'0.0\"N, 0\u00B00'0.0\"E")} ]<br>
 Use <b>Get/Update Pilot Location</b> to set your pilot location before running METAR/KP Risk Assessment.
 `
 return
@@ -1210,7 +2162,8 @@ return
 
 el.classList.remove("location-not-defined")
 el.innerHTML = `
-<b>Pilot Location:</b> DD: [ ${ddText} ] | DMS: [ ${dmsText || "Unavailable"} ]
+<b>Pilot Location:</b> DD: [ ${ddDisplay} ] | DMS: [ ${dmsDisplay} ]
+<br><span class="subtle">Select DD or DMS links to &ldquo;Preview Current Pilot Location&rdquo;.</span>
 `
 }
 
@@ -1416,8 +2369,6 @@ function renderWeatherCheckStatus(){
 const el = document.getElementById("dwCheckStatus")
 const saveBtn = document.getElementById("completeBtn")
 const rerunBtn = document.getElementById("rerunAssessmentBtn")
-const nextFlightLogBtn = document.getElementById("proceedFlightLogBtn")
-const returnToolsBtn = document.getElementById("returnToolsBtn")
 const completed = localStorage.getItem("dwCheckCompleted") === "true"
 const completedAt = localStorage.getItem("dwCheckCompletedAt")
 const hasPendingDraft = localStorage.getItem("dwCheckDraftPending") === "true"
@@ -1443,13 +2394,11 @@ if(latestWeatherArtifact){
 el.innerHTML = `<div>Draft check ready. Click <b>Save Weather Check</b> to commit.</div>`
 if(saveBtn) saveBtn.disabled = false
 if(rerunBtn) rerunBtn.classList.add("is-hidden")
-if(nextFlightLogBtn) nextFlightLogBtn.classList.add("is-hidden")
 }
 else{
 el.textContent = "No weather check saved yet."
 if(saveBtn) saveBtn.disabled = true
 if(rerunBtn) rerunBtn.classList.add("is-hidden")
-if(nextFlightLogBtn) nextFlightLogBtn.classList.add("is-hidden")
 }
 updateActionButtonHighlights()
 return
@@ -1491,16 +2440,6 @@ rerunBtn.textContent = "Recently Saved"
 rerunBtn.classList.add("state-fresh")
 rerunBtn.disabled = true
 }
-}
-
-if(nextFlightLogBtn){
-const showNext = completed && !isStale;
-nextFlightLogBtn.classList.toggle("is-hidden", !showNext);
-}
-
-if(returnToolsBtn){
-const showTools = completed && !isStale;
-returnToolsBtn.classList.toggle("is-hidden", !showTools);
 }
 
 updateActionButtonHighlights()
@@ -1637,6 +2576,10 @@ attempts: [
 async function fetchMETAR(icao){
 
 const cleanIcao = String(icao || "").trim().toUpperCase()
+if(!isValidIcaoCode(cleanIcao)){
+showError("Invalid ICAO format. Use a 4-letter ICAO code (example: CYOO).")
+return null
+}
 const attempts = buildMetarSourceConfig(cleanIcao).attempts
 
 const errors = []
@@ -2466,11 +3409,21 @@ ${qualifierLine}
 
 }
 
+const icaoInputField = document.getElementById("icao")
+if(icaoInputField){
+icaoInputField.addEventListener("keydown",event => {
+if(event.key !== "Enter" || event.isComposing) return
+event.preventDefault()
+runCheck()
+})
+}
+
 restoreKnownPilotLocation()
 renderWeatherCheckStatus()
 updatePilotLocationButtonLabel()
 updateActionButtonHighlights()
 renderSavedWeatherArtifactDetails()
+initWindGuideTable()
 
 </script>
 

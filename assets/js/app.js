@@ -709,7 +709,7 @@ function renderFlightLog() {
 
     if (!stamp) {
       weatherStatus.textContent = 'Last Weather Check: not saved yet.';
-      if (weatherRefreshBtn) weatherRefreshBtn.textContent = 'Run Drone Risk and Weather Survey';
+      if (weatherRefreshBtn) weatherRefreshBtn.textContent = 'Run Drone Weather & Risk Assessment';
       return;
     }
 
@@ -800,7 +800,7 @@ function renderFlightLog() {
 
   if (weatherRefreshBtn) {
     weatherRefreshBtn.addEventListener('click', () => {
-      // Launch the same tool referenced in Tools -> Drone Risk and Weather Survey.
+      // Launch the same tool referenced in Tools -> Drone Weather & Risk Assessment.
       window.location.href = 'DWCheck.html?from=flight-log';
     });
   }
@@ -1186,7 +1186,7 @@ function renderSummary(sections) {
 
     weatherDiv.innerHTML = `
       <div class="summary-header">
-        <h2>Drone Risk and Weather Survey</h2>
+        <h2>Drone Weather & Risk Assessment</h2>
         ${weatherCta}
       </div>
       <ul>
@@ -1203,7 +1203,7 @@ function renderSummary(sections) {
   } else {
     weatherDiv.innerHTML = `
       <div class="summary-header">
-        <h2>Drone Risk and Weather Survey</h2>
+        <h2>Drone Weather & Risk Assessment</h2>
         <a href="DWCheck.html" class="summary-cta summary-cta-red">Refresh Weather Survey</a>
       </div>
       <p><em>No weather check artifact saved for this session.</em></p>

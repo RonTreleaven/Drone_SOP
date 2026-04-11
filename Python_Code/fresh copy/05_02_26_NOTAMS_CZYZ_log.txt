@@ -1,2 +1,0 @@
-Total NOTAMs received from API: 478
-Saved 230 filtered NOTAMs to 05_02_26_NOTAMS_CZYZ.json

@@ -400,6 +400,29 @@ body {
   background: #f0f5ff;
 }
 
+.map-center-fab {
+  position: absolute;
+  top: 58px;
+  right: 10px;
+  z-index: 8;
+  min-width: 42px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #d6e1f3;
+  color: #355995;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-center-fab:hover {
+  background: #f0f5ff;
+}
+
 .route-tools .btn {
   min-width: 0;
   width: 100%;
@@ -448,6 +471,36 @@ body {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   align-items: center;
+}
+
+.route-tools .waypoint-config-panel {
+  grid-column: 1 / -1;
+  border: 1px solid #c9daf2;
+  border-radius: 8px;
+  background: #f8fbff;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.route-tools .waypoint-config-title {
+  grid-column: 1 / -1;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #24456f;
+}
+
+.route-tools .waypoint-config-nav {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.route-tools .waypoint-config-panel .route-status {
+  grid-column: 1 / -1;
+  margin: 0;
 }
 
 .route-tools .mission-settings-drawer.collapsed {
@@ -870,7 +923,8 @@ body.map-immersive {
     max-width: 94px;
   }
 
-  .map-fullscreen-fab {
+  .map-fullscreen-fab,
+  .map-center-fab {
     display: block;
   }
 
@@ -964,6 +1018,7 @@ body.map-immersive {
     <h2>Map Preview</h2>
     <div id="mapShell">
       <button class="btn map-fullscreen-fab" id="toggleMapFullscreenTopBtn" type="button" title="Toggle full screen" aria-label="Toggle full screen">⤢</button>
+      <button class="btn map-center-fab" id="centerPilotMarkerBtn" type="button" title="Center to mission (or pilot if no route)" aria-label="Center to mission or pilot"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7.5" fill="none" stroke="#333" stroke-width="1.8"/><circle cx="11" cy="11" r="2.2" fill="#333"/><line x1="11" y1="1" x2="11" y2="5.5" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="16.5" x2="11" y2="21" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="11" x2="5.5" y2="11" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="16.5" y1="11" x2="21" y2="11" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg></button>
       <button class="btn mobile-tools-toggle" id="toggleRouteToolsBtn" type="button" aria-controls="routeTools" aria-expanded="false">☰ Tools</button>
       <div class="route-tools" id="routeTools">
         <button class="btn secondary-btn drawer-toggle" id="toggleDrawToolsBtn" type="button" aria-controls="drawToolsDrawer" aria-expanded="false">
@@ -990,6 +1045,7 @@ body.map-immersive {
             <span class="tool-glyph glyph-orbit" aria-hidden="true"></span>
             <span>Orbit</span>
           </button>
+          <button class="btn" id="clearPOIsBtn" type="button">Clear POIs</button>
           <button class="btn" id="setPOIFromPilotBtn" type="button">POI from Pilot Marker</button>
           <label class="mission-setting tool-inline-setting" for="orbitRadiusMeters">Orbit Radius (m)
             <input id="orbitRadiusMeters" type="number" min="10" max="500" step="5" value="50" />
@@ -1047,6 +1103,45 @@ body.map-immersive {
           <label class="mission-setting" for="djiZoomAtWp">
             <input id="djiZoomAtWp" type="checkbox" /> Zoom at WP
           </label>
+          <label class="mission-setting" for="djiFacePoiHeading" title="When enabled, each waypoint heading points toward the Mission POI.">
+            <input id="djiFacePoiHeading" type="checkbox" /> Face POI heading
+          </label>
+          <div class="waypoint-config-panel" id="waypointConfigPanel">
+            <div class="waypoint-config-title">Waypoint Config (RC2-style)</div>
+            <label class="mission-setting" for="waypointConfigSelect">Waypoint
+              <select id="waypointConfigSelect"></select>
+            </label>
+            <label class="mission-setting" for="waypointHeadingMode">Heading
+              <select id="waypointHeadingMode">
+                <option value="follow">Follow Course</option>
+                <option value="poi">Face POI</option>
+                <option value="custom">Custom Angle</option>
+              </select>
+            </label>
+            <label class="mission-setting" for="waypointPoiTarget">POI Target
+              <select id="waypointPoiTarget"></select>
+            </label>
+            <label class="mission-setting" for="waypointCustomHeadingAngle">Angle(deg)
+              <input id="waypointCustomHeadingAngle" type="number" min="-180" max="180" step="1" value="0" />
+            </label>
+            <label class="mission-setting" for="waypointZoomFactor">WP Zoom
+              <select id="waypointZoomFactor">
+                <option value="1.0">1.0x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2.0">2.0x</option>
+                <option value="2.5">2.5x</option>
+                <option value="3.0">3.0x</option>
+                <option value="3.5">3.5x</option>
+                <option value="4.0">4.0x</option>
+              </select>
+            </label>
+            <div class="waypoint-config-nav">
+              <button class="btn secondary-btn" id="waypointConfigPrevBtn" type="button" title="Previous waypoint">&larr; WP</button>
+              <button class="btn secondary-btn" id="waypointConfigNextBtn" type="button" title="Next waypoint">WP &rarr;</button>
+              <button class="btn" id="saveWaypointConfigBtn" type="button">Save WP</button>
+            </div>
+            <div class="route-status" id="waypointConfigStatus">Draw/import route to edit waypoint settings.</div>
+          </div>
           <label class="mission-setting" for="djiZoomFactor">Zoom
             <select id="djiZoomFactor">
               <option value="1.0" selected>1.0x</option>
@@ -1183,13 +1278,14 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('snapRouteBtn').addEventListener('click', snapRouteToNearestWaypoint);
   document.getElementById('closePolygonBtn').addEventListener('click', closeCurrentRoutePolygon);
   document.getElementById('setPOIByClickBtn').addEventListener('click', toggleOrbitMode);
+  document.getElementById('clearPOIsBtn').addEventListener('click', clearMissionPOI);
   document.getElementById('setPOIFromPilotBtn').addEventListener('click', setPOIFromPilotLocation);
   const setPOIManuallyBtn = document.getElementById('setPOIManuallyBtn');
   if (setPOIManuallyBtn) {
     setPOIManuallyBtn.addEventListener('click', setPOIManually);
   }
   document.getElementById('generatePatternBtn').addEventListener('click', generateRoutePattern);
-  document.getElementById('patternType').addEventListener('change', updateDrawShapeSummary);
+  document.getElementById('patternType').addEventListener('change', handlePatternTypeChange);
   document.getElementById('toggleDrawToolsBtn').addEventListener('click', toggleDrawToolsDrawer);
   document.getElementById('toggleMissionSettingsBtn').addEventListener('click', toggleMissionSettingsDrawer);
   document.getElementById('toggleExportDrawerBtn').addEventListener('click', toggleExportDrawer);
@@ -1203,11 +1299,24 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('exportDJIKMZToFolderBtn').addEventListener('click', () => exportDJIKMZ({ saveToProfileFolder: true }));
   document.getElementById('toggleMapFullscreenBtn').addEventListener('click', toggleMapFullscreen);
   document.getElementById('toggleMapFullscreenTopBtn').addEventListener('click', toggleMapFullscreen);
+  document.getElementById('centerPilotMarkerBtn').addEventListener('click', centerMapToPilotMarker);
   document.getElementById('routeFile').addEventListener('change', handleRouteFile, false);
   document.getElementById('orbitRadiusMeters').addEventListener('input', syncPOICircleRadiusFromInput);
   document.getElementById('djiTakePhotoEachWp').addEventListener('change', updateWaypointPhotoActionUi);
   document.getElementById('djiHoverAtWp').addEventListener('change', updateWaypointPhotoActionUi);
   document.getElementById('djiZoomAtWp').addEventListener('change', updateWaypointPhotoActionUi);
+  document.getElementById('djiFacePoiHeading').addEventListener('change', updateWaypointPhotoActionUi);
+  document.getElementById('waypointConfigSelect').addEventListener('change', handleWaypointConfigSelectionChange);
+  document.getElementById('waypointHeadingMode').addEventListener('change', () => {
+    applyWaypointConfigEditorState();
+    updateWaypointMarkerVisuals();
+  });
+  document.getElementById('waypointPoiTarget').addEventListener('change', updateWaypointMarkerVisuals);
+  document.getElementById('waypointCustomHeadingAngle').addEventListener('input', updateWaypointMarkerVisuals);
+  document.getElementById('waypointZoomFactor').addEventListener('change', applyWaypointConfigEditorState);
+  document.getElementById('waypointConfigPrevBtn').addEventListener('click', () => stepWaypointConfigSelection(-1));
+  document.getElementById('waypointConfigNextBtn').addEventListener('click', () => stepWaypointConfigSelection(1));
+  document.getElementById('saveWaypointConfigBtn').addEventListener('click', saveWaypointConfigForSelected);
 
   routeToolsMobileCollapsed = isMobileViewport();
   applyRouteToolsPanelState();
@@ -1222,6 +1331,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   if (djiUuidNameEl) djiUuidNameEl.value = '';
   applyExportNamingModeState();
   updateWaypointPhotoActionUi();
+  refreshWaypointConfigUi();
   applyExportPermissionGate();
   window.addEventListener('resize', applyRouteToolsPanelState);
   window.addEventListener('focus', applyExportPermissionGate);
@@ -1270,7 +1380,11 @@ let routeSnapGuard = false;
 let drawToolsCollapsed = true;
 let missionSettingsCollapsed = true;
 let exportDrawerCollapsed = true;
-let missionPOI = null; // Mission Point of Interest marker
+let missionPOIs = []; // [{ id, marker }]
+let activeMissionPOIId = null;
+let waypointPoiAssignments = new Map(); // waypoint index -> mission POI id
+let waypointHeadingConfigs = new Map(); // waypoint index -> { mode, poiId, customAngle, zoomFactor }
+let selectedWaypointConfigIndex = 0;
 let poiCircle = null;
 let pendingMapClickMode = null;
 let syncingPOIRadiusInput = false;
@@ -1454,14 +1568,120 @@ function isValidPilotCoordinate(lat, lng) {
   return !isZeroZero;
 }
 
+function getPoiColorByIndex(index) {
+  const palette = ['#ff6f00', '#2e7d32', '#1565c0', '#c62828', '#6a1b9a', '#00838f'];
+  return palette[index % palette.length];
+}
+
+function getMissionPOIById(id) {
+  if (!id) return null;
+  return missionPOIs.find((entry) => entry.id === id) || null;
+}
+
+function getPrimaryMissionPOIRecord() {
+  if (!missionPOIs.length) return null;
+  return getMissionPOIById(activeMissionPOIId) || missionPOIs[0];
+}
+
+function getAllStoredMissionPOIs() {
+  const points = [];
+  missionPOIs.forEach((entry) => {
+    const p = entry && entry.marker ? entry.marker.getPosition() : null;
+    if (!p) return;
+    const lat = p.lat();
+    const lng = p.lng();
+    if (!isValidPilotCoordinate(lat, lng)) return;
+    points.push({ id: entry.id, lat, lng });
+  });
+  return points;
+}
+
 function getStoredMissionPOI() {
-  if (!missionPOI) return null;
-  const p = missionPOI.getPosition();
+  const primary = getPrimaryMissionPOIRecord();
+  if (!primary || !primary.marker) return null;
+  const p = primary.marker.getPosition();
   if (!p) return null;
   const lat = p.lat();
   const lng = p.lng();
   if (!isValidPilotCoordinate(lat, lng)) return null;
   return { lat, lng };
+}
+
+function refreshMissionPOIMarkerStyles() {
+  missionPOIs.forEach((entry, index) => {
+    const isActive = entry.id === activeMissionPOIId;
+    entry.marker.setIcon({
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: isActive ? 8.5 : 7,
+      fillColor: isActive ? '#b71c1c' : '#d32f2f',
+      fillOpacity: isActive ? 0.98 : 0.92,
+      strokeColor: '#ffffff',
+      strokeWeight: isActive ? 2.2 : 1.8
+    });
+    entry.marker.setLabel({
+      text: `P${index + 1}`,
+      color: '#ffffff',
+      fontSize: '11px',
+      fontWeight: '700'
+    });
+    entry.marker.setZIndex(isActive ? 22000 : 20000 + index);
+    entry.marker.setTitle(`POI P${index + 1}${isActive ? ' (active)' : ''}`);
+  });
+}
+
+function setActiveMissionPOI(id, options = {}) {
+  const record = getMissionPOIById(id);
+  if (!record) return false;
+  activeMissionPOIId = id;
+  refreshMissionPOIMarkerStyles();
+  if (options.panTo && map) {
+    const p = record.marker.getPosition();
+    if (p) map.panTo(p);
+  }
+  syncPOIVisualizationWithPattern();
+  updateDrawShapeSummary();
+  return true;
+}
+
+function createMissionPOIMarker(lat, lng, poiId) {
+  const markerPoi = new google.maps.Marker({
+    position: { lat, lng },
+    map,
+    draggable: true,
+    title: 'POI',
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 7,
+      fillColor: '#d32f2f',
+      fillOpacity: 0.92,
+      strokeColor: '#ffffff',
+      strokeWeight: 1.8
+    }
+  });
+
+  markerPoi.addListener('click', () => {
+    setActiveMissionPOI(poiId);
+    showLookupMessage(`Mission POI ${missionPOIs.findIndex((entry) => entry.id === poiId) + 1} selected. Click a waypoint marker to assign this POI.`, 'dim');
+  });
+
+  markerPoi.addListener('dragend', () => {
+    const p = markerPoi.getPosition();
+    if (!p) return;
+    if (!isValidPilotCoordinate(p.lat(), p.lng())) return;
+    updateDrawShapeSummary();
+  });
+
+  return markerPoi;
+}
+
+function isPOIPatternActive() {
+  const pattern = String(document.getElementById('patternType')?.value || 'perimeter').toLowerCase();
+  return pattern === 'poi';
+}
+
+function syncPOIVisualizationWithPattern() {
+  // POIs are marker-only; keep orbit radius as export math input and avoid map circles.
+  clearPOICircle();
 }
 
 function setMissionPOI(lat, lng) {
@@ -1473,7 +1693,7 @@ function setMissionPOI(lat, lng) {
   const latShort = Number(lat).toFixed(6);
   const lngShort = Number(lng).toFixed(6);
   updateMissionPOIMarker(lat, lng);
-  ensurePOICircleForCurrentPOI({ keepExistingRadius: true });
+  syncPOIVisualizationWithPattern();
 
   document.getElementById("result").innerHTML = `
     <strong>Mission POI Set</strong><br>
@@ -1501,30 +1721,12 @@ function clearLegacyMissionPOIStorage() {
 function updateMissionPOIMarker(lat, lng) {
   if (!map) return;
 
-  const position = { lat, lng };
-  if (!missionPOI) {
-    missionPOI = new google.maps.Marker({
-      position,
-      map,
-      draggable: true,
-      title: 'Mission POI',
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 8,
-        fillColor: '#ff6f00',
-        fillOpacity: 0.8,
-        strokeColor: '#ffffff',
-        strokeWeight: 2
-      }
-    });
-
-    missionPOI.addListener('dragend', () => {
-      const p = missionPOI.getPosition();
-      if (p) setMissionPOI(p.lat(), p.lng());
-    });
-  } else {
-    missionPOI.setPosition(position);
-  }
+  const poiId = `poi-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
+  const markerPoi = createMissionPOIMarker(lat, lng, poiId);
+  missionPOIs.push({ id: poiId, marker: markerPoi });
+  activeMissionPOIId = poiId;
+  refreshMissionPOIMarkerStyles();
+  refreshWaypointConfigUi();
 }
 
 function clearPOICircle() {
@@ -1544,7 +1746,7 @@ function updateDrawShapeSummary() {
     ? (patternEl.options[patternEl.selectedIndex]?.text || patternEl.value)
     : 'Perimeter';
 
-  const hasOrbit = !!missionPOI || pendingMapClickMode === 'poi';
+  const hasOrbit = isPOIPatternActive() && (missionPOIs.length > 0 || pendingMapClickMode === 'poi' || !!poiCircle);
   const hasRoute = !!activePolyline || routePath.length > 0;
   const isDrawingWP = isRouteDrawingActive();
   const isDrawingPoly = !!(drawingManager && window.google && google.maps.drawing &&
@@ -1560,6 +1762,12 @@ function updateDrawShapeSummary() {
     } else {
       indicator.textContent = `Orbit | R=set below | Pattern: ${patternLabel}`;
     }
+    return;
+  }
+
+  if (missionPOIs.length > 0) {
+    const assignedCount = waypointPoiAssignments.size;
+    indicator.textContent = `POIs: ${missionPOIs.length} | Assigned WPs: ${assignedCount} | Pattern: ${patternLabel}`;
     return;
   }
 
@@ -1583,9 +1791,10 @@ function updatePOIRadiusIndicator(_radiusMeters) {
 }
 
 function ensurePOICircleForCurrentPOI(options = {}) {
-  if (!map || !missionPOI) return;
+  const primary = getPrimaryMissionPOIRecord();
+  if (!map || !primary || !primary.marker) return;
 
-  const p = missionPOI.getPosition();
+  const p = primary.marker.getPosition();
   if (!p) return;
 
   const keepExistingRadius = options.keepExistingRadius !== false;
@@ -1607,10 +1816,11 @@ function ensurePOICircleForCurrentPOI(options = {}) {
     });
 
     poiCircle.addListener('center_changed', () => {
-      if (!poiCircle || !missionPOI) return;
+      const activePoi = getPrimaryMissionPOIRecord();
+      if (!poiCircle || !activePoi || !activePoi.marker) return;
       const center = poiCircle.getCenter();
       if (!center) return;
-      missionPOI.setPosition(center);
+      activePoi.marker.setPosition(center);
     });
 
     poiCircle.addListener('radius_changed', () => {
@@ -1633,66 +1843,76 @@ function ensurePOICircleForCurrentPOI(options = {}) {
 
 function syncPOICircleRadiusFromInput() {
   if (syncingPOIRadiusInput) return;
+  if (!isPOIPatternActive()) return;
   const radius = Number(document.getElementById('orbitRadiusMeters')?.value);
   if (!Number.isFinite(radius) || radius < 10) return;
   updatePOIRadiusIndicator(radius);
+  if (!poiCircle && missionPOIs.length > 0) {
+    ensurePOICircleForCurrentPOI({ keepExistingRadius: false });
+  }
   if (!poiCircle) return;
   poiCircle.setRadius(radius);
   updatePOIRadiusIndicator(radius);
+}
+
+function handlePatternTypeChange() {
+  syncPOIVisualizationWithPattern();
+  updateDrawShapeSummary();
 }
 
 function startPOIClickMode() {
   if (!map) return;
   pendingMapClickMode = 'poi';
   updateOrbitButtonState();
-  showLookupMessage('POI click mode enabled. Tap/click on the map to place the POI center.', 'warn');
+  showLookupMessage('POI click mode enabled. Tap/click map to add a POI. Click a POI marker to select active target, then click waypoint markers to assign.', 'warn');
 }
 
 function updateOrbitButtonState() {
   const btn = document.getElementById('setPOIByClickBtn');
   if (!btn) return;
   const span = btn.querySelector('span:last-child');
-  if (missionPOI) {
+  if (pendingMapClickMode === 'poi') {
     btn.classList.add('btn-active');
     btn.classList.remove('btn-pending');
-    if (span) span.textContent = 'Clear';
-    btn.title = 'Clear orbit / POI';
-    btn.setAttribute('aria-label', 'Clear orbit / POI');
-  } else if (pendingMapClickMode === 'poi') {
-    btn.classList.add('btn-active');
-    btn.classList.remove('btn-pending');
-    if (span) span.textContent = 'Clear';
-    btn.title = 'Clear orbit placement';
-    btn.setAttribute('aria-label', 'Clear orbit placement');
+    if (span) span.textContent = 'Cancel';
+    btn.title = 'Cancel POI placement';
+    btn.setAttribute('aria-label', 'Cancel POI placement');
   } else {
     btn.classList.remove('btn-active', 'btn-pending');
-    if (span) span.textContent = 'Orbit';
-    btn.title = 'Orbit by Click';
-    btn.setAttribute('aria-label', 'Orbit by Click');
+    if (span) span.textContent = 'Add POI';
+    btn.title = 'Add POI by Click';
+    btn.setAttribute('aria-label', 'Add POI by Click');
   }
+  const clearBtn = document.getElementById('clearPOIsBtn');
+  if (clearBtn) clearBtn.disabled = missionPOIs.length === 0;
   updateDrawShapeSummary();
 }
 
 function clearMissionPOI() {
   pendingMapClickMode = null;
-  if (missionPOI) {
-    missionPOI.setMap(null);
-    missionPOI = null;
-  }
+  missionPOIs.forEach((entry) => entry.marker.setMap(null));
+  missionPOIs = [];
+  activeMissionPOIId = null;
+  waypointPoiAssignments.clear();
+  waypointHeadingConfigs.forEach((cfg, idx) => {
+    waypointHeadingConfigs.set(idx, {
+      mode: cfg && cfg.mode === 'custom' ? 'custom' : 'follow',
+      poiId: '',
+      customAngle: Number.isFinite(Number(cfg && cfg.customAngle)) ? Number(cfg.customAngle) : 0,
+      zoomFactor: Number.isFinite(Number(cfg && cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : (Number(document.getElementById('djiZoomFactor')?.value) || 1)
+    });
+  });
   clearPOICircle();
   updateOrbitButtonState();
-  showLookupMessage("Mission POI cleared.", "dim");
+  refreshWaypointConfigUi();
+  showLookupMessage("All mission POIs cleared.", "dim");
 }
 
 function toggleOrbitMode() {
-  if (missionPOI) {
-    clearMissionPOI();
-    return;
-  }
   if (pendingMapClickMode === 'poi') {
     pendingMapClickMode = null;
     updateOrbitButtonState();
-    showLookupMessage('Orbit placement cancelled.', 'dim');
+    showLookupMessage('POI placement cancelled.', 'dim');
     return;
   }
   const patternEl = document.getElementById('patternType');
@@ -1855,7 +2075,7 @@ function initGoogleMap() {
     drawingControl: false,
     polylineOptions: {
       clickable: true,
-      editable: true,
+      editable: false,
       draggable: true,
       strokeColor: '#2196F3',
       strokeWeight: 3
@@ -1928,9 +2148,7 @@ function initGoogleMap() {
     pendingMapClickMode = null;
     const latLng = event && event.latLng;
     if (!latLng) return;
-    if (setMissionPOI(latLng.lat(), latLng.lng())) {
-      ensurePOICircleForCurrentPOI({ keepExistingRadius: true });
-    }
+    setMissionPOI(latLng.lat(), latLng.lng());
     updateOrbitButtonState();
   });
 
@@ -1985,6 +2203,41 @@ function triggerMapResizeWithCenterPreserved() {
       map.setCenter(DEFAULT_CENTER);
     }
   }, 60);
+}
+
+function centerMapToPilotMarker() {
+  if (!map) return;
+
+  // Priority 1: Center on mission shape (polyline) if it exists
+  if (activePolyline) {
+    const path = activePolyline.getPath();
+    if (path && path.getLength() > 0) {
+      const bounds = new google.maps.LatLngBounds();
+      path.forEach(point => bounds.extend(point));
+      map.fitBounds(bounds);
+      return;
+    }
+  }
+
+  // Priority 2: Center on pilot marker if set
+  if (marker && marker.getPosition) {
+    const pos = marker.getPosition();
+    if (pos) {
+      map.panTo(pos);
+      if ((map.getZoom() || 0) < 14) map.setZoom(14);
+      return;
+    }
+  }
+
+  // Priority 3: Center on stored pilot position
+  const pilot = getStoredPilotPosition();
+  if (pilot) {
+    map.panTo(pilot);
+    if ((map.getZoom() || 0) < 14) map.setZoom(14);
+    return;
+  }
+
+  showLookupMessage('No mission shape or pilot marker found. Draw a route first.', 'warn');
 }
 
 function updatePseudoFullscreenMapHeight() {
@@ -2176,9 +2429,10 @@ function applyRouteEditState() {
   }
 
   if (activePolyline) {
-    activePolyline.setEditable(routeEditEnabled);
-    // Allow move/positioning while locked; keep drag off while vertex editing.
-    activePolyline.setDraggable(!routeEditEnabled);
+    // Keep native vertex editing off to prevent midpoint drags from creating new waypoints.
+    // Route shape edits are done via numbered waypoint markers only.
+    activePolyline.setEditable(false);
+    activePolyline.setDraggable(routeEditEnabled);
   }
   waypointMarkers.forEach(m => m.setDraggable(routeEditEnabled));
 }
@@ -2267,8 +2521,12 @@ function clearActiveRoute() {
   }
   clearWaypointMarkers();
   routePath = [];
+  waypointPoiAssignments.clear();
+  waypointHeadingConfigs.clear();
+  selectedWaypointConfigIndex = 0;
   applyRouteEditState();
   updateDrawRouteButtonState();
+  refreshWaypointConfigUi();
 }
 
 function handleDrawRouteToggle() {
@@ -2436,7 +2694,7 @@ function setRouteFromLatLngPoints(points) {
     path: gpath,
     strokeColor: '#4caf50',
     strokeWeight: 3,
-    editable: routeEditEnabled,
+    editable: false,
     draggable: false,
     map
   });
@@ -2444,6 +2702,9 @@ function setRouteFromLatLngPoints(points) {
   routeEditEnabled = true;
   setActivePolyline(poly);
   applyRouteEditState();
+  waypointPoiAssignments.clear();
+  waypointHeadingConfigs.clear();
+  selectedWaypointConfigIndex = 0;
   // Preserve heading info if available (e.g., from orbit points)
   routePath = points.map(p => ({ lat: p.lat, lng: p.lng, heading: p.heading }));
 
@@ -2451,6 +2712,7 @@ function setRouteFromLatLngPoints(points) {
   gpath.forEach(g => bounds.extend(g));
   map.fitBounds(bounds);
   extractPathFromPolyline(poly);
+  refreshWaypointConfigUi();
 }
 
 function getProjectedPolygonContext(polygonCoords) {
@@ -2725,13 +2987,34 @@ function generateRoutePattern() {
 
 function extractPathFromPolyline(poly) {
   routePath = poly.getPath().getArray().map(ll => ({ lat: ll.lat(), lng: ll.lng() }));
+  waypointPoiAssignments.forEach((poiId, wpIndex) => {
+    if (wpIndex < 0 || wpIndex >= routePath.length || !getMissionPOIById(poiId)) {
+      waypointPoiAssignments.delete(wpIndex);
+    }
+  });
+  waypointHeadingConfigs.forEach((cfg, wpIndex) => {
+    if (wpIndex < 0 || wpIndex >= routePath.length) {
+      waypointHeadingConfigs.delete(wpIndex);
+    }
+  });
   rebuildWaypointMarkers(poly);
+  refreshWaypointConfigUi();
 }
 
 // Always read the current map state at export time — never rely solely on the cached array.
 function syncRoutePath() {
   if (activePolyline) {
     routePath = activePolyline.getPath().getArray().map(ll => ({ lat: ll.lat(), lng: ll.lng() }));
+    waypointPoiAssignments.forEach((poiId, wpIndex) => {
+      if (wpIndex < 0 || wpIndex >= routePath.length || !getMissionPOIById(poiId)) {
+        waypointPoiAssignments.delete(wpIndex);
+      }
+    });
+    waypointHeadingConfigs.forEach((cfg, wpIndex) => {
+      if (wpIndex < 0 || wpIndex >= routePath.length) {
+        waypointHeadingConfigs.delete(wpIndex);
+      }
+    });
   }
 }
 
@@ -2780,15 +3063,36 @@ function clearWaypointMarkers() {
   waypointMarkers = [];
 }
 
-function makeWpIcon(type) {
+function normalizeHeadingDegrees(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return null;
+  let normalized = n % 360;
+  if (normalized < 0) normalized += 360;
+  return normalized;
+}
+
+function makeWpIcon(type, options = {}) {
+  const selected = !!options.selected;
+  const headingDeg = normalizeHeadingDegrees(options.headingDeg);
   const schemes = {
     start: { bg: '#1b5e20', stroke: '#dcedc8', text: '#ffffff', textStroke: '#0d3b12' },
     end: { bg: '#8e0000', stroke: '#ffcdd2', text: '#ffffff', textStroke: '#4a0000' },
     mid: { bg: '#ffffff', stroke: '#1f2937', text: '#111111', textStroke: '#ffffff' }
   };
   const c = schemes[type] || schemes.mid;
+  const halo = selected
+    ? '<circle cx="14" cy="14" r="13" fill="none" stroke="#f59e0b" stroke-width="2.8" opacity="0.95"/>'
+    : '';
+  const headingArrow = (selected && Number.isFinite(headingDeg))
+    ? '<g transform="rotate(' + headingDeg + ' 14 14)">'
+      + '<line x1="14" y1="14" x2="14" y2="4.8" stroke="#2563eb" stroke-width="2.4" stroke-linecap="round"/>'
+      + '<polygon points="14,2.3 10.7,7.2 17.3,7.2" fill="#2563eb"/>'
+      + '</g>'
+    : '';
   const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28">'
+    + halo
     + '<circle cx="14" cy="14" r="11.5" fill="' + c.bg + '" stroke="' + c.stroke + '" stroke-width="2"/>'
+    + headingArrow
     + '</svg>';
 
   return {
@@ -2815,11 +3119,77 @@ function makeWpLabel(number, type) {
   };
 }
 
+function getWaypointHeadingFromPath(pathPoints, index) {
+  if (!Array.isArray(pathPoints) || pathPoints.length === 0 || index < 0 || index >= pathPoints.length) return null;
+  const here = pathPoints[index];
+  const next = pathPoints[index + 1] || pathPoints[index - 1];
+  if (!here || !next) return null;
+  if (!window.google || !google.maps || !google.maps.geometry) return null;
+
+  const hereLL = here instanceof google.maps.LatLng ? here : new google.maps.LatLng(here.lat, here.lng);
+  const nextLL = next instanceof google.maps.LatLng ? next : new google.maps.LatLng(next.lat, next.lng);
+  if (hereLL.equals(nextLL)) return null;
+  return google.maps.geometry.spherical.computeHeading(hereLL, nextLL);
+}
+
+function getWaypointDisplayHeading(index, pathPoints) {
+  const points = Array.isArray(pathPoints) ? pathPoints : [];
+  if (index < 0 || index >= points.length) return null;
+  const current = points[index];
+  if (!current) return null;
+
+  const cfg = getWaypointConfigForIndex(index);
+  if (cfg.mode === 'custom') {
+    return Number.isFinite(Number(cfg.customAngle)) ? Number(cfg.customAngle) : null;
+  }
+
+  const point = current instanceof google.maps.LatLng
+    ? { lat: current.lat(), lng: current.lng() }
+    : { lat: Number(current.lat), lng: Number(current.lng) };
+
+  if (cfg.mode === 'poi' || !!document.getElementById('djiFacePoiHeading')?.checked) {
+    const missionPois = getAllStoredMissionPOIs();
+    if (missionPois.length) {
+      const targetPoi = cfg.poiId
+        ? missionPois.find((poi) => poi.id === cfg.poiId)
+        : getWaypointMissionPoi(index, point, missionPois);
+      if (targetPoi && window.google && google.maps && google.maps.geometry) {
+        return google.maps.geometry.spherical.computeHeading(
+          new google.maps.LatLng(point.lat, point.lng),
+          new google.maps.LatLng(targetPoi.lat, targetPoi.lng)
+        );
+      }
+    }
+  }
+
+  return getWaypointHeadingFromPath(points, index);
+}
+
+function updateWaypointMarkerVisuals() {
+  if (!Array.isArray(waypointMarkers) || waypointMarkers.length === 0) return;
+  const total = waypointMarkers.length;
+  const pathPoints = activePolyline ? activePolyline.getPath().getArray() : routePath;
+
+  waypointMarkers.forEach((markerWp, idx) => {
+    const type = idx === 0 ? 'start' : (idx === total - 1 ? 'end' : 'mid');
+    const selected = idx === selectedWaypointConfigIndex;
+    const headingDeg = selected ? getWaypointDisplayHeading(idx, pathPoints) : null;
+    markerWp.setIcon(makeWpIcon(type, { selected, headingDeg }));
+    markerWp.setZIndex((selected ? 20000 : 10000) + idx);
+  });
+}
+
 function rebuildWaypointMarkers(poly) {
   clearWaypointMarkers();
   const path = poly.getPath();
   const points = path.getArray();
   const total = points.length;
+
+  waypointPoiAssignments.forEach((poiId, wpIndex) => {
+    if (wpIndex < 0 || wpIndex >= total || !getMissionPOIById(poiId)) {
+      waypointPoiAssignments.delete(wpIndex);
+    }
+  });
 
   points.forEach((pt, idx) => {
     const type = idx === 0 ? 'start' : (idx === total - 1 ? 'end' : 'mid');
@@ -2828,7 +3198,7 @@ function rebuildWaypointMarkers(poly) {
       map,
       draggable: routeEditEnabled,
       title: 'WP ' + (idx + 1) + (idx === 0 ? ' (start)' : idx === total - 1 ? ' (end)' : ''),
-      icon: makeWpIcon(type),
+      icon: makeWpIcon(type, { selected: false }),
       label: makeWpLabel(idx + 1, type),
       optimized: false,
       zIndex: 10000 + idx
@@ -2843,8 +3213,49 @@ function rebuildWaypointMarkers(poly) {
       snapRouteToNearestWaypoint();
     });
 
+    markerWp.addListener('click', () => {
+      selectedWaypointConfigIndex = idx;
+      if (!activeMissionPOIId || missionPOIs.length === 0) {
+        refreshWaypointConfigUi();
+        return;
+      }
+
+      waypointPoiAssignments.set(idx, activeMissionPOIId);
+      const existing = waypointHeadingConfigs.get(idx);
+      waypointHeadingConfigs.set(idx, {
+        mode: 'poi',
+        poiId: activeMissionPOIId,
+        customAngle: Number.isFinite(Number(existing && existing.customAngle)) ? Number(existing.customAngle) : 0
+      });
+
+      const poiIndex = missionPOIs.findIndex((entry) => entry.id === activeMissionPOIId);
+      markerWp.setTitle(`WP ${idx + 1} -> POI ${poiIndex + 1}`);
+      refreshWaypointConfigUi();
+      updateDrawShapeSummary();
+      showLookupMessage(`Assigned WP ${idx + 1} to POI ${poiIndex + 1}.`, 'dim');
+    });
+
+    markerWp.addListener('rightclick', () => {
+      if (!waypointPoiAssignments.has(idx)) return;
+      waypointPoiAssignments.delete(idx);
+      const existing = waypointHeadingConfigs.get(idx);
+      if (existing && existing.mode === 'poi') {
+        waypointHeadingConfigs.set(idx, {
+          mode: 'follow',
+          poiId: '',
+          customAngle: Number.isFinite(Number(existing.customAngle)) ? Number(existing.customAngle) : 0
+        });
+      }
+      markerWp.setTitle('WP ' + (idx + 1) + (idx === 0 ? ' (start)' : idx === total - 1 ? ' (end)' : ''));
+      refreshWaypointConfigUi();
+      updateDrawShapeSummary();
+      showLookupMessage(`Cleared POI assignment for WP ${idx + 1}.`, 'dim');
+    });
+
     waypointMarkers.push(markerWp);
   });
+
+  updateWaypointMarkerVisuals();
 }
 
 function pointsNearlyEqual(a, b, epsilon = 1e-7) {
@@ -3124,6 +3535,7 @@ function getDJIMissionSettings() {
   const hoverAtWp = takePhotoEachWp && !!document.getElementById('djiHoverAtWp')?.checked;
   const hoverSecondsRaw = Number(document.getElementById('djiHoverSeconds')?.value);
   const zoomAtWp = takePhotoEachWp && !!document.getElementById('djiZoomAtWp')?.checked;
+  const facePoiHeading = takePhotoEachWp && !!document.getElementById('djiFacePoiHeading')?.checked;
   const zoomFactorRaw = Number(document.getElementById('djiZoomFactor')?.value);
   const photoByDistanceMetersRaw = Number(document.getElementById('photoByDistanceMeters')?.value);
   const startStopVideo = !!document.getElementById('djiStartStopVideo')?.checked;
@@ -3137,6 +3549,7 @@ function getDJIMissionSettings() {
     hoverAtWp,
     hoverSeconds: Number.isFinite(hoverSecondsRaw) && hoverSecondsRaw > 0 ? hoverSecondsRaw : 3,
     zoomAtWp,
+    facePoiHeading,
     zoomFactor: Number.isFinite(zoomFactorRaw) && zoomFactorRaw >= 1 && zoomFactorRaw <= 4 ? zoomFactorRaw : 1,
     photoByDistanceMeters: Number.isFinite(photoByDistanceMetersRaw) && photoByDistanceMetersRaw > 0 ? photoByDistanceMetersRaw : 0,
     startStopVideo
@@ -3150,16 +3563,243 @@ function updateWaypointPhotoActionUi() {
   const hoverSecondsInput = document.getElementById('djiHoverSeconds');
   const hoverCheckbox = document.getElementById('djiHoverAtWp');
   const zoomCheckbox = document.getElementById('djiZoomAtWp');
+  const facePoiCheckbox = document.getElementById('djiFacePoiHeading');
   const zoomFactorInput = document.getElementById('djiZoomFactor');
 
   if (hoverCheckbox) hoverCheckbox.disabled = !takePhotoEachWp;
   if (zoomCheckbox) zoomCheckbox.disabled = !takePhotoEachWp;
+  if (facePoiCheckbox) facePoiCheckbox.disabled = !takePhotoEachWp;
   if (hoverSecondsInput) hoverSecondsInput.disabled = !takePhotoEachWp || !hoverAtWp;
   if (zoomFactorInput) zoomFactorInput.disabled = !takePhotoEachWp || !zoomAtWp;
 
   if (!takePhotoEachWp) {
     if (hoverCheckbox) hoverCheckbox.checked = false;
     if (zoomCheckbox) zoomCheckbox.checked = false;
+    if (facePoiCheckbox) facePoiCheckbox.checked = false;
+  }
+
+  applyWaypointConfigEditorState();
+}
+
+function getRouteWaypointCountForConfig() {
+  if (activePolyline) {
+    return Math.max(0, activePolyline.getPath().getLength());
+  }
+  return Array.isArray(routePath) ? routePath.length : 0;
+}
+
+function formatPoiLabelById(poiId) {
+  const idx = missionPOIs.findIndex((entry) => entry.id === poiId);
+  return idx >= 0 ? `P${idx + 1}` : 'Auto';
+}
+
+function normalizeWaypointConfigMaps() {
+  const count = getRouteWaypointCountForConfig();
+  const globalZoom = Number(document.getElementById('djiZoomFactor')?.value);
+  const fallbackZoom = Number.isFinite(globalZoom) ? Math.max(1, Math.min(4, globalZoom)) : 1;
+  waypointPoiAssignments.forEach((poiId, wpIndex) => {
+    if (wpIndex < 0 || wpIndex >= count || !getMissionPOIById(poiId)) {
+      waypointPoiAssignments.delete(wpIndex);
+    }
+  });
+
+  waypointHeadingConfigs.forEach((cfg, wpIndex) => {
+    if (wpIndex < 0 || wpIndex >= count) {
+      waypointHeadingConfigs.delete(wpIndex);
+      return;
+    }
+    if (!cfg || !['follow', 'poi', 'custom'].includes(cfg.mode)) {
+      waypointHeadingConfigs.delete(wpIndex);
+      return;
+    }
+    if (cfg.poiId && !getMissionPOIById(cfg.poiId)) {
+      waypointHeadingConfigs.set(wpIndex, {
+        mode: cfg.mode === 'poi' ? 'follow' : cfg.mode,
+        poiId: '',
+        customAngle: Number.isFinite(Number(cfg.customAngle)) ? Number(cfg.customAngle) : 0,
+        zoomFactor: Number.isFinite(Number(cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : fallbackZoom
+      });
+      return;
+    }
+
+    waypointHeadingConfigs.set(wpIndex, {
+      mode: cfg.mode,
+      poiId: cfg.poiId || '',
+      customAngle: Number.isFinite(Number(cfg.customAngle)) ? Number(cfg.customAngle) : 0,
+      zoomFactor: Number.isFinite(Number(cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : fallbackZoom
+    });
+  });
+}
+
+function getWaypointConfigDefault(index) {
+  const globalFacePoi = !!document.getElementById('djiFacePoiHeading')?.checked;
+  const assignedPoiId = waypointPoiAssignments.get(index) || '';
+  const globalZoom = Number(document.getElementById('djiZoomFactor')?.value);
+  return {
+    mode: globalFacePoi ? 'poi' : 'follow',
+    poiId: assignedPoiId,
+    customAngle: 0,
+    zoomFactor: Number.isFinite(globalZoom) ? Math.max(1, Math.min(4, globalZoom)) : 1
+  };
+}
+
+function getWaypointConfigForIndex(index) {
+  const cfg = waypointHeadingConfigs.get(index);
+  if (!cfg) return getWaypointConfigDefault(index);
+  const globalZoom = Number(document.getElementById('djiZoomFactor')?.value);
+  return {
+    mode: ['follow', 'poi', 'custom'].includes(cfg.mode) ? cfg.mode : 'follow',
+    poiId: cfg.poiId && getMissionPOIById(cfg.poiId) ? cfg.poiId : '',
+    customAngle: Number.isFinite(Number(cfg.customAngle)) ? Number(cfg.customAngle) : 0,
+    zoomFactor: Number.isFinite(Number(cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : (Number.isFinite(globalZoom) ? Math.max(1, Math.min(4, globalZoom)) : 1)
+  };
+}
+
+function populateWaypointConfigPoiSelect(selectedPoiId = '') {
+  const poiSelect = document.getElementById('waypointPoiTarget');
+  if (!poiSelect) return;
+  poiSelect.innerHTML = '';
+
+  const autoOption = document.createElement('option');
+  autoOption.value = '';
+  autoOption.textContent = 'Auto / Nearest';
+  poiSelect.appendChild(autoOption);
+
+  missionPOIs.forEach((entry, idx) => {
+    const option = document.createElement('option');
+    option.value = entry.id;
+    option.textContent = `P${idx + 1}`;
+    poiSelect.appendChild(option);
+  });
+
+  poiSelect.value = selectedPoiId && getMissionPOIById(selectedPoiId) ? selectedPoiId : '';
+}
+
+function applyWaypointConfigEditorState() {
+  const modeEl = document.getElementById('waypointHeadingMode');
+  const poiEl = document.getElementById('waypointPoiTarget');
+  const angleEl = document.getElementById('waypointCustomHeadingAngle');
+  const zoomEl = document.getElementById('waypointZoomFactor');
+  const globalZoomEnabled = !!document.getElementById('djiTakePhotoEachWp')?.checked && !!document.getElementById('djiZoomAtWp')?.checked;
+  const selectEl = document.getElementById('waypointConfigSelect');
+  const hasWaypoints = getRouteWaypointCountForConfig() > 0;
+  const mode = modeEl?.value || 'follow';
+
+  if (selectEl) selectEl.disabled = !hasWaypoints;
+  if (modeEl) modeEl.disabled = !hasWaypoints;
+  if (poiEl) poiEl.disabled = !hasWaypoints || mode !== 'poi';
+  if (angleEl) angleEl.disabled = !hasWaypoints || mode !== 'custom';
+  if (zoomEl) zoomEl.disabled = !hasWaypoints || !globalZoomEnabled;
+
+  const prevBtn = document.getElementById('waypointConfigPrevBtn');
+  const nextBtn = document.getElementById('waypointConfigNextBtn');
+  const saveBtn = document.getElementById('saveWaypointConfigBtn');
+  if (prevBtn) prevBtn.disabled = !hasWaypoints;
+  if (nextBtn) nextBtn.disabled = !hasWaypoints;
+  if (saveBtn) saveBtn.disabled = !hasWaypoints;
+}
+
+function refreshWaypointConfigUi() {
+  normalizeWaypointConfigMaps();
+  const count = getRouteWaypointCountForConfig();
+  const select = document.getElementById('waypointConfigSelect');
+  const status = document.getElementById('waypointConfigStatus');
+  const modeEl = document.getElementById('waypointHeadingMode');
+  const angleEl = document.getElementById('waypointCustomHeadingAngle');
+  const zoomEl = document.getElementById('waypointZoomFactor');
+
+  if (!select || !status || !modeEl || !angleEl || !zoomEl) return;
+
+  if (count <= 0) {
+    select.innerHTML = '';
+    selectedWaypointConfigIndex = 0;
+    populateWaypointConfigPoiSelect('');
+    modeEl.value = 'follow';
+    angleEl.value = '0';
+    zoomEl.value = (Number(document.getElementById('djiZoomFactor')?.value) || 1).toFixed(1);
+    status.textContent = 'Draw/import route to edit waypoint settings.';
+    applyWaypointConfigEditorState();
+    return;
+  }
+
+  if (selectedWaypointConfigIndex < 0 || selectedWaypointConfigIndex >= count) {
+    selectedWaypointConfigIndex = Math.max(0, Math.min(selectedWaypointConfigIndex, count - 1));
+  }
+
+  select.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const opt = document.createElement('option');
+    opt.value = String(i);
+    opt.textContent = `WP ${i + 1}`;
+    select.appendChild(opt);
+  }
+
+  selectedWaypointConfigIndex = Math.max(0, Math.min(selectedWaypointConfigIndex, count - 1));
+  select.value = String(selectedWaypointConfigIndex);
+
+  const cfg = getWaypointConfigForIndex(selectedWaypointConfigIndex);
+  modeEl.value = cfg.mode;
+  populateWaypointConfigPoiSelect(cfg.poiId || waypointPoiAssignments.get(selectedWaypointConfigIndex) || '');
+  angleEl.value = String(Math.round(cfg.customAngle));
+  zoomEl.value = cfg.zoomFactor.toFixed(1);
+
+  status.textContent = `Editing WP ${selectedWaypointConfigIndex + 1} of ${count}.`;
+  applyWaypointConfigEditorState();
+  updateWaypointMarkerVisuals();
+}
+
+function handleWaypointConfigSelectionChange() {
+  const select = document.getElementById('waypointConfigSelect');
+  if (!select) return;
+  const idx = Number(select.value);
+  if (!Number.isFinite(idx)) return;
+  selectedWaypointConfigIndex = idx;
+  refreshWaypointConfigUi();
+}
+
+function stepWaypointConfigSelection(delta) {
+  const count = getRouteWaypointCountForConfig();
+  if (count <= 0) return;
+  selectedWaypointConfigIndex = (selectedWaypointConfigIndex + delta + count) % count;
+  refreshWaypointConfigUi();
+}
+
+function saveWaypointConfigForSelected() {
+  const count = getRouteWaypointCountForConfig();
+  if (count <= 0) return;
+
+  const idx = selectedWaypointConfigIndex;
+  if (idx < 0 || idx >= count) return;
+
+  const mode = document.getElementById('waypointHeadingMode')?.value || 'follow';
+  const poiIdRaw = document.getElementById('waypointPoiTarget')?.value || '';
+  const angleRaw = Number(document.getElementById('waypointCustomHeadingAngle')?.value);
+  const zoomRaw = Number(document.getElementById('waypointZoomFactor')?.value);
+  const customAngle = Number.isFinite(angleRaw) ? Math.max(-180, Math.min(180, angleRaw)) : 0;
+  const zoomFactor = Number.isFinite(zoomRaw) ? Math.max(1, Math.min(4, zoomRaw)) : 1;
+  const poiId = poiIdRaw && getMissionPOIById(poiIdRaw) ? poiIdRaw : '';
+
+  waypointHeadingConfigs.set(idx, {
+    mode,
+    poiId,
+    customAngle,
+    zoomFactor
+  });
+
+  if (mode === 'poi' && poiId) {
+    waypointPoiAssignments.set(idx, poiId);
+  } else if (waypointPoiAssignments.has(idx)) {
+    waypointPoiAssignments.delete(idx);
+  }
+
+  if (activePolyline) {
+    rebuildWaypointMarkers(activePolyline);
+  }
+
+  refreshWaypointConfigUi();
+  const status = document.getElementById('waypointConfigStatus');
+  if (status) {
+    status.textContent = `Saved WP ${idx + 1}: ${mode === 'custom' ? `Custom ${Math.round(customAngle)}deg` : mode === 'poi' ? `Face ${formatPoiLabelById(poiId)}` : 'Follow Course'} | Zoom ${zoomFactor.toFixed(1)}x.`;
   }
 }
 
@@ -3246,11 +3886,52 @@ function normalizeWaypointPathForExport(pathPoints) {
   return normalized;
 }
 
+function getNearestMissionPoiForPoint(point, missionPois) {
+  if (!point || !Array.isArray(missionPois) || missionPois.length === 0 || !window.google || !google.maps || !google.maps.geometry) {
+    return null;
+  }
+
+  const pointLL = new google.maps.LatLng(point.lat, point.lng);
+  let bestPoi = null;
+  let bestDistance = Infinity;
+
+  missionPois.forEach((poi) => {
+    const poiLL = new google.maps.LatLng(poi.lat, poi.lng);
+    const d = google.maps.geometry.spherical.computeDistanceBetween(pointLL, poiLL);
+    if (d < bestDistance) {
+      bestDistance = d;
+      bestPoi = poi;
+    }
+  });
+
+  return bestPoi;
+}
+
+function getWaypointMissionPoi(index, point, missionPois) {
+  const assignedPoiId = waypointPoiAssignments.get(index);
+  if (assignedPoiId) {
+    const assigned = missionPois.find((poi) => poi.id === assignedPoiId);
+    if (assigned) return assigned;
+  }
+
+  if (missionPois.length === 1) return missionPois[0];
+  return getNearestMissionPoiForPoint(point, missionPois);
+}
+
 function buildDJIWaylinesWPML() {
   const settings = getDJIMissionSettings();
   const basePath = normalizeWaypointPathForExport(routePath);
-  const missionPoi = getStoredMissionPOI();
+  const missionPois = getAllStoredMissionPOIs();
   const hasExplicitRouteHeadings = basePath.some((point) => point && point.heading !== undefined);
+  const hasPerWaypointPoiMode = Array.from(waypointHeadingConfigs.values()).some((cfg) => cfg && cfg.mode === 'poi');
+
+  if (settings.facePoiHeading && !missionPois.length && !hasExplicitRouteHeadings) {
+    throw new Error('Face POI heading is enabled but no POIs are set. Add at least one POI or disable Face POI heading.');
+  }
+  if (hasPerWaypointPoiMode && !missionPois.length) {
+    throw new Error('At least one waypoint is set to Face POI, but no POIs are available. Add POIs or change waypoint heading mode.');
+  }
+
   const exportPath = settings.photoByDistanceMeters > 0
     ? densifyRouteByDistance(basePath, settings.photoByDistanceMeters)
     : basePath;
@@ -3266,10 +3947,6 @@ function buildDJIWaylinesWPML() {
   for (const idx of photoWaypoints) {
     photoOrderByIndex.set(idx, photoOrder++);
   }
-  const poiPointText = missionPoi
-    ? `${Number(missionPoi.lat).toFixed(6)},${Number(missionPoi.lng).toFixed(6)},0.000000`
-    : '0.000000,0.000000,0.000000';
-  
   let actionGroupId = 1;
   let actionId = 1;
   const placemarks = exportPath.map((p, i) => {
@@ -3282,7 +3959,40 @@ function buildDJIWaylinesWPML() {
     }
     const isLast = i === exportPath.length - 1;
     const isFirst = i === 0;
-    const usePoiHeading = !!missionPoi && !hasExplicitRouteHeadings;
+    const waypointConfig = waypointHeadingConfigs.get(i);
+    const waypointPoi = getWaypointMissionPoi(i, p, missionPois);
+
+    let headingModeText = 'smoothTransition';
+    let headingAngleText = heading;
+    let waypointPoiPointText = '0.000000,0.000000,0.000000';
+    let headingAngleEnableText = '0';
+
+    if (waypointConfig && waypointConfig.mode === 'custom') {
+      const customAngle = Number.isFinite(Number(waypointConfig.customAngle))
+        ? Math.max(-180, Math.min(180, Number(waypointConfig.customAngle)))
+        : 0;
+      headingModeText = 'smoothTransition';
+      headingAngleText = customAngle.toFixed(6);
+      headingAngleEnableText = '1';
+    } else if (waypointConfig && waypointConfig.mode === 'poi') {
+      const targetPoi = waypointConfig.poiId
+        ? (missionPois.find((poi) => poi.id === waypointConfig.poiId) || waypointPoi)
+        : waypointPoi;
+      if (targetPoi) {
+        headingModeText = 'towardPOI';
+        headingAngleText = '0';
+        waypointPoiPointText = `${Number(targetPoi.lat).toFixed(6)},${Number(targetPoi.lng).toFixed(6)},0.000000`;
+        headingAngleEnableText = (isFirst || isLast) ? '1' : '0';
+      }
+    } else {
+      const usePoiHeading = !!settings.facePoiHeading && !!waypointPoi && !hasExplicitRouteHeadings;
+      if (usePoiHeading) {
+        headingModeText = 'towardPOI';
+        headingAngleText = '0';
+        waypointPoiPointText = `${Number(waypointPoi.lat).toFixed(6)},${Number(waypointPoi.lng).toFixed(6)},0.000000`;
+        headingAngleEnableText = (isFirst || isLast) ? '1' : '0';
+      }
+    }
     const turnMode = isLast ? 'toPointAndStopWithContinuityCurvature' : 'toPointAndPassWithContinuityCurvature';
 
     const actions = [];
@@ -3331,6 +4041,9 @@ function buildDJIWaylinesWPML() {
       }
 
       if (settings.takePhotoEachWp && settings.zoomAtWp) {
+        const waypointZoomFactor = waypointConfig && Number.isFinite(Number(waypointConfig.zoomFactor))
+          ? Math.max(1, Math.min(4, Number(waypointConfig.zoomFactor)))
+          : settings.zoomFactor;
         actions.push(`
           <wpml:action>
             <wpml:actionId>${actionId++}</wpml:actionId>
@@ -3338,7 +4051,7 @@ function buildDJIWaylinesWPML() {
             <wpml:actionActuatorFuncParam>
               <wpml:focalLength>0</wpml:focalLength>
               <wpml:isUseFocalFactor>1</wpml:isUseFocalFactor>
-              <wpml:focalFactor>${settings.zoomFactor.toFixed(1)}</wpml:focalFactor>
+              <wpml:focalFactor>${waypointZoomFactor.toFixed(1)}</wpml:focalFactor>
               <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
             </wpml:actionActuatorFuncParam>
           </wpml:action>`);
@@ -3387,10 +4100,10 @@ function buildDJIWaylinesWPML() {
         <wpml:executeHeight>${settings.height}</wpml:executeHeight>
         <wpml:waypointSpeed>${settings.speed}</wpml:waypointSpeed>
         <wpml:waypointHeadingParam>
-          <wpml:waypointHeadingMode>${usePoiHeading ? 'towardPOI' : 'smoothTransition'}</wpml:waypointHeadingMode>
-          <wpml:waypointHeadingAngle>${usePoiHeading ? '0' : heading}</wpml:waypointHeadingAngle>
-          <wpml:waypointPoiPoint>${usePoiHeading ? poiPointText : '0.000000,0.000000,0.000000'}</wpml:waypointPoiPoint>
-          <wpml:waypointHeadingAngleEnable>${usePoiHeading && (isFirst || isLast) ? '1' : '0'}</wpml:waypointHeadingAngleEnable>
+          <wpml:waypointHeadingMode>${headingModeText}</wpml:waypointHeadingMode>
+          <wpml:waypointHeadingAngle>${headingAngleText}</wpml:waypointHeadingAngle>
+          <wpml:waypointPoiPoint>${waypointPoiPointText}</wpml:waypointPoiPoint>
+          <wpml:waypointHeadingAngleEnable>${headingAngleEnableText}</wpml:waypointHeadingAngleEnable>
           <wpml:waypointHeadingPathMode>followBadArc</wpml:waypointHeadingPathMode>
           <wpml:waypointHeadingPoiIndex>0</wpml:waypointHeadingPoiIndex>
         </wpml:waypointHeadingParam>
@@ -3718,12 +4431,16 @@ function importRouteFromGeoJSON(gj) {
   routeEditEnabled = true;
   setActivePolyline(poly);
   applyRouteEditState();
+  waypointPoiAssignments.clear();
+  waypointHeadingConfigs.clear();
+  selectedWaypointConfigIndex = 0;
   routePath = gpath.map(g => ({ lat: g.lat(), lng: g.lng() }));
 
   const bounds = new google.maps.LatLngBounds();
   gpath.forEach(g => bounds.extend(g));
   map.fitBounds(bounds);
   extractPathFromPolyline(poly);
+  refreshWaypointConfigUi();
 }
 
 function handleAddressInputForAutocomplete() {

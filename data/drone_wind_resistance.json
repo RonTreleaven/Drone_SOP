@@ -1,0 +1,116 @@
+{
+  "models": [
+    {
+      "model": "DJI Mini 2",
+      "verified": true,
+      "oemWindMs": 8.5,
+      "oemWindKmh": 30.6,
+      "oemWindKt": 16.5
+    },
+    {
+      "model": "DJI Mini 3",
+      "verified": true,
+      "oemWindMs": 8.5,
+      "oemWindKmh": 30.6,
+      "oemWindKt": 16.5
+    },
+    {
+      "model": "DJI Mini 3 Pro",
+      "verified": true,
+      "oemWindMs": 10.69,
+      "oemWindKmh": 38.5,
+      "oemWindKt": 21
+    },
+    {
+      "model": "DJI Mini 4 Pro",
+      "verified": true,
+      "oemWindMs": 10.69,
+      "oemWindKmh": 38.5,
+      "oemWindKt": 21
+    },
+    {
+      "model": "DJI Air 2S",
+      "verified": true,
+      "oemWindMs": 10.7,
+      "oemWindKmh": 37.8,
+      "oemWindKt": 20.8
+    },
+    {
+      "model": "DJI Air 3",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3
+    },
+    {
+      "model": "DJI Mavic 2 Pro",
+      "verified": true,
+      "oemWindMs": 10.6,
+      "oemWindKmh": 38,
+      "oemWindKt": 20.5
+    },
+    {
+      "model": "DJI Mavic 3 Classic",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3
+    },
+    {
+      "model": "DJI Mavic 3",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3
+    },
+    {
+      "model": "DJI Mavic 3 Pro",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3
+    },
+    {
+      "model": "DJI Phantom 4 Pro V2.0",
+      "verified": true,
+      "oemWindMs": 10,
+      "oemWindKmh": 36,
+      "oemWindKt": 19.4
+    },
+    {
+      "model": "DJI Inspire 2",
+      "verified": true,
+      "oemWindMs": 10,
+      "oemWindKmh": 36,
+      "oemWindKt": 19.4
+    },
+    {
+      "model": "Autel EVO Lite+",
+      "verified": true,
+      "oemWindMs": 10.7,
+      "oemWindKmh": 38.5,
+      "oemWindKt": 20.8
+    },
+    {
+      "model": "Autel EVO II Pro V3",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3
+    },
+    {
+      "model": "Skydio 2+",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3
+    },
+    {
+      "model": "Parrot Anafi USA",
+      "verified": true,
+      "oemWindMs": 10,
+      "oemWindKmh": 36,
+      "oemWindKt": 19.4
+    }
+  ]
+}
