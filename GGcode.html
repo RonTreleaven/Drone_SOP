@@ -656,7 +656,8 @@ body {
   min-width: 0;
 }
 
-#orbitRadiusMeters {
+#orbitRadiusMeters,
+#orbitAltitudeMeters {
   min-width: 88px;
   text-align: center;
   font-variant-numeric: tabular-nums;
@@ -1045,10 +1046,20 @@ body.map-immersive {
             <span class="tool-glyph glyph-orbit" aria-hidden="true"></span>
             <span>Orbit</span>
           </button>
+          <button class="btn" id="startOrbitalMissionBtn" type="button">Orbital Mission</button>
           <button class="btn" id="clearPOIsBtn" type="button">Clear POIs</button>
           <button class="btn" id="setPOIFromPilotBtn" type="button">POI from Pilot Marker</button>
           <label class="mission-setting tool-inline-setting" for="orbitRadiusMeters">Orbit Radius (m)
             <input id="orbitRadiusMeters" type="number" min="10" max="500" step="5" value="50" />
+          </label>
+          <label class="mission-setting tool-inline-setting" for="orbitAltitudeMeters">Orbit Alt (m)
+            <input id="orbitAltitudeMeters" type="number" min="-200" max="2000" step="1" value="0" />
+          </label>
+          <label class="mission-setting tool-inline-setting" for="orbitDirection">Orbit Dir
+            <select id="orbitDirection">
+              <option value="cw" selected>CW</option>
+              <option value="ccw">CCW</option>
+            </select>
           </label>
           <div id="poiRadiusIndicator" class="route-status compact-status">Pattern: Perimeter</div>
           <label class="mission-setting tool-inline-setting" for="patternType">Pattern
@@ -1159,6 +1170,13 @@ body.map-immersive {
           <label class="mission-setting" for="djiStartStopVideo">
             <input id="djiStartStopVideo" type="checkbox" /> Start/Stop Video
           </label>
+          <label class="mission-setting" for="djiVideoStartWp">Video Start WP
+            <input id="djiVideoStartWp" type="number" min="1" step="1" value="1" />
+          </label>
+          <label class="mission-setting" for="djiVideoStopWp">Video Stop WP
+            <input id="djiVideoStopWp" type="number" min="0" step="1" value="0" />
+          </label>
+          <div class="route-status" id="videoWpStatus">Video actions: disabled</div>
         </div>
         <button class="btn secondary-btn drawer-toggle" id="toggleExportDrawerBtn" type="button" aria-controls="exportDrawer" aria-expanded="false">
           Export & Files
@@ -1278,6 +1296,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('snapRouteBtn').addEventListener('click', snapRouteToNearestWaypoint);
   document.getElementById('closePolygonBtn').addEventListener('click', closeCurrentRoutePolygon);
   document.getElementById('setPOIByClickBtn').addEventListener('click', toggleOrbitMode);
+  document.getElementById('startOrbitalMissionBtn').addEventListener('click', startOrbitalMissionMode);
   document.getElementById('clearPOIsBtn').addEventListener('click', clearMissionPOI);
   document.getElementById('setPOIFromPilotBtn').addEventListener('click', setPOIFromPilotLocation);
   const setPOIManuallyBtn = document.getElementById('setPOIManuallyBtn');
@@ -1302,10 +1321,20 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('centerPilotMarkerBtn').addEventListener('click', centerMapToPilotMarker);
   document.getElementById('routeFile').addEventListener('change', handleRouteFile, false);
   document.getElementById('orbitRadiusMeters').addEventListener('input', syncPOICircleRadiusFromInput);
+  document.getElementById('orbitAltitudeMeters').addEventListener('input', handleOrbitAltitudeInputChange);
+  document.getElementById('orbitDirection').addEventListener('change', () => {
+    if (isPOIPatternActive()) {
+      rebuildOrbitRouteFromCircle({ fitMap: false });
+      updateDrawShapeSummary();
+    }
+  });
   document.getElementById('djiTakePhotoEachWp').addEventListener('change', updateWaypointPhotoActionUi);
   document.getElementById('djiHoverAtWp').addEventListener('change', updateWaypointPhotoActionUi);
   document.getElementById('djiZoomAtWp').addEventListener('change', updateWaypointPhotoActionUi);
   document.getElementById('djiFacePoiHeading').addEventListener('change', updateWaypointPhotoActionUi);
+  document.getElementById('djiStartStopVideo').addEventListener('change', updateWaypointPhotoActionUi);
+  document.getElementById('djiVideoStartWp').addEventListener('input', updateVideoWaypointStatus);
+  document.getElementById('djiVideoStopWp').addEventListener('input', updateVideoWaypointStatus);
   document.getElementById('waypointConfigSelect').addEventListener('change', handleWaypointConfigSelectionChange);
   document.getElementById('waypointHeadingMode').addEventListener('change', () => {
     applyWaypointConfigEditorState();
@@ -1578,6 +1607,27 @@ function getMissionPOIById(id) {
   return missionPOIs.find((entry) => entry.id === id) || null;
 }
 
+function getOrbitAltitudeMetersInput() {
+  const raw = Number(document.getElementById('orbitAltitudeMeters')?.value);
+  if (!Number.isFinite(raw)) return 0;
+  return Math.max(-200, Math.min(2000, raw));
+}
+
+function getPoiTargetAltitudeMeters(poi) {
+  if (poi && Number.isFinite(Number(poi.altitudeMeters))) {
+    return Math.max(-200, Math.min(2000, Number(poi.altitudeMeters)));
+  }
+  return getOrbitAltitudeMetersInput();
+}
+
+function formatWaypointPoiPoint(poi) {
+  if (!poi) return '0.000000,0.000000,0.000000';
+  const lat = Number(poi.lat).toFixed(6);
+  const lng = Number(poi.lng).toFixed(6);
+  const alt = getPoiTargetAltitudeMeters(poi).toFixed(6);
+  return `${lat},${lng},${alt}`;
+}
+
 function getPrimaryMissionPOIRecord() {
   if (!missionPOIs.length) return null;
   return getMissionPOIById(activeMissionPOIId) || missionPOIs[0];
@@ -1591,7 +1641,7 @@ function getAllStoredMissionPOIs() {
     const lat = p.lat();
     const lng = p.lng();
     if (!isValidPilotCoordinate(lat, lng)) return;
-    points.push({ id: entry.id, lat, lng });
+    points.push({ id: entry.id, lat, lng, altitudeMeters: getPoiTargetAltitudeMeters(entry) });
   });
   return points;
 }
@@ -1674,13 +1724,52 @@ function createMissionPOIMarker(lat, lng, poiId) {
   return markerPoi;
 }
 
+function createMissionPOIRecord(lat, lng, options = {}) {
+  if (!map || !isValidPilotCoordinate(lat, lng)) return null;
+
+  const poiId = options.id || `poi-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
+  const markerPoi = createMissionPOIMarker(lat, lng, poiId);
+  const record = {
+    id: poiId,
+    marker: markerPoi,
+    altitudeMeters: Number.isFinite(Number(options.altitudeMeters)) ? Number(options.altitudeMeters) : getOrbitAltitudeMetersInput()
+  };
+
+  missionPOIs.push(record);
+  activeMissionPOIId = record.id;
+  refreshMissionPOIMarkerStyles();
+  refreshWaypointConfigUi();
+  return record;
+}
+
+function clearMissionPOIState() {
+  missionPOIs.forEach((entry) => entry.marker.setMap(null));
+  missionPOIs = [];
+  activeMissionPOIId = null;
+  clearPOICircle();
+  updateOrbitButtonState();
+}
+
 function isPOIPatternActive() {
   const pattern = String(document.getElementById('patternType')?.value || 'perimeter').toLowerCase();
   return pattern === 'poi';
 }
 
+function isPendingPOIClickMode() {
+  return pendingMapClickMode === 'poi' || pendingMapClickMode === 'orbital';
+}
+
 function syncPOIVisualizationWithPattern() {
-  // POIs are marker-only; keep orbit radius as export math input and avoid map circles.
+  if (!isPOIPatternActive()) {
+    clearPOICircle();
+    return;
+  }
+
+  if (missionPOIs.length > 0) {
+    ensurePOICircleForCurrentPOI();
+    return;
+  }
+
   clearPOICircle();
 }
 
@@ -1720,13 +1809,49 @@ function clearLegacyMissionPOIStorage() {
 
 function updateMissionPOIMarker(lat, lng) {
   if (!map) return;
+  createMissionPOIRecord(lat, lng, { altitudeMeters: getOrbitAltitudeMetersInput() });
+}
 
-  const poiId = `poi-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
-  const markerPoi = createMissionPOIMarker(lat, lng, poiId);
-  missionPOIs.push({ id: poiId, marker: markerPoi });
-  activeMissionPOIId = poiId;
-  refreshMissionPOIMarkerStyles();
+function handleOrbitAltitudeInputChange() {
+  const activePoi = getPrimaryMissionPOIRecord();
+  if (activePoi) {
+    activePoi.altitudeMeters = getOrbitAltitudeMetersInput();
+  }
+  updateDrawShapeSummary();
+}
+
+function applyOrbitFacePoiDefaults() {
+  if (!isPOIPatternActive() || missionPOIs.length !== 1) return false;
+  const activePoi = getPrimaryMissionPOIRecord();
+  if (!activePoi) return false;
+
+  const count = getRouteWaypointCountForConfig();
+  if (count <= 0) return false;
+
+  const globalZoom = Number(document.getElementById('djiZoomFactor')?.value);
+  const fallbackZoom = Number.isFinite(globalZoom) ? Math.max(1, Math.min(4, globalZoom)) : 1;
+
+  waypointPoiAssignments.clear();
+  for (let idx = 0; idx < count; idx++) {
+    waypointPoiAssignments.set(idx, activePoi.id);
+    const existing = waypointHeadingConfigs.get(idx);
+    waypointHeadingConfigs.set(idx, {
+      mode: 'poi',
+      poiId: activePoi.id,
+      customAngle: Number.isFinite(Number(existing && existing.customAngle)) ? Number(existing.customAngle) : 0,
+      zoomFactor: Number.isFinite(Number(existing && existing.zoomFactor))
+        ? Math.max(1, Math.min(4, Number(existing.zoomFactor)))
+        : fallbackZoom
+    });
+  }
+
+  const facePoiCheckbox = document.getElementById('djiFacePoiHeading');
+  if (facePoiCheckbox) facePoiCheckbox.checked = true;
+
   refreshWaypointConfigUi();
+  updateWaypointMarkerVisuals();
+  updateDrawShapeSummary();
+  return true;
 }
 
 function clearPOICircle() {
@@ -1746,7 +1871,7 @@ function updateDrawShapeSummary() {
     ? (patternEl.options[patternEl.selectedIndex]?.text || patternEl.value)
     : 'Perimeter';
 
-  const hasOrbit = isPOIPatternActive() && (missionPOIs.length > 0 || pendingMapClickMode === 'poi' || !!poiCircle);
+  const hasOrbit = isPOIPatternActive() && (missionPOIs.length > 0 || isPendingPOIClickMode() || !!poiCircle);
   const hasRoute = !!activePolyline || routePath.length > 0;
   const isDrawingWP = isRouteDrawingActive();
   const isDrawingPoly = !!(drawingManager && window.google && google.maps.drawing &&
@@ -1757,10 +1882,11 @@ function updateDrawShapeSummary() {
   if (hasOrbit) {
     const rawRadius = Number(document.getElementById('orbitRadiusMeters')?.value);
     const radius = Number.isFinite(rawRadius) && rawRadius >= 10 ? Math.round(rawRadius) : null;
+    const orbitAlt = Math.round(getOrbitAltitudeMetersInput());
     if (radius) {
-      indicator.textContent = `Orbit | R=${radius} m | D=${radius * 2} m | Pattern: ${patternLabel}`;
+      indicator.textContent = `Orbit | R=${radius} m | Alt=${orbitAlt} m | D=${radius * 2} m | Pattern: ${patternLabel}`;
     } else {
-      indicator.textContent = `Orbit | R=set below | Pattern: ${patternLabel}`;
+      indicator.textContent = `Orbit | R=set below | Alt=${orbitAlt} m | Pattern: ${patternLabel}`;
     }
     return;
   }
@@ -1821,6 +1947,9 @@ function ensurePOICircleForCurrentPOI(options = {}) {
       const center = poiCircle.getCenter();
       if (!center) return;
       activePoi.marker.setPosition(center);
+      if (isPOIPatternActive()) {
+        rebuildOrbitRouteFromCircle({ fitMap: false });
+      }
     });
 
     poiCircle.addListener('radius_changed', () => {
@@ -1831,6 +1960,9 @@ function ensurePOICircleForCurrentPOI(options = {}) {
       if (orbitInput) orbitInput.value = String(Math.round(radius));
       syncingPOIRadiusInput = false;
       updatePOIRadiusIndicator(radius);
+      if (isPOIPatternActive()) {
+        rebuildOrbitRouteFromCircle({ fitMap: false });
+      }
     });
   }
 
@@ -1852,6 +1984,7 @@ function syncPOICircleRadiusFromInput() {
   }
   if (!poiCircle) return;
   poiCircle.setRadius(radius);
+  rebuildOrbitRouteFromCircle({ fitMap: false });
   updatePOIRadiusIndicator(radius);
 }
 
@@ -1860,15 +1993,20 @@ function handlePatternTypeChange() {
   updateDrawShapeSummary();
 }
 
-function startPOIClickMode() {
+function startPOIClickMode(mode = 'poi') {
   if (!map) return;
-  pendingMapClickMode = 'poi';
+  pendingMapClickMode = mode;
   updateOrbitButtonState();
+  if (mode === 'orbital') {
+    showLookupMessage('Orbital Mission: click map to place orbit center (POI). Orbit route will be generated automatically.', 'warn');
+    return;
+  }
   showLookupMessage('POI click mode enabled. Tap/click map to add a POI. Click a POI marker to select active target, then click waypoint markers to assign.', 'warn');
 }
 
 function updateOrbitButtonState() {
   const btn = document.getElementById('setPOIByClickBtn');
+  const orbitalBtn = document.getElementById('startOrbitalMissionBtn');
   if (!btn) return;
   const span = btn.querySelector('span:last-child');
   if (pendingMapClickMode === 'poi') {
@@ -1877,11 +2015,19 @@ function updateOrbitButtonState() {
     if (span) span.textContent = 'Cancel';
     btn.title = 'Cancel POI placement';
     btn.setAttribute('aria-label', 'Cancel POI placement');
+    if (orbitalBtn) orbitalBtn.classList.remove('btn-active');
+  } else if (pendingMapClickMode === 'orbital') {
+    btn.classList.remove('btn-active', 'btn-pending');
+    if (span) span.textContent = 'Orbit';
+    btn.title = 'Add POI by Click';
+    btn.setAttribute('aria-label', 'Add POI by Click');
+    if (orbitalBtn) orbitalBtn.classList.add('btn-active');
   } else {
     btn.classList.remove('btn-active', 'btn-pending');
     if (span) span.textContent = 'Add POI';
     btn.title = 'Add POI by Click';
     btn.setAttribute('aria-label', 'Add POI by Click');
+    if (orbitalBtn) orbitalBtn.classList.remove('btn-active');
   }
   const clearBtn = document.getElementById('clearPOIsBtn');
   if (clearBtn) clearBtn.disabled = missionPOIs.length === 0;
@@ -1890,9 +2036,7 @@ function updateOrbitButtonState() {
 
 function clearMissionPOI() {
   pendingMapClickMode = null;
-  missionPOIs.forEach((entry) => entry.marker.setMap(null));
-  missionPOIs = [];
-  activeMissionPOIId = null;
+  clearMissionPOIState();
   waypointPoiAssignments.clear();
   waypointHeadingConfigs.forEach((cfg, idx) => {
     waypointHeadingConfigs.set(idx, {
@@ -1902,8 +2046,6 @@ function clearMissionPOI() {
       zoomFactor: Number.isFinite(Number(cfg && cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : (Number(document.getElementById('djiZoomFactor')?.value) || 1)
     });
   });
-  clearPOICircle();
-  updateOrbitButtonState();
   refreshWaypointConfigUi();
   showLookupMessage("All mission POIs cleared.", "dim");
 }
@@ -1917,7 +2059,24 @@ function toggleOrbitMode() {
   }
   const patternEl = document.getElementById('patternType');
   if (patternEl) patternEl.value = 'poi';
-  startPOIClickMode();
+  startPOIClickMode('poi');
+}
+
+function startOrbitalMissionMode() {
+  if (pendingMapClickMode === 'orbital') {
+    pendingMapClickMode = null;
+    updateOrbitButtonState();
+    showLookupMessage('Orbital mission placement cancelled.', 'dim');
+    return;
+  }
+
+  const patternEl = document.getElementById('patternType');
+  if (patternEl) patternEl.value = 'poi';
+
+  // Start clean for a dedicated orbital route build.
+  clearActiveRoute();
+  clearMissionPOI();
+  startPOIClickMode('orbital');
 }
 
 function setPOIFromPilotLocation() {
@@ -2144,11 +2303,18 @@ function initGoogleMap() {
   });
 
   map.addListener('click', (event) => {
-    if (pendingMapClickMode !== 'poi') return;
+    if (!isPendingPOIClickMode()) return;
+    const clickMode = pendingMapClickMode;
     pendingMapClickMode = null;
     const latLng = event && event.latLng;
     if (!latLng) return;
     setMissionPOI(latLng.lat(), latLng.lng());
+    if (clickMode === 'orbital') {
+      const patternEl = document.getElementById('patternType');
+      if (patternEl) patternEl.value = 'poi';
+      ensurePOICircleForCurrentPOI({ keepExistingRadius: false });
+      rebuildOrbitRouteFromCircle({ fitMap: true });
+    }
     updateOrbitButtonState();
   });
 
@@ -2681,7 +2847,7 @@ function getClosedPolygonCoordsLngLat() {
   return coords;
 }
 
-function setRouteFromLatLngPoints(points) {
+function setRouteFromLatLngPoints(points, options = {}) {
   if (!Array.isArray(points) || points.length < 2 || !map || !window.google) return;
 
   if (activePolyline) {
@@ -2708,9 +2874,12 @@ function setRouteFromLatLngPoints(points) {
   // Preserve heading info if available (e.g., from orbit points)
   routePath = points.map(p => ({ lat: p.lat, lng: p.lng, heading: p.heading }));
 
-  const bounds = new google.maps.LatLngBounds();
-  gpath.forEach(g => bounds.extend(g));
-  map.fitBounds(bounds);
+  const fitMap = options.fitMap !== false;
+  if (fitMap) {
+    const bounds = new google.maps.LatLngBounds();
+    gpath.forEach(g => bounds.extend(g));
+    map.fitBounds(bounds);
+  }
   extractPathFromPolyline(poly);
   refreshWaypointConfigUi();
 }
@@ -2918,11 +3087,14 @@ function generatePOIOrbitPointsFromPolygon(polygonCoords) {
   }
 
   const radiusMeters = Math.max(10, Number(document.getElementById('orbitRadiusMeters')?.value) || 50);
+  const orbitDirection = String(document.getElementById('orbitDirection')?.value || 'cw').toLowerCase() === 'ccw' ? 'ccw' : 'cw';
   const points = [];
   const count = 8;
+  const startAngleOffsetDeg = 15;
   
   for (let i = 0; i < count; i++) {
-    const heading = (360 / count) * i;
+    const step = ((360 / count) * i + startAngleOffsetDeg) % 360;
+    const heading = orbitDirection === 'ccw' ? (360 - step) % 360 : step;
     const offset = google.maps.geometry.spherical.computeOffset(center, radiusMeters, heading);
     
     // Calculate heading from this point back to the POI (camera point)
@@ -2982,6 +3154,7 @@ function generateRoutePattern() {
       return;
     }
     setRouteFromLatLngPoints(points);
+    applyOrbitFacePoiDefaults();
   }
 }
 
@@ -2999,6 +3172,7 @@ function extractPathFromPolyline(poly) {
   });
   rebuildWaypointMarkers(poly);
   refreshWaypointConfigUi();
+  updateVideoWaypointStatus();
 }
 
 // Always read the current map state at export time — never rely solely on the cached array.
@@ -3031,8 +3205,11 @@ function generatePOIOrbitPointsFromCircle() {
 
   const points = [];
   const count = 12;
+  const startAngleOffsetDeg = 15;
+  const orbitDirection = String(document.getElementById('orbitDirection')?.value || 'cw').toLowerCase() === 'ccw' ? 'ccw' : 'cw';
   for (let i = 0; i < count; i++) {
-    const heading = (360 / count) * i;
+    const step = ((360 / count) * i + startAngleOffsetDeg) % 360;
+    const heading = orbitDirection === 'ccw' ? (360 - step) % 360 : step;
     const offset = google.maps.geometry.spherical.computeOffset(center, radiusMeters, heading);
     const pointHeading = google.maps.geometry.spherical.computeHeading(offset, center) || 0;
     points.push({
@@ -3046,6 +3223,14 @@ function generatePOIOrbitPointsFromCircle() {
     points.push({ ...points[0] });
   }
   return points;
+}
+
+function rebuildOrbitRouteFromCircle(options = {}) {
+  const points = generatePOIOrbitPointsFromCircle();
+  if (!points || points.length < 2) return false;
+  setRouteFromLatLngPoints(points, { fitMap: options.fitMap !== false });
+  applyOrbitFacePoiDefaults();
+  return true;
 }
 
 function ensureRoutePathForExport() {
@@ -3074,6 +3259,8 @@ function normalizeHeadingDegrees(value) {
 function makeWpIcon(type, options = {}) {
   const selected = !!options.selected;
   const headingDeg = normalizeHeadingDegrees(options.headingDeg);
+  const cx = 20;
+  const cy = 20;
   const schemes = {
     start: { bg: '#1b5e20', stroke: '#dcedc8', text: '#ffffff', textStroke: '#0d3b12' },
     end: { bg: '#8e0000', stroke: '#ffcdd2', text: '#ffffff', textStroke: '#4a0000' },
@@ -3081,25 +3268,28 @@ function makeWpIcon(type, options = {}) {
   };
   const c = schemes[type] || schemes.mid;
   const halo = selected
-    ? '<circle cx="14" cy="14" r="13" fill="none" stroke="#f59e0b" stroke-width="2.8" opacity="0.95"/>'
+    ? '<circle cx="20" cy="20" r="18.2" fill="#ff9800" opacity="0.26"/>'
+      + '<circle cx="20" cy="20" r="16.8" fill="none" stroke="#ff9800" stroke-width="3.7" opacity="1"/>'
     : '';
-  const headingArrow = (selected && Number.isFinite(headingDeg))
-    ? '<g transform="rotate(' + headingDeg + ' 14 14)">'
-      + '<line x1="14" y1="14" x2="14" y2="4.8" stroke="#2563eb" stroke-width="2.4" stroke-linecap="round"/>'
-      + '<polygon points="14,2.3 10.7,7.2 17.3,7.2" fill="#2563eb"/>'
+  const headingArrow = Number.isFinite(headingDeg)
+    ? '<g transform="rotate(' + headingDeg + ' ' + cx + ' ' + cy + ')">'
+      + '<line x1="20" y1="20" x2="20" y2="1.8" stroke="#ffffff" stroke-width="8.0" stroke-linecap="round" opacity="0.9"/>'
+      + '<line x1="20" y1="20" x2="20" y2="1.8" stroke="#ff8f00" stroke-width="5.4" stroke-linecap="round" opacity="1"/>'
+      + '<polygon points="20,-3.2 10.0,12.4 30.0,12.4" fill="#ffffff" opacity="0.92"/>'
+      + '<polygon points="20,-1.9 11.8,11.1 28.2,11.1" fill="#ff8f00" stroke="#b35b00" stroke-width="1.1" opacity="1"/>'
       + '</g>'
     : '';
-  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28">'
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">'
     + halo
-    + '<circle cx="14" cy="14" r="11.5" fill="' + c.bg + '" stroke="' + c.stroke + '" stroke-width="2"/>'
     + headingArrow
+    + '<circle cx="20" cy="20" r="11.7" fill="' + c.bg + '" stroke="' + c.stroke + '" stroke-width="2.2"/>'
     + '</svg>';
 
   return {
     url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg),
-    scaledSize: new google.maps.Size(28, 28),
-    anchor: new google.maps.Point(14, 14),
-    labelOrigin: new google.maps.Point(14, 14)
+    scaledSize: new google.maps.Size(40, 40),
+    anchor: new google.maps.Point(20, 20),
+    labelOrigin: new google.maps.Point(20, 20)
   };
 }
 
@@ -3114,7 +3304,7 @@ function makeWpLabel(number, type) {
   return {
     text: labelText,
     color: scheme.color,
-    fontSize: '13px',
+    fontSize: '14px',
     fontWeight: 'bold'
   };
 }
@@ -3173,9 +3363,9 @@ function updateWaypointMarkerVisuals() {
   waypointMarkers.forEach((markerWp, idx) => {
     const type = idx === 0 ? 'start' : (idx === total - 1 ? 'end' : 'mid');
     const selected = idx === selectedWaypointConfigIndex;
-    const headingDeg = selected ? getWaypointDisplayHeading(idx, pathPoints) : null;
+    const headingDeg = getWaypointDisplayHeading(idx, pathPoints);
     markerWp.setIcon(makeWpIcon(type, { selected, headingDeg }));
-    markerWp.setZIndex((selected ? 20000 : 10000) + idx);
+    markerWp.setZIndex((selected ? 500000 : 450000) + idx);
   });
 }
 
@@ -3505,6 +3695,69 @@ function getWpmlElements(xmlDoc, tagName) {
 
 function buildDJITemplateKML(createTimeMs) {
   const settings = getDJIMissionSettings();
+  const basePath = normalizeWaypointPathForExport(routePath);
+  const missionPois = getAllStoredMissionPOIs();
+  const hasExplicitRouteHeadings = basePath.some((point) => point && point.heading !== undefined);
+
+  const placemarks = basePath.map((p, i) => {
+    let heading;
+    if (p.heading !== undefined) {
+      heading = Number(p.heading).toFixed(6);
+    } else {
+      heading = getWaypointHeading(i, basePath).toFixed(6);
+    }
+
+    const waypointConfig = waypointHeadingConfigs.get(i);
+    const waypointPoi = getWaypointMissionPoi(i, p, missionPois);
+    let headingModeText = 'smoothTransition';
+    let headingAngleText = heading;
+    let waypointPoiPointText = '0.000000,0.000000,0.000000';
+
+    if (waypointConfig && waypointConfig.mode === 'custom') {
+      const customAngle = Number.isFinite(Number(waypointConfig.customAngle))
+        ? Math.max(-180, Math.min(180, Number(waypointConfig.customAngle)))
+        : 0;
+      headingAngleText = customAngle.toFixed(6);
+    } else if (waypointConfig && waypointConfig.mode === 'poi') {
+      const targetPoi = waypointConfig.poiId
+        ? (missionPois.find((poi) => poi.id === waypointConfig.poiId) || waypointPoi)
+        : waypointPoi;
+      if (targetPoi) {
+        headingModeText = 'towardPOI';
+        headingAngleText = '0';
+        waypointPoiPointText = formatWaypointPoiPoint(targetPoi);
+      }
+    } else {
+      const usePoiHeading = !!settings.facePoiHeading && !!waypointPoi && !hasExplicitRouteHeadings;
+      if (usePoiHeading) {
+        headingModeText = 'towardPOI';
+        headingAngleText = '0';
+        waypointPoiPointText = formatWaypointPoiPoint(waypointPoi);
+      }
+    }
+
+    return `
+    <Placemark>
+      <Point>
+        <coordinates>${p.lng},${p.lat}</coordinates>
+      </Point>
+      <wpml:index>${i}</wpml:index>
+      <wpml:ellipsoidHeight>${settings.height}</wpml:ellipsoidHeight>
+      <wpml:height>${settings.height}</wpml:height>
+      <wpml:useGlobalHeight>1</wpml:useGlobalHeight>
+      <wpml:useGlobalSpeed>1</wpml:useGlobalSpeed>
+      <wpml:useGlobalHeadingParam>0</wpml:useGlobalHeadingParam>
+      <wpml:useGlobalTurnParam>1</wpml:useGlobalTurnParam>
+      <wpml:gimbalPitchAngle>0</wpml:gimbalPitchAngle>
+      <wpml:waypointHeadingParam>
+        <wpml:waypointHeadingMode>${headingModeText}</wpml:waypointHeadingMode>
+        <wpml:waypointHeadingAngle>${headingAngleText}</wpml:waypointHeadingAngle>
+        <wpml:waypointPoiPoint>${waypointPoiPointText}</wpml:waypointPoiPoint>
+        <wpml:waypointHeadingPathMode>followBadArc</wpml:waypointHeadingPathMode>
+      </wpml:waypointHeadingParam>
+    </Placemark>`;
+  }).join('');
+
   return `<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:wpml="http://www.uav.com/wpmz/1.0.2">
   <Document>
@@ -3522,6 +3775,20 @@ function buildDJITemplateKML(createTimeMs) {
         <wpml:droneSubEnumValue>0</wpml:droneSubEnumValue>
       </wpml:droneInfo>
     </wpml:missionConfig>
+    <Folder>
+      <wpml:templateType>waypoint</wpml:templateType>
+      <wpml:templateId>0</wpml:templateId>
+      <wpml:waylineCoordinateSysParam>
+        <wpml:coordinateMode>WGS84</wpml:coordinateMode>
+        <wpml:heightMode>EGM96</wpml:heightMode>
+        <wpml:globalShootHeight>${settings.height}</wpml:globalShootHeight>
+        <wpml:positioningType>GPS</wpml:positioningType>
+      </wpml:waylineCoordinateSysParam>
+      <wpml:autoFlightSpeed>${settings.speed}</wpml:autoFlightSpeed>
+      <wpml:gimbalPitchMode>usePointSetting</wpml:gimbalPitchMode>
+      <wpml:globalWaypointTurnMode>toPointAndPassWithContinuityCurvature</wpml:globalWaypointTurnMode>
+      <wpml:globalUseStraightLine>0</wpml:globalUseStraightLine>${placemarks}
+    </Folder>
   </Document>
 </kml>`;
 }
@@ -3539,6 +3806,8 @@ function getDJIMissionSettings() {
   const zoomFactorRaw = Number(document.getElementById('djiZoomFactor')?.value);
   const photoByDistanceMetersRaw = Number(document.getElementById('photoByDistanceMeters')?.value);
   const startStopVideo = !!document.getElementById('djiStartStopVideo')?.checked;
+  const videoStartWpRaw = Number(document.getElementById('djiVideoStartWp')?.value);
+  const videoStopWpRaw = Number(document.getElementById('djiVideoStopWp')?.value);
 
   return {
     height: Number.isFinite(height) && height > 0 ? height : 60,
@@ -3552,8 +3821,62 @@ function getDJIMissionSettings() {
     facePoiHeading,
     zoomFactor: Number.isFinite(zoomFactorRaw) && zoomFactorRaw >= 1 && zoomFactorRaw <= 4 ? zoomFactorRaw : 1,
     photoByDistanceMeters: Number.isFinite(photoByDistanceMetersRaw) && photoByDistanceMetersRaw > 0 ? photoByDistanceMetersRaw : 0,
-    startStopVideo
+    startStopVideo,
+    videoStartWp: Number.isFinite(videoStartWpRaw) && videoStartWpRaw >= 1 ? Math.round(videoStartWpRaw) : 1,
+    videoStopWp: Number.isFinite(videoStopWpRaw) && videoStopWpRaw >= 0 ? Math.round(videoStopWpRaw) : 0
   };
+}
+
+function getRouteWaypointCountForVideoActions() {
+  if (activePolyline) {
+    return Math.max(0, activePolyline.getPath().getLength());
+  }
+  return Array.isArray(routePath) ? routePath.length : 0;
+}
+
+function resolveVideoActionIndices(settings, waypointCount) {
+  if (!settings || !settings.startStopVideo || !Number.isFinite(waypointCount) || waypointCount <= 0) {
+    return null;
+  }
+
+  const startIndex = Math.max(0, Math.min(waypointCount - 1, (settings.videoStartWp || 1) - 1));
+  let stopIndex;
+  if ((settings.videoStopWp || 0) <= 0) {
+    stopIndex = waypointCount - 1;
+  } else {
+    stopIndex = Math.max(0, Math.min(waypointCount - 1, (settings.videoStopWp || 1) - 1));
+  }
+
+  if (stopIndex < startIndex) {
+    stopIndex = waypointCount - 1;
+  }
+
+  return { startIndex, stopIndex };
+}
+
+function updateVideoWaypointStatus() {
+  const status = document.getElementById('videoWpStatus');
+  if (!status) return;
+
+  const settings = getDJIMissionSettings();
+  if (!settings.startStopVideo) {
+    status.textContent = 'Video actions: disabled';
+    return;
+  }
+
+  const waypointCount = getRouteWaypointCountForVideoActions();
+  if (waypointCount <= 0) {
+    status.textContent = `Video actions: Start WP ${settings.videoStartWp}, Stop WP ${settings.videoStopWp || 'End'} (no route yet)`;
+    return;
+  }
+
+  const indices = resolveVideoActionIndices(settings, waypointCount);
+  if (!indices) {
+    status.textContent = 'Video actions: disabled';
+    return;
+  }
+
+  status.textContent = `Video actions: start at WP ${indices.startIndex + 1}, stop at WP ${indices.stopIndex + 1}`;
 }
 
 function updateWaypointPhotoActionUi() {
@@ -3565,12 +3888,17 @@ function updateWaypointPhotoActionUi() {
   const zoomCheckbox = document.getElementById('djiZoomAtWp');
   const facePoiCheckbox = document.getElementById('djiFacePoiHeading');
   const zoomFactorInput = document.getElementById('djiZoomFactor');
+  const startStopVideo = !!document.getElementById('djiStartStopVideo')?.checked;
+  const videoStartInput = document.getElementById('djiVideoStartWp');
+  const videoStopInput = document.getElementById('djiVideoStopWp');
 
   if (hoverCheckbox) hoverCheckbox.disabled = !takePhotoEachWp;
   if (zoomCheckbox) zoomCheckbox.disabled = !takePhotoEachWp;
   if (facePoiCheckbox) facePoiCheckbox.disabled = !takePhotoEachWp;
   if (hoverSecondsInput) hoverSecondsInput.disabled = !takePhotoEachWp || !hoverAtWp;
   if (zoomFactorInput) zoomFactorInput.disabled = !takePhotoEachWp || !zoomAtWp;
+  if (videoStartInput) videoStartInput.disabled = !startStopVideo;
+  if (videoStopInput) videoStopInput.disabled = !startStopVideo;
 
   if (!takePhotoEachWp) {
     if (hoverCheckbox) hoverCheckbox.checked = false;
@@ -3579,6 +3907,7 @@ function updateWaypointPhotoActionUi() {
   }
 
   applyWaypointConfigEditorState();
+  updateVideoWaypointStatus();
 }
 
 function getRouteWaypointCountForConfig() {
@@ -3942,6 +4271,7 @@ function buildDJIWaylinesWPML() {
     ? settings.photoByDistanceMeters
     : (settings.takePhotoEachWp ? 20 : 0);
   const photoWaypoints = getPhotoWaypointIndices(exportPath, photoSpacing);
+  const videoActionIndices = resolveVideoActionIndices(settings, exportPath.length);
   const photoOrderByIndex = new Map();
   let photoOrder = 1;
   for (const idx of photoWaypoints) {
@@ -3981,7 +4311,7 @@ function buildDJIWaylinesWPML() {
       if (targetPoi) {
         headingModeText = 'towardPOI';
         headingAngleText = '0';
-        waypointPoiPointText = `${Number(targetPoi.lat).toFixed(6)},${Number(targetPoi.lng).toFixed(6)},0.000000`;
+        waypointPoiPointText = formatWaypointPoiPoint(targetPoi);
         headingAngleEnableText = (isFirst || isLast) ? '1' : '0';
       }
     } else {
@@ -3989,7 +4319,7 @@ function buildDJIWaylinesWPML() {
       if (usePoiHeading) {
         headingModeText = 'towardPOI';
         headingAngleText = '0';
-        waypointPoiPointText = `${Number(waypointPoi.lat).toFixed(6)},${Number(waypointPoi.lng).toFixed(6)},0.000000`;
+        waypointPoiPointText = formatWaypointPoiPoint(waypointPoi);
         headingAngleEnableText = (isFirst || isLast) ? '1' : '0';
       }
     }
@@ -4058,7 +4388,7 @@ function buildDJIWaylinesWPML() {
       }
     }
 
-    if (settings.startStopVideo && isFirst) {
+    if (videoActionIndices && i === videoActionIndices.startIndex) {
       actions.push(`
           <wpml:action>
             <wpml:actionId>${actionId++}</wpml:actionId>
@@ -4069,7 +4399,7 @@ function buildDJIWaylinesWPML() {
           </wpml:action>`);
     }
 
-    if (settings.startStopVideo && isLast) {
+    if (videoActionIndices && i === videoActionIndices.stopIndex) {
       actions.push(`
           <wpml:action>
             <wpml:actionId>${actionId++}</wpml:actionId>
@@ -4240,17 +4570,44 @@ function handleRouteFile(e) {
         if (wpmlFile) {
           const wpmlText = await wpmlFile.async('string');
           const wpmlXml = (new DOMParser()).parseFromString(wpmlText, 'text/xml');
-          const placemarks = wpmlXml.querySelectorAll('Placemark Point coordinates');
+          const placemarks = Array.from(wpmlXml.getElementsByTagName('Placemark'));
           const coords = [];
+          const waypointImports = [];
 
-          placemarks.forEach((el) => {
-            const raw = el.textContent.trim();
+          placemarks.forEach((placemark) => {
+            const coordEl = placemark.querySelector('Point coordinates');
+            if (!coordEl) return;
+            const raw = coordEl.textContent.trim();
             const parts = raw.split(',');
             if (parts.length < 2) return;
             const lon = parseFloat(parts[0]);
             const lat = parseFloat(parts[1]);
             if (!Number.isNaN(lon) && !Number.isNaN(lat)) {
               coords.push({ lat, lng: lon });
+
+              const headingModeEl = getWpmlElements(placemark, 'waypointHeadingMode')[0];
+              const headingAngleEl = getWpmlElements(placemark, 'waypointHeadingAngle')[0];
+              const poiPointEl = getWpmlElements(placemark, 'waypointPoiPoint')[0];
+              let poiPoint = null;
+              if (poiPointEl) {
+                const poiParts = poiPointEl.textContent.trim().split(',');
+                const poiLat = parseFloat(poiParts[0]);
+                const poiLng = parseFloat(poiParts[1]);
+                const poiAlt = parseFloat(poiParts[2]);
+                if (!Number.isNaN(poiLat) && !Number.isNaN(poiLng)) {
+                  poiPoint = {
+                    lat: poiLat,
+                    lng: poiLng,
+                    altitudeMeters: Number.isNaN(poiAlt) ? 0 : poiAlt
+                  };
+                }
+              }
+
+              waypointImports.push({
+                headingMode: headingModeEl ? headingModeEl.textContent.trim() : 'smoothTransition',
+                headingAngle: headingAngleEl ? parseFloat(headingAngleEl.textContent) : 0,
+                poiPoint
+              });
             }
           });
 
@@ -4325,6 +4682,7 @@ function handleRouteFile(e) {
           }
 
           setRouteFromLatLngPoints(coords);
+          restoreImportedWpmlPoiState(waypointImports);
           updateDrawRouteButtonState();
           return;
         }
@@ -4441,6 +4799,68 @@ function importRouteFromGeoJSON(gj) {
   map.fitBounds(bounds);
   extractPathFromPolyline(poly);
   refreshWaypointConfigUi();
+}
+
+function findMatchingImportedPoi(lat, lng, altitudeMeters, epsilon = 1e-6) {
+  return missionPOIs.find((entry) => {
+    const pos = entry && entry.marker ? entry.marker.getPosition() : null;
+    if (!pos) return false;
+    const sameLat = Math.abs(pos.lat() - lat) <= epsilon;
+    const sameLng = Math.abs(pos.lng() - lng) <= epsilon;
+    const sameAlt = Math.abs((Number(entry.altitudeMeters) || 0) - (Number(altitudeMeters) || 0)) <= 0.01;
+    return sameLat && sameLng && sameAlt;
+  }) || null;
+}
+
+function restoreImportedWpmlPoiState(waypointImports) {
+  if (!Array.isArray(waypointImports) || !waypointImports.length) return;
+
+  clearMissionPOIState();
+  waypointPoiAssignments.clear();
+  waypointHeadingConfigs.clear();
+
+  let importedPoiCount = 0;
+  waypointImports.forEach((wp, idx) => {
+    if (!wp || wp.headingMode !== 'towardPOI' || !wp.poiPoint) return;
+
+    const poiLat = Number(wp.poiPoint.lat);
+    const poiLng = Number(wp.poiPoint.lng);
+    const poiAlt = Number.isFinite(Number(wp.poiPoint.altitudeMeters)) ? Number(wp.poiPoint.altitudeMeters) : 0;
+    if (!isValidPilotCoordinate(poiLat, poiLng)) return;
+
+    let poiRecord = findMatchingImportedPoi(poiLat, poiLng, poiAlt);
+    if (!poiRecord) {
+      poiRecord = createMissionPOIRecord(poiLat, poiLng, { altitudeMeters: poiAlt });
+      importedPoiCount += 1;
+    }
+    if (!poiRecord) return;
+
+    waypointPoiAssignments.set(idx, poiRecord.id);
+    waypointHeadingConfigs.set(idx, {
+      mode: 'poi',
+      poiId: poiRecord.id,
+      customAngle: Number.isFinite(Number(wp.headingAngle)) ? Number(wp.headingAngle) : 0,
+      zoomFactor: Number(document.getElementById('djiZoomFactor')?.value) || 1
+    });
+  });
+
+  if (missionPOIs.length === 1) {
+    const onlyPoi = missionPOIs[0];
+    const orbitAltInput = document.getElementById('orbitAltitudeMeters');
+    if (orbitAltInput && Number.isFinite(Number(onlyPoi.altitudeMeters))) {
+      orbitAltInput.value = String(Number(onlyPoi.altitudeMeters));
+    }
+    const patternEl = document.getElementById('patternType');
+    if (patternEl) patternEl.value = 'poi';
+    syncPOIVisualizationWithPattern();
+  }
+
+  refreshWaypointConfigUi();
+  updateWaypointMarkerVisuals();
+  updateDrawShapeSummary();
+  if (importedPoiCount > 0) {
+    showLookupMessage(`Imported ${missionPOIs.length} POI(s) and restored Face POI waypoint headings.`, 'ok');
+  }
 }
 
 function handleAddressInputForAutocomplete() {
