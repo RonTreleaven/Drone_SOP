@@ -1424,6 +1424,8 @@ const PROFILE_STATE_KEY = 'dsop.profileState.v1';
 const PROFILE_SESSION_STATE_KEY = 'dsop.profileState.session.v1';
 const MISSION_AUTOMATION_PROFILE_KEY = 'dsop.missionAutomationProfile.v1';
 const PROFILE_ADVANCED_ACCESS_KEY = 'dsop.profileAdvancedAccess.v1';
+const PROFILE_ADVANCED_ACCESS_ATTESTED_KEY = 'dsop.profileAdvancedAccessAttested.v1';
+const UUID_ROLES_REGISTRY_KEY = 'dsop.uuidRolesRegistry.v1';
 const PROFILE_ADVANCED_ACCESS_VERSION = '2026-04-09';
 
 function normalizeHubMissionStatus(value) {
@@ -1472,6 +1474,11 @@ function getAdvancedExportGateReason() {
   const accessRecord = getHubAdvancedAccessRecord();
   if (!accessRecord || accessRecord.version !== PROFILE_ADVANCED_ACCESS_VERSION || accessRecord.signature !== signature) {
     return 'Advanced exports are locked until the saved profile is validated in My Profile after reading the disclaimer and export instructions.';
+  }
+
+  const attestedState = localStorage.getItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY);
+  if (attestedState !== 'true') {
+    return 'Advanced exports are locked. You must check the acknowledgment in the Advanced Access panel in My Profile to unlock exports and Mission Manager.';
   }
 
   return '';
@@ -1567,6 +1574,45 @@ function getProfileFolderForSlot(slot) {
     .replace(/\.+$/g, '')
     .replace(/^\.+/g, '');
   return cleaned || fallback;
+}
+
+function getRegistryUuidRolesSnapshot() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(UUID_ROLES_REGISTRY_KEY) || 'null');
+    return parsed && typeof parsed === 'object' ? parsed : null;
+  } catch (_err) {
+    return null;
+  }
+}
+
+function getRegistryUuidForSlot(slot) {
+  const snapshot = getRegistryUuidRolesSnapshot();
+  if (!snapshot) return '';
+  if (slot === 'mission_b') return normalizeUuidName(snapshot.missionB || '');
+  if (slot === 'mission_c') return normalizeUuidName(snapshot.missionC || '');
+  return normalizeUuidName(snapshot.missionA || '');
+}
+
+function getProfileSlotUuidGuardReason() {
+  const mode = document.getElementById('exportNameMode')?.value || 'readable';
+  if (mode !== 'profile-slot') return '';
+
+  const slot = getSelectedProfileSlot();
+  const expectedUuid = getRegistryUuidForSlot(slot);
+  if (!expectedUuid) {
+    return '';
+  }
+
+  const configuredUuid = getProfileUuidForSlot(slot);
+  if (!configuredUuid) {
+    return `KMZ export blocked: ${slot.toUpperCase()} has no UUID configured in My Profile, but REGISTRY expects ${expectedUuid}.`;
+  }
+
+  if (configuredUuid !== expectedUuid) {
+    return `KMZ export blocked: ${slot.toUpperCase()} UUID mismatch. Profile has ${configuredUuid}, REGISTRY expects ${expectedUuid}. Reload UUID Roles in Mission Automation Manager and verify slot mapping.`;
+  }
+
+  return '';
 }
 
 function setExportSaveStatus(message, level = 'info') {
@@ -4500,6 +4546,12 @@ async function exportDJIKMZ(options = {}) {
   const blockedReason = getAdvancedExportGateReason();
   if (blockedReason) {
     setExportSaveStatus(blockedReason, 'warn');
+    return;
+  }
+  const uuidGuardReason = getProfileSlotUuidGuardReason();
+  if (uuidGuardReason) {
+    setExportSaveStatus(uuidGuardReason, 'warn');
+    alert(uuidGuardReason);
     return;
   }
   const saveToProfileFolder = !!options.saveToProfileFolder;

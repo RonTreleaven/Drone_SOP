@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "https://drone-sop.local/schemas/step9-healthcheck-report.schema.json",
+  "title": "RC2 Mission Slot Health Check Report",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "reportType",
+    "generatedAt",
+    "generatedBy",
+    "managerRoot",
+    "inputs",
+    "summary",
+    "checks"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "reportType": {
+      "type": "string",
+      "const": "rc2-health-check"
+    },
+    "generatedAt": {
+      "type": "string"
+    },
+    "generatedBy": {
+      "type": "string"
+    },
+    "managerRoot": {
+      "type": "string"
+    },
+    "inputs": {
+      "type": "object",
+      "required": [
+        "rolesPath",
+        "inventoryPath",
+        "rc2LiveCheckRequested",
+        "rc2LiveCheckAttempted"
+      ],
+      "properties": {
+        "rolesPath": {
+          "type": "string"
+        },
+        "inventoryPath": {
+          "type": "string"
+        },
+        "rc2LiveCheckRequested": {
+          "type": "boolean"
+        },
+        "rc2LiveCheckAttempted": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "overallStatus",
+        "okCount",
+        "warnCount",
+        "failCount"
+      ],
+      "properties": {
+        "overallStatus": {
+          "type": "string",
+          "enum": ["COMPLETE", "BLOCKED", "FAILED"]
+        },
+        "okCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "warnCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failCount": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "status",
+          "severity",
+          "role",
+          "message",
+          "evidence",
+          "recommendedAction"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "INVALID",
+              "DUPLICATE",
+              "DRIFT",
+              "MISSING",
+              "MISSING_INVENTORY",
+              "RC2_CHECK_FAILED",
+              "OK_ROLE_UUID_FORMAT",
+              "OK_INVENTORY_MATCH",
+              "OK_LOCAL_STAGE",
+              "OK_RC2_SLOT"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["OK", "WARN", "FAIL"]
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["INFO", "WARN", "ERROR"]
+          },
+          "role": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "object"
+          },
+          "recommendedAction": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

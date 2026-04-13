@@ -563,7 +563,20 @@
         <h2 id="profile-drawer-title" class="profile-drawer-title">My Profile</h2>
         <p class="profile-drawer-subtitle">Save pilot defaults so repeat visits are faster and mirror a profile JSON into the RC2 workspace.</p>
       </div>
-      <button id="close-profile-drawer" class="profile-close-btn" type="button" aria-label="Close profile panel">Close</button>
+      <div class="profile-drawer-header-actions">
+        <div id="mission-manager-actions" class="profile-inline-actions profile-header-actions" hidden>
+          <button
+            id="open-mission-profile-drawer"
+            class="profile-advanced-icon-btn"
+            type="button"
+            title="Open Advanced Profile Details"
+            aria-label="Open Advanced Profile Details"
+          >
+            <img class="profile-advanced-icon" src="assets/img/drone.svg" alt="" aria-hidden="true">
+          </button>
+        </div>
+        <button id="close-profile-drawer" class="profile-close-btn" type="button" aria-label="Close profile panel">Close</button>
+      </div>
     </div>
     <form id="profile-form" class="profile-form" autocomplete="off">
       <div class="profile-field">
@@ -616,21 +629,20 @@
         </div>
       </div>
 
-      <div id="profile-advanced-access-panel" class="profile-validation-panel">
-        <div class="profile-validation-header-row">
-          <p class="profile-validation-title">Advanced Access</p>
-          <p id="profile-advanced-access-pill" class="profile-validation-pill" hidden>[x] User validated successfully</p>
+      <details id="profile-advanced-access-panel" class="profile-validation-panel" open>
+        <summary class="profile-validation-summary">
+          <span class="profile-validation-summary-title">Advanced Access</span>
+          <span id="profile-advanced-access-toggle-state" class="profile-validation-toggle-state">Hide</span>
+        </summary>
+        <div id="profile-advanced-access-content" class="profile-validation-content">
+          <p id="profile-advanced-access-status" class="profile-validation-status"></p>
+          <div id="profile-advanced-access-attest-row" class="profile-checkbox-row profile-validation-checkbox-row">
+            <input id="profile-advanced-access-attested" class="profile-checkbox-input" type="checkbox">
+            <label class="profile-validation-check-label" for="profile-advanced-access-attested">I have read the disclaimer and the export or Mission Manager instructions for KMZ, KML, GeoJSON, and JSON workflows.</label>
+          </div>
+          <p id="profile-advanced-access-note" class="profile-field-note">Confirm the above to unlock advanced exports and Mission Manager. If unchecked, exports are disabled.</p>
         </div>
-        <p id="profile-advanced-access-status" class="profile-validation-status"></p>
-        <div id="profile-advanced-access-attest-row" class="profile-checkbox-row profile-validation-checkbox-row">
-          <input id="profile-advanced-access-attested" class="profile-checkbox-input" type="checkbox">
-          <label class="profile-validation-check-label" for="profile-advanced-access-attested">I have read the disclaimer and the export or Mission Manager instructions for KMZ, KML, GeoJSON, and JSON workflows.</label>
-        </div>
-        <div id="profile-advanced-access-actions" class="profile-inline-actions">
-          <button id="validate-advanced-access" class="mini-btn" type="button">Validate User Access</button>
-        </div>
-        <p id="profile-advanced-access-note" class="profile-field-note">Import stays available. Export and Mission Manager unlock after a saved, validated Workspace Reuse profile.</p>
-      </div>
+      </details>
 
       <details id="profile-automation-panel" class="profile-automation-panel">
         <summary class="profile-automation-summary">Mission Automation Manager (Optional)</summary>
@@ -644,10 +656,7 @@
             <p id="mission-automation-state" class="profile-field-note"></p>
           </div>
 
-          <div id="mission-manager-actions" class="profile-inline-actions" hidden>
-            <button id="open-mission-profile-drawer" class="mini-btn" type="button">Open Advanced Profile Details</button>
-          </div>
-          <p id="mission-automation-note" class="profile-field-note">Use only for RC2 automation with REGISTRY and Mission_A/B/C folders.</p>
+          <p id="mission-automation-note" class="profile-field-note">Use only for RC2 automation with REGISTRY and Mission_A/B/C folders. Use the header profile icon to open Advanced Profile Details.</p>
         </div>
       </details>
     </form>
@@ -716,10 +725,15 @@
         <input id="mission-export-dir-mission-c" name="rc2ExportDirMissionC" type="text" autocomplete="off" placeholder="Example: Mission_C">
       </div>
     </form>
+    <p id="mission-profile-status" class="profile-field-note">Use Load UUID Roles to read REGISTRY/uuid_roles.json and fill Mission A/B/C UUID slots.</p>
     <div class="profile-drawer-footer">
+      <button id="load-mission-uuid-roles" class="profile-import-btn" type="button">Load UUID Roles</button>
+      <button id="import-mission-config" class="profile-import-btn" type="button">Import Config</button>
+      <button id="export-mission-config" class="profile-export-btn" type="button">Export Config</button>
       <button id="cancel-mission-profile-save" class="profile-cancel-btn" type="button">Cancel</button>
-      <button id="save-mission-profile-state" class="profile-save-btn" type="submit" form="mission-profile-form">Save Mission Profile</button>
+      <button id="save-mission-profile-state" class="profile-save-btn" type="submit" form="mission-profile-form">Save Profile</button>
     </div>
+    <input id="mission-config-import-file" type="file" accept="application/json,.json" hidden title="Load AdvCfg.json">
   </aside>
 
   <script>
@@ -731,6 +745,9 @@
     const PROFILE_SESSION_STATE_KEY = 'dsop.profileState.session.v1';
     const MISSION_AUTOMATION_PROFILE_KEY = 'dsop.missionAutomationProfile.v1';
     const PROFILE_ADVANCED_ACCESS_KEY = 'dsop.profileAdvancedAccess.v1';
+    const UUID_ROLES_REGISTRY_KEY = 'dsop.uuidRolesRegistry.v1';
+    const PROFILE_ADVANCED_PANEL_COLLAPSED_KEY = 'dsop.profileAdvancedPanelCollapsed.v1';
+    const PROFILE_ADVANCED_ACCESS_ATTESTED_KEY = 'dsop.profileAdvancedAccessAttested.v1';
     const PROFILE_ADVANCED_ACCESS_VERSION = '2026-04-09';
     const PROFILE_EXPORT_FILENAME = 'DroneSOP_user.json';
     const PLACEHOLDER_EMAIL_TOKENS = ['garbage', 'fake', 'invalid', 'example', 'test', 'noreply', 'no-reply'];
@@ -738,6 +755,7 @@
 
     let profileState = null;
     let missionAutomationState = null;
+    let advancedAccessPanelCollapsedPreference = null;
 
     function toTitleCaseCategory(value) {
       if (value === 'micro') return 'Micro';
@@ -883,6 +901,8 @@
             ? 'MAM is active. Advanced Profile Details are available.'
             : 'MAM is off. Advanced Profile Details are still available for setup.';
       }
+
+      updateAdvancedProfileTriggerUi(accessState, mamEnabled);
     }
 
     function updateProfileSetupNudge() {
@@ -1026,6 +1046,27 @@
 
     function clearAdvancedAccessRecord() {
       localStorage.removeItem(PROFILE_ADVANCED_ACCESS_KEY);
+      localStorage.removeItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY);
+      localStorage.removeItem(PROFILE_ADVANCED_PANEL_COLLAPSED_KEY);
+      advancedAccessPanelCollapsedPreference = null;
+    }
+
+    function loadAdvancedAccessPanelCollapsedPreference() {
+      const stored = localStorage.getItem(PROFILE_ADVANCED_PANEL_COLLAPSED_KEY);
+      if (stored === 'yes') return true;
+      if (stored === 'no') return false;
+      return null;
+    }
+
+    function persistAdvancedAccessPanelCollapsedPreference(isCollapsed) {
+      localStorage.setItem(PROFILE_ADVANCED_PANEL_COLLAPSED_KEY, isCollapsed ? 'yes' : 'no');
+    }
+
+    function updateAdvancedProfileTriggerUi(accessState = getAdvancedAccessState(), mamEnabled = normalizeBoolean(missionAutomationState && missionAutomationState.missionAutomationEnabled)) {
+      const openMissionProfileBtn = document.getElementById('open-mission-profile-drawer');
+      if (!openMissionProfileBtn) return;
+      const isReady = Boolean(accessState && accessState.validated) && normalizeBoolean(mamEnabled);
+      openMissionProfileBtn.classList.toggle('is-ready', isReady);
     }
 
     function getProfileEligibilityMessage(state) {
@@ -1096,67 +1137,42 @@
 
     function updateAdvancedAccessUi() {
       const panel = document.getElementById('profile-advanced-access-panel');
+      const panelContent = document.getElementById('profile-advanced-access-content');
       const statusNote = document.getElementById('profile-advanced-access-status');
-      const attestRow = document.getElementById('profile-advanced-access-attest-row');
-      const actionsRow = document.getElementById('profile-advanced-access-actions');
-      const note = document.getElementById('profile-advanced-access-note');
-      const validatedPill = document.getElementById('profile-advanced-access-pill');
+      const panelToggleState = document.getElementById('profile-advanced-access-toggle-state');
       const exportBtn = document.getElementById('export-profile-state');
-      const validateBtn = document.getElementById('validate-advanced-access');
       const attestedInput = document.getElementById('profile-advanced-access-attested');
       const accessState = getAdvancedAccessState();
       const attested = Boolean(attestedInput && attestedInput.checked);
-      const canValidate = !accessState.validated && !accessState.eligibilityMessage && accessState.savedMatchesCurrent && attested;
-      const isCollapsed = accessState.validated;
+      const defaultCollapsed = accessState.validated && attested;
+      const isCollapsed = advancedAccessPanelCollapsedPreference == null
+        ? defaultCollapsed
+        : advancedAccessPanelCollapsedPreference;
 
       if (panel) {
-        panel.classList.toggle('is-collapsed', isCollapsed);
+        panel.open = !isCollapsed;
       }
-      if (validatedPill) {
-        validatedPill.hidden = !isCollapsed;
+      if (panelContent) {
+        panelContent.hidden = isCollapsed;
       }
+      if (panelToggleState) {
+        panelToggleState.textContent = isCollapsed ? 'Show' : 'Hide';
+      }
+
       if (statusNote) {
-        statusNote.hidden = isCollapsed;
-      }
-      if (attestRow) {
-        attestRow.hidden = isCollapsed;
-      }
-      if (actionsRow) {
-        actionsRow.hidden = isCollapsed;
-      }
-      if (note) {
-        note.hidden = isCollapsed;
+        const message = attested ? 'Acknowledged.' : 'You must check to unlock exports and Mission Manager.';
+        statusNote.textContent = message;
+        statusNote.classList.toggle('is-ok', attested);
+        statusNote.classList.toggle('is-locked', !attested);
       }
 
       if (exportBtn) {
-        exportBtn.disabled = !accessState.validated;
-        exportBtn.setAttribute('aria-disabled', accessState.validated ? 'false' : 'true');
-        exportBtn.title = accessState.validated ? 'Export Profile' : accessState.message;
+        exportBtn.disabled = !attested;
+        exportBtn.setAttribute('aria-disabled', attested ? 'false' : 'true');
+        exportBtn.title = attested ? 'Export Profile' : 'Attestation must be checked to export.';
       }
 
-      if (validateBtn) {
-        validateBtn.textContent = accessState.validated ? 'User Validated' : 'Validate User Access';
-        validateBtn.disabled = accessState.validated ? true : !canValidate;
-        validateBtn.setAttribute('aria-disabled', accessState.validated ? 'true' : canValidate ? 'false' : 'true');
-        validateBtn.title = accessState.validated
-          ? 'Advanced access is already unlocked for this saved profile.'
-          : canValidate
-            ? 'Validate this saved profile for advanced exports and Mission Manager.'
-            : accessState.savedMatchesCurrent && !attested && !accessState.eligibilityMessage
-              ? 'Check the acknowledgment box before validating advanced access.'
-              : accessState.message;
-      }
-
-      if (statusNote) {
-        const statusMessage = accessState.validated
-          ? accessState.message
-          : accessState.savedMatchesCurrent && !attested && !accessState.eligibilityMessage
-            ? 'Check the acknowledgment box, then click Validate User Access.'
-            : accessState.message;
-        statusNote.textContent = statusMessage;
-        statusNote.classList.toggle('is-ok', accessState.validated);
-        statusNote.classList.toggle('is-locked', !accessState.validated);
-      }
+      updateAdvancedProfileTriggerUi(accessState);
     }
 
     function normalizeBoolean(value) {
@@ -1320,6 +1336,27 @@
       localStorage.setItem(MISSION_AUTOMATION_PROFILE_KEY, JSON.stringify(missionAutomationState));
     }
 
+    function buildAdvancedConfigBackupPayload() {
+      const attestedInput = document.getElementById('profile-advanced-access-attested');
+      const attested = Boolean(attestedInput && attestedInput.checked);
+      return {
+        backupType: 'drone-sop-advanced-config',
+        backupVersion: 1,
+        exportedAt: new Date().toISOString(),
+        profile: {
+          missionAutomationEnabled: normalizeBoolean(missionAutomationState && missionAutomationState.missionAutomationEnabled),
+          defaultExportSlot: normalizeExportSlot(missionAutomationState && missionAutomationState.defaultExportSlot),
+          rc2UuidMissionA: normalizeUuidOrEmpty(missionAutomationState && missionAutomationState.rc2UuidMissionA),
+          rc2UuidMissionB: normalizeUuidOrEmpty(missionAutomationState && missionAutomationState.rc2UuidMissionB),
+          rc2UuidMissionC: normalizeUuidOrEmpty(missionAutomationState && missionAutomationState.rc2UuidMissionC),
+          rc2ExportDirMissionA: normalizeExportDir(missionAutomationState && missionAutomationState.rc2ExportDirMissionA, 'Mission_A'),
+          rc2ExportDirMissionB: normalizeExportDir(missionAutomationState && missionAutomationState.rc2ExportDirMissionB, 'Mission_B'),
+          rc2ExportDirMissionC: normalizeExportDir(missionAutomationState && missionAutomationState.rc2ExportDirMissionC, 'Mission_C'),
+          advancedAccessAttested: attested
+        }
+      };
+    }
+
     function buildProfileBackupPayload() {
       return {
         backupType: 'drone-sop-profile',
@@ -1402,6 +1439,92 @@
       return `REGISTRY/profile/mission_automation_profile_${pilotSlug}.json`;
     }
 
+    async function resolveRegistryHandleFromSelectedFolder(selectedHandle) {
+      try {
+        return await selectedHandle.getDirectoryHandle('REGISTRY', { create: false });
+      } catch (_err) {
+        // If REGISTRY was selected directly, use it as-is.
+        if (String(selectedHandle && selectedHandle.name || '').toUpperCase() === 'REGISTRY') {
+          return selectedHandle;
+        }
+
+        // Allow any selected folder that directly contains uuid_roles.json.
+        try {
+          await selectedHandle.getFileHandle('uuid_roles.json', { create: false });
+          return selectedHandle;
+        } catch (_innerErr) {
+          throw new Error('Select RC2_Missions root or the REGISTRY folder containing uuid_roles.json.');
+        }
+      }
+    }
+
+    async function readUuidRolesFromRegistry() {
+      const rootHandle = await ensureRc2ProfileRootHandle();
+      const registryHandle = await resolveRegistryHandleFromSelectedFolder(rootHandle);
+      const uuidRolesFileHandle = await registryHandle.getFileHandle('uuid_roles.json', { create: false });
+      const file = await uuidRolesFileHandle.getFile();
+      const rawText = await file.text();
+
+      let parsed;
+      try {
+        parsed = JSON.parse(rawText);
+      } catch (_err) {
+        throw new Error('REGISTRY/uuid_roles.json is not valid JSON.');
+      }
+
+      if (!parsed || typeof parsed !== 'object') {
+        throw new Error('REGISTRY/uuid_roles.json must contain an object.');
+      }
+
+      const missionA = normalizeUuidOrEmpty(parsed.Mission_A || parsed.mission_a || parsed.rc2UuidMissionA);
+      const missionB = normalizeUuidOrEmpty(parsed.Mission_B || parsed.mission_b || parsed.rc2UuidMissionB);
+      const missionC = normalizeUuidOrEmpty(parsed.Mission_C || parsed.mission_c || parsed.rc2UuidMissionC);
+
+      if (!missionA && !missionB && !missionC) {
+        throw new Error('No valid Mission_A, Mission_B, or Mission_C UUID values were found in REGISTRY/uuid_roles.json.');
+      }
+
+      return {
+        missionA,
+        missionB,
+        missionC,
+        updatedAt: String(parsed.updatedAt || '').trim()
+      };
+    }
+
+    async function loadUuidRolesIntoMissionSlots(status) {
+      try {
+        const roles = await readUuidRolesFromRegistry();
+        missionAutomationState = missionAutomationState || getDefaultMissionAutomationState();
+        missionAutomationState.rc2UuidMissionA = roles.missionA;
+        missionAutomationState.rc2UuidMissionB = roles.missionB;
+        missionAutomationState.rc2UuidMissionC = roles.missionC;
+        localStorage.setItem(UUID_ROLES_REGISTRY_KEY, JSON.stringify({
+          source: 'REGISTRY/uuid_roles.json',
+          loadedAt: new Date().toISOString(),
+          updatedAt: roles.updatedAt || null,
+          missionA: roles.missionA,
+          missionB: roles.missionB,
+          missionC: roles.missionC
+        }));
+        persistMissionAutomationState();
+        fillMissionAutomationForm();
+        updateMissionAutomationUi();
+
+        const stamp = roles.updatedAt ? ` (updated ${roles.updatedAt})` : '';
+        if (status) {
+          status.textContent = `Loaded Mission UUID slots from REGISTRY/uuid_roles.json${stamp}.`;
+        }
+      } catch (error) {
+        if (error && error.name === 'AbortError') {
+          if (status) status.textContent = 'Load UUID Roles canceled.';
+          return;
+        }
+        const reason = error && error.message ? error.message : 'Unable to read REGISTRY/uuid_roles.json.';
+        if (status) status.textContent = `Load UUID Roles failed: ${reason}`;
+      }
+    }
+
     function syncProfileStateWithTermsAndIntro() {
       if (!profileState) return;
       profileState.termsAccepted = hasAcceptedTerms();
@@ -1477,7 +1600,10 @@
       if (droneInput) droneInput.value = profileState.preferredDroneLabel || '';
       if (statusSelect) statusSelect.value = normalizeMissionStatus(profileState.lastMissionStatus);
       if (missionAutomationEnabledInput) missionAutomationEnabledInput.checked = normalizeBoolean(missionAutomationState && missionAutomationState.missionAutomationEnabled);
-      if (advancedAccessAttestedInput) advancedAccessAttestedInput.checked = getAdvancedAccessState().validated;
+      if (advancedAccessAttestedInput) {
+        const savedAttestedState = localStorage.getItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY);
+        advancedAccessAttestedInput.checked = savedAttestedState === 'true';
+      }
       updateProfileUsageModeUi();
       updateAdvancedAccessUi();
       updateMissionAutomationUi();
@@ -1596,6 +1722,103 @@
       status.textContent = profileState.lastMissionStatus === 'closed'
         ? `Private profile loaded for ${pilotName}. This temporary copy is available for this session only.`
         : `Profile imported for ${pilotName}.`;
+    }
+
+    async function exportAdvancedConfigBackup() {
+      if (!missionAutomationState) {
+        alert('No Mission Automation configuration to export.');
+        return;
+      }
+
+      const payload = buildAdvancedConfigBackupPayload();
+      const pilotSlug = slugifyProfileFilePart(profileState.pilotName, 'export');
+      const filename = `DroneSOP_AdvCfg_${pilotSlug}_${new Date().toISOString().split('T')[0]}.json`;
+
+      if ('showSaveFilePicker' in window) {
+        try {
+          const fileHandle = await window.showSaveFilePicker({
+            suggestedName: filename,
+            types: [
+              {
+                description: 'Drone SOP Advanced Config',
+                accept: {
+                  'application/json': ['.json']
+                }
+              }
+            ]
+          });
+          const writable = await fileHandle.createWritable();
+          await writable.write(JSON.stringify(payload, null, 2));
+          await writable.close();
+          alert(`Advanced config exported as ${filename}.`);
+          return;
+        } catch (error) {
+          if (error && error.name === 'AbortError') {
+            return;
+          }
+        }
+      }
+
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(link.href);
+    }
+
+    async function importAdvancedConfigBackup(file) {
+      if (!file) return;
+
+      let parsed;
+      try {
+        const text = await file.text();
+        parsed = JSON.parse(text);
+      } catch (_err) {
+        alert('Advanced config import failed: file is not valid JSON.');
+        return;
+      }
+
+      if (parsed && parsed.backupType !== 'drone-sop-advanced-config') {
+        alert('Advanced config import failed: file is not a valid advanced config backup.');
+        return;
+      }
+
+      const source = parsed && parsed.profile ? parsed.profile : null;
+      if (!source || typeof source !== 'object') {
+        alert('Advanced config import failed: expected profile object.');
+        return;
+      }
+
+      // Import configuration
+      missionAutomationState = loadMissionAutomationState();
+      missionAutomationState.missionAutomationEnabled = normalizeBoolean(source.missionAutomationEnabled || missionAutomationState.missionAutomationEnabled);
+      missionAutomationState.defaultExportSlot = normalizeExportSlot(source.defaultExportSlot || missionAutomationState.defaultExportSlot);
+      missionAutomationState.rc2UuidMissionA = normalizeUuidOrEmpty(source.rc2UuidMissionA || missionAutomationState.rc2UuidMissionA);
+      missionAutomationState.rc2UuidMissionB = normalizeUuidOrEmpty(source.rc2UuidMissionB || missionAutomationState.rc2UuidMissionB);
+      missionAutomationState.rc2UuidMissionC = normalizeUuidOrEmpty(source.rc2UuidMissionC || missionAutomationState.rc2UuidMissionC);
+      missionAutomationState.rc2ExportDirMissionA = normalizeExportDir(source.rc2ExportDirMissionA || missionAutomationState.rc2ExportDirMissionA, 'Mission_A');
+      missionAutomationState.rc2ExportDirMissionB = normalizeExportDir(source.rc2ExportDirMissionB || missionAutomationState.rc2ExportDirMissionB, 'Mission_B');
+      missionAutomationState.rc2ExportDirMissionC = normalizeExportDir(source.rc2ExportDirMissionC || missionAutomationState.rc2ExportDirMissionC, 'Mission_C');
+
+      persistMissionAutomationState();
+
+      // Import attestation state
+      if (typeof source.advancedAccessAttested === 'boolean') {
+        const attestedInput = document.getElementById('profile-advanced-access-attested');
+        if (attestedInput) {
+          attestedInput.checked = source.advancedAccessAttested;
+        }
+      }
+
+      // Update UI
+      fillMissionAutomationForm();
+      updateAdvancedAccessUi();
+      updateMissionAutomationUi();
+
+      alert('Advanced config imported successfully. Profile state updated.');
     }
 
     function closeProfileDrawer() {
@@ -1913,15 +2136,18 @@
       const missionProfileForm = document.getElementById('mission-profile-form');
       const cancelProfileBtn = document.getElementById('cancel-profile-save');
       const cancelMissionProfileBtn = document.getElementById('cancel-mission-profile-save');
+      const missionProfileStatus = document.getElementById('mission-profile-status');
+      const loadMissionUuidRolesBtn = document.getElementById('load-mission-uuid-roles');
       const exportProfileBtn = document.getElementById('export-profile-state');
       const importProfileBtn = document.getElementById('import-profile-state');
       const profileImportFile = document.getElementById('profile-import-file');
-      const validateAdvancedAccessBtn = document.getElementById('validate-advanced-access');
+      const advancedAccessPanel = document.getElementById('profile-advanced-access-panel');
       const advancedAccessAttestedInput = document.getElementById('profile-advanced-access-attested');
       if (!btn || !status || !clearBtn || !acceptBtn) return;
 
       profileState = loadProfileState();
       missionAutomationState = loadMissionAutomationState();
+      advancedAccessPanelCollapsedPreference = loadAdvancedAccessPanelCollapsedPreference();
       persistProfileState();
       persistMissionAutomationState();
       renderProfileSummary();
@@ -2017,6 +2243,16 @@
 
       if (advancedAccessAttestedInput) {
         advancedAccessAttestedInput.addEventListener('change', () => {
+          localStorage.setItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY, advancedAccessAttestedInput.checked ? 'true' : 'false');
+          updateAdvancedAccessUi();
+        });
+      }
+
+      if (advancedAccessPanel) {
+        advancedAccessPanel.addEventListener('toggle', () => {
+          const isCollapsed = !advancedAccessPanel.open;
+          advancedAccessPanelCollapsedPreference = isCollapsed;
+          persistAdvancedAccessPanelCollapsedPreference(isCollapsed);
           updateAdvancedAccessUi();
         });
       }
@@ -2045,59 +2281,19 @@
         cancelMissionProfileBtn.addEventListener('click', closeMissionAutomationDrawer);
       }
 
-      if (validateAdvancedAccessBtn) {
-        validateAdvancedAccessBtn.addEventListener('click', () => {
-          if (profileForm) {
-            syncProfileStateFromForm(profileForm);
-          }
-
-          if (profileCellInput) {
-            const phoneMessage = updateProfilePhoneInput(profileCellInput);
-            if (phoneMessage) {
-              status.textContent = phoneMessage;
-              profileCellInput.reportValidity();
-              updateAdvancedAccessUi();
-              return;
-            }
-          }
-
-          if (profileEmailInput) {
-            const emailMessage = updateProfileEmailValidity(profileEmailInput);
-            if (emailMessage) {
-              status.textContent = emailMessage;
-              profileEmailInput.reportValidity();
-              updateAdvancedAccessUi();
-              return;
-            }
-          }
-
-          if (!advancedAccessAttestedInput || !advancedAccessAttestedInput.checked) {
-            status.textContent = 'Read the advanced export note, then check the acknowledgment box before validating access.';
-            updateAdvancedAccessUi();
-            return;
-          }
-
+      if (loadMissionUuidRolesBtn) {
+        loadMissionUuidRolesBtn.addEventListener('click', async () => {
+          const feedback = missionProfileStatus || status;
           const accessState = getAdvancedAccessState();
-          if (!accessState.savedMatchesCurrent || accessState.eligibilityMessage) {
-            status.textContent = accessState.message;
-            updateAdvancedAccessUi();
-            updateMissionAutomationUi();
-            renderProfileSummary();
+          if (!accessState.validated) {
+            feedback.textContent = accessState.message;
             return;
           }
-
-          localStorage.setItem(PROFILE_ADVANCED_ACCESS_KEY, JSON.stringify({
-            version: PROFILE_ADVANCED_ACCESS_VERSION,
-            approvedAt: new Date().toISOString(),
-            signature: accessState.currentSignature
-          }));
-
-          updateAdvancedAccessUi();
-          updateMissionAutomationUi();
-          renderProfileSummary();
-          status.textContent = 'User validated for advanced exports and Mission Manager on this device.';
+          await loadUuidRolesIntoMissionSlots(feedback);
         });
       }
+
+
 
       if (exportProfileBtn) {
         exportProfileBtn.addEventListener('click', async () => {
@@ -2150,6 +2346,33 @@
         profileBackdrop.addEventListener('click', () => {
           closeProfileDrawer();
           closeMissionAutomationDrawer();
+        });
+      }
+
+      const exportMissionConfigBtn = document.getElementById('export-mission-config');
+      const importMissionConfigBtn = document.getElementById('import-mission-config');
+      const missionConfigImportFile = document.getElementById('mission-config-import-file');
+
+      if (exportMissionConfigBtn) {
+        exportMissionConfigBtn.addEventListener('click', async () => {
+          const accessState = getAdvancedAccessState();
+          if (!accessState.validated) {
+            alert(accessState.message);
+            return;
+          }
+          await exportAdvancedConfigBackup();
+        });
+      }
+
+      if (importMissionConfigBtn && missionConfigImportFile) {
+        importMissionConfigBtn.addEventListener('click', () => {
+          missionConfigImportFile.click();
+        });
+
+        missionConfigImportFile.addEventListener('change', async () => {
+          const file = missionConfigImportFile.files && missionConfigImportFile.files[0];
+          await importAdvancedConfigBackup(file);
+          missionConfigImportFile.value = '';
         });
       }
 
