@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0355/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/045/5104N11410W005\nA) CXXX B) 2604140049 C) 2604170100\nE) CMT3 CALGARY (FOOTHILLS HOSP MCCAIG TOWER) (HELI)\nOBST LGT U/S TOWER 510334N 1141021W (APRX 1.46NM WSW AD) 499FT \nAGL, 4462FT AMSL.)",
+    "startValidity": "2026-04-14T00:49:00",
+    "endValidity": "2026-04-17T01:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.059444, -114.172500"
+    ]
+  },
+  {
     "raw": "(C1069/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/025/5321N11334W005\nA) CYEG B) 2604151300 C) 2604151600\nE) CRANE 532059N 1133338W APRX 5790FT BFR THR 20 AND 2160FT WEST \nEXTENDED RCL. 110FT AGL 2444FT AMSL. NOT LGTD, NOT PAINTED.)",
     "startValidity": "2026-04-13T17:55:25.756",
     "endValidity": "2026-04-15T16:00:00",
@@ -15,15 +24,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.781389, -114.747778"
-    ]
-  },
-  {
-    "raw": "(R0352/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/032/5251N11333W002\nA) CZEG B) 2604131900 C) 2604132200\nE) OBST LGT U/S TOWER 525033N 1133255W (APRX 9NM SSW WETASKIWIN \nREGIONAL AD (CEX3)) 380FT AGL, 3194FT AMSL.)",
-    "startValidity": "2026-04-13T01:35:47.742",
-    "endValidity": "2026-04-13T22:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.842500, -113.548611"
     ]
   },
   {
@@ -63,21 +63,21 @@
     ]
   },
   {
-    "raw": "(R0343/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5148N11404W005\nA) CXXX B) 2604101300 C) 2607092359\nE) CFU9 OLDS (HOSP AND CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 514806N 1140427W (APRX 1.58NM ENE AD) 312FT \nAGL, 3683FT AMSL.)",
-    "startValidity": "2026-04-10T13:00:00",
-    "endValidity": "2026-07-09T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.801667, -114.074167"
-    ]
-  },
-  {
     "raw": "(R0342/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5207N11151W002\nA) CZEG B) 2604101300 C) 2607092359\nE) OBST LGT U/S TOWER 520654N 1115123W (APRX 7NM SE CASTOR AD \n(CER2)) 340FT AGL, 3053FT AMSL.)",
     "startValidity": "2026-04-10T13:00:00",
     "endValidity": "2026-07-09T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "52.115000, -111.856389"
+    ]
+  },
+  {
+    "raw": "(R0343/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5148N11404W005\nA) CXXX B) 2604101300 C) 2607092359\nE) CFU9 OLDS (HOSP AND CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 514806N 1140427W (APRX 1.58NM ENE AD) 312FT \nAGL, 3683FT AMSL.)",
+    "startValidity": "2026-04-10T13:00:00",
+    "endValidity": "2026-07-09T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.801667, -114.074167"
     ]
   },
   {
@@ -375,15 +375,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.310833, -110.198056"
-    ]
-  },
-  {
-    "raw": "(R0262/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/014/5715N11124W005\nA) CXXX B) 2603141409 C) 2604132359\nE) CAL4 FORT MACKAY/ALBIAN \nOBST LGT U/S TOWER 571447N 1112354W (APRX 1.51NM NNE AD) 300FT \nAGL, 1304FT AMSL.)",
-    "startValidity": "2026-03-14T14:09:00",
-    "endValidity": "2026-04-13T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "57.246389, -111.398333"
     ]
   },
   {
