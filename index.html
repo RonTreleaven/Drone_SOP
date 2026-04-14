@@ -1731,8 +1731,7 @@
       }
 
       const payload = buildAdvancedConfigBackupPayload();
-      const pilotSlug = slugifyProfileFilePart(profileState.pilotName, 'export');
-      const filename = `DroneSOP_AdvCfg_${pilotSlug}_${new Date().toISOString().split('T')[0]}.json`;
+      const filename = 'DroneSOP_Adv.json';
 
       if ('showSaveFilePicker' in window) {
         try {

@@ -1,4 +1,4 @@
-﻿# RC2 UUID Mission Integration - New User Onboarding
+﻿# RC2_Onboarding
 
 ## What This Is
 This guide helps a new pilot set up a safe DJI RC2 UUID workflow on Windows:
@@ -7,6 +7,17 @@ This guide helps a new pilot set up a safe DJI RC2 UUID workflow on Windows:
 - Deploy DJI UUID mission packages as .kmz into RC2 slots safely
 
 Standard mission package extension in this SOP: `.kmz`
+
+## Profile Files In REGISTRY
+
+Use these normalized profile export names:
+- `DroneSOP_user.json` (My Profile)
+- `DroneSOP_Adv.json` (Mission Automation / Advanced Profile)
+
+Recommended save target:
+- `RC2_Missions/REGISTRY/`
+
+If `REGISTRY/local_config.json` has `"workspaceRoot": "C:\\Users\\Ron Treleaven\\RC2_Missions"` (example), verify both files are present under that root's `REGISTRY` folder.
 
 
 
@@ -24,7 +35,7 @@ Standard mission package extension in this SOP: `.kmz`
 3. Keep timestamped backups before each slot change.
 4. Keep a local UUID map file so slot roles never become guesswork.
 
-â€‹	* { see /Registry/slot_scan/yyyymmdd_hhmmss/***.kmz }
+* { see /Registry/slot_scan/yyyymmdd_hhmmss/***.kmz }
 
 ## Slot Strategy (Mission A / Mission B / Mission C)
 

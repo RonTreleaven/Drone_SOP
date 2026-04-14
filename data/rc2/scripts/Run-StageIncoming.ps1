@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Stage the newest INCOMING KMZ into a mission role folder and archive the source file.
+    Stage the newest /RC2_Missions/INCOMING/ KMZ into a mission role folder and archive the source file.
 
 .DESCRIPTION
     Wrapper for Step5B_StageFromIncoming.ps1 with -ArchiveIncoming pre-set.
 
     This script is the first step in the Safe User Sequence. It scans the INCOMING
-    folder for the most recently delivered KMZ flight-plan file, copies it into the
+    folder for the most recently delivered KMZ flight-plan file as exported from GGCode, copies it into the
     chosen mission role folder (Mission_A, Mission_B, or Mission_C), and then moves
     the source file to ARCHIVE so it cannot be staged a second time by accident.
 
@@ -22,13 +22,14 @@
 
 .EXAMPLE
     & "./data/rc2/scripts/Run-StageIncoming.ps1"
-    # Interactive prompt â€” enter the role when asked.
+    # Interactive prompt — enter the role when asked.
 
 .NOTES
     Safe User Sequence: Step 1 of 4
     Underlying script : Step5B_StageFromIncoming.ps1
     Flags applied     : -ArchiveIncoming
 #>
+
 
 param(
   [ValidateSet('Mission_A','Mission_B','Mission_C')]

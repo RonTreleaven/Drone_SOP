@@ -340,7 +340,7 @@ body {
   align-items: center;
   position: absolute;
   left: 10px;
-  top: 102px;
+  top: 165px;
   z-index: 7;
   width: min(90vw, 360px);
   max-height: calc(100% - 112px);
@@ -363,7 +363,7 @@ body {
   min-width: 172px;
   position: absolute;
   left: 10px;
-  top: 56px;
+  top: 110px;
   margin: 0;
   z-index: 8;
   border-radius: 6px;
@@ -423,6 +423,34 @@ body {
   background: #f0f5ff;
 }
 
+.map-range-fab {
+  position: absolute;
+  top: 106px;
+  right: 10px;
+  z-index: 8;
+  min-width: 42px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #d6e1f3;
+  color: #355995;
+  font-size: 0.92rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.map-range-fab:hover {
+  background: #f0f5ff;
+}
+
+.map-range-fab.is-active {
+  background: #e7f0ff;
+  border-color: #8aa8d8;
+  color: #1f4f93;
+}
+
 .route-tools .btn {
   min-width: 0;
   width: 100%;
@@ -468,9 +496,101 @@ body {
 .route-tools .mission-settings-drawer {
   grid-column: 1 / -1;
   display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  align-items: start;
+}
+
+.route-tools .mission-settings-section {
+  grid-column: 1 / -1;
+  border: 1px solid #c9daf2;
+  border-radius: 8px;
+  background: #f8fbff;
+  overflow: hidden;
+}
+
+.route-tools .mission-section-toggle {
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: #eaf3ff;
+  color: #24456f;
+  font-weight: 700;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.route-tools .mission-section-toggle .drawer-icon {
+  font-size: 0.72rem;
+  transition: transform 0.2s ease;
+}
+
+.route-tools .mission-settings-section.collapsed .mission-section-toggle .drawer-icon {
+  transform: rotate(-90deg);
+}
+
+.route-tools .mission-section-body {
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+  padding: 8px;
+}
+
+.route-tools .mission-settings-section.collapsed .mission-section-body {
+  display: none;
+}
+
+.route-tools .mission-settings-note {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.route-tools .mission-setting.mission-setting-wide {
+  grid-column: 1 / -1;
+}
+
+.route-tools .mission-settings-toolbar {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
+  margin: 0 0 2px;
+}
+
+.route-tools .mission-pin-btn {
+  width: auto;
+  min-width: 0;
+  padding: 5px 8px;
+  border-radius: 8px;
+  line-height: 1;
+  border-color: #b8cae0;
+  background: #f2f7ff;
+  color: #24456f;
+}
+
+.route-tools .mission-pin-btn:hover {
+  background: #e7f0ff;
+}
+
+.route-tools .mission-pin-btn.is-pinned {
+  background: #1d4f91;
+  color: #fff;
+  border-color: #183f73;
+}
+
+.route-tools .mission-pin-btn .pin-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+.route-tools #djiFinishAction,
+.route-tools #djiGimbalPitch {
+  min-width: 140px;
+  font-size: 0.8rem;
 }
 
 .route-tools .waypoint-config-panel {
@@ -495,6 +615,13 @@ body {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.route-tools .waypoint-config-actions {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 8px;
 }
 
@@ -675,6 +802,172 @@ body {
 .route-tools select,
 .route-tools label {
   font-size: 0.88rem;
+}
+
+.route-tools {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  position: absolute;
+  left: 12px;
+  bottom: 66px;
+  top: auto;
+  z-index: 8;
+  width: auto;
+  max-height: none;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.route-tools.mobile-collapsed {
+  display: none;
+}
+
+.mobile-tools-toggle {
+  display: block;
+  width: 140px;
+  min-width: 140px;
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  top: auto;
+  margin: 0;
+  z-index: 9;
+  border-radius: 10px;
+  font-weight: 700;
+  background: var(--accent-strong);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.22);
+}
+
+.mobile-tools-toggle:hover {
+  background: var(--accent);
+}
+
+.route-tools-menu {
+  width: 176px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.route-tools-flyout-host {
+  position: relative;
+  width: 0;
+  min-width: 0;
+  pointer-events: none;
+}
+
+.route-tools.has-active-panel .route-tools-flyout-host {
+  width: min(38vw, 420px);
+  min-width: 320px;
+}
+
+.route-tools .drawer-toggle.route-tools-option,
+.route-tools .route-tools-action {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(92, 108, 135, 0.94);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 6px 16px rgba(9, 24, 51, 0.2);
+}
+
+.route-tools .drawer-toggle.route-tools-option:hover,
+.route-tools .route-tools-action:hover {
+  background: rgba(63, 82, 116, 0.98);
+}
+
+.route-tools .drawer-toggle.route-tools-option .drawer-icon {
+  font-size: 0.8rem;
+  transform: none;
+}
+
+.route-tools .drawer-toggle.route-tools-option.collapsed .drawer-icon {
+  transform: none;
+}
+
+.route-tools .drawer-toggle.route-tools-option.btn-active .drawer-icon {
+  transform: rotate(90deg);
+}
+
+.route-tools .drawer-toggle.route-tools-option.btn-active {
+  background: rgba(41, 86, 153, 0.9);
+  border-color: rgba(209, 226, 252, 0.95);
+  box-shadow: inset 3px 0 0 #d7e6ff, 0 6px 16px rgba(9, 24, 51, 0.18);
+}
+
+.route-tools .drawer-toggle.route-tools-option.btn-active:hover {
+  background: rgba(36, 77, 139, 0.95);
+}
+
+.route-tools-panel,
+.route-tools .tools-drawer,
+.route-tools .mission-settings-drawer,
+.route-tools .export-drawer {
+  display: grid;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  max-height: min(70vh, 520px);
+  overflow: auto;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 18px 34px rgba(15, 31, 58, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-10px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+}
+
+.route-tools .mission-settings-drawer.route-tools-panel {
+  top: auto;
+  bottom: 0;
+  max-height: min(74vh, 560px);
+}
+
+.route-tools .tools-drawer.active,
+.route-tools .mission-settings-drawer.active,
+.route-tools .export-drawer.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.route-tools .tools-drawer.collapsed,
+.route-tools .mission-settings-drawer.collapsed,
+.route-tools .export-drawer.collapsed {
+  display: grid;
+}
+
+.route-tools .tools-drawer {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  align-items: center;
+}
+
+.route-tools .mission-settings-drawer,
+.route-tools .export-drawer {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  align-items: center;
 }
 
 .mission-setting {
@@ -884,23 +1177,55 @@ body.map-immersive {
   }
 
   .route-tools {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: min(82vw, 320px);
-    top: 102px;
-    transition: opacity 0.16s ease;
-    opacity: 1;
-    padding: 6px;
-    gap: 6px;
+    left: 10px;
+    bottom: 60px;
+    gap: 8px;
   }
 
   .mobile-tools-toggle {
-    width: 172px;
-    min-width: 172px;
-    top: 56px;
+    width: 132px;
+    min-width: 132px;
+    bottom: 10px;
     left: 10px;
     margin: 0;
     padding: 7px 10px;
     font-size: 0.9rem;
+  }
+
+  .route-tools-menu {
+    width: 168px;
+    gap: 6px;
+  }
+
+  .route-tools-flyout-host {
+    width: 0;
+    min-width: 0;
+  }
+
+  .route-tools.has-active-panel .route-tools-flyout-host {
+    width: min(52vw, 320px);
+    min-width: 180px;
+  }
+
+  .route-tools .tools-drawer,
+  .route-tools .mission-settings-drawer,
+  .route-tools .export-drawer {
+    padding: 8px;
+    gap: 6px;
+    max-height: min(62vh, 440px);
+  }
+
+  .route-tools .mission-settings-drawer {
+    max-height: min(74vh, 520px);
+  }
+
+  .route-tools .mission-settings-drawer,
+  .route-tools .export-drawer {
+    grid-template-columns: 1fr;
+  }
+
+  .route-tools .mission-section-body {
+    grid-template-columns: 1fr;
   }
 
   .route-tools .btn {
@@ -925,7 +1250,8 @@ body.map-immersive {
   }
 
   .map-fullscreen-fab,
-  .map-center-fab {
+  .map-center-fab,
+  .map-range-fab {
     display: block;
   }
 
@@ -1020,13 +1346,27 @@ body.map-immersive {
     <div id="mapShell">
       <button class="btn map-fullscreen-fab" id="toggleMapFullscreenTopBtn" type="button" title="Toggle full screen" aria-label="Toggle full screen">⤢</button>
       <button class="btn map-center-fab" id="centerPilotMarkerBtn" type="button" title="Center to mission (or pilot if no route)" aria-label="Center to mission or pilot"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7.5" fill="none" stroke="#333" stroke-width="1.8"/><circle cx="11" cy="11" r="2.2" fill="#333"/><line x1="11" y1="1" x2="11" y2="5.5" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="16.5" x2="11" y2="21" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="11" x2="5.5" y2="11" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="16.5" y1="11" x2="21" y2="11" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <button class="btn map-range-fab" id="toggleRangeGuideBtn" type="button" title="Distance guide (10m rings)" aria-label="Toggle distance guide">◎</button>
       <button class="btn mobile-tools-toggle" id="toggleRouteToolsBtn" type="button" aria-controls="routeTools" aria-expanded="false">☰ Tools</button>
       <div class="route-tools" id="routeTools">
-        <button class="btn secondary-btn drawer-toggle" id="toggleDrawToolsBtn" type="button" aria-controls="drawToolsDrawer" aria-expanded="false">
-          Draw & Shape
-          <span class="drawer-icon">&#9660;</span>
-        </button>
-        <div class="tools-drawer" id="drawToolsDrawer">
+        <div class="route-tools-menu" id="routeToolsMenu">
+          <button class="btn secondary-btn drawer-toggle route-tools-option" id="toggleDrawToolsBtn" type="button" aria-controls="drawToolsDrawer" aria-expanded="false">
+            Draw & Shape
+            <span class="drawer-icon">&#9654;</span>
+          </button>
+          <button class="btn secondary-btn drawer-toggle route-tools-option" id="toggleMissionSettingsBtn" type="button" aria-controls="missionSettingsDrawer" aria-expanded="false">
+            Mission Settings
+            <span class="drawer-icon">&#9654;</span>
+          </button>
+          <button class="btn secondary-btn drawer-toggle route-tools-option" id="toggleExportDrawerBtn" type="button" aria-controls="exportDrawer" aria-expanded="false">
+            Export & Files
+            <span class="drawer-icon">&#9654;</span>
+          </button>
+          <button class="btn secondary-btn route-tools-action" id="toggleMapFullscreenBtn" type="button">Full Screen</button>
+          <button class="btn secondary-btn route-tools-action" id="resetMissionPlannerBtn" type="button">Reset Mission</button>
+        </div>
+        <div class="route-tools-flyout-host" id="routeToolsFlyoutHost">
+        <div class="tools-drawer route-tools-panel" id="drawToolsDrawer">
           <button class="btn icon-btn" id="drawRouteBtn" type="button" title="Waypoints" aria-label="Waypoints">
             <span class="tool-glyph glyph-waypoint" aria-hidden="true"></span>
             <span>WP</span>
@@ -1042,23 +1382,23 @@ body.map-immersive {
           <button class="btn secondary-btn" id="toggleRouteEditBtn" type="button">Lock Route</button>
           <button class="btn" id="snapRouteBtn" type="button">Snap To WP</button>
           <button class="btn" id="closePolygonBtn" type="button">Close Polygon</button>
-          <button class="btn icon-btn" id="setPOIByClickBtn" type="button" title="Orbit by Click" aria-label="Orbit by Click">
+          <button class="btn icon-btn" id="setPOIByClickBtn" type="button" title="Add POI by Click" aria-label="Add POI by Click">
             <span class="tool-glyph glyph-orbit" aria-hidden="true"></span>
-            <span>Orbit</span>
+            <span>Add POI</span>
           </button>
           <button class="btn" id="startOrbitalMissionBtn" type="button">Orbital Mission</button>
           <button class="btn" id="clearPOIsBtn" type="button">Clear POIs</button>
           <button class="btn" id="setPOIFromPilotBtn" type="button">POI from Pilot Marker</button>
           <label class="mission-setting tool-inline-setting" for="orbitRadiusMeters">Orbit Radius (m)
-            <input id="orbitRadiusMeters" type="number" min="10" max="500" step="5" value="50" />
+            <input id="orbitRadiusMeters" type="number" min="10" max="500" step="5" value="10" />
           </label>
           <label class="mission-setting tool-inline-setting" for="orbitAltitudeMeters">Orbit Alt (m)
-            <input id="orbitAltitudeMeters" type="number" min="-200" max="2000" step="1" value="0" />
+            <input id="orbitAltitudeMeters" type="number" min="-200" max="2000" step="1" value="2" />
           </label>
           <label class="mission-setting tool-inline-setting" for="orbitDirection">Orbit Dir
             <select id="orbitDirection">
-              <option value="cw" selected>CW</option>
-              <option value="ccw">CCW</option>
+              <option value="cw">CW</option>
+              <option value="ccw" selected>CCW</option>
             </select>
           </label>
           <div id="poiRadiusIndicator" class="route-status compact-status">Pattern: Perimeter</div>
@@ -1071,118 +1411,169 @@ body.map-immersive {
           </label>
           <button class="btn" id="generatePatternBtn" type="button">Generate Pattern</button>
         </div>
-        <button class="btn secondary-btn drawer-toggle" id="toggleMissionSettingsBtn" type="button" aria-controls="missionSettingsDrawer" aria-expanded="false">
-          Mission Settings
-          <span class="drawer-icon">&#9660;</span>
-        </button>
-        <div class="mission-settings-drawer" id="missionSettingsDrawer">
-          <label class="mission-setting" for="djiExecHeight">H(m)
-            <input id="djiExecHeight" type="number" min="5" max="500" step="1" value="60" />
-          </label>
-          <label class="mission-setting" for="djiWaypointSpeed">Speed(m/s)
-            <input id="djiWaypointSpeed" type="number" min="0.5" max="15" step="0.1" value="2.5" />
-          </label>
-          <label class="mission-setting" for="frontOverlapPct">Front%
-            <input id="frontOverlapPct" type="number" min="20" max="95" step="1" value="75" />
-          </label>
-          <label class="mission-setting" for="sideOverlapPct">Side%
-            <input id="sideOverlapPct" type="number" min="20" max="95" step="1" value="70" />
-          </label>
-          <label class="mission-setting" for="djiFinishAction">Finish
-            <select id="djiFinishAction">
-              <option value="goHome" selected>Go Home</option>
-              <option value="noAction">No Action</option>
-              <option value="autoLand">Auto Land</option>
-            </select>
-          </label>
-          <label class="mission-setting" for="djiGimbalPitch">Gimbal
-            <select id="djiGimbalPitch">
-              <option value="none" selected>Keep</option>
-              <option value="-45">-45</option>
-              <option value="-90">-90</option>
-            </select>
-          </label>
-          <label class="mission-setting" for="djiTakePhotoEachWp">
-            <input id="djiTakePhotoEachWp" type="checkbox" /> Photo each WP
-          </label>
-          <label class="mission-setting" for="djiHoverAtWp">
-            <input id="djiHoverAtWp" type="checkbox" /> Hover at WP
-          </label>
-          <label class="mission-setting" for="djiHoverSeconds">Hover(s)
-            <input id="djiHoverSeconds" type="number" min="1" max="30" step="1" value="3" />
-          </label>
-          <label class="mission-setting" for="djiZoomAtWp">
-            <input id="djiZoomAtWp" type="checkbox" /> Zoom at WP
-          </label>
-          <label class="mission-setting" for="djiFacePoiHeading" title="When enabled, each waypoint heading points toward the Mission POI.">
-            <input id="djiFacePoiHeading" type="checkbox" /> Face POI heading
-          </label>
-          <div class="waypoint-config-panel" id="waypointConfigPanel">
-            <div class="waypoint-config-title">Waypoint Config (RC2-style)</div>
-            <label class="mission-setting" for="waypointConfigSelect">Waypoint
-              <select id="waypointConfigSelect"></select>
-            </label>
-            <label class="mission-setting" for="waypointHeadingMode">Heading
-              <select id="waypointHeadingMode">
-                <option value="follow">Follow Course</option>
-                <option value="poi">Face POI</option>
-                <option value="custom">Custom Angle</option>
-              </select>
-            </label>
-            <label class="mission-setting" for="waypointPoiTarget">POI Target
-              <select id="waypointPoiTarget"></select>
-            </label>
-            <label class="mission-setting" for="waypointCustomHeadingAngle">Angle(deg)
-              <input id="waypointCustomHeadingAngle" type="number" min="-180" max="180" step="1" value="0" />
-            </label>
-            <label class="mission-setting" for="waypointZoomFactor">WP Zoom
-              <select id="waypointZoomFactor">
-                <option value="1.0">1.0x</option>
-                <option value="1.5">1.5x</option>
-                <option value="2.0">2.0x</option>
-                <option value="2.5">2.5x</option>
-                <option value="3.0">3.0x</option>
-                <option value="3.5">3.5x</option>
-                <option value="4.0">4.0x</option>
-              </select>
-            </label>
-            <div class="waypoint-config-nav">
-              <button class="btn secondary-btn" id="waypointConfigPrevBtn" type="button" title="Previous waypoint">&larr; WP</button>
-              <button class="btn secondary-btn" id="waypointConfigNextBtn" type="button" title="Next waypoint">WP &rarr;</button>
-              <button class="btn" id="saveWaypointConfigBtn" type="button">Save WP</button>
-            </div>
-            <div class="route-status" id="waypointConfigStatus">Draw/import route to edit waypoint settings.</div>
+        <div class="mission-settings-drawer route-tools-panel" id="missionSettingsDrawer">
+          <div class="mission-settings-toolbar">
+            <button class="btn secondary-btn mission-pin-btn" id="missionSettingsPinBtn" type="button" title="Pin Mission Settings (keep open)" aria-label="Pin Mission Settings (keep open)" aria-pressed="false">
+              <span class="pin-icon" id="missionSettingsPinIcon" aria-hidden="true">📌</span>
+            </button>
           </div>
-          <label class="mission-setting" for="djiZoomFactor">Zoom
-            <select id="djiZoomFactor">
-              <option value="1.0" selected>1.0x</option>
-              <option value="1.5">1.5x</option>
-              <option value="2.0">2.0x</option>
-              <option value="2.5">2.5x</option>
-              <option value="3.0">3.0x</option>
-              <option value="3.5">3.5x</option>
-              <option value="4.0">4.0x</option>
-            </select>
-          </label>
-          <label class="mission-setting" for="photoByDistanceMeters">PhotoEvery(m)
-            <input id="photoByDistanceMeters" type="number" min="0" max="250" step="1" value="0" />
-          </label>
-          <label class="mission-setting" for="djiStartStopVideo">
-            <input id="djiStartStopVideo" type="checkbox" /> Start/Stop Video
-          </label>
-          <label class="mission-setting" for="djiVideoStartWp">Video Start WP
-            <input id="djiVideoStartWp" type="number" min="1" step="1" value="1" />
-          </label>
-          <label class="mission-setting" for="djiVideoStopWp">Video Stop WP
-            <input id="djiVideoStopWp" type="number" min="0" step="1" value="0" />
-          </label>
-          <div class="route-status" id="videoWpStatus">Video actions: disabled</div>
+          <div class="mission-settings-section collapsed" id="missionGlobalSection">
+            <button class="btn secondary-btn mission-section-toggle" id="toggleMissionGlobalSectionBtn" type="button" aria-controls="missionGlobalSectionBody" aria-expanded="false">
+              Global Config
+              <span class="drawer-icon">&#9660;</span>
+            </button>
+            <div class="mission-section-body" id="missionGlobalSectionBody">
+              <label class="mission-setting" for="djiExecHeight">H(m)
+                <input id="djiExecHeight" type="number" min="5" max="500" step="1" value="10" />
+              </label>
+              <label class="mission-setting" for="djiWaypointSpeed">Speed(m/s)
+                <input id="djiWaypointSpeed" type="number" min="0.5" max="15" step="0.1" value="2.3" />
+              </label>
+              <label class="mission-setting" for="frontOverlapPct">Front%
+                <input id="frontOverlapPct" type="number" min="20" max="95" step="1" value="75" />
+              </label>
+              <label class="mission-setting" for="sideOverlapPct">Side%
+                <input id="sideOverlapPct" type="number" min="20" max="95" step="1" value="70" />
+              </label>
+              <label class="mission-setting mission-setting-wide" for="djiFinishAction">End of Flight
+                <select id="djiFinishAction">
+                  <option value="goHome" selected>Return To Home</option>
+                  <option value="noAction">No Action</option>
+                  <option value="autoLand">Auto Land</option>
+                </select>
+              </label>
+              <label class="mission-setting mission-setting-wide" for="djiGimbalPitch">Global Gimbal
+                <select id="djiGimbalPitch">
+                  <option value="none" selected>Keep</option>
+                  <option value="-45">-45</option>
+                  <option value="-90">-90</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="mission-settings-section collapsed" id="missionWaypointSection">
+            <button class="btn secondary-btn mission-section-toggle" id="toggleMissionWaypointSectionBtn" type="button" aria-controls="missionWaypointSectionBody" aria-expanded="false">
+              Waypoint Config
+              <span class="drawer-icon">&#9660;</span>
+            </button>
+            <div class="mission-section-body" id="missionWaypointSectionBody">
+              <div class="waypoint-config-panel" id="waypointConfigPanel">
+                <div class="waypoint-config-title">Waypoint Config (RC2-style)</div>
+                <label class="mission-setting" for="waypointConfigSelect">Waypoint
+                  <select id="waypointConfigSelect"></select>
+                </label>
+                <label class="mission-setting" for="waypointHeadingMode">Heading
+                  <select id="waypointHeadingMode">
+                    <option value="follow">Follow Course</option>
+                    <option value="poi">Face POI</option>
+                    <option value="custom">Manual (Custom)</option>
+                  </select>
+                </label>
+                <button class="btn secondary-btn mission-setting-wide" id="applyWaypointHeadingAllBtn" type="button">Apply Heading To All WPs</button>
+                <label class="mission-setting" for="waypointPoiTarget">POI Target
+                  <select id="waypointPoiTarget"></select>
+                </label>
+                <button class="btn secondary-btn mission-setting-wide" id="applyWaypointPoiAllBtn" type="button">Apply POI To All WPs</button>
+                <label class="mission-setting" for="waypointCustomHeadingAngle">Angle(deg)
+                  <input id="waypointCustomHeadingAngle" type="number" min="-180" max="180" step="1" value="0" />
+                </label>
+                <label class="mission-setting" for="waypointGimbalPitch">WP Gimbal
+                  <select id="waypointGimbalPitch">
+                    <option value="none">Keep</option>
+                    <option value="-45">-45</option>
+                    <option value="-90">-90</option>
+                  </select>
+                </label>
+                <button class="btn secondary-btn mission-setting-wide" id="applyWaypointGimbalAllBtn" type="button">Apply Gimbal To All WPs</button>
+                <label class="mission-setting" for="waypointZoomFactor">WP Zoom
+                  <select id="waypointZoomFactor">
+                    <option value="1.0">1.0x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2.0">2.0x</option>
+                    <option value="2.5">2.5x</option>
+                    <option value="3.0">3.0x</option>
+                    <option value="3.5">3.5x</option>
+                    <option value="4.0">4.0x</option>
+                  </select>
+                </label>
+                <label class="mission-setting" for="waypointCameraAction">Camera
+                  <select id="waypointCameraAction">
+                    <option value="none">None (global)</option>
+                    <option value="takePhoto">Take Photo</option>
+                    <option value="startRecord">Start Video</option>
+                    <option value="stopRecord">Stop Video</option>
+                  </select>
+                </label>
+                <button class="btn secondary-btn mission-setting-wide" id="applyWaypointCameraActionAllBtn" type="button">Apply Camera Action To All WPs</button>
+                <div class="waypoint-config-nav">
+                  <button class="btn secondary-btn" id="waypointConfigPrevBtn" type="button" title="Previous waypoint">&larr; WP</button>
+                  <button class="btn secondary-btn" id="waypointConfigNextBtn" type="button" title="Next waypoint">WP &rarr;</button>
+                  <button class="btn" id="saveWaypointConfigBtn" type="button">Auto Save</button>
+                </div>
+                <div class="route-status" id="waypointConfigStatus">Draw/import route to edit waypoint settings.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mission-settings-section collapsed" id="missionPhotoSection">
+            <button class="btn secondary-btn mission-section-toggle" id="toggleMissionPhotoSectionBtn" type="button" aria-controls="missionPhotoSectionBody" aria-expanded="false">
+              Photo Options
+              <span class="drawer-icon">&#9660;</span>
+            </button>
+            <div class="mission-section-body" id="missionPhotoSectionBody">
+              <label class="mission-setting" for="djiTakePhotoEachWp">
+                <input id="djiTakePhotoEachWp" type="checkbox" /> Photo each WP
+              </label>
+              <label class="mission-setting" for="djiHoverAtWp">
+                <input id="djiHoverAtWp" type="checkbox" /> Hover at WP
+              </label>
+              <label class="mission-setting" for="djiHoverSeconds">Hover(s)
+                <input id="djiHoverSeconds" type="number" min="1" max="30" step="1" value="3" />
+              </label>
+              <label class="mission-setting" for="djiZoomAtWp">
+                <input id="djiZoomAtWp" type="checkbox" /> Zoom at WP
+              </label>
+              <label class="mission-setting" for="djiFacePoiHeading" title="When enabled, each waypoint heading points toward the Mission POI.">
+                <input id="djiFacePoiHeading" type="checkbox" /> Face POI heading
+              </label>
+              <label class="mission-setting" for="djiZoomFactor">Zoom
+                <select id="djiZoomFactor">
+                  <option value="1.0" selected>1.0x</option>
+                  <option value="1.5">1.5x</option>
+                  <option value="2.0">2.0x</option>
+                  <option value="2.5">2.5x</option>
+                  <option value="3.0">3.0x</option>
+                  <option value="3.5">3.5x</option>
+                  <option value="4.0">4.0x</option>
+                </select>
+              </label>
+              <label class="mission-setting mission-setting-wide" for="photoByDistanceMeters">PhotoEvery(m)
+                <input id="photoByDistanceMeters" type="number" min="0" max="250" step="1" value="0" />
+              </label>
+            </div>
+          </div>
+
+          <div class="mission-settings-section collapsed" id="missionVideoSection">
+            <button class="btn secondary-btn mission-section-toggle" id="toggleMissionVideoSectionBtn" type="button" aria-controls="missionVideoSectionBody" aria-expanded="false">
+              Video Options
+              <span class="drawer-icon">&#9660;</span>
+            </button>
+            <div class="mission-section-body" id="missionVideoSectionBody">
+              <label class="mission-setting" for="djiStartStopVideo">
+                <input id="djiStartStopVideo" type="checkbox" /> Start/Stop Video
+              </label>
+              <label class="mission-setting" for="djiVideoStartWp">Video Start WP
+                <input id="djiVideoStartWp" type="number" min="1" step="1" value="1" />
+              </label>
+              <label class="mission-setting" for="djiVideoStopWp">Video Stop WP
+                <input id="djiVideoStopWp" type="number" min="0" step="1" value="0" />
+              </label>
+              <div class="route-status mission-settings-note" id="videoWpStatus">Video actions: disabled</div>
+            </div>
+          </div>
         </div>
-        <button class="btn secondary-btn drawer-toggle" id="toggleExportDrawerBtn" type="button" aria-controls="exportDrawer" aria-expanded="false">
-          Export & Files
-          <span class="drawer-icon">&#9660;</span>
-        </button>
-        <div class="export-drawer" id="exportDrawer">
+        <div class="export-drawer route-tools-panel" id="exportDrawer">
           <button class="btn" id="exportRouteGeoJSONBtn" type="button">Export GeoJSON</button>
           <button class="btn" id="exportRouteKMLBtn" type="button">Export KML</button>
           <button class="btn" id="exportDJIKMZBtn" type="button">Export KMZ</button>
@@ -1208,7 +1599,7 @@ body.map-immersive {
           <div class="route-status" id="exportSaveStatus">Tip: Export KMZ To Folder can write directly into your transfer subfolders (Chromium browsers).</div>
           <input id="routeFile" type="file" accept=".gpx,.kml,.kmz,.geojson,.json" aria-label="Import route file" />
         </div>
-        <button class="btn secondary-btn" id="toggleMapFullscreenBtn" type="button">Full Screen</button>
+        </div>
       </div>
       <div id="map"></div>
     </div>
@@ -1290,6 +1681,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   });
 
+  document.addEventListener('pointerdown', handleRouteToolsAutoCollapsePointerDown);
+  document.addEventListener('mousemove', handleRouteToolsAutoCollapseMouseMove);
+
   document.getElementById('drawRouteBtn').addEventListener('click', handleDrawRouteToggle);
   document.getElementById('drawPolygonBtn').addEventListener('click', handleDrawPolygonToggle);
   document.getElementById('drawRectangleBtn').addEventListener('click', handleDrawRectangleToggle);
@@ -1307,6 +1701,11 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('patternType').addEventListener('change', handlePatternTypeChange);
   document.getElementById('toggleDrawToolsBtn').addEventListener('click', toggleDrawToolsDrawer);
   document.getElementById('toggleMissionSettingsBtn').addEventListener('click', toggleMissionSettingsDrawer);
+  document.getElementById('missionSettingsPinBtn').addEventListener('click', toggleMissionSettingsPin);
+  document.getElementById('toggleMissionGlobalSectionBtn').addEventListener('click', () => toggleMissionSettingsSection('missionGlobalSection', 'toggleMissionGlobalSectionBtn'));
+  document.getElementById('toggleMissionWaypointSectionBtn').addEventListener('click', () => toggleMissionSettingsSection('missionWaypointSection', 'toggleMissionWaypointSectionBtn'));
+  document.getElementById('toggleMissionPhotoSectionBtn').addEventListener('click', () => toggleMissionSettingsSection('missionPhotoSection', 'toggleMissionPhotoSectionBtn'));
+  document.getElementById('toggleMissionVideoSectionBtn').addEventListener('click', () => toggleMissionSettingsSection('missionVideoSection', 'toggleMissionVideoSectionBtn'));
   document.getElementById('toggleExportDrawerBtn').addEventListener('click', toggleExportDrawer);
   document.getElementById('exportNameMode').addEventListener('change', applyExportNamingModeState);
   document.getElementById('djiProfileSlot').addEventListener('change', applyExportNamingModeState);
@@ -1319,6 +1718,8 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('toggleMapFullscreenBtn').addEventListener('click', toggleMapFullscreen);
   document.getElementById('toggleMapFullscreenTopBtn').addEventListener('click', toggleMapFullscreen);
   document.getElementById('centerPilotMarkerBtn').addEventListener('click', centerMapToPilotMarker);
+  document.getElementById('toggleRangeGuideBtn').addEventListener('click', toggleMissionRangeGuide);
+  document.getElementById('resetMissionPlannerBtn').addEventListener('click', resetMissionPlannerSession);
   document.getElementById('routeFile').addEventListener('change', handleRouteFile, false);
   document.getElementById('orbitRadiusMeters').addEventListener('input', syncPOICircleRadiusFromInput);
   document.getElementById('orbitAltitudeMeters').addEventListener('input', handleOrbitAltitudeInputChange);
@@ -1337,20 +1738,46 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('djiVideoStopWp').addEventListener('input', updateVideoWaypointStatus);
   document.getElementById('waypointConfigSelect').addEventListener('change', handleWaypointConfigSelectionChange);
   document.getElementById('waypointHeadingMode').addEventListener('change', () => {
+    persistWaypointConfigForSelected({ refreshUi: false, updateStatus: true });
     applyWaypointConfigEditorState();
     updateWaypointMarkerVisuals();
   });
-  document.getElementById('waypointPoiTarget').addEventListener('change', updateWaypointMarkerVisuals);
-  document.getElementById('waypointCustomHeadingAngle').addEventListener('input', updateWaypointMarkerVisuals);
-  document.getElementById('waypointZoomFactor').addEventListener('change', applyWaypointConfigEditorState);
+  document.getElementById('waypointPoiTarget').addEventListener('change', () => {
+    persistWaypointConfigForSelected({ refreshUi: false, updateStatus: true });
+    updateWaypointMarkerVisuals();
+  });
+  document.getElementById('waypointCustomHeadingAngle').addEventListener('input', () => {
+    persistWaypointConfigForSelected({ refreshUi: false, updateStatus: false });
+    updateWaypointMarkerVisuals();
+  });
+  document.getElementById('waypointZoomFactor').addEventListener('change', () => {
+    persistWaypointConfigForSelected({ refreshUi: false, updateStatus: true });
+    applyWaypointConfigEditorState();
+  });
+  document.getElementById('waypointGimbalPitch').addEventListener('change', () => {
+    persistWaypointConfigForSelected({ refreshUi: false, updateStatus: true });
+  });
+  document.getElementById('waypointCameraAction').addEventListener('change', () => {
+    persistWaypointConfigForSelected({ refreshUi: false, updateStatus: true });
+  });
+  document.getElementById('applyWaypointCameraActionAllBtn').addEventListener('click', applyWaypointCameraActionToAll);
+  document.getElementById('applyWaypointPoiAllBtn').addEventListener('click', applyWaypointPoiToAll);
   document.getElementById('waypointConfigPrevBtn').addEventListener('click', () => stepWaypointConfigSelection(-1));
   document.getElementById('waypointConfigNextBtn').addEventListener('click', () => stepWaypointConfigSelection(1));
   document.getElementById('saveWaypointConfigBtn').addEventListener('click', saveWaypointConfigForSelected);
+  document.getElementById('applyWaypointHeadingAllBtn').addEventListener('click', applyWaypointHeadingToAll);
+  document.getElementById('applyWaypointGimbalAllBtn').addEventListener('click', applyWaypointGimbalToAll);
 
-  routeToolsMobileCollapsed = isMobileViewport();
+  routeToolsMobileCollapsed = true;
   applyRouteToolsPanelState();
   applyDrawToolsDrawerState();
   applyMissionSettingsDrawerState();
+  applyMissionSettingsPinState();
+  updateMissionRangeGuideButtonState();
+  applyMissionSettingsSectionToggleState('missionGlobalSection', 'toggleMissionGlobalSectionBtn');
+  applyMissionSettingsSectionToggleState('missionWaypointSection', 'toggleMissionWaypointSectionBtn');
+  applyMissionSettingsSectionToggleState('missionPhotoSection', 'toggleMissionPhotoSectionBtn');
+  applyMissionSettingsSectionToggleState('missionVideoSection', 'toggleMissionVideoSectionBtn');
   applyExportDrawerState();
   const exportNameModeEl = document.getElementById('exportNameMode');
   const profileSlotEl = document.getElementById('djiProfileSlot');
@@ -1396,6 +1823,10 @@ let activePolyline = null;
 let routePath = [];
 let routeEditEnabled = true;
 let waypointMarkers = [];
+let undoLastWaypointMarker = null;
+let routeAppendModeActive = false;
+let liveDrawPreviewMarkers = [];
+let liveDrawPreviewPoints = [];
 let googleMapsLoaderPromise = null;
 let routeToolsMobileCollapsed = false;
 let autocompleteDebounceTimer = null;
@@ -1406,20 +1837,25 @@ let autocompleteRequestId = 0;
 let mapPseudoFullscreenActive = false;
 let mapPseudoFullscreenScrollY = 0;
 let routeSnapGuard = false;
-let drawToolsCollapsed = true;
-let missionSettingsCollapsed = true;
-let exportDrawerCollapsed = true;
+let activeRouteToolsPanel = null;
+let routeToolsFlyoutActivatedAt = 0;
+let missionSettingsPinned = false;
 let missionPOIs = []; // [{ id, marker }]
 let activeMissionPOIId = null;
 let waypointPoiAssignments = new Map(); // waypoint index -> mission POI id
-let waypointHeadingConfigs = new Map(); // waypoint index -> { mode, poiId, customAngle, zoomFactor }
+let waypointHeadingConfigs = new Map(); // waypoint index -> { mode, poiId, customAngle, zoomFactor, gimbalPitch }
 let selectedWaypointConfigIndex = 0;
 let poiCircle = null;
+let missionRangeGuideVisible = false;
+let missionRangeGuideRings = [];
+let missionRangeGuideLabels = [];
 let pendingMapClickMode = null;
 let syncingPOIRadiusInput = false;
 let profileExportRootHandle = null;
 const SNAP_TO_WAYPOINT_METERS = 12;
 const AUTO_CLOSE_POLYGON_METERS = 16;
+const LIVE_DRAW_DUPLICATE_METERS = 1.2;
+const ROUTE_TOOLS_FLYOUT_STICKY_MS = 2000;
 const PROFILE_STATE_KEY = 'dsop.profileState.v1';
 const PROFILE_SESSION_STATE_KEY = 'dsop.profileState.session.v1';
 const MISSION_AUTOMATION_PROFILE_KEY = 'dsop.missionAutomationProfile.v1';
@@ -1703,16 +2139,53 @@ function getStoredMissionPOI() {
   return { lat, lng };
 }
 
+function getRoutePointForWaypointIndex(index) {
+  if (!Number.isInteger(index) || index < 0) return null;
+
+  if (activePolyline) {
+    const path = activePolyline.getPath();
+    if (!path || index >= path.getLength()) return null;
+    const point = path.getAt(index);
+    return point ? { lat: point.lat(), lng: point.lng() } : null;
+  }
+
+  if (!Array.isArray(routePath) || index >= routePath.length) return null;
+  const point = routePath[index];
+  if (!point) return null;
+  return { lat: Number(point.lat), lng: Number(point.lng) };
+}
+
+function getFocusedWaypointTargetPoiId() {
+  const point = getRoutePointForWaypointIndex(selectedWaypointConfigIndex);
+  if (!point) return '';
+
+  const missionPois = getAllStoredMissionPOIs();
+  if (!missionPois.length) return '';
+
+  const cfg = getWaypointConfigForIndex(selectedWaypointConfigIndex);
+  const globalFacePoi = !!document.getElementById('djiFacePoiHeading')?.checked;
+  if (cfg.mode === 'custom') return '';
+  if (cfg.mode !== 'poi' && !globalFacePoi) return '';
+
+  const targetPoi = cfg.poiId
+    ? (missionPois.find((poi) => poi.id === cfg.poiId) || null)
+    : getWaypointMissionPoi(selectedWaypointConfigIndex, point, missionPois);
+
+  return targetPoi && targetPoi.id ? targetPoi.id : '';
+}
+
 function refreshMissionPOIMarkerStyles() {
+  const focusedPoiId = getFocusedWaypointTargetPoiId();
   missionPOIs.forEach((entry, index) => {
     const isActive = entry.id === activeMissionPOIId;
+    const isFocusedTarget = entry.id === focusedPoiId;
     entry.marker.setIcon({
       path: google.maps.SymbolPath.CIRCLE,
-      scale: isActive ? 8.5 : 7,
-      fillColor: isActive ? '#b71c1c' : '#d32f2f',
-      fillOpacity: isActive ? 0.98 : 0.92,
-      strokeColor: '#ffffff',
-      strokeWeight: isActive ? 2.2 : 1.8
+      scale: isActive ? 8.8 : (isFocusedTarget ? 8.2 : 7),
+      fillColor: isActive ? '#b71c1c' : (isFocusedTarget ? '#ef6c00' : '#d32f2f'),
+      fillOpacity: isActive ? 0.98 : (isFocusedTarget ? 0.98 : 0.92),
+      strokeColor: isFocusedTarget ? '#ffe082' : '#ffffff',
+      strokeWeight: isActive ? 2.4 : (isFocusedTarget ? 3 : 1.8)
     });
     entry.marker.setLabel({
       text: `P${index + 1}`,
@@ -1720,8 +2193,8 @@ function refreshMissionPOIMarkerStyles() {
       fontSize: '11px',
       fontWeight: '700'
     });
-    entry.marker.setZIndex(isActive ? 22000 : 20000 + index);
-    entry.marker.setTitle(`POI P${index + 1}${isActive ? ' (active)' : ''}`);
+    entry.marker.setZIndex(isActive ? 22000 : (isFocusedTarget ? 21500 : 20000 + index));
+    entry.marker.setTitle(`POI P${index + 1}${isActive ? ' (active)' : ''}${isFocusedTarget ? ' (waypoint target)' : ''}`);
   });
 }
 
@@ -1764,6 +2237,7 @@ function createMissionPOIMarker(lat, lng, poiId) {
     const p = markerPoi.getPosition();
     if (!p) return;
     if (!isValidPilotCoordinate(p.lat(), p.lng())) return;
+    refreshMissionRangeGuideIfVisible();
     updateDrawShapeSummary();
   });
 
@@ -1887,7 +2361,9 @@ function applyOrbitFacePoiDefaults() {
       customAngle: Number.isFinite(Number(existing && existing.customAngle)) ? Number(existing.customAngle) : 0,
       zoomFactor: Number.isFinite(Number(existing && existing.zoomFactor))
         ? Math.max(1, Math.min(4, Number(existing.zoomFactor)))
-        : fallbackZoom
+        : fallbackZoom,
+      gimbalPitch: normalizeWaypointGimbalPitch(existing && existing.gimbalPitch),
+      cameraAction: normalizeWaypointCameraAction(existing && existing.cameraAction)
     });
   }
 
@@ -2047,7 +2523,7 @@ function startPOIClickMode(mode = 'poi') {
     showLookupMessage('Orbital Mission: click map to place orbit center (POI). Orbit route will be generated automatically.', 'warn');
     return;
   }
-  showLookupMessage('POI click mode enabled. Tap/click map to add a POI. Click a POI marker to select active target, then click waypoint markers to assign.', 'warn');
+  showLookupMessage('POI click mode enabled. Tap/click map to add a POI target. Existing route is preserved.', 'warn');
 }
 
 function updateOrbitButtonState() {
@@ -2089,7 +2565,9 @@ function clearMissionPOI() {
       mode: cfg && cfg.mode === 'custom' ? 'custom' : 'follow',
       poiId: '',
       customAngle: Number.isFinite(Number(cfg && cfg.customAngle)) ? Number(cfg.customAngle) : 0,
-      zoomFactor: Number.isFinite(Number(cfg && cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : (Number(document.getElementById('djiZoomFactor')?.value) || 1)
+      zoomFactor: Number.isFinite(Number(cfg && cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : (Number(document.getElementById('djiZoomFactor')?.value) || 1),
+      gimbalPitch: normalizeWaypointGimbalPitch(cfg && cfg.gimbalPitch),
+      cameraAction: normalizeWaypointCameraAction(cfg && cfg.cameraAction)
     });
   });
   refreshWaypointConfigUi();
@@ -2103,8 +2581,6 @@ function toggleOrbitMode() {
     showLookupMessage('POI placement cancelled.', 'dim');
     return;
   }
-  const patternEl = document.getElementById('patternType');
-  if (patternEl) patternEl.value = 'poi';
   startPOIClickMode('poi');
 }
 
@@ -2280,7 +2756,7 @@ function initGoogleMap() {
     drawingControl: false,
     polylineOptions: {
       clickable: true,
-      editable: false,
+      editable: true,
       draggable: true,
       strokeColor: '#2196F3',
       strokeWeight: 3
@@ -2308,6 +2784,7 @@ function initGoogleMap() {
 
   google.maps.event.addListener(drawingManager, 'polylinecomplete', (poly) => {
     drawingManager.setDrawingMode(null);
+    clearLiveDrawPreview();
     setActivePolyline(poly);
     snapRouteToNearestWaypoint();
     extractPathFromPolyline(poly);
@@ -2348,20 +2825,40 @@ function initGoogleMap() {
     updateDrawRouteButtonState();
   });
 
+  google.maps.event.addListener(drawingManager, 'drawingmode_changed', () => {
+    const mode = drawingManager.getDrawingMode();
+    if (mode !== google.maps.drawing.OverlayType.POLYLINE) {
+      clearLiveDrawPreview();
+    }
+    updateDrawRouteButtonState();
+  });
+
   map.addListener('click', (event) => {
-    if (!isPendingPOIClickMode()) return;
-    const clickMode = pendingMapClickMode;
-    pendingMapClickMode = null;
     const latLng = event && event.latLng;
     if (!latLng) return;
-    setMissionPOI(latLng.lat(), latLng.lng());
-    if (clickMode === 'orbital') {
-      const patternEl = document.getElementById('patternType');
-      if (patternEl) patternEl.value = 'poi';
-      ensurePOICircleForCurrentPOI({ keepExistingRadius: false });
-      rebuildOrbitRouteFromCircle({ fitMap: true });
+
+    if (isPendingPOIClickMode()) {
+      const clickMode = pendingMapClickMode;
+      pendingMapClickMode = null;
+      setMissionPOI(latLng.lat(), latLng.lng());
+      if (clickMode === 'orbital') {
+        const patternEl = document.getElementById('patternType');
+        if (patternEl) patternEl.value = 'poi';
+        ensurePOICircleForCurrentPOI({ keepExistingRadius: false });
+        rebuildOrbitRouteFromCircle({ fitMap: true });
+      }
+      updateOrbitButtonState();
+      return;
     }
-    updateOrbitButtonState();
+
+    if (routeAppendModeActive) {
+      appendWaypointToActiveRoute(latLng);
+      return;
+    }
+
+    if (isNativeRouteDrawingActive()) {
+      addLiveDrawPreviewPoint(latLng);
+    }
   });
 
   applyRouteEditState();
@@ -2452,6 +2949,200 @@ function centerMapToPilotMarker() {
   showLookupMessage('No mission shape or pilot marker found. Draw a route first.', 'warn');
 }
 
+function updateMissionRangeGuideButtonState() {
+  const btn = document.getElementById('toggleRangeGuideBtn');
+  if (!btn) return;
+  btn.classList.toggle('is-active', missionRangeGuideVisible);
+  btn.title = missionRangeGuideVisible ? 'Hide distance guide (10m rings)' : 'Distance guide (10m rings)';
+  btn.setAttribute('aria-label', btn.title);
+}
+
+function clearMissionRangeGuide() {
+  missionRangeGuideRings.forEach((ring) => ring.setMap(null));
+  missionRangeGuideLabels.forEach((label) => label.setMap(null));
+  missionRangeGuideRings = [];
+  missionRangeGuideLabels = [];
+  missionRangeGuideVisible = false;
+  updateMissionRangeGuideButtonState();
+}
+
+function getMissionRangeGuideCenter() {
+  if (missionPOIs.length === 1) {
+    const p = missionPOIs[0].marker && missionPOIs[0].marker.getPosition ? missionPOIs[0].marker.getPosition() : null;
+    if (p) {
+      return { lat: p.lat(), lng: p.lng(), source: 'poi' };
+    }
+  }
+
+  if (marker && marker.getPosition) {
+    const p = marker.getPosition();
+    if (p) {
+      return { lat: p.lat(), lng: p.lng(), source: missionPOIs.length > 1 ? 'pilot-multi-poi' : 'pilot' };
+    }
+  }
+
+  const pilot = getStoredPilotPosition();
+  if (pilot) {
+    return { lat: pilot.lat, lng: pilot.lng, source: missionPOIs.length > 1 ? 'stored-pilot-multi-poi' : 'stored-pilot' };
+  }
+
+  return null;
+}
+
+function buildMissionRangeGuide(center) {
+  if (!map || !window.google || !google.maps || !google.maps.geometry || !center) return;
+
+  const centerLatLng = new google.maps.LatLng(center.lat, center.lng);
+  for (let radiusMeters = 10; radiusMeters <= 100; radiusMeters += 10) {
+    const path = [];
+    for (let headingDeg = 0; headingDeg <= 360; headingDeg += 5) {
+      path.push(google.maps.geometry.spherical.computeOffset(centerLatLng, radiusMeters, headingDeg));
+    }
+
+    const ring = new google.maps.Polyline({
+      map,
+      path,
+      clickable: false,
+      strokeOpacity: 0,
+      zIndex: 1400,
+      icons: [{
+        icon: {
+          path: 'M 0,-1 0,1',
+          strokeOpacity: 0.82,
+          strokeColor: '#96a1b1',
+          scale: 2
+        },
+        offset: '0',
+        repeat: '11px'
+      }]
+    });
+    missionRangeGuideRings.push(ring);
+
+    const labelPos = google.maps.geometry.spherical.computeOffset(centerLatLng, radiusMeters, 42);
+    const labelMarker = new google.maps.Marker({
+      map,
+      position: labelPos,
+      clickable: false,
+      zIndex: 1450,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 1,
+        fillOpacity: 0,
+        strokeOpacity: 0
+      },
+      label: {
+        text: `${radiusMeters}m`,
+        color: '#5f6b7b',
+        fontSize: '11px',
+        fontWeight: '700'
+      }
+    });
+    missionRangeGuideLabels.push(labelMarker);
+  }
+
+  missionRangeGuideVisible = true;
+  updateMissionRangeGuideButtonState();
+}
+
+function refreshMissionRangeGuideIfVisible() {
+  if (!missionRangeGuideVisible) return;
+  const center = getMissionRangeGuideCenter();
+  if (!center) {
+    clearMissionRangeGuide();
+    return;
+  }
+
+  const shouldWarnMultiPoi = center.source === 'pilot-multi-poi' || center.source === 'stored-pilot-multi-poi';
+  clearMissionRangeGuide();
+  buildMissionRangeGuide(center);
+  if (shouldWarnMultiPoi) {
+    showLookupMessage('Multiple POIs found. Distance guide centered on pilot marker. Drag pilot marker to desired mission center and tap rings button again.', 'dim');
+  }
+}
+
+function toggleMissionRangeGuide() {
+  if (!map || !window.google || !google.maps || !google.maps.geometry) return;
+
+  if (missionRangeGuideVisible) {
+    clearMissionRangeGuide();
+    showLookupMessage('Distance guide hidden.', 'dim');
+    return;
+  }
+
+  const center = getMissionRangeGuideCenter();
+  if (!center) {
+    showLookupMessage('Set pilot marker first, or use exactly one mission POI, then enable distance guide.', 'warn');
+    return;
+  }
+
+  buildMissionRangeGuide(center);
+  if (center.source === 'pilot-multi-poi' || center.source === 'stored-pilot-multi-poi') {
+    showLookupMessage('Multiple POIs found. Distance guide centered on pilot marker. Drag pilot marker to mission center if needed.', 'dim');
+  } else {
+    showLookupMessage('Distance guide enabled: 10m rings out to 100m.', 'dim');
+  }
+}
+
+function resetElementToDefault(el) {
+  if (!el) return;
+
+  if (el.tagName === 'SELECT') {
+    const options = Array.from(el.options || []);
+    const defaultIndex = options.findIndex((opt) => opt.defaultSelected);
+    el.selectedIndex = defaultIndex >= 0 ? defaultIndex : 0;
+    return;
+  }
+
+  if (el.type === 'checkbox' || el.type === 'radio') {
+    el.checked = !!el.defaultChecked;
+    return;
+  }
+
+  if (el.type === 'file') {
+    el.value = '';
+    return;
+  }
+
+  el.value = el.defaultValue;
+}
+
+function resetMissionPlannerPanelDefaults() {
+  const controls = document.querySelectorAll([
+    '#drawToolsDrawer input',
+    '#drawToolsDrawer select',
+    '#missionSettingsDrawer input',
+    '#missionSettingsDrawer select',
+    '#exportDrawer input',
+    '#exportDrawer select'
+  ].join(','));
+
+  controls.forEach((control) => resetElementToDefault(control));
+
+  missionSettingsPinned = false;
+  pendingMapClickMode = null;
+  selectedWaypointConfigIndex = 0;
+  routeAppendModeActive = false;
+
+  applyMissionSettingsPinState();
+  applyExportNamingModeState();
+  updateOrbitButtonState();
+  updateDrawShapeSummary();
+  updateWaypointPhotoActionUi();
+  updateVideoWaypointStatus();
+  refreshWaypointConfigUi();
+}
+
+function resetMissionPlannerSession() {
+  clearMissionRangeGuide();
+  clearLiveDrawPreview();
+  clearActiveRoute();
+  clearMissionPOIState();
+  waypointPoiAssignments.clear();
+  waypointHeadingConfigs.clear();
+  resetMissionPlannerPanelDefaults();
+  showLookupMessage('Mission reset complete. Pilot location/marker preserved.', 'dim');
+}
+
 function updatePseudoFullscreenMapHeight() {
   if (!mapPseudoFullscreenActive) return;
   const panel = document.querySelector('.map-panel');
@@ -2513,14 +3204,83 @@ function applyRouteToolsPanelState() {
   const toggleBtn = document.getElementById('toggleRouteToolsBtn');
   if (!routeTools || !toggleBtn) return;
 
+  const hasActivePanel = !routeToolsMobileCollapsed && activeRouteToolsPanel !== null;
   routeTools.classList.toggle('mobile-collapsed', routeToolsMobileCollapsed);
+  routeTools.classList.toggle('has-active-panel', hasActivePanel);
   toggleBtn.textContent = routeToolsMobileCollapsed ? '☰ Tools' : '✕ Close';
   toggleBtn.setAttribute('aria-expanded', routeToolsMobileCollapsed ? 'false' : 'true');
 }
 
 function toggleRouteToolsPanel() {
   routeToolsMobileCollapsed = !routeToolsMobileCollapsed;
+  if (routeToolsMobileCollapsed) {
+    activeRouteToolsPanel = null;
+  }
   applyRouteToolsPanelState();
+  applyDrawToolsDrawerState();
+  applyMissionSettingsDrawerState();
+  applyExportDrawerState();
+}
+
+function collapseActiveRouteToolsFlyout() {
+  if (activeRouteToolsPanel === 'mission' && missionSettingsPinned) return;
+  if (activeRouteToolsPanel === null) return;
+  activeRouteToolsPanel = null;
+  routeToolsFlyoutActivatedAt = 0;
+  applyDrawToolsDrawerState();
+  applyMissionSettingsDrawerState();
+  applyExportDrawerState();
+}
+
+function shouldAutoCollapseRouteToolsFlyout() {
+  if (activeRouteToolsPanel === 'mission' && missionSettingsPinned) return false;
+  return !isMobileViewport();
+}
+
+function isRouteToolsFlyoutStickyOpen() {
+  if (activeRouteToolsPanel === null || routeToolsFlyoutActivatedAt <= 0) return false;
+  return (Date.now() - routeToolsFlyoutActivatedAt) < ROUTE_TOOLS_FLYOUT_STICKY_MS;
+}
+
+function handleRouteToolsAutoCollapsePointerDown(event) {
+  if (!shouldAutoCollapseRouteToolsFlyout()) return;
+  if (routeToolsMobileCollapsed || activeRouteToolsPanel === null) return;
+  if (isRouteToolsFlyoutStickyOpen()) return;
+
+  const flyoutHost = document.getElementById('routeToolsFlyoutHost');
+  const menu = document.getElementById('routeToolsMenu');
+  const target = event && event.target;
+  if (!flyoutHost || !target) return;
+
+  if (flyoutHost.contains(target) || (menu && menu.contains(target))) return;
+  collapseActiveRouteToolsFlyout();
+}
+
+function handleRouteToolsAutoCollapseMouseMove(event) {
+  if (!shouldAutoCollapseRouteToolsFlyout()) return;
+  if (routeToolsMobileCollapsed || activeRouteToolsPanel === null) return;
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  if (isRouteToolsFlyoutStickyOpen()) return;
+
+  const flyoutHost = document.getElementById('routeToolsFlyoutHost');
+  const menu = document.getElementById('routeToolsMenu');
+  const target = event && event.target;
+  if (!flyoutHost || !target) return;
+
+  if (flyoutHost.contains(target) || (menu && menu.contains(target))) return;
+  collapseActiveRouteToolsFlyout();
+}
+
+function setActiveRouteToolsPanel(panelName) {
+  if (routeToolsMobileCollapsed) {
+    routeToolsMobileCollapsed = false;
+  }
+  activeRouteToolsPanel = activeRouteToolsPanel === panelName ? null : panelName;
+  routeToolsFlyoutActivatedAt = activeRouteToolsPanel ? Date.now() : 0;
+  applyRouteToolsPanelState();
+  applyDrawToolsDrawerState();
+  applyMissionSettingsDrawerState();
+  applyExportDrawerState();
 }
 
 function applyDrawToolsDrawerState() {
@@ -2528,14 +3288,91 @@ function applyDrawToolsDrawerState() {
   const toggleBtn = document.getElementById('toggleDrawToolsBtn');
   if (!drawer || !toggleBtn) return;
 
-  drawer.classList.toggle('collapsed', drawToolsCollapsed);
-  toggleBtn.classList.toggle('collapsed', drawToolsCollapsed);
-  toggleBtn.setAttribute('aria-expanded', drawToolsCollapsed ? 'false' : 'true');
+  const isActive = !routeToolsMobileCollapsed && activeRouteToolsPanel === 'draw';
+  drawer.classList.toggle('active', isActive);
+  drawer.classList.toggle('collapsed', !isActive);
+  toggleBtn.classList.toggle('collapsed', !isActive);
+  toggleBtn.classList.toggle('btn-active', isActive);
+  toggleBtn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+  toggleBtn.title = isActive ? 'Draw & Shape (click to close)' : 'Draw & Shape';
+  toggleBtn.setAttribute('aria-label', toggleBtn.title);
 }
 
 function toggleDrawToolsDrawer() {
-  drawToolsCollapsed = !drawToolsCollapsed;
-  applyDrawToolsDrawerState();
+  setActiveRouteToolsPanel('draw');
+}
+
+function getMissionSettingsSectionDefs() {
+  return [
+    { sectionId: 'missionGlobalSection', buttonId: 'toggleMissionGlobalSectionBtn' },
+    { sectionId: 'missionWaypointSection', buttonId: 'toggleMissionWaypointSectionBtn' },
+    { sectionId: 'missionPhotoSection', buttonId: 'toggleMissionPhotoSectionBtn' },
+    { sectionId: 'missionVideoSection', buttonId: 'toggleMissionVideoSectionBtn' }
+  ];
+}
+
+function syncMissionSettingsSectionToggleStates() {
+  getMissionSettingsSectionDefs().forEach(({ sectionId, buttonId }) => {
+    applyMissionSettingsSectionToggleState(sectionId, buttonId);
+  });
+}
+
+function applyMissionSettingsPinState() {
+  const btn = document.getElementById('missionSettingsPinBtn');
+  const icon = document.getElementById('missionSettingsPinIcon');
+  if (!btn || !icon) return;
+
+  const isPinned = !!missionSettingsPinned;
+  const label = isPinned
+    ? 'Unpin Mission Settings (allow auto-close)'
+    : 'Pin Mission Settings (keep open)';
+
+  btn.classList.toggle('is-pinned', isPinned);
+  btn.setAttribute('aria-pressed', isPinned ? 'true' : 'false');
+  btn.title = label;
+  btn.setAttribute('aria-label', label);
+  icon.textContent = isPinned ? '📍' : '📌';
+}
+
+function toggleMissionSettingsPin() {
+  missionSettingsPinned = !missionSettingsPinned;
+  applyMissionSettingsPinState();
+
+  if (missionSettingsPinned && routeToolsMobileCollapsed) {
+    routeToolsMobileCollapsed = false;
+    applyRouteToolsPanelState();
+  }
+
+  if (missionSettingsPinned && activeRouteToolsPanel !== 'mission') {
+    setActiveRouteToolsPanel('mission');
+  }
+}
+
+function applyMissionSettingsSectionToggleState(sectionId, buttonId) {
+  const section = document.getElementById(sectionId);
+  const button = document.getElementById(buttonId);
+  if (!section || !button) return;
+
+  const isCollapsed = section.classList.contains('collapsed');
+  button.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+}
+
+function toggleMissionSettingsSection(sectionId, buttonId) {
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+
+  const willOpen = section.classList.contains('collapsed');
+  getMissionSettingsSectionDefs().forEach(({ sectionId: id }) => {
+    const current = document.getElementById(id);
+    if (!current) return;
+    if (id === sectionId) {
+      current.classList.toggle('collapsed', !willOpen);
+    } else {
+      current.classList.add('collapsed');
+    }
+  });
+
+  syncMissionSettingsSectionToggleStates();
 }
 
 function applyMissionSettingsDrawerState() {
@@ -2543,14 +3380,18 @@ function applyMissionSettingsDrawerState() {
   const toggleBtn = document.getElementById('toggleMissionSettingsBtn');
   if (!drawer || !toggleBtn) return;
 
-  drawer.classList.toggle('collapsed', missionSettingsCollapsed);
-  toggleBtn.classList.toggle('collapsed', missionSettingsCollapsed);
-  toggleBtn.setAttribute('aria-expanded', missionSettingsCollapsed ? 'false' : 'true');
+  const isActive = !routeToolsMobileCollapsed && activeRouteToolsPanel === 'mission';
+  drawer.classList.toggle('active', isActive);
+  drawer.classList.toggle('collapsed', !isActive);
+  toggleBtn.classList.toggle('collapsed', !isActive);
+  toggleBtn.classList.toggle('btn-active', isActive);
+  toggleBtn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+  toggleBtn.title = isActive ? 'Mission Settings (click to close)' : 'Mission Settings';
+  toggleBtn.setAttribute('aria-label', toggleBtn.title);
 }
 
 function toggleMissionSettingsDrawer() {
-  missionSettingsCollapsed = !missionSettingsCollapsed;
-  applyMissionSettingsDrawerState();
+  setActiveRouteToolsPanel('mission');
 }
 
 function applyExportDrawerState() {
@@ -2558,14 +3399,18 @@ function applyExportDrawerState() {
   const toggleBtn = document.getElementById('toggleExportDrawerBtn');
   if (!drawer || !toggleBtn) return;
 
-  drawer.classList.toggle('collapsed', exportDrawerCollapsed);
-  toggleBtn.classList.toggle('collapsed', exportDrawerCollapsed);
-  toggleBtn.setAttribute('aria-expanded', exportDrawerCollapsed ? 'false' : 'true');
+  const isActive = !routeToolsMobileCollapsed && activeRouteToolsPanel === 'export';
+  drawer.classList.toggle('active', isActive);
+  drawer.classList.toggle('collapsed', !isActive);
+  toggleBtn.classList.toggle('collapsed', !isActive);
+  toggleBtn.classList.toggle('btn-active', isActive);
+  toggleBtn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+  toggleBtn.title = isActive ? 'Export & Files (click to close)' : 'Export & Files';
+  toggleBtn.setAttribute('aria-label', toggleBtn.title);
 }
 
 function toggleExportDrawer() {
-  exportDrawerCollapsed = !exportDrawerCollapsed;
-  applyExportDrawerState();
+  setActiveRouteToolsPanel('export');
 }
 
 function applyExportNamingModeState() {
@@ -2604,6 +3449,7 @@ function setActivePolyline(poly) {
   if (activePolyline) activePolyline.setMap(null);
   clearWaypointMarkers();
   activePolyline = poly;
+  routeAppendModeActive = false;
   applyRouteEditState();
   updateDrawRouteButtonState();
 
@@ -2633,6 +3479,9 @@ function applyRouteEditState() {
   if (!hasRoute) {
     routeEditEnabled = true;
   }
+  if (!routeEditEnabled) {
+    routeAppendModeActive = false;
+  }
 
   if (btn) {
     btn.disabled = !hasRoute;
@@ -2647,39 +3496,47 @@ function applyRouteEditState() {
     activePolyline.setDraggable(routeEditEnabled);
   }
   waypointMarkers.forEach(m => m.setDraggable(routeEditEnabled));
+  updateUndoLastWaypointMarker();
+}
+
+function setRouteAppendMode(active) {
+  routeAppendModeActive = !!(active && activePolyline && routeEditEnabled);
+  updateDrawRouteButtonState();
+  updateUndoLastWaypointMarker();
+}
+
+function appendWaypointToActiveRoute(latLng) {
+  if (!routeAppendModeActive || !activePolyline || !latLng) return;
+
+  const path = activePolyline.getPath();
+  if (!path) return;
+
+  path.push(latLng);
+  selectedWaypointConfigIndex = path.getLength() - 1;
+  extractPathFromPolyline(activePolyline);
 }
 
 function toggleRouteEdit() {
   const hasRoute = !!activePolyline || routePath.length > 0;
   if (!hasRoute) return;
 
-  const wasEditing = routeEditEnabled;
   routeEditEnabled = !routeEditEnabled;
   applyRouteEditState();
   if (activePolyline) {
     rebuildWaypointMarkers(activePolyline);
   }
-  
-  // If locking the route, prompt to set POI
-  if (wasEditing && !routeEditEnabled) {
-    setTimeout(() => {
-      const shouldPromptPOI = window.confirm(
-        'Route locked! Would you like to set a Point of Interest (POI) for this mission? This is used for DJI Face POI heading and camera orientation.\n\nOK: Set POI now\nCancel: Skip for now'
-      );
-      if (shouldPromptPOI) {
-        startPOIClickMode();
-        showLookupMessage('POI mode active: Click on the map to set the point of interest, or press Cancel in Orbit panel to cancel.', 'warn');
-      }
-    }, 100);
-  }
 }
 
-function isRouteDrawingActive() {
+function isNativeRouteDrawingActive() {
   return !!(drawingManager
     && window.google
     && google.maps
     && google.maps.drawing
     && drawingManager.getDrawingMode() === google.maps.drawing.OverlayType.POLYLINE);
+}
+
+function isRouteDrawingActive() {
+  return isNativeRouteDrawingActive() || routeAppendModeActive;
 }
 
 function updateDrawingToolActiveState() {
@@ -2696,8 +3553,8 @@ function updateDrawingToolActiveState() {
     const labelSpan = wpBtn.querySelector('span:last-child');
     const active = hasRoute || isDrawing;
     wpBtn.classList.toggle('btn-active', active);
-    if (labelSpan) labelSpan.textContent = active ? 'Clear' : 'WP';
-    wpBtn.title = active ? 'Clear current shape' : 'Waypoints';
+    if (labelSpan) labelSpan.textContent = routeAppendModeActive ? 'Done' : (active ? 'Clear' : 'WP');
+    wpBtn.title = routeAppendModeActive ? 'Finish waypoint append mode' : (active ? 'Clear current shape' : 'Waypoints');
     wpBtn.setAttribute('aria-label', wpBtn.title);
   }
   if (polyBtn) {
@@ -2727,11 +3584,14 @@ function clearActiveRoute() {
   if (drawingManager) {
     drawingManager.setDrawingMode(null);
   }
+  routeAppendModeActive = false;
+  clearLiveDrawPreview();
   if (activePolyline) {
     activePolyline.setMap(null);
     activePolyline = null;
   }
   clearWaypointMarkers();
+  clearUndoLastWaypointMarker();
   routePath = [];
   waypointPoiAssignments.clear();
   waypointHeadingConfigs.clear();
@@ -2744,12 +3604,19 @@ function clearActiveRoute() {
 function handleDrawRouteToggle() {
   if (!drawingManager || !window.google || !google.maps || !google.maps.drawing) return;
 
+  if (routeAppendModeActive) {
+    setRouteAppendMode(false);
+    showLookupMessage('Waypoint append mode ended.', 'dim');
+    return;
+  }
+
   const hasRoute = !!activePolyline || routePath.length > 0;
-  if (hasRoute || isRouteDrawingActive()) {
+  if (hasRoute || isNativeRouteDrawingActive()) {
     clearActiveRoute();
     return;
   }
 
+  clearLiveDrawPreview();
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
   const patternEl = document.getElementById('patternType');
   if (patternEl) patternEl.value = 'perimeter';
@@ -2783,6 +3650,49 @@ function handleDrawRectangleToggle() {
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.RECTANGLE);
   showLookupMessage('Rectangle mode enabled. Drag on map to draw bounds.', 'dim');
   updateDrawRouteButtonState();
+}
+
+function undoLastWaypoint() {
+  if (!activePolyline) {
+    if (isNativeRouteDrawingActive()) {
+      showLookupMessage('Finish the current draw first, then use Undo Last WP.', 'dim');
+      return;
+    }
+    showLookupMessage('No route to undo. Draw or import a route first.', 'dim');
+    return;
+  }
+
+  const path = activePolyline.getPath();
+  const points = path ? path.getArray() : [];
+  const targetInfo = getUndoWaypointTargetInfo(points);
+  const len = points.length;
+  if (!targetInfo || len <= 0) return;
+
+  if (targetInfo.hasClosedDuplicate && len > 0) {
+    path.removeAt(len - 1);
+  }
+
+  if (path.getLength() <= 2) {
+    clearActiveRoute();
+    showLookupMessage('Route cleared.', 'dim');
+    return;
+  }
+
+  const removeIndex = Math.min(targetInfo.targetIndex, path.getLength() - 1);
+  if (removeIndex < 0) return;
+  path.removeAt(removeIndex);
+
+  if (path.getLength() < 2) {
+    clearActiveRoute();
+    showLookupMessage('Route cleared.', 'dim');
+    return;
+  }
+
+  const nextTargetInfo = getUndoWaypointTargetInfo(path.getArray());
+  selectedWaypointConfigIndex = nextTargetInfo ? nextTargetInfo.targetIndex : 0;
+  extractPathFromPolyline(activePolyline);
+  setRouteAppendMode(true);
+  showLookupMessage(`Removed last waypoint. Tap map to continue from WP ${Math.max(1, path.getLength())}. Click WP again when done.`, 'warn');
 }
 
 function getRoutePointsFromActivePolyline() {
@@ -2874,7 +3784,6 @@ function snapRouteToNearestWaypoint() {
 
   routeSnapGuard = true;
   snapPathVertices(path);
-  autoClosePathIfNear(path);
   routeSnapGuard = false;
   extractPathFromPolyline(activePolyline);
 }
@@ -3132,8 +4041,8 @@ function generatePOIOrbitPointsFromPolygon(polygonCoords) {
     center = new google.maps.LatLng(centerLat, centerLng);
   }
 
-  const radiusMeters = Math.max(10, Number(document.getElementById('orbitRadiusMeters')?.value) || 50);
-  const orbitDirection = String(document.getElementById('orbitDirection')?.value || 'cw').toLowerCase() === 'ccw' ? 'ccw' : 'cw';
+  const radiusMeters = Math.max(10, Number(document.getElementById('orbitRadiusMeters')?.value) || 10);
+  const orbitDirection = String(document.getElementById('orbitDirection')?.value || 'ccw').toLowerCase() === 'ccw' ? 'ccw' : 'cw';
   const points = [];
   const count = 8;
   const startAngleOffsetDeg = 15;
@@ -3252,7 +4161,7 @@ function generatePOIOrbitPointsFromCircle() {
   const points = [];
   const count = 12;
   const startAngleOffsetDeg = 15;
-  const orbitDirection = String(document.getElementById('orbitDirection')?.value || 'cw').toLowerCase() === 'ccw' ? 'ccw' : 'cw';
+  const orbitDirection = String(document.getElementById('orbitDirection')?.value || 'ccw').toLowerCase() === 'ccw' ? 'ccw' : 'cw';
   for (let i = 0; i < count; i++) {
     const step = ((360 / count) * i + startAngleOffsetDeg) % 360;
     const heading = orbitDirection === 'ccw' ? (360 - step) % 360 : step;
@@ -3292,6 +4201,156 @@ function ensureRoutePathForExport() {
 function clearWaypointMarkers() {
   waypointMarkers.forEach(m => m.setMap(null));
   waypointMarkers = [];
+}
+
+function clearUndoLastWaypointMarker() {
+  if (!undoLastWaypointMarker) return;
+  undoLastWaypointMarker.setMap(null);
+  undoLastWaypointMarker = null;
+}
+
+function makeUndoWaypointIcon() {
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34">'
+    + '<circle cx="17" cy="17" r="14" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>'
+    + '<path d="M19.8 9.8c-4.8 0-8 3-8.8 7.1h-2.6l3.8 4.4 3.7-4.4h-2.2c0.7-2.2 2.6-3.9 6.1-3.9 1.9 0 3.8 0.8 5.2 2.3l2-2c-1.9-2.2-4.4-3.5-7.2-3.5z" fill="#c2410c"/>'
+    + '</svg>';
+
+  return {
+    url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg),
+    scaledSize: new google.maps.Size(34, 34),
+    anchor: new google.maps.Point(17, 17)
+  };
+}
+
+function getUndoWaypointTargetInfo(pathPoints) {
+  const points = Array.isArray(pathPoints) ? pathPoints : [];
+  if (!points.length) return null;
+
+  let targetIndex = points.length - 1;
+  let hasClosedDuplicate = false;
+
+  if (points.length >= 2) {
+    const first = points[0] instanceof google.maps.LatLng
+      ? { lat: points[0].lat(), lng: points[0].lng() }
+      : { lat: Number(points[0].lat), lng: Number(points[0].lng) };
+    const last = points[points.length - 1] instanceof google.maps.LatLng
+      ? { lat: points[points.length - 1].lat(), lng: points[points.length - 1].lng() }
+      : { lat: Number(points[points.length - 1].lat), lng: Number(points[points.length - 1].lng) };
+    hasClosedDuplicate = pointsNearlyEqual(first, last);
+    if (hasClosedDuplicate) {
+      targetIndex = points.length - 2;
+    }
+  }
+
+  if (targetIndex < 0 || targetIndex >= points.length) return null;
+
+  const targetPoint = points[targetIndex];
+  const targetLatLng = targetPoint instanceof google.maps.LatLng
+    ? targetPoint
+    : new google.maps.LatLng(Number(targetPoint.lat), Number(targetPoint.lng));
+
+  return {
+    targetIndex,
+    targetLatLng,
+    hasClosedDuplicate
+  };
+}
+
+function getUndoWaypointAnchorPosition(latLng) {
+  if (!latLng || !window.google || !google.maps || !google.maps.geometry) {
+    return latLng;
+  }
+  return google.maps.geometry.spherical.computeOffset(latLng, 14, 45);
+}
+
+function updateUndoLastWaypointMarker(pathPoints = null) {
+  if (!map || !routeEditEnabled || !activePolyline) {
+    clearUndoLastWaypointMarker();
+    return;
+  }
+
+  const points = Array.isArray(pathPoints) ? pathPoints : activePolyline.getPath().getArray();
+  const targetInfo = getUndoWaypointTargetInfo(points);
+  if (!targetInfo || targetInfo.targetIndex < 0) {
+    clearUndoLastWaypointMarker();
+    return;
+  }
+
+  const anchorPosition = getUndoWaypointAnchorPosition(targetInfo.targetLatLng);
+  if (!anchorPosition) {
+    clearUndoLastWaypointMarker();
+    return;
+  }
+
+  if (!undoLastWaypointMarker) {
+    undoLastWaypointMarker = new google.maps.Marker({
+      map,
+      clickable: true,
+      draggable: false,
+      optimized: false,
+      zIndex: 650000,
+      icon: makeUndoWaypointIcon()
+    });
+    undoLastWaypointMarker.addListener('click', undoLastWaypoint);
+  }
+
+  undoLastWaypointMarker.setPosition(anchorPosition);
+  undoLastWaypointMarker.setTitle('Undo last WP ' + (targetInfo.targetIndex + 1));
+  undoLastWaypointMarker.setMap(map);
+}
+
+function isLiveDrawPreviewDuplicate(point) {
+  if (!Array.isArray(liveDrawPreviewPoints) || liveDrawPreviewPoints.length === 0) {
+    return false;
+  }
+  const last = liveDrawPreviewPoints[liveDrawPreviewPoints.length - 1];
+  if (!last || !window.google || !google.maps || !google.maps.geometry) {
+    return false;
+  }
+  const d = google.maps.geometry.spherical.computeDistanceBetween(
+    new google.maps.LatLng(last.lat, last.lng),
+    point
+  );
+  return d <= LIVE_DRAW_DUPLICATE_METERS;
+}
+
+function clearLiveDrawPreview() {
+  liveDrawPreviewMarkers.forEach((m) => m.setMap(null));
+  liveDrawPreviewMarkers = [];
+  liveDrawPreviewPoints = [];
+}
+
+function redrawLiveDrawPreviewMarkers() {
+  liveDrawPreviewMarkers.forEach((m) => m.setMap(null));
+  liveDrawPreviewMarkers = [];
+
+  const total = liveDrawPreviewPoints.length;
+  if (!total || !map || !window.google) return;
+
+  liveDrawPreviewPoints.forEach((pt, idx) => {
+    const type = idx === 0 ? 'start' : 'mid';
+    const headingDeg = getWaypointHeadingFromPath(liveDrawPreviewPoints, idx);
+    const markerWp = new google.maps.Marker({
+      position: pt,
+      map,
+      draggable: false,
+      clickable: false,
+      title: 'WP ' + (idx + 1) + (idx === 0 ? ' (start)' : ''),
+      icon: makeWpIcon(type, { selected: false, headingDeg }),
+      label: makeWpLabel(idx + 1, type),
+      optimized: false,
+      zIndex: 9000 + idx
+    });
+    liveDrawPreviewMarkers.push(markerWp);
+  });
+}
+
+function addLiveDrawPreviewPoint(latLng) {
+  if (!latLng || !window.google || !google.maps) return;
+  if (isLiveDrawPreviewDuplicate(latLng)) return;
+
+  liveDrawPreviewPoints.push({ lat: latLng.lat(), lng: latLng.lng() });
+  redrawLiveDrawPreviewMarkers();
 }
 
 function normalizeHeadingDegrees(value) {
@@ -3461,7 +4520,10 @@ function rebuildWaypointMarkers(poly) {
       waypointHeadingConfigs.set(idx, {
         mode: 'poi',
         poiId: activeMissionPOIId,
-        customAngle: Number.isFinite(Number(existing && existing.customAngle)) ? Number(existing.customAngle) : 0
+        customAngle: Number.isFinite(Number(existing && existing.customAngle)) ? Number(existing.customAngle) : 0,
+        zoomFactor: Number.isFinite(Number(existing && existing.zoomFactor)) ? Math.max(1, Math.min(4, Number(existing.zoomFactor))) : (Number(document.getElementById('djiZoomFactor')?.value) || 1),
+        gimbalPitch: normalizeWaypointGimbalPitch(existing && existing.gimbalPitch),
+        cameraAction: normalizeWaypointCameraAction(existing && existing.cameraAction)
       });
 
       const poiIndex = missionPOIs.findIndex((entry) => entry.id === activeMissionPOIId);
@@ -3479,7 +4541,10 @@ function rebuildWaypointMarkers(poly) {
         waypointHeadingConfigs.set(idx, {
           mode: 'follow',
           poiId: '',
-          customAngle: Number.isFinite(Number(existing.customAngle)) ? Number(existing.customAngle) : 0
+          customAngle: Number.isFinite(Number(existing.customAngle)) ? Number(existing.customAngle) : 0,
+          zoomFactor: Number.isFinite(Number(existing.zoomFactor)) ? Math.max(1, Math.min(4, Number(existing.zoomFactor))) : (Number(document.getElementById('djiZoomFactor')?.value) || 1),
+          gimbalPitch: normalizeWaypointGimbalPitch(existing.gimbalPitch),
+          cameraAction: normalizeWaypointCameraAction(existing.cameraAction)
         });
       }
       markerWp.setTitle('WP ' + (idx + 1) + (idx === 0 ? ' (start)' : idx === total - 1 ? ' (end)' : ''));
@@ -3492,6 +4557,7 @@ function rebuildWaypointMarkers(poly) {
   });
 
   updateWaypointMarkerVisuals();
+  updateUndoLastWaypointMarker(points);
 }
 
 function pointsNearlyEqual(a, b, epsilon = 1e-7) {
@@ -3586,13 +4652,13 @@ function buildMissionExportBaseName() {
   const patternType = document.getElementById('patternType')?.value || 'perimeter';
   let patternPart = 'P';
   if (patternType === 'poi') {
-    patternPart = `O${formatShortNumber(document.getElementById('orbitRadiusMeters')?.value, '50')}`;
+    patternPart = `O${formatShortNumber(document.getElementById('orbitRadiusMeters')?.value, '10')}`;
   } else if (patternType === 'lawnmower') {
     patternPart = 'LM';
   }
 
-  const aglPart = `AGL${formatShortNumber(document.getElementById('djiExecHeight')?.value, '60')}`;
-  const speedPart = `S${formatShortNumber(document.getElementById('djiWaypointSpeed')?.value, '2p5')}`;
+  const aglPart = `AGL${formatShortNumber(document.getElementById('djiExecHeight')?.value, '10')}`;
+  const speedPart = `S${formatShortNumber(document.getElementById('djiWaypointSpeed')?.value, '2p3')}`;
   return `${placeShort}_${patternPart}_${aglPart}_${speedPart}`;
 }
 
@@ -3726,6 +4792,12 @@ function getWaypointHeading(index, pathPoints = routePath) {
   ) || 0;
 }
 
+function getWaypointGimbalPitchForIndex(index, globalGimbalPitch = 'none') {
+  const fallback = normalizeWaypointGimbalPitch(globalGimbalPitch);
+  const cfg = waypointHeadingConfigs.get(index);
+  return normalizeWaypointGimbalPitch(cfg && cfg.gimbalPitch ? cfg.gimbalPitch : fallback);
+}
+
 const WPML_NS_PRIMARY = 'http://www.uav.com/wpmz/1.0.2';
 const WPML_NS_LEGACY = 'http://www.dji.com/wpmz/1.0.2';
 
@@ -3754,6 +4826,7 @@ function buildDJITemplateKML(createTimeMs) {
     }
 
     const waypointConfig = waypointHeadingConfigs.get(i);
+    const waypointGimbalPitch = getWaypointGimbalPitchForIndex(i, settings.gimbalPitch);
     const waypointPoi = getWaypointMissionPoi(i, p, missionPois);
     let headingModeText = 'smoothTransition';
     let headingAngleText = heading;
@@ -3794,7 +4867,7 @@ function buildDJITemplateKML(createTimeMs) {
       <wpml:useGlobalSpeed>1</wpml:useGlobalSpeed>
       <wpml:useGlobalHeadingParam>0</wpml:useGlobalHeadingParam>
       <wpml:useGlobalTurnParam>1</wpml:useGlobalTurnParam>
-      <wpml:gimbalPitchAngle>0</wpml:gimbalPitchAngle>
+      <wpml:gimbalPitchAngle>${waypointGimbalPitch === 'none' ? 0 : waypointGimbalPitch}</wpml:gimbalPitchAngle>
       <wpml:waypointHeadingParam>
         <wpml:waypointHeadingMode>${headingModeText}</wpml:waypointHeadingMode>
         <wpml:waypointHeadingAngle>${headingAngleText}</wpml:waypointHeadingAngle>
@@ -3856,8 +4929,8 @@ function getDJIMissionSettings() {
   const videoStopWpRaw = Number(document.getElementById('djiVideoStopWp')?.value);
 
   return {
-    height: Number.isFinite(height) && height > 0 ? height : 60,
-    speed: Number.isFinite(speed) && speed > 0 ? speed : 2.5,
+    height: Number.isFinite(height) && height > 0 ? height : 10,
+    speed: Number.isFinite(speed) && speed > 0 ? speed : 2.3,
     finishAction,
     gimbalPitch,
     takePhotoEachWp,
@@ -3954,6 +5027,7 @@ function updateWaypointPhotoActionUi() {
 
   applyWaypointConfigEditorState();
   updateVideoWaypointStatus();
+  refreshMissionPOIMarkerStyles();
 }
 
 function getRouteWaypointCountForConfig() {
@@ -3968,10 +5042,26 @@ function formatPoiLabelById(poiId) {
   return idx >= 0 ? `P${idx + 1}` : 'Auto';
 }
 
+function normalizeWaypointGimbalPitch(value) {
+  const text = String(value || 'none').trim();
+  if (text === '-45' || text === '-90') return text;
+  return 'none';
+}
+
+function normalizeWaypointCameraAction(value) {
+  const v = String(value || 'none').trim();
+  return ['takePhoto', 'startRecord', 'stopRecord'].includes(v) ? v : 'none';
+}
+
+function getGlobalWaypointGimbalPitch() {
+  return normalizeWaypointGimbalPitch(document.getElementById('djiGimbalPitch')?.value || 'none');
+}
+
 function normalizeWaypointConfigMaps() {
   const count = getRouteWaypointCountForConfig();
   const globalZoom = Number(document.getElementById('djiZoomFactor')?.value);
   const fallbackZoom = Number.isFinite(globalZoom) ? Math.max(1, Math.min(4, globalZoom)) : 1;
+  const fallbackGimbalPitch = getGlobalWaypointGimbalPitch();
   waypointPoiAssignments.forEach((poiId, wpIndex) => {
     if (wpIndex < 0 || wpIndex >= count || !getMissionPOIById(poiId)) {
       waypointPoiAssignments.delete(wpIndex);
@@ -3992,7 +5082,9 @@ function normalizeWaypointConfigMaps() {
         mode: cfg.mode === 'poi' ? 'follow' : cfg.mode,
         poiId: '',
         customAngle: Number.isFinite(Number(cfg.customAngle)) ? Number(cfg.customAngle) : 0,
-        zoomFactor: Number.isFinite(Number(cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : fallbackZoom
+        zoomFactor: Number.isFinite(Number(cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : fallbackZoom,
+        gimbalPitch: normalizeWaypointGimbalPitch(cfg.gimbalPitch || fallbackGimbalPitch),
+        cameraAction: normalizeWaypointCameraAction(cfg.cameraAction)
       });
       return;
     }
@@ -4001,7 +5093,9 @@ function normalizeWaypointConfigMaps() {
       mode: cfg.mode,
       poiId: cfg.poiId || '',
       customAngle: Number.isFinite(Number(cfg.customAngle)) ? Number(cfg.customAngle) : 0,
-      zoomFactor: Number.isFinite(Number(cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : fallbackZoom
+      zoomFactor: Number.isFinite(Number(cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : fallbackZoom,
+      gimbalPitch: normalizeWaypointGimbalPitch(cfg.gimbalPitch || fallbackGimbalPitch),
+      cameraAction: normalizeWaypointCameraAction(cfg.cameraAction)
     });
   });
 }
@@ -4010,11 +5104,14 @@ function getWaypointConfigDefault(index) {
   const globalFacePoi = !!document.getElementById('djiFacePoiHeading')?.checked;
   const assignedPoiId = waypointPoiAssignments.get(index) || '';
   const globalZoom = Number(document.getElementById('djiZoomFactor')?.value);
+  const globalGimbalPitch = getGlobalWaypointGimbalPitch();
   return {
     mode: globalFacePoi ? 'poi' : 'follow',
     poiId: assignedPoiId,
     customAngle: 0,
-    zoomFactor: Number.isFinite(globalZoom) ? Math.max(1, Math.min(4, globalZoom)) : 1
+    zoomFactor: Number.isFinite(globalZoom) ? Math.max(1, Math.min(4, globalZoom)) : 1,
+    gimbalPitch: globalGimbalPitch,
+    cameraAction: 'none'
   };
 }
 
@@ -4022,11 +5119,14 @@ function getWaypointConfigForIndex(index) {
   const cfg = waypointHeadingConfigs.get(index);
   if (!cfg) return getWaypointConfigDefault(index);
   const globalZoom = Number(document.getElementById('djiZoomFactor')?.value);
+  const globalGimbalPitch = getGlobalWaypointGimbalPitch();
   return {
     mode: ['follow', 'poi', 'custom'].includes(cfg.mode) ? cfg.mode : 'follow',
     poiId: cfg.poiId && getMissionPOIById(cfg.poiId) ? cfg.poiId : '',
     customAngle: Number.isFinite(Number(cfg.customAngle)) ? Number(cfg.customAngle) : 0,
-    zoomFactor: Number.isFinite(Number(cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : (Number.isFinite(globalZoom) ? Math.max(1, Math.min(4, globalZoom)) : 1)
+    zoomFactor: Number.isFinite(Number(cfg.zoomFactor)) ? Math.max(1, Math.min(4, Number(cfg.zoomFactor))) : (Number.isFinite(globalZoom) ? Math.max(1, Math.min(4, globalZoom)) : 1),
+    gimbalPitch: normalizeWaypointGimbalPitch(cfg.gimbalPitch || globalGimbalPitch),
+    cameraAction: normalizeWaypointCameraAction(cfg.cameraAction)
   };
 }
 
@@ -4055,6 +5155,10 @@ function applyWaypointConfigEditorState() {
   const poiEl = document.getElementById('waypointPoiTarget');
   const angleEl = document.getElementById('waypointCustomHeadingAngle');
   const zoomEl = document.getElementById('waypointZoomFactor');
+  const gimbalEl = document.getElementById('waypointGimbalPitch');
+  const applyHeadingAllBtn = document.getElementById('applyWaypointHeadingAllBtn');
+  const applyPoiAllBtn = document.getElementById('applyWaypointPoiAllBtn');
+  const applyGimbalAllBtn = document.getElementById('applyWaypointGimbalAllBtn');
   const globalZoomEnabled = !!document.getElementById('djiTakePhotoEachWp')?.checked && !!document.getElementById('djiZoomAtWp')?.checked;
   const selectEl = document.getElementById('waypointConfigSelect');
   const hasWaypoints = getRouteWaypointCountForConfig() > 0;
@@ -4062,16 +5166,28 @@ function applyWaypointConfigEditorState() {
 
   if (selectEl) selectEl.disabled = !hasWaypoints;
   if (modeEl) modeEl.disabled = !hasWaypoints;
-  if (poiEl) poiEl.disabled = !hasWaypoints || mode !== 'poi';
+  if (poiEl) poiEl.disabled = !hasWaypoints;
   if (angleEl) angleEl.disabled = !hasWaypoints || mode !== 'custom';
   if (zoomEl) zoomEl.disabled = !hasWaypoints || !globalZoomEnabled;
+  if (gimbalEl) gimbalEl.disabled = !hasWaypoints;
+  const cameraActionSel = document.getElementById('waypointCameraAction');
+  const applyCameraAllBtn = document.getElementById('applyWaypointCameraActionAllBtn');
+  if (cameraActionSel) cameraActionSel.disabled = !hasWaypoints;
+  if (applyCameraAllBtn) applyCameraAllBtn.disabled = !hasWaypoints;
+  if (applyHeadingAllBtn) applyHeadingAllBtn.disabled = !hasWaypoints;
+  if (applyPoiAllBtn) applyPoiAllBtn.disabled = !hasWaypoints || !poiEl || !poiEl.value || !getMissionPOIById(poiEl.value);
+  if (applyGimbalAllBtn) applyGimbalAllBtn.disabled = !hasWaypoints;
 
   const prevBtn = document.getElementById('waypointConfigPrevBtn');
   const nextBtn = document.getElementById('waypointConfigNextBtn');
   const saveBtn = document.getElementById('saveWaypointConfigBtn');
   if (prevBtn) prevBtn.disabled = !hasWaypoints;
   if (nextBtn) nextBtn.disabled = !hasWaypoints;
-  if (saveBtn) saveBtn.disabled = !hasWaypoints;
+  if (saveBtn) {
+    saveBtn.disabled = true;
+    saveBtn.title = hasWaypoints ? 'Waypoint changes are saved automatically.' : 'Draw/import route to edit waypoint settings.';
+    saveBtn.setAttribute('aria-label', saveBtn.title);
+  }
 }
 
 function refreshWaypointConfigUi() {
@@ -4082,8 +5198,11 @@ function refreshWaypointConfigUi() {
   const modeEl = document.getElementById('waypointHeadingMode');
   const angleEl = document.getElementById('waypointCustomHeadingAngle');
   const zoomEl = document.getElementById('waypointZoomFactor');
+  const gimbalEl = document.getElementById('waypointGimbalPitch');
 
-  if (!select || !status || !modeEl || !angleEl || !zoomEl) return;
+  if (!select || !status || !modeEl || !angleEl || !zoomEl || !gimbalEl) return;
+
+  const cameraActionEl = document.getElementById('waypointCameraAction');
 
   if (count <= 0) {
     select.innerHTML = '';
@@ -4092,7 +5211,9 @@ function refreshWaypointConfigUi() {
     modeEl.value = 'follow';
     angleEl.value = '0';
     zoomEl.value = (Number(document.getElementById('djiZoomFactor')?.value) || 1).toFixed(1);
-    status.textContent = 'Draw/import route to edit waypoint settings.';
+    gimbalEl.value = getGlobalWaypointGimbalPitch();
+    if (cameraActionEl) cameraActionEl.value = 'none';
+    status.textContent = 'Draw/import route to edit waypoint settings.'
     applyWaypointConfigEditorState();
     return;
   }
@@ -4117,15 +5238,19 @@ function refreshWaypointConfigUi() {
   populateWaypointConfigPoiSelect(cfg.poiId || waypointPoiAssignments.get(selectedWaypointConfigIndex) || '');
   angleEl.value = String(Math.round(cfg.customAngle));
   zoomEl.value = cfg.zoomFactor.toFixed(1);
+  gimbalEl.value = cfg.gimbalPitch;
+  if (cameraActionEl) cameraActionEl.value = cfg.cameraAction;
 
   status.textContent = `Editing WP ${selectedWaypointConfigIndex + 1} of ${count}.`;
-  applyWaypointConfigEditorState();
+  applyWaypointConfigEditorState()
   updateWaypointMarkerVisuals();
+  refreshMissionPOIMarkerStyles();
 }
 
 function handleWaypointConfigSelectionChange() {
   const select = document.getElementById('waypointConfigSelect');
   if (!select) return;
+  persistWaypointConfigForSelected({ refreshUi: false, updateStatus: false });
   const idx = Number(select.value);
   if (!Number.isFinite(idx)) return;
   selectedWaypointConfigIndex = idx;
@@ -4135,30 +5260,39 @@ function handleWaypointConfigSelectionChange() {
 function stepWaypointConfigSelection(delta) {
   const count = getRouteWaypointCountForConfig();
   if (count <= 0) return;
+  persistWaypointConfigForSelected({ refreshUi: false, updateStatus: false });
   selectedWaypointConfigIndex = (selectedWaypointConfigIndex + delta + count) % count;
   refreshWaypointConfigUi();
 }
 
-function saveWaypointConfigForSelected() {
+function persistWaypointConfigForSelected(options = {}) {
   const count = getRouteWaypointCountForConfig();
-  if (count <= 0) return;
+  if (count <= 0) return false;
 
   const idx = selectedWaypointConfigIndex;
-  if (idx < 0 || idx >= count) return;
+  if (idx < 0 || idx >= count) return false;
+
+  const refreshUi = options.refreshUi !== false;
+  const updateStatus = options.updateStatus !== false;
 
   const mode = document.getElementById('waypointHeadingMode')?.value || 'follow';
   const poiIdRaw = document.getElementById('waypointPoiTarget')?.value || '';
   const angleRaw = Number(document.getElementById('waypointCustomHeadingAngle')?.value);
   const zoomRaw = Number(document.getElementById('waypointZoomFactor')?.value);
+  const gimbalRaw = document.getElementById('waypointGimbalPitch')?.value || getGlobalWaypointGimbalPitch();
   const customAngle = Number.isFinite(angleRaw) ? Math.max(-180, Math.min(180, angleRaw)) : 0;
   const zoomFactor = Number.isFinite(zoomRaw) ? Math.max(1, Math.min(4, zoomRaw)) : 1;
+  const gimbalPitch = normalizeWaypointGimbalPitch(gimbalRaw);
+  const cameraAction = normalizeWaypointCameraAction(document.getElementById('waypointCameraAction')?.value);
   const poiId = poiIdRaw && getMissionPOIById(poiIdRaw) ? poiIdRaw : '';
 
   waypointHeadingConfigs.set(idx, {
     mode,
     poiId,
     customAngle,
-    zoomFactor
+    zoomFactor,
+    gimbalPitch,
+    cameraAction
   });
 
   if (mode === 'poi' && poiId) {
@@ -4171,10 +5305,145 @@ function saveWaypointConfigForSelected() {
     rebuildWaypointMarkers(activePolyline);
   }
 
+  if (refreshUi) {
+    refreshWaypointConfigUi();
+  }
+  if (updateStatus) {
+    const status = document.getElementById('waypointConfigStatus');
+    if (status) {
+      const gimbalText = gimbalPitch === 'none' ? 'Keep' : `${gimbalPitch}deg`;
+      const cameraText = cameraAction === 'none' ? '' : ` | Cam: ${cameraAction}`;
+      status.textContent = `WP ${idx + 1} auto-saved: ${mode === 'custom' ? `Custom ${Math.round(customAngle)}deg` : mode === 'poi' ? `Face ${formatPoiLabelById(poiId)}` : 'Follow Course'} | Gimbal ${gimbalText} | Zoom ${zoomFactor.toFixed(1)}x${cameraText}.`;
+    }
+  }
+  return true;
+}
+
+function saveWaypointConfigForSelected() {
+  persistWaypointConfigForSelected({ refreshUi: true, updateStatus: true });
+}
+
+function applyWaypointHeadingToAll() {
+  const count = getRouteWaypointCountForConfig();
+  if (count <= 0) return;
+
+  persistWaypointConfigForSelected({ refreshUi: false, updateStatus: false });
+  const source = getWaypointConfigForIndex(selectedWaypointConfigIndex);
+  const sourcePoiId = source.poiId && getMissionPOIById(source.poiId) ? source.poiId : '';
+
+  for (let idx = 0; idx < count; idx++) {
+    const current = getWaypointConfigForIndex(idx);
+    waypointHeadingConfigs.set(idx, {
+      mode: source.mode,
+      poiId: sourcePoiId,
+      customAngle: source.customAngle,
+      zoomFactor: current.zoomFactor,
+      gimbalPitch: current.gimbalPitch,
+      cameraAction: current.cameraAction
+    });
+
+    if (source.mode === 'poi' && sourcePoiId) {
+      waypointPoiAssignments.set(idx, sourcePoiId);
+    } else {
+      waypointPoiAssignments.delete(idx);
+    }
+  }
+
+  if (activePolyline) rebuildWaypointMarkers(activePolyline);
   refreshWaypointConfigUi();
   const status = document.getElementById('waypointConfigStatus');
   if (status) {
-    status.textContent = `Saved WP ${idx + 1}: ${mode === 'custom' ? `Custom ${Math.round(customAngle)}deg` : mode === 'poi' ? `Face ${formatPoiLabelById(poiId)}` : 'Follow Course'} | Zoom ${zoomFactor.toFixed(1)}x.`;
+    status.textContent = `Applied heading mode to all ${count} waypoint(s).`;
+  }
+}
+
+function applyWaypointPoiToAll() {
+  const count = getRouteWaypointCountForConfig();
+  if (count <= 0) return;
+
+  persistWaypointConfigForSelected({ refreshUi: false, updateStatus: false });
+  const source = getWaypointConfigForIndex(selectedWaypointConfigIndex);
+  const sourcePoiId = source.poiId && getMissionPOIById(source.poiId) ? source.poiId : '';
+  if (!sourcePoiId) {
+    const status = document.getElementById('waypointConfigStatus');
+    if (status) {
+      status.textContent = 'Select a valid POI target first, then apply to all waypoints.';
+    }
+    return;
+  }
+
+  for (let idx = 0; idx < count; idx++) {
+    const current = getWaypointConfigForIndex(idx);
+    waypointHeadingConfigs.set(idx, {
+      mode: 'poi',
+      poiId: sourcePoiId,
+      customAngle: current.customAngle,
+      zoomFactor: current.zoomFactor,
+      gimbalPitch: current.gimbalPitch,
+      cameraAction: current.cameraAction
+    });
+    waypointPoiAssignments.set(idx, sourcePoiId);
+  }
+
+  if (activePolyline) rebuildWaypointMarkers(activePolyline);
+  refreshWaypointConfigUi();
+  const status = document.getElementById('waypointConfigStatus');
+  if (status) {
+    status.textContent = `Applied POI ${formatPoiLabelById(sourcePoiId)} to all ${count} waypoint(s) and set heading mode to Face POI.`;
+  }
+}
+
+function applyWaypointGimbalToAll() {
+  const count = getRouteWaypointCountForConfig();
+  if (count <= 0) return;
+
+  persistWaypointConfigForSelected({ refreshUi: false, updateStatus: false });
+  const source = getWaypointConfigForIndex(selectedWaypointConfigIndex);
+
+  for (let idx = 0; idx < count; idx++) {
+    const current = getWaypointConfigForIndex(idx);
+    waypointHeadingConfigs.set(idx, {
+      mode: current.mode,
+      poiId: current.poiId,
+      customAngle: current.customAngle,
+      zoomFactor: current.zoomFactor,
+      gimbalPitch: source.gimbalPitch,
+      cameraAction: current.cameraAction
+    });
+  }
+
+  refreshWaypointConfigUi();
+  const status = document.getElementById('waypointConfigStatus');
+  if (status) {
+    const gimbalText = source.gimbalPitch === 'none' ? 'Keep' : `${source.gimbalPitch}deg`;
+    status.textContent = `Applied gimbal ${gimbalText} to all ${count} waypoint(s).`;
+  }
+}
+
+function applyWaypointCameraActionToAll() {
+  const count = getRouteWaypointCountForConfig();
+  if (count <= 0) return;
+
+  persistWaypointConfigForSelected({ refreshUi: false, updateStatus: false });
+  const source = getWaypointConfigForIndex(selectedWaypointConfigIndex);
+
+  for (let idx = 0; idx < count; idx++) {
+    const current = getWaypointConfigForIndex(idx);
+    waypointHeadingConfigs.set(idx, {
+      mode: current.mode,
+      poiId: current.poiId,
+      customAngle: current.customAngle,
+      zoomFactor: current.zoomFactor,
+      gimbalPitch: current.gimbalPitch,
+      cameraAction: source.cameraAction
+    });
+  }
+
+  refreshWaypointConfigUi();
+  const status = document.getElementById('waypointConfigStatus');
+  if (status) {
+    const actionLabels = { none: 'None (global)', takePhoto: 'Take Photo', startRecord: 'Start Video', stopRecord: 'Stop Video' };
+    status.textContent = `Applied camera action "${actionLabels[source.cameraAction] || source.cameraAction}" to all ${count} waypoint(s).`;
   }
 }
 
@@ -4370,9 +5639,13 @@ function buildDJIWaylinesWPML() {
       }
     }
     const turnMode = isLast ? 'toPointAndStopWithContinuityCurvature' : 'toPointAndPassWithContinuityCurvature';
+    const waypointGimbalPitch = getWaypointGimbalPitchForIndex(i, settings.gimbalPitch);
+    const prevWaypointGimbalPitch = i > 0
+      ? getWaypointGimbalPitchForIndex(i - 1, settings.gimbalPitch)
+      : 'none';
 
     const actions = [];
-    if (settings.gimbalPitch !== 'none' && isFirst) {
+    if (waypointGimbalPitch !== 'none' && (isFirst || waypointGimbalPitch !== prevWaypointGimbalPitch)) {
       actions.push(`
           <wpml:action>
             <wpml:actionId>${actionId++}</wpml:actionId>
@@ -4381,7 +5654,7 @@ function buildDJIWaylinesWPML() {
               <wpml:gimbalHeadingYawBase>aircraft</wpml:gimbalHeadingYawBase>
               <wpml:gimbalRotateMode>absoluteAngle</wpml:gimbalRotateMode>
               <wpml:gimbalPitchRotateEnable>1</wpml:gimbalPitchRotateEnable>
-              <wpml:gimbalPitchRotateAngle>${settings.gimbalPitch}</wpml:gimbalPitchRotateAngle>
+              <wpml:gimbalPitchRotateAngle>${waypointGimbalPitch}</wpml:gimbalPitchRotateAngle>
               <wpml:gimbalRollRotateEnable>0</wpml:gimbalRollRotateEnable>
               <wpml:gimbalRollRotateAngle>0</wpml:gimbalRollRotateAngle>
               <wpml:gimbalYawRotateEnable>0</wpml:gimbalYawRotateEnable>
@@ -4393,20 +5666,23 @@ function buildDJIWaylinesWPML() {
           </wpml:action>`);
     }
 
-    // Only add photo trigger at calculated photo waypoints (for photogrammetry coverage)
-    if (photoWaypoints.has(i)) {
-      actions.push(`
+    // Per-WP camera action overrides global photo/video for this waypoint
+    const wpCameraAction = normalizeWaypointCameraAction(waypointConfig && waypointConfig.cameraAction);
+
+    if (wpCameraAction !== 'none') {
+      // Per-WP override: use exactly this action
+      if (wpCameraAction === 'takePhoto') {
+        actions.push(`
           <wpml:action>
             <wpml:actionId>${actionId++}</wpml:actionId>
             <wpml:actionActuatorFunc>takePhoto</wpml:actionActuatorFunc>
             <wpml:actionActuatorFuncParam>
-              <wpml:fileSuffix>Photo${photoOrderByIndex.get(i) || i + 1}</wpml:fileSuffix>
+              <wpml:fileSuffix>Photo${i + 1}</wpml:fileSuffix>
               <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
             </wpml:actionActuatorFuncParam>
           </wpml:action>`);
-
-      if (settings.takePhotoEachWp && settings.hoverAtWp) {
-        actions.push(`
+        if (settings.hoverAtWp) {
+          actions.push(`
           <wpml:action>
             <wpml:actionId>${actionId++}</wpml:actionId>
             <wpml:actionActuatorFunc>hover</wpml:actionActuatorFunc>
@@ -4414,13 +5690,12 @@ function buildDJIWaylinesWPML() {
               <wpml:hoverTime>${settings.hoverSeconds}</wpml:hoverTime>
             </wpml:actionActuatorFuncParam>
           </wpml:action>`);
-      }
-
-      if (settings.takePhotoEachWp && settings.zoomAtWp) {
-        const waypointZoomFactor = waypointConfig && Number.isFinite(Number(waypointConfig.zoomFactor))
-          ? Math.max(1, Math.min(4, Number(waypointConfig.zoomFactor)))
-          : settings.zoomFactor;
-        actions.push(`
+        }
+        if (settings.zoomAtWp) {
+          const waypointZoomFactor = waypointConfig && Number.isFinite(Number(waypointConfig.zoomFactor))
+            ? Math.max(1, Math.min(4, Number(waypointConfig.zoomFactor)))
+            : settings.zoomFactor;
+          actions.push(`
           <wpml:action>
             <wpml:actionId>${actionId++}</wpml:actionId>
             <wpml:actionActuatorFunc>zoom</wpml:actionActuatorFunc>
@@ -4431,11 +5706,9 @@ function buildDJIWaylinesWPML() {
               <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
             </wpml:actionActuatorFuncParam>
           </wpml:action>`);
-      }
-    }
-
-    if (videoActionIndices && i === videoActionIndices.startIndex) {
-      actions.push(`
+        }
+      } else if (wpCameraAction === 'startRecord') {
+        actions.push(`
           <wpml:action>
             <wpml:actionId>${actionId++}</wpml:actionId>
             <wpml:actionActuatorFunc>startRecord</wpml:actionActuatorFunc>
@@ -4443,10 +5716,8 @@ function buildDJIWaylinesWPML() {
               <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
             </wpml:actionActuatorFuncParam>
           </wpml:action>`);
-    }
-
-    if (videoActionIndices && i === videoActionIndices.stopIndex) {
-      actions.push(`
+      } else if (wpCameraAction === 'stopRecord') {
+        actions.push(`
           <wpml:action>
             <wpml:actionId>${actionId++}</wpml:actionId>
             <wpml:actionActuatorFunc>stopRecord</wpml:actionActuatorFunc>
@@ -4454,6 +5725,71 @@ function buildDJIWaylinesWPML() {
               <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
             </wpml:actionActuatorFuncParam>
           </wpml:action>`);
+      }
+    } else {
+      // No per-WP override — fall back to global photo/video settings
+      // Only add photo trigger at calculated photo waypoints (for photogrammetry coverage)
+      if (photoWaypoints.has(i)) {
+        actions.push(`
+          <wpml:action>
+            <wpml:actionId>${actionId++}</wpml:actionId>
+            <wpml:actionActuatorFunc>takePhoto</wpml:actionActuatorFunc>
+            <wpml:actionActuatorFuncParam>
+              <wpml:fileSuffix>Photo${photoOrderByIndex.get(i) || i + 1}</wpml:fileSuffix>
+              <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
+            </wpml:actionActuatorFuncParam>
+          </wpml:action>`);
+
+        if (settings.takePhotoEachWp && settings.hoverAtWp) {
+          actions.push(`
+          <wpml:action>
+            <wpml:actionId>${actionId++}</wpml:actionId>
+            <wpml:actionActuatorFunc>hover</wpml:actionActuatorFunc>
+            <wpml:actionActuatorFuncParam>
+              <wpml:hoverTime>${settings.hoverSeconds}</wpml:hoverTime>
+            </wpml:actionActuatorFuncParam>
+          </wpml:action>`);
+        }
+
+        if (settings.takePhotoEachWp && settings.zoomAtWp) {
+          const waypointZoomFactor = waypointConfig && Number.isFinite(Number(waypointConfig.zoomFactor))
+            ? Math.max(1, Math.min(4, Number(waypointConfig.zoomFactor)))
+            : settings.zoomFactor;
+          actions.push(`
+          <wpml:action>
+            <wpml:actionId>${actionId++}</wpml:actionId>
+            <wpml:actionActuatorFunc>zoom</wpml:actionActuatorFunc>
+            <wpml:actionActuatorFuncParam>
+              <wpml:focalLength>0</wpml:focalLength>
+              <wpml:isUseFocalFactor>1</wpml:isUseFocalFactor>
+              <wpml:focalFactor>${waypointZoomFactor.toFixed(1)}</wpml:focalFactor>
+              <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
+            </wpml:actionActuatorFuncParam>
+          </wpml:action>`);
+        }
+      }
+
+      if (videoActionIndices && i === videoActionIndices.startIndex) {
+        actions.push(`
+          <wpml:action>
+            <wpml:actionId>${actionId++}</wpml:actionId>
+            <wpml:actionActuatorFunc>startRecord</wpml:actionActuatorFunc>
+            <wpml:actionActuatorFuncParam>
+              <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
+            </wpml:actionActuatorFuncParam>
+          </wpml:action>`);
+      }
+
+      if (videoActionIndices && i === videoActionIndices.stopIndex) {
+        actions.push(`
+          <wpml:action>
+            <wpml:actionId>${actionId++}</wpml:actionId>
+            <wpml:actionActuatorFunc>stopRecord</wpml:actionActuatorFunc>
+            <wpml:actionActuatorFuncParam>
+              <wpml:payloadPositionIndex>0</wpml:payloadPositionIndex>
+            </wpml:actionActuatorFuncParam>
+          </wpml:action>`);
+      }
     }
 
     const actionGroup = actions.length ? `
@@ -4892,7 +6228,8 @@ function restoreImportedWpmlPoiState(waypointImports) {
       mode: 'poi',
       poiId: poiRecord.id,
       customAngle: Number.isFinite(Number(wp.headingAngle)) ? Number(wp.headingAngle) : 0,
-      zoomFactor: Number(document.getElementById('djiZoomFactor')?.value) || 1
+      zoomFactor: Number(document.getElementById('djiZoomFactor')?.value) || 1,
+      gimbalPitch: getGlobalWaypointGimbalPitch()
     });
   });
 
@@ -5319,6 +6656,7 @@ function updateMap(lat, lng) {
         showLatLonCopy(draggedLat, draggedLng);
         buildDSSTLink(draggedLat, draggedLng);
       checkAirspace(draggedLat, draggedLng);
+        refreshMissionRangeGuideIfVisible();
       const resultEl = document.getElementById('result');
       resultEl.innerHTML += `<br><em>Marker adjusted to:</em> ${draggedLat.toFixed(6)}, ${draggedLng.toFixed(6)}`;
     });
