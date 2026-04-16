@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RC2 Automation Bundle</title>
-  <link rel="stylesheet" href="/assets/css/rc2-index.css">
+  <link rel="stylesheet" href="../../assets/css/rc2-index.css">
   <style>
     :root {
       --bg: #f4f8fc;
@@ -107,25 +107,25 @@
         <tbody>
           <tr>
             <td>1</td>
-            <td><a href="/data/rc2/scripts/Run-StageIncoming.ps1">Run-StageIncoming.ps1</a></td>
+            <td><a href="./scripts/Run-StageIncoming.ps1">Run-StageIncoming.ps1</a></td>
             <td>Finds the newest KMZ in your Username/RC2_Missions/INCOMING, copies it into the chosen mission role folder, and archives the source so it cannot be re-staged accidentally. Prompts for <code>-Role</code> if not supplied.</td>
             <td>Step5B — flags: <code>-ArchiveIncoming</code></td>
           </tr>
           <tr>
             <td>2</td>
-            <td><a href="/data/rc2/scripts/Run-HealthCheck.ps1">Run-HealthCheck.ps1</a></td>
+            <td><a href="./scripts/Run-HealthCheck.ps1">Run-HealthCheck.ps1</a></td>
             <td>Validates UUID role mapping, inventory alignment, staged KMZ files, and live RC2 slot state. Any WARNING or ERROR blocks deployment. RC2 must be connected via USB to Windows using MTP protocol.</td>
             <td>Step9 — flags: <code>-CheckRC2 -FailOnWarning</code></td>
           </tr>
           <tr>
             <td>3</td>
-            <td><a href="/data/rc2/scripts/Run-DeployPreview.ps1">Run-DeployPreview.ps1</a></td>
+            <td><a href="./scripts/Run-DeployPreview.ps1">Run-DeployPreview.ps1</a></td>
             <td>Shows the full deployment plan — which KMZ files would go to which RC2 UUID slot folders. <strong>No files are transferred, moved, or deleted.</strong> Prompts for <code>-Role</code> if not supplied.</td>
             <td>Step6 — flags: <code>-DryRun</code></td>
           </tr>
           <tr>
             <td>4</td>
-            <td><a href="/data/rc2/scripts/Run-Deploy.ps1">Run-Deploy.ps1</a></td>
+            <td><a href="./scripts/Run-Deploy.ps1">Run-Deploy.ps1</a></td>
             <td>Copies staged KMZ packages to RC2 UUID slot folders via MTP. Displays the plan and requires you to type <code>YES</code> before any file is written. Anything else cancels cleanly.</td>
             <td>Step6 — flags: <code>-PromptBeforeCopy</code></td>
           </tr>
@@ -151,24 +151,24 @@
       <p class="subtitle">Use the <strong>Run-*</strong> wrappers for day-to-day operations. The underlying Step scripts are the engine — called automatically by the wrappers.</p>
       <p><strong>Wrapper scripts (recommended entry points)</strong></p>
       <ul>
-        <li><a href="/data/rc2/scripts/Run-StageIncoming.ps1">Run-StageIncoming.ps1</a> — guided Step 1: stage INCOMING KMZ to role folder with archive</li>
-        <li><a href="/data/rc2/scripts/Run-HealthCheck.ps1">Run-HealthCheck.ps1</a> — guided Step 2: full health check with RC2 live gate</li>
-        <li><a href="/data/rc2/scripts/Run-DeployPreview.ps1">Run-DeployPreview.ps1</a> — guided Step 3: dry-run deployment preview, no writes</li>
-        <li><a href="/data/rc2/scripts/Run-Deploy.ps1">Run-Deploy.ps1</a> — guided Step 4: live transfer to RC2 with YES confirmation gate</li>
+        <li><a href="./scripts/Run-StageIncoming.ps1">Run-StageIncoming.ps1</a> — guided Step 1: stage INCOMING KMZ to role folder with archive</li>
+        <li><a href="./scripts/Run-HealthCheck.ps1">Run-HealthCheck.ps1</a> — guided Step 2: full health check with RC2 live gate</li>
+        <li><a href="./scripts/Run-DeployPreview.ps1">Run-DeployPreview.ps1</a> — guided Step 3: dry-run deployment preview, no writes</li>
+        <li><a href="./scripts/Run-Deploy.ps1">Run-Deploy.ps1</a> — guided Step 4: live transfer to RC2 with YES confirmation gate</li>
       </ul>
       <p><strong>Underlying engine scripts</strong></p>
       <ul>
-        <li><a href="/data/rc2/scripts/Step5.ps1">Step5.ps1</a> - deploy prep functions and role package normalization</li>
-        <li><a href="/data/rc2/scripts/Step5B_StageFromIncoming.ps1">Step5B_StageFromIncoming.ps1</a> - stage newest INCOMING package to selected role</li>
-        <li><a href="/data/rc2/scripts/Step6.ps1">Step6.ps1</a> - copy staged role package(s) to RC2 UUID slot folders</li>
-        <li><a href="/data/rc2/scripts/Step9_HealthCheck.ps1">Step9_HealthCheck.ps1</a> <span class="ok">(health check)</span> - validate mapping, drift, staged files, and optional RC2 slots</li>
+        <li><a href="./scripts/Step5.ps1">Step5.ps1</a> - deploy prep functions and role package normalization</li>
+        <li><a href="./scripts/Step5B_StageFromIncoming.ps1">Step5B_StageFromIncoming.ps1</a> - stage newest INCOMING package to selected role</li>
+        <li><a href="./scripts/Step6.ps1">Step6.ps1</a> - copy staged role package(s) to RC2 UUID slot folders</li>
+        <li><a href="./scripts/Step9_HealthCheck.ps1">Step9_HealthCheck.ps1</a> <span class="ok">(health check)</span> - validate mapping, drift, staged files, and optional RC2 slots</li>
       </ul>
     </section>
 
     <section class="card">
       <h2>Schema</h2>
       <ul>
-        <li><a href="/data/schema/step9_healthcheck_report.schema.json">step9_healthcheck_report.schema.json</a> (JSON Schema draft 2019-09)</li>
+        <li><a href="../schema/step9_healthcheck_report.schema.json">step9_healthcheck_report.schema.json</a> (JSON Schema draft 2019-09)</li>
       </ul>
       <p class="subtitle">Use this schema with ajv-cli to validate generated health reports.</p>
     </section>
@@ -185,9 +185,9 @@
     <section class="card">
       <h2>Docs</h2>
       <ul>
-        <li><a href="/data/rc2/docs/docs-viewer.html?id=wiki">MAM RC2 PS1 Wiki</a></li>
-        <li><a href="/data/rc2/docs/docs-viewer.html?id=saving">Saving Missions to RC2</a></li>
-        <li><a href="/data/rc2/docs/docs-viewer.html?id=onboarding">RC2 Onboarding</a></li>
+        <li><a href="./docs/docs-viewer.html?id=wiki">MAM RC2 PS1 Wiki</a></li>
+        <li><a href="./docs/docs-viewer.html?id=saving">Saving Missions to RC2</a></li>
+        <li><a href="./docs/docs-viewer.html?id=onboarding">RC2 Onboarding</a></li>
       </ul>
     </section>
 
@@ -216,7 +216,7 @@
 
     <section class="card">
       <h2>Manifest</h2>
-      <p><a href="/data/rc2/manifest.json">/data/rc2/manifest.json</a></p>
+      <p><a href="./manifest.json">./manifest.json</a></p>
     </section>
   </main>
 </body>
