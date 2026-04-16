@@ -5,13 +5,13 @@ This page documents the intended use of the RC2 PowerShell workflow and how host
 
 ## Scope
 - Script discovery and version visibility via hosted static files
-- Safe transfer pattern for Mission_B validation
-- Maintenance process for promoting scripts/schema/docs to hosted paths
+- Safe transfer pattern for Mission_A/B/C validation
+- Maintenance processes for promoting scripts/schema/docs to hosted paths
 
 ## Execution Model
-- Hosted page/data paths are static distribution only.
-- PowerShell scripts execute locally on Windows.
-- RC2 write operations occur only when user confirms in Step6 PromptBeforeCopy mode.
+- Hosted page/data paths are static for distribution only.
+- PowerShell scripts are to be copied and executed locally on Windows.
+- RC2 write operations occur only when user confirms (in Step6) and you are prompted before copy mode.
 
 ## AJV Prerequisite (Optional But Recommended)
 Use AJV to validate Step9 JSON output against schema.  Install in a PowerShell terminal.
@@ -32,15 +32,15 @@ If npm is missing, install Node.js LTS first, then rerun the commands.
 
 ## Safe User Sequence
 
-Four wrapper scripts guide you through the full mission-deployment workflow, after you have completed the New User onboarding and have created the /<user>/RC2_Missions file structures.
+Four wrapper scripts guide you through the full mission-deployment workflow, after you have completed the New User Onboarding and have created the /<user>/RC2_Missions file structures.
 
 Each wrapper prints a plain-language description of what it will do at runtime —
 no memorisation of parameter flags is required. Run them in order from the repository root in PowerShell.
 
 ### Step 1 — Run-StageIncoming.ps1
 
-**What it does:** Finds the newest KMZ file in your INCOMING folder, copies it into
-the chosen mission role folder (Mission_A, Mission_B, or Mission_C), then moves the
+**What it does:** Finds the newest KMZ file in your RC2_Missions/INCOMING folder, copies it into
+the chosen mission role folder (Mission_A, Mission_B, Mission_C), then moves the
 source file to ARCHIVE so it cannot be staged a second time by accident.
 
 **Prompts for:** Role (if not supplied as a parameter).
@@ -59,10 +59,10 @@ Underlying script: **Step5B_StageFromIncoming.ps1** — flags applied: `-Archive
 
 **What it checks:**
 
-1. UUID role mapping — uuid_roles.json format and completeness.
-2. Inventory alignment — uuid_inventory.csv vs registry, no orphan/missing entries.
+1. UUID role mapping — uuid_roles.json check to validate UUID target.
+2. Inventory alignment — uuid_inventory.csv vs registry, no orphans/missing entries.
 3. Staged KMZ files — each role folder has a package ready to deploy.
-4. RC2 live slot state — on-device waypoint UUIDs match the registry (RC2 must be connected).
+4. RC2 live slot state — on-device waypoint UUIDs matching the registry (RC2 must be connected via USB/MTP to PC).
 
 Any WARNING or ERROR causes a non-zero exit and blocks deployment.
 
@@ -121,7 +121,7 @@ Underlying script: **Step6.ps1** — flags applied: `-PromptBeforeCopy`
 ## RC2 Display Behavior (Important)
 
 RC2 does not use mission role labels (Mission_A/B/C) directly in the list UI.
-In practice, list order is driven by file timestamp/order on device.
+In practice, list order is driven by file timestamp/order on DJI RC2 device.
 
 Operational rule used in this workflow:
 - Deploy in this order: `Mission_C -> Mission_B -> Mission_A`
@@ -135,8 +135,8 @@ This is the supported human-readable mapping method for this SOP.
 After each full ordered deploy:
 1. Open RC2 mission list with **Newest first**; verify visual order is A, B, C.
 2. Toggle to **Oldest first**; verify visual order is C, B, A.
-3. If mission footprint is hard to distinguish, export three clearly different test patterns (example: triangle, line, box).
-4. If RC2 does not auto-locate mission on map, use map browse/set-location and verify the expected pattern before flight.
+3. If mission location is hard to distinguish, export three clearly different test patterns (example: triangle, line, box).
+4. If RC2 does not auto-locate mission on map, use DJI Fly map to browse/set-location and verify the expected pattern before flight.
 
 
 ## Engine Scripts (Called by Wrappers)

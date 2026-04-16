@@ -74,7 +74,7 @@
   <main class="wrap">
     <h1>RC2 Automation Bundle</h1>
     <p class="subtitle">Static artifacts for docs, schema, and PowerShell scripts used in the RC2 Mission workflow.</p>
-    <p class="rc2-back-link"><a href="/">← Back to Drone SOP Home</a></p>
+    <p class="rc2-back-link"><a href="../../index.html">← Back to Drone SOP Home</a></p>
 
     <section class="card warn">
       <h2>Execution Model</h2>
@@ -84,10 +84,10 @@
 
     <section class="card">
       <h2>How Main Site Index Is Affected</h2>
-      <p>This RC2 portal does not change normal site navigation or execute from main mission pages. It acts as a hosted reference and download surface for MAM and RC2 automation artifacts.</p>
+      <p>This RC2 portal does not change normal site navigation or execute from main mission pages. It acts as a hosted reference and download surface for the Mission Automation Manager and RC2 automation artifacts.</p>
       <ul>
-        <li>Main app behavior still comes from My Profile, Mission Automation Manager, GGCode export logic, and local browser state.</li>
-        <li>PowerShell scripts still run locally on Windows against RC2_Missions and optional live RC2 connection.</li>
+        <li>Main app behavior still comes from My Profile(DroneSOP_user), Mission Automation Manager profile(DroneSOP_ADV), GeoCode export logic, and your local browser state.</li>
+        <li>PowerShell scripts will run locally on Windows PCs against RC2_Missions and optional live RC2 connections.</li>
         <li>Use this page as the source-of-truth wiki for script versions, commands, and schema links.</li>
       </ul>
     </section>
@@ -108,13 +108,13 @@
           <tr>
             <td>1</td>
             <td><a href="/data/rc2/scripts/Run-StageIncoming.ps1">Run-StageIncoming.ps1</a></td>
-            <td>Finds the newest KMZ in INCOMING, copies it into the chosen role folder, and archives the source so it cannot be re-staged accidentally. Prompts for <code>-Role</code> if not supplied.</td>
+            <td>Finds the newest KMZ in your Username/RC2_Missions/INCOMING, copies it into the chosen mission role folder, and archives the source so it cannot be re-staged accidentally. Prompts for <code>-Role</code> if not supplied.</td>
             <td>Step5B — flags: <code>-ArchiveIncoming</code></td>
           </tr>
           <tr>
             <td>2</td>
             <td><a href="/data/rc2/scripts/Run-HealthCheck.ps1">Run-HealthCheck.ps1</a></td>
-            <td>Validates UUID role mapping, inventory alignment, staged KMZ files, and live RC2 slot state. Any WARNING or ERROR blocks deployment. RC2 must be connected via USB.</td>
+            <td>Validates UUID role mapping, inventory alignment, staged KMZ files, and live RC2 slot state. Any WARNING or ERROR blocks deployment. RC2 must be connected via USB to Windows using MTP protocol.</td>
             <td>Step9 — flags: <code>-CheckRC2 -FailOnWarning</code></td>
           </tr>
           <tr>
@@ -175,7 +175,7 @@
 
     <section class="card">
       <h2>Prerequisite: AJV (If Needed)</h2>
-      <p>If <code>ajv</code> is not recognized, install it first:</p>
+      <p>If <code>ajv</code> is not recognized, install it first in a PowerShell terminal session:</p>
       <p><code>npm install -g ajv-cli</code></p>
       <p>Verify installation:</p>
       <p><code>ajv help validate</code></p>

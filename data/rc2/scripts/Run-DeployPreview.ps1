@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Preview the deployment plan for a mission role â€” no files are transferred.
+    Preview the deployment plan for a mission role” no files are transferred.
 
 .DESCRIPTION
     Wrapper for Step6.ps1 with -DryRun pre-set.
