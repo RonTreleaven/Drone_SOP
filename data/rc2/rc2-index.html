@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RC2 Automation Bundle</title>
+  <link rel="stylesheet" href="/assets/css/rc2-index.css">
   <style>
     :root {
       --bg: #f4f8fc;
@@ -73,6 +74,7 @@
   <main class="wrap">
     <h1>RC2 Automation Bundle</h1>
     <p class="subtitle">Static artifacts for docs, schema, and PowerShell scripts used in the RC2 Mission workflow.</p>
+    <p class="rc2-back-link"><a href="/">← Back to Drone SOP Home</a></p>
 
     <section class="card warn">
       <h2>Execution Model</h2>
@@ -93,43 +95,43 @@
     <section class="card">
       <h2>Safe User Sequence</h2>
       <p>Four wrapper scripts guide you through the full mission-deployment workflow with built-in prompts, descriptions, and safety gates. Run them in order from the repository root.</p>
-      <table style="width:100%;border-collapse:collapse;font-size:0.92em;">
+      <table class="rc2-table">
         <thead>
-          <tr style="background:#1e2a38;">
-            <th style="padding:6px 10px;text-align:left;">#</th>
-            <th style="padding:6px 10px;text-align:left;">Wrapper Script</th>
-            <th style="padding:6px 10px;text-align:left;">What it does</th>
-            <th style="padding:6px 10px;text-align:left;">Underlying script</th>
+          <tr>
+            <th>#</th>
+            <th>Wrapper Script</th>
+            <th>What it does</th>
+            <th>Underlying script</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td style="padding:6px 10px;">1</td>
-            <td style="padding:6px 10px;"><a href="/data/rc2/scripts/Run-StageIncoming.ps1">Run-StageIncoming.ps1</a></td>
-            <td style="padding:6px 10px;">Finds the newest KMZ in INCOMING, copies it into the chosen role folder, and archives the source so it cannot be re-staged accidentally. Prompts for <code>-Role</code> if not supplied.</td>
-            <td style="padding:6px 10px;">Step5B — flags: <code>-ArchiveIncoming</code></td>
-          </tr>
-          <tr style="background:#1b2330;">
-            <td style="padding:6px 10px;">2</td>
-            <td style="padding:6px 10px;"><a href="/data/rc2/scripts/Run-HealthCheck.ps1">Run-HealthCheck.ps1</a></td>
-            <td style="padding:6px 10px;">Validates UUID role mapping, inventory alignment, staged KMZ files, and live RC2 slot state. Any WARNING or ERROR blocks deployment. RC2 must be connected via USB.</td>
-            <td style="padding:6px 10px;">Step9 — flags: <code>-CheckRC2 -FailOnWarning</code></td>
+            <td>1</td>
+            <td><a href="/data/rc2/scripts/Run-StageIncoming.ps1">Run-StageIncoming.ps1</a></td>
+            <td>Finds the newest KMZ in INCOMING, copies it into the chosen role folder, and archives the source so it cannot be re-staged accidentally. Prompts for <code>-Role</code> if not supplied.</td>
+            <td>Step5B — flags: <code>-ArchiveIncoming</code></td>
           </tr>
           <tr>
-            <td style="padding:6px 10px;">3</td>
-            <td style="padding:6px 10px;"><a href="/data/rc2/scripts/Run-DeployPreview.ps1">Run-DeployPreview.ps1</a></td>
-            <td style="padding:6px 10px;">Shows the full deployment plan — which KMZ files would go to which RC2 UUID slot folders. <strong>No files are transferred, moved, or deleted.</strong> Prompts for <code>-Role</code> if not supplied.</td>
-            <td style="padding:6px 10px;">Step6 — flags: <code>-DryRun</code></td>
+            <td>2</td>
+            <td><a href="/data/rc2/scripts/Run-HealthCheck.ps1">Run-HealthCheck.ps1</a></td>
+            <td>Validates UUID role mapping, inventory alignment, staged KMZ files, and live RC2 slot state. Any WARNING or ERROR blocks deployment. RC2 must be connected via USB.</td>
+            <td>Step9 — flags: <code>-CheckRC2 -FailOnWarning</code></td>
           </tr>
-          <tr style="background:#1b2330;">
-            <td style="padding:6px 10px;">4</td>
-            <td style="padding:6px 10px;"><a href="/data/rc2/scripts/Run-Deploy.ps1">Run-Deploy.ps1</a></td>
-            <td style="padding:6px 10px;">Copies staged KMZ packages to RC2 UUID slot folders via MTP. Displays the plan and requires you to type <code>YES</code> before any file is written. Anything else cancels cleanly.</td>
-            <td style="padding:6px 10px;">Step6 — flags: <code>-PromptBeforeCopy</code></td>
+          <tr>
+            <td>3</td>
+            <td><a href="/data/rc2/scripts/Run-DeployPreview.ps1">Run-DeployPreview.ps1</a></td>
+            <td>Shows the full deployment plan — which KMZ files would go to which RC2 UUID slot folders. <strong>No files are transferred, moved, or deleted.</strong> Prompts for <code>-Role</code> if not supplied.</td>
+            <td>Step6 — flags: <code>-DryRun</code></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><a href="/data/rc2/scripts/Run-Deploy.ps1">Run-Deploy.ps1</a></td>
+            <td>Copies staged KMZ packages to RC2 UUID slot folders via MTP. Displays the plan and requires you to type <code>YES</code> before any file is written. Anything else cancels cleanly.</td>
+            <td>Step6 — flags: <code>-PromptBeforeCopy</code></td>
           </tr>
         </tbody>
       </table>
-      <p style="margin-top:12px;">Each wrapper prints a description of what it will do at runtime, so no prior knowledge of parameter flags is required.</p>
+      <p class="rc2-wrapper-note">Each wrapper prints a description of what it will do at runtime, so no prior knowledge of parameter flags is required.</p>
       <p class="subtitle"><strong>RC2 visual order note:</strong> the RC2 mission list is effectively timestamp-driven. For predictable A/B/C display, run full Step6 deploy in order <code>Mission_C -&gt; Mission_B -&gt; Mission_A</code>. In newest-first sort this appears as <code>A, B, C</code>; in oldest-first sort it appears as <code>C, B, A</code>.</p>
     </section>
 
@@ -185,7 +187,7 @@
       <ul>
         <li><a href="/data/rc2/docs/docs-viewer.html?id=wiki">MAM RC2 PS1 Wiki</a></li>
         <li><a href="/data/rc2/docs/docs-viewer.html?id=saving">Saving Missions to RC2</a></li>
-        <li><a href="/data/rc2/docs/docs-viewer.html?id=onboarding">RC2 UUID Mission Integration - New User Onboarding</a></li>
+        <li><a href="/data/rc2/docs/docs-viewer.html?id=onboarding">RC2 Onboarding</a></li>
       </ul>
     </section>
 

@@ -27,6 +27,11 @@ This document is focused on one mission test run that a new user can repeat.
 - GGCode advanced export access is enabled in My Profile.
 - RC2 is available for Step 6 copy when staging is complete.
 
+Platform and handoff note:
+- RC2 replacement steps (Step 5 staging + Step 6 copy) are Windows operations because RC2 access relies on MTP.
+- iOS/iPadOS users can still complete profile setup and export mission `.kmz` files.
+- If mobile-only in the field, save `.kmz` to cloud/external storage and hand off to a Windows operator to complete RC2 slot replacement.
+
 ## What GGCode Export Actually Does
 In GGCode Export & Files drawer:
 - Export KMZ: creates a DJI KMZ and downloads it.

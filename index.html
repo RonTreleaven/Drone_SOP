@@ -656,7 +656,7 @@
             <p id="mission-automation-state" class="profile-field-note"></p>
           </div>
 
-          <p id="mission-automation-note" class="profile-field-note">Use only for RC2 automation with REGISTRY and Mission_A/B/C folders. Use the header profile icon to open Advanced Profile Details.</p>
+          <p id="mission-automation-note" class="profile-field-note">Use only for RC2 automation with REGISTRY and Mission_A/B/C folders. Use the header profile icon to open Advanced Profile Details. Windows only: requires completed onboarding and a Windows PC; iOS/iPadOS are not compatible for RC2_Missions/MTP workflow steps.</p>
         </div>
       </details>
     </form>
@@ -865,6 +865,7 @@
       const openMissionProfileBtn = document.getElementById('open-mission-profile-drawer');
       const saveMissionProfileBtn = document.getElementById('save-mission-profile-state');
       const accessState = getAdvancedAccessState();
+      const windowsOnlyNotice = ' Windows only: requires completed onboarding and a Windows PC; iOS/iPadOS are not compatible for RC2_Missions/MTP workflow steps.';
       if (!missionAutomationEnabledInput || !missionManagerActions) return;
 
       const mamEnabled = missionAutomationEnabledInput.checked;
@@ -896,10 +897,10 @@
 
       if (missionAutomationNote) {
         missionAutomationNote.textContent = !accessState.validated
-          ? 'Mission Automation Manager is locked until advanced access is validated.'
+          ? `Mission Automation Manager is locked until advanced access is validated.${windowsOnlyNotice}`
           : mamEnabled
-            ? 'MAM is active. Advanced Profile Details are available.'
-            : 'MAM is off. Advanced Profile Details are still available for setup.';
+            ? `MAM is active. Advanced Profile Details are available.${windowsOnlyNotice}`
+            : `MAM is off. Advanced Profile Details are still available for setup.${windowsOnlyNotice}`;
       }
 
       updateAdvancedProfileTriggerUi(accessState, mamEnabled);
@@ -1108,20 +1109,26 @@
       const currentSignature = buildProfileIdentitySignature(currentState);
       const savedSignature = buildProfileIdentitySignature(savedState);
       const savedMatchesCurrent = Boolean(savedState && currentSignature && savedSignature === currentSignature);
+      const attested = localStorage.getItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY) === 'true';
       const record = getAdvancedAccessRecord();
+      const hasLegacyValidatedRecord = Boolean(
+        record
+        && record.version === PROFILE_ADVANCED_ACCESS_VERSION
+        && record.signature === currentSignature
+      );
       const validated = Boolean(
         !eligibilityMessage
         && savedMatchesCurrent
-        && record
-        && record.version === PROFILE_ADVANCED_ACCESS_VERSION
-        && record.signature === currentSignature
+        && (attested || hasLegacyValidatedRecord)
       );
 
       let message = 'Read the advanced export note and validate this saved profile.';
       if (eligibilityMessage) {
         message = eligibilityMessage;
       } else if (!savedMatchesCurrent) {
-        message = 'Click Save Profile in Workspace Reuse mode, then validate advanced access.';
+        message = 'Click Save Profile in Workspace Reuse mode, then check the acknowledgment to unlock advanced access.';
+      } else if (!attested && !hasLegacyValidatedRecord) {
+        message = 'Check the acknowledgment to unlock advanced exports and Mission Manager.';
       } else if (validated) {
         message = 'User validated for advanced exports and Mission Manager on this device.';
       }
@@ -2436,7 +2443,7 @@
             : ' Mission Automation Profile is disabled; local profile save only.';
 
           if (normalizeMissionStatus(lastMissionStatus) === 'active') {
-            profileSaveMessage += ' Advanced access remains locked until you check the acknowledgment box and click Validate User Access.';
+            profileSaveMessage += ' Advanced access remains locked until you check the acknowledgment box.';
           }
 
           closeProfileDrawer();

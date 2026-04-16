@@ -14,7 +14,7 @@ This page documents the intended use of the RC2 PowerShell workflow and how host
 - RC2 write operations occur only when user confirms in Step6 PromptBeforeCopy mode.
 
 ## AJV Prerequisite (Optional But Recommended)
-Use AJV to validate Step9 JSON output against schema.
+Use AJV to validate Step9 JSON output against schema.  Install in a PowerShell terminal.
 
 Install:
 
@@ -32,9 +32,10 @@ If npm is missing, install Node.js LTS first, then rerun the commands.
 
 ## Safe User Sequence
 
-Four wrapper scripts guide you through the full mission-deployment workflow.
+Four wrapper scripts guide you through the full mission-deployment workflow, after you have completed the New User onboarding and have created the /<user>/RC2_Missions file structures.
+
 Each wrapper prints a plain-language description of what it will do at runtime —
-no memorisation of parameter flags is required. Run them in order from the repository root.
+no memorisation of parameter flags is required. Run them in order from the repository root in PowerShell.
 
 ### Step 1 — Run-StageIncoming.ps1
 
@@ -57,6 +58,7 @@ Underlying script: **Step5B_StageFromIncoming.ps1** — flags applied: `-Archive
 ### Step 2 — Run-HealthCheck.ps1
 
 **What it checks:**
+
 1. UUID role mapping — uuid_roles.json format and completeness.
 2. Inventory alignment — uuid_inventory.csv vs registry, no orphan/missing entries.
 3. Staged KMZ files — each role folder has a package ready to deploy.

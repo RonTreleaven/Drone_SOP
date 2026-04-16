@@ -1,23 +1,25 @@
 ﻿# RC2_Onboarding
 
 ## What This Is
-This guide helps a new pilot set up a safe DJI RC2 UUID workflow on Windows:
+This guide helps a new pilot set up a safe DJI RC2 UUID workflow on Windows.  Apple IOS does not support MTP protocol.
+Android devices do support MTP, but these procedures only work on Windows, with PowerShell, which is native to Windows 10/11 versions.  Use these procedures to:
+
 - Discover RC2 UUID slots
 - Assign Mission A, Mission B, and Mission C slots
 - Deploy DJI UUID mission packages as .kmz into RC2 slots safely
 
 Standard mission package extension in this SOP: `.kmz`
 
-## Profile Files In REGISTRY
+## Profile Files In /RC2_Missions/REGISTRY
 
-Use these normalized profile export names:
+Use of these profile export names are saved as:
 - `DroneSOP_user.json` (My Profile)
 - `DroneSOP_Adv.json` (Mission Automation / Advanced Profile)
 
 Recommended save target:
 - `RC2_Missions/REGISTRY/`
 
-If `REGISTRY/local_config.json` has `"workspaceRoot": "C:\\Users\\Ron Treleaven\\RC2_Missions"` (example), verify both files are present under that root's `REGISTRY` folder.
+If `REGISTRY/local_config.json` has `"workspaceRoot": "C:\\Users\\<username>\\RC2_Missions"` (example), verify both files are present under that root's `REGISTRY` folder after creation of your User/Advanced profiles on this website.
 
 
 
@@ -870,7 +872,23 @@ My Profile and Advanced Access gating:
 - `My Profile` in `index.html` should remain the primary identity and readiness checkpoint for feature access.
 - Advanced tooling should require an additional explicit gate beyond basic acceptance, to reduce careless use.
 - That advanced gate should confirm the user understands public safety obligations, regulatory boundaries, and operational responsibility before access is granted.
-- Recommended pattern: `Accept and Continue` for baseline exploration, then a separate `Advanced Access` acknowledgment and validation step for higher-risk workflow features.
+- Current validation rule in the UI: `Profile Usage Mode = Workspace Reuse` + eligible profile fields + Advanced Access acknowledgment checked.
+- The `Use Mission Automation Structure` checkbox should unlock once the above conditions are met.
+- `DroneSOP_Adv.json` export is not a prerequisite for unlocking; it is an output after advanced access is unlocked.
+
+Validation and finalization checkpoints:
+- Validated: profile summary shows advanced access as ready, and Mission Automation controls become selectable.
+- Finalized (browser side): `DroneSOP_user.json` and optional `DroneSOP_Adv.json` are exported and archived in `RC2_Missions/REGISTRY/`.
+- Finalized (RC2 side): Step 5 staging and Step 6 copy complete, then DJI Fly mission load check passes.
+
+Platform compatibility:
+- Mission Automation Manager and RC2 slot replacement workflow are Windows-first operations.
+- iOS/iPadOS can be used for planning/profile work, but are not compatible with direct RC2 MTP copy operations.
+- If using iOS/iPadOS, treat profile and KMZ export as handoff artifacts for later Windows execution.
+
+Cloud and external storage fallback (worst case):
+- A user can save the mission `.kmz` and profile JSON files to cloud/external storage.
+- A Windows operator can later retrieve those files, run onboarding checks, and perform RC2 waypoint slot replacement through the standard Step 5/Step 6 path.
 
 Recommended advanced-readiness checks:
 - User affirms Pilot in Command accountability.
@@ -1029,7 +1047,7 @@ Important first-run behavior:
 1. Run `Step5A.ps1` once after Step 4 to seed your local role files from the role map and slot scan.
 2. Export a new mission `.kmz` into your local RC2 missions workspace under your configured `managerRoot`.
   Preferred manual export location: `INCOMING`.
-  Folder export option: save directly into `Mission_A`, `Mission_B`, or `Mission_C` only when filename and target role UUID are confirmed.
+    Folder export option: save directly into `Mission_A`, `Mission_B`, or `Mission_C` only when filename and target role UUID are confirmed.
 
 Operator decision table (export save location):
 

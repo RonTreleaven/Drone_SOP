@@ -18,7 +18,6 @@ exclude:
   - "*.py"
   - "*.bak_*"
   - "*.cmd"
-  - "*.ps1"
   - 3_26_Cloudfare_worker.js
   - "assets/logs/"
   - "assets/MD/"

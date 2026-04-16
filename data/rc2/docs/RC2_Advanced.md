@@ -40,6 +40,11 @@ Recommended slot model:
 - PowerShell access
 - Operator understands backup and restore steps
 
+Platform compatibility note:
+- RC2 mission slot replacement is Windows-only in this SOP because it depends on MTP access to RC2 storage.
+- iOS/iPadOS are supported for planning/profile tasks and exporting files, but not for direct RC2 waypoint folder replacement.
+- Mobile workaround: export `.kmz` and profile JSON to cloud/external storage, then complete RC2 copy operations on a Windows PC.
+
 ## Critical Paths on RC 2
 Within the RC 2 MTP tree:
 - Internal shared storage/Android/data/dji.go.v5/files/waypoint
