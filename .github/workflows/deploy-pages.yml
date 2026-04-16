@@ -58,6 +58,8 @@ jobs:
 
           # Data — live NOTAM JSON files (auto-updated by fetch-notams CRON)
           cp data/notams/*.json _site/data/notams/  2>/dev/null || true
+          # Data - RC2 automation bundle (scripts, docs, schema, index)
+          cp -r data/rc2 _site/data/
 
           # Disable Jekyll processing
           touch _site/.nojekyll
