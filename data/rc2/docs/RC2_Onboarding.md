@@ -1,14 +1,22 @@
 ﻿# RC2_Onboarding
 
 ## What This Is
-This guide helps a new pilot set up a safe DJI RC2 UUID workflow on Windows.  Apple IOS does not support MTP protocol.
-Android devices do support MTP, but these procedures only work on Windows, with PowerShell, which is native to Windows 10/11 versions.  Use these procedures to:
+This guide helps a drone pilot set up a safe DJI RC2 UUID workflow on Windows.  Apple IOS does not support MTP protocol. Android devices do support MTP, but these procedures currently work on Windows, using native PowerShell, which for Windows 10/11+ versions.  
 
-- Discover RC2 UUID slots
-- Assign Mission A, Mission B, and Mission C slots
-- Deploy DJI UUID mission packages as .kmz into RC2 slots safely
+## Use these procedures to:
+
+- Discover DJI RC2 UUID slots, connected to PC with controller turned on.
+- Assign Mission A, Mission B, and Mission C slots to DJI UUID indexes, in order to upload your  mission.kmz package and exported from Gcode Tools. 
+- Deploy DJI UUID mission packages as .kmz into matching RC2 slots safely.  
 
 Standard mission package extension in this SOP: `.kmz`
+
+
+## Alternate Manual approach.
+
+There are many good YouTube videos, in which to do similar hacks of pre-planning a flight path, or orbits that Gcode currently has tested.
+
+
 
 ## Profile Files In /RC2_Missions/REGISTRY
 

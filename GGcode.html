@@ -148,6 +148,26 @@ body {
   min-width: 0;
 }
 
+.manual-dd-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.manual-dd-actions {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+
+.manual-dd-hint {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--text-soft);
+}
+
 .search-note {
   margin: 10px 0 0;
   color: var(--text-soft);
@@ -1129,6 +1149,10 @@ body.map-immersive {
     grid-template-columns: 1fr;
   }
 
+  .manual-dd-grid {
+    grid-template-columns: 1fr;
+  }
+
   .btn.lookup-btn {
     width: 100%;
   }
@@ -1280,12 +1304,26 @@ body.map-immersive {
     <div class="collapsible-body" id="searchBody">
       <div class="search-row">
         <div class="field-group">
-          <label for="address">Enter an address, city, or postal code, or select "Get Pilot Position" button</label>
+          <label for="address">Enter an address, city, or postal code, or choose a pilot location action below</label>
           <div class="address-input-wrap" id="addressInputWrap">
             <input type="text" id="address" autocomplete="off" placeholder="Enter address, city, postal code, landmark" aria-autocomplete="list" aria-controls="addressSuggestions">
             <div id="addressSuggestions" class="autocomplete-menu" role="listbox" aria-label="Address suggestions"></div>
           </div>
         </div>
+      </div>
+      <div class="manual-dd-grid" aria-label="Manual DD coordinate entry">
+        <div class="field-group">
+          <label for="manualLat">Input LAT (DD)</label>
+          <input type="text" id="manualLat" inputmode="decimal" autocomplete="off" placeholder="43.938280">
+        </div>
+        <div class="field-group">
+          <label for="manualLon">Input LON (DD)</label>
+          <input type="text" id="manualLon" inputmode="decimal" autocomplete="off" placeholder="-78.979720">
+        </div>
+      </div>
+      <div class="manual-dd-actions">
+        <button id="applyManualDdBtn" class="btn" type="button" onclick="setPilotMarkerFromDDInputs()">Set New Pilot Marker By DD</button>
+        <p class="manual-dd-hint">Moves the marker for planning and updates links. Pilot location is only saved when Set New Pilot Location is clicked.</p>
       </div>
       <div class="history-row">
         <div class="field-group">
@@ -1296,7 +1334,8 @@ body.map-immersive {
         </div>
       </div>
       <div class="button-row">
-        <button id="fetchCurrentPositionBtn" class="btn secondary-btn" type="button" onclick="useCurrentPilotPosition()">Fetch Current Position</button>
+        <button id="fetchCurrentPositionBtn" class="btn secondary-btn" type="button" onclick="getCurrentGpsPosition()">Get Current GPS Position</button>
+        <button id="useSavedPlanningBtn" class="btn secondary-btn" type="button" onclick="useSavedPlanningLocation()">Use Saved Planning Location</button>
         <button id="runLookupBtn" class="btn lookup-btn" onclick="runLookup()">Lookup</button>
         <button id="clearInputsBtn" class="btn secondary-btn" onclick="clearInputs()">Clear Inputs</button>
       </div>
@@ -1673,6 +1712,18 @@ document.addEventListener('DOMContentLoaded', async function() {
     addressInput.addEventListener('input', handleAddressInputForAutocomplete);
   }
 
+  const manualLatInput = document.getElementById('manualLat');
+  const manualLonInput = document.getElementById('manualLon');
+  [manualLatInput, manualLonInput].forEach((el) => {
+    if (!el) return;
+    el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        setPilotMarkerFromDDInputs();
+      }
+    });
+  });
+
   document.addEventListener('mousedown', function(event) {
     const wrap = document.getElementById('addressInputWrap');
     if (!wrap) return;
@@ -1794,6 +1845,10 @@ document.addEventListener('DOMContentLoaded', async function() {
   window.addEventListener('storage', applyExportPermissionGate);
 
   renderLookupHistory();
+  restorePlanningMarkerState();
+  window.addEventListener('pageshow', () => {
+    restorePlanningMarkerState();
+  });
   updateLookupActionButtons();
 });
 const GEOCODE_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.GEOCODE_ENDPOINT)
@@ -1813,6 +1868,7 @@ const LOOKUP_HISTORY_KEY = "missionLookupHistory";
 const LOOKUP_HISTORY_COOKIE = "missionLookupHistory";
 const LOOKUP_HISTORY_TTL_DAYS = 365;
 const MAX_LOOKUP_HISTORY = 10;
+const PLANNING_MARKER_STATE_KEY = "ggcodePlanningMarkerState";
 
 const DEFAULT_CENTER = { lat: 43.7, lng: -79.4 }; // Toronto default
 const DEFAULT_ZOOM = 10;
@@ -2640,18 +2696,25 @@ function hasStoredPilotLocation() {
 
 function updateLookupActionButtons() {
   const fetchBtn = document.getElementById("fetchCurrentPositionBtn");
+  const savedBtn = document.getElementById("useSavedPlanningBtn");
   const lookupBtn = document.getElementById("runLookupBtn");
   const clearBtn = document.getElementById("clearInputsBtn");
-  if (!fetchBtn || !lookupBtn || !clearBtn) return;
+  if (!fetchBtn || !savedBtn || !lookupBtn || !clearBtn) return;
 
   const hasSavedPilot = hasStoredPilotLocation();
+  const hasSavedPlanning = !!getPlanningMarkerState();
   const hasActiveMissionPoint = !!marker;
 
-  fetchBtn.textContent = hasSavedPilot ? "Get Pilot Position" : "Fetch Current Position";
+  fetchBtn.textContent = "Get Current GPS Position";
+  savedBtn.textContent = hasSavedPlanning ? "Use Saved Planning Location" : (hasSavedPilot ? "Use Saved Pilot Location" : "Use Saved Planning Location");
+  savedBtn.disabled = !hasSavedPlanning && !hasSavedPilot;
 
   if (hasActiveMissionPoint) {
     fetchBtn.classList.remove("success-btn");
     fetchBtn.classList.add("secondary-btn");
+
+    savedBtn.classList.remove("success-btn");
+    savedBtn.classList.add("secondary-btn");
 
     lookupBtn.classList.remove("success-btn");
     lookupBtn.classList.add("secondary-btn");
@@ -2661,6 +2724,9 @@ function updateLookupActionButtons() {
   } else {
     fetchBtn.classList.add("success-btn");
     fetchBtn.classList.remove("secondary-btn");
+
+    savedBtn.classList.add("success-btn");
+    savedBtn.classList.remove("secondary-btn");
 
     lookupBtn.classList.add("success-btn");
     lookupBtn.classList.remove("secondary-btn");
@@ -6472,57 +6538,76 @@ async function runLookup() {
   updateLookupActionButtons();
 }
 
-function useCurrentPilotPosition() {
+function getCurrentGpsPosition() {
   if (!map || !window.google || !window.google.maps) {
     showLookupMessage("Map is still initializing. Try again in a moment.", "warn");
     return;
   }
 
-  const stored = getStoredPilotPosition();
-  if (stored) {
-    const useSaved = window.confirm(
-      'A pilot location is already saved.\n\nOK: Use saved location\nCancel: Get your current location'
-    );
-
-    if (useSaved) {
-      applyPilotPosition(stored.lat, stored.lng, {
-        source: localStorage.getItem("pilotLocationSource") || "saved-pilot-location",
-        resultHeading: "Using last pilot location saved",
-        toastPrefix: "Loaded last pilot location saved"
-      });
-      return;
-    } else {
-      // User wants to get current location instead
-      if (!navigator.geolocation) {
-        showLookupMessage("Geolocation is not supported by this browser. Use manual LAT/LON entry.", "warn");
-        updateLookupActionButtons();
-        return;
-      }
-
-      showLookupMessage("Getting your current location...", "dim");
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          applyPilotPosition(position.coords.latitude, position.coords.longitude, {
-            source: "ggcode-geolocation",
-            resultHeading: "Using device current location",
-            toastPrefix: "Pilot location updated"
-          });
-        },
-        () => {
-          showLookupMessage("Unable to get current location. Using saved location.", "warn");
-          applyPilotPosition(stored.lat, stored.lng, {
-            source: localStorage.getItem("pilotLocationSource") || "saved-pilot-location",
-            resultHeading: "Using last pilot location saved",
-            toastPrefix: "Loaded last pilot location saved"
-          });
-        },
-        { enableHighAccuracy: true, timeout: 12000, maximumAge: 300000 }
-      );
-      return;
-    }
+  if (!navigator.geolocation) {
+    showLookupMessage("Geolocation is not supported by this browser. Use manual LAT/LON entry.", "warn");
+    updateLookupActionButtons();
+    return;
   }
 
-  promptForPilotPositionSetup();
+  showLookupMessage("Getting your current location...", "dim");
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      applyPilotPosition(position.coords.latitude, position.coords.longitude, {
+        source: "ggcode-geolocation",
+        resultHeading: "Using device current location",
+        toastPrefix: "Pilot location updated"
+      });
+    },
+    () => {
+      showLookupMessage("Unable to get current location. Use Saved Planning Location or set LAT/LON manually.", "warn");
+      updateLookupActionButtons();
+    },
+    { enableHighAccuracy: true, timeout: 12000, maximumAge: 300000 }
+  );
+}
+
+function useSavedPlanningLocation() {
+  if (!map || !window.google || !window.google.maps) {
+    showLookupMessage("Map is still initializing. Try again in a moment.", "warn");
+    return;
+  }
+
+  const planning = getPlanningMarkerState();
+  if (planning) {
+    updateMap(planning.lat, planning.lng);
+    showLatLonCopy(planning.lat, planning.lng);
+    buildDSSTLink(planning.lat, planning.lng);
+    checkAirspace(planning.lat, planning.lng);
+
+    const latShort = Number(planning.lat).toFixed(6);
+    const lngShort = Number(planning.lng).toFixed(6);
+    const manualLatInput = document.getElementById('manualLat');
+    const manualLonInput = document.getElementById('manualLon');
+    if (manualLatInput) manualLatInput.value = latShort;
+    if (manualLonInput) manualLonInput.value = lngShort;
+
+    document.getElementById('result').innerHTML = `
+      <strong>Using saved planning location</strong><br>
+      DD (6) Lat: ${latShort} | Lon: ${lngShort}
+    `;
+    document.getElementById('result').className = 'result result-box';
+    updateLookupActionButtons();
+    return;
+  }
+
+  const stored = getStoredPilotPosition();
+  if (stored) {
+    applyPilotPosition(stored.lat, stored.lng, {
+      source: localStorage.getItem("pilotLocationSource") || "saved-pilot-location",
+      resultHeading: "Using last pilot location saved",
+      toastPrefix: "Loaded last pilot location saved"
+    });
+    return;
+  }
+
+  showLookupMessage("No saved planning location found. Use Get Current GPS Position or enter DD LAT/LON.", "warn");
+  updateLookupActionButtons();
 }
 
 function applyPilotPosition(lat, lng, options = {}) {
@@ -6574,60 +6659,114 @@ function applyPilotPosition(lat, lng, options = {}) {
   return true;
 }
 
-function promptForPilotPositionSetup() {
-  const chooseCurrent = window.confirm(
-    'No valid pilot location saved.\n\nOK: Get your current location\nCancel: Set LAT/Lon manually'
-  );
+function setPilotMarkerFromDDInputs() {
+  const latInput = document.getElementById('manualLat');
+  const lonInput = document.getElementById('manualLon');
+  if (!latInput || !lonInput) return;
 
-  if (chooseCurrent) {
-    if (!navigator.geolocation) {
-      showLookupMessage("Geolocation is not supported by this browser. Use manual LAT/LON entry.", "warn");
-      updateLookupActionButtons();
-      return;
-    }
-
-    showLookupMessage("Getting your current location...", "dim");
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        applyPilotPosition(position.coords.latitude, position.coords.longitude, {
-          source: "ggcode-geolocation",
-          resultHeading: "Using device current location",
-          toastPrefix: "Pilot location captured"
-        });
-      },
-      () => {
-        showLookupMessage("Unable to get current location. You can set LAT/LON manually.", "warn");
-        updateLookupActionButtons();
-      },
-      { enableHighAccuracy: true, timeout: 12000, maximumAge: 300000 }
-    );
+  if (!map || !window.google || !window.google.maps) {
+    showLookupMessage('Map is still initializing. Try again in a moment.', 'warn');
     return;
   }
 
-  const latText = window.prompt("Set LAT/LON manually\n\nEnter latitude (-90 to 90):");
-  if (latText == null) {
-    updateLookupActionButtons();
-    return;
-  }
-  const lngText = window.prompt("Enter longitude (-180 to 180):");
-  if (lngText == null) {
-    updateLookupActionButtons();
+  const latText = latInput.value.trim();
+  const lonText = lonInput.value.trim();
+  if (!latText || !lonText) {
+    showLookupMessage('Enter both LAT and LON in DD format.', 'warn');
     return;
   }
 
-  const lat = Number(latText.trim());
-  const lng = Number(lngText.trim());
+  const lat = Number(latText);
+  const lng = Number(lonText);
   if (!isValidPilotCoordinate(lat, lng)) {
-    showLookupMessage("Invalid manual coordinates. Use non-zero values within LAT/LON range.", "warn");
-    updateLookupActionButtons();
+    showLookupMessage(`Invalid DD coordinates. LAT must be between -90 and 90, and LON between -180 and 180 (non-zero). Received: ${latText}, ${lonText}`, 'warn');
     return;
   }
 
-  applyPilotPosition(lat, lng, {
-    source: "ggcode-manual-entry",
-    resultHeading: "Using manually set pilot location",
-    toastPrefix: "Manual pilot location set"
-  });
+  updateMap(lat, lng);
+  showLatLonCopy(lat, lng);
+  buildDSSTLink(lat, lng);
+  checkAirspace(lat, lng);
+  refreshMissionRangeGuideIfVisible();
+
+  const latShort = lat.toFixed(6);
+  const lngShort = lng.toFixed(6);
+  document.getElementById('result').innerHTML = `
+    <strong>Manual DD marker update</strong><br>
+    Input Lat/Lon: ${latShort}, ${lngShort}<br>
+    <em>New pilot marker set as:</em> ${latShort}, ${lngShort}
+  `;
+  document.getElementById('result').className = 'result result-box';
+
+  updateLookupActionButtons();
+}
+
+function persistPlanningMarkerState(lat, lng, source = "planning") {
+  if (!isValidPilotCoordinate(lat, lng)) return;
+  try {
+    const payload = {
+      lat: Number(lat).toFixed(6),
+      lng: Number(lng).toFixed(6),
+      source,
+      updatedAt: new Date().toISOString()
+    };
+    const serialized = JSON.stringify(payload);
+    localStorage.setItem(PLANNING_MARKER_STATE_KEY, serialized);
+    sessionStorage.setItem(PLANNING_MARKER_STATE_KEY, serialized);
+  } catch {
+    // Ignore storage write errors.
+  }
+}
+
+function clearPlanningMarkerState() {
+  try {
+    localStorage.removeItem(PLANNING_MARKER_STATE_KEY);
+    sessionStorage.removeItem(PLANNING_MARKER_STATE_KEY);
+  } catch {
+    // Ignore storage clear errors.
+  }
+}
+
+function getPlanningMarkerState() {
+  try {
+    const raw = sessionStorage.getItem(PLANNING_MARKER_STATE_KEY) || localStorage.getItem(PLANNING_MARKER_STATE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return null;
+    const lat = Number(parsed.lat);
+    const lng = Number(parsed.lng);
+    if (!isValidPilotCoordinate(lat, lng)) return null;
+    return { lat, lng };
+  } catch {
+    return null;
+  }
+}
+
+function restorePlanningMarkerState() {
+  if (!map || !window.google || !window.google.maps) return;
+  if (marker) return;
+
+  const saved = getPlanningMarkerState();
+  if (!saved) return;
+
+  updateMap(saved.lat, saved.lng);
+  showLatLonCopy(saved.lat, saved.lng);
+  buildDSSTLink(saved.lat, saved.lng);
+  checkAirspace(saved.lat, saved.lng);
+
+  const latShort = Number(saved.lat).toFixed(6);
+  const lngShort = Number(saved.lng).toFixed(6);
+  const manualLatInput = document.getElementById('manualLat');
+  const manualLonInput = document.getElementById('manualLon');
+  if (manualLatInput) manualLatInput.value = latShort;
+  if (manualLonInput) manualLonInput.value = lngShort;
+
+  document.getElementById('result').innerHTML = `
+    <strong>Planning marker restored</strong><br>
+    Input Lat/Lon: ${latShort}, ${lngShort}<br>
+    <em>New pilot marker set as:</em> ${latShort}, ${lngShort}
+  `;
+  document.getElementById('result').className = 'result result-box';
 }
 
 // -------------------------
@@ -6635,6 +6774,7 @@ function promptForPilotPositionSetup() {
 // -------------------------
 function updateMap(lat, lng) {
   const position = { lat, lng };
+  persistPlanningMarkerState(lat, lng, "update-map");
   if (!marker) {
     marker = new google.maps.Marker({
       position,
@@ -6655,6 +6795,7 @@ function updateMap(lat, lng) {
       
         showLatLonCopy(draggedLat, draggedLng);
         buildDSSTLink(draggedLat, draggedLng);
+      persistPlanningMarkerState(draggedLat, draggedLng, "marker-drag");
       checkAirspace(draggedLat, draggedLng);
         refreshMissionRangeGuideIfVisible();
       const resultEl = document.getElementById('result');
@@ -6783,7 +6924,7 @@ function buildNotamsMapLink(lat, lng) {
     const actionPanel = document.getElementById('dsstLink').parentNode;
     actionPanel.appendChild(notamsLink);
   }
-  notamsLink.innerHTML = `<a class="action-link" href="${notamsUrl}" target="_blank">Open in NotamsMap with this location</a>`;
+  notamsLink.innerHTML = `<a class="action-link" href="${notamsUrl}">Open in NotamsMap with this location</a>`;
 
   // Add Google Maps hotlink with full precision
   let gmapsLink = document.getElementById('gmapsHotlink');
@@ -7036,6 +7177,10 @@ function clearInputs() {
   }
 
   document.getElementById("address").value = "";
+  const manualLat = document.getElementById('manualLat');
+  const manualLon = document.getElementById('manualLon');
+  if (manualLat) manualLat.value = '';
+  if (manualLon) manualLon.value = '';
   clearAddressSuggestions();
   document.getElementById("result").innerText = "Search a location to populate formatted address and coordinates.";
   document.getElementById("result").className = "result result-box dim";
@@ -7053,6 +7198,7 @@ function clearInputs() {
     marker.setMap(null);
     marker = null;
   }
+  clearPlanningMarkerState();
 
   clearActiveRoute();
 

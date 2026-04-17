@@ -859,7 +859,7 @@ window.onload = function() {
       var m = Math.floor(mFloat);
       var s = ((mFloat - m) * 60).toFixed(1);
       var dir = isLat ? (deg >= 0 ? 'N' : 'S') : (deg >= 0 ? 'E' : 'W');
-      return d + '°' + m + "'" + s + '"' + dir;
+      return d + '┬░' + m + "'" + s + '"' + dir;
   }
 
   function parseLatLonText(value) {
@@ -919,6 +919,50 @@ window.onload = function() {
       } catch (err) {
           return null;
       }
+  }
+
+  function getPilotLocationFromQuery() {
+      try {
+          var params = new URLSearchParams(window.location.search || '');
+
+          var centerRaw = (params.get('center') || '').trim();
+          if (centerRaw) {
+              var centerPair = splitCoordinatePair(centerRaw);
+              if (centerPair) {
+                  var centerLl = L.latLng(centerPair.lat, centerPair.lon);
+                  if (hasUsablePilotLocation(centerLl)) {
+                      return centerLl;
+                  }
+              }
+          }
+
+          var pilotRaw = (params.get('pilot') || '').trim();
+          if (pilotRaw) {
+              var pilotPair = splitCoordinatePair(pilotRaw);
+              if (pilotPair) {
+                  var pilotLl = L.latLng(pilotPair.lat, pilotPair.lon);
+                  if (hasUsablePilotLocation(pilotLl)) {
+                      return pilotLl;
+                  }
+              }
+          }
+
+          var pilotLatRaw = params.get('pilotLat');
+          var pilotLonRaw = params.get('pilotLon');
+          if (pilotLatRaw != null && pilotLonRaw != null) {
+              var pilotLat = Number(pilotLatRaw);
+              var pilotLon = Number(pilotLonRaw);
+              if (isFinite(pilotLat) && isFinite(pilotLon)) {
+                  var explicitPilotLl = L.latLng(pilotLat, pilotLon);
+                  if (hasUsablePilotLocation(explicitPilotLl)) {
+                      return explicitPilotLl;
+                  }
+              }
+          }
+      } catch (err) {
+          console.warn('[NOTAM MAP] unable to parse pilot location from URL', err);
+      }
+      return null;
   }
 
   function parseLinkedObstacleBatchFromQuery() {
@@ -3098,6 +3142,7 @@ window.onload = function() {
       };
 
     var startupPilotLocation = marker.getLatLng();
+    var queryPilotLocation = getPilotLocationFromQuery();
     var restoredPilotLocation = getStoredPilotLocation();
     linkedRealtimeNotams = getLinkedRealtimeNotamsFromQuery();
         if (!linkedRealtimeNotams.length) {
@@ -3105,7 +3150,9 @@ window.onload = function() {
         }
     linkedRealtimeMode = linkedRealtimeNotams.length > 0;
 
-    if (restoredPilotLocation) {
+    if (queryPilotLocation) {
+            startupPilotLocation = queryPilotLocation;
+    } else if (restoredPilotLocation) {
             startupPilotLocation = restoredPilotLocation;
     }
 
@@ -60466,7 +60513,7 @@ window.onload = function() {
 
         
             
-                var html_72abc8ea93c491cdd0bdf3b2dbfc2ec0 = $(`<div id="html_72abc8ea93c491cdd0bdf3b2dbfc2ec0" style="width: 100.0%; height: 100.0%;">CKA8 - St. François Xavier Airport<br><a href='NotamsMap.html?lat=49.924400&lon=-97.548897&focus=1&src=qfilter'>Open NOTAM focus: 49.924400, -97.548897</a></div>`)[0];
+                var html_72abc8ea93c491cdd0bdf3b2dbfc2ec0 = $(`<div id="html_72abc8ea93c491cdd0bdf3b2dbfc2ec0" style="width: 100.0%; height: 100.0%;">CKA8 - St. Fran├ºois Xavier Airport<br><a href='NotamsMap.html?lat=49.924400&lon=-97.548897&focus=1&src=qfilter'>Open NOTAM focus: 49.924400, -97.548897</a></div>`)[0];
                 popup_4e55af4b140076244273f0065e998568.setContent(html_72abc8ea93c491cdd0bdf3b2dbfc2ec0);
             
         
@@ -60479,7 +60526,7 @@ window.onload = function() {
     
             marker_6c60893cfa73b124854ea453ad43d3ff.bindTooltip(
                 `<div>
-                     CKA8 | St. François Xavier Airport
+                     CKA8 | St. Fran├ºois Xavier Airport
                  </div>`,
                 {
   "sticky": true,
@@ -63552,7 +63599,7 @@ window.onload = function() {
 
         
             
-                var html_5f4eb90475932fdfbfe467f9fa78e6f7 = $(`<div id="html_5f4eb90475932fdfbfe467f9fa78e6f7" style="width: 100.0%; height: 100.0%;">CA-0356 - Saint-Léonard (Cyr) Airport<br><a href='NotamsMap.html?lat=47.180555&lon=-67.890272&focus=1&src=qfilter'>Open NOTAM focus: 47.180555, -67.890272</a></div>`)[0];
+                var html_5f4eb90475932fdfbfe467f9fa78e6f7 = $(`<div id="html_5f4eb90475932fdfbfe467f9fa78e6f7" style="width: 100.0%; height: 100.0%;">CA-0356 - Saint-L├⌐onard (Cyr) Airport<br><a href='NotamsMap.html?lat=47.180555&lon=-67.890272&focus=1&src=qfilter'>Open NOTAM focus: 47.180555, -67.890272</a></div>`)[0];
                 popup_54cc4296a2c861c2c7aca76c0e060e40.setContent(html_5f4eb90475932fdfbfe467f9fa78e6f7);
             
         
@@ -63565,7 +63612,7 @@ window.onload = function() {
     
             marker_5ed2896d8b672c00b8d011f824b0a3bf.bindTooltip(
                 `<div>
-                     CA-0356 | Saint-Léonard (Cyr) Airport
+                     CA-0356 | Saint-L├⌐onard (Cyr) Airport
                  </div>`,
                 {
   "sticky": true,
@@ -64636,7 +64683,7 @@ window.onload = function() {
 
         
             
-                var html_379258ceaffa3ed50b9f4e5fcb2263ee = $(`<div id="html_379258ceaffa3ed50b9f4e5fcb2263ee" style="width: 100.0%; height: 100.0%;">CYQM - Greater Moncton Roméo LeBlanc International Airport<br><a href='NotamsMap.html?lat=46.113189&lon=-64.677190&focus=1&src=qfilter'>Open NOTAM focus: 46.113189, -64.677190</a></div>`)[0];
+                var html_379258ceaffa3ed50b9f4e5fcb2263ee = $(`<div id="html_379258ceaffa3ed50b9f4e5fcb2263ee" style="width: 100.0%; height: 100.0%;">CYQM - Greater Moncton Rom├⌐o LeBlanc International Airport<br><a href='NotamsMap.html?lat=46.113189&lon=-64.677190&focus=1&src=qfilter'>Open NOTAM focus: 46.113189, -64.677190</a></div>`)[0];
                 popup_23a52a30ddaf99b3a0da9cca3095b980.setContent(html_379258ceaffa3ed50b9f4e5fcb2263ee);
             
         
@@ -64649,7 +64696,7 @@ window.onload = function() {
     
             marker_f5dbd17446830ea2ca754bd0efde5d4a.bindTooltip(
                 `<div>
-                     CYQM | Greater Moncton Roméo LeBlanc International Airport
+                     CYQM | Greater Moncton Rom├⌐o LeBlanc International Airport
                  </div>`,
                 {
   "sticky": true,
@@ -64732,7 +64779,7 @@ window.onload = function() {
 
         
             
-                var html_873228d72c84c2247e9b959d7cef85ef = $(`<div id="html_873228d72c84c2247e9b959d7cef85ef" style="width: 100.0%; height: 100.0%;">CYSL - Saint-Léonard Airport<br><a href='NotamsMap.html?lat=47.157097&lon=-67.836242&focus=1&src=qfilter'>Open NOTAM focus: 47.157097, -67.836242</a></div>`)[0];
+                var html_873228d72c84c2247e9b959d7cef85ef = $(`<div id="html_873228d72c84c2247e9b959d7cef85ef" style="width: 100.0%; height: 100.0%;">CYSL - Saint-L├⌐onard Airport<br><a href='NotamsMap.html?lat=47.157097&lon=-67.836242&focus=1&src=qfilter'>Open NOTAM focus: 47.157097, -67.836242</a></div>`)[0];
                 popup_46a7d58b3c898f863327ca351aa5cabb.setContent(html_873228d72c84c2247e9b959d7cef85ef);
             
         
@@ -64745,7 +64792,7 @@ window.onload = function() {
     
             marker_1865ffc5c83ebff43dedb5d1b52ae38a.bindTooltip(
                 `<div>
-                     CYSL | Saint-Léonard Airport
+                     CYSL | Saint-L├⌐onard Airport
                  </div>`,
                 {
   "sticky": true,
@@ -67572,7 +67619,7 @@ window.onload = function() {
 
         
             
-                var html_e2d1687f6a7aa053544d49f25ec95a90 = $(`<div id="html_e2d1687f6a7aa053544d49f25ec95a90" style="width: 100.0%; height: 100.0%;">CA-0807 - François Heliport<br><a href='NotamsMap.html?lat=47.581670&lon=-56.745810&focus=1&src=qfilter'>Open NOTAM focus: 47.581670, -56.745810</a></div>`)[0];
+                var html_e2d1687f6a7aa053544d49f25ec95a90 = $(`<div id="html_e2d1687f6a7aa053544d49f25ec95a90" style="width: 100.0%; height: 100.0%;">CA-0807 - Fran├ºois Heliport<br><a href='NotamsMap.html?lat=47.581670&lon=-56.745810&focus=1&src=qfilter'>Open NOTAM focus: 47.581670, -56.745810</a></div>`)[0];
                 popup_7b8fac0581582f1479be17087da8e3b2.setContent(html_e2d1687f6a7aa053544d49f25ec95a90);
             
         
@@ -67585,7 +67632,7 @@ window.onload = function() {
     
             marker_e4a0788d5d8ff114be701f6628f61abb.bindTooltip(
                 `<div>
-                     CA-0807 | François Heliport
+                     CA-0807 | Fran├ºois Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -77704,7 +77751,7 @@ window.onload = function() {
 
         
             
-                var html_10d581297239203fbe537931d658c1c9 = $(`<div id="html_10d581297239203fbe537931d658c1c9" style="width: 100.0%; height: 100.0%;">CEN7 - Deliné Seaplane Base<br><a href='NotamsMap.html?lat=65.183299&lon=-123.417000&focus=1&src=qfilter'>Open NOTAM focus: 65.183299, -123.417000</a></div>`)[0];
+                var html_10d581297239203fbe537931d658c1c9 = $(`<div id="html_10d581297239203fbe537931d658c1c9" style="width: 100.0%; height: 100.0%;">CEN7 - Delin├⌐ Seaplane Base<br><a href='NotamsMap.html?lat=65.183299&lon=-123.417000&focus=1&src=qfilter'>Open NOTAM focus: 65.183299, -123.417000</a></div>`)[0];
                 popup_a8768e86f7ac0bfd29c30341b960554a.setContent(html_10d581297239203fbe537931d658c1c9);
             
         
@@ -77717,7 +77764,7 @@ window.onload = function() {
     
             marker_2b19de367da4172e696d32c1766e8475.bindTooltip(
                 `<div>
-                     CEN7 | Deliné Seaplane Base
+                     CEN7 | Delin├⌐ Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -77848,7 +77895,7 @@ window.onload = function() {
 
         
             
-                var html_1e1c0a65cefb6203c45607ef88d8fdc7 = $(`<div id="html_1e1c0a65cefb6203c45607ef88d8fdc7" style="width: 100.0%; height: 100.0%;">CEQ8 - Whatì Seaplane Base<br><a href='NotamsMap.html?lat=63.141910&lon=-117.275791&focus=1&src=qfilter'>Open NOTAM focus: 63.141910, -117.275791</a></div>`)[0];
+                var html_1e1c0a65cefb6203c45607ef88d8fdc7 = $(`<div id="html_1e1c0a65cefb6203c45607ef88d8fdc7" style="width: 100.0%; height: 100.0%;">CEQ8 - What├¼ Seaplane Base<br><a href='NotamsMap.html?lat=63.141910&lon=-117.275791&focus=1&src=qfilter'>Open NOTAM focus: 63.141910, -117.275791</a></div>`)[0];
                 popup_af500182f9dab067557f460927afb7d0.setContent(html_1e1c0a65cefb6203c45607ef88d8fdc7);
             
         
@@ -77861,7 +77908,7 @@ window.onload = function() {
     
             marker_205716c62b1b713648b33c84ba5cac46.bindTooltip(
                 `<div>
-                     CEQ8 | Whatì Seaplane Base
+                     CEQ8 | What├¼ Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -78870,7 +78917,7 @@ window.onload = function() {
 
         
             
-                var html_c6e653a3bb6ae69c0486c94366c7546d = $(`<div id="html_c6e653a3bb6ae69c0486c94366c7546d" style="width: 100.0%; height: 100.0%;">CEM3 - Whatì Airport<br><a href='NotamsMap.html?lat=63.131699&lon=-117.246002&focus=1&src=qfilter'>Open NOTAM focus: 63.131699, -117.246002</a></div>`)[0];
+                var html_c6e653a3bb6ae69c0486c94366c7546d = $(`<div id="html_c6e653a3bb6ae69c0486c94366c7546d" style="width: 100.0%; height: 100.0%;">CEM3 - What├¼ Airport<br><a href='NotamsMap.html?lat=63.131699&lon=-117.246002&focus=1&src=qfilter'>Open NOTAM focus: 63.131699, -117.246002</a></div>`)[0];
                 popup_494df5f7c0ed69cb7ec80a6b322aee50.setContent(html_c6e653a3bb6ae69c0486c94366c7546d);
             
         
@@ -78883,7 +78930,7 @@ window.onload = function() {
     
             marker_f1ffdcf4d1541d761b296e91080887ea.bindTooltip(
                 `<div>
-                     CEM3 | Whatì Airport
+                     CEM3 | What├¼ Airport
                  </div>`,
                 {
   "sticky": true,
@@ -80022,7 +80069,7 @@ window.onload = function() {
 
         
             
-                var html_447c1f690933b2ebdb4dbf18f00ce500 = $(`<div id="html_447c1f690933b2ebdb4dbf18f00ce500" style="width: 100.0%; height: 100.0%;">CYWE - Wekweètì Airport<br><a href='NotamsMap.html?lat=64.190804&lon=-114.077002&focus=1&src=qfilter'>Open NOTAM focus: 64.190804, -114.077002</a></div>`)[0];
+                var html_447c1f690933b2ebdb4dbf18f00ce500 = $(`<div id="html_447c1f690933b2ebdb4dbf18f00ce500" style="width: 100.0%; height: 100.0%;">CYWE - Wekwe├¿t├¼ Airport<br><a href='NotamsMap.html?lat=64.190804&lon=-114.077002&focus=1&src=qfilter'>Open NOTAM focus: 64.190804, -114.077002</a></div>`)[0];
                 popup_a13b32714ca6c056636038427974c7cc.setContent(html_447c1f690933b2ebdb4dbf18f00ce500);
             
         
@@ -80035,7 +80082,7 @@ window.onload = function() {
     
             marker_9c2619b97f425cf9d6c662d3e01e856b.bindTooltip(
                 `<div>
-                     CYWE | Wekweètì Airport
+                     CYWE | Wekwe├¿t├¼ Airport
                  </div>`,
                 {
   "sticky": true,
@@ -80070,7 +80117,7 @@ window.onload = function() {
 
         
             
-                var html_a93ab73b5dca43633cb00efc0041e319 = $(`<div id="html_a93ab73b5dca43633cb00efc0041e319" style="width: 100.0%; height: 100.0%;">CYWJ - Déline Airport<br><a href='NotamsMap.html?lat=65.211098&lon=-123.435997&focus=1&src=qfilter'>Open NOTAM focus: 65.211098, -123.435997</a></div>`)[0];
+                var html_a93ab73b5dca43633cb00efc0041e319 = $(`<div id="html_a93ab73b5dca43633cb00efc0041e319" style="width: 100.0%; height: 100.0%;">CYWJ - D├⌐line Airport<br><a href='NotamsMap.html?lat=65.211098&lon=-123.435997&focus=1&src=qfilter'>Open NOTAM focus: 65.211098, -123.435997</a></div>`)[0];
                 popup_7f2f648bca30ad0a92e62fc4029378d0.setContent(html_a93ab73b5dca43633cb00efc0041e319);
             
         
@@ -80083,7 +80130,7 @@ window.onload = function() {
     
             marker_065d49dd2942a46322eff51c6fbce207.bindTooltip(
                 `<div>
-                     CYWJ | Déline Airport
+                     CYWJ | D├⌐line Airport
                  </div>`,
                 {
   "sticky": true,
@@ -101604,7 +101651,7 @@ window.onload = function() {
 
         
             
-                var html_006080d26c0caee4bd97c22ba72920ae = $(`<div id="html_006080d26c0caee4bd97c22ba72920ae" style="width: 100.0%; height: 100.0%;">CYHF - Hearst René Fontaine Municipal Airport<br><a href='NotamsMap.html?lat=49.714199&lon=-83.686096&focus=1&src=qfilter'>Open NOTAM focus: 49.714199, -83.686096</a></div>`)[0];
+                var html_006080d26c0caee4bd97c22ba72920ae = $(`<div id="html_006080d26c0caee4bd97c22ba72920ae" style="width: 100.0%; height: 100.0%;">CYHF - Hearst Ren├⌐ Fontaine Municipal Airport<br><a href='NotamsMap.html?lat=49.714199&lon=-83.686096&focus=1&src=qfilter'>Open NOTAM focus: 49.714199, -83.686096</a></div>`)[0];
                 popup_aa9fda2fbbf637a57078f816f1f9decd.setContent(html_006080d26c0caee4bd97c22ba72920ae);
             
         
@@ -101617,7 +101664,7 @@ window.onload = function() {
     
             marker_4de1384465e04b838e479bfffc16b124.bindTooltip(
                 `<div>
-                     CYHF | Hearst René Fontaine Municipal Airport
+                     CYHF | Hearst Ren├⌐ Fontaine Municipal Airport
                  </div>`,
                 {
   "sticky": true,
@@ -130022,7 +130069,7 @@ window.onload = function() {
 
         
             
-                var html_5d3ca88360be920cb453654c0dc1727d = $(`<div id="html_5d3ca88360be920cb453654c0dc1727d" style="width: 100.0%; height: 100.0%;">CA-0199 - Lac Éon Airport<br><a href='NotamsMap.html?lat=51.852501&lon=-63.276798&focus=1&src=qfilter'>Open NOTAM focus: 51.852501, -63.276798</a></div>`)[0];
+                var html_5d3ca88360be920cb453654c0dc1727d = $(`<div id="html_5d3ca88360be920cb453654c0dc1727d" style="width: 100.0%; height: 100.0%;">CA-0199 - Lac ├ëon Airport<br><a href='NotamsMap.html?lat=51.852501&lon=-63.276798&focus=1&src=qfilter'>Open NOTAM focus: 51.852501, -63.276798</a></div>`)[0];
                 popup_caa8144beae948e0ed3cb3556ee431a7.setContent(html_5d3ca88360be920cb453654c0dc1727d);
             
         
@@ -130035,7 +130082,7 @@ window.onload = function() {
     
             marker_0b95f4d5b43064696074a7464b43b1a9.bindTooltip(
                 `<div>
-                     CA-0199 | Lac Éon Airport
+                     CA-0199 | Lac ├ëon Airport
                  </div>`,
                 {
   "sticky": true,
@@ -130310,7 +130357,7 @@ window.onload = function() {
 
         
             
-                var html_e9e9fa9e90c47f8a6a159c41befc816c = $(`<div id="html_e9e9fa9e90c47f8a6a159c41befc816c" style="width: 100.0%; height: 100.0%;">CA-0254 - Mégantic Airport<br><a href='NotamsMap.html?lat=45.588055&lon=-70.871665&focus=1&src=qfilter'>Open NOTAM focus: 45.588055, -70.871665</a></div>`)[0];
+                var html_e9e9fa9e90c47f8a6a159c41befc816c = $(`<div id="html_e9e9fa9e90c47f8a6a159c41befc816c" style="width: 100.0%; height: 100.0%;">CA-0254 - M├⌐gantic Airport<br><a href='NotamsMap.html?lat=45.588055&lon=-70.871665&focus=1&src=qfilter'>Open NOTAM focus: 45.588055, -70.871665</a></div>`)[0];
                 popup_ca06a8e6a7da2e9751911ef60399025c.setContent(html_e9e9fa9e90c47f8a6a159c41befc816c);
             
         
@@ -130323,7 +130370,7 @@ window.onload = function() {
     
             marker_ec5ca3a931f13b7bb4fe19e52ef10ae0.bindTooltip(
                 `<div>
-                     CA-0254 | Mégantic Airport
+                     CA-0254 | M├⌐gantic Airport
                  </div>`,
                 {
   "sticky": true,
@@ -130550,7 +130597,7 @@ window.onload = function() {
 
         
             
-                var html_179544e6a07e398b8eb137f7483b9539 = $(`<div id="html_179544e6a07e398b8eb137f7483b9539" style="width: 100.0%; height: 100.0%;">CA-0314 - Rivière-Ouelle Airport<br><a href='NotamsMap.html?lat=47.445332&lon=-69.979134&focus=1&src=qfilter'>Open NOTAM focus: 47.445332, -69.979134</a></div>`)[0];
+                var html_179544e6a07e398b8eb137f7483b9539 = $(`<div id="html_179544e6a07e398b8eb137f7483b9539" style="width: 100.0%; height: 100.0%;">CA-0314 - Rivi├¿re-Ouelle Airport<br><a href='NotamsMap.html?lat=47.445332&lon=-69.979134&focus=1&src=qfilter'>Open NOTAM focus: 47.445332, -69.979134</a></div>`)[0];
                 popup_8fa7d4e0f64d3a6db6d1be8b658b38eb.setContent(html_179544e6a07e398b8eb137f7483b9539);
             
         
@@ -130563,7 +130610,7 @@ window.onload = function() {
     
             marker_d68acd6908fa381e32f1e942d6826cc1.bindTooltip(
                 `<div>
-                     CA-0314 | Rivière-Ouelle Airport
+                     CA-0314 | Rivi├¿re-Ouelle Airport
                  </div>`,
                 {
   "sticky": true,
@@ -130982,7 +131029,7 @@ window.onload = function() {
 
         
             
-                var html_23ff73d6ba682a454286e4278327f4ce = $(`<div id="html_23ff73d6ba682a454286e4278327f4ce" style="width: 100.0%; height: 100.0%;">CA-0385 - Baie-Trinité Airport<br><a href='NotamsMap.html?lat=49.399859&lon=-67.312460&focus=1&src=qfilter'>Open NOTAM focus: 49.399859, -67.312460</a></div>`)[0];
+                var html_23ff73d6ba682a454286e4278327f4ce = $(`<div id="html_23ff73d6ba682a454286e4278327f4ce" style="width: 100.0%; height: 100.0%;">CA-0385 - Baie-Trinit├⌐ Airport<br><a href='NotamsMap.html?lat=49.399859&lon=-67.312460&focus=1&src=qfilter'>Open NOTAM focus: 49.399859, -67.312460</a></div>`)[0];
                 popup_dd5b1330942accf69c3584f80c5a0772.setContent(html_23ff73d6ba682a454286e4278327f4ce);
             
         
@@ -130995,7 +131042,7 @@ window.onload = function() {
     
             marker_d749d0582c37f7bb2778781c65aa0cb7.bindTooltip(
                 `<div>
-                     CA-0385 | Baie-Trinité Airport
+                     CA-0385 | Baie-Trinit├⌐ Airport
                  </div>`,
                 {
   "sticky": true,
@@ -131078,7 +131125,7 @@ window.onload = function() {
 
         
             
-                var html_c733331c789678f6dbf522069140fb7d = $(`<div id="html_c733331c789678f6dbf522069140fb7d" style="width: 100.0%; height: 100.0%;">CA-0423 - Île d'Orléans Heliport<br><a href='NotamsMap.html?lat=46.983334&lon=-70.833336&focus=1&src=qfilter'>Open NOTAM focus: 46.983334, -70.833336</a></div>`)[0];
+                var html_c733331c789678f6dbf522069140fb7d = $(`<div id="html_c733331c789678f6dbf522069140fb7d" style="width: 100.0%; height: 100.0%;">CA-0423 - ├Äle d'Orl├⌐ans Heliport<br><a href='NotamsMap.html?lat=46.983334&lon=-70.833336&focus=1&src=qfilter'>Open NOTAM focus: 46.983334, -70.833336</a></div>`)[0];
                 popup_e9506c10b4acdfdfc60942649b1ab706.setContent(html_c733331c789678f6dbf522069140fb7d);
             
         
@@ -131091,7 +131138,7 @@ window.onload = function() {
     
             marker_647909b0ad3aab922efeb43a7e2c8920.bindTooltip(
                 `<div>
-                     CA-0423 | Île d'Orléans Heliport
+                     CA-0423 | ├Äle d'Orl├⌐ans Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -131174,7 +131221,7 @@ window.onload = function() {
 
         
             
-                var html_d14d22a600f8dcf932f9ba17b5152bf6 = $(`<div id="html_d14d22a600f8dcf932f9ba17b5152bf6" style="width: 100.0%; height: 100.0%;">CA-0490 - Aérodrome Saint-Louis<br><a href='NotamsMap.html?lat=46.770733&lon=-71.285477&focus=1&src=qfilter'>Open NOTAM focus: 46.770733, -71.285477</a></div>`)[0];
+                var html_d14d22a600f8dcf932f9ba17b5152bf6 = $(`<div id="html_d14d22a600f8dcf932f9ba17b5152bf6" style="width: 100.0%; height: 100.0%;">CA-0490 - A├⌐rodrome Saint-Louis<br><a href='NotamsMap.html?lat=46.770733&lon=-71.285477&focus=1&src=qfilter'>Open NOTAM focus: 46.770733, -71.285477</a></div>`)[0];
                 popup_94aeffacde90175ccd7d079f66471958.setContent(html_d14d22a600f8dcf932f9ba17b5152bf6);
             
         
@@ -131187,7 +131234,7 @@ window.onload = function() {
     
             marker_0a1ffba99fe0ff8330128ad9e72050f5.bindTooltip(
                 `<div>
-                     CA-0490 | Aérodrome Saint-Louis
+                     CA-0490 | A├⌐rodrome Saint-Louis
                  </div>`,
                 {
   "sticky": true,
@@ -131222,7 +131269,7 @@ window.onload = function() {
 
         
             
-                var html_e8bd6c0fede45bf720fae59b78337e95 = $(`<div id="html_e8bd6c0fede45bf720fae59b78337e95" style="width: 100.0%; height: 100.0%;">CA-0491 - Montréal / Boucherville Water Aerodrome<br><a href='NotamsMap.html?lat=45.627778&lon=-73.454722&focus=1&src=qfilter'>Open NOTAM focus: 45.627778, -73.454722</a></div>`)[0];
+                var html_e8bd6c0fede45bf720fae59b78337e95 = $(`<div id="html_e8bd6c0fede45bf720fae59b78337e95" style="width: 100.0%; height: 100.0%;">CA-0491 - Montr├⌐al / Boucherville Water Aerodrome<br><a href='NotamsMap.html?lat=45.627778&lon=-73.454722&focus=1&src=qfilter'>Open NOTAM focus: 45.627778, -73.454722</a></div>`)[0];
                 popup_5b8a53211a0f280f66455622f4ca9031.setContent(html_e8bd6c0fede45bf720fae59b78337e95);
             
         
@@ -131235,7 +131282,7 @@ window.onload = function() {
     
             marker_d911a481347ca9cac5e007d2bc2da474.bindTooltip(
                 `<div>
-                     CA-0491 | Montréal / Boucherville Water Aerodrome
+                     CA-0491 | Montr├⌐al / Boucherville Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -131462,7 +131509,7 @@ window.onload = function() {
 
         
             
-                var html_45802681e1b5381c15cb6216b515a498 = $(`<div id="html_45802681e1b5381c15cb6216b515a498" style="width: 100.0%; height: 100.0%;">CA-0574 - Les Cèdres Water Aerodrome<br><a href='NotamsMap.html?lat=45.306001&lon=-74.058008&focus=1&src=qfilter'>Open NOTAM focus: 45.306001, -74.058008</a></div>`)[0];
+                var html_45802681e1b5381c15cb6216b515a498 = $(`<div id="html_45802681e1b5381c15cb6216b515a498" style="width: 100.0%; height: 100.0%;">CA-0574 - Les C├¿dres Water Aerodrome<br><a href='NotamsMap.html?lat=45.306001&lon=-74.058008&focus=1&src=qfilter'>Open NOTAM focus: 45.306001, -74.058008</a></div>`)[0];
                 popup_3f1985a475442c344b1ca4742b6a9304.setContent(html_45802681e1b5381c15cb6216b515a498);
             
         
@@ -131475,7 +131522,7 @@ window.onload = function() {
     
             marker_f4d588d9b72a4a30be3513e329dae6fc.bindTooltip(
                 `<div>
-                     CA-0574 | Les Cèdres Water Aerodrome
+                     CA-0574 | Les C├¿dres Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -131558,7 +131605,7 @@ window.onload = function() {
 
         
             
-                var html_3894b6d52f039e24558d7faf49bcc735 = $(`<div id="html_3894b6d52f039e24558d7faf49bcc735" style="width: 100.0%; height: 100.0%;">CA-0600 - Rivère l'Acadie Water Aerodrome<br><a href='NotamsMap.html?lat=45.490350&lon=-73.303326&focus=1&src=qfilter'>Open NOTAM focus: 45.490350, -73.303326</a></div>`)[0];
+                var html_3894b6d52f039e24558d7faf49bcc735 = $(`<div id="html_3894b6d52f039e24558d7faf49bcc735" style="width: 100.0%; height: 100.0%;">CA-0600 - Riv├¿re l'Acadie Water Aerodrome<br><a href='NotamsMap.html?lat=45.490350&lon=-73.303326&focus=1&src=qfilter'>Open NOTAM focus: 45.490350, -73.303326</a></div>`)[0];
                 popup_3ba5fa585c535d4d78cbb7bc2459f9c6.setContent(html_3894b6d52f039e24558d7faf49bcc735);
             
         
@@ -131571,7 +131618,7 @@ window.onload = function() {
     
             marker_0359606b2a5a76671f9f667297d7c19b.bindTooltip(
                 `<div>
-                     CA-0600 | Rivère l'Acadie Water Aerodrome
+                     CA-0600 | Riv├¿re l'Acadie Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -132038,7 +132085,7 @@ window.onload = function() {
 
         
             
-                var html_af58979796bbac0231d05892c58522f7 = $(`<div id="html_af58979796bbac0231d05892c58522f7" style="width: 100.0%; height: 100.0%;">CA-0655 - Quebec/Sûreté Heliport<br><a href='NotamsMap.html?lat=46.834000&lon=-71.284100&focus=1&src=qfilter'>Open NOTAM focus: 46.834000, -71.284100</a></div>`)[0];
+                var html_af58979796bbac0231d05892c58522f7 = $(`<div id="html_af58979796bbac0231d05892c58522f7" style="width: 100.0%; height: 100.0%;">CA-0655 - Quebec/S├╗ret├⌐ Heliport<br><a href='NotamsMap.html?lat=46.834000&lon=-71.284100&focus=1&src=qfilter'>Open NOTAM focus: 46.834000, -71.284100</a></div>`)[0];
                 popup_fdbfc3c7434a3c53e7de6b7626c3fe85.setContent(html_af58979796bbac0231d05892c58522f7);
             
         
@@ -132051,7 +132098,7 @@ window.onload = function() {
     
             marker_35bdea273f891cd30a5675795e98515b.bindTooltip(
                 `<div>
-                     CA-0655 | Quebec/Sûreté Heliport
+                     CA-0655 | Quebec/S├╗ret├⌐ Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -132134,7 +132181,7 @@ window.onload = function() {
 
         
             
-                var html_348007d06f0f9a76896033c28bed6106 = $(`<div id="html_348007d06f0f9a76896033c28bed6106" style="width: 100.0%; height: 100.0%;">CA-0657 - Pointe-au-Chêne Water Aerodrome<br><a href='NotamsMap.html?lat=45.640002&lon=-74.750000&focus=1&src=qfilter'>Open NOTAM focus: 45.640002, -74.750000</a></div>`)[0];
+                var html_348007d06f0f9a76896033c28bed6106 = $(`<div id="html_348007d06f0f9a76896033c28bed6106" style="width: 100.0%; height: 100.0%;">CA-0657 - Pointe-au-Ch├¬ne Water Aerodrome<br><a href='NotamsMap.html?lat=45.640002&lon=-74.750000&focus=1&src=qfilter'>Open NOTAM focus: 45.640002, -74.750000</a></div>`)[0];
                 popup_f2a2866286fcd314c877a55caaf4ff22.setContent(html_348007d06f0f9a76896033c28bed6106);
             
         
@@ -132147,7 +132194,7 @@ window.onload = function() {
     
             marker_0bbf0af0dd9a92452af05d6b59fb5eab.bindTooltip(
                 `<div>
-                     CA-0657 | Pointe-au-Chêne Water Aerodrome
+                     CA-0657 | Pointe-au-Ch├¬ne Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -132230,7 +132277,7 @@ window.onload = function() {
 
         
             
-                var html_bc265e22379e42a03db8c456ff59bcec = $(`<div id="html_bc265e22379e42a03db8c456ff59bcec" style="width: 100.0%; height: 100.0%;">CA-0681 - St. André-Avellin (Old Aerodrome)<br><a href='NotamsMap.html?lat=45.802801&lon=-75.054098&focus=1&src=qfilter'>Open NOTAM focus: 45.802801, -75.054098</a></div>`)[0];
+                var html_bc265e22379e42a03db8c456ff59bcec = $(`<div id="html_bc265e22379e42a03db8c456ff59bcec" style="width: 100.0%; height: 100.0%;">CA-0681 - St. Andr├⌐-Avellin (Old Aerodrome)<br><a href='NotamsMap.html?lat=45.802801&lon=-75.054098&focus=1&src=qfilter'>Open NOTAM focus: 45.802801, -75.054098</a></div>`)[0];
                 popup_a74c8d0a8258142c8e79c429460e9ebe.setContent(html_bc265e22379e42a03db8c456ff59bcec);
             
         
@@ -132243,7 +132290,7 @@ window.onload = function() {
     
             marker_75f3e6ecfae217b6af701cb8eb3d0651.bindTooltip(
                 `<div>
-                     CA-0681 | St. André-Avellin (Old Aerodrome)
+                     CA-0681 | St. Andr├⌐-Avellin (Old Aerodrome)
                  </div>`,
                 {
   "sticky": true,
@@ -132566,7 +132613,7 @@ window.onload = function() {
 
         
             
-                var html_ec8472c36cabeba63bea2315387a9d27 = $(`<div id="html_ec8472c36cabeba63bea2315387a9d27" style="width: 100.0%; height: 100.0%;">CA-0719 - Sept-Îles/Lac des Rapides Airport<br><a href='NotamsMap.html?lat=50.297620&lon=-66.408960&focus=1&src=qfilter'>Open NOTAM focus: 50.297620, -66.408960</a></div>`)[0];
+                var html_ec8472c36cabeba63bea2315387a9d27 = $(`<div id="html_ec8472c36cabeba63bea2315387a9d27" style="width: 100.0%; height: 100.0%;">CA-0719 - Sept-├Äles/Lac des Rapides Airport<br><a href='NotamsMap.html?lat=50.297620&lon=-66.408960&focus=1&src=qfilter'>Open NOTAM focus: 50.297620, -66.408960</a></div>`)[0];
                 popup_6b20cf6ff2592724e45d79c39ab51122.setContent(html_ec8472c36cabeba63bea2315387a9d27);
             
         
@@ -132579,7 +132626,7 @@ window.onload = function() {
     
             marker_cf2e4ac13066277280a45aebd5ac32f5.bindTooltip(
                 `<div>
-                     CA-0719 | Sept-Îles/Lac des Rapides Airport
+                     CA-0719 | Sept-├Äles/Lac des Rapides Airport
                  </div>`,
                 {
   "sticky": true,
@@ -132662,7 +132709,7 @@ window.onload = function() {
 
         
             
-                var html_10c7e950fd5c8b27b5f97c91b365427c = $(`<div id="html_10c7e950fd5c8b27b5f97c91b365427c" style="width: 100.0%; height: 100.0%;">CA-0848 - Rivière-Bleue Airport<br><a href='NotamsMap.html?lat=47.446490&lon=-69.039420&focus=1&src=qfilter'>Open NOTAM focus: 47.446490, -69.039420</a></div>`)[0];
+                var html_10c7e950fd5c8b27b5f97c91b365427c = $(`<div id="html_10c7e950fd5c8b27b5f97c91b365427c" style="width: 100.0%; height: 100.0%;">CA-0848 - Rivi├¿re-Bleue Airport<br><a href='NotamsMap.html?lat=47.446490&lon=-69.039420&focus=1&src=qfilter'>Open NOTAM focus: 47.446490, -69.039420</a></div>`)[0];
                 popup_2a6a68c6fc4e4f4a17d21a42737aa69c.setContent(html_10c7e950fd5c8b27b5f97c91b365427c);
             
         
@@ -132675,7 +132722,7 @@ window.onload = function() {
     
             marker_6f15bbcf12e186fdac31fffcfafd28db.bindTooltip(
                 `<div>
-                     CA-0848 | Rivière-Bleue Airport
+                     CA-0848 | Rivi├¿re-Bleue Airport
                  </div>`,
                 {
   "sticky": true,
@@ -132758,7 +132805,7 @@ window.onload = function() {
 
         
             
-                var html_99bcfef3da5f5ccc41c34ac527e4d528 = $(`<div id="html_99bcfef3da5f5ccc41c34ac527e4d528" style="width: 100.0%; height: 100.0%;">CA-1049 - Chicoutimi (Hydro-Québec) Heliport<br><a href='NotamsMap.html?lat=48.400002&lon=-71.116898&focus=1&src=qfilter'>Open NOTAM focus: 48.400002, -71.116898</a></div>`)[0];
+                var html_99bcfef3da5f5ccc41c34ac527e4d528 = $(`<div id="html_99bcfef3da5f5ccc41c34ac527e4d528" style="width: 100.0%; height: 100.0%;">CA-1049 - Chicoutimi (Hydro-Qu├⌐bec) Heliport<br><a href='NotamsMap.html?lat=48.400002&lon=-71.116898&focus=1&src=qfilter'>Open NOTAM focus: 48.400002, -71.116898</a></div>`)[0];
                 popup_3b3e8b6f414d4a0c3728692d39ac7ad3.setContent(html_99bcfef3da5f5ccc41c34ac527e4d528);
             
         
@@ -132771,7 +132818,7 @@ window.onload = function() {
     
             marker_5e5666d979576098863cf5a317fa45f5.bindTooltip(
                 `<div>
-                     CA-1049 | Chicoutimi (Hydro-Québec) Heliport
+                     CA-1049 | Chicoutimi (Hydro-Qu├⌐bec) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -133046,7 +133093,7 @@ window.onload = function() {
 
         
             
-                var html_e9b50e73b3f59a2e24aac9a0d5817469 = $(`<div id="html_e9b50e73b3f59a2e24aac9a0d5817469" style="width: 100.0%; height: 100.0%;">CA-1100 - Rimouski (Hydro-Québec) Heliport<br><a href='NotamsMap.html?lat=48.441101&lon=-68.542503&focus=1&src=qfilter'>Open NOTAM focus: 48.441101, -68.542503</a></div>`)[0];
+                var html_e9b50e73b3f59a2e24aac9a0d5817469 = $(`<div id="html_e9b50e73b3f59a2e24aac9a0d5817469" style="width: 100.0%; height: 100.0%;">CA-1100 - Rimouski (Hydro-Qu├⌐bec) Heliport<br><a href='NotamsMap.html?lat=48.441101&lon=-68.542503&focus=1&src=qfilter'>Open NOTAM focus: 48.441101, -68.542503</a></div>`)[0];
                 popup_01a56818b32f4776bee4f22d6bf4a8c5.setContent(html_e9b50e73b3f59a2e24aac9a0d5817469);
             
         
@@ -133059,7 +133106,7 @@ window.onload = function() {
     
             marker_454275e975cbc5fbc026afa6265a26f3.bindTooltip(
                 `<div>
-                     CA-1100 | Rimouski (Hydro-Québec) Heliport
+                     CA-1100 | Rimouski (Hydro-Qu├⌐bec) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -133094,7 +133141,7 @@ window.onload = function() {
 
         
             
-                var html_0c9bf7d1bd0750e08f68fd6882361415 = $(`<div id="html_0c9bf7d1bd0750e08f68fd6882361415" style="width: 100.0%; height: 100.0%;">CA-1101 - Montreal / Les Cèdres Airport<br><a href='NotamsMap.html?lat=45.347500&lon=-74.076698&focus=1&src=qfilter'>Open NOTAM focus: 45.347500, -74.076698</a></div>`)[0];
+                var html_0c9bf7d1bd0750e08f68fd6882361415 = $(`<div id="html_0c9bf7d1bd0750e08f68fd6882361415" style="width: 100.0%; height: 100.0%;">CA-1101 - Montreal / Les C├¿dres Airport<br><a href='NotamsMap.html?lat=45.347500&lon=-74.076698&focus=1&src=qfilter'>Open NOTAM focus: 45.347500, -74.076698</a></div>`)[0];
                 popup_50837ad4525c27248a4b86244faa3306.setContent(html_0c9bf7d1bd0750e08f68fd6882361415);
             
         
@@ -133107,7 +133154,7 @@ window.onload = function() {
     
             marker_a7f8d94c6f0321b53238492b552664e7.bindTooltip(
                 `<div>
-                     CA-1101 | Montreal / Les Cèdres Airport
+                     CA-1101 | Montreal / Les C├¿dres Airport
                  </div>`,
                 {
   "sticky": true,
@@ -133238,7 +133285,7 @@ window.onload = function() {
 
         
             
-                var html_404588aa7999797bed894fbbf261dc03 = $(`<div id="html_404588aa7999797bed894fbbf261dc03" style="width: 100.0%; height: 100.0%;">CA-1104 - Quebec / Hôpital de l'enfant-Jésus Heliport<br><a href='NotamsMap.html?lat=46.837568&lon=-71.225179&focus=1&src=qfilter'>Open NOTAM focus: 46.837568, -71.225179</a></div>`)[0];
+                var html_404588aa7999797bed894fbbf261dc03 = $(`<div id="html_404588aa7999797bed894fbbf261dc03" style="width: 100.0%; height: 100.0%;">CA-1104 - Quebec / H├┤pital de l'enfant-J├⌐sus Heliport<br><a href='NotamsMap.html?lat=46.837568&lon=-71.225179&focus=1&src=qfilter'>Open NOTAM focus: 46.837568, -71.225179</a></div>`)[0];
                 popup_8aa8f3ef40e98da1a43ef04b8817e05e.setContent(html_404588aa7999797bed894fbbf261dc03);
             
         
@@ -133251,7 +133298,7 @@ window.onload = function() {
     
             marker_bcb77127176d3de0fbc8dac49829377b.bindTooltip(
                 `<div>
-                     CA-1104 | Quebec / Hôpital de l'enfant-Jésus Heliport
+                     CA-1104 | Quebec / H├┤pital de l'enfant-J├⌐sus Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -133766,7 +133813,7 @@ window.onload = function() {
 
         
             
-                var html_5acc4be6559826b3ef7f12ab0b54976e = $(`<div id="html_5acc4be6559826b3ef7f12ab0b54976e" style="width: 100.0%; height: 100.0%;">CA-1134 - Parc De La Vérendrye (Le Domaine) Seaplane Base<br><a href='NotamsMap.html?lat=47.036701&lon=-76.536697&focus=1&src=qfilter'>Open NOTAM focus: 47.036701, -76.536697</a></div>`)[0];
+                var html_5acc4be6559826b3ef7f12ab0b54976e = $(`<div id="html_5acc4be6559826b3ef7f12ab0b54976e" style="width: 100.0%; height: 100.0%;">CA-1134 - Parc De La V├⌐rendrye (Le Domaine) Seaplane Base<br><a href='NotamsMap.html?lat=47.036701&lon=-76.536697&focus=1&src=qfilter'>Open NOTAM focus: 47.036701, -76.536697</a></div>`)[0];
                 popup_7a1da6116a12a358e05c79fb7e6aff5a.setContent(html_5acc4be6559826b3ef7f12ab0b54976e);
             
         
@@ -133779,7 +133826,7 @@ window.onload = function() {
     
             marker_a2aa42c206c9e26e77f7078829d7a352.bindTooltip(
                 `<div>
-                     CA-1134 | Parc De La Vérendrye (Le Domaine) Seaplane Base
+                     CA-1134 | Parc De La V├⌐rendrye (Le Domaine) Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -133814,7 +133861,7 @@ window.onload = function() {
 
         
             
-                var html_82765cefb17bf49b22e076742e17d095 = $(`<div id="html_82765cefb17bf49b22e076742e17d095" style="width: 100.0%; height: 100.0%;">CA-1141 - Témiscaming/Lac Kipawa Seaplane Base<br><a href='NotamsMap.html?lat=46.778335&lon=-78.979556&focus=1&src=qfilter'>Open NOTAM focus: 46.778335, -78.979556</a></div>`)[0];
+                var html_82765cefb17bf49b22e076742e17d095 = $(`<div id="html_82765cefb17bf49b22e076742e17d095" style="width: 100.0%; height: 100.0%;">CA-1141 - T├⌐miscaming/Lac Kipawa Seaplane Base<br><a href='NotamsMap.html?lat=46.778335&lon=-78.979556&focus=1&src=qfilter'>Open NOTAM focus: 46.778335, -78.979556</a></div>`)[0];
                 popup_d0f992c84c6b75b6806bf91e93daf2cf.setContent(html_82765cefb17bf49b22e076742e17d095);
             
         
@@ -133827,7 +133874,7 @@ window.onload = function() {
     
             marker_7fa118c79116245344d6b4837068c8a0.bindTooltip(
                 `<div>
-                     CA-1141 | Témiscaming/Lac Kipawa Seaplane Base
+                     CA-1141 | T├⌐miscaming/Lac Kipawa Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -134356,7 +134403,7 @@ window.onload = function() {
 
         
             
-                var html_49db8c918f173e95507824f32d7aadcd = $(`<div id="html_49db8c918f173e95507824f32d7aadcd" style="width: 100.0%; height: 100.0%;">CA-0187 - Citadelle de Québec Heliport<br><a href='NotamsMap.html?lat=46.807443&lon=-71.206642&focus=1&src=qfilter'>Open NOTAM focus: 46.807443, -71.206642</a></div>`)[0];
+                var html_49db8c918f173e95507824f32d7aadcd = $(`<div id="html_49db8c918f173e95507824f32d7aadcd" style="width: 100.0%; height: 100.0%;">CA-0187 - Citadelle de Qu├⌐bec Heliport<br><a href='NotamsMap.html?lat=46.807443&lon=-71.206642&focus=1&src=qfilter'>Open NOTAM focus: 46.807443, -71.206642</a></div>`)[0];
                 popup_7232cc89d6015ccf7ae2c2161558acb0.setContent(html_49db8c918f173e95507824f32d7aadcd);
             
         
@@ -134369,7 +134416,7 @@ window.onload = function() {
     
             marker_76e033925f9df3a660bbb6ec822b37f9.bindTooltip(
                 `<div>
-                     CA-0187 | Citadelle de Québec Heliport
+                     CA-0187 | Citadelle de Qu├⌐bec Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -134452,7 +134499,7 @@ window.onload = function() {
 
         
             
-                var html_3d795e6370b4962c532adc8dcd04ef96 = $(`<div id="html_3d795e6370b4962c532adc8dcd04ef96" style="width: 100.0%; height: 100.0%;">CA-0805 - La Cormorandière Heliport<br><a href='NotamsMap.html?lat=47.287710&lon=-61.689140&focus=1&src=qfilter'>Open NOTAM focus: 47.287710, -61.689140</a></div>`)[0];
+                var html_3d795e6370b4962c532adc8dcd04ef96 = $(`<div id="html_3d795e6370b4962c532adc8dcd04ef96" style="width: 100.0%; height: 100.0%;">CA-0805 - La Cormorandi├¿re Heliport<br><a href='NotamsMap.html?lat=47.287710&lon=-61.689140&focus=1&src=qfilter'>Open NOTAM focus: 47.287710, -61.689140</a></div>`)[0];
                 popup_48cfa028225cbd12d9e6553cf6367e28.setContent(html_3d795e6370b4962c532adc8dcd04ef96);
             
         
@@ -134465,7 +134512,7 @@ window.onload = function() {
     
             marker_cc8c18e95401f967e14686569fef3377.bindTooltip(
                 `<div>
-                     CA-0805 | La Cormorandière Heliport
+                     CA-0805 | La Cormorandi├¿re Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -134740,7 +134787,7 @@ window.onload = function() {
 
         
             
-                var html_bd340f5c6fb9e131cdf41ddec56b4264 = $(`<div id="html_bd340f5c6fb9e131cdf41ddec56b4264" style="width: 100.0%; height: 100.0%;">CCH7 - Capitale Hélicoptère Heliport<br><a href='NotamsMap.html?lat=46.800800&lon=-71.374100&focus=1&src=qfilter'>Open NOTAM focus: 46.800800, -71.374100</a></div>`)[0];
+                var html_bd340f5c6fb9e131cdf41ddec56b4264 = $(`<div id="html_bd340f5c6fb9e131cdf41ddec56b4264" style="width: 100.0%; height: 100.0%;">CCH7 - Capitale H├⌐licopt├¿re Heliport<br><a href='NotamsMap.html?lat=46.800800&lon=-71.374100&focus=1&src=qfilter'>Open NOTAM focus: 46.800800, -71.374100</a></div>`)[0];
                 popup_a65dc31238dc682416b34fe17bdf23c0.setContent(html_bd340f5c6fb9e131cdf41ddec56b4264);
             
         
@@ -134753,7 +134800,7 @@ window.onload = function() {
     
             marker_4ade8187e811e694abd65016f3bb4abf.bindTooltip(
                 `<div>
-                     CCH7 | Capitale Hélicoptère Heliport
+                     CCH7 | Capitale H├⌐licopt├¿re Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -134884,7 +134931,7 @@ window.onload = function() {
 
         
             
-                var html_69fc171eb05f143f8178290d4432f09d = $(`<div id="html_69fc171eb05f143f8178290d4432f09d" style="width: 100.0%; height: 100.0%;">CEH8 - Évasion Hélicoptère Heliport<br><a href='NotamsMap.html?lat=45.640600&lon=-73.642702&focus=1&src=qfilter'>Open NOTAM focus: 45.640600, -73.642702</a></div>`)[0];
+                var html_69fc171eb05f143f8178290d4432f09d = $(`<div id="html_69fc171eb05f143f8178290d4432f09d" style="width: 100.0%; height: 100.0%;">CEH8 - ├ëvasion H├⌐licopt├¿re Heliport<br><a href='NotamsMap.html?lat=45.640600&lon=-73.642702&focus=1&src=qfilter'>Open NOTAM focus: 45.640600, -73.642702</a></div>`)[0];
                 popup_fab40e5712efba83f28ba32c021c4f3e.setContent(html_69fc171eb05f143f8178290d4432f09d);
             
         
@@ -134897,7 +134944,7 @@ window.onload = function() {
     
             marker_e9ed3f9ac5a7612ad9f6d5e6a38663b1.bindTooltip(
                 `<div>
-                     CEH8 | Évasion Hélicoptère Heliport
+                     CEH8 | ├ëvasion H├⌐licopt├¿re Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -135076,7 +135123,7 @@ window.onload = function() {
 
         
             
-                var html_e1e103ff1302e6e454c52e7da1d8c01f = $(`<div id="html_e1e103ff1302e6e454c52e7da1d8c01f" style="width: 100.0%; height: 100.0%;">CIO2 - Îles aux Oies Heliport<br><a href='NotamsMap.html?lat=47.137500&lon=-70.478333&focus=1&src=qfilter'>Open NOTAM focus: 47.137500, -70.478333</a></div>`)[0];
+                var html_e1e103ff1302e6e454c52e7da1d8c01f = $(`<div id="html_e1e103ff1302e6e454c52e7da1d8c01f" style="width: 100.0%; height: 100.0%;">CIO2 - ├Äles aux Oies Heliport<br><a href='NotamsMap.html?lat=47.137500&lon=-70.478333&focus=1&src=qfilter'>Open NOTAM focus: 47.137500, -70.478333</a></div>`)[0];
                 popup_8a30dfadaad0ebb9cd461cc4672f8afd.setContent(html_e1e103ff1302e6e454c52e7da1d8c01f);
             
         
@@ -135089,7 +135136,7 @@ window.onload = function() {
     
             marker_38b8dc5028938e12182d6a81e726507a.bindTooltip(
                 `<div>
-                     CIO2 | Îles aux Oies Heliport
+                     CIO2 | ├Äles aux Oies Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -135268,7 +135315,7 @@ window.onload = function() {
 
         
             
-                var html_59c28845fe7f29e8ce0ef7be1dbaf6d4 = $(`<div id="html_59c28845fe7f29e8ce0ef7be1dbaf6d4" style="width: 100.0%; height: 100.0%;">CMH4 - Mirabel Hélico Heliport<br><a href='NotamsMap.html?lat=45.695550&lon=-73.952500&focus=1&src=qfilter'>Open NOTAM focus: 45.695550, -73.952500</a></div>`)[0];
+                var html_59c28845fe7f29e8ce0ef7be1dbaf6d4 = $(`<div id="html_59c28845fe7f29e8ce0ef7be1dbaf6d4" style="width: 100.0%; height: 100.0%;">CMH4 - Mirabel H├⌐lico Heliport<br><a href='NotamsMap.html?lat=45.695550&lon=-73.952500&focus=1&src=qfilter'>Open NOTAM focus: 45.695550, -73.952500</a></div>`)[0];
                 popup_34062491c7a6c4541ea70fa51750e577.setContent(html_59c28845fe7f29e8ce0ef7be1dbaf6d4);
             
         
@@ -135281,7 +135328,7 @@ window.onload = function() {
     
             marker_23d393ab167bd386f58df8fd1fb72a3f.bindTooltip(
                 `<div>
-                     CMH4 | Mirabel Hélico Heliport
+                     CMH4 | Mirabel H├⌐lico Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -135652,7 +135699,7 @@ window.onload = function() {
 
         
             
-                var html_ac05eeaa5305388e680327d7893c5720 = $(`<div id="html_ac05eeaa5305388e680327d7893c5720" style="width: 100.0%; height: 100.0%;">CSE2 - Chibougamau (Hydro-Québec) Heliport<br><a href='NotamsMap.html?lat=49.887798&lon=-74.400299&focus=1&src=qfilter'>Open NOTAM focus: 49.887798, -74.400299</a></div>`)[0];
+                var html_ac05eeaa5305388e680327d7893c5720 = $(`<div id="html_ac05eeaa5305388e680327d7893c5720" style="width: 100.0%; height: 100.0%;">CSE2 - Chibougamau (Hydro-Qu├⌐bec) Heliport<br><a href='NotamsMap.html?lat=49.887798&lon=-74.400299&focus=1&src=qfilter'>Open NOTAM focus: 49.887798, -74.400299</a></div>`)[0];
                 popup_9aa9ade8acd7c50d47e225d01d19ff0c.setContent(html_ac05eeaa5305388e680327d7893c5720);
             
         
@@ -135665,7 +135712,7 @@ window.onload = function() {
     
             marker_5fd94be3926366064c02ee1dbc8784b8.bindTooltip(
                 `<div>
-                     CSE2 | Chibougamau (Hydro-Québec) Heliport
+                     CSE2 | Chibougamau (Hydro-Qu├⌐bec) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -135796,7 +135843,7 @@ window.onload = function() {
 
         
             
-                var html_d3e351f664ffc5ae00859c661b39fcf1 = $(`<div id="html_d3e351f664ffc5ae00859c661b39fcf1" style="width: 100.0%; height: 100.0%;">CSG7 - François Desourdy Heliport<br><a href='NotamsMap.html?lat=45.449699&lon=-71.868896&focus=1&src=qfilter'>Open NOTAM focus: 45.449699, -71.868896</a></div>`)[0];
+                var html_d3e351f664ffc5ae00859c661b39fcf1 = $(`<div id="html_d3e351f664ffc5ae00859c661b39fcf1" style="width: 100.0%; height: 100.0%;">CSG7 - Fran├ºois Desourdy Heliport<br><a href='NotamsMap.html?lat=45.449699&lon=-71.868896&focus=1&src=qfilter'>Open NOTAM focus: 45.449699, -71.868896</a></div>`)[0];
                 popup_a50ce9f93da97e1c4537ed6312eb5863.setContent(html_d3e351f664ffc5ae00859c661b39fcf1);
             
         
@@ -135809,7 +135856,7 @@ window.onload = function() {
     
             marker_939bf04506dd7108674f06cc906a15eb.bindTooltip(
                 `<div>
-                     CSG7 | François Desourdy Heliport
+                     CSG7 | Fran├ºois Desourdy Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -135892,7 +135939,7 @@ window.onload = function() {
 
         
             
-                var html_305a8baf381d8c01ba9e062e75a4a4fc = $(`<div id="html_305a8baf381d8c01ba9e062e75a4a4fc" style="width: 100.0%; height: 100.0%;">CSH6 - Montreal / Les Cèdres Heliport<br><a href='NotamsMap.html?lat=45.347165&lon=-74.086985&focus=1&src=qfilter'>Open NOTAM focus: 45.347165, -74.086985</a></div>`)[0];
+                var html_305a8baf381d8c01ba9e062e75a4a4fc = $(`<div id="html_305a8baf381d8c01ba9e062e75a4a4fc" style="width: 100.0%; height: 100.0%;">CSH6 - Montreal / Les C├¿dres Heliport<br><a href='NotamsMap.html?lat=45.347165&lon=-74.086985&focus=1&src=qfilter'>Open NOTAM focus: 45.347165, -74.086985</a></div>`)[0];
                 popup_52fd6819a83df57c87a5d0d70b459b67.setContent(html_305a8baf381d8c01ba9e062e75a4a4fc);
             
         
@@ -135905,7 +135952,7 @@ window.onload = function() {
     
             marker_07ff08751ca0368ccad8c97c36a81209.bindTooltip(
                 `<div>
-                     CSH6 | Montreal / Les Cèdres Heliport
+                     CSH6 | Montreal / Les C├¿dres Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -135940,7 +135987,7 @@ window.onload = function() {
 
         
             
-                var html_8cd2635dc3a6a43f566eae0e8a8b024c = $(`<div id="html_8cd2635dc3a6a43f566eae0e8a8b024c" style="width: 100.0%; height: 100.0%;">CSH9 - Montréal East (AIM) Heliport<br><a href='NotamsMap.html?lat=45.635193&lon=-73.562138&focus=1&src=qfilter'>Open NOTAM focus: 45.635193, -73.562138</a></div>`)[0];
+                var html_8cd2635dc3a6a43f566eae0e8a8b024c = $(`<div id="html_8cd2635dc3a6a43f566eae0e8a8b024c" style="width: 100.0%; height: 100.0%;">CSH9 - Montr├⌐al East (AIM) Heliport<br><a href='NotamsMap.html?lat=45.635193&lon=-73.562138&focus=1&src=qfilter'>Open NOTAM focus: 45.635193, -73.562138</a></div>`)[0];
                 popup_72d6c8bd7bdbbeebcc90c4d14cbb853b.setContent(html_8cd2635dc3a6a43f566eae0e8a8b024c);
             
         
@@ -135953,7 +136000,7 @@ window.onload = function() {
     
             marker_ecfc0d24d954dfb39265355ea7f5a536.bindTooltip(
                 `<div>
-                     CSH9 | Montréal East (AIM) Heliport
+                     CSH9 | Montr├⌐al East (AIM) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -136084,7 +136131,7 @@ window.onload = function() {
 
         
             
-                var html_224814bcb7b6b803a37d6cae002a9731 = $(`<div id="html_224814bcb7b6b803a37d6cae002a9731" style="width: 100.0%; height: 100.0%;">CSN9 - Baie-Comeau / Héli-Manicouagan Heliport<br><a href='NotamsMap.html?lat=49.198956&lon=-68.285418&focus=1&src=qfilter'>Open NOTAM focus: 49.198956, -68.285418</a></div>`)[0];
+                var html_224814bcb7b6b803a37d6cae002a9731 = $(`<div id="html_224814bcb7b6b803a37d6cae002a9731" style="width: 100.0%; height: 100.0%;">CSN9 - Baie-Comeau / H├⌐li-Manicouagan Heliport<br><a href='NotamsMap.html?lat=49.198956&lon=-68.285418&focus=1&src=qfilter'>Open NOTAM focus: 49.198956, -68.285418</a></div>`)[0];
                 popup_00bda104b1232fc8a63400ccc67ff88f.setContent(html_224814bcb7b6b803a37d6cae002a9731);
             
         
@@ -136097,7 +136144,7 @@ window.onload = function() {
     
             marker_28695d6c8a87c6e5e950a0b8717f1762.bindTooltip(
                 `<div>
-                     CSN9 | Baie-Comeau / Héli-Manicouagan Heliport
+                     CSN9 | Baie-Comeau / H├⌐li-Manicouagan Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -136132,7 +136179,7 @@ window.onload = function() {
 
         
             
-                var html_90d14ced791c8cd0c3984b7e3523fc29 = $(`<div id="html_90d14ced791c8cd0c3984b7e3523fc29" style="width: 100.0%; height: 100.0%;">CSR5 - Île d'Orléans Heliport<br><a href='NotamsMap.html?lat=46.990799&lon=-70.826698&focus=1&src=qfilter'>Open NOTAM focus: 46.990799, -70.826698</a></div>`)[0];
+                var html_90d14ced791c8cd0c3984b7e3523fc29 = $(`<div id="html_90d14ced791c8cd0c3984b7e3523fc29" style="width: 100.0%; height: 100.0%;">CSR5 - ├Äle d'Orl├⌐ans Heliport<br><a href='NotamsMap.html?lat=46.990799&lon=-70.826698&focus=1&src=qfilter'>Open NOTAM focus: 46.990799, -70.826698</a></div>`)[0];
                 popup_df5b52bffd4d7975d71bf387f2bf555c.setContent(html_90d14ced791c8cd0c3984b7e3523fc29);
             
         
@@ -136145,7 +136192,7 @@ window.onload = function() {
     
             marker_0f39b1d5a69fed9a2937cc854bd663db.bindTooltip(
                 `<div>
-                     CSR5 | Île d'Orléans Heliport
+                     CSR5 | ├Äle d'Orl├⌐ans Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -136180,7 +136227,7 @@ window.onload = function() {
 
         
             
-                var html_8fe3437465d2b12de29794843c916af6 = $(`<div id="html_8fe3437465d2b12de29794843c916af6" style="width: 100.0%; height: 100.0%;">CSS2 - Rivière-du-Loup Heliport<br><a href='NotamsMap.html?lat=47.849039&lon=-69.542253&focus=1&src=qfilter'>Open NOTAM focus: 47.849039, -69.542253</a></div>`)[0];
+                var html_8fe3437465d2b12de29794843c916af6 = $(`<div id="html_8fe3437465d2b12de29794843c916af6" style="width: 100.0%; height: 100.0%;">CSS2 - Rivi├¿re-du-Loup Heliport<br><a href='NotamsMap.html?lat=47.849039&lon=-69.542253&focus=1&src=qfilter'>Open NOTAM focus: 47.849039, -69.542253</a></div>`)[0];
                 popup_2b3e5e1a93e5551a50e722182a924693.setContent(html_8fe3437465d2b12de29794843c916af6);
             
         
@@ -136193,7 +136240,7 @@ window.onload = function() {
     
             marker_3ea04fba41a5d189966e8f6851a5a62e.bindTooltip(
                 `<div>
-                     CSS2 | Rivière-du-Loup Heliport
+                     CSS2 | Rivi├¿re-du-Loup Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -136324,7 +136371,7 @@ window.onload = function() {
 
         
             
-                var html_3985b8aeb48926524972e0dea87da4c0 = $(`<div id="html_3985b8aeb48926524972e0dea87da4c0" style="width: 100.0%; height: 100.0%;">CSV3 - Bécancour Heliport<br><a href='NotamsMap.html?lat=46.365002&lon=-72.396103&focus=1&src=qfilter'>Open NOTAM focus: 46.365002, -72.396103</a></div>`)[0];
+                var html_3985b8aeb48926524972e0dea87da4c0 = $(`<div id="html_3985b8aeb48926524972e0dea87da4c0" style="width: 100.0%; height: 100.0%;">CSV3 - B├⌐cancour Heliport<br><a href='NotamsMap.html?lat=46.365002&lon=-72.396103&focus=1&src=qfilter'>Open NOTAM focus: 46.365002, -72.396103</a></div>`)[0];
                 popup_6822c50b6fa77817cf827a94698fdc51.setContent(html_3985b8aeb48926524972e0dea87da4c0);
             
         
@@ -136337,7 +136384,7 @@ window.onload = function() {
     
             marker_3610a18b3e9c8dd5428a8564d474fab3.bindTooltip(
                 `<div>
-                     CSV3 | Bécancour Heliport
+                     CSV3 | B├⌐cancour Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -136372,7 +136419,7 @@ window.onload = function() {
 
         
             
-                var html_b19e65945ec6f1d81a42cd79d411907b = $(`<div id="html_b19e65945ec6f1d81a42cd79d411907b" style="width: 100.0%; height: 100.0%;">CSW5 - Montréal (Bell) Heliport<br><a href='NotamsMap.html?lat=45.685001&lon=-73.931099&focus=1&src=qfilter'>Open NOTAM focus: 45.685001, -73.931099</a></div>`)[0];
+                var html_b19e65945ec6f1d81a42cd79d411907b = $(`<div id="html_b19e65945ec6f1d81a42cd79d411907b" style="width: 100.0%; height: 100.0%;">CSW5 - Montr├⌐al (Bell) Heliport<br><a href='NotamsMap.html?lat=45.685001&lon=-73.931099&focus=1&src=qfilter'>Open NOTAM focus: 45.685001, -73.931099</a></div>`)[0];
                 popup_6804524080c084fd5ec8ad12c48bc6d2.setContent(html_b19e65945ec6f1d81a42cd79d411907b);
             
         
@@ -136385,7 +136432,7 @@ window.onload = function() {
     
             marker_ba494e2e0561c0dcb30db9369722960d.bindTooltip(
                 `<div>
-                     CSW5 | Montréal (Bell) Heliport
+                     CSW5 | Montr├⌐al (Bell) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -136516,7 +136563,7 @@ window.onload = function() {
 
         
             
-                var html_e3cc8fec380ddde7ddd5c0ddf926d78e = $(`<div id="html_e3cc8fec380ddde7ddd5c0ddf926d78e" style="width: 100.0%; height: 100.0%;">CSZ2 - Québec (Complex H) Heliport<br><a href='NotamsMap.html?lat=46.807205&lon=-71.213432&focus=1&src=qfilter'>Open NOTAM focus: 46.807205, -71.213432</a></div>`)[0];
+                var html_e3cc8fec380ddde7ddd5c0ddf926d78e = $(`<div id="html_e3cc8fec380ddde7ddd5c0ddf926d78e" style="width: 100.0%; height: 100.0%;">CSZ2 - Qu├⌐bec (Complex H) Heliport<br><a href='NotamsMap.html?lat=46.807205&lon=-71.213432&focus=1&src=qfilter'>Open NOTAM focus: 46.807205, -71.213432</a></div>`)[0];
                 popup_6cdac9304c009a76a3924f98d80dbf22.setContent(html_e3cc8fec380ddde7ddd5c0ddf926d78e);
             
         
@@ -136529,7 +136576,7 @@ window.onload = function() {
     
             marker_aad18f3bb058cb4d9c28bad74a3c7d36.bindTooltip(
                 `<div>
-                     CSZ2 | Québec (Complex H) Heliport
+                     CSZ2 | Qu├⌐bec (Complex H) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -136564,7 +136611,7 @@ window.onload = function() {
 
         
             
-                var html_8bd36d3476dae2108c8f899c5a6e8eca = $(`<div id="html_8bd36d3476dae2108c8f899c5a6e8eca" style="width: 100.0%; height: 100.0%;">CSZ6 - St-Jérôme (Hydro-Québec) Heliport<br><a href='NotamsMap.html?lat=45.770763&lon=-74.026997&focus=1&src=qfilter'>Open NOTAM focus: 45.770763, -74.026997</a></div>`)[0];
+                var html_8bd36d3476dae2108c8f899c5a6e8eca = $(`<div id="html_8bd36d3476dae2108c8f899c5a6e8eca" style="width: 100.0%; height: 100.0%;">CSZ6 - St-J├⌐r├┤me (Hydro-Qu├⌐bec) Heliport<br><a href='NotamsMap.html?lat=45.770763&lon=-74.026997&focus=1&src=qfilter'>Open NOTAM focus: 45.770763, -74.026997</a></div>`)[0];
                 popup_f2656fe02ce3ba8c97459b0884dc0ae4.setContent(html_8bd36d3476dae2108c8f899c5a6e8eca);
             
         
@@ -136577,7 +136624,7 @@ window.onload = function() {
     
             marker_9e47bff97c2b7776fdacbc1a2f3ad8c8.bindTooltip(
                 `<div>
-                     CSZ6 | St-Jérôme (Hydro-Québec) Heliport
+                     CSZ6 | St-J├⌐r├┤me (Hydro-Qu├⌐bec) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -136612,7 +136659,7 @@ window.onload = function() {
 
         
             
-                var html_655f6e4bc8dd0190492a34c5feb96ef0 = $(`<div id="html_655f6e4bc8dd0190492a34c5feb96ef0" style="width: 100.0%; height: 100.0%;">CSZ8 - Montréal (Sacré-Coeur) Heliport<br><a href='NotamsMap.html?lat=45.533169&lon=-73.712431&focus=1&src=qfilter'>Open NOTAM focus: 45.533169, -73.712431</a></div>`)[0];
+                var html_655f6e4bc8dd0190492a34c5feb96ef0 = $(`<div id="html_655f6e4bc8dd0190492a34c5feb96ef0" style="width: 100.0%; height: 100.0%;">CSZ8 - Montr├⌐al (Sacr├⌐-Coeur) Heliport<br><a href='NotamsMap.html?lat=45.533169&lon=-73.712431&focus=1&src=qfilter'>Open NOTAM focus: 45.533169, -73.712431</a></div>`)[0];
                 popup_3e28d941e678655d5d05f8877d1e98ab.setContent(html_655f6e4bc8dd0190492a34c5feb96ef0);
             
         
@@ -136625,7 +136672,7 @@ window.onload = function() {
     
             marker_af95462f228febfef1fdc4abb096be53.bindTooltip(
                 `<div>
-                     CSZ8 | Montréal (Sacré-Coeur) Heliport
+                     CSZ8 | Montr├⌐al (Sacr├⌐-Coeur) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -136660,7 +136707,7 @@ window.onload = function() {
 
         
             
-                var html_5e524ba21d7910daf502eeb9aa9896f5 = $(`<div id="html_5e524ba21d7910daf502eeb9aa9896f5" style="width: 100.0%; height: 100.0%;">CTA2 - Sept-Îles (Hydro-Québec) Heliport<br><a href='NotamsMap.html?lat=50.288352&lon=-66.412418&focus=1&src=qfilter'>Open NOTAM focus: 50.288352, -66.412418</a></div>`)[0];
+                var html_5e524ba21d7910daf502eeb9aa9896f5 = $(`<div id="html_5e524ba21d7910daf502eeb9aa9896f5" style="width: 100.0%; height: 100.0%;">CTA2 - Sept-├Äles (Hydro-Qu├⌐bec) Heliport<br><a href='NotamsMap.html?lat=50.288352&lon=-66.412418&focus=1&src=qfilter'>Open NOTAM focus: 50.288352, -66.412418</a></div>`)[0];
                 popup_1824cdcbc66d744a52157f0eb6d684a6.setContent(html_5e524ba21d7910daf502eeb9aa9896f5);
             
         
@@ -136673,7 +136720,7 @@ window.onload = function() {
     
             marker_506f5a983e5b0336c153e1c3dc0b1f9c.bindTooltip(
                 `<div>
-                     CTA2 | Sept-Îles (Hydro-Québec) Heliport
+                     CTA2 | Sept-├Äles (Hydro-Qu├⌐bec) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -136948,7 +136995,7 @@ window.onload = function() {
 
         
             
-                var html_9c2ebf50aae71552be2a1959de68dfc6 = $(`<div id="html_9c2ebf50aae71552be2a1959de68dfc6" style="width: 100.0%; height: 100.0%;">CTJ2 - Québec (Coast Guard) Heliport<br><a href='NotamsMap.html?lat=46.806335&lon=-71.203979&focus=1&src=qfilter'>Open NOTAM focus: 46.806335, -71.203979</a></div>`)[0];
+                var html_9c2ebf50aae71552be2a1959de68dfc6 = $(`<div id="html_9c2ebf50aae71552be2a1959de68dfc6" style="width: 100.0%; height: 100.0%;">CTJ2 - Qu├⌐bec (Coast Guard) Heliport<br><a href='NotamsMap.html?lat=46.806335&lon=-71.203979&focus=1&src=qfilter'>Open NOTAM focus: 46.806335, -71.203979</a></div>`)[0];
                 popup_1a9e79efc92bf080e913b983cfdedb29.setContent(html_9c2ebf50aae71552be2a1959de68dfc6);
             
         
@@ -136961,7 +137008,7 @@ window.onload = function() {
     
             marker_53db67b2c1c570295449e6d58c986f92.bindTooltip(
                 `<div>
-                     CTJ2 | Québec (Coast Guard) Heliport
+                     CTJ2 | Qu├⌐bec (Coast Guard) Heliport
                  </div>`,
                 {
   "sticky": true,
@@ -137648,7 +137695,7 @@ window.onload = function() {
 
         
             
-                var html_cf61bf071d9f6193c3c8281e2c7f5cc5 = $(`<div id="html_cf61bf071d9f6193c3c8281e2c7f5cc5" style="width: 100.0%; height: 100.0%;">CYGL - La Grande Rivière Airport<br><a href='NotamsMap.html?lat=53.625301&lon=-77.704201&focus=1&src=qfilter'>Open NOTAM focus: 53.625301, -77.704201</a></div>`)[0];
+                var html_cf61bf071d9f6193c3c8281e2c7f5cc5 = $(`<div id="html_cf61bf071d9f6193c3c8281e2c7f5cc5" style="width: 100.0%; height: 100.0%;">CYGL - La Grande Rivi├¿re Airport<br><a href='NotamsMap.html?lat=53.625301&lon=-77.704201&focus=1&src=qfilter'>Open NOTAM focus: 53.625301, -77.704201</a></div>`)[0];
                 popup_5132eb0c2416468cafca4804ef4042cf.setContent(html_cf61bf071d9f6193c3c8281e2c7f5cc5);
             
         
@@ -137661,7 +137708,7 @@ window.onload = function() {
     
             marker_1c9efb959ce92428bb912fd47c2f8ee2.bindTooltip(
                 `<div>
-                     CYGL | La Grande Rivière Airport
+                     CYGL | La Grande Rivi├¿re Airport
                  </div>`,
                 {
   "sticky": true,
@@ -137696,7 +137743,7 @@ window.onload = function() {
 
         
             
-                var html_92a3b88232f258768446c59250bdffd3 = $(`<div id="html_92a3b88232f258768446c59250bdffd3" style="width: 100.0%; height: 100.0%;">CYGP - Michel-Pouliot Gaspé Airport<br><a href='NotamsMap.html?lat=48.774915&lon=-64.481893&focus=1&src=qfilter'>Open NOTAM focus: 48.774915, -64.481893</a></div>`)[0];
+                var html_92a3b88232f258768446c59250bdffd3 = $(`<div id="html_92a3b88232f258768446c59250bdffd3" style="width: 100.0%; height: 100.0%;">CYGP - Michel-Pouliot Gasp├⌐ Airport<br><a href='NotamsMap.html?lat=48.774915&lon=-64.481893&focus=1&src=qfilter'>Open NOTAM focus: 48.774915, -64.481893</a></div>`)[0];
                 popup_8b04e50cd8dd29e4a4e7d899b33ca81b.setContent(html_92a3b88232f258768446c59250bdffd3);
             
         
@@ -137709,7 +137756,7 @@ window.onload = function() {
     
             marker_452f84161b477c35f12359718c8f8017.bindTooltip(
                 `<div>
-                     CYGP | Michel-Pouliot Gaspé Airport
+                     CYGP | Michel-Pouliot Gasp├⌐ Airport
                  </div>`,
                 {
   "sticky": true,
@@ -137744,7 +137791,7 @@ window.onload = function() {
 
         
             
-                var html_67fd3e72abcaf17a1b343cb5b1e4dda2 = $(`<div id="html_67fd3e72abcaf17a1b343cb5b1e4dda2" style="width: 100.0%; height: 100.0%;">CYGR - Îles-de-la-Madeleine Airport<br><a href='NotamsMap.html?lat=47.425242&lon=-61.778612&focus=1&src=qfilter'>Open NOTAM focus: 47.425242, -61.778612</a></div>`)[0];
+                var html_67fd3e72abcaf17a1b343cb5b1e4dda2 = $(`<div id="html_67fd3e72abcaf17a1b343cb5b1e4dda2" style="width: 100.0%; height: 100.0%;">CYGR - ├Äles-de-la-Madeleine Airport<br><a href='NotamsMap.html?lat=47.425242&lon=-61.778612&focus=1&src=qfilter'>Open NOTAM focus: 47.425242, -61.778612</a></div>`)[0];
                 popup_a570530f7b6fed05eef0aac5ccc1f1c8.setContent(html_67fd3e72abcaf17a1b343cb5b1e4dda2);
             
         
@@ -137757,7 +137804,7 @@ window.onload = function() {
     
             marker_55f65ec7473b01b3eb18f0f76d1793f7.bindTooltip(
                 `<div>
-                     CYGR | Îles-de-la-Madeleine Airport
+                     CYGR | ├Äles-de-la-Madeleine Airport
                  </div>`,
                 {
   "sticky": true,
@@ -137888,7 +137935,7 @@ window.onload = function() {
 
         
             
-                var html_f79a84326612ed7e34dbb90590b2c46f = $(`<div id="html_f79a84326612ed7e34dbb90590b2c46f" style="width: 100.0%; height: 100.0%;">CYHU - Montréal / Saint-Hubert Metropolitan Airport<br><a href='NotamsMap.html?lat=45.517502&lon=-73.416901&focus=1&src=qfilter'>Open NOTAM focus: 45.517502, -73.416901</a></div>`)[0];
+                var html_f79a84326612ed7e34dbb90590b2c46f = $(`<div id="html_f79a84326612ed7e34dbb90590b2c46f" style="width: 100.0%; height: 100.0%;">CYHU - Montr├⌐al / Saint-Hubert Metropolitan Airport<br><a href='NotamsMap.html?lat=45.517502&lon=-73.416901&focus=1&src=qfilter'>Open NOTAM focus: 45.517502, -73.416901</a></div>`)[0];
                 popup_0f6466336376808de6047185c8cef80c.setContent(html_f79a84326612ed7e34dbb90590b2c46f);
             
         
@@ -137901,7 +137948,7 @@ window.onload = function() {
     
             marker_bd6e0012ceb7e125deafc3e15f96e65f.bindTooltip(
                 `<div>
-                     CYHU | Montréal / Saint-Hubert Metropolitan Airport
+                     CYHU | Montr├⌐al / Saint-Hubert Metropolitan Airport
                  </div>`,
                 {
   "sticky": true,
@@ -138512,7 +138559,7 @@ window.onload = function() {
 
         
             
-                var html_b4b487249221d57be342961c9432560c = $(`<div id="html_b4b487249221d57be342961c9432560c" style="width: 100.0%; height: 100.0%;">CYRI - Rivière-du-Loup Airport<br><a href='NotamsMap.html?lat=47.764400&lon=-69.584702&focus=1&src=qfilter'>Open NOTAM focus: 47.764400, -69.584702</a></div>`)[0];
+                var html_b4b487249221d57be342961c9432560c = $(`<div id="html_b4b487249221d57be342961c9432560c" style="width: 100.0%; height: 100.0%;">CYRI - Rivi├¿re-du-Loup Airport<br><a href='NotamsMap.html?lat=47.764400&lon=-69.584702&focus=1&src=qfilter'>Open NOTAM focus: 47.764400, -69.584702</a></div>`)[0];
                 popup_53869e88b592a5d77e725b3c12d5101f.setContent(html_b4b487249221d57be342961c9432560c);
             
         
@@ -138525,7 +138572,7 @@ window.onload = function() {
     
             marker_07bdc121c72dfe4c04cda3706af90508.bindTooltip(
                 `<div>
-                     CYRI | Rivière-du-Loup Airport
+                     CYRI | Rivi├¿re-du-Loup Airport
                  </div>`,
                 {
   "sticky": true,
@@ -138608,7 +138655,7 @@ window.onload = function() {
 
         
             
-                var html_2f6a6649954f63d7a98cd79c52a65205 = $(`<div id="html_2f6a6649954f63d7a98cd79c52a65205" style="width: 100.0%; height: 100.0%;">CYRQ - Trois-Rivières Airport<br><a href='NotamsMap.html?lat=46.352798&lon=-72.679398&focus=1&src=qfilter'>Open NOTAM focus: 46.352798, -72.679398</a></div>`)[0];
+                var html_2f6a6649954f63d7a98cd79c52a65205 = $(`<div id="html_2f6a6649954f63d7a98cd79c52a65205" style="width: 100.0%; height: 100.0%;">CYRQ - Trois-Rivi├¿res Airport<br><a href='NotamsMap.html?lat=46.352798&lon=-72.679398&focus=1&src=qfilter'>Open NOTAM focus: 46.352798, -72.679398</a></div>`)[0];
                 popup_7c90e7417d2bebf84cb3744526540588.setContent(html_2f6a6649954f63d7a98cd79c52a65205);
             
         
@@ -138621,7 +138668,7 @@ window.onload = function() {
     
             marker_661f64848eb91954f8979eeac349706e.bindTooltip(
                 `<div>
-                     CYRQ | Trois-Rivières Airport
+                     CYRQ | Trois-Rivi├¿res Airport
                  </div>`,
                 {
   "sticky": true,
@@ -139088,7 +139135,7 @@ window.onload = function() {
 
         
             
-                var html_340d27ace8c5566930c6036b06faf497 = $(`<div id="html_340d27ace8c5566930c6036b06faf497" style="width: 100.0%; height: 100.0%;">CYZV - Sept-Îles Airport<br><a href='NotamsMap.html?lat=50.223301&lon=-66.265602&focus=1&src=qfilter'>Open NOTAM focus: 50.223301, -66.265602</a></div>`)[0];
+                var html_340d27ace8c5566930c6036b06faf497 = $(`<div id="html_340d27ace8c5566930c6036b06faf497" style="width: 100.0%; height: 100.0%;">CYZV - Sept-├Äles Airport<br><a href='NotamsMap.html?lat=50.223301&lon=-66.265602&focus=1&src=qfilter'>Open NOTAM focus: 50.223301, -66.265602</a></div>`)[0];
                 popup_9cd9378e0dfe5ce462cab52e6867c5ef.setContent(html_340d27ace8c5566930c6036b06faf497);
             
         
@@ -139101,7 +139148,7 @@ window.onload = function() {
     
             marker_6ba1ec1b6f4be3d3e9e68064f8d5e857.bindTooltip(
                 `<div>
-                     CYZV | Sept-Îles Airport
+                     CYZV | Sept-├Äles Airport
                  </div>`,
                 {
   "sticky": true,
@@ -139136,7 +139183,7 @@ window.onload = function() {
 
         
             
-                var html_a9a02e3c20e9eeb815e6ffeedbbdd66b = $(`<div id="html_a9a02e3c20e9eeb815e6ffeedbbdd66b" style="width: 100.0%; height: 100.0%;">CZBM - Bromont (Roland Désourdy) Airport<br><a href='NotamsMap.html?lat=45.290798&lon=-72.741402&focus=1&src=qfilter'>Open NOTAM focus: 45.290798, -72.741402</a></div>`)[0];
+                var html_a9a02e3c20e9eeb815e6ffeedbbdd66b = $(`<div id="html_a9a02e3c20e9eeb815e6ffeedbbdd66b" style="width: 100.0%; height: 100.0%;">CZBM - Bromont (Roland D├⌐sourdy) Airport<br><a href='NotamsMap.html?lat=45.290798&lon=-72.741402&focus=1&src=qfilter'>Open NOTAM focus: 45.290798, -72.741402</a></div>`)[0];
                 popup_d21dd405c556ef248d8194824a1c61a6.setContent(html_a9a02e3c20e9eeb815e6ffeedbbdd66b);
             
         
@@ -139149,7 +139196,7 @@ window.onload = function() {
     
             marker_0685e2caf95c0ead5f21b6dbf8c36ab1.bindTooltip(
                 `<div>
-                     CZBM | Bromont (Roland Désourdy) Airport
+                     CZBM | Bromont (Roland D├⌐sourdy) Airport
                  </div>`,
                 {
   "sticky": true,
@@ -139198,7 +139245,7 @@ window.onload = function() {
 
         
             
-                var html_8e7e30bcfc72eb5b6069c704f9a8f704 = $(`<div id="html_8e7e30bcfc72eb5b6069c704f9a8f704" style="width: 100.0%; height: 100.0%;">CA-0464 - Saint-François-de-Laval (Laval Aviation)<br><a href='NotamsMap.html?lat=45.693126&lon=-73.580911&focus=1&src=qfilter'>Open NOTAM focus: 45.693126, -73.580911</a></div>`)[0];
+                var html_8e7e30bcfc72eb5b6069c704f9a8f704 = $(`<div id="html_8e7e30bcfc72eb5b6069c704f9a8f704" style="width: 100.0%; height: 100.0%;">CA-0464 - Saint-Fran├ºois-de-Laval (Laval Aviation)<br><a href='NotamsMap.html?lat=45.693126&lon=-73.580911&focus=1&src=qfilter'>Open NOTAM focus: 45.693126, -73.580911</a></div>`)[0];
                 popup_2e147f02d3b17304227a084b1f0f324c.setContent(html_8e7e30bcfc72eb5b6069c704f9a8f704);
             
         
@@ -139211,7 +139258,7 @@ window.onload = function() {
     
             marker_38c68069682b27bc98ec7d9802add3c4.bindTooltip(
                 `<div>
-                     CA-0464 | Saint-François-de-Laval (Laval Aviation)
+                     CA-0464 | Saint-Fran├ºois-de-Laval (Laval Aviation)
                  </div>`,
                 {
   "sticky": true,
@@ -139246,7 +139293,7 @@ window.onload = function() {
 
         
             
-                var html_1c663ce8e9ccb81942fe4472e35d044d = $(`<div id="html_1c663ce8e9ccb81942fe4472e35d044d" style="width: 100.0%; height: 100.0%;">CA-0505 - Rivière Temiscamie Floatbase<br><a href='NotamsMap.html?lat=51.008489&lon=-72.989837&focus=1&src=qfilter'>Open NOTAM focus: 51.008489, -72.989837</a></div>`)[0];
+                var html_1c663ce8e9ccb81942fe4472e35d044d = $(`<div id="html_1c663ce8e9ccb81942fe4472e35d044d" style="width: 100.0%; height: 100.0%;">CA-0505 - Rivi├¿re Temiscamie Floatbase<br><a href='NotamsMap.html?lat=51.008489&lon=-72.989837&focus=1&src=qfilter'>Open NOTAM focus: 51.008489, -72.989837</a></div>`)[0];
                 popup_ed1f291d99b84b7bc24eaa5bcfa39332.setContent(html_1c663ce8e9ccb81942fe4472e35d044d);
             
         
@@ -139259,7 +139306,7 @@ window.onload = function() {
     
             marker_8ced78b12fd521c63455d3b1458ee5fd.bindTooltip(
                 `<div>
-                     CA-0505 | Rivière Temiscamie Floatbase
+                     CA-0505 | Rivi├¿re Temiscamie Floatbase
                  </div>`,
                 {
   "sticky": true,
@@ -139534,7 +139581,7 @@ window.onload = function() {
 
         
             
-                var html_5c822f3b6cbd4d64b518717fe9da5096 = $(`<div id="html_5c822f3b6cbd4d64b518717fe9da5096" style="width: 100.0%; height: 100.0%;">CA-1218 - Tête-à-la-Baleine Water Aerodrome<br><a href='NotamsMap.html?lat=50.695000&lon=-59.320000&focus=1&src=qfilter'>Open NOTAM focus: 50.695000, -59.320000</a></div>`)[0];
+                var html_5c822f3b6cbd4d64b518717fe9da5096 = $(`<div id="html_5c822f3b6cbd4d64b518717fe9da5096" style="width: 100.0%; height: 100.0%;">CA-1218 - T├¬te-├á-la-Baleine Water Aerodrome<br><a href='NotamsMap.html?lat=50.695000&lon=-59.320000&focus=1&src=qfilter'>Open NOTAM focus: 50.695000, -59.320000</a></div>`)[0];
                 popup_eb3333d19eea48a2a3bb207059d5788a.setContent(html_5c822f3b6cbd4d64b518717fe9da5096);
             
         
@@ -139547,7 +139594,7 @@ window.onload = function() {
     
             marker_881636a2de4fb82ad5c89e617662747d.bindTooltip(
                 `<div>
-                     CA-1218 | Tête-à-la-Baleine Water Aerodrome
+                     CA-1218 | T├¬te-├á-la-Baleine Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -139678,7 +139725,7 @@ window.onload = function() {
 
         
             
-                var html_be9ded8e2c5ec28f236faf30bb500218 = $(`<div id="html_be9ded8e2c5ec28f236faf30bb500218" style="width: 100.0%; height: 100.0%;">CGD2 - Alma (Rivière La Grande Décharge) Seaplane Base<br><a href='NotamsMap.html?lat=48.563301&lon=-71.615799&focus=1&src=qfilter'>Open NOTAM focus: 48.563301, -71.615799</a></div>`)[0];
+                var html_be9ded8e2c5ec28f236faf30bb500218 = $(`<div id="html_be9ded8e2c5ec28f236faf30bb500218" style="width: 100.0%; height: 100.0%;">CGD2 - Alma (Rivi├¿re La Grande D├⌐charge) Seaplane Base<br><a href='NotamsMap.html?lat=48.563301&lon=-71.615799&focus=1&src=qfilter'>Open NOTAM focus: 48.563301, -71.615799</a></div>`)[0];
                 popup_83e325ad91d178631da2b9446df1a494.setContent(html_be9ded8e2c5ec28f236faf30bb500218);
             
         
@@ -139691,7 +139738,7 @@ window.onload = function() {
     
             marker_886fd482310d34c96901985e4a812b57.bindTooltip(
                 `<div>
-                     CGD2 | Alma (Rivière La Grande Décharge) Seaplane Base
+                     CGD2 | Alma (Rivi├¿re La Grande D├⌐charge) Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -139774,7 +139821,7 @@ window.onload = function() {
 
         
             
-                var html_1736023cb3c2250879463b8ab64e55d8 = $(`<div id="html_1736023cb3c2250879463b8ab64e55d8" style="width: 100.0%; height: 100.0%;">CHA3 - Hydro Aéroport de Montréal<br><a href='NotamsMap.html?lat=45.544000&lon=-73.515000&focus=1&src=qfilter'>Open NOTAM focus: 45.544000, -73.515000</a></div>`)[0];
+                var html_1736023cb3c2250879463b8ab64e55d8 = $(`<div id="html_1736023cb3c2250879463b8ab64e55d8" style="width: 100.0%; height: 100.0%;">CHA3 - Hydro A├⌐roport de Montr├⌐al<br><a href='NotamsMap.html?lat=45.544000&lon=-73.515000&focus=1&src=qfilter'>Open NOTAM focus: 45.544000, -73.515000</a></div>`)[0];
                 popup_89a93490c423ecd398f6bbb24010018f.setContent(html_1736023cb3c2250879463b8ab64e55d8);
             
         
@@ -139787,7 +139834,7 @@ window.onload = function() {
     
             marker_62790a71714b2b186b5f1175d308ed2f.bindTooltip(
                 `<div>
-                     CHA3 | Hydro Aéroport de Montréal
+                     CHA3 | Hydro A├⌐roport de Montr├⌐al
                  </div>`,
                 {
   "sticky": true,
@@ -139822,7 +139869,7 @@ window.onload = function() {
 
         
             
-                var html_644a06b230c95694e282afd6506dd611 = $(`<div id="html_644a06b230c95694e282afd6506dd611" style="width: 100.0%; height: 100.0%;">CJF2 - Carignan/Rivière L'Acadie Water Aerodrome<br><a href='NotamsMap.html?lat=45.473600&lon=-73.294800&focus=1&src=qfilter'>Open NOTAM focus: 45.473600, -73.294800</a></div>`)[0];
+                var html_644a06b230c95694e282afd6506dd611 = $(`<div id="html_644a06b230c95694e282afd6506dd611" style="width: 100.0%; height: 100.0%;">CJF2 - Carignan/Rivi├¿re L'Acadie Water Aerodrome<br><a href='NotamsMap.html?lat=45.473600&lon=-73.294800&focus=1&src=qfilter'>Open NOTAM focus: 45.473600, -73.294800</a></div>`)[0];
                 popup_ae8fdce6382164ff322960ad8e630fd6.setContent(html_644a06b230c95694e282afd6506dd611);
             
         
@@ -139835,7 +139882,7 @@ window.onload = function() {
     
             marker_13116b1a3c0afd2ebcc9a3710aacc9e1.bindTooltip(
                 `<div>
-                     CJF2 | Carignan/Rivière L'Acadie Water Aerodrome
+                     CJF2 | Carignan/Rivi├¿re L'Acadie Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -140014,7 +140061,7 @@ window.onload = function() {
 
         
             
-                var html_1b876fc357dcff48b37ea77bd395fe00 = $(`<div id="html_1b876fc357dcff48b37ea77bd395fe00" style="width: 100.0%; height: 100.0%;">CLS7 - Blais Aéronautique Inc Water Aerodrome<br><a href='NotamsMap.html?lat=45.913000&lon=-75.095000&focus=1&src=qfilter'>Open NOTAM focus: 45.913000, -75.095000</a></div>`)[0];
+                var html_1b876fc357dcff48b37ea77bd395fe00 = $(`<div id="html_1b876fc357dcff48b37ea77bd395fe00" style="width: 100.0%; height: 100.0%;">CLS7 - Blais A├⌐ronautique Inc Water Aerodrome<br><a href='NotamsMap.html?lat=45.913000&lon=-75.095000&focus=1&src=qfilter'>Open NOTAM focus: 45.913000, -75.095000</a></div>`)[0];
                 popup_4ff57db5e536f17382df00b5d4b3ef48.setContent(html_1b876fc357dcff48b37ea77bd395fe00);
             
         
@@ -140027,7 +140074,7 @@ window.onload = function() {
     
             marker_d1d4dd042d21e0b6460ebb148d0cafa2.bindTooltip(
                 `<div>
-                     CLS7 | Blais Aéronautique Inc Water Aerodrome
+                     CLS7 | Blais A├⌐ronautique Inc Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -140110,7 +140157,7 @@ window.onload = function() {
 
         
             
-                var html_0ba3a8adac817fcd7fba17ad27ef7d58 = $(`<div id="html_0ba3a8adac817fcd7fba17ad27ef7d58" style="width: 100.0%; height: 100.0%;">CMT2 - Mont-Tremblant (Lac Maskinongé) Seaplane Base<br><a href='NotamsMap.html?lat=46.087825&lon=-74.608452&focus=1&src=qfilter'>Open NOTAM focus: 46.087825, -74.608452</a></div>`)[0];
+                var html_0ba3a8adac817fcd7fba17ad27ef7d58 = $(`<div id="html_0ba3a8adac817fcd7fba17ad27ef7d58" style="width: 100.0%; height: 100.0%;">CMT2 - Mont-Tremblant (Lac Maskinong├⌐) Seaplane Base<br><a href='NotamsMap.html?lat=46.087825&lon=-74.608452&focus=1&src=qfilter'>Open NOTAM focus: 46.087825, -74.608452</a></div>`)[0];
                 popup_10f4f30b958d226e1a1ed94b62618427.setContent(html_0ba3a8adac817fcd7fba17ad27ef7d58);
             
         
@@ -140123,7 +140170,7 @@ window.onload = function() {
     
             marker_7fda8624853d290a2f83214f05549fb7.bindTooltip(
                 `<div>
-                     CMT2 | Mont-Tremblant (Lac Maskinongé) Seaplane Base
+                     CMT2 | Mont-Tremblant (Lac Maskinong├⌐) Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -140494,7 +140541,7 @@ window.onload = function() {
 
         
             
-                var html_d25c90ecc7ddd2d2e635746363359ece = $(`<div id="html_d25c90ecc7ddd2d2e635746363359ece" style="width: 100.0%; height: 100.0%;">CSA9 - Lac-Des-Îles Seaplane Base<br><a href='NotamsMap.html?lat=46.411900&lon=-75.519995&focus=1&src=qfilter'>Open NOTAM focus: 46.411900, -75.519995</a></div>`)[0];
+                var html_d25c90ecc7ddd2d2e635746363359ece = $(`<div id="html_d25c90ecc7ddd2d2e635746363359ece" style="width: 100.0%; height: 100.0%;">CSA9 - Lac-Des-├Äles Seaplane Base<br><a href='NotamsMap.html?lat=46.411900&lon=-75.519995&focus=1&src=qfilter'>Open NOTAM focus: 46.411900, -75.519995</a></div>`)[0];
                 popup_1bc66123eb980b0807aa3102cee4a481.setContent(html_d25c90ecc7ddd2d2e635746363359ece);
             
         
@@ -140507,7 +140554,7 @@ window.onload = function() {
     
             marker_bd073688bfd2a53fbb4a12739ef5784a.bindTooltip(
                 `<div>
-                     CSA9 | Lac-Des-Îles Seaplane Base
+                     CSA9 | Lac-Des-├Äles Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -140974,7 +141021,7 @@ window.onload = function() {
 
         
             
-                var html_4e8b7258bfe2065f644b85d5b93e1ba5 = $(`<div id="html_4e8b7258bfe2065f644b85d5b93e1ba5" style="width: 100.0%; height: 100.0%;">CSM8 - Sept-Îles/Lac des Rapides Water Aerodrome<br><a href='NotamsMap.html?lat=50.298901&lon=-66.415604&focus=1&src=qfilter'>Open NOTAM focus: 50.298901, -66.415604</a></div>`)[0];
+                var html_4e8b7258bfe2065f644b85d5b93e1ba5 = $(`<div id="html_4e8b7258bfe2065f644b85d5b93e1ba5" style="width: 100.0%; height: 100.0%;">CSM8 - Sept-├Äles/Lac des Rapides Water Aerodrome<br><a href='NotamsMap.html?lat=50.298901&lon=-66.415604&focus=1&src=qfilter'>Open NOTAM focus: 50.298901, -66.415604</a></div>`)[0];
                 popup_55a830643b9787ce528903a381144758.setContent(html_4e8b7258bfe2065f644b85d5b93e1ba5);
             
         
@@ -140987,7 +141034,7 @@ window.onload = function() {
     
             marker_520c146f7e379a10b2c0af92151343b9.bindTooltip(
                 `<div>
-                     CSM8 | Sept-Îles/Lac des Rapides Water Aerodrome
+                     CSM8 | Sept-├Äles/Lac des Rapides Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -141022,7 +141069,7 @@ window.onload = function() {
 
         
             
-                var html_6d0cef6885cf52b7bcbf2a15aa26c5b7 = $(`<div id="html_6d0cef6885cf52b7bcbf2a15aa26c5b7" style="width: 100.0%; height: 100.0%;">CSN8 - Québec/Lac St-Augustin Seaplane Base<br><a href='NotamsMap.html?lat=46.751400&lon=-71.394203&focus=1&src=qfilter'>Open NOTAM focus: 46.751400, -71.394203</a></div>`)[0];
+                var html_6d0cef6885cf52b7bcbf2a15aa26c5b7 = $(`<div id="html_6d0cef6885cf52b7bcbf2a15aa26c5b7" style="width: 100.0%; height: 100.0%;">CSN8 - Qu├⌐bec/Lac St-Augustin Seaplane Base<br><a href='NotamsMap.html?lat=46.751400&lon=-71.394203&focus=1&src=qfilter'>Open NOTAM focus: 46.751400, -71.394203</a></div>`)[0];
                 popup_700bdb2ac1e86d598831306b30e9bdd9.setContent(html_6d0cef6885cf52b7bcbf2a15aa26c5b7);
             
         
@@ -141035,7 +141082,7 @@ window.onload = function() {
     
             marker_e0e2c7a8f2acde58a3fd54681b1dfbfc.bindTooltip(
                 `<div>
-                     CSN8 | Québec/Lac St-Augustin Seaplane Base
+                     CSN8 | Qu├⌐bec/Lac St-Augustin Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -141070,7 +141117,7 @@ window.onload = function() {
 
         
             
-                var html_25cd941d81b9122b6393018fa2c7cdac = $(`<div id="html_25cd941d81b9122b6393018fa2c7cdac" style="width: 100.0%; height: 100.0%;">CSP8 - Lac Sept-Îles Seaplane Base<br><a href='NotamsMap.html?lat=46.939701&lon=-71.745003&focus=1&src=qfilter'>Open NOTAM focus: 46.939701, -71.745003</a></div>`)[0];
+                var html_25cd941d81b9122b6393018fa2c7cdac = $(`<div id="html_25cd941d81b9122b6393018fa2c7cdac" style="width: 100.0%; height: 100.0%;">CSP8 - Lac Sept-├Äles Seaplane Base<br><a href='NotamsMap.html?lat=46.939701&lon=-71.745003&focus=1&src=qfilter'>Open NOTAM focus: 46.939701, -71.745003</a></div>`)[0];
                 popup_704fb3740339bd7c6fb29acf59ba006e.setContent(html_25cd941d81b9122b6393018fa2c7cdac);
             
         
@@ -141083,7 +141130,7 @@ window.onload = function() {
     
             marker_48ac36ee92b0de660fc0c0e930f4d1df.bindTooltip(
                 `<div>
-                     CSP8 | Lac Sept-Îles Seaplane Base
+                     CSP8 | Lac Sept-├Äles Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -141166,7 +141213,7 @@ window.onload = function() {
 
         
             
-                var html_b3d1cc3669ab125c40302995c6d62896 = $(`<div id="html_b3d1cc3669ab125c40302995c6d62896" style="width: 100.0%; height: 100.0%;">CSS7 - Lac-à-Beauce Seaplane Base<br><a href='NotamsMap.html?lat=47.321401&lon=-72.764997&focus=1&src=qfilter'>Open NOTAM focus: 47.321401, -72.764997</a></div>`)[0];
+                var html_b3d1cc3669ab125c40302995c6d62896 = $(`<div id="html_b3d1cc3669ab125c40302995c6d62896" style="width: 100.0%; height: 100.0%;">CSS7 - Lac-├á-Beauce Seaplane Base<br><a href='NotamsMap.html?lat=47.321401&lon=-72.764997&focus=1&src=qfilter'>Open NOTAM focus: 47.321401, -72.764997</a></div>`)[0];
                 popup_e6f76e4be20487fa55da39b7af448643.setContent(html_b3d1cc3669ab125c40302995c6d62896);
             
         
@@ -141179,7 +141226,7 @@ window.onload = function() {
     
             marker_f8c1e4ab68cce61bad9a3522d5847b58.bindTooltip(
                 `<div>
-                     CSS7 | Lac-à-Beauce Seaplane Base
+                     CSS7 | Lac-├á-Beauce Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -141310,7 +141357,7 @@ window.onload = function() {
 
         
             
-                var html_172a7458e542e374938d2f6d04d842c0 = $(`<div id="html_172a7458e542e374938d2f6d04d842c0" style="width: 100.0%; height: 100.0%;">CSU7 - Lac-à-la-Tortue Water Aerodrome<br><a href='NotamsMap.html?lat=46.616699&lon=-72.625801&focus=1&src=qfilter'>Open NOTAM focus: 46.616699, -72.625801</a></div>`)[0];
+                var html_172a7458e542e374938d2f6d04d842c0 = $(`<div id="html_172a7458e542e374938d2f6d04d842c0" style="width: 100.0%; height: 100.0%;">CSU7 - Lac-├á-la-Tortue Water Aerodrome<br><a href='NotamsMap.html?lat=46.616699&lon=-72.625801&focus=1&src=qfilter'>Open NOTAM focus: 46.616699, -72.625801</a></div>`)[0];
                 popup_67aa8f0caa620abc8a39f9c09a1df6b8.setContent(html_172a7458e542e374938d2f6d04d842c0);
             
         
@@ -141323,7 +141370,7 @@ window.onload = function() {
     
             marker_91ceb8738ba4b8a46da247312394abe7.bindTooltip(
                 `<div>
-                     CSU7 | Lac-à-la-Tortue Water Aerodrome
+                     CSU7 | Lac-├á-la-Tortue Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -141406,7 +141453,7 @@ window.onload = function() {
 
         
             
-                var html_94e37cdd2c2bbfc3f1500493c9527115 = $(`<div id="html_94e37cdd2c2bbfc3f1500493c9527115" style="width: 100.0%; height: 100.0%;">CSW9 - Ste-Véronique Seaplane Base<br><a href='NotamsMap.html?lat=46.514702&lon=-74.990303&focus=1&src=qfilter'>Open NOTAM focus: 46.514702, -74.990303</a></div>`)[0];
+                var html_94e37cdd2c2bbfc3f1500493c9527115 = $(`<div id="html_94e37cdd2c2bbfc3f1500493c9527115" style="width: 100.0%; height: 100.0%;">CSW9 - Ste-V├⌐ronique Seaplane Base<br><a href='NotamsMap.html?lat=46.514702&lon=-74.990303&focus=1&src=qfilter'>Open NOTAM focus: 46.514702, -74.990303</a></div>`)[0];
                 popup_f90baf6e61fb1985286dca161f1e0721.setContent(html_94e37cdd2c2bbfc3f1500493c9527115);
             
         
@@ -141419,7 +141466,7 @@ window.onload = function() {
     
             marker_a112cf14e83b2966d0afab68572b30da.bindTooltip(
                 `<div>
-                     CSW9 | Ste-Véronique Seaplane Base
+                     CSW9 | Ste-V├⌐ronique Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -141502,7 +141549,7 @@ window.onload = function() {
 
         
             
-                var html_ea4cc6394cb6f4e215171a77a7ac5f60 = $(`<div id="html_ea4cc6394cb6f4e215171a77a7ac5f60" style="width: 100.0%; height: 100.0%;">CSZ7 - Chibougamau/Lac Caché Water Aerodrome<br><a href='NotamsMap.html?lat=49.823371&lon=-74.424285&focus=1&src=qfilter'>Open NOTAM focus: 49.823371, -74.424285</a></div>`)[0];
+                var html_ea4cc6394cb6f4e215171a77a7ac5f60 = $(`<div id="html_ea4cc6394cb6f4e215171a77a7ac5f60" style="width: 100.0%; height: 100.0%;">CSZ7 - Chibougamau/Lac Cach├⌐ Water Aerodrome<br><a href='NotamsMap.html?lat=49.823371&lon=-74.424285&focus=1&src=qfilter'>Open NOTAM focus: 49.823371, -74.424285</a></div>`)[0];
                 popup_84bb32f0531d21337815676d8918f329.setContent(html_ea4cc6394cb6f4e215171a77a7ac5f60);
             
         
@@ -141515,7 +141562,7 @@ window.onload = function() {
     
             marker_b6cf678b81c6fcfd9cb7ce713d112d4e.bindTooltip(
                 `<div>
-                     CSZ7 | Chibougamau/Lac Caché Water Aerodrome
+                     CSZ7 | Chibougamau/Lac Cach├⌐ Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -141598,7 +141645,7 @@ window.onload = function() {
 
         
             
-                var html_cef75afd127956c50ebcde6b9800f28b = $(`<div id="html_cef75afd127956c50ebcde6b9800f28b" style="width: 100.0%; height: 100.0%;">CTA5 - Val-d'Or/Hydrobase Piché Dubuisson Seaplane Base<br><a href='NotamsMap.html?lat=48.085301&lon=-77.888601&focus=1&src=qfilter'>Open NOTAM focus: 48.085301, -77.888601</a></div>`)[0];
+                var html_cef75afd127956c50ebcde6b9800f28b = $(`<div id="html_cef75afd127956c50ebcde6b9800f28b" style="width: 100.0%; height: 100.0%;">CTA5 - Val-d'Or/Hydrobase Pich├⌐ Dubuisson Seaplane Base<br><a href='NotamsMap.html?lat=48.085301&lon=-77.888601&focus=1&src=qfilter'>Open NOTAM focus: 48.085301, -77.888601</a></div>`)[0];
                 popup_776f7e18f7763833f0a9c31d2031f2dd.setContent(html_cef75afd127956c50ebcde6b9800f28b);
             
         
@@ -141611,7 +141658,7 @@ window.onload = function() {
     
             marker_899461702c4ad1795753cdbcf2174724.bindTooltip(
                 `<div>
-                     CTA5 | Val-d'Or/Hydrobase Piché Dubuisson Seaplane Base
+                     CTA5 | Val-d'Or/Hydrobase Pich├⌐ Dubuisson Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -141694,7 +141741,7 @@ window.onload = function() {
 
         
             
-                var html_bc3e91f3ae332be805ffd6d7f0efd5e7 = $(`<div id="html_bc3e91f3ae332be805ffd6d7f0efd5e7" style="width: 100.0%; height: 100.0%;">CTD3 - Lac Sébastien Seaplane Base<br><a href='NotamsMap.html?lat=48.651699&lon=-71.145798&focus=1&src=qfilter'>Open NOTAM focus: 48.651699, -71.145798</a></div>`)[0];
+                var html_bc3e91f3ae332be805ffd6d7f0efd5e7 = $(`<div id="html_bc3e91f3ae332be805ffd6d7f0efd5e7" style="width: 100.0%; height: 100.0%;">CTD3 - Lac S├⌐bastien Seaplane Base<br><a href='NotamsMap.html?lat=48.651699&lon=-71.145798&focus=1&src=qfilter'>Open NOTAM focus: 48.651699, -71.145798</a></div>`)[0];
                 popup_5c635d8d29f1c791afb130651b49e684.setContent(html_bc3e91f3ae332be805ffd6d7f0efd5e7);
             
         
@@ -141707,7 +141754,7 @@ window.onload = function() {
     
             marker_35942500af32e2d4349f949b4f3ef268.bindTooltip(
                 `<div>
-                     CTD3 | Lac Sébastien Seaplane Base
+                     CTD3 | Lac S├⌐bastien Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -141934,7 +141981,7 @@ window.onload = function() {
 
         
             
-                var html_a99bf64c4a6d7965d67caa68171edf91 = $(`<div id="html_a99bf64c4a6d7965d67caa68171edf91" style="width: 100.0%; height: 100.0%;">CTM8 - Témiscouata-sur-le-Lac Water Aerodrome<br><a href='NotamsMap.html?lat=47.685000&lon=-68.875000&focus=1&src=qfilter'>Open NOTAM focus: 47.685000, -68.875000</a></div>`)[0];
+                var html_a99bf64c4a6d7965d67caa68171edf91 = $(`<div id="html_a99bf64c4a6d7965d67caa68171edf91" style="width: 100.0%; height: 100.0%;">CTM8 - T├⌐miscouata-sur-le-Lac Water Aerodrome<br><a href='NotamsMap.html?lat=47.685000&lon=-68.875000&focus=1&src=qfilter'>Open NOTAM focus: 47.685000, -68.875000</a></div>`)[0];
                 popup_ef8e40aab26d643d64dac75acf3deccf.setContent(html_a99bf64c4a6d7965d67caa68171edf91);
             
         
@@ -141947,7 +141994,7 @@ window.onload = function() {
     
             marker_1a83369c1e31ba1419c5a1a514077d2c.bindTooltip(
                 `<div>
-                     CTM8 | Témiscouata-sur-le-Lac Water Aerodrome
+                     CTM8 | T├⌐miscouata-sur-le-Lac Water Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -142174,7 +142221,7 @@ window.onload = function() {
 
         
             
-                var html_120f89f7463fb62c59c3719901138d93 = $(`<div id="html_120f89f7463fb62c59c3719901138d93" style="width: 100.0%; height: 100.0%;">CTV2 - Lac-Des-Écorces Seaplane Base<br><a href='NotamsMap.html?lat=46.548599&lon=-75.418602&focus=1&src=qfilter'>Open NOTAM focus: 46.548599, -75.418602</a></div>`)[0];
+                var html_120f89f7463fb62c59c3719901138d93 = $(`<div id="html_120f89f7463fb62c59c3719901138d93" style="width: 100.0%; height: 100.0%;">CTV2 - Lac-Des-├ëcorces Seaplane Base<br><a href='NotamsMap.html?lat=46.548599&lon=-75.418602&focus=1&src=qfilter'>Open NOTAM focus: 46.548599, -75.418602</a></div>`)[0];
                 popup_9d851eb7a5b851e964a3783f5b857fea.setContent(html_120f89f7463fb62c59c3719901138d93);
             
         
@@ -142187,7 +142234,7 @@ window.onload = function() {
     
             marker_ad681e54e84ecc3960ecf6e9df8119eb.bindTooltip(
                 `<div>
-                     CTV2 | Lac-Des-Écorces Seaplane Base
+                     CTV2 | Lac-Des-├ëcorces Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -142222,7 +142269,7 @@ window.onload = function() {
 
         
             
-                var html_607112e230a61589212c75c5c044d5b4 = $(`<div id="html_607112e230a61589212c75c5c044d5b4" style="width: 100.0%; height: 100.0%;">CTX2 - Lac Trévet Seaplane Base<br><a href='NotamsMap.html?lat=48.159401&lon=-76.137802&focus=1&src=qfilter'>Open NOTAM focus: 48.159401, -76.137802</a></div>`)[0];
+                var html_607112e230a61589212c75c5c044d5b4 = $(`<div id="html_607112e230a61589212c75c5c044d5b4" style="width: 100.0%; height: 100.0%;">CTX2 - Lac Tr├⌐vet Seaplane Base<br><a href='NotamsMap.html?lat=48.159401&lon=-76.137802&focus=1&src=qfilter'>Open NOTAM focus: 48.159401, -76.137802</a></div>`)[0];
                 popup_5937ad9426c63503117db32bda1c381b.setContent(html_607112e230a61589212c75c5c044d5b4);
             
         
@@ -142235,7 +142282,7 @@ window.onload = function() {
     
             marker_8f40f21eb6733607133da5237ee1de78.bindTooltip(
                 `<div>
-                     CTX2 | Lac Trévet Seaplane Base
+                     CTX2 | Lac Tr├⌐vet Seaplane Base
                  </div>`,
                 {
   "sticky": true,
@@ -142366,7 +142413,7 @@ window.onload = function() {
 
         
             
-                var html_6eac78d3be5872ad269372d6aabd0916 = $(`<div id="html_6eac78d3be5872ad269372d6aabd0916" style="width: 100.0%; height: 100.0%;">CVP2 - Île Sainte-Hélène Water Airport<br><a href='NotamsMap.html?lat=45.521200&lon=-73.539400&focus=1&src=qfilter'>Open NOTAM focus: 45.521200, -73.539400</a></div>`)[0];
+                var html_6eac78d3be5872ad269372d6aabd0916 = $(`<div id="html_6eac78d3be5872ad269372d6aabd0916" style="width: 100.0%; height: 100.0%;">CVP2 - ├Äle Sainte-H├⌐l├¿ne Water Airport<br><a href='NotamsMap.html?lat=45.521200&lon=-73.539400&focus=1&src=qfilter'>Open NOTAM focus: 45.521200, -73.539400</a></div>`)[0];
                 popup_b36cfe71814bdf34591d7f8882838a08.setContent(html_6eac78d3be5872ad269372d6aabd0916);
             
         
@@ -142379,7 +142426,7 @@ window.onload = function() {
     
             marker_b9ea391d5c4007addf1d9a01938704c9.bindTooltip(
                 `<div>
-                     CVP2 | Île Sainte-Hélène Water Airport
+                     CVP2 | ├Äle Sainte-H├⌐l├¿ne Water Airport
                  </div>`,
                 {
   "sticky": true,
@@ -142668,7 +142715,7 @@ window.onload = function() {
 
         
             
-                var html_9f4c604743769b62c609ab2931438bbc = $(`<div id="html_9f4c604743769b62c609ab2931438bbc" style="width: 100.0%; height: 100.0%;">CA-0457 - L'Île d'Entrée Airfield<br><a href='NotamsMap.html?lat=47.276376&lon=-61.712329&focus=1&src=qfilter'>Open NOTAM focus: 47.276376, -61.712329</a></div>`)[0];
+                var html_9f4c604743769b62c609ab2931438bbc = $(`<div id="html_9f4c604743769b62c609ab2931438bbc" style="width: 100.0%; height: 100.0%;">CA-0457 - L'├Äle d'Entr├⌐e Airfield<br><a href='NotamsMap.html?lat=47.276376&lon=-61.712329&focus=1&src=qfilter'>Open NOTAM focus: 47.276376, -61.712329</a></div>`)[0];
                 popup_81a63902cd2a6a8d2bdb422c794f13b0.setContent(html_9f4c604743769b62c609ab2931438bbc);
             
         
@@ -142681,7 +142728,7 @@ window.onload = function() {
     
             marker_eb9c6eddeb4de6856094a5dc6478b91b.bindTooltip(
                 `<div>
-                     CA-0457 | L'Île d'Entrée Airfield
+                     CA-0457 | L'├Äle d'Entr├⌐e Airfield
                  </div>`,
                 {
   "sticky": true,
@@ -142716,7 +142763,7 @@ window.onload = function() {
 
         
             
-                var html_43f2e3bf508895bab7185248d8b99682 = $(`<div id="html_43f2e3bf508895bab7185248d8b99682" style="width: 100.0%; height: 100.0%;">CA-0463 - Saint-François-de-Laval (Laval Aviation)<br><a href='NotamsMap.html?lat=45.688674&lon=-73.581126&focus=1&src=qfilter'>Open NOTAM focus: 45.688674, -73.581126</a></div>`)[0];
+                var html_43f2e3bf508895bab7185248d8b99682 = $(`<div id="html_43f2e3bf508895bab7185248d8b99682" style="width: 100.0%; height: 100.0%;">CA-0463 - Saint-Fran├ºois-de-Laval (Laval Aviation)<br><a href='NotamsMap.html?lat=45.688674&lon=-73.581126&focus=1&src=qfilter'>Open NOTAM focus: 45.688674, -73.581126</a></div>`)[0];
                 popup_e55562838bfbc0fe7464b8ed83c599c2.setContent(html_43f2e3bf508895bab7185248d8b99682);
             
         
@@ -142729,7 +142776,7 @@ window.onload = function() {
     
             marker_0f8c445240ba104ae2bb94af4f69586d.bindTooltip(
                 `<div>
-                     CA-0463 | Saint-François-de-Laval (Laval Aviation)
+                     CA-0463 | Saint-Fran├ºois-de-Laval (Laval Aviation)
                  </div>`,
                 {
   "sticky": true,
@@ -142764,7 +142811,7 @@ window.onload = function() {
 
         
             
-                var html_2501ea595923a8a9ea32b4a8b5b356d8 = $(`<div id="html_2501ea595923a8a9ea32b4a8b5b356d8" style="width: 100.0%; height: 100.0%;">CA-0526 - Rivière-aux-Saumons Aerodrome<br><a href='NotamsMap.html?lat=49.401389&lon=-62.295278&focus=1&src=qfilter'>Open NOTAM focus: 49.401389, -62.295278</a></div>`)[0];
+                var html_2501ea595923a8a9ea32b4a8b5b356d8 = $(`<div id="html_2501ea595923a8a9ea32b4a8b5b356d8" style="width: 100.0%; height: 100.0%;">CA-0526 - Rivi├¿re-aux-Saumons Aerodrome<br><a href='NotamsMap.html?lat=49.401389&lon=-62.295278&focus=1&src=qfilter'>Open NOTAM focus: 49.401389, -62.295278</a></div>`)[0];
                 popup_d308911d41e4458ddfe7b77df28c94f3.setContent(html_2501ea595923a8a9ea32b4a8b5b356d8);
             
         
@@ -142777,7 +142824,7 @@ window.onload = function() {
     
             marker_4df3b56764519af1bb95e7e1e444592c.bindTooltip(
                 `<div>
-                     CA-0526 | Rivière-aux-Saumons Aerodrome
+                     CA-0526 | Rivi├¿re-aux-Saumons Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -142956,7 +143003,7 @@ window.onload = function() {
 
         
             
-                var html_ef84bccbc6122083a680ec2b805adebf = $(`<div id="html_ef84bccbc6122083a680ec2b805adebf" style="width: 100.0%; height: 100.0%;">CA-0718 - Rivière-au-Tonnerre Airport<br><a href='NotamsMap.html?lat=50.277110&lon=-64.754770&focus=1&src=qfilter'>Open NOTAM focus: 50.277110, -64.754770</a></div>`)[0];
+                var html_ef84bccbc6122083a680ec2b805adebf = $(`<div id="html_ef84bccbc6122083a680ec2b805adebf" style="width: 100.0%; height: 100.0%;">CA-0718 - Rivi├¿re-au-Tonnerre Airport<br><a href='NotamsMap.html?lat=50.277110&lon=-64.754770&focus=1&src=qfilter'>Open NOTAM focus: 50.277110, -64.754770</a></div>`)[0];
                 popup_2354dac2a1c82ad66908a2fb7c5c072a.setContent(html_ef84bccbc6122083a680ec2b805adebf);
             
         
@@ -142969,7 +143016,7 @@ window.onload = function() {
     
             marker_ffd9ba53670fccb9ab7926edf4d8c22c.bindTooltip(
                 `<div>
-                     CA-0718 | Rivière-au-Tonnerre Airport
+                     CA-0718 | Rivi├¿re-au-Tonnerre Airport
                  </div>`,
                 {
   "sticky": true,
@@ -143052,7 +143099,7 @@ window.onload = function() {
 
         
             
-                var html_6693e1d0bdcc58b4680dee9b510ce662 = $(`<div id="html_6693e1d0bdcc58b4680dee9b510ce662" style="width: 100.0%; height: 100.0%;">CA-0814 - Brébeuf Airport<br><a href='NotamsMap.html?lat=48.394870&lon=-66.383890&focus=1&src=qfilter'>Open NOTAM focus: 48.394870, -66.383890</a></div>`)[0];
+                var html_6693e1d0bdcc58b4680dee9b510ce662 = $(`<div id="html_6693e1d0bdcc58b4680dee9b510ce662" style="width: 100.0%; height: 100.0%;">CA-0814 - Br├⌐beuf Airport<br><a href='NotamsMap.html?lat=48.394870&lon=-66.383890&focus=1&src=qfilter'>Open NOTAM focus: 48.394870, -66.383890</a></div>`)[0];
                 popup_1e36d11fa0b2ae8e4c2955b39660a9f9.setContent(html_6693e1d0bdcc58b4680dee9b510ce662);
             
         
@@ -143065,7 +143112,7 @@ window.onload = function() {
     
             marker_bee28c5022bbe1bb07b1dd90c10e0ffb.bindTooltip(
                 `<div>
-                     CA-0814 | Brébeuf Airport
+                     CA-0814 | Br├⌐beuf Airport
                  </div>`,
                 {
   "sticky": true,
@@ -143100,7 +143147,7 @@ window.onload = function() {
 
         
             
-                var html_a7353a03c668909ddbe3eb554e9b632e = $(`<div id="html_a7353a03c668909ddbe3eb554e9b632e" style="width: 100.0%; height: 100.0%;">CA-0839 - Île Sainte-Marguerite Airport<br><a href='NotamsMap.html?lat=47.031730&lon=-70.625710&focus=1&src=qfilter'>Open NOTAM focus: 47.031730, -70.625710</a></div>`)[0];
+                var html_a7353a03c668909ddbe3eb554e9b632e = $(`<div id="html_a7353a03c668909ddbe3eb554e9b632e" style="width: 100.0%; height: 100.0%;">CA-0839 - ├Äle Sainte-Marguerite Airport<br><a href='NotamsMap.html?lat=47.031730&lon=-70.625710&focus=1&src=qfilter'>Open NOTAM focus: 47.031730, -70.625710</a></div>`)[0];
                 popup_8af989448e79f29988179caeadaf57aa.setContent(html_a7353a03c668909ddbe3eb554e9b632e);
             
         
@@ -143113,7 +143160,7 @@ window.onload = function() {
     
             marker_f8a9ccf06b8f2d98842c47c92978f3b3.bindTooltip(
                 `<div>
-                     CA-0839 | Île Sainte-Marguerite Airport
+                     CA-0839 | ├Äle Sainte-Marguerite Airport
                  </div>`,
                 {
   "sticky": true,
@@ -143148,7 +143195,7 @@ window.onload = function() {
 
         
             
-                var html_371030b2fb1474f6a61c01ae4982c572 = $(`<div id="html_371030b2fb1474f6a61c01ae4982c572" style="width: 100.0%; height: 100.0%;">CA-0840 - Grosse-Île Airport<br><a href='NotamsMap.html?lat=47.033780&lon=-70.659940&focus=1&src=qfilter'>Open NOTAM focus: 47.033780, -70.659940</a></div>`)[0];
+                var html_371030b2fb1474f6a61c01ae4982c572 = $(`<div id="html_371030b2fb1474f6a61c01ae4982c572" style="width: 100.0%; height: 100.0%;">CA-0840 - Grosse-├Äle Airport<br><a href='NotamsMap.html?lat=47.033780&lon=-70.659940&focus=1&src=qfilter'>Open NOTAM focus: 47.033780, -70.659940</a></div>`)[0];
                 popup_7f7b91d7399593d62c6fd2b3910ea121.setContent(html_371030b2fb1474f6a61c01ae4982c572);
             
         
@@ -143161,7 +143208,7 @@ window.onload = function() {
     
             marker_ce528a1d4b06635b8d46f7f553a28849.bindTooltip(
                 `<div>
-                     CA-0840 | Grosse-Île Airport
+                     CA-0840 | Grosse-├Äle Airport
                  </div>`,
                 {
   "sticky": true,
@@ -143196,7 +143243,7 @@ window.onload = function() {
 
         
             
-                var html_5c580ac650a8e4bd968df715c542aaf4 = $(`<div id="html_5c580ac650a8e4bd968df715c542aaf4" style="width: 100.0%; height: 100.0%;">CA-0874 - Aérodrome Nilgaut<br><a href='NotamsMap.html?lat=46.570969&lon=-77.331871&focus=1&src=qfilter'>Open NOTAM focus: 46.570969, -77.331871</a></div>`)[0];
+                var html_5c580ac650a8e4bd968df715c542aaf4 = $(`<div id="html_5c580ac650a8e4bd968df715c542aaf4" style="width: 100.0%; height: 100.0%;">CA-0874 - A├⌐rodrome Nilgaut<br><a href='NotamsMap.html?lat=46.570969&lon=-77.331871&focus=1&src=qfilter'>Open NOTAM focus: 46.570969, -77.331871</a></div>`)[0];
                 popup_42047d92d6c7990ce8e48b1b7f9cdc09.setContent(html_5c580ac650a8e4bd968df715c542aaf4);
             
         
@@ -143209,7 +143256,7 @@ window.onload = function() {
     
             marker_5ad5fd8df48d120f95fa4f3cd0295d92.bindTooltip(
                 `<div>
-                     CA-0874 | Aérodrome Nilgaut
+                     CA-0874 | A├⌐rodrome Nilgaut
                  </div>`,
                 {
   "sticky": true,
@@ -143340,7 +143387,7 @@ window.onload = function() {
 
         
             
-                var html_aa79232cc4c0b2eabcecb31a5d7a1fa5 = $(`<div id="html_aa79232cc4c0b2eabcecb31a5d7a1fa5" style="width: 100.0%; height: 100.0%;">CA-0967 - Vauréal Airstrip<br><a href='NotamsMap.html?lat=49.615780&lon=-62.604280&focus=1&src=qfilter'>Open NOTAM focus: 49.615780, -62.604280</a></div>`)[0];
+                var html_aa79232cc4c0b2eabcecb31a5d7a1fa5 = $(`<div id="html_aa79232cc4c0b2eabcecb31a5d7a1fa5" style="width: 100.0%; height: 100.0%;">CA-0967 - Vaur├⌐al Airstrip<br><a href='NotamsMap.html?lat=49.615780&lon=-62.604280&focus=1&src=qfilter'>Open NOTAM focus: 49.615780, -62.604280</a></div>`)[0];
                 popup_c7baae1f764dbe5fea237ab4a360cafb.setContent(html_aa79232cc4c0b2eabcecb31a5d7a1fa5);
             
         
@@ -143353,7 +143400,7 @@ window.onload = function() {
     
             marker_fcc237bef2c6d791bb2a9ac495186e52.bindTooltip(
                 `<div>
-                     CA-0967 | Vauréal Airstrip
+                     CA-0967 | Vaur├⌐al Airstrip
                  </div>`,
                 {
   "sticky": true,
@@ -143388,7 +143435,7 @@ window.onload = function() {
 
         
             
-                var html_5e7aa9526959004def5a11f4eb4a52b1 = $(`<div id="html_5e7aa9526959004def5a11f4eb4a52b1" style="width: 100.0%; height: 100.0%;">CA-0968 - Baie Innommée Airstrip<br><a href='NotamsMap.html?lat=49.250990&lon=-61.801810&focus=1&src=qfilter'>Open NOTAM focus: 49.250990, -61.801810</a></div>`)[0];
+                var html_5e7aa9526959004def5a11f4eb4a52b1 = $(`<div id="html_5e7aa9526959004def5a11f4eb4a52b1" style="width: 100.0%; height: 100.0%;">CA-0968 - Baie Innomm├⌐e Airstrip<br><a href='NotamsMap.html?lat=49.250990&lon=-61.801810&focus=1&src=qfilter'>Open NOTAM focus: 49.250990, -61.801810</a></div>`)[0];
                 popup_db5563140a96bab3453635c0760da6ff.setContent(html_5e7aa9526959004def5a11f4eb4a52b1);
             
         
@@ -143401,7 +143448,7 @@ window.onload = function() {
     
             marker_ff26a52e32af5cdf6a6b9344099ad7a7.bindTooltip(
                 `<div>
-                     CA-0968 | Baie Innommée Airstrip
+                     CA-0968 | Baie Innomm├⌐e Airstrip
                  </div>`,
                 {
   "sticky": true,
@@ -143580,7 +143627,7 @@ window.onload = function() {
 
         
             
-                var html_9046142db3f018e4755dbf926c04591f = $(`<div id="html_9046142db3f018e4755dbf926c04591f" style="width: 100.0%; height: 100.0%;">CAA2 - St. André-Avellin Aerodrome<br><a href='NotamsMap.html?lat=45.744319&lon=-75.070267&focus=1&src=qfilter'>Open NOTAM focus: 45.744319, -75.070267</a></div>`)[0];
+                var html_9046142db3f018e4755dbf926c04591f = $(`<div id="html_9046142db3f018e4755dbf926c04591f" style="width: 100.0%; height: 100.0%;">CAA2 - St. Andr├⌐-Avellin Aerodrome<br><a href='NotamsMap.html?lat=45.744319&lon=-75.070267&focus=1&src=qfilter'>Open NOTAM focus: 45.744319, -75.070267</a></div>`)[0];
                 popup_7e87c95c6ad6862e7b6fcfbbb6c9008a.setContent(html_9046142db3f018e4755dbf926c04591f);
             
         
@@ -143593,7 +143640,7 @@ window.onload = function() {
     
             marker_7069141b08c662c252d0db65703dd55e.bindTooltip(
                 `<div>
-                     CAA2 | St. André-Avellin Aerodrome
+                     CAA2 | St. Andr├⌐-Avellin Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -143772,7 +143819,7 @@ window.onload = function() {
 
         
             
-                var html_77f12566da24049b5bced7d308354285 = $(`<div id="html_77f12566da24049b5bced7d308354285" style="width: 100.0%; height: 100.0%;">CCU2 - ULM Québec Aerodrome<br><a href='NotamsMap.html?lat=46.173889&lon=-73.278889&focus=1&src=qfilter'>Open NOTAM focus: 46.173889, -73.278889</a></div>`)[0];
+                var html_77f12566da24049b5bced7d308354285 = $(`<div id="html_77f12566da24049b5bced7d308354285" style="width: 100.0%; height: 100.0%;">CCU2 - ULM Qu├⌐bec Aerodrome<br><a href='NotamsMap.html?lat=46.173889&lon=-73.278889&focus=1&src=qfilter'>Open NOTAM focus: 46.173889, -73.278889</a></div>`)[0];
                 popup_c840be3d7c8023a1e3e724cd0f40a5ae.setContent(html_77f12566da24049b5bced7d308354285);
             
         
@@ -143785,7 +143832,7 @@ window.onload = function() {
     
             marker_1c1af4521cf8d89c5b9eeab86fb02d53.bindTooltip(
                 `<div>
-                     CCU2 | ULM Québec Aerodrome
+                     CCU2 | ULM Qu├⌐bec Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -143820,7 +143867,7 @@ window.onload = function() {
 
         
             
-                var html_11f126421c97a2faddfbaac04f92772f = $(`<div id="html_11f126421c97a2faddfbaac04f92772f" style="width: 100.0%; height: 100.0%;">CDD3 - Ste-Agnès-de-Dundee Airport<br><a href='NotamsMap.html?lat=45.047722&lon=-74.340102&focus=1&src=qfilter'>Open NOTAM focus: 45.047722, -74.340102</a></div>`)[0];
+                var html_11f126421c97a2faddfbaac04f92772f = $(`<div id="html_11f126421c97a2faddfbaac04f92772f" style="width: 100.0%; height: 100.0%;">CDD3 - Ste-Agn├¿s-de-Dundee Airport<br><a href='NotamsMap.html?lat=45.047722&lon=-74.340102&focus=1&src=qfilter'>Open NOTAM focus: 45.047722, -74.340102</a></div>`)[0];
                 popup_08899fb12a9cd8807418161c79ca6e53.setContent(html_11f126421c97a2faddfbaac04f92772f);
             
         
@@ -143833,7 +143880,7 @@ window.onload = function() {
     
             marker_2c2eb1edf7550c4143a51e33f5aae1ea.bindTooltip(
                 `<div>
-                     CDD3 | Ste-Agnès-de-Dundee Airport
+                     CDD3 | Ste-Agn├¿s-de-Dundee Airport
                  </div>`,
                 {
   "sticky": true,
@@ -144204,7 +144251,7 @@ window.onload = function() {
 
         
             
-                var html_2310beb31fd9c963a28d80693d21b06a = $(`<div id="html_2310beb31fd9c963a28d80693d21b06a" style="width: 100.0%; height: 100.0%;">CNV9 - Québec / Neuville Airport<br><a href='NotamsMap.html?lat=46.721476&lon=-71.585498&focus=1&src=qfilter'>Open NOTAM focus: 46.721476, -71.585498</a></div>`)[0];
+                var html_2310beb31fd9c963a28d80693d21b06a = $(`<div id="html_2310beb31fd9c963a28d80693d21b06a" style="width: 100.0%; height: 100.0%;">CNV9 - Qu├⌐bec / Neuville Airport<br><a href='NotamsMap.html?lat=46.721476&lon=-71.585498&focus=1&src=qfilter'>Open NOTAM focus: 46.721476, -71.585498</a></div>`)[0];
                 popup_416275bf3f2ba72658275dcf8fcb1c8c.setContent(html_2310beb31fd9c963a28d80693d21b06a);
             
         
@@ -144217,7 +144264,7 @@ window.onload = function() {
     
             marker_8c81d0aa2878b82cdeda8951860fc098.bindTooltip(
                 `<div>
-                     CNV9 | Québec / Neuville Airport
+                     CNV9 | Qu├⌐bec / Neuville Airport
                  </div>`,
                 {
   "sticky": true,
@@ -144348,7 +144395,7 @@ window.onload = function() {
 
         
             
-                var html_f1c6254e859d6519adf85b6fb8dd1cbe = $(`<div id="html_f1c6254e859d6519adf85b6fb8dd1cbe" style="width: 100.0%; height: 100.0%;">CRB4 - Rivière Bonnard Airport<br><a href='NotamsMap.html?lat=50.704399&lon=-71.162498&focus=1&src=qfilter'>Open NOTAM focus: 50.704399, -71.162498</a></div>`)[0];
+                var html_f1c6254e859d6519adf85b6fb8dd1cbe = $(`<div id="html_f1c6254e859d6519adf85b6fb8dd1cbe" style="width: 100.0%; height: 100.0%;">CRB4 - Rivi├¿re Bonnard Airport<br><a href='NotamsMap.html?lat=50.704399&lon=-71.162498&focus=1&src=qfilter'>Open NOTAM focus: 50.704399, -71.162498</a></div>`)[0];
                 popup_dfffd4129f119600d6d2ab571eded3d6.setContent(html_f1c6254e859d6519adf85b6fb8dd1cbe);
             
         
@@ -144361,7 +144408,7 @@ window.onload = function() {
     
             marker_53fddc9775af02a13ac41ae49c6c426d.bindTooltip(
                 `<div>
-                     CRB4 | Rivière Bonnard Airport
+                     CRB4 | Rivi├¿re Bonnard Airport
                  </div>`,
                 {
   "sticky": true,
@@ -144396,7 +144443,7 @@ window.onload = function() {
 
         
             
-                var html_a989d2d31307f7eac534935f4950b776 = $(`<div id="html_a989d2d31307f7eac534935f4950b776" style="width: 100.0%; height: 100.0%;">CRB5 - Rivière Bell Aerodrome<br><a href='NotamsMap.html?lat=49.078899&lon=-62.236900&focus=1&src=qfilter'>Open NOTAM focus: 49.078899, -62.236900</a></div>`)[0];
+                var html_a989d2d31307f7eac534935f4950b776 = $(`<div id="html_a989d2d31307f7eac534935f4950b776" style="width: 100.0%; height: 100.0%;">CRB5 - Rivi├¿re Bell Aerodrome<br><a href='NotamsMap.html?lat=49.078899&lon=-62.236900&focus=1&src=qfilter'>Open NOTAM focus: 49.078899, -62.236900</a></div>`)[0];
                 popup_bf2c85265433ebcdb324897479a4f429.setContent(html_a989d2d31307f7eac534935f4950b776);
             
         
@@ -144409,7 +144456,7 @@ window.onload = function() {
     
             marker_8a52bb89c8178f14d244e0aba01a375d.bindTooltip(
                 `<div>
-                     CRB5 | Rivière Bell Aerodrome
+                     CRB5 | Rivi├¿re Bell Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -144588,7 +144635,7 @@ window.onload = function() {
 
         
             
-                var html_99b368977d746a3b4a126855e65e3c0e = $(`<div id="html_99b368977d746a3b4a126855e65e3c0e" style="width: 100.0%; height: 100.0%;">CRT2 - Rivière Témiscamie (Air Roberval) Airport<br><a href='NotamsMap.html?lat=51.009247&lon=-72.983594&focus=1&src=qfilter'>Open NOTAM focus: 51.009247, -72.983594</a></div>`)[0];
+                var html_99b368977d746a3b4a126855e65e3c0e = $(`<div id="html_99b368977d746a3b4a126855e65e3c0e" style="width: 100.0%; height: 100.0%;">CRT2 - Rivi├¿re T├⌐miscamie (Air Roberval) Airport<br><a href='NotamsMap.html?lat=51.009247&lon=-72.983594&focus=1&src=qfilter'>Open NOTAM focus: 51.009247, -72.983594</a></div>`)[0];
                 popup_a3b691736823027247f1ff1b322bbb01.setContent(html_99b368977d746a3b4a126855e65e3c0e);
             
         
@@ -144601,7 +144648,7 @@ window.onload = function() {
     
             marker_4e01bec9f522c0d1b51759657fbff6d3.bindTooltip(
                 `<div>
-                     CRT2 | Rivière Témiscamie (Air Roberval) Airport
+                     CRT2 | Rivi├¿re T├⌐miscamie (Air Roberval) Airport
                  </div>`,
                 {
   "sticky": true,
@@ -145164,7 +145211,7 @@ window.onload = function() {
 
         
             
-                var html_c23aaeb76525ac75d396c4a33264d28e = $(`<div id="html_c23aaeb76525ac75d396c4a33264d28e" style="width: 100.0%; height: 100.0%;">CSH2 - Île-aux-Grues Airport<br><a href='NotamsMap.html?lat=47.072402&lon=-70.533235&focus=1&src=qfilter'>Open NOTAM focus: 47.072402, -70.533235</a></div>`)[0];
+                var html_c23aaeb76525ac75d396c4a33264d28e = $(`<div id="html_c23aaeb76525ac75d396c4a33264d28e" style="width: 100.0%; height: 100.0%;">CSH2 - ├Äle-aux-Grues Airport<br><a href='NotamsMap.html?lat=47.072402&lon=-70.533235&focus=1&src=qfilter'>Open NOTAM focus: 47.072402, -70.533235</a></div>`)[0];
                 popup_baa934a704459eb46a7175809cf03375.setContent(html_c23aaeb76525ac75d396c4a33264d28e);
             
         
@@ -145177,7 +145224,7 @@ window.onload = function() {
     
             marker_2f1694e597d1814dbc71543d23c3eea2.bindTooltip(
                 `<div>
-                     CSH2 | Île-aux-Grues Airport
+                     CSH2 | ├Äle-aux-Grues Airport
                  </div>`,
                 {
   "sticky": true,
@@ -145548,7 +145595,7 @@ window.onload = function() {
 
         
             
-                var html_dc684ec38d0db61d6d307470887f885d = $(`<div id="html_dc684ec38d0db61d6d307470887f885d" style="width: 100.0%; height: 100.0%;">CSL3 - Lac-à-la-Tortue Airport<br><a href='NotamsMap.html?lat=46.621806&lon=-72.632889&focus=1&src=qfilter'>Open NOTAM focus: 46.621806, -72.632889</a></div>`)[0];
+                var html_dc684ec38d0db61d6d307470887f885d = $(`<div id="html_dc684ec38d0db61d6d307470887f885d" style="width: 100.0%; height: 100.0%;">CSL3 - Lac-├á-la-Tortue Airport<br><a href='NotamsMap.html?lat=46.621806&lon=-72.632889&focus=1&src=qfilter'>Open NOTAM focus: 46.621806, -72.632889</a></div>`)[0];
                 popup_7927971bcc33e33df3422242ce3384db.setContent(html_dc684ec38d0db61d6d307470887f885d);
             
         
@@ -145561,7 +145608,7 @@ window.onload = function() {
     
             marker_e3f01eee52c8c93134a5e95b2442eabe.bindTooltip(
                 `<div>
-                     CSL3 | Lac-à-la-Tortue Airport
+                     CSL3 | Lac-├á-la-Tortue Airport
                  </div>`,
                 {
   "sticky": true,
@@ -145788,7 +145835,7 @@ window.onload = function() {
 
         
             
-                var html_07fae0ab4e99bed8e5b89437342d990e = $(`<div id="html_07fae0ab4e99bed8e5b89437342d990e" style="width: 100.0%; height: 100.0%;">CSN3 - St-Jérôme Airport<br><a href='NotamsMap.html?lat=45.779799&lon=-74.067088&focus=1&src=qfilter'>Open NOTAM focus: 45.779799, -74.067088</a></div>`)[0];
+                var html_07fae0ab4e99bed8e5b89437342d990e = $(`<div id="html_07fae0ab4e99bed8e5b89437342d990e" style="width: 100.0%; height: 100.0%;">CSN3 - St-J├⌐r├┤me Airport<br><a href='NotamsMap.html?lat=45.779799&lon=-74.067088&focus=1&src=qfilter'>Open NOTAM focus: 45.779799, -74.067088</a></div>`)[0];
                 popup_91eb9fd4401880f2cb18a0802d24f3c6.setContent(html_07fae0ab4e99bed8e5b89437342d990e);
             
         
@@ -145801,7 +145848,7 @@ window.onload = function() {
     
             marker_8edf439ed54d31976c2670ba1e62632e.bindTooltip(
                 `<div>
-                     CSN3 | St-Jérôme Airport
+                     CSN3 | St-J├⌐r├┤me Airport
                  </div>`,
                 {
   "sticky": true,
@@ -145932,7 +145979,7 @@ window.onload = function() {
 
         
             
-                var html_99c793968cc222bfbcdbb88ddd0ece94 = $(`<div id="html_99c793968cc222bfbcdbb88ddd0ece94" style="width: 100.0%; height: 100.0%;">CSP6 - Montreal / Aéroparc Île Perrot<br><a href='NotamsMap.html?lat=45.376099&lon=-73.907204&focus=1&src=qfilter'>Open NOTAM focus: 45.376099, -73.907204</a></div>`)[0];
+                var html_99c793968cc222bfbcdbb88ddd0ece94 = $(`<div id="html_99c793968cc222bfbcdbb88ddd0ece94" style="width: 100.0%; height: 100.0%;">CSP6 - Montreal / A├⌐roparc ├Äle Perrot<br><a href='NotamsMap.html?lat=45.376099&lon=-73.907204&focus=1&src=qfilter'>Open NOTAM focus: 45.376099, -73.907204</a></div>`)[0];
                 popup_5ca1e5407ee45c7ac5cea9591aed2985.setContent(html_99c793968cc222bfbcdbb88ddd0ece94);
             
         
@@ -145945,7 +145992,7 @@ window.onload = function() {
     
             marker_d602eb354a456bacc1b679984f47ec37.bindTooltip(
                 `<div>
-                     CSP6 | Montreal / Aéroparc Île Perrot
+                     CSP6 | Montreal / A├⌐roparc ├Äle Perrot
                  </div>`,
                 {
   "sticky": true,
@@ -146652,7 +146699,7 @@ window.onload = function() {
 
         
             
-                var html_73159291212299a80db819b0c3fb7948 = $(`<div id="html_73159291212299a80db819b0c3fb7948" style="width: 100.0%; height: 100.0%;">CSZ4 - St-Frédéric Airport<br><a href='NotamsMap.html?lat=46.331402&lon=-70.963303&focus=1&src=qfilter'>Open NOTAM focus: 46.331402, -70.963303</a></div>`)[0];
+                var html_73159291212299a80db819b0c3fb7948 = $(`<div id="html_73159291212299a80db819b0c3fb7948" style="width: 100.0%; height: 100.0%;">CSZ4 - St-Fr├⌐d├⌐ric Airport<br><a href='NotamsMap.html?lat=46.331402&lon=-70.963303&focus=1&src=qfilter'>Open NOTAM focus: 46.331402, -70.963303</a></div>`)[0];
                 popup_aa978de8290074caf8c20d1e5a8475d0.setContent(html_73159291212299a80db819b0c3fb7948);
             
         
@@ -146665,7 +146712,7 @@ window.onload = function() {
     
             marker_8f8db5839cf7d4a76f2adfd33d9efea8.bindTooltip(
                 `<div>
-                     CSZ4 | St-Frédéric Airport
+                     CSZ4 | St-Fr├⌐d├⌐ric Airport
                  </div>`,
                 {
   "sticky": true,
@@ -146700,7 +146747,7 @@ window.onload = function() {
 
         
             
-                var html_f8518d4e2ea67a7668b2f4a4c4191c84 = $(`<div id="html_f8518d4e2ea67a7668b2f4a4c4191c84" style="width: 100.0%; height: 100.0%;">CTA3 - Île aux Coudres Airport<br><a href='NotamsMap.html?lat=47.389400&lon=-70.384399&focus=1&src=qfilter'>Open NOTAM focus: 47.389400, -70.384399</a></div>`)[0];
+                var html_f8518d4e2ea67a7668b2f4a4c4191c84 = $(`<div id="html_f8518d4e2ea67a7668b2f4a4c4191c84" style="width: 100.0%; height: 100.0%;">CTA3 - ├Äle aux Coudres Airport<br><a href='NotamsMap.html?lat=47.389400&lon=-70.384399&focus=1&src=qfilter'>Open NOTAM focus: 47.389400, -70.384399</a></div>`)[0];
                 popup_937ce9806924bf5601c8a9cf622dbaf8.setContent(html_f8518d4e2ea67a7668b2f4a4c4191c84);
             
         
@@ -146713,7 +146760,7 @@ window.onload = function() {
     
             marker_5c426cdc5c42a523e7e4cea191abfd9b.bindTooltip(
                 `<div>
-                     CTA3 | Île aux Coudres Airport
+                     CTA3 | ├Äle aux Coudres Airport
                  </div>`,
                 {
   "sticky": true,
@@ -146796,7 +146843,7 @@ window.onload = function() {
 
         
             
-                var html_c93f0f1c80edca694f1c9a3641f80f9d = $(`<div id="html_c93f0f1c80edca694f1c9a3641f80f9d" style="width: 100.0%; height: 100.0%;">CTB6 - Tête-à-la-Baleine Airport<br><a href='NotamsMap.html?lat=50.674400&lon=-59.383598&focus=1&src=qfilter'>Open NOTAM focus: 50.674400, -59.383598</a></div>`)[0];
+                var html_c93f0f1c80edca694f1c9a3641f80f9d = $(`<div id="html_c93f0f1c80edca694f1c9a3641f80f9d" style="width: 100.0%; height: 100.0%;">CTB6 - T├¬te-├á-la-Baleine Airport<br><a href='NotamsMap.html?lat=50.674400&lon=-59.383598&focus=1&src=qfilter'>Open NOTAM focus: 50.674400, -59.383598</a></div>`)[0];
                 popup_058334ec35a2f5ec43c112fdfa16f4f3.setContent(html_c93f0f1c80edca694f1c9a3641f80f9d);
             
         
@@ -146809,7 +146856,7 @@ window.onload = function() {
     
             marker_aec520c0dc6fb05e30a2439e1e2e179c.bindTooltip(
                 `<div>
-                     CTB6 | Tête-à-la-Baleine Airport
+                     CTB6 | T├¬te-├á-la-Baleine Airport
                  </div>`,
                 {
   "sticky": true,
@@ -146844,7 +146891,7 @@ window.onload = function() {
 
         
             
-                var html_211830a7b7998581207b031e68f9c65e = $(`<div id="html_211830a7b7998581207b031e68f9c65e" style="width: 100.0%; height: 100.0%;">CTE5 - Lac à la Perchaude Airport<br><a href='NotamsMap.html?lat=46.622501&lon=-72.848297&focus=1&src=qfilter'>Open NOTAM focus: 46.622501, -72.848297</a></div>`)[0];
+                var html_211830a7b7998581207b031e68f9c65e = $(`<div id="html_211830a7b7998581207b031e68f9c65e" style="width: 100.0%; height: 100.0%;">CTE5 - Lac ├á la Perchaude Airport<br><a href='NotamsMap.html?lat=46.622501&lon=-72.848297&focus=1&src=qfilter'>Open NOTAM focus: 46.622501, -72.848297</a></div>`)[0];
                 popup_457c939f40fe9e3ea61d16cced57e3f6.setContent(html_211830a7b7998581207b031e68f9c65e);
             
         
@@ -146857,7 +146904,7 @@ window.onload = function() {
     
             marker_4cb5cf0fba1c42bc0a6424a3d588fa59.bindTooltip(
                 `<div>
-                     CTE5 | Lac à la Perchaude Airport
+                     CTE5 | Lac ├á la Perchaude Airport
                  </div>`,
                 {
   "sticky": true,
@@ -146940,7 +146987,7 @@ window.onload = function() {
 
         
             
-                var html_73f217a0f5e78e54cb25eb81d43de5d3 = $(`<div id="html_73f217a0f5e78e54cb25eb81d43de5d3" style="width: 100.0%; height: 100.0%;">CTG3 - Du Rocher-Percé (Pabok) Airport<br><a href='NotamsMap.html?lat=48.383780&lon=-64.562703&focus=1&src=qfilter'>Open NOTAM focus: 48.383780, -64.562703</a></div>`)[0];
+                var html_73f217a0f5e78e54cb25eb81d43de5d3 = $(`<div id="html_73f217a0f5e78e54cb25eb81d43de5d3" style="width: 100.0%; height: 100.0%;">CTG3 - Du Rocher-Perc├⌐ (Pabok) Airport<br><a href='NotamsMap.html?lat=48.383780&lon=-64.562703&focus=1&src=qfilter'>Open NOTAM focus: 48.383780, -64.562703</a></div>`)[0];
                 popup_3b8390b979b517cc89d9503f98394490.setContent(html_73f217a0f5e78e54cb25eb81d43de5d3);
             
         
@@ -146953,7 +147000,7 @@ window.onload = function() {
     
             marker_f9d2789523993e839e75e6a0673a5627.bindTooltip(
                 `<div>
-                     CTG3 | Du Rocher-Percé (Pabok) Airport
+                     CTG3 | Du Rocher-Perc├⌐ (Pabok) Airport
                  </div>`,
                 {
   "sticky": true,
@@ -147036,7 +147083,7 @@ window.onload = function() {
 
         
             
-                var html_e46f30bfe41c92b29f5dc48ebc4a8b61 = $(`<div id="html_e46f30bfe41c92b29f5dc48ebc4a8b61" style="width: 100.0%; height: 100.0%;">CTJ3 - Rivière-la-Madeleine Airport<br><a href='NotamsMap.html?lat=49.241950&lon=-65.330490&focus=1&src=qfilter'>Open NOTAM focus: 49.241950, -65.330490</a></div>`)[0];
+                var html_e46f30bfe41c92b29f5dc48ebc4a8b61 = $(`<div id="html_e46f30bfe41c92b29f5dc48ebc4a8b61" style="width: 100.0%; height: 100.0%;">CTJ3 - Rivi├¿re-la-Madeleine Airport<br><a href='NotamsMap.html?lat=49.241950&lon=-65.330490&focus=1&src=qfilter'>Open NOTAM focus: 49.241950, -65.330490</a></div>`)[0];
                 popup_e3eb2e0d670762181b0784ddb3b47a38.setContent(html_e46f30bfe41c92b29f5dc48ebc4a8b61);
             
         
@@ -147049,7 +147096,7 @@ window.onload = function() {
     
             marker_643b89c1787a90f3f29d38d3e3884a4d.bindTooltip(
                 `<div>
-                     CTJ3 | Rivière-la-Madeleine Airport
+                     CTJ3 | Rivi├¿re-la-Madeleine Airport
                  </div>`,
                 {
   "sticky": true,
@@ -147132,7 +147179,7 @@ window.onload = function() {
 
         
             
-                var html_4dde1a908803462b60c6123fda3c34c1 = $(`<div id="html_4dde1a908803462b60c6123fda3c34c1" style="width: 100.0%; height: 100.0%;">CTK6 - Kégashka Airport<br><a href='NotamsMap.html?lat=50.195801&lon=-61.265800&focus=1&src=qfilter'>Open NOTAM focus: 50.195801, -61.265800</a></div>`)[0];
+                var html_4dde1a908803462b60c6123fda3c34c1 = $(`<div id="html_4dde1a908803462b60c6123fda3c34c1" style="width: 100.0%; height: 100.0%;">CTK6 - K├⌐gashka Airport<br><a href='NotamsMap.html?lat=50.195801&lon=-61.265800&focus=1&src=qfilter'>Open NOTAM focus: 50.195801, -61.265800</a></div>`)[0];
                 popup_4ebbb7e0151941a151ebbf2a36f073a1.setContent(html_4dde1a908803462b60c6123fda3c34c1);
             
         
@@ -147145,7 +147192,7 @@ window.onload = function() {
     
             marker_c7ab8b22a3c20d3351be077daf03c497.bindTooltip(
                 `<div>
-                     CTK6 | Kégashka Airport
+                     CTK6 | K├⌐gashka Airport
                  </div>`,
                 {
   "sticky": true,
@@ -147468,7 +147515,7 @@ window.onload = function() {
 
         
             
-                var html_fc9df2f7acfed5ab842d55e1539a97cc = $(`<div id="html_fc9df2f7acfed5ab842d55e1539a97cc" style="width: 100.0%; height: 100.0%;">CTU5 - La Tabatière Airport<br><a href='NotamsMap.html?lat=50.830799&lon=-58.975601&focus=1&src=qfilter'>Open NOTAM focus: 50.830799, -58.975601</a></div>`)[0];
+                var html_fc9df2f7acfed5ab842d55e1539a97cc = $(`<div id="html_fc9df2f7acfed5ab842d55e1539a97cc" style="width: 100.0%; height: 100.0%;">CTU5 - La Tabati├¿re Airport<br><a href='NotamsMap.html?lat=50.830799&lon=-58.975601&focus=1&src=qfilter'>Open NOTAM focus: 50.830799, -58.975601</a></div>`)[0];
                 popup_3b6df9994462d5b884b542f5573c6b01.setContent(html_fc9df2f7acfed5ab842d55e1539a97cc);
             
         
@@ -147481,7 +147528,7 @@ window.onload = function() {
     
             marker_a6cc36b8adf79a255149a3b0eaee3245.bindTooltip(
                 `<div>
-                     CTU5 | La Tabatière Airport
+                     CTU5 | La Tabati├¿re Airport
                  </div>`,
                 {
   "sticky": true,
@@ -148380,7 +148427,7 @@ window.onload = function() {
 
         
             
-                var html_b61156d0dd831610d0f6989a68f04043 = $(`<div id="html_b61156d0dd831610d0f6989a68f04043" style="width: 100.0%; height: 100.0%;">CYRC - Chicoutimi/Saint-Honoré Aerodrome<br><a href='NotamsMap.html?lat=48.520963&lon=-71.052560&focus=1&src=qfilter'>Open NOTAM focus: 48.520963, -71.052560</a></div>`)[0];
+                var html_b61156d0dd831610d0f6989a68f04043 = $(`<div id="html_b61156d0dd831610d0f6989a68f04043" style="width: 100.0%; height: 100.0%;">CYRC - Chicoutimi/Saint-Honor├⌐ Aerodrome<br><a href='NotamsMap.html?lat=48.520963&lon=-71.052560&focus=1&src=qfilter'>Open NOTAM focus: 48.520963, -71.052560</a></div>`)[0];
                 popup_26b071e0f839cefcb24fe2935e652d97.setContent(html_b61156d0dd831610d0f6989a68f04043);
             
         
@@ -148393,7 +148440,7 @@ window.onload = function() {
     
             marker_43df2b2791475235bbec5f4b02c7bbf8.bindTooltip(
                 `<div>
-                     CYRC | Chicoutimi/Saint-Honoré Aerodrome
+                     CYRC | Chicoutimi/Saint-Honor├⌐ Aerodrome
                  </div>`,
                 {
   "sticky": true,
@@ -154560,7 +154607,7 @@ window.onload = function() {
 
         
             
-                var html_e6525d5e8855f026abeb1a58cdbd5f79 = $(`<div id="html_e6525d5e8855f026abeb1a58cdbd5f79" style="width: 100.0%; height: 100.0%;">CJF3 - Île-à-la-Crosse Airport<br><a href='NotamsMap.html?lat=55.489700&lon=-107.930000&focus=1&src=qfilter'>Open NOTAM focus: 55.489700, -107.930000</a></div>`)[0];
+                var html_e6525d5e8855f026abeb1a58cdbd5f79 = $(`<div id="html_e6525d5e8855f026abeb1a58cdbd5f79" style="width: 100.0%; height: 100.0%;">CJF3 - ├Äle-├á-la-Crosse Airport<br><a href='NotamsMap.html?lat=55.489700&lon=-107.930000&focus=1&src=qfilter'>Open NOTAM focus: 55.489700, -107.930000</a></div>`)[0];
                 popup_7b33d98fa6edca80a8b108ca60928b83.setContent(html_e6525d5e8855f026abeb1a58cdbd5f79);
             
         
@@ -154573,7 +154620,7 @@ window.onload = function() {
     
             marker_223400d253607d8b32f02a9fd6b101a3.bindTooltip(
                 `<div>
-                     CJF3 | Île-à-la-Crosse Airport
+                     CJF3 | ├Äle-├á-la-Crosse Airport
                  </div>`,
                 {
   "sticky": true,
