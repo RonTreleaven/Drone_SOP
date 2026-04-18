@@ -1,20 +1,20 @@
 [
   {
-    "raw": "(V0427/26 NOTAMN\nQ) CZQM/QOLAS/IV/M/AE/000/003/4348N06608W005\nA) CYQI B) 2604141832 C) 2605012359\nE) OBST LGT U/S NDB TOWER 434737N 0660733W (APRX 2.6NM SW AD) 148FT \nAGL, 230FT AMSL.)",
-    "startValidity": "2026-04-14T18:32:00",
-    "endValidity": "2026-05-01T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.793611, -66.125833"
-    ]
-  },
-  {
     "raw": "(V0428/26 NOTAMN\nQ) CZQM/QOLAS/IV/M/AE/000/002/4352N06603W005\nA) CYQI B) 2604141832 C) 2605012359\nE) OBST LGT U/S NDB TOWER 435139N 0660237W (APRX 2.8NM ENE AD) 80FT \nAGL, 200FT AMSL.)",
     "startValidity": "2026-04-14T18:32:00",
     "endValidity": "2026-05-01T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.860833, -66.043611"
+    ]
+  },
+  {
+    "raw": "(V0427/26 NOTAMN\nQ) CZQM/QOLAS/IV/M/AE/000/003/4348N06608W005\nA) CYQI B) 2604141832 C) 2605012359\nE) OBST LGT U/S NDB TOWER 434737N 0660733W (APRX 2.6NM SW AD) 148FT \nAGL, 230FT AMSL.)",
+    "startValidity": "2026-04-14T18:32:00",
+    "endValidity": "2026-05-01T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.793611, -66.125833"
     ]
   },
   {
