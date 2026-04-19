@@ -90,6 +90,11 @@ body {
   color: var(--accent);
 }
 
+.lookup-country-group {
+  margin-top: 8px;
+  max-width: 260px;
+}
+
 #address {
   width: 100%;
 }
@@ -567,6 +572,10 @@ body {
   margin: 0;
 }
 
+.pattern-regenerate-notice {
+  display: none;
+}
+
 .route-tools .mission-setting.mission-setting-wide {
   grid-column: 1 / -1;
 }
@@ -775,6 +784,29 @@ body {
   height: 4px;
   border-radius: 50%;
   background: currentColor;
+}
+
+.glyph-survey {
+  border-radius: 2px;
+  border: 2px solid currentColor;
+}
+
+.glyph-survey::before,
+.glyph-survey::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  height: 2px;
+  background: currentColor;
+}
+
+.glyph-survey::before {
+  top: 4px;
+}
+
+.glyph-survey::after {
+  top: 8px;
 }
 
 .route-tools .route-status {
@@ -1309,6 +1341,13 @@ body.map-immersive {
             <input type="text" id="address" autocomplete="off" placeholder="Enter address, city, postal code, landmark" aria-autocomplete="list" aria-controls="addressSuggestions">
             <div id="addressSuggestions" class="autocomplete-menu" role="listbox" aria-label="Address suggestions"></div>
           </div>
+          <div class="field-group lookup-country-group">
+            <label for="lookupCountry">Lookup country</label>
+            <select id="lookupCountry">
+              <option value="CA">Canada (CA)</option>
+              <option value="US">United States (US)</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="manual-dd-grid" aria-label="Manual DD coordinate entry">
@@ -1339,7 +1378,7 @@ body.map-immersive {
         <button id="runLookupBtn" class="btn lookup-btn" onclick="runLookup()">Lookup</button>
         <button id="clearInputsBtn" class="btn secondary-btn" onclick="clearInputs()">Clear Inputs</button>
       </div>
-      <p class="search-note">Use a specific civic address when possible to improve geocode precision for mission planning and site surveys.</p>
+      <p class="search-note">Use a specific civic address and matching country selection to improve geocode precision for mission planning and site surveys.</p>
     </div>
     <div class="panel lookup-summary-panel">
       <h2>Lookup Summary</h2>
@@ -1418,6 +1457,10 @@ body.map-immersive {
             <span class="tool-glyph glyph-rectangle" aria-hidden="true"></span>
             <span>Rect</span>
           </button>
+          <button class="btn icon-btn" id="setSurveyPatternBtn" type="button" title="Survey Pattern" aria-label="Survey Pattern">
+            <span class="tool-glyph glyph-survey" aria-hidden="true"></span>
+            <span>Survey</span>
+          </button>
           <button class="btn secondary-btn" id="toggleRouteEditBtn" type="button">Lock Route</button>
           <button class="btn" id="snapRouteBtn" type="button">Snap To WP</button>
           <button class="btn" id="closePolygonBtn" type="button">Close Polygon</button>
@@ -1440,15 +1483,6 @@ body.map-immersive {
               <option value="ccw" selected>CCW</option>
             </select>
           </label>
-          <div id="poiRadiusIndicator" class="route-status compact-status">Pattern: Perimeter</div>
-          <label class="mission-setting tool-inline-setting" for="patternType">Pattern
-            <select id="patternType">
-              <option value="perimeter" selected>Perimeter</option>
-              <option value="lawnmower">Lawnmower</option>
-              <option value="poi">POI Orbit</option>
-            </select>
-          </label>
-          <button class="btn" id="generatePatternBtn" type="button">Generate Pattern</button>
         </div>
         <div class="mission-settings-drawer route-tools-panel" id="missionSettingsDrawer">
           <div class="mission-settings-toolbar">
@@ -1474,6 +1508,31 @@ body.map-immersive {
               <label class="mission-setting" for="sideOverlapPct">Side%
                 <input id="sideOverlapPct" type="number" min="20" max="95" step="1" value="70" />
               </label>
+              <label class="mission-setting mission-setting-wide" for="surveyCameraProfile">Survey Camera
+                <select id="surveyCameraProfile">
+                  <option value="mini4proWide" selected>DJI Mini 4 Pro Wide (84x63)</option>
+                  <option value="air3Wide">DJI Air 3 Wide (82x62)</option>
+                  <option value="mavic3eWide">DJI Mavic 3E Wide (84x63)</option>
+                  <option value="custom">Custom FOV</option>
+                </select>
+              </label>
+              <label class="mission-setting" for="surveyHfovDeg">HFOV(deg)
+                <input id="surveyHfovDeg" type="number" min="20" max="150" step="0.1" value="84" />
+              </label>
+              <label class="mission-setting" for="surveyVfovDeg">VFOV(deg)
+                <input id="surveyVfovDeg" type="number" min="15" max="120" step="0.1" value="63" />
+              </label>
+              <div class="route-status mission-settings-note" id="surveySpacingHint">Survey spacing preview: cross-track and along-track values are computed from altitude, overlaps, and camera FOV.</div>
+              <div id="poiRadiusIndicator" class="route-status mission-settings-note">Pattern: Perimeter</div>
+              <label class="mission-setting mission-setting-wide" for="patternType">Pattern
+                <select id="patternType">
+                  <option value="perimeter" selected>Perimeter</option>
+                  <option value="survey">Survey</option>
+                  <option value="poi">POI Orbit</option>
+                </select>
+              </label>
+              <button class="btn mission-setting-wide" id="generatePatternBtn" type="button">Generate Pattern</button>
+              <div class="route-status mission-settings-note pattern-regenerate-notice" id="patternRegenerateNotice">Pattern inputs changed. Regenerate pattern to apply updated survey values.</div>
               <label class="mission-setting mission-setting-wide" for="djiFinishAction">End of Flight
                 <select id="djiFinishAction">
                   <option value="goHome" selected>Return To Home</option>
@@ -1680,6 +1739,18 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 
   var addressInput = document.getElementById('address');
+  const lookupCountrySelect = document.getElementById('lookupCountry');
+  if (lookupCountrySelect) {
+    restoreLookupCountrySelection();
+    lookupCountrySelect.addEventListener('change', function() {
+      const normalized = normalizeLookupCountry(lookupCountrySelect.value);
+      lookupCountrySelect.value = normalized;
+      persistLookupCountrySelection(normalized);
+      clearAddressSuggestions();
+      handleAddressInputForAutocomplete();
+    });
+  }
+
   if (addressInput) {
     addressInput.addEventListener('keydown', function(e) {
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
@@ -1738,6 +1809,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('drawRouteBtn').addEventListener('click', handleDrawRouteToggle);
   document.getElementById('drawPolygonBtn').addEventListener('click', handleDrawPolygonToggle);
   document.getElementById('drawRectangleBtn').addEventListener('click', handleDrawRectangleToggle);
+  document.getElementById('setSurveyPatternBtn').addEventListener('click', activateSurveyPatternMode);
   document.getElementById('snapRouteBtn').addEventListener('click', snapRouteToNearestWaypoint);
   document.getElementById('closePolygonBtn').addEventListener('click', closeCurrentRoutePolygon);
   document.getElementById('setPOIByClickBtn').addEventListener('click', toggleOrbitMode);
@@ -1785,6 +1857,34 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('djiZoomAtWp').addEventListener('change', updateWaypointPhotoActionUi);
   document.getElementById('djiFacePoiHeading').addEventListener('change', updateWaypointPhotoActionUi);
   document.getElementById('djiStartStopVideo').addEventListener('change', updateWaypointPhotoActionUi);
+  document.getElementById('djiExecHeight').addEventListener('input', () => {
+    syncSurveySpacingPreview();
+    evaluatePatternRegenerateWarning();
+  });
+  document.getElementById('djiWaypointSpeed').addEventListener('input', () => {
+    syncSurveySpacingPreview();
+    evaluatePatternRegenerateWarning();
+  });
+  document.getElementById('frontOverlapPct').addEventListener('input', () => {
+    syncSurveySpacingPreview();
+    evaluatePatternRegenerateWarning();
+  });
+  document.getElementById('sideOverlapPct').addEventListener('input', () => {
+    syncSurveySpacingPreview();
+    evaluatePatternRegenerateWarning();
+  });
+  document.getElementById('surveyCameraProfile').addEventListener('change', () => {
+    handleSurveyCameraProfileChange();
+    evaluatePatternRegenerateWarning();
+  });
+  document.getElementById('surveyHfovDeg').addEventListener('input', () => {
+    syncSurveySpacingPreview();
+    evaluatePatternRegenerateWarning();
+  });
+  document.getElementById('surveyVfovDeg').addEventListener('input', () => {
+    syncSurveySpacingPreview();
+    evaluatePatternRegenerateWarning();
+  });
   document.getElementById('djiVideoStartWp').addEventListener('input', updateVideoWaypointStatus);
   document.getElementById('djiVideoStopWp').addEventListener('input', updateVideoWaypointStatus);
   document.getElementById('waypointConfigSelect').addEventListener('change', handleWaypointConfigSelectionChange);
@@ -1837,6 +1937,8 @@ document.addEventListener('DOMContentLoaded', async function() {
   if (profileSlotEl) profileSlotEl.value = getDefaultProfileExportSlot();
   if (djiUuidNameEl) djiUuidNameEl.value = '';
   applyExportNamingModeState();
+  handleSurveyCameraProfileChange();
+  updatePatternRegenerateNotice();
   updateWaypointPhotoActionUi();
   refreshWaypointConfigUi();
   applyExportPermissionGate();
@@ -1861,13 +1963,18 @@ const MAPS_API_LIBRARIES = "drawing,geometry";
 const AUTOCOMPLETE_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.AUTOCOMPLETE_ENDPOINT)
   ? window.DRONE_SOP_CONFIG.AUTOCOMPLETE_ENDPOINT
   : "https://navcan-proxy.rontreleaven.workers.dev/places-autocomplete";
-const AUTOCOMPLETE_COMPONENTS = "country:CA";
 const AUTOCOMPLETE_DEBOUNCE_MS = 240;
 const AUTOCOMPLETE_MIN_CHARS = 3;
 const LOOKUP_HISTORY_KEY = "missionLookupHistory";
 const LOOKUP_HISTORY_COOKIE = "missionLookupHistory";
 const LOOKUP_HISTORY_TTL_DAYS = 365;
 const MAX_LOOKUP_HISTORY = 10;
+const LOOKUP_COUNTRY_KEY = "missionLookupCountry";
+const DEFAULT_LOOKUP_COUNTRY = "CA";
+const LOOKUP_COUNTRY_COMPONENTS = {
+  CA: "country:CA",
+  US: "country:US"
+};
 const PLANNING_MARKER_STATE_KEY = "ggcodePlanningMarkerState";
 
 const DEFAULT_CENTER = { lat: 43.7, lng: -79.4 }; // Toronto default
@@ -1908,10 +2015,20 @@ let missionRangeGuideLabels = [];
 let pendingMapClickMode = null;
 let syncingPOIRadiusInput = false;
 let profileExportRootHandle = null;
+let patternSeedPolygonCoords = null;
+let patternSeedOverlay = null;
+let lastPatternGenerationSignature = '';
+let patternRegenerateRequired = false;
 const SNAP_TO_WAYPOINT_METERS = 12;
 const AUTO_CLOSE_POLYGON_METERS = 16;
 const LIVE_DRAW_DUPLICATE_METERS = 1.2;
 const ROUTE_TOOLS_FLYOUT_STICKY_MS = 2000;
+const SURVEY_CAMERA_PROFILES = {
+  mini4proWide: { label: 'DJI Mini 4 Pro Wide', hfovDeg: 84, vfovDeg: 63 },
+  air3Wide: { label: 'DJI Air 3 Wide', hfovDeg: 82, vfovDeg: 62 },
+  mavic3eWide: { label: 'DJI Mavic 3E Wide', hfovDeg: 84, vfovDeg: 63 },
+  custom: { label: 'Custom FOV', hfovDeg: 84, vfovDeg: 63 }
+};
 const PROFILE_STATE_KEY = 'dsop.profileState.v1';
 const PROFILE_SESSION_STATE_KEY = 'dsop.profileState.session.v1';
 const MISSION_AUTOMATION_PROFILE_KEY = 'dsop.missionAutomationProfile.v1';
@@ -1956,24 +2073,45 @@ function getHubAdvancedAccessRecord() {
   }
 }
 
-function getAdvancedExportGateReason() {
+function getAdvancedExportGateState() {
   const savedProfile = getSavedValidatedHubProfile();
   if (!savedProfile) {
-    return 'Advanced exports are locked until a valid Workspace Reuse profile is saved and validated in My Profile.';
+    return {
+      blocked: true,
+      code: 'PROFILE_NOT_VALIDATED',
+      message: 'Advanced exports are locked until a valid Workspace Reuse profile is saved and validated in My Profile.'
+    };
   }
 
   const signature = buildHubProfileIdentitySignature(savedProfile);
   const accessRecord = getHubAdvancedAccessRecord();
-  if (!accessRecord || accessRecord.version !== PROFILE_ADVANCED_ACCESS_VERSION || accessRecord.signature !== signature) {
-    return 'Advanced exports are locked until the saved profile is validated in My Profile after reading the disclaimer and export instructions.';
+  const hasValidLegacyRecord = Boolean(
+    accessRecord
+    && accessRecord.version === PROFILE_ADVANCED_ACCESS_VERSION
+    && accessRecord.signature === signature
+  );
+  const attested = localStorage.getItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY) === 'true';
+
+  if (!attested && !hasValidLegacyRecord) {
+    return {
+      blocked: true,
+      code: 'ACK_REQUIRED',
+      message: 'Advanced exports are locked. Check the acknowledgment in My Profile > Advanced Access, then save profile in Workspace Reuse mode.'
+    };
   }
 
-  const attestedState = localStorage.getItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY);
-  if (attestedState !== 'true') {
-    return 'Advanced exports are locked. You must check the acknowledgment in the Advanced Access panel in My Profile to unlock exports and Mission Manager.';
-  }
+  return {
+    blocked: false,
+    code: 'OK',
+    message: '',
+    attested,
+    hasValidLegacyRecord
+  };
+}
 
-  return '';
+function getAdvancedExportGateReason() {
+  const gate = getAdvancedExportGateState();
+  return gate.blocked ? gate.message : '';
 }
 
 function canUseAdvancedExports() {
@@ -2567,8 +2705,13 @@ function syncPOICircleRadiusFromInput() {
 }
 
 function handlePatternTypeChange() {
+  const patternType = String(document.getElementById('patternType')?.value || 'perimeter').toLowerCase();
+  if (patternType === 'survey') {
+    applySurveyPatternDefaults();
+  }
   syncPOIVisualizationWithPattern();
   updateDrawShapeSummary();
+  evaluatePatternRegenerateWarning();
 }
 
 function startPOIClickMode(mode = 'poi') {
@@ -2865,7 +3008,7 @@ function initGoogleMap() {
       if (Math.abs(points[0].lat - points[points.length - 1].lat) > 1e-8 || Math.abs(points[0].lng - points[points.length - 1].lng) > 1e-8) {
         points.push({ ...points[0] });
       }
-      setRouteFromLatLngPoints(points);
+      setRouteFromLatLngPoints(points, { setPatternSeed: true });
     }
     updateDrawRouteButtonState();
   });
@@ -2887,7 +3030,7 @@ function initGoogleMap() {
       { lat: sw.lat(), lng: sw.lng() },
       { lat: nw.lat(), lng: nw.lng() }
     ];
-    setRouteFromLatLngPoints(points);
+    setRouteFromLatLngPoints(points, { setPatternSeed: true });
     updateDrawRouteButtonState();
   });
 
@@ -3659,6 +3802,8 @@ function clearActiveRoute() {
   clearWaypointMarkers();
   clearUndoLastWaypointMarker();
   routePath = [];
+  clearPatternSeedPolygon();
+  clearPatternGenerationBaseline();
   waypointPoiAssignments.clear();
   waypointHeadingConfigs.clear();
   selectedWaypointConfigIndex = 0;
@@ -3715,6 +3860,26 @@ function handleDrawRectangleToggle() {
   clearActiveRoute();
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.RECTANGLE);
   showLookupMessage('Rectangle mode enabled. Drag on map to draw bounds.', 'dim');
+  updateDrawRouteButtonState();
+}
+
+function activateSurveyPatternMode() {
+  const patternEl = document.getElementById('patternType');
+  if (!patternEl) return;
+  patternEl.value = 'survey';
+  handlePatternTypeChange();
+
+  if (!drawingManager || !window.google || !google.maps || !google.maps.drawing) {
+    showLookupMessage('Survey pattern selected. Generate Pattern when ready.', 'dim');
+    return;
+  }
+
+  if (drawingManager.getDrawingMode() !== google.maps.drawing.OverlayType.POLYGON) {
+    clearActiveRoute();
+    drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+  }
+
+  showLookupMessage('Survey mode enabled. Draw polygon boundary on map, then Generate Pattern.', 'dim');
   updateDrawRouteButtonState();
 }
 
@@ -3799,6 +3964,7 @@ function closeCurrentRoutePolygon() {
   }
 
   extractPathFromPolyline(activePolyline);
+  setPatternSeedPolygon(getClosedPolygonCoordsLngLat());
 }
 
 function snapPathVertices(path) {
@@ -3868,6 +4034,53 @@ function getClosedPolygonCoordsLngLat() {
   return coords;
 }
 
+function cloneClosedPolygonCoords(coords) {
+  if (!Array.isArray(coords) || coords.length < 4) return null;
+  return coords.map((entry) => [Number(entry[0]), Number(entry[1])]);
+}
+
+function renderPatternSeedOverlay() {
+  if (patternSeedOverlay) {
+    patternSeedOverlay.setMap(null);
+    patternSeedOverlay = null;
+  }
+  if (!map || !window.google || !google.maps) return;
+  if (!Array.isArray(patternSeedPolygonCoords) || patternSeedPolygonCoords.length < 4) return;
+
+  const path = patternSeedPolygonCoords.map(([lng, lat]) => ({ lat, lng }));
+  patternSeedOverlay = new google.maps.Polygon({
+    paths: path,
+    strokeColor: '#6f7c8f',
+    strokeOpacity: 0.78,
+    strokeWeight: 2,
+    fillColor: '#000000',
+    fillOpacity: 0.2,
+    clickable: false,
+    editable: false,
+    draggable: false,
+    zIndex: 1,
+    map
+  });
+}
+
+function setPatternSeedPolygon(coords) {
+  const cloned = cloneClosedPolygonCoords(coords);
+  patternSeedPolygonCoords = cloned && cloned.length >= 4 ? cloned : null;
+  renderPatternSeedOverlay();
+}
+
+function getPatternSeedPolygon() {
+  return cloneClosedPolygonCoords(patternSeedPolygonCoords);
+}
+
+function clearPatternSeedPolygon() {
+  patternSeedPolygonCoords = null;
+  if (patternSeedOverlay) {
+    patternSeedOverlay.setMap(null);
+    patternSeedOverlay = null;
+  }
+}
+
 function setRouteFromLatLngPoints(points, options = {}) {
   if (!Array.isArray(points) || points.length < 2 || !map || !window.google) return;
 
@@ -3902,6 +4115,9 @@ function setRouteFromLatLngPoints(points, options = {}) {
     map.fitBounds(bounds);
   }
   extractPathFromPolyline(poly);
+  if (options.setPatternSeed) {
+    setPatternSeedPolygon(getClosedPolygonCoordsLngLat());
+  }
   refreshWaypointConfigUi();
 }
 
@@ -4013,31 +4229,182 @@ function getSweepSegmentsAtY(rotatedPoints, sweepY) {
   return segments;
 }
 
-function getRecommendedPhotoEveryMeters(heightMeters, speedMetersPerSecond, frontOverlapPct) {
-  const alongTrackMeters = computeSurveySpacingMeters(heightMeters, frontOverlapPct, 0.9);
-  const timedCadenceMeters = Math.max(2, (Number(speedMetersPerSecond) || 2.5) * 3);
-  return Math.max(2, Math.min(alongTrackMeters, timedCadenceMeters));
+function getSurveyCameraDefinition() {
+  const profileSelect = document.getElementById('surveyCameraProfile');
+  const profileKey = String(profileSelect?.value || 'mini4proWide');
+  const profile = SURVEY_CAMERA_PROFILES[profileKey] || SURVEY_CAMERA_PROFILES.mini4proWide;
+  const hfovInput = document.getElementById('surveyHfovDeg');
+  const vfovInput = document.getElementById('surveyVfovDeg');
+
+  const hfovDeg = Math.max(20, Math.min(150, Number(hfovInput?.value) || profile.hfovDeg));
+  const vfovDeg = Math.max(15, Math.min(120, Number(vfovInput?.value) || profile.vfovDeg));
+  return {
+    profileKey,
+    label: profile.label,
+    hfovDeg,
+    vfovDeg
+  };
 }
 
-function computeSurveySpacingMeters(heightMeters, overlapPct, multiplier) {
+function computeSurveySpacingFromFov(heightMeters, frontOverlapPct, sideOverlapPct, hfovDeg, vfovDeg) {
   const safeHeight = Number.isFinite(heightMeters) && heightMeters > 0 ? heightMeters : 60;
-  const overlap = Math.max(20, Math.min(95, Number(overlapPct) || 70));
-  const base = safeHeight * multiplier;
-  return Math.max(3, base * (1 - overlap / 100));
+  const frontOverlap = Math.max(20, Math.min(95, Number(frontOverlapPct) || 75));
+  const sideOverlap = Math.max(20, Math.min(95, Number(sideOverlapPct) || 70));
+  const safeHfov = Math.max(20, Math.min(150, Number(hfovDeg) || 84));
+  const safeVfov = Math.max(15, Math.min(120, Number(vfovDeg) || 63));
+
+  const hfovRad = (safeHfov * Math.PI) / 180;
+  const vfovRad = (safeVfov * Math.PI) / 180;
+  const crossTrackFootprint = 2 * safeHeight * Math.tan(hfovRad / 2);
+  const alongTrackFootprint = 2 * safeHeight * Math.tan(vfovRad / 2);
+
+  const lineSpacingMeters = Math.max(2, crossTrackFootprint * (1 - sideOverlap / 100));
+  const photoEveryMeters = Math.max(2, alongTrackFootprint * (1 - frontOverlap / 100));
+  return {
+    lineSpacingMeters,
+    photoEveryMeters,
+    crossTrackFootprint,
+    alongTrackFootprint,
+    frontOverlap,
+    sideOverlap,
+    safeHeight,
+    safeHfov,
+    safeVfov
+  };
 }
 
-function generateLawnmowerPointsFromPolygon(polygonCoords) {
+function handleSurveyCameraProfileChange() {
+  const profileSelect = document.getElementById('surveyCameraProfile');
+  const hfovInput = document.getElementById('surveyHfovDeg');
+  const vfovInput = document.getElementById('surveyVfovDeg');
+  if (!profileSelect || !hfovInput || !vfovInput) return;
+
+  const profileKey = String(profileSelect.value || 'mini4proWide');
+  const profile = SURVEY_CAMERA_PROFILES[profileKey] || SURVEY_CAMERA_PROFILES.mini4proWide;
+  const isCustom = profileKey === 'custom';
+  if (!isCustom) {
+    hfovInput.value = String(profile.hfovDeg);
+    vfovInput.value = String(profile.vfovDeg);
+  }
+  hfovInput.disabled = !isCustom;
+  vfovInput.disabled = !isCustom;
+  syncSurveySpacingPreview();
+}
+
+function syncSurveySpacingPreview() {
+  const hint = document.getElementById('surveySpacingHint');
+  if (!hint) return;
+
+  const height = Number(document.getElementById('djiExecHeight')?.value);
+  const frontOverlap = Number(document.getElementById('frontOverlapPct')?.value);
+  const sideOverlap = Number(document.getElementById('sideOverlapPct')?.value);
+  const camera = getSurveyCameraDefinition();
+  const spacing = computeSurveySpacingFromFov(height, frontOverlap, sideOverlap, camera.hfovDeg, camera.vfovDeg);
+
+  hint.textContent = `Survey spacing (${camera.label}): line ${spacing.lineSpacingMeters.toFixed(1)} m | photo ${spacing.photoEveryMeters.toFixed(1)} m | footprint ${spacing.crossTrackFootprint.toFixed(1)} x ${spacing.alongTrackFootprint.toFixed(1)} m`;
+}
+
+function isSurveyPatternType(value) {
+  const type = String(value || '').toLowerCase();
+  return type === 'survey';
+}
+
+function buildPatternGenerationSignature() {
+  const patternType = String(document.getElementById('patternType')?.value || 'perimeter').toLowerCase();
+  if (!isSurveyPatternType(patternType)) return '';
+
+  return JSON.stringify({
+    patternType,
+    height: Number(document.getElementById('djiExecHeight')?.value || 0),
+    speed: Number(document.getElementById('djiWaypointSpeed')?.value || 0),
+    front: Number(document.getElementById('frontOverlapPct')?.value || 0),
+    side: Number(document.getElementById('sideOverlapPct')?.value || 0),
+    cameraProfile: String(document.getElementById('surveyCameraProfile')?.value || ''),
+    hfov: Number(document.getElementById('surveyHfovDeg')?.value || 0),
+    vfov: Number(document.getElementById('surveyVfovDeg')?.value || 0)
+  });
+}
+
+function updatePatternRegenerateNotice() {
+  const notice = document.getElementById('patternRegenerateNotice');
+  if (!notice) return;
+
+  const patternType = String(document.getElementById('patternType')?.value || 'perimeter').toLowerCase();
+  const shouldShow = isSurveyPatternType(patternType) && patternRegenerateRequired;
+  notice.style.display = shouldShow ? 'block' : 'none';
+}
+
+function markPatternGenerationBaseline() {
+  lastPatternGenerationSignature = buildPatternGenerationSignature();
+  patternRegenerateRequired = false;
+  updatePatternRegenerateNotice();
+}
+
+function clearPatternGenerationBaseline() {
+  lastPatternGenerationSignature = '';
+  patternRegenerateRequired = false;
+  updatePatternRegenerateNotice();
+}
+
+function evaluatePatternRegenerateWarning() {
+  const current = buildPatternGenerationSignature();
+  if (!current || !lastPatternGenerationSignature) {
+    patternRegenerateRequired = false;
+    updatePatternRegenerateNotice();
+    return;
+  }
+
+  patternRegenerateRequired = current !== lastPatternGenerationSignature;
+  updatePatternRegenerateNotice();
+}
+
+function applySurveyPatternDefaults() {
+  const frontEl = document.getElementById('frontOverlapPct');
+  const sideEl = document.getElementById('sideOverlapPct');
+  const cameraEl = document.getElementById('surveyCameraProfile');
+  const globalGimbalEl = document.getElementById('djiGimbalPitch');
+  if (frontEl && (!Number.isFinite(Number(frontEl.value)) || Number(frontEl.value) <= 0)) {
+    frontEl.value = '75';
+  }
+  if (sideEl && (!Number.isFinite(Number(sideEl.value)) || Number(sideEl.value) <= 0)) {
+    sideEl.value = '70';
+  }
+  if (cameraEl && !cameraEl.value) {
+    cameraEl.value = 'mini4proWide';
+  }
+  if (globalGimbalEl && normalizeWaypointGimbalPitch(globalGimbalEl.value) === 'none') {
+    globalGimbalEl.value = '-90';
+  }
+  let appliedWaypointGimbalDefault = false;
+  waypointHeadingConfigs.forEach((cfg, idx) => {
+    if (!cfg) return;
+    if (normalizeWaypointGimbalPitch(cfg.gimbalPitch) === 'none') {
+      waypointHeadingConfigs.set(idx, {
+        ...cfg,
+        gimbalPitch: '-90'
+      });
+      appliedWaypointGimbalDefault = true;
+    }
+  });
+  if (appliedWaypointGimbalDefault) {
+    refreshWaypointConfigUi();
+  }
+  handleSurveyCameraProfileChange();
+}
+
+function generateSurveyPointsFromPolygon(polygonCoords) {
   if (!window.turf) {
     alert('Pattern generation requires Turf.js and it is not available.');
     return null;
   }
 
   const height = Number(document.getElementById('djiExecHeight')?.value);
-  const speed = Number(document.getElementById('djiWaypointSpeed')?.value);
   const frontOverlap = Number(document.getElementById('frontOverlapPct')?.value);
   const sideOverlap = Number(document.getElementById('sideOverlapPct')?.value);
+  const camera = getSurveyCameraDefinition();
+  const spacing = computeSurveySpacingFromFov(height, frontOverlap, sideOverlap, camera.hfovDeg, camera.vfovDeg);
 
-  const lineSpacingMeters = computeSurveySpacingMeters(height, sideOverlap, 1.05);
+  const lineSpacingMeters = spacing.lineSpacingMeters;
   const projectedContext = getProjectedPolygonContext(polygonCoords);
   if (!projectedContext) return null;
 
@@ -4072,9 +4439,17 @@ function generateLawnmowerPointsFromPolygon(polygonCoords) {
   }
 
   const photoEveryInput = document.getElementById('photoByDistanceMeters');
-  if (photoEveryInput && (!Number(photoEveryInput.value) || Number(photoEveryInput.value) <= 0)) {
-    photoEveryInput.value = String(Math.round(getRecommendedPhotoEveryMeters(height, speed, frontOverlap)));
+  if (photoEveryInput) {
+    photoEveryInput.value = String(Math.max(2, Math.round(spacing.photoEveryMeters)));
   }
+
+  const photoEachWpInput = document.getElementById('djiTakePhotoEachWp');
+  if (photoEachWpInput && photoEachWpInput.checked) {
+    photoEachWpInput.checked = false;
+    updateWaypointPhotoActionUi();
+  }
+
+  showLookupMessage(`Survey spacing set from ${camera.label}: line ${spacing.lineSpacingMeters.toFixed(1)} m, photo ${spacing.photoEveryMeters.toFixed(1)} m (Fwd ${spacing.frontOverlap}%, Side ${spacing.sideOverlap}%).`, 'ok');
 
   return route.length >= 2 ? route : null;
 }
@@ -4145,37 +4520,50 @@ function generateRoutePattern() {
     return;
   }
 
-  const polygonCoords = getClosedPolygonCoordsLngLat();
-  if (!polygonCoords || polygonCoords.length < 4) {
+  const currentPolygonCoords = getClosedPolygonCoordsLngLat();
+  if (!currentPolygonCoords || currentPolygonCoords.length < 4) {
     alert('Need a closed polygon shape first. Use Close Polygon after drawing at least 3 points.');
     return;
   }
 
   const patternType = document.getElementById('patternType')?.value || 'perimeter';
   if (patternType === 'perimeter') {
-    const points = polygonCoords.map(([lng, lat]) => ({ lat, lng }));
-    setRouteFromLatLngPoints(points);
+    setPatternSeedPolygon(currentPolygonCoords);
+    const points = currentPolygonCoords.map(([lng, lat]) => ({ lat, lng }));
+    setRouteFromLatLngPoints(points, { setPatternSeed: true });
+    clearPatternGenerationBaseline();
     return;
   }
 
-  if (patternType === 'lawnmower') {
-    const points = generateLawnmowerPointsFromPolygon(polygonCoords);
+  const seedPolygonCoords = getPatternSeedPolygon();
+  const sourcePolygonCoords = seedPolygonCoords && seedPolygonCoords.length >= 4
+    ? seedPolygonCoords
+    : currentPolygonCoords;
+  if (!seedPolygonCoords) {
+    setPatternSeedPolygon(currentPolygonCoords);
+  }
+
+  if (patternType === 'survey') {
+    applySurveyPatternDefaults();
+    const points = generateSurveyPointsFromPolygon(sourcePolygonCoords);
     if (!points || points.length < 2) {
-      alert('Could not generate lawnmower pattern. Try a larger polygon or lower overlap settings.');
+      alert('Could not generate survey pattern. Try a larger polygon or lower overlap settings.');
       return;
     }
     setRouteFromLatLngPoints(points);
+    markPatternGenerationBaseline();
     return;
   }
 
   if (patternType === 'poi') {
-    const points = generatePOIOrbitPointsFromPolygon(polygonCoords);
+    const points = generatePOIOrbitPointsFromPolygon(sourcePolygonCoords);
     if (!points || points.length < 2) {
       alert('Could not generate POI orbit pattern.');
       return;
     }
     setRouteFromLatLngPoints(points);
     applyOrbitFacePoiDefaults();
+    clearPatternGenerationBaseline();
   }
 }
 
@@ -4719,8 +5107,8 @@ function buildMissionExportBaseName() {
   let patternPart = 'P';
   if (patternType === 'poi') {
     patternPart = `O${formatShortNumber(document.getElementById('orbitRadiusMeters')?.value, '10')}`;
-  } else if (patternType === 'lawnmower') {
-    patternPart = 'LM';
+  } else if (patternType === 'survey') {
+    patternPart = 'SV';
   }
 
   const aglPart = `AGL${formatShortNumber(document.getElementById('djiExecHeight')?.value, '10')}`;
@@ -5574,6 +5962,49 @@ function getPhotoWaypointIndices(pathPoints, photoSpacingMeters) {
   return photoIndices;
 }
 
+function normalizeHeadingDelta(degrees) {
+  let value = Number(degrees) || 0;
+  while (value > 180) value -= 360;
+  while (value < -180) value += 360;
+  return value;
+}
+
+function getAdaptiveTurnDampingMeters(pathPoints, index, speedMetersPerSecond, photoWaypointSet) {
+  if (!Array.isArray(pathPoints) || pathPoints.length < 3) return 0;
+  if (index <= 0 || index >= pathPoints.length - 1) return 0;
+  if (!window.google || !google.maps || !google.maps.geometry) return 0;
+
+  const prev = pathPoints[index - 1];
+  const current = pathPoints[index];
+  const next = pathPoints[index + 1];
+  if (!prev || !current || !next) return 0;
+
+  const prevLL = new google.maps.LatLng(prev.lat, prev.lng);
+  const currentLL = new google.maps.LatLng(current.lat, current.lng);
+  const nextLL = new google.maps.LatLng(next.lat, next.lng);
+
+  const prevSegment = google.maps.geometry.spherical.computeDistanceBetween(prevLL, currentLL);
+  const nextSegment = google.maps.geometry.spherical.computeDistanceBetween(currentLL, nextLL);
+  if (!Number.isFinite(prevSegment) || !Number.isFinite(nextSegment) || prevSegment < 1 || nextSegment < 1) {
+    return 0;
+  }
+
+  const inHeading = google.maps.geometry.spherical.computeHeading(prevLL, currentLL);
+  const outHeading = google.maps.geometry.spherical.computeHeading(currentLL, nextLL);
+  const turnDegrees = Math.abs(normalizeHeadingDelta(outHeading - inHeading));
+  const turnSeverity = Math.min(1, Math.max(0, turnDegrees / 180));
+  if (turnSeverity < 0.05) return 0;
+
+  const speedFactor = Math.max(0.85, Math.min(1.35, (Number(speedMetersPerSecond) || 2.5) / 4));
+  const photoFactor = photoWaypointSet && photoWaypointSet.has(index) ? 1.12 : 1;
+  const localSpan = Math.min(prevSegment, nextSegment);
+  const adaptive = localSpan * 0.42 * turnSeverity * speedFactor * photoFactor;
+
+  if (!Number.isFinite(adaptive) || adaptive <= 0) return 0;
+  const clamped = Math.max(0, Math.min(12, adaptive));
+  return Number(clamped.toFixed(2));
+}
+
 function areRoutePointsEquivalent(a, b) {
   if (!a || !b) return false;
   return Math.abs(a.lat - b.lat) < 1e-9 && Math.abs(a.lng - b.lng) < 1e-9;
@@ -5705,6 +6136,7 @@ function buildDJIWaylinesWPML() {
       }
     }
     const turnMode = isLast ? 'toPointAndStopWithContinuityCurvature' : 'toPointAndPassWithContinuityCurvature';
+    const turnDampingDist = isLast ? 0 : getAdaptiveTurnDampingMeters(exportPath, i, settings.speed, photoWaypoints);
     const waypointGimbalPitch = getWaypointGimbalPitchForIndex(i, settings.gimbalPitch);
     const prevWaypointGimbalPitch = i > 0
       ? getWaypointGimbalPitchForIndex(i - 1, settings.gimbalPitch)
@@ -5887,7 +6319,7 @@ function buildDJIWaylinesWPML() {
         </wpml:waypointHeadingParam>
         <wpml:waypointTurnParam>
           <wpml:waypointTurnMode>${turnMode}</wpml:waypointTurnMode>
-          <wpml:waypointTurnDampingDist>0</wpml:waypointTurnDampingDist>
+          <wpml:waypointTurnDampingDist>${turnDampingDist}</wpml:waypointTurnDampingDist>
         </wpml:waypointTurnParam>
         <wpml:useStraightLine>0</wpml:useStraightLine>${actionGroup}
       </Placemark>`;
@@ -6349,7 +6781,8 @@ async function fetchAddressSuggestions(query) {
   }
   autocompleteAbortController = new AbortController();
 
-  const url = `${AUTOCOMPLETE_ENDPOINT}?input=${encodeURIComponent(query)}&components=${encodeURIComponent(AUTOCOMPLETE_COMPONENTS)}&types=address`;
+  const countryComponents = getLookupCountryComponents();
+  const url = `${AUTOCOMPLETE_ENDPOINT}?input=${encodeURIComponent(query)}&components=${encodeURIComponent(countryComponents)}&types=address`;
 
   try {
     const res = await fetch(url, {
@@ -6484,6 +6917,46 @@ function selectAddressSuggestion(index) {
   addressInput.focus();
 }
 
+function normalizeLookupCountry(value) {
+  const code = String(value || '').toUpperCase();
+  return Object.prototype.hasOwnProperty.call(LOOKUP_COUNTRY_COMPONENTS, code)
+    ? code
+    : DEFAULT_LOOKUP_COUNTRY;
+}
+
+function persistLookupCountrySelection(countryCode) {
+  const normalized = normalizeLookupCountry(countryCode);
+  try {
+    localStorage.setItem(LOOKUP_COUNTRY_KEY, normalized);
+  } catch {
+    // Ignore localStorage write failures.
+  }
+}
+
+function restoreLookupCountrySelection() {
+  const select = document.getElementById('lookupCountry');
+  if (!select) return;
+
+  let stored = DEFAULT_LOOKUP_COUNTRY;
+  try {
+    stored = localStorage.getItem(LOOKUP_COUNTRY_KEY) || DEFAULT_LOOKUP_COUNTRY;
+  } catch {
+    stored = DEFAULT_LOOKUP_COUNTRY;
+  }
+  const normalized = normalizeLookupCountry(stored);
+  select.value = normalized;
+  persistLookupCountrySelection(normalized);
+}
+
+function getSelectedLookupCountryCode() {
+  const select = document.getElementById('lookupCountry');
+  return normalizeLookupCountry(select ? select.value : DEFAULT_LOOKUP_COUNTRY);
+}
+
+function getLookupCountryComponents() {
+  return LOOKUP_COUNTRY_COMPONENTS[getSelectedLookupCountryCode()] || LOOKUP_COUNTRY_COMPONENTS[DEFAULT_LOOKUP_COUNTRY];
+}
+
 // -------------------------
 // MAIN LOOKUP FUNCTION
 // -------------------------
@@ -6499,7 +6972,8 @@ async function runLookup() {
     return;
   }
 
-  const url = `${GEOCODE_ENDPOINT}?address=${encodeURIComponent(address)}&components=${encodeURIComponent("country:CA")}`;
+  const countryComponents = getLookupCountryComponents();
+  const url = `${GEOCODE_ENDPOINT}?address=${encodeURIComponent(address)}&components=${encodeURIComponent(countryComponents)}`;
 
   let data;
   try {
