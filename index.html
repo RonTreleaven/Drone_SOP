@@ -1364,10 +1364,74 @@
       };
     }
 
+    function buildProfileAdvancedValidationSnapshot(state = profileState) {
+      const resolvedState = state || getDefaultProfileState();
+      const signature = buildProfileIdentitySignature(resolvedState);
+      const attested = localStorage.getItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY) === 'true';
+      const record = getAdvancedAccessRecord();
+      const hasValidLegacyRecord = Boolean(
+        record
+        && record.version === PROFILE_ADVANCED_ACCESS_VERSION
+        && record.signature === signature
+      );
+      const accessState = getAdvancedAccessState(resolvedState);
+
+      return {
+        schemaVersion: 1,
+        profileAdvancedAccessVersion: PROFILE_ADVANCED_ACCESS_VERSION,
+        signature,
+        attested,
+        validated: Boolean(accessState && accessState.validated),
+        hasLegacyValidatedRecord: hasValidLegacyRecord,
+        exportedAt: new Date().toISOString()
+      };
+    }
+
+    function restoreAdvancedValidationFromProfileImport(source, state = profileState) {
+      const resolvedState = state || getDefaultProfileState();
+      const importedValidation = source && typeof source === 'object' && source.advancedValidation && typeof source.advancedValidation === 'object'
+        ? source.advancedValidation
+        : null;
+
+      const fallbackAttested = typeof (source && source.advancedAccessAttested) === 'boolean'
+        ? source.advancedAccessAttested
+        : null;
+
+      const attested = importedValidation
+        ? importedValidation.attested === true
+        : fallbackAttested;
+
+      if (typeof attested === 'boolean') {
+        localStorage.setItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY, attested ? 'true' : 'false');
+      }
+
+      if (!importedValidation) {
+        return;
+      }
+
+      const currentSignature = buildProfileIdentitySignature(resolvedState);
+      const importedSignature = String(importedValidation.signature || '').trim();
+      const importedValidated = importedValidation.validated === true;
+      const importedAttested = importedValidation.attested === true;
+      const isSignatureMatch = Boolean(currentSignature && importedSignature && importedSignature === currentSignature);
+
+      if (importedValidated && importedAttested && isSignatureMatch) {
+        localStorage.setItem(PROFILE_ADVANCED_ACCESS_KEY, JSON.stringify({
+          version: PROFILE_ADVANCED_ACCESS_VERSION,
+          signature: currentSignature,
+          restoredFrom: 'DroneSOP_user.json',
+          restoredAt: new Date().toISOString()
+        }));
+        return;
+      }
+
+      localStorage.removeItem(PROFILE_ADVANCED_ACCESS_KEY);
+    }
+
     function buildProfileBackupPayload() {
       return {
         backupType: 'drone-sop-profile',
-        backupVersion: 1,
+        backupVersion: 2,
         exportedAt: new Date().toISOString(),
         profile: {
           pilotName: profileState.pilotName || '',
@@ -1375,7 +1439,8 @@
           pilotEmail: profileState.pilotEmail || '',
           droneMissionCategory: normalizeMissionCategory(profileState.droneMissionCategory),
           preferredDroneLabel: profileState.preferredDroneLabel || '',
-          lastMissionStatus: normalizeMissionStatus(profileState.lastMissionStatus)
+          lastMissionStatus: normalizeMissionStatus(profileState.lastMissionStatus),
+          advancedValidation: buildProfileAdvancedValidationSnapshot(profileState)
         }
       };
     }
@@ -1722,6 +1787,7 @@
       }
 
       persistProfileState();
+      restoreAdvancedValidationFromProfileImport(source, profileState);
       fillProfileForm();
       renderProfileSummary();
 
