@@ -414,6 +414,15 @@
     ]
   },
   {
+    "raw": "(U0409/26 NOTAMR U0405/26\nQ) CZWG/QOLAS/IV/M/E/000/020/4839N09043W002\nA) CZWG B) 2603061607 C) 2606051700EST\nE) OBST LGT U/S TOWER 483913N 0904251W (APRX 12NM W KASHABOWIE/UPPER \nSHEBANDOWAN LAKE (WATER) AD (CKF5)) 410FT AGL, 1971FT AMSL.)",
+    "startValidity": "2026-03-06T16:07:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "48.653611, -90.714167"
+    ]
+  },
+  {
     "raw": "(U0408/26 NOTAMR U0406/26\nQ) CZWG/QOLAS/IV/M/E/000/011/4847N08834W002\nA) CZWG B) 2603061607 C) 2606051700EST\nE) OBST LGT U/S TOWER 484703N 0883339W (APRX 16NM NE THUNDER \nBAY/ELDORADO AD (CED8)) 330FT AGL, 1045FT AMSL.)",
     "startValidity": "2026-03-06T16:07:00",
     "endValidity": null,
@@ -429,15 +438,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.091667, -89.490000"
-    ]
-  },
-  {
-    "raw": "(U0409/26 NOTAMR U0405/26\nQ) CZWG/QOLAS/IV/M/E/000/020/4839N09043W002\nA) CZWG B) 2603061607 C) 2606051700EST\nE) OBST LGT U/S TOWER 483913N 0904251W (APRX 12NM W KASHABOWIE/UPPER \nSHEBANDOWAN LAKE (WATER) AD (CKF5)) 410FT AGL, 1971FT AMSL.)",
-    "startValidity": "2026-03-06T16:07:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "48.653611, -90.714167"
     ]
   },
   {
