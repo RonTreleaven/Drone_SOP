@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0387/26 NOTAMR R0332/26\nQ) CZEG/QOLAS/IV/M/E/000/035/5041N11227W002\nA) CZEG B) 2604221712 C) 2606061710\nE) OBST LGT U/S TOWER 504122N 1122713W (APRX 6NM SSE BASSANO (HEALTH \nCENTRE) (HELI) AD (CBL4)) 665FT AGL, 3401FT AMSL.)",
+    "startValidity": "2026-04-22T17:12:00",
+    "endValidity": "2026-06-06T17:10:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.689444, -112.453611"
+    ]
+  },
+  {
     "raw": "(O1245/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/047/5111N11534W005\nA) CXXX B) 2604241400 C) 2604242100\nE) CBM7 BANFF MINERAL SPRINGS (HOSPITAL) (HELI)\nCRANE 511040N 1153403W (APRX 2077FT E AD (CBM7)). 40FT AGL 4636FT \nAMSL. NOT LGTD.)",
     "startValidity": "2026-04-22T14:06:52.935",
     "endValidity": "2026-04-24T21:00:00",
@@ -321,15 +330,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "51.165556, -113.991667"
-    ]
-  },
-  {
-    "raw": "(R0332/26 NOTAMR R0179/26\nQ) CZEG/QOLAS/IV/M/E/000/035/5041N11227W002\nA) CZEG B) 2604080251 C) 2604240240\nE) OBST LGT U/S TOWER 504122N 1122713W (APRX 6NM SSE BASSANO (HEALTH \nCENTRE) (HELI) AD (CBL4)) 665FT AGL, 3401FT AMSL.)",
-    "startValidity": "2026-04-08T02:51:00",
-    "endValidity": "2026-04-24T02:40:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.689444, -112.453611"
     ]
   },
   {
@@ -981,15 +981,6 @@
     ]
   },
   {
-    "raw": "(R0084/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/035/5526N12005W002\nA) CZEG B) 2601230227 C) 2604222000EST\nE) OBST LGT U/S TOWER 552554N 1200505W (APRX 14NM NW \nBEAVERLODGE/CLANAECHAN AD (CLN4)) 400FT AGL, 3485FT AMSL.)",
-    "startValidity": "2026-01-23T02:27:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.431667, -120.084722"
-    ]
-  },
-  {
     "raw": "(U0124/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2601222012 C) 2604232359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
     "startValidity": "2026-01-22T20:12:00",
     "endValidity": "2026-04-23T23:59:00",
@@ -1014,15 +1005,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.236667, -109.980278"
-    ]
-  },
-  {
-    "raw": "(R0079/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/039/5133N11218W002\nA) CZEG B) 2601221439 C) 2604221800\nE) OBST LGT U/S TOWER 513323N 1121804W (APRX 15NM WSW HANNA (HEALTH \nCENTRE) (HELI) AD (CHD3)) 350FT AGL, 3851FT AMSL.)",
-    "startValidity": "2026-01-22T14:39:00",
-    "endValidity": "2026-04-22T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.556389, -112.301111"
     ]
   },
   {
