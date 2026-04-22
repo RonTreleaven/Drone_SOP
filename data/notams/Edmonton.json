@@ -9,15 +9,6 @@
     ]
   },
   {
-    "raw": "(C1223/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/037/5108N11402W005\nA) CYYC B) 2604211800 C) 2604212200\nE) CRANE 510827N 1140139W APRX 3460FT BFR THR 17R AND 1420FT WEST \nEXTENDED RCL. 115FT AGL 3668FT AMSL. LGTD, NOT PAINTED.)",
-    "startValidity": "2026-04-21T17:22:55.410",
-    "endValidity": "2026-04-21T22:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "51.140833, -114.027500"
-    ]
-  },
-  {
     "raw": "(R0382/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/032/5216N11203W002\nA) CZEG B) 2604211400 C) 2604271400\nE) OBST LGT U/S WIND TURBINE 521616N 1120311W (APRX 5NM WNW CASTOR \nAD (CER2)) 397FT AGL, 3130FT AMSL.)",
     "startValidity": "2026-04-21T13:23:59.495",
     "endValidity": "2026-04-27T14:00:00",
@@ -807,15 +798,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "60.809722, -115.786944"
-    ]
-  },
-  {
-    "raw": "(R0176/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/013/6821N13324W005\nA) CYEV B) 2602220344 C) 2604212359\nE) OBST LGT U/S WIND TURBINE 682123N 1332425W (APRX 3.6NM N AD) \n490FT AGL, 1290FT AMSL.)",
-    "startValidity": "2026-02-22T03:44:00",
-    "endValidity": "2026-04-21T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "68.356389, -133.406944"
     ]
   },
   {
