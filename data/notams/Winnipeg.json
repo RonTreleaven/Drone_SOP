@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U0722/26 NOTAMR U0133/26\nQ) CZWG/QOLAS/IV/M/E/000/024/5113N10244W002\nA) CZWG B) 2604230649 C) 2607212100\nE) OBST LGT U/S TOWER 511233N 1024359W (APRX 11NM WSW YORKTON \nREGIONAL AD (CYQV)) 616FT AGL, 2334FT AMSL.)",
+    "startValidity": "2026-04-23T06:49:00",
+    "endValidity": "2026-07-21T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.209167, -102.733056"
+    ]
+  },
+  {
     "raw": "(U0721/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/027/5102N10325W002\nA) CZWG B) 2604221913 C) 2607211800\nE) OBST LGT U/S TOWER 510226N 1032446W (APRX 6NM SSE ITUNA AD \n(CJM2)) 464FT AGL, 2654FT AMSL.)",
     "startValidity": "2026-04-22T19:13:00",
     "endValidity": "2026-07-21T18:00:00",
@@ -99,21 +108,21 @@
     ]
   },
   {
-    "raw": "(J2465/26 NOTAMR J0284/26\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2604141340 C) 2607141400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-04-14T13:40:00",
-    "endValidity": null,
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "52.467222, -92.960833"
-    ]
-  },
-  {
     "raw": "(U0673/26 NOTAMR U0073/26\nQ) CZWG/QOLAS/IV/M/AE/000/015/5126N09015W005\nA) CYPL B) 2604141340 C) 2607141400EST\nE) OBST LGT U/S TOWER 512531N 0901500W (APRX 1.87NM SW AD) 104FT \nAGL, 1410FT AMSL.)",
     "startValidity": "2026-04-14T13:40:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.425278, -90.250000"
+    ]
+  },
+  {
+    "raw": "(J2465/26 NOTAMR J0284/26\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2604141340 C) 2607141400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
+    "startValidity": "2026-04-14T13:40:00",
+    "endValidity": null,
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "52.467222, -92.960833"
     ]
   },
   {
@@ -333,21 +342,21 @@
     ]
   },
   {
-    "raw": "(U0471/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/006/5622N09436W005\nA) CXXX B) 2603111601 C) 2606111545\nE) CJP8 GILLAM (WATER)\nOBST LGT U/S TOWER 562140N 0943600W (APRX 1.96NM ENE AD) 200FT \nAGL, 600FT AMSL.)",
-    "startValidity": "2026-03-11T16:01:00",
-    "endValidity": "2026-06-11T15:45:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "56.361111, -94.600000"
-    ]
-  },
-  {
     "raw": "(U0470/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/012/5123N09654W002\nA) CZWG B) 2603111601 C) 2606111545\nE) OBST LGT U/S TOWER 512321N 0965426W (APRX 14NM SSW PINE DOCK \n(WATER) AD (CKT8)) 419FT AGL, 1141FT AMSL.)",
     "startValidity": "2026-03-11T16:01:00",
     "endValidity": "2026-06-11T15:45:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.389167, -96.907222"
+    ]
+  },
+  {
+    "raw": "(U0471/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/006/5622N09436W005\nA) CXXX B) 2603111601 C) 2606111545\nE) CJP8 GILLAM (WATER)\nOBST LGT U/S TOWER 562140N 0943600W (APRX 1.96NM ENE AD) 200FT \nAGL, 600FT AMSL.)",
+    "startValidity": "2026-03-11T16:01:00",
+    "endValidity": "2026-06-11T15:45:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "56.361111, -94.600000"
     ]
   },
   {
@@ -423,15 +432,6 @@
     ]
   },
   {
-    "raw": "(U0409/26 NOTAMR U0405/26\nQ) CZWG/QOLAS/IV/M/E/000/020/4839N09043W002\nA) CZWG B) 2603061607 C) 2606051700EST\nE) OBST LGT U/S TOWER 483913N 0904251W (APRX 12NM W KASHABOWIE/UPPER \nSHEBANDOWAN LAKE (WATER) AD (CKF5)) 410FT AGL, 1971FT AMSL.)",
-    "startValidity": "2026-03-06T16:07:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "48.653611, -90.714167"
-    ]
-  },
-  {
     "raw": "(U0408/26 NOTAMR U0406/26\nQ) CZWG/QOLAS/IV/M/E/000/011/4847N08834W002\nA) CZWG B) 2603061607 C) 2606051700EST\nE) OBST LGT U/S TOWER 484703N 0883339W (APRX 16NM NE THUNDER \nBAY/ELDORADO AD (CED8)) 330FT AGL, 1045FT AMSL.)",
     "startValidity": "2026-03-06T16:07:00",
     "endValidity": null,
@@ -447,6 +447,15 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.091667, -89.490000"
+    ]
+  },
+  {
+    "raw": "(U0409/26 NOTAMR U0405/26\nQ) CZWG/QOLAS/IV/M/E/000/020/4839N09043W002\nA) CZWG B) 2603061607 C) 2606051700EST\nE) OBST LGT U/S TOWER 483913N 0904251W (APRX 12NM W KASHABOWIE/UPPER \nSHEBANDOWAN LAKE (WATER) AD (CKF5)) 410FT AGL, 1971FT AMSL.)",
+    "startValidity": "2026-03-06T16:07:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "48.653611, -90.714167"
     ]
   },
   {
@@ -735,15 +744,6 @@
     "q_code": "QOBCH",
     "coordinates_dd": [
       "52.388611, -96.325556"
-    ]
-  },
-  {
-    "raw": "(U0133/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/024/5113N10244W002\nA) CZWG B) 2601241622 C) 2604232100\nE) OBST LGT U/S TOWER 511233N 1024359W (APRX 11NM WSW YORKTON \nREGIONAL AD (CYQV)) 616FT AGL, 2334FT AMSL.)",
-    "startValidity": "2026-01-24T16:22:00",
-    "endValidity": "2026-04-23T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.209167, -102.733056"
     ]
   },
   {
