@@ -1,5 +1,41 @@
 [
   {
+    "raw": "(U0728/26 NOTAMR U0124/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2604231831 C) 2607222359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
+    "startValidity": "2026-04-23T18:31:00",
+    "endValidity": "2026-07-22T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.480833, -109.194167"
+    ]
+  },
+  {
+    "raw": "(U0727/26 NOTAMR U0123/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5250N10936W005\nA) CXXX B) 2604231828 C) 2607222359\nE) CJV2 NEILBURG \nOBST LGT U/S TOWER 525010N 1093624W (APRX 1.25NM ENE AD) 350FT \nAGL, 2580FT AMSL.)",
+    "startValidity": "2026-04-23T18:28:00",
+    "endValidity": "2026-07-22T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.836111, -109.606667"
+    ]
+  },
+  {
+    "raw": "(C1292/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/037/5108N11401W005\nA) CYYC B) 2604231759 C) 2606010400\nE) MOBILE CRANE WITHIN 430FT RADIUS CENTRED ON 510758N 1140051W APRX \n520FT BFR THR 17R AND 1640FT EAST EXTENDED RCL. 124FT AGL 3678FT \nAMSL. LGTD, NOT PAINTED.)",
+    "startValidity": "2026-04-23T17:59:00",
+    "endValidity": "2026-06-01T04:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "51.132778, -114.014167"
+    ]
+  },
+  {
+    "raw": "(C1291/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/024/6044N13505W005\nA) CYXY B) 2604231706 C) 2604232100\nE) MOBILE CRANE WITHIN 65FT RADIUS CENTRED ON 604353N 1350515W APRX \n3990FT BFR THR 14R AND 570FT SW EXTENDED RCL. 65FT AGL 2316FT \nAMSL.)",
+    "startValidity": "2026-04-23T17:06:00",
+    "endValidity": "2026-04-23T21:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "60.731389, -135.087500"
+    ]
+  },
+  {
     "raw": "(R0390/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/027/5312N11116W002\nA) CZEG B) 2604230202 C) 2607212359\nE) OBST LGT U/S TOWER 531142N 1111617W (APRX 17NM SW VERMILION \nHEALTH CENTRE (HELI) AD (CVH2)) 230FT AGL, 2691FT AMSL.)",
     "startValidity": "2026-04-23T02:02:00",
     "endValidity": "2026-07-21T23:59:00",
@@ -42,15 +78,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.184722, -113.027222"
-    ]
-  },
-  {
-    "raw": "(R0385/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/028/5440N11332W002\nA) CZEG B) 2604231601 C) 2604231900\nE) OBST LGT U/S TOWER 544000N 1133202W (APRX 12NM WSW ATHABASCA AD \n(CYWM)) 350FT AGL, 2760FT AMSL.)",
-    "startValidity": "2026-04-22T12:20:46.617",
-    "endValidity": "2026-04-23T19:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "54.666667, -113.533889"
     ]
   },
   {
@@ -297,21 +324,21 @@
     ]
   },
   {
-    "raw": "(R0342/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5207N11151W002\nA) CZEG B) 2604101300 C) 2607092359\nE) OBST LGT U/S TOWER 520654N 1115123W (APRX 7NM SE CASTOR AD \n(CER2)) 340FT AGL, 3053FT AMSL.)",
-    "startValidity": "2026-04-10T13:00:00",
-    "endValidity": "2026-07-09T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.115000, -111.856389"
-    ]
-  },
-  {
     "raw": "(R0343/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5148N11404W005\nA) CXXX B) 2604101300 C) 2607092359\nE) CFU9 OLDS (HOSP AND CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 514806N 1140427W (APRX 1.58NM ENE AD) 312FT \nAGL, 3683FT AMSL.)",
     "startValidity": "2026-04-10T13:00:00",
     "endValidity": "2026-07-09T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.801667, -114.074167"
+    ]
+  },
+  {
+    "raw": "(R0342/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5207N11151W002\nA) CZEG B) 2604101300 C) 2607092359\nE) OBST LGT U/S TOWER 520654N 1115123W (APRX 7NM SE CASTOR AD \n(CER2)) 340FT AGL, 3053FT AMSL.)",
+    "startValidity": "2026-04-10T13:00:00",
+    "endValidity": "2026-07-09T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.115000, -111.856389"
     ]
   },
   {
@@ -978,24 +1005,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "55.146944, -114.817222"
-    ]
-  },
-  {
-    "raw": "(U0124/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2601222012 C) 2604232359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
-    "startValidity": "2026-01-22T20:12:00",
-    "endValidity": "2026-04-23T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.480833, -109.194167"
-    ]
-  },
-  {
-    "raw": "(U0123/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/026/5250N10936W005\nA) CXXX B) 2601222011 C) 2604232359\nE) CJV2 NEILBURG \nOBST LGT U/S TOWER 525010N 1093624W (APRX 1.25NM ENE AD) 350FT \nAGL, 2580FT AMSL.)",
-    "startValidity": "2026-01-22T20:11:00",
-    "endValidity": "2026-04-23T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.836111, -109.606667"
     ]
   },
   {
