@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(I1747/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/004/6819N13327W005\nA) CYEV B) 2604281300 C) 2605130100\nE) MOBILE DRILL RIG  WITHIN 3937FT RADIUS CENTRED ON 681845N \n1332657W APRX 1810FT BFR THR 24 AND 2840FT NW EXTENDED RCL. 23FT \nAGL 333FT AMSL. NOT LGTD, PAINTED.)",
+    "startValidity": "2026-04-24T16:08:08.517",
+    "endValidity": "2026-05-13T01:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "68.312500, -133.449167"
+    ]
+  },
+  {
+    "raw": "(R0397/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5109N11407W005\nA) CYYC B) 2604241420 C) 2607232359\nE) OBST LGT U/S TOWER 510927N 1140715W (APRX 4.6NM WNW AD) 98FT AGL, \n3688FT AMSL.)",
+    "startValidity": "2026-04-24T14:20:00",
+    "endValidity": "2026-07-23T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.157500, -114.120833"
+    ]
+  },
+  {
     "raw": "(U0728/26 NOTAMR U0124/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2604231831 C) 2607222359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
     "startValidity": "2026-04-23T18:31:00",
     "endValidity": "2026-07-22T23:59:00",
@@ -24,15 +42,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "51.132778, -114.014167"
-    ]
-  },
-  {
-    "raw": "(R0390/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/027/5312N11116W002\nA) CZEG B) 2604230202 C) 2607212359\nE) OBST LGT U/S TOWER 531142N 1111617W (APRX 17NM SW VERMILION \nHEALTH CENTRE (HELI) AD (CVH2)) 230FT AGL, 2691FT AMSL.)",
-    "startValidity": "2026-04-23T02:02:00",
-    "endValidity": "2026-07-21T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.195000, -111.271389"
     ]
   },
   {
@@ -315,21 +324,21 @@
     ]
   },
   {
-    "raw": "(R0343/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5148N11404W005\nA) CXXX B) 2604101300 C) 2607092359\nE) CFU9 OLDS (HOSP AND CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 514806N 1140427W (APRX 1.58NM ENE AD) 312FT \nAGL, 3683FT AMSL.)",
-    "startValidity": "2026-04-10T13:00:00",
-    "endValidity": "2026-07-09T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.801667, -114.074167"
-    ]
-  },
-  {
     "raw": "(R0342/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5207N11151W002\nA) CZEG B) 2604101300 C) 2607092359\nE) OBST LGT U/S TOWER 520654N 1115123W (APRX 7NM SE CASTOR AD \n(CER2)) 340FT AGL, 3053FT AMSL.)",
     "startValidity": "2026-04-10T13:00:00",
     "endValidity": "2026-07-09T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "52.115000, -111.856389"
+    ]
+  },
+  {
+    "raw": "(R0343/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5148N11404W005\nA) CXXX B) 2604101300 C) 2607092359\nE) CFU9 OLDS (HOSP AND CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 514806N 1140427W (APRX 1.58NM ENE AD) 312FT \nAGL, 3683FT AMSL.)",
+    "startValidity": "2026-04-10T13:00:00",
+    "endValidity": "2026-07-09T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.801667, -114.074167"
     ]
   },
   {
@@ -627,15 +636,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "55.180278, -118.826389"
-    ]
-  },
-  {
-    "raw": "(R0257/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5312N11021W002\nA) CZEG B) 2603121744 C) 2606101800\nE) OBST LGT U/S TOWER 531138N 1102057W (APRX 12NM SW LLOYDMINSTER AD \n(CYLL)) 495FT AGL, 2859FT AMSL.)",
-    "startValidity": "2026-03-12T17:44:00",
-    "endValidity": "2026-06-10T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.193889, -110.349167"
     ]
   },
   {
