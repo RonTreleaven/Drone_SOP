@@ -643,16 +643,6 @@ padding:6px 8px;
 text-transform:none;
 }
 
-.wind-guide-sort-label{
-font-size:12px;
-font-weight:700;
-color:#1f3f5c;
-background:#e3f2ff;
-border:1px solid #bfdcf6;
-padding:5px 8px;
-border-radius:999px;
-}
-
 .wind-guide-editor-card{
 max-width:980px;
 }
@@ -987,7 +977,7 @@ margin-top:10px;
 <div class="panel">
 <div class="panel-toggle-header" onclick="toggleWeatherReportCollapse()">
 <span id="weatherReportCollapseIcon" class="panel-collapse-icon collapsed">▼</span>
-<h3>Current Weather Report</h3>
+<h3>Current METAR Report</h3>
 </div>
 <div id="weatherReportContent" class="is-hidden">
 <pre id="metarText"></pre>
@@ -1005,11 +995,6 @@ margin-top:10px;
 <label for="windGuideModelFilter">Filter by Drone Model
 <input id="windGuideModelFilter" class="wind-guide-filter-input" type="text" placeholder="Search model (ex: Mini, Mavic, Autel)" oninput="handleWindGuideFilterChange()">
 </label>
-<label for="windGuideValidatedOnly">
-<input id="windGuideValidatedOnly" type="checkbox" onchange="handleWindGuideFilterChange()">
-Validated only
-</label>
-<span class="wind-guide-sort-label">Sort: OEM m/s (low to high)</span>
 <button type="button" class="mini-action-btn" onclick="tryOpenWindGuideEditor()">Edit Wind Guide JSON</button>
 </div>
 <div class="table-wrap wind-guide-table-wrap" id="windGuideTableWrap">
@@ -1021,13 +1006,12 @@ Validated only
 <th>OEM km/h</th>
 <th>OEM kt</th>
 <th>Conv mph</th>
-<th>Conv kt</th>
 <th>Validated OEM</th>
 </tr>
 </thead>
 <tbody id="windGuideTableBody">
 <tr>
-<td colspan="7">Loading wind guide models...</td>
+<td colspan="6">Loading wind guide models...</td>
 </tr>
 </tbody>
 </table>
@@ -1217,18 +1201,11 @@ const input = document.getElementById("windGuideModelFilter")
 return String(input?.value || "").trim().toLowerCase()
 }
 
-function isWindGuideValidatedOnlyEnabled(){
-const checkbox = document.getElementById("windGuideValidatedOnly")
-return !!checkbox?.checked
-}
-
 function getFilteredSortedWindGuideModels(models){
 const modelFilter = getWindGuideModelFilterText()
-const validatedOnly = isWindGuideValidatedOnlyEnabled()
 
 return (Array.isArray(models) ? [...models] : [])
 .filter(model => {
-if(validatedOnly && !model.validated) return false
 if(!modelFilter) return true
 return String(model.model || "").toLowerCase().includes(modelFilter)
 })
@@ -1526,7 +1503,7 @@ const tbody = document.getElementById("windGuideTableBody")
 if(!tbody) return
 
 if(!Array.isArray(models) || !models.length){
-tbody.innerHTML = "<tr><td colspan=\"7\">No models match the current filter.</td></tr>"
+tbody.innerHTML = "<tr><td colspan=\"6\">No models match the current filter.</td></tr>"
 return
 }
 
@@ -1535,7 +1512,6 @@ const oemMsText = formatWindGuideNumber(model.oemWindMs,2)
 const oemKmhText = formatWindGuideNumber(model.oemWindKmh,1)
 const oemKtText = formatWindGuideNumber(model.oemWindKt,1)
 const convMphText = formatWindGuideNumber(model.convertedMph,1)
-const convKtText = formatWindGuideNumber(model.convertedKt,1)
 const checked = model.validated ? "checked" : ""
 return `<tr>
 <td>${escapeHtml(model.model)}</td>
@@ -1543,7 +1519,6 @@ return `<tr>
 <td>${escapeHtml(oemKmhText)}</td>
 <td>${escapeHtml(oemKtText)}</td>
 <td>${escapeHtml(convMphText)}</td>
-<td>${escapeHtml(convKtText)}</td>
 <td><input type="checkbox" class="wind-guide-verified" data-model-id="${escapeHtml(model.modelId)}" ${checked} disabled></td>
 </tr>`
 }).join("")

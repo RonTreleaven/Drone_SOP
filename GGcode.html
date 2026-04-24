@@ -765,11 +765,6 @@ body {
   border-bottom: 12px solid currentColor;
 }
 
-.glyph-rectangle {
-  border: 2px solid currentColor;
-  border-radius: 2px;
-}
-
 .glyph-orbit {
   border: 2px solid currentColor;
   border-radius: 50%;
@@ -1350,6 +1345,14 @@ body.map-immersive {
           </div>
         </div>
       </div>
+      <div class="history-row">
+        <div class="field-group">
+          <label for="lookupHistory">Recent lookups (last 10)</label>
+          <select id="lookupHistory" onchange="applyHistoryLookup()">
+            <option value="">Choose a recent lookup...</option>
+          </select>
+        </div>
+      </div>
       <div class="manual-dd-grid" aria-label="Manual DD coordinate entry">
         <div class="field-group">
           <label for="manualLat">Input LAT (DD)</label>
@@ -1363,14 +1366,6 @@ body.map-immersive {
       <div class="manual-dd-actions">
         <button id="applyManualDdBtn" class="btn" type="button" onclick="setPilotMarkerFromDDInputs()">Set New Pilot Marker By DD</button>
         <p class="manual-dd-hint">Moves the marker for planning and updates links. Pilot location is only saved when Set New Pilot Location is clicked.</p>
-      </div>
-      <div class="history-row">
-        <div class="field-group">
-          <label for="lookupHistory">Recent lookups (last 10)</label>
-          <select id="lookupHistory" onchange="applyHistoryLookup()">
-            <option value="">Choose a recent lookup...</option>
-          </select>
-        </div>
       </div>
       <div class="button-row">
         <button id="fetchCurrentPositionBtn" class="btn secondary-btn" type="button" onclick="getCurrentGpsPosition()">Get Current GPS Position</button>
@@ -1452,10 +1447,6 @@ body.map-immersive {
           <button class="btn icon-btn" id="drawPolygonBtn" type="button" title="Polygon" aria-label="Polygon">
             <span class="tool-glyph glyph-polygon" aria-hidden="true"></span>
             <span>Poly</span>
-          </button>
-          <button class="btn icon-btn" id="drawRectangleBtn" type="button" title="Rectangle" aria-label="Rectangle">
-            <span class="tool-glyph glyph-rectangle" aria-hidden="true"></span>
-            <span>Rect</span>
           </button>
           <button class="btn icon-btn" id="setSurveyPatternBtn" type="button" title="Survey Pattern" aria-label="Survey Pattern">
             <span class="tool-glyph glyph-survey" aria-hidden="true"></span>
@@ -1808,7 +1799,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   document.getElementById('drawRouteBtn').addEventListener('click', handleDrawRouteToggle);
   document.getElementById('drawPolygonBtn').addEventListener('click', handleDrawPolygonToggle);
-  document.getElementById('drawRectangleBtn').addEventListener('click', handleDrawRectangleToggle);
   document.getElementById('setSurveyPatternBtn').addEventListener('click', activateSurveyPatternMode);
   document.getElementById('snapRouteBtn').addEventListener('click', snapRouteToNearestWaypoint);
   document.getElementById('closePolygonBtn').addEventListener('click', closeCurrentRoutePolygon);
@@ -2592,8 +2582,6 @@ function updateDrawShapeSummary() {
   const isDrawingWP = isRouteDrawingActive();
   const isDrawingPoly = !!(drawingManager && window.google && google.maps.drawing &&
     drawingManager.getDrawingMode() === google.maps.drawing.OverlayType.POLYGON);
-  const isDrawingRect = !!(drawingManager && window.google && google.maps.drawing &&
-    drawingManager.getDrawingMode() === google.maps.drawing.OverlayType.RECTANGLE);
 
   if (hasOrbit) {
     const rawRadius = Number(document.getElementById('orbitRadiusMeters')?.value);
@@ -2619,10 +2607,6 @@ function updateDrawShapeSummary() {
   }
   if (isDrawingPoly) {
     indicator.textContent = `Polygon | Pattern: ${patternLabel}`;
-    return;
-  }
-  if (isDrawingRect) {
-    indicator.textContent = `Rectangle | Pattern: ${patternLabel}`;
     return;
   }
   indicator.textContent = `Pattern: ${patternLabel}`;
@@ -2978,15 +2962,6 @@ function initGoogleMap() {
       strokeWeight: 3,
       fillColor: '#5ba3ff',
       fillOpacity: 0.12
-    },
-    rectangleOptions: {
-      clickable: true,
-      editable: true,
-      draggable: true,
-      strokeColor: '#1a73e8',
-      strokeWeight: 3,
-      fillColor: '#5ba3ff',
-      fillOpacity: 0.12
     }
   });
   drawingManager.setMap(map);
@@ -3010,27 +2985,6 @@ function initGoogleMap() {
       }
       setRouteFromLatLngPoints(points, { setPatternSeed: true });
     }
-    updateDrawRouteButtonState();
-  });
-
-  google.maps.event.addListener(drawingManager, 'rectanglecomplete', (rectangle) => {
-    drawingManager.setDrawingMode(null);
-    const b = rectangle.getBounds();
-    rectangle.setMap(null);
-    if (!b) return;
-
-    const ne = b.getNorthEast();
-    const sw = b.getSouthWest();
-    const nw = new google.maps.LatLng(ne.lat(), sw.lng());
-    const se = new google.maps.LatLng(sw.lat(), ne.lng());
-    const points = [
-      { lat: nw.lat(), lng: nw.lng() },
-      { lat: ne.lat(), lng: ne.lng() },
-      { lat: se.lat(), lng: se.lng() },
-      { lat: sw.lat(), lng: sw.lng() },
-      { lat: nw.lat(), lng: nw.lng() }
-    ];
-    setRouteFromLatLngPoints(points, { setPatternSeed: true });
     updateDrawRouteButtonState();
   });
 
@@ -3756,7 +3710,6 @@ function updateDrawingToolActiveState() {
 
   const wpBtn = document.getElementById('drawRouteBtn');
   const polyBtn = document.getElementById('drawPolygonBtn');
-  const rectBtn = document.getElementById('drawRectangleBtn');
 
   if (wpBtn) {
     const labelSpan = wpBtn.querySelector('span:last-child');
@@ -3773,14 +3726,6 @@ function updateDrawingToolActiveState() {
     if (labelSpan) labelSpan.textContent = active ? 'Clear' : 'Poly';
     polyBtn.title = active ? 'Clear polygon mode' : 'Polygon';
     polyBtn.setAttribute('aria-label', polyBtn.title);
-  }
-  if (rectBtn) {
-    const labelSpan = rectBtn.querySelector('span:last-child');
-    const active = mode === google.maps.drawing.OverlayType.RECTANGLE;
-    rectBtn.classList.toggle('btn-active', active);
-    if (labelSpan) labelSpan.textContent = active ? 'Clear' : 'Rect';
-    rectBtn.title = active ? 'Clear rectangle mode' : 'Rectangle';
-    rectBtn.setAttribute('aria-label', rectBtn.title);
   }
   updateDrawShapeSummary();
 }
@@ -3846,20 +3791,6 @@ function handleDrawPolygonToggle() {
   clearActiveRoute();
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
   showLookupMessage('Polygon mode enabled. Draw an area and release to finish.', 'dim');
-  updateDrawRouteButtonState();
-}
-
-function handleDrawRectangleToggle() {
-  if (!drawingManager || !window.google || !google.maps || !google.maps.drawing) return;
-  if (drawingManager.getDrawingMode() === google.maps.drawing.OverlayType.RECTANGLE) {
-    drawingManager.setDrawingMode(null);
-    showLookupMessage('Rectangle mode cleared.', 'dim');
-    updateDrawRouteButtonState();
-    return;
-  }
-  clearActiveRoute();
-  drawingManager.setDrawingMode(google.maps.drawing.OverlayType.RECTANGLE);
-  showLookupMessage('Rectangle mode enabled. Drag on map to draw bounds.', 'dim');
   updateDrawRouteButtonState();
 }
 
@@ -4579,6 +4510,9 @@ function extractPathFromPolyline(poly) {
       waypointHeadingConfigs.delete(wpIndex);
     }
   });
+  if (patternSeedPolygonCoords && isRouteClosed(routePath)) {
+    setPatternSeedPolygon(getClosedPolygonCoordsLngLat());
+  }
   rebuildWaypointMarkers(poly);
   refreshWaypointConfigUi();
   updateVideoWaypointStatus();
@@ -4956,8 +4890,17 @@ function rebuildWaypointMarkers(poly) {
     markerWp.addListener('dragend', () => {
       const p = markerWp.getPosition();
       if (!p || !routeEditEnabled) return;
+      const wasClosed = isRouteClosed(path.getArray());
+      const lastIndex = path.getLength() - 1;
       routeSnapGuard = true;
       path.setAt(idx, p);
+      if (wasClosed && path.getLength() >= 4) {
+        if (idx === 0 && lastIndex >= 1) {
+          path.setAt(lastIndex, p);
+        } else if (idx === lastIndex) {
+          path.setAt(0, p);
+        }
+      }
       routeSnapGuard = false;
       snapRouteToNearestWaypoint();
     });
