@@ -2,7 +2,7 @@
   "type": "FeatureCollection",
   "name": "canadian_airspace",
   "metadata": {
-    "source": "https://storage.googleapis.com/29f98e10-a489-4c82-ae5e-489dbcd4912f/ca_asp.geojson?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=cloud-run-api-application%40openaip-187622.iam.gserviceaccount.com%2F20260401%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260401T010054Z&X-Goog-Expires=86400&X-Goog-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%22ca_asp.geojson%22&X-Goog-Signature=1b54f6ce6b051a70909541f2891fcb1e3dd40102ef61e74b11e092426c7c648bf61d92022634fee9fd319dd500523ed98d9d7a6fe33a7dabd7d6c7ead40e44b02172d8e05ab85b39420c209cd360a60971b5ca3ec9850857e8c782daaaafc3fa73178a36f28043c90315cab4683eacb3e9325123f1b2854e52e8212de87dd63bf42d007ae541d9195fe434b285c268ca1603a135bbc780625637fdd2a1417a36814d74035a891d69fbfc1ab2d5da266a78ca9f9c3599186a60eedad0184bae600961611f3695bfd1f500e58229b8ccb15b931e28441675360f30af0182bd178fa1832521716ed646ebed55b9d77c12d91ea12c8956a812c4d6b495250a1f4a69",
+    "source": "ca_asp.geojson",
     "input_feature_count": 2264,
     "feature_count": 212,
     "dropped_non_polygon": 0,

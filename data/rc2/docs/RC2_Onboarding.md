@@ -1,27 +1,26 @@
 ﻿# RC2_Onboarding
 
 ## What This Is
-This guide helps a drone pilot set up a safe DJI RC2 UUID workflow on Windows.  Apple IOS does not support MTP protocol. Android devices do support MTP, but these procedures currently work on Windows, using native PowerShell, which for Windows 10/11+ versions.  
+This guide helps a drone pilot set up a safe DJI RC2 UUID workflow on Windows.  Apple IOS does not support MTP protocol. Android devices do support MTP, but these procedures currently work on Windows, using native PowerShell on Windows 10/11+ versions.  
 
 ## Use these procedures to:
 
-- Discover DJI RC2 UUID slots, connected to PC with controller turned on.
-- Assign Mission A, Mission B, and Mission C slots to DJI UUID indexes, in order to upload your  mission.kmz package and exported from Gcode Tools. 
-- Deploy DJI UUID mission packages as .kmz into matching RC2 slots safely.  
+- Discover DJI RC2 UUID slots, when connected to PC with controller turned on.
+- Assigns Mission A, Mission B, and Mission C slots to DJI UUID indexes, in order to upload your mission.kmz packages and exports from Gcode Tool. 
+- Deploys DJI UUID mission packages as .kmz into matching RC2 slots safely.  
 
-Standard mission package extension in this SOP: `.kmz`
+Standard mission package extension in this SOP: `.kmz` 
 
 
 ## Alternate Manual approach.
 
-There are many good YouTube videos, in which to do similar hacks of pre-planning a flight path, or orbits that Gcode currently has tested.
-
+There are many good YouTube videos, in which to do similar hacks of pre-planning a flight paths, or orbits that Gcode currently has tested.
 
 
 ## Profile Files In /RC2_Missions/REGISTRY
 
 Use of these profile export names are saved as:
-- `DroneSOP_user.json` (My Profile)
+- `DroneSOP_user.json` (User's Profile)
 - `DroneSOP_Adv.json` (Mission Automation / Advanced Profile)
 
 Recommended save target:
@@ -58,16 +57,15 @@ Rename policy (depends on slot mode):
 - Local archive filenames can be descriptive (example: `Bridge_Inspection_v4.kmz`).
 - RC2 deployed filename should be normalized to `<UUID>.kmz` for the slot target.
 
-## Prerequisites
+## Prerequisites - Before you start!
 - Windows PC
-- USB cable connected DJI RC2 (MTP visible in This PC)
+- USB cable connected DJI RC2 (MTP visible on your Windows PC)
 - PowerShell 5.1+
 - Ability to create and save 3 simple waypoint missions in DJI Fly on the RC2
   
+  Your Windows PC connected to DJI RC2 Controller 
 
-  Your Windows PC to RC2 Controller 
-
-  > DJI RC 2\Internal shared storage\Android\data\dji.go.v5\files\waypoint\*.kmz
+  > DJI RC 2\Internal shared storage\Android\data\dji.go.v5\files\waypoint\*.kmz  // location of the waypoint *.kmz UUID and files
 
 
 
@@ -77,7 +75,7 @@ Before creating the first 3 RC2 waypoint missions, the user should establish a v
 
 This document used the DJI Mini Pro 4 and an RC2 controller with screen for testing.  Adding models that will be tested with these methods.
 
-Mavic 4 Pro, Air 3S, Mini Pro 5?
+Mavic 4 Pro, Air 3S, Mini Pro 5 (to be confirmed)
 
 
 
@@ -97,7 +95,7 @@ Use this checklist before moving into the scripted steps.
 - [x] The RC2 is unlocked and visible in Windows.
 - [x] USB mode is set to File Transfer (MTP) if prompted.
 
-Use this status language in the document and in future scripts:
+Use this status language in the onboarding documentation and in future scripts:
 - `READY`: user completed the checkpoint successfully.
 - `BLOCKED`: user cannot continue until a prerequisite is fixed.
 - `FAILED`: the script ran but hit an error.
@@ -110,6 +108,7 @@ Recommended self-training style, use gates:
   
 
 Preferred method:
+
 1. Take the RC2 and aircraft outdoors.
 2. Power on the RC2 and aircraft and connect to the aircraft.
 3. Open DJI Fly and enter Camera View.
