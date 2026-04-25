@@ -114,6 +114,14 @@ input {
 .btn-secondary:hover {
   background: #999;
 }
+.divider {
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
+.btn-clear {
+  margin-top: 16px;
+}
 
 #output {
   background: #eaf1fb;
@@ -150,12 +158,21 @@ input {
 
 <h1>DMS → Decimal Degrees</h1>
 
-<p>Enter NOTAM DD lat/long coordinates</p>
+<p><strong>E) Section</strong> — DMS coordinates</p>
 
 <input id="notam" placeholder="435636N 0785747W">
 
-<button class="btn btn-primary" onclick="convert()">Convert</button>
-<button class="btn btn-secondary" onclick="clearFields()">CLEAR</button>
+<button class="btn btn-primary" onclick="convert()">Convert E)</button>
+
+<hr class="divider">
+
+<p><strong>Q) Line</strong> — DDMMnDDDMMw + radius</p>
+
+<input id="notamQ" placeholder="4357N07848W005">
+
+<button class="btn btn-primary" onclick="convertQ()">Convert Q)</button>
+
+<button class="btn btn-secondary btn-clear" onclick="clearFields()">CLEAR</button>
 
 <div id="output"></div>
 <a id="mapLink" target="_blank"></a>
@@ -200,8 +217,47 @@ function convert(skipClipboard) {
     }
 }
 
+function convertQ(skipClipboard) {
+    let input = document.getElementById("notamQ").value.trim();
+
+    // Q) line format: DDMM[N/S]DDDMM[E/W][RRR]
+    let regex = /^(\d{2})(\d{2})([NS])(\d{3})(\d{2})([EW])(\d{3})?$/;
+    let match = input.match(regex);
+
+    if (!match) {
+        document.getElementById("output").innerHTML = "Invalid Q) format — expected e.g. 4357N07848W005";
+        document.getElementById("mapLink").href = "";
+        document.getElementById("mapLink").innerHTML = "";
+        return;
+    }
+
+    let lat = Number(match[1]) + Number(match[2]) / 60;
+    let lon = Number(match[4]) + Number(match[5]) / 60;
+    if (match[3] === 'S') lat *= -1;
+    if (match[6] === 'W') lon *= -1;
+
+    let result = lat.toFixed(6) + ", " + lon.toFixed(6);
+    let gmaps = "https://www.google.com/maps?q=" + result;
+
+    let html = "<strong>Lat/Lon:</strong> " + result;
+    if (match[7]) {
+        html += "<br><strong>Radius:</strong> " + Number(match[7]) + " NM";
+    }
+
+    document.getElementById("output").innerHTML = html;
+
+    let link = document.getElementById("mapLink");
+    link.href = gmaps;
+    link.innerHTML = "View on Google Maps";
+
+    if (!skipClipboard && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(result).catch(() => {});
+    }
+}
+
 function clearFields() {
     document.getElementById("notam").value = "";
+    document.getElementById("notamQ").value = "";
     document.getElementById("output").innerHTML = "";
     let link = document.getElementById("mapLink");
     link.href = "";

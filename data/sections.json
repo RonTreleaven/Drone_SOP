@@ -144,9 +144,9 @@
     "items": [
       "Horizontal Flyaway Checklist Completed",
       "Attempt to reconnect to aircraft (antennae, controller, app).",
-      "Note Emergency button on Flight Timer screen of Drone Pilot Canada app.",
       "Estimate RPA altitude, speed, direction, battery life.",
-      "Call aerodromes in direction of travel (nearest first).",
+      "Use emergency shut-down of your RPA or monitor App settings for Hover/RTH settings",
+	  "Call aerodromes in direction of travel (nearest first).",
       "Call FIR Area Control Centre Emergency Number.",
       "If threat is imminent, call Aviation Emergency Number: 1-877-992-6853.",
       "Use communication script when contacting aerodromes/emergency contacts."
