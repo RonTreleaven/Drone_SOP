@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0402/26 NOTAMN\nQ) CZVR/QOLAS/IV/M/AE/000/021/4911N11934W005\nA) CXXX B) 2604250345 C) 2607242359EST\nE) CAU3 OLIVER \nOBST LGT U/S TOWER 491105N 1193409W (APRX 5989FT WNW AD) 158FT \nAGL, 2089FT AMSL.)",
+    "startValidity": "2026-04-25T03:45:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.184722, -119.569167"
+    ]
+  },
+  {
     "raw": "(R0400/26 NOTAMN\nQ) CZVR/QOLAS/IV/M/E/000/007/4947N12436W002\nA) CZVR B) 2604251601 C) 2604252000\nE) OBST LGT U/S TOWER 494704N 1243617W (APRX 5NM SW POWELL RIVER AD \n(CYPW)) 160FT AGL, 620FT AMSL.)",
     "startValidity": "2026-04-24T19:08:56.784",
     "endValidity": "2026-04-25T20:00:00",
@@ -51,15 +60,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.205833, -122.898333"
-    ]
-  },
-  {
-    "raw": "(I1688/26 NOTAMN\nQ) CZVR/QOBCE/IV/M/AE/000/001/4906N12301W005\nA) CZBB B) 2604221400 C) 2604242300\nE) CRANE 490552N 1230058W APRX 5290FT BFR DTHR 13 AND 4880FT NE \nEXTENDED RCL. 50FT AGL 56FT AMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-04-21T16:23:31.751",
-    "endValidity": "2026-04-24T23:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "49.097778, -123.016111"
     ]
   },
   {
