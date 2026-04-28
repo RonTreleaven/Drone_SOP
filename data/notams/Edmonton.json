@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(C1387/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/037/5106N11359W005\nA) CYYC B) 2604281600 C) 2604281900\nE) CRANE 510550N 1135914W APRX 4750FT BFR THR 35R AND 720FT EAST \nEXTENDED RCL. 100FT AGL 3657FT AMSL. NOT LGTD, NOT PAINTED.)",
+    "startValidity": "2026-04-28T16:00:00",
+    "endValidity": "2026-04-28T19:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "51.097222, -113.987222"
+    ]
+  },
+  {
     "raw": "(C1374/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/024/6042N13505W005\nA) CYXY B) 2604282000 C) 2604282359\nE) MOBILE CRANE WITHIN 65FT RADIUS CENTRED ON 604229N 1350431W APRX \n1530FT BFR THR 02 AND 280FT EAST EXTENDED RCL. 65FT AGL 2342FT \nAMSL. NOT LGTD.)",
     "startValidity": "2026-04-27T21:27:45.953",
     "endValidity": "2026-04-28T23:59:00",
@@ -15,15 +24,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "68.312500, -133.449167"
-    ]
-  },
-  {
-    "raw": "(C1373/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/037/5106N11359W005\nA) CYYC B) 2604281300 C) 2604281600\nE) CRANE 510550N 1135914W APRX 4750FT BFR THR 35R AND 720FT EAST \nEXTENDED RCL. 100FT AGL 3657FT AMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-04-27T20:30:27.438",
-    "endValidity": "2026-04-28T16:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "51.097222, -113.987222"
     ]
   },
   {
@@ -297,21 +297,21 @@
     ]
   },
   {
-    "raw": "(R0342/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5207N11151W002\nA) CZEG B) 2604101300 C) 2607092359\nE) OBST LGT U/S TOWER 520654N 1115123W (APRX 7NM SE CASTOR AD \n(CER2)) 340FT AGL, 3053FT AMSL.)",
-    "startValidity": "2026-04-10T13:00:00",
-    "endValidity": "2026-07-09T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.115000, -111.856389"
-    ]
-  },
-  {
     "raw": "(R0343/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5148N11404W005\nA) CXXX B) 2604101300 C) 2607092359\nE) CFU9 OLDS (HOSP AND CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 514806N 1140427W (APRX 1.58NM ENE AD) 312FT \nAGL, 3683FT AMSL.)",
     "startValidity": "2026-04-10T13:00:00",
     "endValidity": "2026-07-09T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.801667, -114.074167"
+    ]
+  },
+  {
+    "raw": "(R0342/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5207N11151W002\nA) CZEG B) 2604101300 C) 2607092359\nE) OBST LGT U/S TOWER 520654N 1115123W (APRX 7NM SE CASTOR AD \n(CER2)) 340FT AGL, 3053FT AMSL.)",
+    "startValidity": "2026-04-10T13:00:00",
+    "endValidity": "2026-07-09T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.115000, -111.856389"
     ]
   },
   {
@@ -924,15 +924,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "64.030556, -139.147778"
-    ]
-  },
-  {
-    "raw": "(R0110/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/025/5356N11306W005\nA) CXXX B) 2601291338 C) 2604281335\nE) CRW2 REDWATER (HELIWORKS) (HELI)\nOBST LGT U/S TOWER 535621N 1130548W (APRX 1.23NM N AD) 349FT AGL, \n2422FT AMSL.)",
-    "startValidity": "2026-01-29T13:38:00",
-    "endValidity": "2026-04-28T13:35:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.939167, -113.096667"
     ]
   },
   {
