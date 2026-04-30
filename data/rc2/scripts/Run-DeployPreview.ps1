@@ -61,7 +61,7 @@ if (-not $Role) {
 }
 
 Write-Host ""
-Write-Host "[INFO] Previewing deployment for role : $Role  (DryRun — no files will be transferred)" -ForegroundColor Green
+Write-Host "[INFO] Previewing deployment for role : $Role  (DryRun : no files will be transferred)" -ForegroundColor Green
 Write-Host ""
 
 & "$PSScriptRoot\Step6.ps1" -Roles $Role -DryRun

@@ -333,9 +333,21 @@
 
         <h2 class="calc-heading">GSD Calculator</h2>
         <div class="fields">
+          <div class="field">
+            <label for="detailBand">Detail Band</label>
+            <select id="detailBand">
+              <option value="veryhigh">Very High</option>
+              <option value="high">High</option>
+              <option value="general">General</option>
+            </select>
+          </div>
           <div class="field field-wide">
             <label for="droneModel">Drone Selection (from Wind Resistance Guide)</label>
             <select id="droneModel"></select>
+          </div>
+          <div class="field">
+            <label for="speed">Speed (m/s)</label>
+            <input id="speed" type="number" min="1" max="15" step="0.1" value="6" placeholder="Enter speed">
           </div>
           <div class="field">
             <label for="photoMode">Photo Mode (Resolution)</label>
@@ -577,9 +589,19 @@
         : 'base';
     }
 
-    function updateSurveyGuidance(selectedModel, selectedMode, imageType, condition) {
+    function updateSurveyGuidance(selectedModel, selectedMode, imageType, condition, timedIntervalText, frontOverlapOverride) {
       const guidance = document.getElementById('surveyGuidance');
       const supports48 = !!(photoModeProfiles[selectedModel.model] && Number.isFinite(photoModeProfiles[selectedModel.model].mp48));
+      // Get user-selected speed and detail band
+      const speedInput = Number(document.getElementById('speed').value);
+      const detailBandValue = document.getElementById('detailBand').value;
+      let vfov = 63; // default VFOV
+      let frontOverlap = 0.8; // default front overlap
+      if (typeof frontOverlapOverride === 'number') {
+        frontOverlap = frontOverlapOverride;
+      } else if (condition && conditionProfiles[condition]) {
+        frontOverlap = conditionProfiles[condition].frontOverlap / 100;
+      }
       const imageTypeLabel = imageType === 'jpeg-raw' ? 'JPEG + RAW' : 'JPEG';
       const imageTypeHint = imageType === 'jpeg-raw'
         ? 'JPEG + RAW improves post-processing flexibility but increases storage and write load.'
@@ -604,11 +626,12 @@
           '<strong>Mission Condition: ' + cp.label + '</strong> &mdash; Target Detail Band: <strong>' + cp.band + '</strong><br>' +
           '<div class="ggcode-block">' +
           '<strong>GGCode Survey Settings:</strong><br>' +
-          '&bull; Speed: ' + cp.speedMin + ' &ndash; ' + cp.speedMax + ' m/s<br>' +
-          '&bull; Front Overlap: ' + cp.frontOverlap + '%<br>' +
+          '&bull; Speed: ' + speedInput + ' m/s<br>' +
+          '&bull; Front Overlap: ' + Math.round(frontOverlap * 100) + '%<br>' +
           '&bull; Side Overlap: ' + cp.sideOverlap + '%<br>' +
           '&bull; White Balance: ' + cp.whiteBalance + '<br>' +
           '&bull; Recommended MP Mode: ' + cp.recommendedMp + ' MP' +
+          (timedIntervalText || '') +
           '</div>';
       } else {
         conditionText =
@@ -620,17 +643,7 @@
     }
 
     function refreshSurveyGuidance() {
-      const select = document.getElementById('droneModel');
-      if (!select.value) {
-        document.getElementById('surveyGuidance').innerHTML = '<strong>Select a drone model first.</strong> Camera defaults, MP widths, and orthomosaic guidance will update after model selection.';
-        return;
-      }
-      const selectedModel = droneDefaults.find((item) => item.model === select.value);
-      if (!selectedModel) return;
-      const mode = document.getElementById('photoMode').value;
-      const imageType = document.getElementById('imageType').value;
-      const condition = document.getElementById('missionCondition').value;
-      updateSurveyGuidance(selectedModel, mode, imageType, condition);
+      // No-op: Only update on Calculate now
     }
 
     function applySelectedDroneDefaults() {
@@ -714,6 +727,21 @@
       const focal = Number(document.getElementById('focal').value);
       const imgW = Number(document.getElementById('imgW').value);
       const out = document.getElementById('gsdResult');
+      // Timed Interval calculation and GGCode Survey update
+      const speedInput = Number(document.getElementById('speed').value);
+      const detailBandValue = document.getElementById('detailBand').value;
+      let vfov = 63;
+      let frontOverlap = 0.8;
+      if (detailBandValue === 'veryhigh') {
+        vfov = 63;
+        frontOverlap = 0.85;
+      } else if (detailBandValue === 'high') {
+        vfov = 63;
+        frontOverlap = 0.8;
+      } else if (detailBandValue === 'general') {
+        vfov = 63;
+        frontOverlap = 0.75;
+      }
 
       if (!Number.isFinite(alt) || !Number.isFinite(sensorW) || !Number.isFinite(focal) || !Number.isFinite(imgW) || alt <= 0 || sensorW <= 0 || focal <= 0 || imgW <= 0) {
         out.innerHTML = '<span class="warning">Please enter valid positive values.</span>';
@@ -722,11 +750,43 @@
 
       const gsdMmPerPx = (alt * 1000 * sensorW) / (focal * imgW);
       const gsdCmPerPx = gsdMmPerPx / 10;
-      const detailBand = gsdCmPerPx <= 2.5 ? 'High detail' : (gsdCmPerPx <= 5 ? 'Medium detail' : 'Lower detail');
+      let detailBand = '';
+      if (gsdCmPerPx <= 1.5) {
+        detailBand = 'Very High';
+      } else if (gsdCmPerPx <= 3.0) {
+        detailBand = 'High';
+      } else if (gsdCmPerPx <= 5.0) {
+        detailBand = 'General';
+      } else {
+        detailBand = 'Lower';
+      }
 
       out.innerHTML = '<strong>GSD:</strong> ' + gsdCmPerPx.toFixed(2) + ' cm/pixel' +
         ' <br><strong>Pixel footprint:</strong> ' + gsdMmPerPx.toFixed(1) + ' mm/pixel' +
         ' <br><strong>Detail class:</strong> ' + detailBand;
+
+      // Timed Interval calculation
+      let timedIntervalText = '';
+      if (Number.isFinite(alt) && alt > 0 && Number.isFinite(speedInput) && speedInput > 0 && frontOverlap > 0 && frontOverlap < 1) {
+        const VFOV_rad = vfov * Math.PI / 180;
+        const footprintHeight = 2 * alt * Math.tan(VFOV_rad / 2);
+        const photoSpacing = footprintHeight * (1 - frontOverlap);
+        const interval = photoSpacing / speedInput;
+        timedIntervalText = '<br>&bull; <strong>Timed Interval:</strong> ' + interval.toFixed(2) + ' s';
+      }
+
+      // Update GGCode Survey Settings guidance
+      const select = document.getElementById('droneModel');
+      if (!select.value) {
+        document.getElementById('surveyGuidance').innerHTML = '<strong>Select a drone model first.</strong> Camera defaults, MP widths, and orthomosaic guidance will update after model selection.';
+        return;
+      }
+      const selectedModel = droneDefaults.find((item) => item.model === select.value);
+      if (!selectedModel) return;
+      const mode = document.getElementById('photoMode').value;
+      const imageType = document.getElementById('imageType').value;
+      const condition = document.getElementById('missionCondition').value;
+      updateSurveyGuidance(selectedModel, mode, imageType, condition, timedIntervalText, frontOverlap);
     }
 
     function resetGsd() {
