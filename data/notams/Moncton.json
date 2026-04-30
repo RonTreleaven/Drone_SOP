@@ -1,11 +1,11 @@
 [
   {
-    "raw": "(V0481/26 NOTAMR V0122/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4439N06331W005\nA) CYAW B) 2604281400 C) 2607262359EST\nE) OBST LGT U/S TOWER 443833N 0633103W (APRX 4418FT NW AD) 174FT \nAGL, 319FT AMSL.)",
-    "startValidity": "2026-04-28T14:00:00",
+    "raw": "(V0498/26 NOTAMR V0141/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4432N06444W005\nA) CXXX B) 2604301754 C) 2607301800EST\nE) CCA2 NEW GERMANY (WATER)\nOBST LGT U/S TOWER 443156N 0644416W (APRX 1.2NM SSW AD) 299FT \nAGL, 564FT AMSL.)",
+    "startValidity": "2026-04-30T17:54:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
-      "44.642500, -63.517500"
+      "44.532222, -64.737778"
     ]
   },
   {
@@ -15,6 +15,15 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.615278, -63.418889"
+    ]
+  },
+  {
+    "raw": "(V0481/26 NOTAMR V0122/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4439N06331W005\nA) CYAW B) 2604281400 C) 2607262359EST\nE) OBST LGT U/S TOWER 443833N 0633103W (APRX 4418FT NW AD) 174FT \nAGL, 319FT AMSL.)",
+    "startValidity": "2026-04-28T14:00:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.642500, -63.517500"
     ]
   },
   {
@@ -276,15 +285,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "46.578056, -60.984444"
-    ]
-  },
-  {
-    "raw": "(V0141/26 NOTAMR V1399/25\nQ) CZQM/QOLAS/IV/M/AE/000/006/4432N06444W005\nA) CXXX B) 2602041314 C) 2605041800EST\nE) CCA2 NEW GERMANY (WATER)\nOBST LGT U/S TOWER 443156N 0644416W (APRX 1.2NM SSW AD) 299FT \nAGL, 564FT AMSL.)",
-    "startValidity": "2026-02-04T13:14:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.532222, -64.737778"
     ]
   },
   {
