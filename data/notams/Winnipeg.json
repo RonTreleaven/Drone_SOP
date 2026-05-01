@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U0770/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/024/5029N10427W002\nA) CZWG B) 2604302100 C) 2607302100\nE) OBST LGT U/S TOWER 502910N 1042631W (APRX 7NM ENE REGINA GENERAL \n(HOSP) (HELI) AD (CRQ2)) 302FT AGL, 2327FT AMSL.)",
+    "startValidity": "2026-04-30T21:00:00",
+    "endValidity": "2026-07-30T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.486111, -104.441944"
+    ]
+  },
+  {
     "raw": "(U0752/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/021/5146N10648W002\nA) CZWG B) 2604291728 C) 2607281800\nE) OBST LGT U/S TOWER 514551N 1064820W (APRX 19NM SSW \nSASKATOON/BANGA AIR AD (CJN5)) 351FT AGL, 2009FT AMSL.)",
     "startValidity": "2026-04-29T17:28:00",
     "endValidity": "2026-07-28T18:00:00",
@@ -708,15 +717,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.567500, -106.649167"
-    ]
-  },
-  {
-    "raw": "(U0170/26 NOTAMR U2111/25\nQ) CZWG/QOLAS/IV/M/AE/000/024/5029N10427W005\nA) CXXX B) 2601302041 C) 2604302100EST\nE) CPB5 PILOT BUTTE \nOBST LGT U/S TOWER 502910N 1042631W (APRX 1.56NM NNW AD) 302FT \nAGL, 2327FT AMSL.)",
-    "startValidity": "2026-01-30T20:41:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.486111, -104.441944"
     ]
   },
   {
