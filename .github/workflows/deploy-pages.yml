@@ -2,6 +2,21 @@ name: Deploy to GitHub Pages
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "*.html"
+      - "*.js"
+      - "*.png"
+      - "*.ico"
+      - "*.svg"
+      - "assets/**"
+      - "sections/**"
+      - "data/**"
+      - "drone_jobs/**"
+      - ".github/workflows/deploy-pages.yml"
+      - "_config.yml"
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -30,7 +45,7 @@ jobs:
         run: |
           mkdir -p _site/assets/js _site/assets/css _site/assets/img \
                    _site/assets/Emergency _site/assets/CFS _site/assets/pdf \
-                   _site/data/notams _site/sections
+                   _site/data/notams _site/sections _site/drone_jobs
 
           # Root-level HTML pages
           cp *.html _site/
@@ -52,6 +67,14 @@ jobs:
 
           # Sections (SOP procedure pages)
           cp sections/*.html _site/sections/
+
+          # Drone jobs utility page (static app + data)
+          cp drone_jobs/index.html _site/drone_jobs/
+          cp drone_jobs/jobs.json _site/drone_jobs/ 2>/dev/null || true
+          cp drone_jobs/jobs_review.csv _site/drone_jobs/ 2>/dev/null || true
+          cp drone_jobs/jobs_review_latest.csv _site/drone_jobs/ 2>/dev/null || true
+          cp drone_jobs/*.css _site/drone_jobs/ 2>/dev/null || true
+          cp drone_jobs/*.js _site/drone_jobs/ 2>/dev/null || true
 
           # Data — reference JSON/GeoJSON files (root of data/)
           cp data/*.json data/*.geojson _site/data/ 2>/dev/null || true
