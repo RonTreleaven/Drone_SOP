@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Drone Jobs Review</title>
+  <style>
+    :root {
+      --bg: #f3f7fb;
+      --ink: #12243f;
+      --muted: #4a5a72;
+      --card: #ffffff;
+      --line: #d6e0ed;
+      --accent: #0f766e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at top right, #d8f6ef, var(--bg));
+    }
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 14px 12px 24px;
+    }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 8px 24px rgba(9, 30, 66, 0.08);
+      margin-bottom: 10px;
+    }
+    h1 {
+      margin: 0 0 4px;
+      font-size: 24px;
+    }
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    details.filter-drawer {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f9fcff;
+      padding: 8px;
+    }
+    details.filter-drawer > summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: #1f3557;
+      list-style: none;
+    }
+    details.filter-drawer > summary::-webkit-details-marker { display: none; }
+    .filters {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 10px;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    input, select, button {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px;
+      font: inherit;
+      background: #fff;
+      color: var(--ink);
+    }
+    .actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      background: linear-gradient(135deg, #0f766e, #0284c7);
+      color: #fff;
+      font-weight: 600;
+    }
+    button.secondary {
+      background: #607891;
+    }
+    #status {
+      margin-top: 8px;
+      font-weight: 600;
+    }
+    .list-wrap {
+      max-height: calc(100vh - 240px);
+      overflow: auto;
+      padding-right: 4px;
+    }
+    .job-list {
+      display: grid;
+      gap: 10px;
+    }
+    .job {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .job-title {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: #17325a;
+    }
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .field {
+      border: 1px solid #e4ebf4;
+      border-radius: 8px;
+      padding: 7px;
+      background: #fcfeff;
+    }
+    .field .k {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 2px;
+      font-weight: 700;
+    }
+    .field .v {
+      font-size: 14px;
+      font-weight: 600;
+      word-break: break-word;
+    }
+    .summary {
+      border: 1px solid #e4ebf4;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 14px;
+      line-height: 1.4;
+      background: #fafdff;
+      margin-bottom: 8px;
+      max-height: 110px;
+      overflow: auto;
+    }
+    .link-line a {
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .link-line a:hover { text-decoration: underline; }
+    @media (max-width: 980px) {
+      .filters { grid-template-columns: 1fr 1fr; }
+      .field-grid { grid-template-columns: 1fr 1fr; }
+      .actions { flex-direction: column; }
+      .list-wrap { max-height: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="panel">
+      <h1>Drone Jobs Review</h1>
+      <div class="muted">Focus view of unique jobs from jobs.json. Open Filters panel to refine the list.</div>
+
+      <details class="filter-drawer" id="filterDrawer">
+        <summary>Filters</summary>
+        <div class="filters">
+          <div>
+            <label for="q">Search</label>
+            <input id="q" type="text" placeholder="Company, title, location, category, summary" title="Search filter" />
+          </div>
+          <div>
+            <label for="source">Source</label>
+            <select id="source" title="Source filter"></select>
+          </div>
+          <div>
+            <label for="category">Category</label>
+            <select id="category" title="Category filter"></select>
+          </div>
+          <div>
+            <label for="minConf">Min confidence</label>
+            <input id="minConf" type="number" min="0" max="1" step="0.01" value="0.00" placeholder="0.00" title="Minimum confidence" />
+          </div>
+          <div>
+            <label for="canadaOnly">Canada only</label>
+            <select id="canadaOnly" title="Canada-only filter">
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+        </div>
+        <div class="actions">
+          <button id="applyBtn" type="button">Apply Filters</button>
+          <button id="resetBtn" class="secondary" type="button">Reset Filters</button>
+        </div>
+      </details>
+
+      <div id="status" class="muted"></div>
+    </section>
+
+    <div class="list-wrap">
+      <section id="jobList" class="job-list"></section>
+    </div>
+  </div>
+
+  <script>
+    let jobs = [];
+
+    function normalizeText(value) {
+      if (value === null || value === undefined) return "";
+      return String(value)
+        .replace(/\u2013|\u2014/g, "-")
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+    }
+
+    function normalizeDate(value) {
+      if (!value) return "";
+      const s = String(value).trim();
+      const mmdd = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+      if (mmdd.test(s)) return s;
+      const d = new Date(s);
+      if (Number.isNaN(d.getTime())) return "";
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      const yy = d.getFullYear();
+      return `${mm}/${dd}/${yy}`;
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function isCanadaLocation(text) {
+      const t = (text || "").toLowerCase();
+      return ["canada", ", on", ", qc", ", bc", ", ab", ", mb", ", sk", ", ns", ", nb", ", nl", ", pe"]
+        .some(token => t.includes(token));
+    }
+
+    function optionMarkup(values, allLabel = "All") {
+      const options = [`<option value="">${allLabel}</option>`];
+      values.forEach(v => {
+        options.push(`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`);
+      });
+      return options.join("");
+    }
+
+    function buildFilters() {
+      const sources = [...new Set(jobs.map(j => normalizeText(j.source)).filter(Boolean))].sort();
+      const categories = [...new Set(jobs.map(j => normalizeText(j.category)).filter(Boolean))].sort();
+      document.getElementById("source").innerHTML = optionMarkup(sources);
+      document.getElementById("category").innerHTML = optionMarkup(categories);
+    }
+
+    function currentFilters() {
+      return {
+        q: document.getElementById("q").value.trim().toLowerCase(),
+        source: document.getElementById("source").value,
+        category: document.getElementById("category").value,
+        minConf: parseFloat(document.getElementById("minConf").value || "0"),
+        canadaOnly: document.getElementById("canadaOnly").value === "1",
+      };
+    }
+
+    function filterJobs() {
+      const f = currentFilters();
+      return jobs.filter(job => {
+        const title = normalizeText(job.title);
+        const company = normalizeText(job.company);
+        const location = normalizeText(job.location);
+        const summary = normalizeText(job.summary);
+        const source = normalizeText(job.source);
+        const category = normalizeText(job.category);
+        const confidence = Number(job.confidence || 0);
+
+        if (f.source && source !== f.source) return false;
+        if (f.category && category !== f.category) return false;
+        if (confidence < f.minConf) return false;
+        if (f.canadaOnly && !isCanadaLocation(location)) return false;
+
+        if (f.q) {
+          const hay = `${company} ${title} ${location} ${source} ${category} ${summary}`.toLowerCase();
+          if (!hay.includes(f.q)) return false;
+        }
+        return true;
+      });
+    }
+
+    function fieldRow(label, value) {
+      return `<div class="field"><div class="k">${label}</div><div class="v">${escapeHtml(value || "N/A")}</div></div>`;
+    }
+
+    function rowHtml(job) {
+      const company = normalizeText(job.company);
+      const title = normalizeText(job.title);
+      const location = normalizeText(job.location);
+      const source = normalizeText(job.source);
+      const posted = normalizeDate(job.date_posted);
+      const expires = normalizeDate(job.date_expires);
+      const category = normalizeText(job.category);
+      const summary = normalizeText(job.summary);
+      const url = String(job.link || "").trim();
+
+      return `
+      <article class="job">
+        <h2 class="job-title">${escapeHtml(title || "Untitled Job")}</h2>
+        <div class="field-grid">
+          ${fieldRow("Company", company)}
+          ${fieldRow("Location", location)}
+          ${fieldRow("Source", source)}
+          ${fieldRow("Category", category)}
+          ${fieldRow("Date Posted", posted)}
+          ${fieldRow("Expired", expires)}
+        </div>
+        <div class="summary">${escapeHtml(summary || "No summary available")}</div>
+        <div class="link-line"><a href="${escapeHtml(url)}" target="_blank" rel="noopener">View Source Job URL</a></div>
+      </article>`;
+    }
+
+    function render() {
+      const filtered = filterJobs();
+      document.getElementById("status").textContent = `Showing ${filtered.length} of ${jobs.length} jobs`;
+      document.getElementById("jobList").innerHTML = filtered.map(rowHtml).join("");
+    }
+
+    async function init() {
+      try {
+        const res = await fetch("jobs.json", { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        jobs = await res.json();
+      } catch (err) {
+        document.getElementById("status").textContent = `Failed to load jobs.json: ${err.message}`;
+        return;
+      }
+
+      jobs = jobs.map(j => ({
+        ...j,
+        company: normalizeText(j.company),
+        title: normalizeText(j.title),
+        location: normalizeText(j.location),
+        source: normalizeText(j.source),
+        category: normalizeText(j.category),
+        date_posted: normalizeDate(j.date_posted),
+        date_expires: normalizeDate(j.date_expires),
+        summary: normalizeText(j.summary),
+      }));
+
+      buildFilters();
+      render();
+
+      document.getElementById("applyBtn").addEventListener("click", render);
+      document.getElementById("q").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          render();
+        }
+      });
+      document.getElementById("resetBtn").addEventListener("click", () => {
+        document.getElementById("q").value = "";
+        document.getElementById("source").value = "";
+        document.getElementById("category").value = "";
+        document.getElementById("minConf").value = "0.00";
+        document.getElementById("canadaOnly").value = "0";
+        render();
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
