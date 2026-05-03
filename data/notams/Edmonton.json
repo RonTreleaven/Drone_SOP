@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0418/26 NOTAMR R0417/26\nQ) CZEG/QOLAS/IV/M/AE/000/018/6402N13909W005\nA) CYDA B) 2605031712 C) 2606011700EST\nE) OBST LGT U/S TOWER 640150N 1390852W (APRX 5097FT SSW AD) 35FT \nAGL, 1741FT AMSL.)",
+    "startValidity": "2026-05-03T17:12:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "64.030556, -139.147778"
+    ]
+  },
+  {
     "raw": "(R0415/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/037/5320N11529W002\nA) CZEG B) 2605041601 C) 2605042000\nE) OBST LGT U/S TOWER 532020N 1152924W (APRX 15NM SSW WILDWOOD/LOCHE \nMIST FARMS AD (CJJ3)) 320FT AGL, 3604FT AMSL.)",
     "startValidity": "2026-05-02T16:23:07.847",
     "endValidity": "2026-05-04T20:00:00",
@@ -879,15 +888,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "60.611389, -116.211667"
-    ]
-  },
-  {
-    "raw": "(R0122/26 NOTAMR R1206/25\nQ) CZEG/QOLAS/IV/M/AE/000/018/6402N13909W005\nA) CYDA B) 2602021616 C) 2605031700EST\nE) OBST LGT U/S TOWER 640150N 1390852W (APRX 5097FT SSW AD) 35FT \nAGL, 1741FT AMSL.)",
-    "startValidity": "2026-02-02T16:16:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "64.030556, -139.147778"
     ]
   },
   {
