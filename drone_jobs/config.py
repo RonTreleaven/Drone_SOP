@@ -76,4 +76,14 @@ LEVER_SITES = {
     "aero": "Aero",
 }
 
+# Default daily scrape sources. Keep Indeed out by default until RSS is reliable again.
+DEFAULT_SOURCES = [
+    "jobbank",
+    "simplyhired",
+    "talent",
+    "jobs_bear",
+    "greenhouse",
+    "lever",
+]
+
 # Workopolis is currently blocked by anti-bot protection for Python requests from this environment.

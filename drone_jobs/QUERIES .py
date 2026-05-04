@@ -25,7 +25,8 @@ def classify_job(title, description):
     if any(k in text for k in ["inspection", "roof", "tower", "construction"]):
         return "inspection"
 
-    if any(k in text for k in ["film", "cinema", "tv", "production"]):
+    # Keep film matching explicit; generic "production" causes engineering false positives.
+    if any(k in text for k in ["film", "cinema", " tv ", "television", "movie", "documentary"]):
         return "film"
 
     return "general"

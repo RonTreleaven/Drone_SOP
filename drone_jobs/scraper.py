@@ -10,6 +10,7 @@ import requests
 
 from classifier import classify_job, detect_type
 from config import (
+    DEFAULT_SOURCES,
     EXCLUDED_TITLE_PHRASES,
     GREENHOUSE_BOARDS,
     GREENHOUSE_JOBS_API,
@@ -597,14 +598,51 @@ def parse_lever_job(item, company_name):
 
 def fetch_indeed():
     jobs = []
+    blocked = False
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/124.0.0.0 Safari/537.36"
+        ),
+        "Accept": "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
+        "Accept-Language": "en-CA,en;q=0.9",
+        "Referer": "https://ca.indeed.com/",
+    }
 
     for query_family, query in iter_query_pairs():
+        if blocked:
+            break
+
         url = INDEED_RSS.format(query=quote_plus(query))
-        response = fetch_url(url)
-        if response is None:
+        try:
+            response = requests.get(url, headers=headers, timeout=20)
+        except requests.RequestException as exc:
+            print(f"Indeed request failed for '{query}': {exc}")
             continue
-        if "Security Check" in response.text:
-            print("Blocked by Indeed")
+
+        if response.status_code in (403, 429):
+            print(
+                "\nIndeed RSS appears blocked (HTTP "
+                f"{response.status_code}). Skipping Indeed for this run."
+            )
+            blocked = True
+            continue
+
+        if response.status_code >= 400:
+            print(f"Indeed RSS HTTP {response.status_code} for query '{query}', skipping query.")
+            continue
+
+        content_type = (response.headers.get("content-type") or "").lower()
+        body_lower = response.text.lower()
+        if ("xml" not in content_type) and ("<rss" not in body_lower and "<feed" not in body_lower):
+            print("\nIndeed returned a non-RSS payload. Skipping Indeed for this run.")
+            blocked = True
+            continue
+
+        if "security check" in body_lower or "captcha" in body_lower:
+            print("\nIndeed security challenge detected. Skipping Indeed for this run.")
+            blocked = True
             continue
 
         print("\nFetching:", url)
@@ -878,7 +916,7 @@ def run(reset=False, sources=None, no_write=False):
         "lever": fetch_lever,
     }
 
-    selected_sources = sources or list(source_fetchers.keys())
+    selected_sources = sources or list(DEFAULT_SOURCES)
     unknown_sources = [source for source in selected_sources if source not in source_fetchers]
     if unknown_sources:
         valid = ", ".join(sorted(source_fetchers.keys()))

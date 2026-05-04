@@ -4,6 +4,7 @@ import csv
 from datetime import datetime, timedelta, timezone
 
 from normalization import normalize_date, normalize_text, parse_date_value
+from classifier import classify_job
 
 
 def parse_iso_date(value):
@@ -44,15 +45,17 @@ def fetch_jobs():
 
     jobs = []
     for r in rows:
+        title = normalize_text(r[0])
+        summary = normalize_text(r[4])
         jobs.append({
-            "title": normalize_text(r[0]),
+            "title": title,
             "company": normalize_text(r[1]),
             "location": normalize_text(r[2]),
             "link": r[3],
-            "summary": normalize_text(r[4]),
+            "summary": summary,
             "date_posted": normalize_date(r[5]),
             "date_expires": normalize_date(r[6]),
-            "category": normalize_text(r[7]),
+            "category": classify_job(title, summary),
             "type": normalize_text(r[8]),
             "source": normalize_text(r[9]),
             "query_family": normalize_text(r[10]),
