@@ -476,16 +476,28 @@ def evaluate_job_match(job):
     return is_match, round(score, 3), "; ".join(reasons)
 
 
+def build_summary_preview(description, max_chars=550):
+    text = clean_text(description)
+    if len(text) <= max_chars:
+        return text
+
+    preview = text[:max_chars]
+    last_space = preview.rfind(" ")
+    if last_space >= int(max_chars * 0.7):
+        preview = preview[:last_space]
+    return preview.rstrip()
+
+
 def finalize_job(job):
     is_match, score, reason = evaluate_job_match(job)
     if not is_match:
         return None
 
-    description = job.get("description", "")
-    job["summary"] = description[:500]
+    description = clean_text(job.get("description", ""))
+    job["description"] = description
+    job["summary"] = build_summary_preview(description, max_chars=550)
     job["confidence"] = score
     job["match_reason"] = reason
-    job.pop("description", None)
     return job
 
 
@@ -931,7 +943,7 @@ def run(reset=False, sources=None, no_write=False):
     jobs = dedupe_jobs(collected)
     inserted = 0
     if no_write:
-        print("Preview mode enabled: not writing to jobs.db")
+        print("Preview mode enabled: not writing to data/jobs.db")
     else:
         for job in jobs:
             inserted += insert_job(job)

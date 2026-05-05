@@ -1,3 +1,15 @@
+from pathlib import Path
+
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DATA_DIR = PROJECT_ROOT / "data"
+
+# Pipeline outputs are written to /data so HTML can consume them directly.
+JOBS_DB_PATH = DATA_DIR / "jobs.db"
+JOBS_JSON_PATH = DATA_DIR / "jobs.json"
+JOBS_REVIEW_CSV_PATH = DATA_DIR / "jobs_review.csv"
+JOBS_REVIEW_LATEST_CSV_PATH = DATA_DIR / "jobs_review_latest.csv"
+
 QUERY_FAMILIES = {
     "operations": [
         "drone pilot",

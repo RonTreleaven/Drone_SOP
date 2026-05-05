@@ -41,6 +41,16 @@
       "optimumImageWidthPx": 4000
     },
     {
+      "model": "DJI Mini 5 Pro",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3,
+      "optimumSensorWidthMm": 13.2,
+      "optimumFocalLengthMm": 8.8,
+      "optimumImageWidthPx": 4096
+    },
+    {
       "model": "DJI Air 2S",
       "verified": true,
       "oemWindMs": 10.7,

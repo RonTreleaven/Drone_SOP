@@ -313,7 +313,7 @@
           <div class="accordion-body">
             <p class="small"><strong>Ground Sampling Distance (GSD)</strong> is the real-world ground size represented by one image pixel.</p>
             <div class="formula">GSD = (H x Sw) / (f x Iw)</div>
-            <p class="small">Where H = height above ground (m), Sw = sensor width (mm), f = focal length (mm), Iw = image width (pixels). Convert m to mm before using formula.</p>
+            <p class="small"> H = height AGL(m), Sw = sensor width (mm), f = focal length (mm), Iw = image width (pixels). Convert m to mm before using formula.</p>
             <p class="small"><strong>Lower GSD is better detail.</strong> Example: 2.4 cm/pixel resolves smaller features than 4.8 cm/pixel.</p>
 
             <h2 class="calc-heading">GSD Calculator</h2>
@@ -393,7 +393,7 @@
               <th>Focal Length (mm)</th>
               <th>Base Width (px)</th>
               <th>12 MP Width (px)</th>
-              <th>48 MP Width (px)</th>
+              <th>High MP Width (px)</th>
             </tr>
           </thead>
           <tbody id="droneDefaultsBody"></tbody>
@@ -420,7 +420,7 @@
                     <th>Target GSD (cm/px)</th>
                     <th>Base Width Altitude (m)</th>
                     <th>12 MP Altitude (m)</th>
-                    <th>48 MP Altitude (m)</th>
+                    <th>High MP Altitude (m)</th>
                   </tr>
                 </thead>
                 <tbody id="altitudeBandsBody"></tbody>
@@ -450,14 +450,14 @@
                   <tr><td>Sunny</td><td>12 MP</td><td>Sunny</td><td>6 to 8</td><td>80 / 75</td></tr>
                   <tr><td>Overcast</td><td>12 MP</td><td>Cloudy</td><td>5 to 7</td><td>80 / 75</td></tr>
                   <tr><td>Late day</td><td>12 MP</td><td>Fixed</td><td>4 to 6</td><td>82 / 78</td></tr>
-                  <tr><td>High detail</td><td>48 MP</td><td>Fixed</td><td>3 to 5</td><td>85 / 80</td></tr>
+                  <tr><td>High detail</td><td>High MP (48/50)</td><td>Fixed</td><td>3 to 5</td><td>85 / 80</td></tr>
                 </tbody>
               </table>
             </div>
             <ul>
               <li>Use fixed white balance for full mission consistency.</li>
               <li>Use 4:3 capture and low ISO with fast shutter.</li>
-              <li>Use 12 MP as default; move to 48 MP only in strong light and slower flights.</li>
+              <li>Use 12 MP as default; move to High MP (48/50 MP by model) only in strong light and slower flights.</li>
             </ul>
           </div>
         </details>
@@ -476,6 +476,7 @@
       'DJI Mini 3': { mp12: 4000, mp48: 8064 },
       'DJI Mini 3 Pro': { mp12: 4000, mp48: 8064 },
       'DJI Mini 4 Pro': { mp12: 4000, mp48: 8064 },
+      'DJI Mini 5 Pro': { mp12: 4096, mp48: 8192, mpHighLabel: '50 MP' },
       'DJI Air 3': { mp12: 4032, mp48: 8064 }
     };
 
@@ -792,6 +793,9 @@
     function syncPhotoModeOptions(selectedModel) {
       const modeSelect = document.getElementById('photoMode');
       const profile = photoModeProfiles[selectedModel.model];
+      const highMpLabel = (profile && typeof profile.mpHighLabel === 'string' && profile.mpHighLabel.trim())
+        ? profile.mpHighLabel.trim()
+        : '48 MP';
       const previousValue = modeSelect.value;
       modeSelect.innerHTML = '';
 
@@ -810,7 +814,7 @@
       if (profile && Number.isFinite(profile.mp48)) {
         const opt48 = document.createElement('option');
         opt48.value = '48';
-        opt48.textContent = '48 MP';
+        opt48.textContent = highMpLabel;
         modeSelect.appendChild(opt48);
       }
 
@@ -821,7 +825,11 @@
 
     function updateSurveyGuidance(selectedModel, selectedMode, imageType, condition, timedIntervalText, frontOverlapOverride) {
       const guidance = document.getElementById('surveyGuidance');
-      const supports48 = !!(photoModeProfiles[selectedModel.model] && Number.isFinite(photoModeProfiles[selectedModel.model].mp48));
+      const selectedProfile = photoModeProfiles[selectedModel.model] || null;
+      const supports48 = !!(selectedProfile && Number.isFinite(selectedProfile.mp48));
+      const highMpLabel = (selectedProfile && typeof selectedProfile.mpHighLabel === 'string' && selectedProfile.mpHighLabel.trim())
+        ? selectedProfile.mpHighLabel.trim()
+        : '48 MP';
       // Get user-selected speed and detail band
       const speedInput = Number(document.getElementById('speed').value);
       const detailBandValue = document.getElementById('detailBand').value;
@@ -839,12 +847,12 @@
 
       let modeText = '';
       if (selectedMode === '48' && supports48) {
-        modeText = '<strong>Optimal (48 MP mode):</strong> Use only in strong light with slower speed and higher overlap. Recommended setup: ' + imageTypeLabel + ', 4:3, fixed white balance, front overlap 85%, side overlap 80%, and shutter typically 1/1000 or faster.<br>' + imageTypeHint + '<br><strong>Note:</strong> Image type does not change GSD; MP mode changes image width and therefore GSD.';
+        modeText = '<strong>Optimal (' + highMpLabel + ' mode):</strong> Use only in strong light with slower speed and higher overlap. Recommended setup: ' + imageTypeLabel + ', 4:3, fixed white balance, front overlap 85%, side overlap 80%, and shutter typically 1/1000 or faster.<br>' + imageTypeHint + '<br><strong>Note:</strong> Image type does not change GSD; MP mode changes image width and therefore GSD.';
       } else if (selectedMode === '12') {
         modeText = '<strong>Optimal (12 MP mode):</strong> Most reliable orthomosaic setting. Recommended setup: ' + imageTypeLabel + ', 4:3, fixed white balance, front overlap 80%, side overlap 75%, low ISO, and shutter typically 1/800 or faster.<br>' + imageTypeHint + '<br><strong>Note:</strong> Image type does not change GSD; MP mode changes image width and therefore GSD.';
       } else {
         modeText = supports48
-          ? '<strong>Model supports 12 MP and 48 MP:</strong> 12 MP is generally the optimal default for consistent orthomosaic stitching. Use 48 MP only when light and stability are excellent and you can fly slower with higher overlap. Current image type: ' + imageTypeLabel + '.<br><strong>Note:</strong> Image type does not change GSD; MP mode changes image width and therefore GSD.'
+          ? '<strong>Model supports 12 MP and ' + highMpLabel + ':</strong> 12 MP is generally the optimal default for consistent orthomosaic stitching. Use ' + highMpLabel + ' only when light and stability are excellent and you can fly slower with higher overlap. Current image type: ' + imageTypeLabel + '.<br><strong>Note:</strong> Image type does not change GSD; MP mode changes image width and therefore GSD.'
           : '<strong>Model guidance:</strong> Use the base camera width for this drone and prioritize consistency: ' + imageTypeLabel + ', 4:3 (where available), fixed white balance, low ISO, and steady overlap values.<br><strong>Note:</strong> Image type does not change GSD.';
       }
 

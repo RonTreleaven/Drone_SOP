@@ -5,6 +5,8 @@ from datetime import datetime, timedelta, timezone
 
 from normalization import normalize_date, normalize_text, parse_date_value
 from classifier import classify_job
+from database import init_db
+from config import DATA_DIR, JOBS_DB_PATH, JOBS_JSON_PATH, JOBS_REVIEW_CSV_PATH, JOBS_REVIEW_LATEST_CSV_PATH
 
 
 def parse_iso_date(value):
@@ -29,12 +31,13 @@ def is_possibly_stale(date_posted, date_expires):
 
 
 def fetch_jobs():
-    conn = sqlite3.connect("jobs.db")
+    init_db()
+    conn = sqlite3.connect(str(JOBS_DB_PATH))
     c = conn.cursor()
 
     c.execute(
         """
-         SELECT title, company, location, link, summary, date_posted, date_expires,
+         SELECT title, company, location, link, description, summary, date_posted, date_expires,
              category, type, source, query_family, matched_query, confidence, match_reason
         FROM jobs
         ORDER BY confidence DESC, created_at DESC
@@ -46,30 +49,33 @@ def fetch_jobs():
     jobs = []
     for r in rows:
         title = normalize_text(r[0])
-        summary = normalize_text(r[4])
+        description = normalize_text(r[4])
+        summary = normalize_text(r[5])
         jobs.append({
             "title": title,
             "company": normalize_text(r[1]),
             "location": normalize_text(r[2]),
             "link": r[3],
+            "description": description,
             "summary": summary,
-            "date_posted": normalize_date(r[5]),
-            "date_expires": normalize_date(r[6]),
-            "category": classify_job(title, summary),
-            "type": normalize_text(r[8]),
-            "source": normalize_text(r[9]),
-            "query_family": normalize_text(r[10]),
-            "matched_query": normalize_text(r[11]),
-            "confidence": r[12],
-            "match_reason": normalize_text(r[13]),
+            "date_posted": normalize_date(r[6]),
+            "date_expires": normalize_date(r[7]),
+            "category": classify_job(title, description or summary),
+            "type": normalize_text(r[9]),
+            "source": normalize_text(r[10]),
+            "query_family": normalize_text(r[11]),
+            "matched_query": normalize_text(r[12]),
+            "confidence": r[13],
+            "match_reason": normalize_text(r[14]),
         })
 
     return jobs
 
 def export_json():
     jobs = fetch_jobs()
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-    with open("jobs.json", "w", encoding="utf-8") as f:
+    with open(JOBS_JSON_PATH, "w", encoding="utf-8") as f:
         json.dump(jobs, f, indent=2, ensure_ascii=False)
 
 
@@ -89,7 +95,8 @@ def load_existing_reviews(path):
 
 def export_review_csv():
     jobs = fetch_jobs()
-    output = "jobs_review.csv"
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    output = JOBS_REVIEW_CSV_PATH
     existing = load_existing_reviews(output)
 
     review_fields = [
@@ -114,6 +121,7 @@ def export_review_csv():
         "type",
         "confidence",
         "match_reason",
+        "description",
         "summary",
         "link",
     ] + review_fields
@@ -142,7 +150,7 @@ def export_review_csv():
             writer.writeheader()
             writer.writerows(rows)
     except PermissionError:
-        fallback_output = "jobs_review_latest.csv"
+        fallback_output = JOBS_REVIEW_LATEST_CSV_PATH
         with open(fallback_output, "w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=headers)
             writer.writeheader()

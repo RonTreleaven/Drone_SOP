@@ -1,6 +1,13 @@
 
 import sqlite3
 
+from config import DATA_DIR, JOBS_DB_PATH
+
+
+def _connect():
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    return sqlite3.connect(str(JOBS_DB_PATH))
+
 
 def _ensure_column(cursor, table_name, column_name, ddl):
     cursor.execute(f"PRAGMA table_info({table_name})")
@@ -9,7 +16,7 @@ def _ensure_column(cursor, table_name, column_name, ddl):
         cursor.execute(f"ALTER TABLE {table_name} ADD COLUMN {ddl}")
 
 def init_db():
-    conn = sqlite3.connect("jobs.db")
+    conn = _connect()
     c = conn.cursor()
 
     c.execute("""
@@ -19,6 +26,7 @@ def init_db():
         company TEXT,
         location TEXT,
         link TEXT UNIQUE,
+        description TEXT,
         summary TEXT,
         date_posted TEXT,
         date_expires TEXT,
@@ -33,6 +41,7 @@ def init_db():
     )
     """)
 
+    _ensure_column(c, "jobs", "description", "description TEXT")
     _ensure_column(c, "jobs", "summary", "summary TEXT")
     _ensure_column(c, "jobs", "date_posted", "date_posted TEXT")
     _ensure_column(c, "jobs", "date_expires", "date_expires TEXT")
@@ -46,7 +55,7 @@ def init_db():
 
 
 def clear_jobs():
-    conn = sqlite3.connect("jobs.db")
+    conn = _connect()
     c = conn.cursor()
     c.execute("DELETE FROM jobs")
     conn.commit()
@@ -54,18 +63,19 @@ def clear_jobs():
 
 
 def insert_job(job):
-    conn = sqlite3.connect("jobs.db")
+    conn = _connect()
     c = conn.cursor()
 
     try:
         c.execute("""
-        INSERT INTO jobs (title, company, location, link, summary, date_posted, date_expires, category, type, source, query_family, matched_query, confidence, match_reason)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO jobs (title, company, location, link, description, summary, date_posted, date_expires, category, type, source, query_family, matched_query, confidence, match_reason)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             job["title"],
             job["company"],
             job["location"],
             job["link"],
+            job.get("description", ""),
             job.get("summary", ""),
             job.get("date_posted", ""),
             job.get("date_expires", ""),

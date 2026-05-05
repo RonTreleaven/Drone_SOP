@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Drone Jobs Review</title>
-  <link rel="stylesheet" href="../assets/css/site-nav.css" />
-  <script src="../assets/js/site-nav.js" defer></script>
+  <link rel="stylesheet" href="assets/css/site-nav.css" />
+  <script src="assets/js/site-nav.js" defer></script>
   <style>
     :root {
       --bg: #f3f7fb;
@@ -64,13 +64,42 @@
       font-weight: 700;
       color: #1f3557;
       list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid #cfdcee;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #eef5ff, #e7f4ff);
+      min-height: 44px;
+    }
+    details.filter-drawer > summary::after {
+      content: "Tap to open";
+      font-size: 11px;
+      color: #4c6483;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    details.filter-drawer[open] > summary::after {
+      content: "Tap to close";
+    }
+    details.filter-drawer[open] > summary {
+      margin-bottom: 8px;
     }
     details.filter-drawer > summary::-webkit-details-marker { display: none; }
     .filters {
       margin-top: 8px;
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
+    }
+    .filter-item {
+      min-width: 0;
+    }
+    .filter-item.search {
+      grid-column: 1 / -1;
     }
     label {
       display: block;
@@ -90,15 +119,26 @@
     }
     .actions {
       margin-top: 10px;
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
+      position: sticky;
+      bottom: 0;
+      z-index: 3;
+      padding-top: 8px;
+      background: linear-gradient(180deg, rgba(249, 252, 255, 0), rgba(249, 252, 255, 0.96) 24%, rgba(249, 252, 255, 1) 100%);
     }
     button {
       cursor: pointer;
       border: none;
       background: linear-gradient(135deg, #0f766e, #0284c7);
       color: #fff;
-      font-weight: 600;
+      font-weight: 700;
+      text-align: center;
+      font-size: 0.84rem;
+      min-height: 42px;
+      white-space: nowrap;
+      padding: 8px 6px;
     }
     button.secondary {
       background: #607891;
@@ -112,50 +152,122 @@
       margin-top: 10px;
     }
     .status-pill {
-      border: 1px solid #314963;
-      background: linear-gradient(180deg, #172637 0%, #1b3045 100%);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 10px rgba(8, 20, 34, 0.12);
-      border-radius: 10px;
-      padding: 9px 12px;
+      border: 1px solid #2f4c69;
+      background: linear-gradient(135deg, #112b49 0%, #133e67 52%, #0f5f7e 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 20px rgba(10, 27, 45, 0.26);
+      border-radius: 12px;
+      padding: 8px;
     }
     .status-metrics {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
     }
     .status-metric {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 7px;
-      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      border: 1px solid rgba(166, 200, 232, 0.3);
+      border-radius: 9px;
+      background: rgba(10, 22, 39, 0.36);
+      padding: 5px 7px;
     }
     .status-pill .k {
       display: inline-block;
-      color: #97aec8;
-      font-size: 0.66rem;
+      color: #bad0e5;
+      font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.09em;
       line-height: 1;
-      margin-bottom: 0;
+      margin-bottom: 4px;
       font-weight: 800;
     }
     .status-pill .v {
-      color: #ffd24a;
-      font-size: 0.96rem;
-      line-height: 1.15;
+      color: #ffe57a;
+      font-size: 1rem;
+      line-height: 1.2;
       text-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
       font-weight: 800;
       font-variant-numeric: tabular-nums;
       word-break: break-word;
+      text-align: center;
     }
     .status-sep {
-      color: rgba(151, 174, 200, 0.55);
-      font-size: 0.95rem;
+      display: none;
+    }
+    .status-sources {
+      margin-top: 8px;
+      border-top: 1px solid rgba(178, 211, 239, 0.28);
+      padding-top: 6px;
+      color: #d6e8f8;
+      font-size: 0.73rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .status-sources .src-label {
+      color: #d6e8f8;
+      margin-right: 4px;
+    }
+    .status-sources .src-item {
+      color: #98d5ff;
+      margin-right: 10px;
+    }
+    .status-sources .src-count {
+      display: inline-block;
+      min-width: 1.35em;
+      padding: 1px 5px;
+      margin-left: 3px;
+      border-radius: 4px;
+      background: #000000;
+      color: #ffd24a;
+      font-size: 0.72rem;
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+    .status-toggle-row {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .status-toggle-btn {
+      width: auto;
+      min-width: 138px;
+      max-width: 100%;
+      min-height: 34px;
+      padding: 6px 12px;
+      border: 1px solid rgba(166, 200, 232, 0.32);
+      border-radius: 8px;
+      background: rgba(10, 22, 39, 0.45);
+      color: #d9ecff;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       line-height: 1;
-      -webkit-user-select: none;
-      user-select: none;
+      white-space: nowrap;
+    }
+    .status-toggle-btn:hover {
+      background: rgba(20, 43, 69, 0.62);
+    }
+    .status-toggle-btn.export-all {
+      border-color: rgba(255, 210, 74, 0.45);
+      color: #ffe59b;
+      background: rgba(39, 28, 9, 0.52);
+    }
+    .status-toggle-btn.export-all:hover {
+      background: rgba(60, 42, 13, 0.68);
     }
     #statusError {
       margin-top: 8px;
@@ -168,6 +280,8 @@
     .job-list {
       display: grid;
       gap: 10px;
+      max-width: 760px;
+      margin: 0 auto;
     }
     .job {
       background: #fff;
@@ -177,19 +291,59 @@
     }
     .job-title {
       margin: 0 0 8px;
-      font-size: 18px;
+      font-size: clamp(1rem, 1.8vw, 1.1rem);
       color: #17325a;
     }
     .job-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
       gap: 8px;
       margin-bottom: 8px;
     }
     .job-head .job-title {
       margin: 0;
       flex: 1;
+      min-width: 0;
+    }
+    .job-title-toggle {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      color: inherit;
+      padding: 0;
+      font: inherit;
+      line-height: 1.2;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 32px;
+    }
+    .job-title-toggle::before {
+      content: "▾";
+      color: #3e5978;
+      font-size: 0.95rem;
+      flex: 0 0 auto;
+      transition: transform 0.15s ease;
+    }
+    .job.collapsed .job-title-toggle::before {
+      transform: rotate(-90deg);
+    }
+    .job-title-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .job-body {
+      display: block;
+    }
+    .job.collapsed .job-body {
+      display: none;
     }
     .job-select {
       display: inline-flex;
@@ -199,6 +353,9 @@
       font-weight: 700;
       color: var(--muted);
       white-space: nowrap;
+      flex-shrink: 0;
+      justify-self: end;
+      align-self: start;
     }
     .job-select input {
       width: 16px;
@@ -208,8 +365,8 @@
     }
     .field-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(140px, 1fr));
-      gap: 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
       margin-bottom: 8px;
     }
     .field {
@@ -234,13 +391,17 @@
     .summary {
       border: 1px solid #e4ebf4;
       border-radius: 8px;
-      padding: 8px;
+      padding: 9px;
       font-size: 14px;
-      line-height: 1.4;
+      line-height: 1.45;
       background: #fafdff;
       margin-bottom: 8px;
-      max-height: 110px;
+      max-height: 158px;
       overflow: auto;
+    }
+    .summary .fr-segment {
+      color: #355c86;
+      font-style: italic;
     }
     .link-line a {
       color: var(--accent);
@@ -250,47 +411,81 @@
     }
     .link-line a:hover { text-decoration: underline; }
     @media (max-width: 980px) {
-      .filters { grid-template-columns: 1fr 1fr; }
       .status-metrics {
+        grid-template-columns: 1fr;
+      }
+      .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .actions {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .list-wrap { max-height: none; }
+      .summary { max-height: 176px; }
+      .status-sources {
+        font-size: 0.72rem;
+      }
+    }
+    @media (max-width: 640px) {
+      .filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
       }
-      .status-sep {
-        display: none;
+      .actions {
+        gap: 6px;
       }
-      .field-grid { grid-template-columns: 1fr 1fr; }
-      .actions { flex-direction: column; }
-      .list-wrap { max-height: none; }
+      button {
+        font-size: 0.78rem;
+        min-height: 44px;
+      }
+      .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .job-title {
+        font-size: 0.98rem;
+      }
+      .job-select {
+        font-size: 11px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <nav class="top-nav shared-site-nav" data-nav-variant="utility" data-back-fallback="../tools.html"></nav>
+    <nav class="top-nav shared-site-nav" data-nav-variant="utility" data-back-fallback="tools.html"></nav>
 
     <section class="panel">
       <h1>Drone Jobs Review <span id="refreshStamp" class="refresh-stamp"></span></h1>
-      <div class="muted">Focus view of unique jobs from jobs.json. Open Filters panel to refine the list.</div>
+      <div class="muted">Focus view of unique jobs from data/jobs.json. Open Filters panel to refine the list.</div>
 
       <details class="filter-drawer" id="filterDrawer">
         <summary>Filters</summary>
         <div class="filters">
-          <div>
+          <div class="filter-item search">
             <label for="q">Search</label>
             <input id="q" type="text" placeholder="Company, title, location, category, summary" title="Search filter" />
           </div>
-          <div>
+          <div class="filter-item">
             <label for="source">Source</label>
             <select id="source" title="Source filter"></select>
           </div>
-          <div>
+          <div class="filter-item">
             <label for="category">Category</label>
             <select id="category" title="Category filter"></select>
           </div>
-          <div>
+          <div class="filter-item">
             <label for="minConf">Min confidence</label>
-            <input id="minConf" type="number" min="0" max="1" step="0.01" value="0.00" placeholder="0.00" title="Minimum confidence" />
+            <input id="minConf" type="number" min="0" max="1" step="0.05" value="0.50" placeholder="0.50" title="Minimum confidence" list="minConfHints" />
+            <datalist id="minConfHints">
+              <option value="0.25"></option>
+              <option value="0.35"></option>
+              <option value="0.45"></option>
+              <option value="0.50"></option>
+              <option value="0.60"></option>
+              <option value="0.70"></option>
+              <option value="0.75"></option>
+              <option value="0.85"></option>
+              <option value="0.95"></option>
+              <option value="1.00"></option>
+            </datalist>
           </div>
-          <div>
+          <div class="filter-item">
             <label for="canadaOnly">Canada only</label>
             <select id="canadaOnly" title="Canada-only filter">
               <option value="yes" selected>Yes</option>
@@ -319,6 +514,12 @@
               <span class="v" id="statusRun">-</span>
             </div>
           </div>
+          <div class="status-toggle-row">
+            <button id="toggleAllBtn" class="status-toggle-btn" type="button">Collapse All</button>
+            <button id="exportSelectedTopBtn" class="status-toggle-btn export-all" type="button">Export Selected (0)</button>
+            <button id="clearExportsBtn" class="status-toggle-btn" type="button">Clear Exports</button>
+          </div>
+          <div class="status-sources" id="statusSources">Sources: -</div>
         </div>
       </div>
       <div id="statusError" class="muted"></div>
@@ -333,6 +534,8 @@
     let jobs = [];
     let lastRunLabel = "-";
     const selectedJobKeys = new Set();
+    const collapsedJobKeys = new Set();
+    const MIN_CONF_PRESETS = [0.25, 0.35, 0.45, 0.5, 0.6, 0.7, 0.75, 0.85, 0.95, 1.0];
 
     function normalizeText(value) {
       if (value === null || value === undefined) return "";
@@ -363,6 +566,69 @@
         .replace(/>/g, "&gt;")
         .replace(/\"/g, "&quot;")
         .replace(/'/g, "&#039;");
+    }
+
+    function formatDescriptionHtml(text) {
+      const source = String(text || "");
+      const headingLabels = [
+        "Job Title",
+        "Job Type",
+        "Work Location",
+        "Location",
+        "Benefits",
+        "Qualifications",
+        "Key Responsibilities",
+        "Responsibilities",
+        "Requirements",
+        "Required skills",
+        "Pay Rate",
+        "About the Role",
+      ];
+      const frenchIndicators = [
+        "travail",
+        "temps plein",
+        "temps partiel",
+        "competences",
+        "responsabilites",
+        "exigences",
+        "salaire",
+        "francais",
+        "anglais",
+        "poste",
+        "pour",
+        "avec",
+      ];
+
+      function isFrenchLikeSegment(segment) {
+        const s = String(segment || "").toLowerCase();
+        if (/[àâäéèêëîïôöùûüçœ]/i.test(s)) {
+          return true;
+        }
+        const normalized = s
+          .normalize("NFKD")
+          .replace(/[\u0300-\u036f]/g, "");
+        let score = 0;
+        frenchIndicators.forEach((token) => {
+          if (normalized.includes(token)) score += 1;
+        });
+        return score >= 2 && normalized.length >= 30;
+      }
+
+      const chunks = source.match(/[^.!?\n]+[.!?]?|\n+/g) || [source];
+      const escaped = chunks.map((chunk) => {
+        const plain = chunk.trim();
+        const safe = escapeHtml(chunk);
+        if (!plain) return safe;
+        return isFrenchLikeSegment(plain)
+          ? `<span class="fr-segment">${safe}</span>`
+          : safe;
+      }).join("");
+
+      const escapedLabels = headingLabels.map(label =>
+        label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+      );
+      const headingPattern = new RegExp(`\\b(${escapedLabels.join("|")}):`, "gi");
+      return escaped.replace(headingPattern, "<strong>$1:</strong>");
     }
 
     function isCanadaLocation(text) {
@@ -427,12 +693,63 @@
       };
     }
 
+    function formatConfidence(value) {
+      const safe = Number.isFinite(value) ? value : 0;
+      const clamped = Math.min(1, Math.max(0, safe));
+      return clamped.toFixed(2);
+    }
+
+    function snapConfidence(value) {
+      const numeric = Number(value);
+      if (!Number.isFinite(numeric)) return MIN_CONF_PRESETS[0];
+      return Math.min(1, Math.max(0, numeric));
+    }
+
+    function findPresetIndex(current, direction) {
+      const tolerance = 0.0001;
+      const exactIndex = MIN_CONF_PRESETS.findIndex(v => Math.abs(v - current) < tolerance);
+      if (exactIndex !== -1) {
+        return Math.min(MIN_CONF_PRESETS.length - 1, Math.max(0, exactIndex + direction));
+      }
+
+      if (direction > 0) {
+        const nextIndex = MIN_CONF_PRESETS.findIndex(v => v > current);
+        return nextIndex === -1 ? MIN_CONF_PRESETS.length - 1 : nextIndex;
+      }
+
+      for (let i = MIN_CONF_PRESETS.length - 1; i >= 0; i -= 1) {
+        if (MIN_CONF_PRESETS[i] < current) return i;
+      }
+      return 0;
+    }
+
+    function setupMinConfidenceHelper() {
+      const minConfInput = document.getElementById("minConf");
+      if (!minConfInput) return;
+
+      minConfInput.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
+        event.preventDefault();
+        const direction = event.key === "ArrowUp" ? 1 : -1;
+        const current = snapConfidence(minConfInput.value);
+        const nextIndex = findPresetIndex(current, direction);
+        minConfInput.value = formatConfidence(MIN_CONF_PRESETS[nextIndex]);
+        render();
+      });
+
+      minConfInput.addEventListener("change", () => {
+        minConfInput.value = formatConfidence(snapConfidence(minConfInput.value));
+        render();
+      });
+    }
+
     function filterJobs() {
       const f = currentFilters();
       return jobs.filter(job => {
         const title = normalizeText(job.title);
         const company = normalizeText(job.company);
         const location = normalizeText(job.location);
+        const description = normalizeText(job.description);
         const summary = normalizeText(job.summary);
         const source = normalizeText(job.source);
         const category = normalizeText(job.category);
@@ -446,7 +763,7 @@
         if (f.canadaOnly === "intl" && inCanada) return false;
 
         if (f.q) {
-          const hay = `${company} ${title} ${location} ${source} ${category} ${summary}`.toLowerCase();
+          const hay = `${company} ${title} ${location} ${source} ${category} ${description} ${summary}`.toLowerCase();
           if (!hay.includes(f.q)) return false;
         }
         return true;
@@ -465,20 +782,30 @@
       const posted = normalizeDate(job.date_posted);
       const expires = normalizeDate(job.date_expires);
       const category = normalizeText(job.category);
+      const description = normalizeText(job.description);
       const summary = normalizeText(job.summary);
+      const descriptionText = description || summary;
       const url = String(job.link || "").trim();
       const key = jobKey(job);
       const checked = selectedJobKeys.has(key) ? " checked" : "";
+      const isCollapsed = collapsedJobKeys.has(key);
+      const cardClass = isCollapsed ? "job collapsed" : "job";
+      const expanded = isCollapsed ? "false" : "true";
 
       return `
-      <article class="job">
+      <article class="${cardClass}">
         <div class="job-head">
-          <h2 class="job-title">${escapeHtml(title || "Untitled Job")}</h2>
+          <h2 class="job-title">
+            <button class="job-title-toggle" type="button" data-job-key="${escapeHtml(key)}" aria-expanded="${expanded}" title="Collapse or expand this job card">
+              <span class="job-title-text">${escapeHtml(title || "Untitled Job")}</span>
+            </button>
+          </h2>
           <label class="job-select">
             <input type="checkbox" class="job-select-input" data-job-key="${escapeHtml(key)}"${checked} />
             Export
           </label>
         </div>
+        <div class="job-body">
         <div class="field-grid">
           ${fieldRow("Company", company)}
           ${fieldRow("Location", location)}
@@ -487,8 +814,9 @@
           ${fieldRow("Date Posted", posted)}
           ${fieldRow("Expired", expires)}
         </div>
-        <div class="summary">${escapeHtml(summary || "No summary available")}</div>
+        <div class="summary">${formatDescriptionHtml(descriptionText || "No description available")}</div>
         <div class="link-line"><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">View Source Job URL</a></div>
+        </div>
       </article>`;
     }
 
@@ -518,6 +846,7 @@
         "matched_query",
         "confidence",
         "link",
+        "description",
         "summary",
       ];
 
@@ -543,15 +872,75 @@
     function updateExportButton() {
       const selectedCount = jobs.filter(job => selectedJobKeys.has(jobKey(job))).length;
       const btn = document.getElementById("exportBtn");
+      const topBtn = document.getElementById("exportSelectedTopBtn");
       btn.textContent = `Export Selected (${selectedCount})`;
       btn.disabled = selectedCount === 0;
       btn.classList.toggle("secondary", selectedCount === 0);
+      if (topBtn) {
+        topBtn.textContent = `Export Selected (${selectedCount})`;
+        topBtn.disabled = selectedCount === 0;
+      }
+    }
+
+    function formatSourceTally(list) {
+      const counts = new Map();
+      list.forEach((job) => {
+        const src = normalizeText(job.source || "unknown").toLowerCase() || "unknown";
+        counts.set(src, (counts.get(src) || 0) + 1);
+      });
+
+      if (!counts.size) {
+        return '<span class="src-label">Sources:</span><span class="src-item">none</span>';
+      }
+
+      const compact = [...counts.entries()]
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .map(([name, count]) => `<span class="src-item">${escapeHtml(name)}<span class="src-count">${count}</span></span>`)
+        .join("");
+      return `<span class="src-label">Sources:</span>${compact}`;
+    }
+
+    function updateToggleAllButton(filtered) {
+      const btn = document.getElementById("toggleAllBtn");
+      if (!btn) return;
+
+      if (!filtered.length) {
+        btn.textContent = "Collapse All";
+        btn.disabled = true;
+        return;
+      }
+
+      const allCollapsed = filtered.every(job => collapsedJobKeys.has(jobKey(job)));
+      btn.textContent = allCollapsed ? "Expand All" : "Collapse All";
+      btn.disabled = false;
+    }
+
+    function toggleAllFilteredCards() {
+      const filtered = filterJobs();
+      if (!filtered.length) return;
+
+      const allCollapsed = filtered.every(job => collapsedJobKeys.has(jobKey(job)));
+      filtered.forEach((job) => {
+        const key = jobKey(job);
+        if (allCollapsed) collapsedJobKeys.delete(key);
+        else collapsedJobKeys.add(key);
+      });
+
+      render();
+    }
+
+    function clearAllExports() {
+      selectedJobKeys.clear();
+      document.getElementById("statusError").textContent = "Cleared all export selections.";
+      render();
     }
 
     function render() {
       const filtered = filterJobs();
       document.getElementById("statusCount").textContent = `${filtered.length} of ${jobs.length} jobs`;
       document.getElementById("statusRun").textContent = lastRunLabel;
+      document.getElementById("statusSources").innerHTML = formatSourceTally(filtered);
+      updateToggleAllButton(filtered);
       document.getElementById("jobList").innerHTML = filtered.map(rowHtml).join("");
       updateExportButton();
     }
@@ -573,7 +962,7 @@
 
       const daysSince = Math.max(0, Math.floor((startOfToday - startOfRefreshDay) / 86400000));
       const plural = daysSince === 1 ? "day" : "days";
-      return `${localDateLabel} (${daysSince} ${plural} since last run)`;
+      return `${localDateLabel} (${daysSince} ${plural})`;
     }
 
     function setRefreshStamp(lastModified) {
@@ -587,12 +976,12 @@
 
     async function init() {
       try {
-        const res = await fetch("jobs.json", { cache: "no-store" });
+        const res = await fetch("data/jobs.json", { cache: "no-store" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         setRefreshStamp(res.headers.get("last-modified"));
         jobs = await res.json();
       } catch (err) {
-        document.getElementById("statusError").textContent = `Failed to load jobs.json: ${err.message}`;
+        document.getElementById("statusError").textContent = `Failed to load data/jobs.json: ${err.message}`;
         return;
       }
 
@@ -606,10 +995,12 @@
         category: normalizeText(j.category),
         date_posted: normalizeDate(j.date_posted),
         date_expires: normalizeDate(j.date_expires),
+        description: normalizeText(j.description),
         summary: normalizeText(j.summary),
       }));
 
       buildFilters();
+      setupMinConfidenceHelper();
       render();
 
       document.getElementById("applyBtn").addEventListener("click", render);
@@ -618,6 +1009,9 @@
       document.getElementById("category").addEventListener("change", render);
       document.getElementById("minConf").addEventListener("input", render);
       document.getElementById("canadaOnly").addEventListener("change", render);
+      document.getElementById("toggleAllBtn").addEventListener("click", toggleAllFilteredCards);
+      document.getElementById("exportSelectedTopBtn").addEventListener("click", exportSelectedJobs);
+      document.getElementById("clearExportsBtn").addEventListener("click", clearAllExports);
       document.getElementById("exportBtn").addEventListener("click", exportSelectedJobs);
       document.getElementById("jobList").addEventListener("change", (event) => {
         const input = event.target.closest(".job-select-input");
@@ -627,6 +1021,15 @@
         if (input.checked) selectedJobKeys.add(key);
         else selectedJobKeys.delete(key);
         updateExportButton();
+      });
+      document.getElementById("jobList").addEventListener("click", (event) => {
+        const btn = event.target.closest(".job-title-toggle");
+        if (!btn) return;
+        const key = btn.getAttribute("data-job-key") || "";
+        if (!key) return;
+        if (collapsedJobKeys.has(key)) collapsedJobKeys.delete(key);
+        else collapsedJobKeys.add(key);
+        render();
       });
       document.getElementById("q").addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
@@ -638,7 +1041,7 @@
         document.getElementById("q").value = "";
         document.getElementById("source").value = "";
         document.getElementById("category").value = "";
-        document.getElementById("minConf").value = "0.00";
+        document.getElementById("minConf").value = "0.50";
         document.getElementById("canadaOnly").value = "yes";
         document.getElementById("statusError").textContent = "";
         render();

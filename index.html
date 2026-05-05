@@ -257,6 +257,23 @@
       font-size: 0.85rem;
       color: var(--muted);
     }
+    .loc-airspace-status {
+      flex-basis: 100%;
+      margin-top: 0.1rem;
+      font-size: 0.82rem;
+      color: #5b6b7a;
+    }
+    .loc-airspace-status.is-ok {
+      color: #1f7a46;
+      font-weight: 600;
+    }
+    .loc-airspace-status.is-warn {
+      color: #a84600;
+      font-weight: 600;
+    }
+    .loc-airspace-status.is-dim {
+      color: #5b6b7a;
+    }
     .loc-status.is-armed {
       color: #b71c1c;
       font-weight: 700;
@@ -523,6 +540,7 @@
         <div class="loc-init">
           <button id="init-pilot-location" class="mini-btn" type="button">Set Pilot Location</button>
           <span id="pilot-location-status" class="loc-status">No pilot location set yet.</span>
+          <span id="pilot-airspace-status" class="loc-airspace-status is-dim">Airspace status will appear after pilot location is set.</span>
         </div>
         <p id="profile-quick-summary" class="profile-quick-summary" hidden></p>
       </section>
@@ -1981,6 +1999,160 @@
       return `${d}\u00B0${m}'${s}"${dir}`;
     }
 
+    let airspaceData = null;
+    let airspaceLoaded = false;
+    let airspaceLoadError = '';
+
+    function setAirspaceStatus(message, tone = 'dim') {
+      const node = document.getElementById('pilot-airspace-status');
+      if (!node) return;
+      node.textContent = message;
+      node.classList.remove('is-ok', 'is-warn', 'is-dim');
+      if (tone === 'ok') node.classList.add('is-ok');
+      else if (tone === 'warn') node.classList.add('is-warn');
+      else node.classList.add('is-dim');
+    }
+
+    function pointInRing(point, ring) {
+      const x = point[0];
+      const y = point[1];
+      let inside = false;
+
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const xi = ring[i][0];
+        const yi = ring[i][1];
+        const xj = ring[j][0];
+        const yj = ring[j][1];
+        const intersect = ((yi > y) !== (yj > y))
+          && (x < ((xj - xi) * (y - yi)) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+      }
+
+      return inside;
+    }
+
+    function isPointInsidePolygonGeometry(point, polygonCoords) {
+      if (!Array.isArray(polygonCoords) || polygonCoords.length === 0) return false;
+      const exteriorRing = polygonCoords[0];
+      if (!pointInRing(point, exteriorRing)) return false;
+      for (let i = 1; i < polygonCoords.length; i += 1) {
+        if (pointInRing(point, polygonCoords[i])) return false;
+      }
+      return true;
+    }
+
+    function isPointInsideFeature(point, feature) {
+      if (!feature || !feature.geometry) return false;
+      const geometry = feature.geometry;
+
+      if (geometry.type === 'Polygon') {
+        return isPointInsidePolygonGeometry(point, geometry.coordinates);
+      }
+
+      if (geometry.type === 'MultiPolygon') {
+        for (let i = 0; i < geometry.coordinates.length; i += 1) {
+          if (isPointInsidePolygonGeometry(point, geometry.coordinates[i])) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
+    function checkAirspace(lat, lon) {
+      if (!airspaceLoaded) {
+        setAirspaceStatus('Airspace data loading...', 'dim');
+        return;
+      }
+
+      if (!airspaceData || airspaceLoadError) {
+        setAirspaceStatus(`Airspace dataset unavailable (${airspaceLoadError || 'not loaded'}). Verify in NAV CANADA DSST.`, 'warn');
+        return;
+      }
+
+      if (!Array.isArray(airspaceData.features) || airspaceData.features.length === 0) {
+        setAirspaceStatus('Airspace dataset is installed but empty.', 'warn');
+        return;
+      }
+
+      const latNum = Number(lat);
+      const lonNum = Number(lon);
+      if (!Number.isFinite(latNum) || !Number.isFinite(lonNum)) {
+        setAirspaceStatus('Airspace check skipped due to invalid pilot coordinates.', 'warn');
+        return;
+      }
+
+      let inside = false;
+      let zoneName = '';
+      let zoneClass = '';
+      const point = [lonNum, latNum];
+
+      airspaceData.features.forEach((feature) => {
+        if (isPointInsideFeature(point, feature)) {
+          inside = true;
+          zoneName = feature.properties?.name || 'Controlled Airspace';
+          zoneClass = feature.properties?.class || feature.properties?.airspace_class || '';
+        }
+      });
+
+      if (inside) {
+        const zoneLabel = zoneClass ? `${zoneName} (Class ${zoneClass})` : zoneName;
+        setAirspaceStatus(`Inside controlled airspace: ${zoneLabel}`, 'warn');
+      } else {
+        setAirspaceStatus('No controlled airspace detected for current pilot location.', 'ok');
+      }
+    }
+
+    function getStoredPilotCoordinates() {
+      const latRaw = localStorage.getItem('pilotLatitude');
+      const lonRaw = localStorage.getItem('pilotLongitude');
+      if (latRaw && lonRaw) {
+        const latNum = Number(latRaw);
+        const lonNum = Number(lonRaw);
+        if (Number.isFinite(latNum) && Number.isFinite(lonNum)) {
+          return { lat: latNum, lon: lonNum };
+        }
+      }
+
+      const dd = localStorage.getItem('pilotLocationDD');
+      if (!dd) return null;
+      const parts = dd.split(',').map((part) => part.trim());
+      if (parts.length !== 2) return null;
+      const latNum = Number(parts[0]);
+      const lonNum = Number(parts[1]);
+      if (!Number.isFinite(latNum) || !Number.isFinite(lonNum)) return null;
+      return { lat: latNum, lon: lonNum };
+    }
+
+    fetch('./data/canadian_airspace.geojson')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        const isFeatureCollection = data && data.type === 'FeatureCollection' && Array.isArray(data.features);
+        if (!isFeatureCollection) {
+          throw new Error('Invalid GeoJSON structure');
+        }
+        airspaceData = data;
+        airspaceLoaded = true;
+
+        const coords = getStoredPilotCoordinates();
+        if (coords) {
+          checkAirspace(coords.lat, coords.lon);
+        } else {
+          setAirspaceStatus('Airspace status will appear after pilot location is set.', 'dim');
+        }
+      })
+      .catch((err) => {
+        airspaceLoadError = err && err.message ? err.message : 'Unknown airspace data error';
+        airspaceLoaded = true;
+        setAirspaceStatus(`Airspace dataset unavailable (${airspaceLoadError}).`, 'warn');
+      });
+
     function setPilotLocation(lat, lon, source) {
       const latNum = Number(lat);
       const lonNum = Number(lon);
@@ -2004,8 +2176,13 @@
       const dd = localStorage.getItem('pilotLocationDD');
       if (dd) {
         status.textContent = `Pilot location ready: ${dd}`;
+        const coords = getStoredPilotCoordinates();
+        if (coords) {
+          checkAirspace(coords.lat, coords.lon);
+        }
         return true;
       }
+      setAirspaceStatus('Airspace status will appear after pilot location is set.', 'dim');
       return false;
     }
 
@@ -2596,6 +2773,7 @@
               'index-hub'
             );
             status.textContent = `Pilot location ready: ${saved.latShort}, ${saved.lonShort}`;
+            checkAirspace(position.coords.latitude, position.coords.longitude);
             updateHighlightState(true);
             updateClearDataVisibility();
           },
