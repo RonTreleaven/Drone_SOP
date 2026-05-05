@@ -1493,6 +1493,9 @@ body.map-immersive {
               <label class="mission-setting" for="djiWaypointSpeed">Speed(m/s)
                 <input id="djiWaypointSpeed" type="number" min="0.5" max="15" step="0.1" value="2.3" />
               </label>
+              <label class="mission-setting" for="rthBufferMinutes">RTH Buffer(min)
+                <input id="rthBufferMinutes" type="number" min="0" max="30" step="0.5" value="2" />
+              </label>
               <label class="mission-setting" for="frontOverlapPct">Front%
                 <input id="frontOverlapPct" type="number" min="20" max="95" step="1" value="75" />
               </label>
@@ -1514,6 +1517,7 @@ body.map-immersive {
                 <input id="surveyVfovDeg" type="number" min="15" max="120" step="0.1" value="63" />
               </label>
               <div class="route-status mission-settings-note" id="surveySpacingHint">Survey spacing preview: cross-track and along-track values are computed from altitude, overlaps, and camera FOV.</div>
+              <div class="route-status mission-settings-note" id="missionPathSummary">Path estimate: generate or import a route to calculate distance and time.</div>
               <div id="poiRadiusIndicator" class="route-status mission-settings-note">Pattern: Perimeter</div>
               <label class="mission-setting mission-setting-wide" for="patternType">Pattern
                 <select id="patternType">
@@ -1854,7 +1858,9 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('djiWaypointSpeed').addEventListener('input', () => {
     syncSurveySpacingPreview();
     evaluatePatternRegenerateWarning();
+    updateMissionPathSummary();
   });
+  document.getElementById('rthBufferMinutes').addEventListener('input', updateMissionPathSummary);
   document.getElementById('frontOverlapPct').addEventListener('input', () => {
     syncSurveySpacingPreview();
     evaluatePatternRegenerateWarning();
@@ -1875,6 +1881,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     syncSurveySpacingPreview();
     evaluatePatternRegenerateWarning();
   });
+  document.getElementById('djiFinishAction').addEventListener('change', updateMissionPathSummary);
   document.getElementById('djiVideoStartWp').addEventListener('input', updateVideoWaypointStatus);
   document.getElementById('djiVideoStopWp').addEventListener('input', updateVideoWaypointStatus);
   document.getElementById('waypointConfigSelect').addEventListener('change', handleWaypointConfigSelectionChange);
@@ -1929,6 +1936,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   applyExportNamingModeState();
   handleSurveyCameraProfileChange();
   updatePatternRegenerateNotice();
+  updateMissionPathSummary();
   updateWaypointPhotoActionUi();
   refreshWaypointConfigUi();
   applyExportPermissionGate();
@@ -2570,7 +2578,10 @@ function clearPOICircle() {
 
 function updateDrawShapeSummary() {
   const indicator = document.getElementById('poiRadiusIndicator');
-  if (!indicator) return;
+  if (!indicator) {
+    updateMissionPathSummary();
+    return;
+  }
 
   const patternEl = document.getElementById('patternType');
   const patternLabel = patternEl
@@ -2592,24 +2603,29 @@ function updateDrawShapeSummary() {
     } else {
       indicator.textContent = `Orbit | R=set below | Alt=${orbitAlt} m | Pattern: ${patternLabel}`;
     }
+    updateMissionPathSummary();
     return;
   }
 
   if (missionPOIs.length > 0) {
     const assignedCount = waypointPoiAssignments.size;
     indicator.textContent = `POIs: ${missionPOIs.length} | Assigned WPs: ${assignedCount} | Pattern: ${patternLabel}`;
+    updateMissionPathSummary();
     return;
   }
 
   if (hasRoute || isDrawingWP) {
     indicator.textContent = `Waypoints | Pattern: ${patternLabel}`;
+    updateMissionPathSummary();
     return;
   }
   if (isDrawingPoly) {
     indicator.textContent = `Polygon | Pattern: ${patternLabel}`;
+    updateMissionPathSummary();
     return;
   }
   indicator.textContent = `Pattern: ${patternLabel}`;
+  updateMissionPathSummary();
 }
 
 function updatePOIRadiusIndicator(_radiusMeters) {
@@ -3755,6 +3771,7 @@ function clearActiveRoute() {
   applyRouteEditState();
   updateDrawRouteButtonState();
   refreshWaypointConfigUi();
+  updateMissionPathSummary();
 }
 
 function handleDrawRouteToggle() {
@@ -4232,7 +4249,91 @@ function syncSurveySpacingPreview() {
   const camera = getSurveyCameraDefinition();
   const spacing = computeSurveySpacingFromFov(height, frontOverlap, sideOverlap, camera.hfovDeg, camera.vfovDeg);
 
-  hint.textContent = `Survey spacing (${camera.label}): line ${spacing.lineSpacingMeters.toFixed(1)} m | photo ${spacing.photoEveryMeters.toFixed(1)} m | footprint ${spacing.crossTrackFootprint.toFixed(1)} x ${spacing.alongTrackFootprint.toFixed(1)} m`;
+  hint.textContent = `Survey spacing (${camera.label}): line ${spacing.lineSpacingMeters.toFixed(1)} m | photo ${spacing.photoEveryMeters.toFixed(1)} m | per-photo footprint ${spacing.crossTrackFootprint.toFixed(1)} x ${spacing.alongTrackFootprint.toFixed(1)} m (ground coverage of one image, not mission span)`;
+  updateMissionPathSummary();
+}
+
+function getCurrentPatternLabel() {
+  const patternEl = document.getElementById('patternType');
+  if (!patternEl) return 'Perimeter';
+  return patternEl.options[patternEl.selectedIndex]?.text || patternEl.value || 'Perimeter';
+}
+
+function getActiveRoutePointsForSummary() {
+  if (activePolyline && typeof activePolyline.getPath === 'function') {
+    return activePolyline.getPath().getArray();
+  }
+  if (Array.isArray(routePath)) {
+    return routePath;
+  }
+  return [];
+}
+
+function computePathDistanceMeters(points) {
+  if (!Array.isArray(points) || points.length < 2 || !window.google || !google.maps || !google.maps.geometry) {
+    return 0;
+  }
+
+  let totalMeters = 0;
+  for (let i = 1; i < points.length; i++) {
+    const prev = points[i - 1] instanceof google.maps.LatLng
+      ? points[i - 1]
+      : new google.maps.LatLng(Number(points[i - 1].lat), Number(points[i - 1].lng));
+    const curr = points[i] instanceof google.maps.LatLng
+      ? points[i]
+      : new google.maps.LatLng(Number(points[i].lat), Number(points[i].lng));
+    totalMeters += google.maps.geometry.spherical.computeDistanceBetween(prev, curr);
+  }
+  return totalMeters;
+}
+
+function updateMissionPathSummary() {
+  const summary = document.getElementById('missionPathSummary');
+  if (!summary) return;
+
+  const patternLabel = getCurrentPatternLabel();
+  const points = getActiveRoutePointsForSummary();
+  const height = Number(document.getElementById('djiExecHeight')?.value);
+  const frontOverlap = Number(document.getElementById('frontOverlapPct')?.value);
+  const sideOverlap = Number(document.getElementById('sideOverlapPct')?.value);
+  const camera = getSurveyCameraDefinition();
+  const spacing = computeSurveySpacingFromFov(height, frontOverlap, sideOverlap, camera.hfovDeg, camera.vfovDeg);
+  const takeEveryMeters = spacing.photoEveryMeters;
+
+  const speed = Number(document.getElementById('djiWaypointSpeed')?.value);
+  const takeEverySeconds = Number.isFinite(speed) && speed > 0 ? (takeEveryMeters / speed) : NaN;
+  const photoCadenceText = Number.isFinite(takeEverySeconds)
+    ? `Photo TakeEvery: ${takeEverySeconds.toFixed(1)} s (~${takeEveryMeters.toFixed(1)} m)`
+    : `Photo TakeEvery: set valid speed (current spacing ~${takeEveryMeters.toFixed(1)} m)`;
+
+  if (!Array.isArray(points) || points.length < 2) {
+    summary.textContent = `Path estimate (${patternLabel}): generate or import a route to calculate distance/time | ${photoCadenceText}`;
+    return;
+  }
+
+  const finishAction = String(document.getElementById('djiFinishAction')?.value || 'goHome');
+  const configuredRthBufferMinutes = Number(document.getElementById('rthBufferMinutes')?.value);
+  const distanceMeters = computePathDistanceMeters(points);
+  const distanceKm = distanceMeters / 1000;
+
+  if (!Number.isFinite(speed) || speed <= 0) {
+    summary.textContent = `Path estimate (${patternLabel}): ${distanceMeters.toFixed(1)} m (${distanceKm.toFixed(2)} km). Enter valid speed to estimate time | ${photoCadenceText}`;
+    return;
+  }
+
+  const estimatedSeconds = distanceMeters / speed;
+  const pathMinutes = estimatedSeconds / 60;
+  const rthBufferMinutes = (finishAction === 'goHome' && Number.isFinite(configuredRthBufferMinutes) && configuredRthBufferMinutes > 0)
+    ? configuredRthBufferMinutes
+    : 0;
+  const totalMinutes = pathMinutes + rthBufferMinutes;
+
+  if (finishAction === 'goHome') {
+    summary.textContent = `Path estimate (${patternLabel}): ${distanceMeters.toFixed(1)} m (${distanceKm.toFixed(2)} km) | Path time @ ${speed.toFixed(1)} m/s: ${pathMinutes.toFixed(1)} min | RTH buffer: ${rthBufferMinutes.toFixed(1)} min | Total: ${totalMinutes.toFixed(1)} min | ${photoCadenceText}`;
+    return;
+  }
+
+  summary.textContent = `Path estimate (${patternLabel}): ${distanceMeters.toFixed(1)} m (${distanceKm.toFixed(2)} km) | Path time @ ${speed.toFixed(1)} m/s: ${pathMinutes.toFixed(1)} min | Total: ${totalMinutes.toFixed(1)} min (RTH buffer not applied: End of Flight is not Return To Home) | ${photoCadenceText}`;
 }
 
 function isSurveyPatternType(value) {
@@ -4516,6 +4617,7 @@ function extractPathFromPolyline(poly) {
   rebuildWaypointMarkers(poly);
   refreshWaypointConfigUi();
   updateVideoWaypointStatus();
+  updateMissionPathSummary();
 }
 
 // Always read the current map state at export time — never rely solely on the cached array.
@@ -4533,6 +4635,7 @@ function syncRoutePath() {
       }
     });
   }
+  updateMissionPathSummary();
 }
 
 function generatePOIOrbitPointsFromCircle() {

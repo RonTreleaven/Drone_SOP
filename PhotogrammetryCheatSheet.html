@@ -313,6 +313,8 @@
           <div class="accordion-body">
             <p class="small"><strong>Ground Sampling Distance (GSD)</strong> is the real-world ground size represented by one image pixel.</p>
             <div class="formula">GSD = (H x Sw) / (f x Iw)</div>
+            <div class="formula">Timed Interval (s) = [2 x H x tan(VFOV/2) x (1 - Front Overlap)] / Speed</div>
+            <div class="formula">Estimated Flight Time (s) = Mission Path Distance / Speed</div>
             <p class="small"> H = height AGL(m), Sw = sensor width (mm), f = focal length (mm), Iw = image width (pixels). Convert m to mm before using formula.</p>
             <p class="small"><strong>Lower GSD is better detail.</strong> Example: 2.4 cm/pixel resolves smaller features than 4.8 cm/pixel.</p>
 
@@ -333,6 +335,10 @@
           <div class="field">
             <label for="speed">Speed (m/s)</label>
             <input id="speed" type="number" min="1" max="15" step="0.1" value="6" placeholder="Enter speed">
+          </div>
+          <div class="field">
+            <label for="missionDistance">Mission path distance (m)</label>
+            <input id="missionDistance" type="number" min="1" step="1" value="" placeholder="Optional: total path distance">
           </div>
           <div class="field">
             <label for="photoMode">Photo Mode (Resolution)</label>
@@ -991,6 +997,7 @@
       const out = document.getElementById('gsdResult');
       // Timed Interval calculation and GGCode Survey update
       const speedInput = Number(document.getElementById('speed').value);
+      const missionDistanceInput = Number(document.getElementById('missionDistance').value);
       const detailBandValue = document.getElementById('detailBand').value;
       const bandTargets = {
         veryhigh: { label: 'Very High', min: 0.5, max: 1.5 },
@@ -1038,20 +1045,50 @@
         bandGuidance += ' <br><span class="warning">Current altitude yields ' + detailBand + '. Adjust altitude toward the selected band range above.</span>';
       }
 
-      out.innerHTML = '<strong>GSD:</strong> ' + gsdCmPerPx.toFixed(2) + ' cm/pixel' +
-        ' <br><strong>Pixel footprint:</strong> ' + gsdMmPerPx.toFixed(1) + ' mm/pixel' +
-        ' <br><strong>Detail class:</strong> ' + detailBand +
-        bandGuidance;
-
       // Timed Interval calculation
       let timedIntervalText = '';
+      let timedIntervalSummaryText = '';
+      let photoCountSummaryText = '';
+      let flightTimeSummaryText = '';
       if (Number.isFinite(alt) && alt > 0 && Number.isFinite(speedInput) && speedInput > 0 && frontOverlap > 0 && frontOverlap < 1) {
         const VFOV_rad = vfov * Math.PI / 180;
         const footprintHeight = 2 * alt * Math.tan(VFOV_rad / 2);
         const photoSpacing = footprintHeight * (1 - frontOverlap);
         const interval = photoSpacing / speedInput;
         timedIntervalText = '<br>&bull; <strong>Timed Interval:</strong> ' + interval.toFixed(2) + ' s';
+        timedIntervalSummaryText =
+          ' <br><strong>Timed interval:</strong> ' + interval.toFixed(2) + ' s' +
+          ' <br><span class="small">Formula: [2 x H x tan(VFOV/2) x (1 - front overlap)] / speed</span>';
+
+        if (Number.isFinite(missionDistanceInput) && missionDistanceInput > 0) {
+          const estimatedPhotoCount = Math.ceil(missionDistanceInput / photoSpacing) + 1;
+          const flightSeconds = missionDistanceInput / speedInput;
+          const flightMinutes = Math.floor(flightSeconds / 60);
+          const flightRemainSeconds = flightSeconds - (flightMinutes * 60);
+
+          flightTimeSummaryText =
+            ' <br><strong>Estimated flight time:</strong> ' +
+            flightMinutes + ' min ' + flightRemainSeconds.toFixed(1) + ' s' +
+            ' (' + flightSeconds.toFixed(1) + ' s)' +
+            ' <br><span class="small">Formula: mission path distance / speed = ' +
+            missionDistanceInput.toFixed(1) + ' / ' + speedInput.toFixed(1) + '</span>';
+
+          photoCountSummaryText =
+            ' <br><strong>Estimated photos:</strong> ' + estimatedPhotoCount +
+            ' <br><span class="small">Formula: ceil(distance / along-track photo spacing) + 1</span>';
+        } else {
+          flightTimeSummaryText =
+            ' <br><span class="small">Enter Mission path distance to estimate total flight time.</span>';
+        }
       }
+
+      out.innerHTML = '<strong>GSD:</strong> ' + gsdCmPerPx.toFixed(2) + ' cm/pixel' +
+        ' <br><strong>Pixel footprint:</strong> ' + gsdMmPerPx.toFixed(1) + ' mm/pixel' +
+        ' <br><strong>Detail class:</strong> ' + detailBand +
+        bandGuidance +
+        timedIntervalSummaryText +
+        flightTimeSummaryText +
+        photoCountSummaryText;
 
       // Update GGCode Survey Settings guidance
       const select = document.getElementById('droneModel');
@@ -1076,6 +1113,7 @@
 
     function resetGsd() {
       document.getElementById('alt').value = '';
+      document.getElementById('missionDistance').value = '';
       document.getElementById('droneModel').value = '';
       document.getElementById('missionCondition').value = '';
       applySelectedDroneDefaults();
