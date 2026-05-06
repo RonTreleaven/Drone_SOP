@@ -1,20 +1,29 @@
 [
   {
+    "raw": "(U0802/26 NOTAMR U0543/26\nQ) CZWG/QOLAS/IV/M/E/000/019/4941N10037W002\nA) CZWG B) 2605052125 C) 2606192359\nE) OBST LGT U/S TOWER 494044N 1003712W (APRX 15NM ESE VIRDEN \n(GABRIELLE FARM) AD (CKR7)) 429FT AGL, 1853FT AMSL.)",
+    "startValidity": "2026-05-05T21:25:00",
+    "endValidity": "2026-06-19T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.678889, -100.620000"
+    ]
+  },
+  {
+    "raw": "(U0801/26 NOTAMR U0544/26\nQ) CZWG/QOLAS/IV/M/E/000/030/5023N10556W002\nA) CZWG B) 2605052027 C) 2606192359\nE) OBST LGT U/S TOWER 502324N 1055537W (APRX 15NM W MOOSE JAW/AIR \nVICE MARSHAL C.M. MCEWEN AD (CYMJ)) 570FT AGL, 2946FT AMSL.)",
+    "startValidity": "2026-05-05T20:27:00",
+    "endValidity": "2026-06-19T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.390000, -105.926944"
+    ]
+  },
+  {
     "raw": "(U0800/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/019/4952N09744W002\nA) CZWG B) 2605051739 C) 2606051700\nE) OBST LGT U/S TOWER 495226N 0974425W (APRX 8NM WSW ST. FRANCOIS \nXAVIER AD (CKA8)) 1109FT AGL, 1894FT AMSL.)",
     "startValidity": "2026-05-05T17:39:00",
     "endValidity": "2026-06-05T17:00:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.873889, -97.740278"
-    ]
-  },
-  {
-    "raw": "(U0791/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/023/5252N10826W002\nA) CZWG B) 2605041533 C) 2605062100\nE) OBST LGT U/S TOWER 525211N 1082547W (APRX 9NM WNW NORTH \nBATTLEFORD AD (CYQW)) 425FT AGL, 2207FT AMSL.)",
-    "startValidity": "2026-05-04T15:33:00",
-    "endValidity": "2026-05-06T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.869722, -108.429722"
     ]
   },
   {
@@ -366,24 +375,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.044444, -85.862222"
-    ]
-  },
-  {
-    "raw": "(U0544/26 NOTAMR U0219/26\nQ) CZWG/QOLAS/IV/M/E/000/030/5023N10556W002\nA) CZWG B) 2603230823 C) 2605072359\nE) OBST LGT U/S TOWER 502324N 1055537W (APRX 15NM W MOOSE JAW/AIR \nVICE MARSHAL C.M. MCEWEN AD (CYMJ)) 570FT AGL, 2946FT AMSL.)",
-    "startValidity": "2026-03-23T08:23:00",
-    "endValidity": "2026-05-07T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.390000, -105.926944"
-    ]
-  },
-  {
-    "raw": "(U0543/26 NOTAMR U0220/26\nQ) CZWG/QOLAS/IV/M/E/000/019/4941N10037W002\nA) CZWG B) 2603230823 C) 2605072359\nE) OBST LGT U/S TOWER 494044N 1003712W (APRX 15NM ESE VIRDEN \n(GABRIELLE FARM) AD (CKR7)) 429FT AGL, 1853FT AMSL.)",
-    "startValidity": "2026-03-23T08:23:00",
-    "endValidity": "2026-05-07T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.678889, -100.620000"
     ]
   },
   {
