@@ -617,8 +617,7 @@ body {
 }
 
 .route-tools #djiFinishAction,
-.route-tools #djiGimbalPitch,
-.route-tools #mappingPrecisionMode {
+.route-tools #djiGimbalPitch {
   min-width: 140px;
   font-size: 0.8rem;
 }
@@ -1494,12 +1493,6 @@ body.map-immersive {
               <label class="mission-setting" for="djiWaypointSpeed">Speed(m/s)
                 <input id="djiWaypointSpeed" type="number" min="0.5" max="15" step="0.1" value="2.3" />
               </label>
-              <label class="mission-setting mission-setting-wide" for="mappingPrecisionMode">Mapping Precision
-                <select id="mappingPrecisionMode">
-                  <option value="cinematicSmooth" selected>Cinematic-Smooth</option>
-                  <option value="orthoPrecise">Ortho-Precise</option>
-                </select>
-              </label>
               <label class="mission-setting" for="rthBufferMinutes">RTH Buffer(min)
                 <input id="rthBufferMinutes" type="number" min="0" max="30" step="0.5" value="2" />
               </label>
@@ -1867,7 +1860,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     evaluatePatternRegenerateWarning();
     updateMissionPathSummary();
   });
-  document.getElementById('mappingPrecisionMode').addEventListener('change', updateMissionPathSummary);
   document.getElementById('rthBufferMinutes').addEventListener('input', updateMissionPathSummary);
   document.getElementById('frontOverlapPct').addEventListener('input', () => {
     syncSurveySpacingPreview();
@@ -5300,31 +5292,6 @@ function getWaypointHeading(index, pathPoints = routePath) {
   ) || 0;
 }
 
-function getStableSurveyHeading(pathPoints) {
-  if (!Array.isArray(pathPoints) || pathPoints.length < 2 || !window.google || !google.maps || !google.maps.geometry) {
-    return 0;
-  }
-
-  let bestHeading = 0;
-  let bestDistance = -1;
-  for (let i = 0; i < pathPoints.length - 1; i++) {
-    const a = pathPoints[i];
-    const b = pathPoints[i + 1];
-    if (!a || !b) continue;
-    if (a.lat === b.lat && a.lng === b.lng) continue;
-
-    const from = new google.maps.LatLng(a.lat, a.lng);
-    const to = new google.maps.LatLng(b.lat, b.lng);
-    const d = google.maps.geometry.spherical.computeDistanceBetween(from, to);
-    if (!Number.isFinite(d) || d <= bestDistance) continue;
-
-    bestDistance = d;
-    bestHeading = google.maps.geometry.spherical.computeHeading(from, to) || 0;
-  }
-
-  return bestHeading;
-}
-
 function getWaypointGimbalPitchForIndex(index, globalGimbalPitch = 'none') {
   const fallback = normalizeWaypointGimbalPitch(globalGimbalPitch);
   const cfg = waypointHeadingConfigs.get(index);
@@ -5349,17 +5316,11 @@ function buildDJITemplateKML(createTimeMs) {
   const basePath = normalizeWaypointPathForExport(routePath);
   const missionPois = getAllStoredMissionPOIs();
   const hasExplicitRouteHeadings = basePath.some((point) => point && point.heading !== undefined);
-  const lockAutoHeading = !!settings.lockAutoHeading && !hasExplicitRouteHeadings;
-  const stableAutoHeadingText = lockAutoHeading
-    ? getStableSurveyHeading(basePath).toFixed(6)
-    : '0.000000';
 
   const placemarks = basePath.map((p, i) => {
     let heading;
     if (p.heading !== undefined) {
       heading = Number(p.heading).toFixed(6);
-    } else if (lockAutoHeading) {
-      heading = stableAutoHeadingText;
     } else {
       heading = getWaypointHeading(i, basePath).toFixed(6);
     }
@@ -5444,8 +5405,8 @@ function buildDJITemplateKML(createTimeMs) {
       </wpml:waylineCoordinateSysParam>
       <wpml:autoFlightSpeed>${settings.speed}</wpml:autoFlightSpeed>
       <wpml:gimbalPitchMode>usePointSetting</wpml:gimbalPitchMode>
-      <wpml:globalWaypointTurnMode>${settings.defaultTurnMode}</wpml:globalWaypointTurnMode>
-      <wpml:globalUseStraightLine>${settings.useStraightLine ? 1 : 0}</wpml:globalUseStraightLine>${placemarks}
+      <wpml:globalWaypointTurnMode>toPointAndPassWithContinuityCurvature</wpml:globalWaypointTurnMode>
+      <wpml:globalUseStraightLine>0</wpml:globalUseStraightLine>${placemarks}
     </Folder>
   </Document>
 </kml>`;
@@ -5466,10 +5427,6 @@ function getDJIMissionSettings() {
   const startStopVideo = !!document.getElementById('djiStartStopVideo')?.checked;
   const videoStartWpRaw = Number(document.getElementById('djiVideoStartWp')?.value);
   const videoStopWpRaw = Number(document.getElementById('djiVideoStopWp')?.value);
-  const mappingPrecisionMode = document.getElementById('mappingPrecisionMode')?.value === 'orthoPrecise'
-    ? 'orthoPrecise'
-    : 'cinematicSmooth';
-  const isOrthoPrecise = mappingPrecisionMode === 'orthoPrecise';
 
   return {
     height: Number.isFinite(height) && height > 0 ? height : 10,
@@ -5485,15 +5442,7 @@ function getDJIMissionSettings() {
     photoByDistanceMeters: Number.isFinite(photoByDistanceMetersRaw) && photoByDistanceMetersRaw > 0 ? photoByDistanceMetersRaw : 0,
     startStopVideo,
     videoStartWp: Number.isFinite(videoStartWpRaw) && videoStartWpRaw >= 1 ? Math.round(videoStartWpRaw) : 1,
-    videoStopWp: Number.isFinite(videoStopWpRaw) && videoStopWpRaw >= 0 ? Math.round(videoStopWpRaw) : 0,
-    mappingPrecisionMode,
-    useStraightLine: isOrthoPrecise,
-    defaultTurnMode: isOrthoPrecise
-      ? 'toPointAndStopWithContinuityCurvature'
-      : 'toPointAndPassWithContinuityCurvature',
-    stopTurnThresholdDeg: isOrthoPrecise ? 55 : 180,
-    disableAdaptiveTurnDamping: isOrthoPrecise,
-    lockAutoHeading: isOrthoPrecise
+    videoStopWp: Number.isFinite(videoStopWpRaw) && videoStopWpRaw >= 0 ? Math.round(videoStopWpRaw) : 0
   };
 }
 
@@ -6066,25 +6015,6 @@ function normalizeHeadingDelta(degrees) {
   return value;
 }
 
-function getTurnAngleDegrees(pathPoints, index) {
-  if (!Array.isArray(pathPoints) || pathPoints.length < 3) return 0;
-  if (index <= 0 || index >= pathPoints.length - 1) return 0;
-  if (!window.google || !google.maps || !google.maps.geometry) return 0;
-
-  const prev = pathPoints[index - 1];
-  const current = pathPoints[index];
-  const next = pathPoints[index + 1];
-  if (!prev || !current || !next) return 0;
-
-  const prevLL = new google.maps.LatLng(prev.lat, prev.lng);
-  const currentLL = new google.maps.LatLng(current.lat, current.lng);
-  const nextLL = new google.maps.LatLng(next.lat, next.lng);
-
-  const inHeading = google.maps.geometry.spherical.computeHeading(prevLL, currentLL);
-  const outHeading = google.maps.geometry.spherical.computeHeading(currentLL, nextLL);
-  return Math.abs(normalizeHeadingDelta(outHeading - inHeading));
-}
-
 function getAdaptiveTurnDampingMeters(pathPoints, index, speedMetersPerSecond, photoWaypointSet) {
   if (!Array.isArray(pathPoints) || pathPoints.length < 3) return 0;
   if (index <= 0 || index >= pathPoints.length - 1) return 0;
@@ -6105,7 +6035,9 @@ function getAdaptiveTurnDampingMeters(pathPoints, index, speedMetersPerSecond, p
     return 0;
   }
 
-  const turnDegrees = getTurnAngleDegrees(pathPoints, index);
+  const inHeading = google.maps.geometry.spherical.computeHeading(prevLL, currentLL);
+  const outHeading = google.maps.geometry.spherical.computeHeading(currentLL, nextLL);
+  const turnDegrees = Math.abs(normalizeHeadingDelta(outHeading - inHeading));
   const turnSeverity = Math.min(1, Math.max(0, turnDegrees / 180));
   if (turnSeverity < 0.05) return 0;
 
@@ -6194,10 +6126,6 @@ function buildDJIWaylinesWPML() {
   const exportPath = (enablePhotoEvents && settings.photoByDistanceMeters > 0)
     ? densifyRouteByDistance(basePath, settings.photoByDistanceMeters)
     : basePath;
-  const lockAutoHeading = !!settings.lockAutoHeading && !hasExplicitRouteHeadings;
-  const stableAutoHeadingText = lockAutoHeading
-    ? getStableSurveyHeading(exportPath).toFixed(6)
-    : '0.000000';
 
   // If photo events are disabled, keep spacing at 0 so no photo action groups are injected.
   // If enabled and PhotoEvery is unset, use a conservative fallback distance.
@@ -6218,8 +6146,6 @@ function buildDJIWaylinesWPML() {
     let heading;
     if (p.heading !== undefined) {
       heading = Number(p.heading).toFixed(6);
-    } else if (lockAutoHeading) {
-      heading = stableAutoHeadingText;
     } else {
       heading = getWaypointHeading(i, exportPath).toFixed(6);
     }
@@ -6259,14 +6185,8 @@ function buildDJIWaylinesWPML() {
         headingAngleEnableText = (isFirst || isLast) ? '1' : '0';
       }
     }
-    const turnDegrees = getTurnAngleDegrees(exportPath, i);
-    const useStopTurn = isLast || (turnDegrees >= settings.stopTurnThresholdDeg);
-    const turnMode = useStopTurn
-      ? 'toPointAndStopWithContinuityCurvature'
-      : 'toPointAndPassWithContinuityCurvature';
-    const turnDampingDist = (isLast || settings.disableAdaptiveTurnDamping)
-      ? 0
-      : getAdaptiveTurnDampingMeters(exportPath, i, settings.speed, photoWaypoints);
+    const turnMode = isLast ? 'toPointAndStopWithContinuityCurvature' : 'toPointAndPassWithContinuityCurvature';
+    const turnDampingDist = isLast ? 0 : getAdaptiveTurnDampingMeters(exportPath, i, settings.speed, photoWaypoints);
     const waypointGimbalPitch = getWaypointGimbalPitchForIndex(i, settings.gimbalPitch);
     const prevWaypointGimbalPitch = i > 0
       ? getWaypointGimbalPitchForIndex(i - 1, settings.gimbalPitch)
@@ -6451,7 +6371,7 @@ function buildDJIWaylinesWPML() {
           <wpml:waypointTurnMode>${turnMode}</wpml:waypointTurnMode>
           <wpml:waypointTurnDampingDist>${turnDampingDist}</wpml:waypointTurnDampingDist>
         </wpml:waypointTurnParam>
-        <wpml:useStraightLine>${settings.useStraightLine ? 1 : 0}</wpml:useStraightLine>${actionGroup}
+        <wpml:useStraightLine>0</wpml:useStraightLine>${actionGroup}
       </Placemark>`;
   }).join('');
 
@@ -6475,9 +6395,7 @@ function buildDJIWaylinesWPML() {
       <wpml:waylineId>0</wpml:waylineId>
       <wpml:distance>0</wpml:distance>
       <wpml:duration>0</wpml:duration>
-      <wpml:autoFlightSpeed>${settings.speed}</wpml:autoFlightSpeed>
-      <wpml:globalWaypointTurnMode>${settings.defaultTurnMode}</wpml:globalWaypointTurnMode>
-      <wpml:globalUseStraightLine>${settings.useStraightLine ? 1 : 0}</wpml:globalUseStraightLine>${placemarks}
+      <wpml:autoFlightSpeed>${settings.speed}</wpml:autoFlightSpeed>${placemarks}
     </Folder>
   </Document>
 </kml>`;
