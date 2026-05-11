@@ -2,6 +2,7 @@ import argparse
 import json
 import re
 from datetime import datetime, timezone
+from pathlib import Path
 from urllib.parse import quote_plus
 from urllib.parse import urljoin
 
@@ -910,6 +911,34 @@ def parse_sources(value):
     return list(dict.fromkeys(sources))
 
 
+def append_run_summary_log(selected_sources, collected_count, deduped_count, inserted_count, avg_conf, by_source, by_family, no_write):
+    log_path = Path(__file__).resolve().parent.parent / "assets" / "logs" / "jobs_scraper_runs.log"
+    timestamp = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
+    duplicates_removed = max(0, collected_count - deduped_count)
+    duplicate_ratio = round((duplicates_removed / collected_count), 3) if collected_count else 0
+    mode = "preview" if no_write else "write"
+
+    line = (
+        f"[{timestamp}] mode={mode} "
+        f"sources={','.join(selected_sources)} "
+        f"collected={collected_count} "
+        f"deduped={deduped_count} "
+        f"duplicates_removed={duplicates_removed} "
+        f"duplicate_ratio={duplicate_ratio} "
+        f"inserted={inserted_count} "
+        f"avg_conf={avg_conf} "
+        f"by_source={json.dumps(by_source, sort_keys=True)} "
+        f"by_family={json.dumps(by_family, sort_keys=True)}\n"
+    )
+
+    try:
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        with log_path.open("a", encoding="utf-8") as handle:
+            handle.write(line)
+    except OSError as exc:
+        print(f"Warning: failed to write run summary log: {exc}")
+
+
 def run(reset=False, sources=None, no_write=False):
     init_db()
     if reset and not no_write:
@@ -965,6 +994,17 @@ def run(reset=False, sources=None, no_write=False):
     print("By source:", by_source)
     print("By query family:", by_family)
     print(f"Average confidence: {avg_conf}")
+
+    append_run_summary_log(
+        selected_sources=selected_sources,
+        collected_count=len(collected),
+        deduped_count=len(jobs),
+        inserted_count=inserted,
+        avg_conf=avg_conf,
+        by_source=by_source,
+        by_family=by_family,
+        no_write=no_write,
+    )
 
 
 if __name__ == "__main__":

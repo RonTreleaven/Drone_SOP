@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Drone SOP UI Working Copy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #10243a;
+      --muted: #4f6275;
+      --line: #d7e3ee;
+      --panel: #ffffff;
+      --bg-top: #eef6ff;
+      --bg-mid: #f7fcfa;
+      --bg-bottom: #f5f8fb;
+      --brand: #005f94;
+      --brand-strong: #004f7c;
+      --accent: #0f7a5f;
+      --warn: #9a5d00;
+      --warn-bg: #fff7e8;
+      --danger: #b12a2a;
+      --ok: #1f7a46;
+      --shadow: 0 12px 36px rgba(14, 36, 62, 0.12);
+      --radius: 14px;
+      --touch: 48px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Manrope, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 2%, rgba(0, 95, 148, 0.16), transparent 24%),
+        radial-gradient(circle at 85% 20%, rgba(15, 122, 95, 0.14), transparent 25%),
+        linear-gradient(180deg, var(--bg-top), var(--bg-mid) 40%, var(--bg-bottom));
+      min-height: 100%;
+    }
+
+    .app {
+      width: min(980px, 100%);
+      margin: 0 auto;
+      padding: 0 1rem 6.8rem;
+    }
+
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(8px);
+      background: rgba(247, 252, 250, 0.88);
+      border-bottom: 1px solid rgba(16, 36, 58, 0.08);
+      margin: 0 -1rem;
+      padding: 0.6rem 1rem;
+    }
+
+    .top-row {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font: 700 1.1rem/1.15 "Space Grotesk", Manrope, sans-serif;
+      letter-spacing: 0.02em;
+      color: var(--brand-strong);
+    }
+
+    .brand p {
+      margin: 0.15rem 0 0;
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chip-row {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding: 0.55rem 0 0.05rem;
+      scrollbar-width: thin;
+    }
+
+    .chip {
+      border: 1px solid #c7d8e8;
+      border-radius: 999px;
+      background: #fff;
+      color: #2d4964;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 0.3rem 0.7rem;
+      white-space: nowrap;
+    }
+
+    .chip.good {
+      border-color: #96d3ad;
+      background: #effbf3;
+      color: #205d36;
+    }
+
+    .chip.warn {
+      border-color: #e6cb97;
+      background: #fff8eb;
+      color: #7f5600;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      min-height: var(--touch);
+      padding: 0.6rem 0.9rem;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+      text-align: center;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #0a74ad, #005f94);
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(0, 95, 148, 0.3);
+    }
+
+    .btn-primary:hover { background: linear-gradient(180deg, #07689d, #00507f); }
+
+    .btn-ghost {
+      background: #fff;
+      border: 1px solid #abc7de;
+      color: #0d517b;
+    }
+
+    .btn-danger {
+      background: #fff;
+      border: 1px solid #d89f9f;
+      color: #8d2222;
+    }
+
+    .hero {
+      margin-top: 0.95rem;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: #396280;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .hero h2 {
+      margin: 0.45rem 0 0.35rem;
+      font: 700 clamp(1.5rem, 4.6vw, 2.1rem)/1.1 "Space Grotesk", Manrope, sans-serif;
+      color: #0d3454;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #3e586f;
+      max-width: 58ch;
+    }
+
+    .section {
+      margin-top: 0.85rem;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0.9rem;
+      box-shadow: 0 5px 18px rgba(16, 36, 58, 0.06);
+    }
+
+    .section h3 {
+      margin: 0;
+      font: 700 1.05rem/1.2 "Space Grotesk", Manrope, sans-serif;
+      color: #133a5a;
+    }
+
+    .subtle {
+      margin: 0.35rem 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .grid {
+      margin-top: 0.8rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+
+    .check-card {
+      border: 1px solid #d2dfeb;
+      border-radius: 12px;
+      padding: 0.75rem;
+      background: #fbfeff;
+    }
+
+    .check-card h4 {
+      margin: 0;
+      font-size: 1rem;
+      color: #143f62;
+    }
+
+    .check-card p {
+      margin: 0.28rem 0 0.72rem;
+      font-size: 0.88rem;
+      color: #4b6379;
+    }
+
+    .check-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .state {
+      margin-top: 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #5a6f82;
+    }
+
+    .state.done { color: var(--ok); }
+
+    .notice {
+      margin-top: 0.75rem;
+      border: 1px solid #edcd95;
+      background: var(--warn-bg);
+      border-radius: 10px;
+      padding: 0.65rem 0.75rem;
+      color: var(--warn);
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+
+    .split {
+      margin-top: 0.75rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+
+    .field {
+      border: 1px solid #d4e0ea;
+      border-radius: 10px;
+      padding: 0.65rem;
+      background: #fcfeff;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.78rem;
+      color: #54708a;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .field input[type="number"],
+    .field select {
+      width: 100%;
+      min-height: var(--touch);
+      border: 1px solid #b8cde0;
+      border-radius: 9px;
+      padding: 0.45rem 0.6rem;
+      font: 600 0.95rem/1.1 Manrope, sans-serif;
+      color: #183956;
+      background: #fff;
+    }
+
+    .radio-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .radio-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid #b5cbe0;
+      border-radius: 999px;
+      min-height: var(--touch);
+      padding: 0.25rem 0.65rem;
+      background: #fff;
+      color: #184364;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 0.75rem;
+    }
+
+    .gate {
+      border: 1px solid #d7e5ef;
+      border-radius: 10px;
+      padding: 0.65rem;
+      background: #f8fcff;
+    }
+
+    .gate strong {
+      display: block;
+      color: #113b5e;
+      margin-bottom: 0.35rem;
+    }
+
+    .gate p {
+      margin: 0;
+      font-size: 0.84rem;
+      color: #4d667e;
+    }
+
+    details.advanced {
+      border: 1px solid #ccdcec;
+      border-radius: 12px;
+      margin-top: 0.75rem;
+      background: #f8fcff;
+      overflow: hidden;
+    }
+
+    details.advanced summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.7rem 0.75rem;
+      font-weight: 700;
+      color: #16486d;
+      user-select: none;
+    }
+
+    details.advanced summary::-webkit-details-marker { display: none; }
+
+    details.advanced summary::after {
+      content: "+";
+      color: #346d93;
+      font-size: 1rem;
+      transition: transform 0.2s ease;
+    }
+
+    details.advanced[open] summary::after {
+      content: "-";
+    }
+
+    .advanced-body {
+      border-top: 1px solid #d8e6f2;
+      padding: 0.7rem 0.75rem;
+      font-size: 0.88rem;
+      color: #3f607b;
+    }
+
+    .advanced-body a {
+      display: inline-block;
+      margin-top: 0.45rem;
+      color: #005e91;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .sticky-bottom {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 30;
+      background: rgba(255, 255, 255, 0.96);
+      border-top: 1px solid #d2e0eb;
+      padding: 0.45rem 0.55rem calc(0.45rem + env(safe-area-inset-bottom));
+      backdrop-filter: blur(8px);
+    }
+
+    .thumb-nav {
+      width: min(980px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.4rem;
+    }
+
+    .thumb-btn {
+      min-height: 50px;
+      border: 1px solid #bdd2e4;
+      border-radius: 11px;
+      background: #ffffff;
+      color: #174463;
+      font-size: 0.76rem;
+      font-weight: 800;
+      line-height: 1.1;
+      padding: 0.35rem 0.25rem;
+      text-align: center;
+    }
+
+    .thumb-btn.alert {
+      border-color: #e2b6b6;
+      color: #872323;
+      background: #fff7f7;
+    }
+
+    .ready-row {
+      margin-top: 0.75rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.55rem;
+      align-items: center;
+    }
+
+    .ready-pill {
+      border: 1px dashed #b7cbdd;
+      border-radius: 10px;
+      padding: 0.55rem 0.6rem;
+      font-size: 0.84rem;
+      color: #4d657c;
+      background: #f9fcff;
+    }
+
+    .ready-pill strong { color: #113b5d; }
+
+    .emergency-panel {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 50;
+      background: #fff;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      box-shadow: 0 -16px 34px rgba(15, 36, 54, 0.3);
+      transform: translateY(104%);
+      transition: transform 0.26s ease;
+      max-height: 82vh;
+      overflow: auto;
+      border-top: 2px solid #dca7a7;
+      padding: 0.75rem 1rem 1rem;
+    }
+
+    .emergency-panel.open {
+      transform: translateY(0);
+    }
+
+    .emergency-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .emergency-head h4 {
+      margin: 0;
+      color: #8f2323;
+      font: 700 1rem/1.2 "Space Grotesk", Manrope, sans-serif;
+    }
+
+    .emergency-list {
+      margin: 0.7rem 0 0;
+      padding-left: 1.1rem;
+      color: #3f556b;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .contacts {
+      margin-top: 0.8rem;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .contact-link {
+      display: block;
+      border: 1px solid #d6e2ec;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #124469;
+      background: #fbfdff;
+      min-height: var(--touch);
+      padding: 0.58rem 0.7rem;
+      font-weight: 700;
+    }
+
+    .shade {
+      position: fixed;
+      inset: 0;
+      z-index: 45;
+      background: rgba(9, 24, 39, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .shade.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (min-width: 760px) {
+      .hero, .section { padding: 1.1rem 1.15rem; }
+
+      .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .split {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .ready-row {
+        grid-template-columns: 1fr auto;
+      }
+
+      .thumb-nav {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="top-bar">
+      <div class="top-row">
+        <div class="brand">
+          <h1>Drone SOP Mission Hub</h1>
+          <p>Survey First. Fly Smart.</p>
+        </div>
+        <button id="openEmergencyTop" class="btn btn-danger" type="button">Emergency</button>
+      </div>
+      <div class="chip-row" aria-label="Mission progress status">
+        <span id="chipAirspace" class="chip warn">Airspace: Pending</span>
+        <span id="chipWeather" class="chip warn">Weather: Pending</span>
+        <span id="chipNotam" class="chip warn">NOTAM: Pending</span>
+        <span id="chipCategory" class="chip">Category: Micro</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-label="Landing message and quick launch">
+        <p class="eyebrow">Pre-Flight Decision Support</p>
+        <h2>Survey First. Fly Smart.</h2>
+        <p>Survey your airspace, weather, and NOTAM environment before launch. Keep emergency references one tap away for every mission phase.</p>
+        <div class="ready-row">
+          <p id="readinessText" class="ready-pill"><strong>Mission readiness:</strong> Complete all 3 checks to mark this mission ready.</p>
+          <button id="quickLaunchBtn" class="btn btn-primary" type="button">Quick Launch Pre-Flight</button>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Pilot profile defaults and category logic">
+        <h3>Pilot Defaults and Mission Category</h3>
+        <p class="subtle">Saved drone profile suggests category. Under 250g defaults to Micro. Above 250g defaults to Basic or Advanced.</p>
+
+        <div class="split">
+          <div class="field">
+            <label for="droneWeight">Drone Weight (grams)</label>
+            <input id="droneWeight" type="number" min="1" step="1" value="249">
+          </div>
+
+          <div class="field">
+            <label for="opsMode">Mission Profile</label>
+            <select id="opsMode">
+              <option value="basic">Basic operations</option>
+              <option value="advanced">Advanced operations</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top: 0.65rem;">
+          <label>Category Output</label>
+          <div class="radio-row">
+            <span id="categoryResult" class="radio-pill">Micro</span>
+            <span id="categoryHint" class="radio-pill">Auto from profile</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Pre-flight checks in preferred order">
+        <h3>Pre-Flight Checks (Preferred Order)</h3>
+        <p class="subtle">Recommended sequence: Airspace -> Weather -> NOTAM. Each check can be refreshed in real time.</p>
+
+        <div class="grid">
+          <article class="check-card" data-check="airspace">
+            <h4>1) Airspace Survey</h4>
+            <p>Review class of airspace, flight area boundaries, and local traffic pattern risk.</p>
+            <div class="check-actions">
+              <a href="tools.html" class="btn btn-ghost" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Open Airspace Tools</a>
+              <button class="btn btn-primary" type="button" data-mark="airspace">Mark Complete</button>
+            </div>
+            <div id="state-airspace" class="state">Status: Pending</div>
+          </article>
+
+          <article class="check-card" data-check="weather">
+            <h4>2) Weather Check</h4>
+            <p>Verify wind, visibility, and local conditions before takeoff and during mission windows.</p>
+            <div class="check-actions">
+              <a href="tools.html" class="btn btn-ghost" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Open Weather Tools</a>
+              <button class="btn btn-primary" type="button" data-mark="weather">Mark Complete</button>
+            </div>
+            <div id="state-weather" class="state">Status: Pending</div>
+          </article>
+
+          <article class="check-card" data-check="notam">
+            <h4>3) NOTAM Check</h4>
+            <p>Refresh NOTAMs in real time and confirm temporary restrictions or no-fly notices.</p>
+            <div class="check-actions">
+              <a href="Notam Lookup.html" class="btn btn-ghost" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Open NOTAM Tools</a>
+              <button class="btn btn-primary" type="button" data-mark="notam">Mark Complete</button>
+            </div>
+            <div id="state-notam" class="state">Status: Pending</div>
+          </article>
+        </div>
+
+        <div class="notice" role="note">
+          Best-practice warning: Micro flights may be lower-risk, but pilots should still check NOTAMs for temporary restrictions, emergency activity, and local no-fly updates.
+        </div>
+      </section>
+
+      <section class="section" aria-label="Validation and returning user behavior">
+        <h3>User Validation and Gate Behavior</h3>
+        <p class="subtle">Returning validated users can quick-launch without repeating disclaimer and terms acceptance.</p>
+
+        <div class="stack">
+          <label class="radio-pill" style="width: fit-content;">
+            <input id="isValidated" type="checkbox" style="accent-color: #0a6ea4;">
+            Simulate validated returning user
+          </label>
+
+          <div id="gateBlock" class="gate">
+            <strong>Disclaimer and Terms Gate</strong>
+            <p>First-time users must acknowledge operational responsibility and agree before continuing.</p>
+            <button id="acceptGate" class="btn btn-primary" type="button" style="margin-top: 0.55rem;">Accept and Continue</button>
+          </div>
+
+          <div id="quickBlock" class="gate" hidden>
+            <strong>Quick-Launch Enabled</strong>
+            <p>Gate is skipped because this session is treated as validated and returning.</p>
+          </div>
+        </div>
+      </section>
+
+      <details class="advanced" aria-label="Advanced optional section">
+        <summary>Advanced Mission Automation (Optional)</summary>
+        <div class="advanced-body">
+          This section is intentionally secondary in MVP. It stays collapsed unless the pilot explicitly expands it.
+          <br>
+          <a href="GGcode.html">Open Mission Automation Workspace</a>
+        </div>
+      </details>
+    </main>
+  </div>
+
+  <div id="shade" class="shade" aria-hidden="true"></div>
+
+  <aside id="emergencyPanel" class="emergency-panel" aria-hidden="true">
+    <div class="emergency-head">
+      <h4>Emergency Quick Panel</h4>
+      <button id="closeEmergency" class="btn btn-danger" type="button">Close</button>
+    </div>
+    <ol class="emergency-list">
+      <li>Stabilize aircraft and prioritize public safety.</li>
+      <li>Land immediately when safe or execute controlled return-to-home.</li>
+      <li>Confirm pilot and observer safety status.</li>
+      <li>Document time, location, and incident details.</li>
+      <li>Notify required authorities and internal contacts.</li>
+    </ol>
+    <div class="contacts">
+      <a class="contact-link" href="emergencies.html">Open Full Emergency Procedures</a>
+      <a class="contact-link" href="FIR_FIC_911.html">Open FIR and Contact References</a>
+      <a class="contact-link" href="https://www.navcanada.ca/en/" target="_blank" rel="noopener">NAV CANADA Resources</a>
+    </div>
+  </aside>
+
+  <nav class="sticky-bottom" aria-label="Thumb-friendly quick actions">
+    <div class="thumb-nav">
+      <button class="thumb-btn" data-scroll="airspace">Airspace</button>
+      <button class="thumb-btn" data-scroll="weather">Weather</button>
+      <button class="thumb-btn" data-scroll="notam">NOTAM</button>
+      <a class="thumb-btn" href="Sections.html" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">SOP</a>
+      <button id="openEmergencyBottom" class="thumb-btn alert" type="button">Emergency</button>
+    </div>
+  </nav>
+
+  <script>
+    const checks = {
+      airspace: false,
+      weather: false,
+      notam: false
+    };
+
+    const chipAirspace = document.getElementById('chipAirspace');
+    const chipWeather = document.getElementById('chipWeather');
+    const chipNotam = document.getElementById('chipNotam');
+    const chipCategory = document.getElementById('chipCategory');
+    const readinessText = document.getElementById('readinessText');
+
+    const stateMap = {
+      airspace: document.getElementById('state-airspace'),
+      weather: document.getElementById('state-weather'),
+      notam: document.getElementById('state-notam')
+    };
+
+    const weightInput = document.getElementById('droneWeight');
+    const opsMode = document.getElementById('opsMode');
+    const categoryResult = document.getElementById('categoryResult');
+    const categoryHint = document.getElementById('categoryHint');
+
+    const validatedToggle = document.getElementById('isValidated');
+    const gateBlock = document.getElementById('gateBlock');
+    const quickBlock = document.getElementById('quickBlock');
+    const acceptGate = document.getElementById('acceptGate');
+
+    const emergencyPanel = document.getElementById('emergencyPanel');
+    const shade = document.getElementById('shade');
+
+    const storageKey = 'drone-sop-working-copy-state';
+
+    function saveState() {
+      const data = {
+        checks,
+        weight: weightInput.value,
+        ops: opsMode.value,
+        validated: validatedToggle.checked,
+        gateAccepted: acceptGate.dataset.accepted === 'true'
+      };
+      localStorage.setItem(storageKey, JSON.stringify(data));
+    }
+
+    function loadState() {
+      const raw = localStorage.getItem(storageKey);
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        if (data && data.checks) {
+          checks.airspace = Boolean(data.checks.airspace);
+          checks.weather = Boolean(data.checks.weather);
+          checks.notam = Boolean(data.checks.notam);
+        }
+        if (data && data.weight) weightInput.value = data.weight;
+        if (data && data.ops) opsMode.value = data.ops;
+        if (data && typeof data.validated === 'boolean') validatedToggle.checked = data.validated;
+        if (data && data.gateAccepted) {
+          acceptGate.dataset.accepted = 'true';
+          acceptGate.textContent = 'Accepted';
+        }
+      } catch (_) {
+        // Ignore invalid local state for this working prototype.
+      }
+    }
+
+    function updateCategory() {
+      const weight = Number(weightInput.value || 0);
+      let category = 'Micro';
+      let hint = 'Auto from profile';
+
+      if (weight >= 250) {
+        category = opsMode.value === 'advanced' ? 'Advanced' : 'Basic';
+        hint = 'Profile + mission mode';
+      }
+
+      categoryResult.textContent = category;
+      categoryHint.textContent = hint;
+      chipCategory.textContent = `Category: ${category}`;
+      saveState();
+    }
+
+    function applyCheckVisual(key) {
+      const done = checks[key];
+      const stateEl = stateMap[key];
+      const chipEl = key === 'airspace' ? chipAirspace : key === 'weather' ? chipWeather : chipNotam;
+
+      stateEl.textContent = done ? 'Status: Complete' : 'Status: Pending';
+      stateEl.classList.toggle('done', done);
+      chipEl.textContent = `${key.charAt(0).toUpperCase() + key.slice(1)}: ${done ? 'Complete' : 'Pending'}`;
+      chipEl.classList.toggle('good', done);
+      chipEl.classList.toggle('warn', !done);
+    }
+
+    function updateReadiness() {
+      const doneCount = Object.values(checks).filter(Boolean).length;
+      const isReady = doneCount === 3;
+
+      readinessText.innerHTML = isReady
+        ? '<strong>Mission readiness:</strong> Core pre-flight checks complete. Ready to proceed.'
+        : `<strong>Mission readiness:</strong> ${doneCount}/3 checks complete. Finish all checks before launch.`;
+
+      readinessText.style.borderColor = isReady ? '#96d3ad' : '#b7cbdd';
+      readinessText.style.background = isReady ? '#effbf3' : '#f9fcff';
+      readinessText.style.color = isReady ? '#205d36' : '#4d657c';
+    }
+
+    function updateGateView() {
+      const validated = validatedToggle.checked;
+      gateBlock.hidden = validated;
+      quickBlock.hidden = !validated;
+      saveState();
+    }
+
+    function openEmergency() {
+      emergencyPanel.classList.add('open');
+      emergencyPanel.setAttribute('aria-hidden', 'false');
+      shade.classList.add('open');
+      shade.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeEmergency() {
+      emergencyPanel.classList.remove('open');
+      emergencyPanel.setAttribute('aria-hidden', 'true');
+      shade.classList.remove('open');
+      shade.setAttribute('aria-hidden', 'true');
+    }
+
+    function initialize() {
+      loadState();
+      updateCategory();
+      ['airspace', 'weather', 'notam'].forEach(key => applyCheckVisual(key));
+      updateReadiness();
+      updateGateView();
+
+      document.querySelectorAll('[data-mark]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const key = btn.dataset.mark;
+          checks[key] = true;
+          applyCheckVisual(key);
+          updateReadiness();
+          saveState();
+        });
+      });
+
+      weightInput.addEventListener('input', updateCategory);
+      opsMode.addEventListener('change', updateCategory);
+      validatedToggle.addEventListener('change', updateGateView);
+
+      acceptGate.addEventListener('click', () => {
+        acceptGate.dataset.accepted = 'true';
+        acceptGate.textContent = 'Accepted';
+        saveState();
+      });
+
+      document.getElementById('quickLaunchBtn').addEventListener('click', () => {
+        document.querySelector('[data-check="airspace"]').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      document.querySelectorAll('[data-scroll]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const key = btn.dataset.scroll;
+          const section = document.querySelector(`[data-check="${key}"]`);
+          if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      document.getElementById('openEmergencyTop').addEventListener('click', openEmergency);
+      document.getElementById('openEmergencyBottom').addEventListener('click', openEmergency);
+      document.getElementById('closeEmergency').addEventListener('click', closeEmergency);
+      shade.addEventListener('click', closeEmergency);
+    }
+
+    initialize();
+  </script>
+</body>
+</html>
