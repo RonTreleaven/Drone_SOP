@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U0833/26 NOTAMR U0252/26\nQ) CZWG/QOLAS/IV/M/E/000/018/5054N09338W002\nA) CZWG B) 2605121342 C) 2608111400EST\nE) OBST LGT U/S TOWER 505347N 0933742W (APRX 10NM SE RED LAKE \n(MARGARET COCHENOUR MEMORIAL HOSPITAL) (HELI) AD (CRL3)) 350FT \nAGL, 1713FT AMSL.)",
+    "startValidity": "2026-05-12T13:42:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.896389, -93.628333"
+    ]
+  },
+  {
     "raw": "(U0827/26 NOTAMR U0242/26\nQ) CZWG/QOLAS/IV/M/AE/000/011/4953N09739W005\nA) CXXX B) 2605111734 C) 2608102359\nE) CKA8 ST. FRANCOIS XAVIER \nOBST LGT U/S TOWER 495302N 0973832W (APRX 4.4NM SW AD) 230FT AGL, \n1019FT AMSL.)",
     "startValidity": "2026-05-11T17:34:00",
     "endValidity": "2026-08-10T23:59:00",
@@ -441,21 +450,21 @@
     ]
   },
   {
-    "raw": "(U0470/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/012/5123N09654W002\nA) CZWG B) 2603111601 C) 2606111545\nE) OBST LGT U/S TOWER 512321N 0965426W (APRX 14NM SSW PINE DOCK \n(WATER) AD (CKT8)) 419FT AGL, 1141FT AMSL.)",
-    "startValidity": "2026-03-11T16:01:00",
-    "endValidity": "2026-06-11T15:45:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.389167, -96.907222"
-    ]
-  },
-  {
     "raw": "(U0471/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/006/5622N09436W005\nA) CXXX B) 2603111601 C) 2606111545\nE) CJP8 GILLAM (WATER)\nOBST LGT U/S TOWER 562140N 0943600W (APRX 1.96NM ENE AD) 200FT \nAGL, 600FT AMSL.)",
     "startValidity": "2026-03-11T16:01:00",
     "endValidity": "2026-06-11T15:45:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "56.361111, -94.600000"
+    ]
+  },
+  {
+    "raw": "(U0470/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/012/5123N09654W002\nA) CZWG B) 2603111601 C) 2606111545\nE) OBST LGT U/S TOWER 512321N 0965426W (APRX 14NM SSW PINE DOCK \n(WATER) AD (CKT8)) 419FT AGL, 1141FT AMSL.)",
+    "startValidity": "2026-03-11T16:01:00",
+    "endValidity": "2026-06-11T15:45:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.389167, -96.907222"
     ]
   },
   {
@@ -672,15 +681,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.908889, -91.151389"
-    ]
-  },
-  {
-    "raw": "(U0252/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/018/5054N09338W002\nA) CZWG B) 2602121418 C) 2605121415EST\nE) OBST LGT U/S TOWER 505347N 0933742W (APRX 10NM SE RED LAKE \n(MARGARET COCHENOUR MEMORIAL HOSPITAL) (HELI) AD (CRL3)) 350FT \nAGL, 1713FT AMSL.)",
-    "startValidity": "2026-02-12T14:18:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.896389, -93.628333"
     ]
   },
   {
