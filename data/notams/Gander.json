@@ -61,14 +61,5 @@
     "coordinates_dd": [
       "47.526667, -57.387500"
     ]
-  },
-  {
-    "raw": "(V0170/26 NOTAMN\nQ) CZQX/QOLAS/IV/M/E/000/002/4732N05723W002\nA) CZQX B) 2602131510 C) 2605131800\nE) OBST LGT U/S WIND TURBINE GROUP WITHIN 341FT RADIUS CENTRED ON \n473136N 0572315W (APRX 48NM NW MIQUELON/MIQUELON AD (LFVM)). \n157FT AGL 190FT AMSL.)",
-    "startValidity": "2026-02-13T15:10:00",
-    "endValidity": "2026-05-13T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "47.526667, -57.387500"
-    ]
   }
 ]
