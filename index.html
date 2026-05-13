@@ -2002,6 +2002,10 @@
     let airspaceData = null;
     let airspaceLoaded = false;
     let airspaceLoadError = '';
+    let airportData = null;
+
+    const ICAO_PROP_KEYS = ['icao', 'icaoCode', 'airport_code', 'airportCode', 'ident', 'code'];
+    const NAME_STOP_WORDS = new Set(['CZ', 'CTA', 'TCA', 'CLASS', 'CONTROL', 'CONTROLLED', 'ZONE', 'AIRPORT', 'AERODROME', 'MUNI', 'MUNICIPAL']);
 
     function setAirspaceStatus(message, tone = 'dim') {
       const node = document.getElementById('pilot-airspace-status');
@@ -2060,6 +2064,89 @@
       return false;
     }
 
+    function getIcaoFromProperties(properties) {
+      if (!properties || typeof properties !== 'object') return '';
+
+      for (let i = 0; i < ICAO_PROP_KEYS.length; i += 1) {
+        const key = ICAO_PROP_KEYS[i];
+        const raw = properties[key];
+        if (!raw) continue;
+        const value = String(raw).trim().toUpperCase();
+        if (/^[A-Z][A-Z0-9]{3}$/.test(value)) return value;
+      }
+
+      return '';
+    }
+
+    function tokenizeName(value) {
+      if (!value) return [];
+      return String(value)
+        .toUpperCase()
+        .replace(/[^A-Z0-9/ ]+/g, ' ')
+        .replace(/\//g, ' ')
+        .split(/\s+/)
+        .map((token) => token.trim())
+        .filter((token) => token && !NAME_STOP_WORDS.has(token));
+    }
+
+    function distanceKm(lat1, lon1, lat2, lon2) {
+      const toRad = (deg) => deg * (Math.PI / 180);
+      const dLat = toRad(lat2 - lat1);
+      const dLon = toRad(lon2 - lon1);
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+        + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2))
+        * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return 6371 * c;
+    }
+
+    function findAirportIcaoForZone(zoneName, lat, lon) {
+      if (!airportData || !Array.isArray(airportData.features) || airportData.features.length === 0) {
+        return '';
+      }
+
+      const zoneTokens = tokenizeName(zoneName);
+      if (zoneTokens.length === 0) return '';
+
+      let bestCode = '';
+      let bestScore = -Infinity;
+
+      airportData.features.forEach((feature) => {
+        const props = feature && feature.properties ? feature.properties : null;
+        if (!props) return;
+
+        const icao = getIcaoFromProperties(props);
+        if (!icao) return;
+
+        const coords = feature.geometry && feature.geometry.coordinates;
+        if (!Array.isArray(coords) || coords.length < 2) return;
+
+        const aptLon = Number(coords[0]);
+        const aptLat = Number(coords[1]);
+        if (!Number.isFinite(aptLat) || !Number.isFinite(aptLon)) return;
+
+        const airportTokens = tokenizeName(props.name || props.title || '');
+        if (airportTokens.length === 0) return;
+
+        let overlap = 0;
+        zoneTokens.forEach((token) => {
+          if (airportTokens.includes(token)) overlap += 1;
+        });
+        if (overlap === 0) return;
+
+        const km = distanceKm(lat, lon, aptLat, aptLon);
+        if (!Number.isFinite(km) || km > 80) return;
+
+        const score = overlap * 100 - km;
+        if (score > bestScore) {
+          bestScore = score;
+          bestCode = icao;
+        }
+      });
+
+      return bestCode;
+    }
+
     function checkAirspace(lat, lon) {
       if (!airspaceLoaded) {
         setAirspaceStatus('Airspace data loading...', 'dim');
@@ -2086,6 +2173,7 @@
       let inside = false;
       let zoneName = '';
       let zoneClass = '';
+      let zoneIcao = '';
       const point = [lonNum, latNum];
 
       airspaceData.features.forEach((feature) => {
@@ -2093,11 +2181,15 @@
           inside = true;
           zoneName = feature.properties?.name || 'Controlled Airspace';
           zoneClass = feature.properties?.class || feature.properties?.airspace_class || '';
+          zoneIcao = getIcaoFromProperties(feature.properties)
+            || findAirportIcaoForZone(zoneName, latNum, lonNum)
+            || '';
         }
       });
 
       if (inside) {
-        const zoneLabel = zoneClass ? `${zoneName} (Class ${zoneClass})` : zoneName;
+        const zoneNameWithCode = zoneIcao ? `${zoneName} [${zoneIcao}]` : zoneName;
+        const zoneLabel = zoneClass ? `${zoneNameWithCode} (Class ${zoneClass})` : zoneNameWithCode;
         setAirspaceStatus(`Inside controlled airspace: ${zoneLabel}`, 'warn');
       } else {
         setAirspaceStatus('No controlled airspace detected for current pilot location.', 'ok');
@@ -2151,6 +2243,17 @@
         airspaceLoadError = err && err.message ? err.message : 'Unknown airspace data error';
         airspaceLoaded = true;
         setAirspaceStatus(`Airspace dataset unavailable (${airspaceLoadError}).`, 'warn');
+      });
+
+    fetch('./ca_apt.geojson')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && data.type === 'FeatureCollection' && Array.isArray(data.features)) {
+          airportData = data;
+        }
+      })
+      .catch(() => {
+        airportData = null;
       });
 
     function setPilotLocation(lat, lon, source) {
