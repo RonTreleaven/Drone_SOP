@@ -171,15 +171,6 @@
     ]
   },
   {
-    "raw": "(U0732/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/021/5103N10210W002\nA) CZWG B) 2604232316 C) 2607031800\nE) OBST LGT U/S TOWER 510317N 1021018W (APRX 17NM SE YORKTON \nREGIONAL AD (CYQV)) 272FT AGL, 2013FT AMSL.)",
-    "startValidity": "2026-04-23T23:16:00",
-    "endValidity": "2026-07-03T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.054722, -102.171667"
-    ]
-  },
-  {
     "raw": "(U0728/26 NOTAMR U0124/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2604231831 C) 2607222359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
     "startValidity": "2026-04-23T18:31:00",
     "endValidity": "2026-07-22T23:59:00",
@@ -213,15 +204,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.209167, -102.733056"
-    ]
-  },
-  {
-    "raw": "(U0721/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/027/5102N10325W002\nA) CZWG B) 2604221913 C) 2607211800\nE) OBST LGT U/S TOWER 510226N 1032446W (APRX 6NM SSE ITUNA AD \n(CJM2)) 464FT AGL, 2654FT AMSL.)",
-    "startValidity": "2026-04-22T19:13:00",
-    "endValidity": "2026-07-21T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.040556, -103.412778"
     ]
   },
   {
@@ -366,15 +348,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.920556, -97.184167"
-    ]
-  },
-  {
-    "raw": "(U0583/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/024/5200N10258W002\nA) CZWG B) 2603301439 C) 2606281800\nE) OBST LGT U/S TOWER 515949N 1025808W (APRX 12NM W PREECEVILLE AD \n(CJK9)) 370FT AGL, 2364FT AMSL.)",
-    "startValidity": "2026-03-30T14:39:00",
-    "endValidity": "2026-06-28T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.996944, -102.968889"
     ]
   },
   {
