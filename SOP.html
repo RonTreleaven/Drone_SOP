@@ -66,6 +66,12 @@
       justify-content: space-between;
     }
 
+    .top-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     .brand {
       min-width: 0;
     }
@@ -548,7 +554,10 @@
           <h1>Drone SOP Mission Hub</h1>
           <p>Survey First. Fly Smart.</p>
         </div>
-        <button id="openEmergencyTop" class="btn btn-danger" type="button">Emergency</button>
+        <div class="top-actions">
+          <button id="clearDataTop" class="btn btn-ghost" type="button">Clear Data + Refresh</button>
+          <button id="openEmergencyTop" class="btn btn-danger" type="button">Emergency</button>
+        </div>
       </div>
       <div class="chip-row" aria-label="Mission progress status">
         <span id="chipAirspace" class="chip warn">Airspace: Pending</span>
@@ -571,19 +580,21 @@
 
       <section class="section" aria-label="Pilot profile defaults and category logic">
         <h3>Pilot Defaults and Mission Category</h3>
-        <p class="subtle">Saved drone profile suggests category. Under 250g defaults to Micro. Above 250g defaults to Basic or Advanced.</p>
+        <p class="subtle">Saved drone profile suggests category. Micro is planned at 250g or less. Basic is planned up to 25kg and at least 3 NM (5.6 km) from an airport center. Advanced is planned for 251g to 25kg and requires Advanced certification, registration proof, safety requirement compliance, and controlled-airspace permission when applicable.</p>
 
         <div class="split">
           <div class="field">
             <label for="droneWeight">Drone Weight (grams)</label>
             <input id="droneWeight" type="number" min="1" step="1" value="249">
+            <div id="weightRangeHint" class="subtle">Micro target: 250g. Basic/Advanced target: under 25kg (&lt;25000g).</div>
           </div>
 
           <div class="field">
-            <label for="opsMode">Mission Profile</label>
-            <select id="opsMode">
-              <option value="basic">Basic operations</option>
-              <option value="advanced">Advanced operations</option>
+            <label for="planningType">Flight Planning Type</label>
+            <select id="planningType">
+              <option value="micro">Micro</option>
+              <option value="basic">Basic</option>
+              <option value="advanced">Advanced</option>
             </select>
           </div>
         </div>
@@ -592,8 +603,12 @@
           <label>Category Output</label>
           <div class="radio-row">
             <span id="categoryResult" class="radio-pill">Micro</span>
-            <span id="categoryHint" class="radio-pill">Auto from profile</span>
+            <span id="categoryHint" class="radio-pill">Manual plan override</span>
           </div>
+        </div>
+
+        <div id="advancedReqNote" class="notice" hidden>
+          Advanced planning reminder: confirm Advanced Drone Pilot certification, registration proof, safety requirement compliance, and controlled-airspace permissions when operating in controlled airspace.
         </div>
       </section>
 
@@ -626,7 +641,7 @@
             <h4>3) NOTAM Check</h4>
             <p>Refresh NOTAMs in real time and confirm temporary restrictions or no-fly notices.</p>
             <div class="check-actions">
-              <a href="Notam Lookup.html" class="btn btn-ghost" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Open NOTAM Tools</a>
+              <a href="NotamsMap.html" class="btn btn-ghost" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Open NOTAM Tools</a>
               <button class="btn btn-primary" type="button" data-mark="notam">Mark Complete</button>
             </div>
             <div id="state-notam" class="state">Status: Pending</div>
@@ -723,9 +738,11 @@
     };
 
     const weightInput = document.getElementById('droneWeight');
-    const opsMode = document.getElementById('opsMode');
+    const planningType = document.getElementById('planningType');
+    const weightRangeHint = document.getElementById('weightRangeHint');
     const categoryResult = document.getElementById('categoryResult');
     const categoryHint = document.getElementById('categoryHint');
+    const advancedReqNote = document.getElementById('advancedReqNote');
 
     const validatedToggle = document.getElementById('isValidated');
     const gateBlock = document.getElementById('gateBlock');
@@ -734,14 +751,41 @@
 
     const emergencyPanel = document.getElementById('emergencyPanel');
     const shade = document.getElementById('shade');
+    const clearDataTop = document.getElementById('clearDataTop');
 
     const storageKey = 'drone-sop-working-copy-state';
+    const BASIC_ADVANCED_MAX_G = 24999;
+
+    function updateWeightInputConstraints(forcePreset=false) {
+      const selectedPlan = planningType.value;
+      const currentWeight = Number(weightInput.value || 0);
+
+      weightInput.min = '1';
+
+      if (selectedPlan === 'micro') {
+        weightInput.max = '250';
+        weightRangeHint.textContent = 'Micro target: 250g.';
+        weightInput.placeholder = '250';
+        weightInput.title = 'Micro planning target: 250g.';
+        if (forcePreset || currentWeight > 250 || currentWeight <= 0) weightInput.value = '250';
+        return;
+      }
+
+      if (selectedPlan === 'basic' || selectedPlan === 'advanced') {
+        weightInput.max = String(BASIC_ADVANCED_MAX_G);
+        weightRangeHint.textContent = 'Basic/Advanced target: under 25kg (<25000g).';
+        weightInput.placeholder = '24999';
+        weightInput.title = 'Basic/Advanced planning target: under 25kg (<25000g).';
+        if (forcePreset || currentWeight > BASIC_ADVANCED_MAX_G || currentWeight <= 0) weightInput.value = String(BASIC_ADVANCED_MAX_G);
+        return;
+      }
+    }
 
     function saveState() {
       const data = {
         checks,
         weight: weightInput.value,
-        ops: opsMode.value,
+        planningType: planningType.value,
         validated: validatedToggle.checked,
         gateAccepted: acceptGate.dataset.accepted === 'true'
       };
@@ -759,7 +803,8 @@
           checks.notam = Boolean(data.checks.notam);
         }
         if (data && data.weight) weightInput.value = data.weight;
-        if (data && data.ops) opsMode.value = data.ops;
+        if (data && data.planningType) planningType.value = data.planningType;
+        if (planningType.value === 'auto') planningType.value = Number(weightInput.value || 0) > 250 ? 'basic' : 'micro';
         if (data && typeof data.validated === 'boolean') validatedToggle.checked = data.validated;
         if (data && data.gateAccepted) {
           acceptGate.dataset.accepted = 'true';
@@ -772,17 +817,26 @@
 
     function updateCategory() {
       const weight = Number(weightInput.value || 0);
+      const selectedPlan = planningType.value;
       let category = 'Micro';
-      let hint = 'Auto from profile';
+      let hint = 'Manual plan override';
 
-      if (weight >= 250) {
-        category = opsMode.value === 'advanced' ? 'Advanced' : 'Basic';
-        hint = 'Profile + mission mode';
+      category = selectedPlan.charAt(0).toUpperCase() + selectedPlan.slice(1);
+      if (selectedPlan === 'basic') {
+        hint = 'Manual override (Basic: up to 25kg, >=3 NM / 5.6 km from airport center)';
+      } else if (selectedPlan === 'advanced') {
+        hint = 'Manual override (Advanced: certification, registration, safety, and permissions as applicable)';
+      }
+
+      if ((selectedPlan === 'basic' || selectedPlan === 'advanced') && weight >= 25000) {
+        category = 'Out of Scope';
+        hint = 'Selected Basic/Advanced requires weight under 25kg (<25000g).';
       }
 
       categoryResult.textContent = category;
       categoryHint.textContent = hint;
       chipCategory.textContent = `Category: ${category}`;
+      advancedReqNote.hidden = category !== 'Advanced';
       saveState();
     }
 
@@ -832,8 +886,16 @@
       shade.setAttribute('aria-hidden', 'true');
     }
 
+    function clearDataAndRefresh() {
+      const accepted = window.confirm('Clear all saved SOP1 selections and refresh now?');
+      if (!accepted) return;
+      localStorage.removeItem(storageKey);
+      window.location.reload();
+    }
+
     function initialize() {
       loadState();
+      updateWeightInputConstraints();
       updateCategory();
       ['airspace', 'weather', 'notam'].forEach(key => applyCheckVisual(key));
       updateReadiness();
@@ -850,7 +912,10 @@
       });
 
       weightInput.addEventListener('input', updateCategory);
-      opsMode.addEventListener('change', updateCategory);
+      planningType.addEventListener('change', () => {
+        updateWeightInputConstraints(true);
+        updateCategory();
+      });
       validatedToggle.addEventListener('change', updateGateView);
 
       acceptGate.addEventListener('click', () => {
@@ -875,6 +940,7 @@
       document.getElementById('openEmergencyBottom').addEventListener('click', openEmergency);
       document.getElementById('closeEmergency').addEventListener('click', closeEmergency);
       shade.addEventListener('click', closeEmergency);
+      clearDataTop.addEventListener('click', clearDataAndRefresh);
     }
 
     initialize();

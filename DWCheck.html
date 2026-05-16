@@ -963,7 +963,7 @@ margin-top:10px;
 <h4 id="scoringIndexTitle">Scoring Index</h4>
 <h5 class="modal-score-title">Maximum Score 7</h5>
 <ul class="modal-list">
-<li><b>Wind:</b> &gt; 21 KT = 4, &gt; 15 KT = 3, &gt; 10 KT = 2</li>
+<li><b>Wind (higher of sustained or gust):</b> 0-9 KT = 1, 10-15 KT = 2, 16-20 KT = 3, 21+ KT = 4</li>
 <li><b>Gust spread:</b> &gt; 8 KT = +1</li>
 <li><b>Visibility:</b> &lt; 3 SM = +1</li>
 <li><b>Ceiling:</b> &lt; 1000 ft = +1</li>
@@ -995,6 +995,7 @@ margin-top:10px;
 <label for="windGuideModelFilter">Filter by Drone Model
 <input id="windGuideModelFilter" class="wind-guide-filter-input" type="text" placeholder="Search model (ex: Mini, Mavic, Autel)" oninput="handleWindGuideFilterChange()">
 </label>
+<button id="windGuideFilterToggleBtn" type="button" class="mini-action-btn" onclick="toggleWindGuideModelFilter()" title="Clear filter">Clear Filter</button>
 <button type="button" class="mini-action-btn" onclick="tryOpenWindGuideEditor()">Edit Wind Guide JSON</button>
 </div>
 <div class="table-wrap wind-guide-table-wrap" id="windGuideTableWrap">
@@ -1070,6 +1071,11 @@ errors: []
 }
 
 const WIND_GUIDE_VALIDATION_MAP_KEY = "dwWindGuideValidationMap"
+const PROFILE_STATE_KEY = "dsop.profileState.v1"
+const PROFILE_SESSION_STATE_KEY = "dsop.profileState.session.v1"
+
+let preferredWindGuideFilterValue = ""
+let preferredWindGuideFilterApplied = false
 
 function isValidIcaoCode(value){
 return /^[A-Z]{4}$/.test(String(value || "").trim().toUpperCase())
@@ -1201,6 +1207,109 @@ const input = document.getElementById("windGuideModelFilter")
 return String(input?.value || "").trim().toLowerCase()
 }
 
+function getWindGuideModelFilterValue(){
+const input = document.getElementById("windGuideModelFilter")
+return String(input?.value || "").trim()
+}
+
+function setWindGuideModelFilterValue(value){
+const input = document.getElementById("windGuideModelFilter")
+if(!input) return
+input.value = String(value || "").trim()
+}
+
+function parsePreferredDroneCandidate(rawValue){
+const tokens = String(rawValue || "")
+.split(/[;,]/)
+.map(token => token.trim())
+.filter(Boolean)
+if(!tokens.length) return ""
+return tokens[0]
+}
+
+function readPreferredDroneFromProfileStorage(){
+const tryRead = (storage, key) => {
+try{
+const raw = storage.getItem(key)
+if(!raw) return ""
+const parsed = JSON.parse(raw)
+if(!parsed || typeof parsed !== "object") return ""
+return parsePreferredDroneCandidate(parsed.preferredDroneLabel)
+}
+catch{
+return ""
+}
+}
+
+return (
+tryRead(localStorage,PROFILE_STATE_KEY)
+|| tryRead(sessionStorage,PROFILE_SESSION_STATE_KEY)
+|| parsePreferredDroneCandidate(localStorage.getItem("preferredDroneLabel"))
+)
+}
+
+function updateWindGuideFilterToggleButton(){
+const btn = document.getElementById("windGuideFilterToggleBtn")
+if(!btn) return
+
+const currentFilter = getWindGuideModelFilterValue()
+const hasFilter = !!currentFilter
+const hasPreferred = !!preferredWindGuideFilterValue
+
+if(hasFilter){
+btn.textContent = "Clear Filter"
+btn.title = "Clear model filter"
+btn.disabled = false
+return
+}
+
+if(hasPreferred){
+btn.textContent = "Use Preferred Drone"
+btn.title = `Use preferred drone (${preferredWindGuideFilterValue})`
+btn.disabled = false
+return
+}
+
+btn.textContent = "Clear Filter"
+btn.title = "No filter applied"
+btn.disabled = true
+}
+
+function applyPreferredDroneFilterIfAvailable(){
+const preferred = readPreferredDroneFromProfileStorage()
+preferredWindGuideFilterValue = preferred
+if(!preferred) {
+preferredWindGuideFilterApplied = false
+updateWindGuideFilterToggleButton()
+return false
+}
+
+setWindGuideModelFilterValue(preferred)
+preferredWindGuideFilterApplied = true
+applyWindGuideFiltersAndSort()
+return true
+}
+
+function clearWindGuideModelFilter(){
+setWindGuideModelFilterValue("")
+preferredWindGuideFilterApplied = false
+applyWindGuideFiltersAndSort()
+}
+
+function toggleWindGuideModelFilter(){
+const currentFilter = getWindGuideModelFilterValue()
+if(currentFilter){
+clearWindGuideModelFilter()
+return
+}
+
+if(preferredWindGuideFilterValue){
+setWindGuideModelFilterValue(preferredWindGuideFilterValue)
+preferredWindGuideFilterApplied = true
+applyWindGuideFiltersAndSort()
+}
+}
+
 function getFilteredSortedWindGuideModels(models){
 const modelFilter = getWindGuideModelFilterText()
 
@@ -1251,9 +1360,11 @@ icon.classList.toggle("collapsed",isNowHidden)
 
 function applyWindGuideFiltersAndSort(){
 renderWindGuideTable(getFilteredSortedWindGuideModels(latestWindGuideModels))
+updateWindGuideFilterToggleButton()
 }
 
 function handleWindGuideFilterChange(){
+preferredWindGuideFilterApplied = false
 applyWindGuideFiltersAndSort()
 }
 
@@ -1584,7 +1695,10 @@ validated: Object.prototype.hasOwnProperty.call(validationMap,model.modelId)
 : !!model.verified
 }))
 
+const preferredApplied = applyPreferredDroneFilterIfAvailable()
+if(!preferredApplied){
 applyWindGuideFiltersAndSort()
+}
 
 const icon = document.getElementById("windGuideCollapseIcon")
 const controls = document.getElementById("windGuideControls")
@@ -3101,6 +3215,7 @@ function calculateWindRisk(metar){
 
 const wind = metar.wspd || 0
 const gust = metar.wgst || wind
+const effectiveWind = Math.max(wind,gust)
 const dirRaw = metar.wdir
 const windDir = dirRaw === "VRB" ? "VRB" : (Number.isFinite(Number(dirRaw)) ? `${String(Number(dirRaw)).padStart(3,"0")}°` : "N/A")
 const vis = parseFloat(metar.visib) || 10
@@ -3108,10 +3223,11 @@ const ceiling = metar.ceil || 5000
 
 let score = 0
 
-if(wind > 21) score += 4
-else if(wind > 15) score += 3
-else if(wind > 10) score += 2
-if(gust - wind > 8) score += 1
+if(effectiveWind >= 21) score += 4
+else if(effectiveWind >= 16) score += 3
+else if(effectiveWind >= 10) score += 2
+else score += 1
+if(gust - wind > 7) score += 1
 
 if(vis < 3) score += 1           // add 1 to risk score if <3 SM visibility
 if(ceiling < 1000) score += 1    // add 1 to risk score if ceiling < 1000 ft  
