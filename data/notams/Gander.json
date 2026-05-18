@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(V0556/26 NOTAMR V0195/26\nQ) CZQX/QOLAS/IV/M/E/000/011/4730N05343W002\nA) CZQX B) 2605181215 C) 2608171400EST\nE) OBST LGT U/S TOWER 473028N 0534329W (APRX 22NM WSW HARBOUR GRACE \nAD (CHG2)) 300FT AGL, 1100FT AMSL.)",
+    "startValidity": "2026-05-18T12:15:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "47.507778, -53.724722"
+    ]
+  },
+  {
     "raw": "(V0510/26 NOTAMN\nQ) CZQX/QOBCE/IV/M/E/000/014/4827N05702W002\nA) CZQX B) 2605041754 C) PERM\nE) AMEND PUBLICATIONS: NEW QUARRY WITHIN 656FT RADIUS CENTRED ON \n482656N 0570142W (APRX 42NM SSE SOUTH BROOK (WATER) AD (CCT5)). \n492FT AGL 1345FT AMSL.)",
     "startValidity": "2026-05-04T17:54:00",
     "endValidity": null,
@@ -33,15 +42,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.820000, -56.720833"
-    ]
-  },
-  {
-    "raw": "(V0195/26 NOTAMR V1391/25\nQ) CZQX/QOLAS/IV/M/E/000/011/4730N05343W002\nA) CZQX B) 2602231303 C) 2605181400EST\nE) OBST LGT U/S TOWER 473028N 0534329W (APRX 22NM WSW HARBOUR GRACE \nAD (CHG2)) 300FT AGL, 1100FT AMSL.)",
-    "startValidity": "2026-02-23T13:03:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "47.507778, -53.724722"
     ]
   },
   {
