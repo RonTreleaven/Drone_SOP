@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0445/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5124N11143W002\nA) CZEG B) 2605172049 C) 2608142359\nE) OBST LGT U/S TOWER 512344N 1114306W (APRX 16NM SE HANNA AD \n(CEL4)) 348FT AGL, 3097FT AMSL.)",
+    "startValidity": "2026-05-17T20:49:00",
+    "endValidity": "2026-08-14T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.395556, -111.718333"
+    ]
+  },
+  {
     "raw": "(R0443/26 NOTAMR R0325/26\nQ) CZEG/QOLAS/IV/M/AE/000/025/5446N11320W005\nA) CYWM B) 2605160824 C) 2606302359\nE) OBST LGT U/S TOWER 544541N 1131954W (APRX 4.5NM W AD) 522FT AGL, \n2448FT AMSL.)",
     "startValidity": "2026-05-16T08:24:00",
     "endValidity": "2026-06-30T23:59:00",
@@ -834,15 +843,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.493611, -112.668611"
-    ]
-  },
-  {
-    "raw": "(R0164/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/030/5022N11201W002\nA) CZEG B) 2602172218 C) 2605172359\nE) OBST LGT U/S TOWER 502155N 1120047W (APRX 13NM S BROOKS(COMMUNITY \nHEALTH CENTRE) (HELI) AD (CFV8)) 351FT AGL, 2904FT AMSL.)",
-    "startValidity": "2026-02-17T22:18:00",
-    "endValidity": "2026-05-17T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.365278, -112.013056"
     ]
   },
   {
