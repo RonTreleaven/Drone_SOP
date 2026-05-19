@@ -1,1 +1,2 @@
 [2026-05-11 13:57:22 -0400] mode=preview sources=lever collected=1 deduped=1 duplicates_removed=0 duplicate_ratio=0.0 inserted=0 avg_conf=0.95 by_source={"lever": 1} by_family={"operations": 1}
+[2026-05-19 06:28:25 -0400] mode=write sources=jobbank,simplyhired,talent,jobs_bear,greenhouse,lever collected=61 deduped=23 duplicates_removed=38 duplicate_ratio=0.623 inserted=23 avg_conf=0.941 by_source={"greenhouse": 1, "jobbank": 1, "lever": 1, "simplyhired": 16, "talent": 4} by_family={"mapping": 3, "operations": 17, "technical": 3}

@@ -237,14 +237,16 @@
           <input id="pilotLon" type="text" inputmode="decimal" placeholder="-78.897000">
         </div>
         <div class="field">
-          <label for="classFilter">CZ ICAO Class Filter (multi-select)</label>
-          <select id="classFilter" multiple size="6" aria-label="Control zone class filter">
+          <label for="classFilter">Airspace Filter (multi-select)</label>
+          <select id="classFilter" multiple size="7" aria-label="Control zone class filter">
+            <option value="A">Class A</option>
             <option value="B">Class B</option>
             <option value="C">Class C</option>
             <option value="D" selected>Class D</option>
             <option value="E">Class E</option>
             <option value="F" selected>Class F</option>
             <option value="G">Class G</option>
+            <option value="R" selected>Restricted (DAH)</option>
           </select>
           <div class="mini-actions">
             <button id="selectAllClassesBtn" type="button">Select All</button>
@@ -283,6 +285,7 @@
       attribution: "&copy; OpenStreetMap contributors"
     }).addTo(map);
 
+
     const czLayer = L.geoJSON(null, {
       style: {
         color: "#b42318",
@@ -301,6 +304,41 @@
       }
     }).addTo(map);
 
+    const dahRestrictedLayer = L.geoJSON(null, {
+      pointToLayer: (feature, latlng) => {
+        const p = feature && feature.properties ? feature.properties : {};
+        const radiusNm = Number(p.radius_nm);
+        const radiusMeters = Number.isFinite(radiusNm) ? radiusNm * 1852 : 926;
+        return L.circle(latlng, {
+          radius: radiusMeters,
+          color: "#8b1f1f",
+          weight: 2,
+          fillColor: "#c74343",
+          fillOpacity: 0.16
+        });
+      },
+      onEachFeature: (feature, layer) => {
+        const p = feature && feature.properties ? feature.properties : {};
+        const name = normalizeLabel(p.name || "DAH Restricted Site");
+        const section = p.section || "n/a";
+        const radiusNm = Number.isFinite(Number(p.radius_nm)) ? `${Number(p.radius_nm).toFixed(1)} NM` : "n/a";
+        const lower = Number.isFinite(Number(p.lower_ft)) ? `${Number(p.lower_ft)} ft` : "n/a";
+        const upper = Number.isFinite(Number(p.upper_ft)) ? `${Number(p.upper_ft)} ft` : "n/a";
+        const timeDesignation = p.time_designation || "n/a";
+        const agency = normalizeLabel(p.user_agency || "n/a");
+
+        layer.bindPopup(
+          `<strong>${name}</strong><br>` +
+          `DAH: ${section}<br>` +
+          `Radius: ${radiusNm}<br>` +
+          `Lower: ${lower}<br>` +
+          `Upper: ${upper}<br>` +
+          `Time: ${timeDesignation}<br>` +
+          `Agency: ${agency}`
+        );
+      }
+    }).addTo(map);
+
     const pilotIcon = L.divIcon({
       className: "",
       html: '<div style="width:14px;height:14px;border-radius:50%;background:#c62828;border:2px solid #fff;box-shadow:0 0 0 3px rgba(198,40,40,0.28);"></div>',
@@ -311,6 +349,7 @@
     let pilotMarker = null;
     let controlZoneData = null;
     let filteredControlZoneData = null;
+    let dahRestrictedData = null;
     let airportLookupEntries = [];
 
     const CLASS_CODE_TO_LETTER = {
@@ -322,6 +361,33 @@
       5: "F",
       6: "G"
     };
+
+    function normalizeIcaoClass(value) {
+      if (typeof value === "number" && Number.isFinite(value)) {
+        return CLASS_CODE_TO_LETTER[value] || "UNK";
+      }
+
+      if (typeof value !== "string") return "UNK";
+      const text = value.trim().toUpperCase();
+      if (!text) return "UNK";
+
+      // Handle values serialized as numeric strings (for example "5").
+      if (/^\d+$/.test(text)) {
+        const n = Number(text);
+        return CLASS_CODE_TO_LETTER[n] || "UNK";
+      }
+
+      if (/^[A-G]$/.test(text)) {
+        return text;
+      }
+
+      const classMatch = text.match(/\bCLASS[ _-]*([A-G])\b/);
+      if (classMatch) {
+        return classMatch[1];
+      }
+
+      return "UNK";
+    }
 
     function setStatus(text, tone) {
       const el = document.getElementById("status");
@@ -425,15 +491,53 @@
       return hits;
     }
 
+    function dahSitesContainingPoint(lat, lon, featureCollection) {
+      const hits = [];
+      if (!featureCollection || !Array.isArray(featureCollection.features)) return hits;
+
+      featureCollection.features.forEach((feature) => {
+        if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
+        const p = feature.properties || {};
+        const radiusNm = Number(p.radius_nm);
+        if (!Number.isFinite(radiusNm)) return;
+        const center = feature.geometry.coordinates;
+        if (!Array.isArray(center) || center.length < 2) return;
+
+        const centerLon = Number(center[0]);
+        const centerLat = Number(center[1]);
+        if (!Number.isFinite(centerLat) || !Number.isFinite(centerLon)) return;
+
+        const distanceMeters = map.distance([lat, lon], [centerLat, centerLon]);
+        if (distanceMeters <= radiusNm * 1852) {
+          hits.push(feature);
+        }
+      });
+
+      return hits;
+    }
+
+    function getCombinedLayerBounds() {
+      let bounds = null;
+
+      if (czLayer.getLayers().length) {
+        bounds = czLayer.getBounds();
+      }
+
+      if (dahRestrictedLayer.getLayers().length) {
+        const dahBounds = dahRestrictedLayer.getBounds();
+        if (!bounds) {
+          bounds = dahBounds;
+        } else {
+          bounds.extend(dahBounds);
+        }
+      }
+
+      return bounds;
+    }
+
     function getFeatureClassLetter(feature) {
       const classValue = feature && feature.properties ? feature.properties.icaoClass : null;
-      if (typeof classValue === "number" && Number.isFinite(classValue)) {
-        return CLASS_CODE_TO_LETTER[classValue] || "UNK";
-      }
-      if (typeof classValue === "string" && classValue.trim()) {
-        return classValue.trim().toUpperCase();
-      }
-      return "UNK";
+      return normalizeIcaoClass(classValue);
     }
 
     function normalizeLookupName(value) {
@@ -546,14 +650,21 @@
 
     function formatSelectedClasses(selectedClassSet) {
       if (!selectedClassSet || !selectedClassSet.size) {
-        return "no classes";
+        return "no filters";
       }
 
-      const ordered = ["B", "C", "D", "E", "F", "G"].filter((v) => selectedClassSet.has(v));
-      if (ordered.length === 6) {
-        return "all selected classes";
+      const ordered = ["A", "B", "C", "D", "E", "F", "G", "R"].filter((v) => selectedClassSet.has(v));
+      if (ordered.length === 8) {
+        return "all selected filters";
       }
-      return `classes ${ordered.join("+")}`;
+
+      const labels = ordered.map((code) => (code === "R" ? "Restricted" : `Class ${code}`));
+      return labels.join("+");
+    }
+
+    function isRestrictedFilterEnabled(selectedClassSet = null) {
+      const set = selectedClassSet || getSelectedClassSet();
+      return set.has("R");
     }
 
     function formatHitClasses(hits) {
@@ -590,8 +701,17 @@
         czLayer.addData(filteredControlZoneData);
       }
 
+      const showRestricted = isRestrictedFilterEnabled(selectedClassSet);
+      dahRestrictedLayer.clearLayers();
+      if (showRestricted && dahRestrictedData && Array.isArray(dahRestrictedData.features)) {
+        dahRestrictedLayer.addData(dahRestrictedData);
+      }
+
       const count = filteredControlZoneData && Array.isArray(filteredControlZoneData.features)
         ? filteredControlZoneData.features.length
+        : 0;
+      const restrictedCount = showRestricted && dahRestrictedData && Array.isArray(dahRestrictedData.features)
+        ? dahRestrictedData.features.length
         : 0;
       const filterText = formatSelectedClasses(selectedClassSet);
 
@@ -599,7 +719,7 @@
         const ll = pilotMarker.getLatLng();
         reportLocation(ll.lat, ll.lng);
       } else {
-        setStatus(`Showing ${count} control-zone features for ${filterText}.`, "ok");
+        setStatus(`Showing ${count} control-zone features and ${restrictedCount} restricted-site circles for ${filterText}.`, "ok");
       }
     }
 
@@ -612,14 +732,17 @@
       const pilot = pilotMarker.getLatLng();
       const activeData = filteredControlZoneData || controlZoneData;
       const localHits = zonesContainingPoint(pilot.lat, pilot.lng, activeData);
+      const localDahHits = isRestrictedFilterEnabled()
+        ? dahSitesContainingPoint(pilot.lat, pilot.lng, dahRestrictedData)
+        : [];
 
       // Force a local focus window around pilot so zoom is always tight and predictable.
       map.setView(pilot, 12, { animate: true });
       const localWindowBounds = L.circle(pilot, { radius: 8000 }).getBounds();
       map.fitBounds(localWindowBounds, { padding: [24, 24], maxZoom: 12, animate: true });
 
-      if (localHits.length > 0) {
-        setStatus(`Focused on pilot area (8 km view). Pilot is inside ${localHits.length} active zone(s).`, "ok");
+      if (localHits.length > 0 || localDahHits.length > 0) {
+        setStatus(`Focused on pilot area (8 km view). Pilot is inside ${localHits.length} CZ zone(s) and ${localDahHits.length} DAH restricted site(s).`, "ok");
       } else {
         setStatus("Focused on pilot area (8 km view).", "ok");
       }
@@ -662,25 +785,85 @@
     function reportLocation(lat, lon) {
       const activeData = filteredControlZoneData || controlZoneData;
       const hits = zonesContainingPoint(lat, lon, activeData);
-      if (!hits.length) {
+      const dahHits = isRestrictedFilterEnabled()
+        ? dahSitesContainingPoint(lat, lon, dahRestrictedData)
+        : [];
+
+      if (!hits.length && !dahHits.length) {
         const selectedClassSet = getSelectedClassSet();
         const filterText = formatSelectedClasses(selectedClassSet);
-        setStatus(`Pilot ${lat.toFixed(6)}, ${lon.toFixed(6)}. No control zone hit in ${filterText}.`, "ok");
+        setStatus(`Pilot ${lat.toFixed(6)}, ${lon.toFixed(6)}. No control zone hit in ${filterText}, and no DAH restricted-site hit.`, "ok");
         return;
       }
 
-      const hitClassText = formatHitClasses(hits);
-      const names = Array.from(new Set(hits
-        .slice(0, 4)
-        .map((f) => {
-          const rawName = (f.properties && f.properties.name) ? f.properties.name : "Unnamed CZ";
-          const classLetter = getFeatureClassLetter(f);
-          return `${normalizeLabel(rawName)} (${classLetter})`;
-        })))
-        .join(" | ");
+      const messages = [];
 
-      const more = hits.length > 4 ? ` (+${hits.length - 4} more)` : "";
-      setStatus(`Pilot ${lat.toFixed(6)}, ${lon.toFixed(6)} inside ${hitClassText}: ${names}${more}`, "ok");
+      if (hits.length) {
+        const hitClassText = formatHitClasses(hits);
+        const names = Array.from(new Set(hits
+          .slice(0, 4)
+          .map((f) => {
+            const rawName = (f.properties && f.properties.name) ? f.properties.name : "Unnamed CZ";
+            const classLetter = getFeatureClassLetter(f);
+            return `${normalizeLabel(rawName)} (${classLetter})`;
+          })))
+          .join(" | ");
+        const more = hits.length > 4 ? ` (+${hits.length - 4} more)` : "";
+        messages.push(`inside ${hitClassText}: ${names}${more}`);
+      }
+
+      if (dahHits.length) {
+        const dahNames = Array.from(new Set(dahHits.slice(0, 4).map((f) => normalizeLabel((f.properties && f.properties.name) || "DAH Restricted Site")))).join(" | ");
+        const dahMore = dahHits.length > 4 ? ` (+${dahHits.length - 4} more)` : "";
+        messages.push(`inside DAH restricted site(s): ${dahNames}${dahMore}`);
+      }
+
+      setStatus(`Pilot ${lat.toFixed(6)}, ${lon.toFixed(6)} ${messages.join("; ")}`, "ok");
+    }
+
+    async function loadDahRestrictedSites() {
+      try {
+        const sources = [
+          "data/airspace/RestrictedDAH.geoJson",
+          "data/airspace/dah_restricted_sites.geojson"
+        ];
+
+        let data = null;
+        let lastError = "HTTP 404";
+
+        for (const source of sources) {
+          try {
+            const response = await fetch(source, { cache: "no-store" });
+            if (!response.ok) {
+              lastError = `HTTP ${response.status}`;
+              continue;
+            }
+            const parsed = await response.json();
+            if (!parsed || parsed.type !== "FeatureCollection" || !Array.isArray(parsed.features)) {
+              lastError = "Invalid GeoJSON";
+              continue;
+            }
+            data = parsed;
+            break;
+          } catch (err) {
+            lastError = err && err.message ? err.message : "unknown error";
+          }
+        }
+
+        if (!data) {
+          throw new Error(lastError);
+        }
+
+        dahRestrictedData = data;
+        dahRestrictedLayer.clearLayers();
+        if (isRestrictedFilterEnabled()) {
+          dahRestrictedLayer.addData(data);
+        }
+      } catch (err) {
+        dahRestrictedData = null;
+        dahRestrictedLayer.clearLayers();
+        setStatus(`DAH restricted-site layer unavailable: ${err.message}`, "warn");
+      }
     }
 
     function applyStoredPilot() {
@@ -698,6 +881,7 @@
     async function loadControlZones() {
       try {
         await loadAirportLookup();
+        await loadDahRestrictedSites();
 
         const response = await fetch("data/airspace/Control_ca_asp.geojson", { cache: "no-store" });
         if (!response.ok) {
@@ -710,9 +894,18 @@
         }
 
         controlZoneData = data;
-        applyClassFilter();
+
+        // On initial load, prioritize previously saved pilot location first.
+        // This ensures the page opens around the pilot if one was already set.
         const restored = applyStoredPilot();
+        applyClassFilter();
+
         if (restored) {
+          const ll = pilotMarker ? pilotMarker.getLatLng() : null;
+          if (ll) {
+            map.setView(ll, 12, { animate: false });
+          }
+
           // Delay startup focus until Leaflet is fully ready to avoid refresh-time fitBounds races.
           map.whenReady(() => {
             requestAnimationFrame(() => {
@@ -729,16 +922,18 @@
             });
           });
         } else {
-          if (czLayer.getLayers().length) {
-            map.fitBounds(czLayer.getBounds(), { padding: [18, 18] });
+          const allBounds = getCombinedLayerBounds();
+          if (allBounds && allBounds.isValid()) {
+            map.fitBounds(allBounds, { padding: [18, 18] });
           }
 
           const selectedClassSet = getSelectedClassSet();
           const activeCount = filteredControlZoneData && Array.isArray(filteredControlZoneData.features)
             ? filteredControlZoneData.features.length
             : data.features.length;
+          const dahCount = dahRestrictedData && Array.isArray(dahRestrictedData.features) ? dahRestrictedData.features.length : 0;
           const filterText = formatSelectedClasses(selectedClassSet);
-          setStatus(`Loaded ${activeCount} control-zone features for ${filterText}. Set pilot lat/lon to check location.`, "ok");
+          setStatus(`Loaded ${activeCount} control-zone features for ${filterText} and ${dahCount} DAH restricted-site circles. Set pilot lat/lon to check location.`, "ok");
         }
       } catch (err) {
         setStatus(`Could not load control zones: ${err.message}`, "warn");
@@ -752,12 +947,13 @@
     });
 
     document.getElementById("fitCzBtn").addEventListener("click", () => {
-      if (!czLayer.getLayers().length) {
-        setStatus("Control-zone layer is not loaded yet.", "warn");
+      const allBounds = getCombinedLayerBounds();
+      if (!allBounds || !allBounds.isValid()) {
+        setStatus("Map layers are not loaded yet.", "warn");
         return;
       }
-      map.fitBounds(czLayer.getBounds(), { padding: [18, 18] });
-      setStatus("Map centered on all Canadian control zones.", "ok");
+      map.fitBounds(allBounds, { padding: [18, 18] });
+      setStatus("Map centered on control zones and DAH restricted-site circles.", "ok");
     });
 
     document.getElementById("currentGpsBtn").addEventListener("click", () => {

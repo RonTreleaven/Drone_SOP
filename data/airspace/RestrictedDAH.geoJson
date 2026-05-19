@@ -1,0 +1,433 @@
+{
+  "type": "FeatureCollection",
+  "name": "DAH_Restricted_Sites",
+  "metadata": {
+    "source": "Transport Canada Designated Airspace Handbook",
+    "edition": "Effective 0901Z 22 JAN 2026 to 0901Z 19 MAR 2026",
+    "notes": "Generated from DAH pages 197-201 provided by user."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.1.0-6",
+        "name": "KAMLOOPS REGIONAL CORRECTIONAL CENTRE, BC",
+        "fir": "VANCOUVER",
+        "province": "BC",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 3300,
+        "time_designation": "CONT",
+        "user_agency": "Warden (250) 571-2226"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -120.412650, 50.666414 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.1.0-7",
+        "name": "NANAIMO CORRECTIONAL CENTRE, BC",
+        "fir": "VANCOUVER",
+        "province": "BC",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1300,
+        "time_designation": "CONT",
+        "user_agency": "Warden (250) 729-7705"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -124.050000, 49.207972 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.1.0-8",
+        "name": "NORTH FRASER PRE-TRIAL CENTRE, BC",
+        "fir": "VANCOUVER",
+        "province": "BC",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1000,
+        "time_designation": "CONT",
+        "user_agency": "Warden (604) 468-3549"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -122.753611, 49.250556 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.1.0-9",
+        "name": "OKANAGAN CORRECTIONAL CENTRE, BC",
+        "fir": "VANCOUVER",
+        "province": "BC",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 2100,
+        "time_designation": "CONT",
+        "user_agency": "Warden (236) 216-2097"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -119.535111, 49.225194 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.1.0-10",
+        "name": "PRINCE GEORGE REGIONAL CORRECTIONAL CENTRE, BC",
+        "fir": "VANCOUVER",
+        "province": "BC",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 3100,
+        "time_designation": "CONT",
+        "user_agency": "Warden (250) 960-3038"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -122.708706, 53.907689 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.1.0-11",
+        "name": "SURREY PRE-TRIAL SERVICES CENTRE, BC",
+        "fir": "VANCOUVER",
+        "province": "BC",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1300,
+        "time_designation": "CONT",
+        "user_agency": "Warden (604) 572-2104"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -122.825969, 49.107264 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.2.0-1",
+        "name": "BRUCE POWER GENERATING STATION, ON",
+        "fir": "TORONTO",
+        "province": "ON",
+        "radius_nm": 2.0,
+        "lower_ft": 0,
+        "upper_ft": 1600,
+        "time_designation": "CONT",
+        "effective_start": "0901Z 22 JAN 2026",
+        "effective_end": "0901Z 19 MAR 2026",
+        "user_agency": "Nuclear Security Central Alarm Station (519) 361-2673 Ext 15281"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -81.590278, 44.328889 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.2.0-2",
+        "name": "DARLINGTON NUCLEAR GENERATING STATION, ON",
+        "fir": "TORONTO",
+        "province": "ON",
+        "radius_nm": 1.0,
+        "lower_ft": 0,
+        "upper_ft": 1300,
+        "time_designation": "CONT",
+        "user_agency": "OPG Senior Manager Of Investigations (905) 839-6746 Ext 4000"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -78.720833, 43.870000 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.2.0-3",
+        "name": "DEFENCE RESEARCH AND DEVELOPMENT CANADA, ON",
+        "fir": "TORONTO",
+        "province": "ON",
+        "radius_nm": 1.0,
+        "lower_ft": 0,
+        "upper_ft": 1700,
+        "time_designation": "CONT",
+        "user_agency": "Base Duty Officer (437) 328-4154 / P-GTA.4CDSGGTADet@forces.gc.ca"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -79.468094, 43.750403 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.2.0-4",
+        "name": "PICKERING NUCLEAR GENERATING STATION, ON",
+        "fir": "TORONTO",
+        "province": "ON",
+        "radius_nm": 1.0,
+        "lower_ft": 0,
+        "upper_ft": 1300,
+        "time_designation": "CONT",
+        "user_agency": "OPG Senior Manager Of Investigations (905) 839-6746 Ext 4000"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -79.062778, 43.810833 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.3.0-1",
+        "name": "ROBERVAL DETENTION FACILITY, QC",
+        "fir": "MONTREAL",
+        "province": "QC",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1400,
+        "time_designation": "CONT",
+        "user_agency": "Deputy Director General of security, Correctional Services (514) 864-8010 ext 50502"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -72.231111, 48.533333 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.3.0-2",
+        "name": "SEPT-ILES DETENTION FACILITY, QC",
+        "fir": "MONTREAL",
+        "province": "QC",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1100,
+        "time_designation": "CONT",
+        "user_agency": "Deputy Director General of security, Correctional Services (514) 864-8010 ext 50502"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -66.416111, 50.278056 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.3.0-3",
+        "name": "NEW CARLISLE COURT HOUSE, QC",
+        "fir": "MONTREAL",
+        "province": "QC",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1100,
+        "time_designation": "CONT",
+        "user_agency": "Deputy Director General of security, Correctional Services (514) 864-8010 ext 50502"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -65.317500, 48.012778 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.3.0-4",
+        "name": "PERCE DETENTION FACILITY, QC",
+        "fir": "MONTREAL",
+        "province": "QC",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1000,
+        "time_designation": "CONT",
+        "user_agency": "Deputy Director General of security, Correctional Services (514) 864-8010 ext 50502"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -64.213333, 48.524167 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.3.0-5",
+        "name": "MONTREAL - BORDEAUX DETENTION FACILITY, QC",
+        "fir": "MONTREAL",
+        "province": "QC",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1100,
+        "time_designation": "CONT",
+        "user_agency": "Deputy Director General of security, Correctional Services (514) 864-8010 ext 50502"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -73.686111, 45.545278 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.3.0-6",
+        "name": "NATIONAL ASSEMBLY OF QUEBEC, QC",
+        "fir": "MONTREAL",
+        "province": "QC",
+        "radius_nm": 0.1,
+        "lower_ft": 0,
+        "upper_ft": 1300,
+        "time_designation": "CONT",
+        "user_agency": "Security (418) 644-2783 Ext 1 / planificationsecurite@assnat.qc.ca"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -71.214106, 46.808519 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.4.0-1",
+        "name": "POINT LEPREAU NUCLEAR GENERATING STATION, NB",
+        "fir": "MONCTON",
+        "province": "NB",
+        "radius_nm": 1.5,
+        "lower_ft": 0,
+        "upper_ft": 1100,
+        "time_designation": "CONT",
+        "user_agency": "Nuclear Response Team (506) 651-8706 / nrtrpaspilot@nbpower.com"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -66.454797, 45.073242 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.4.0-2",
+        "name": "SAINT JOHN REGIONAL CORRECTIONAL CENTRE, NB",
+        "fir": "MONCTON",
+        "province": "NB",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1200,
+        "time_designation": "CONT",
+        "user_agency": "SJRCC (506) 658-5400"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -65.984925, 45.267825 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.4.0-3",
+        "name": "SOUTHEAST REGIONAL CORRECTIONAL CENTRE, NB",
+        "fir": "MONCTON",
+        "province": "NB",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1100,
+        "time_designation": "CONT",
+        "user_agency": "SRCC (506) 532-7885"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -64.517517, 46.206475 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.4.0-4",
+        "name": "NEW BRUNSWICK WOMENS CORRECTIONAL CENTRE, NB",
+        "fir": "MONCTON",
+        "province": "NB",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1100,
+        "time_designation": "CONT",
+        "user_agency": "NBWCC (506) 624-2000"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -65.476842, 47.007422 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.4.0-5",
+        "name": "DALHOUSIE REGIONAL CORRECTIONAL CENTRE, NB",
+        "fir": "MONCTON",
+        "province": "NB",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1100,
+        "time_designation": "CONT",
+        "user_agency": "DRCC (506) 684-7517"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -66.392817, 48.040567 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.4.0-6",
+        "name": "MADAWASKA REGIONAL CORRECTIONAL CENTRE, NB",
+        "fir": "MONCTON",
+        "province": "NB",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1600,
+        "time_designation": "CONT",
+        "user_agency": "MRCC (506) 737-4510"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -68.393808, 47.297822 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.4.0-7",
+        "name": "HMC DOCKYARD, NS",
+        "fir": "MONCTON",
+        "province": "NS",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1000,
+        "time_designation": "CONT",
+        "user_agency": "RJOC (Atlantic) (902) 427-2501"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -63.583333, 44.661389 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.4.0-8",
+        "name": "CENTRAL NOVA SCOTIA CORRECTIONAL FACILITY, NS",
+        "fir": "MONCTON",
+        "province": "NS",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1200,
+        "time_designation": "CONT",
+        "user_agency": "Superintendent (902) 717-0356"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -63.593189, 44.722325 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.4.0-9",
+        "name": "NORTHEAST NOVA SCOTIA CORRECTIONAL FACILITY, NS",
+        "fir": "MONCTON",
+        "province": "NS",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1300,
+        "time_designation": "CONT",
+        "user_agency": "Superintendent (902) 240-8737"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -62.608708, 45.575411 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.4.0-10",
+        "name": "CAPE BRETON CORRECTIONAL FACILITY, NS",
+        "fir": "MONCTON",
+        "province": "NS",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1200,
+        "time_designation": "CONT",
+        "user_agency": "Superintendent (902) 574-2290"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -60.076575, 46.177922 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.4.0-11",
+        "name": "SOUTHWEST NOVA SCOTIA CORRECTIONAL FACILITY, NS",
+        "fir": "MONCTON",
+        "province": "NS",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1200,
+        "time_designation": "CONT",
+        "user_agency": "Superintendent (902) 774-0937"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -66.094875, 43.827992 ] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section": "6.4.0-12",
+        "name": "NOVA SCOTIA YOUTH CENTRE, NS",
+        "fir": "MONCTON",
+        "province": "NS",
+        "radius_nm": 0.5,
+        "lower_ft": 0,
+        "upper_ft": 1200,
+        "time_designation": "CONT",
+        "user_agency": "Superintendent (902) 698-9165"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -64.666517, 45.053514 ] }
+    }
+  ]
+}
