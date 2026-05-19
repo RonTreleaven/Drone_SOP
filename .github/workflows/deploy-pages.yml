@@ -44,7 +44,7 @@ jobs:
         run: |
           mkdir -p _site/assets/js _site/assets/css _site/assets/img \
                    _site/assets/Emergency _site/assets/CFS _site/assets/pdf \
-                   _site/data/notams _site/sections
+                   _site/data/notams _site/data/airspace _site/sections
 
           # Root-level HTML pages
           cp *.html _site/
@@ -69,6 +69,10 @@ jobs:
 
           # Data — reference JSON/GeoJSON files (root of data/)
           cp data/*.json data/*.geojson _site/data/ 2>/dev/null || true
+
+          # Data — airspace files used by CZMiniMap and related tools
+          cp data/airspace/*.geojson _site/data/airspace/ 2>/dev/null || true
+          cp data/airspace/*.geoJson _site/data/airspace/ 2>/dev/null || true
 
           # Data — live NOTAM JSON files (auto-updated by fetch-notams CRON)
           cp data/notams/*.json _site/data/notams/  2>/dev/null || true

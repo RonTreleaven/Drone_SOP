@@ -613,10 +613,71 @@
       return "n/a";
     }
 
+    function getBasePathPrefixes() {
+      const prefixes = ["", "/"];
+      const parts = (window.location.pathname || "/").split("/").filter(Boolean);
+      if (parts.length && !parts[0].includes(".")) {
+        prefixes.push(`/${parts[0]}/`);
+      }
+      return Array.from(new Set(prefixes));
+    }
+
+    function buildSourceCandidates(sources) {
+      const prefixes = getBasePathPrefixes();
+      const candidates = [];
+
+      sources.forEach((rawSource) => {
+        const source = String(rawSource || "").trim();
+        if (!source) return;
+        if (/^https?:\/\//i.test(source)) {
+          candidates.push(source);
+          return;
+        }
+
+        const cleanSource = source.replace(/^\/+/, "");
+        prefixes.forEach((prefix) => {
+          if (!prefix) {
+            candidates.push(cleanSource);
+          } else {
+            candidates.push(`${prefix}${cleanSource}`);
+          }
+        });
+      });
+
+      return Array.from(new Set(candidates));
+    }
+
+    async function fetchFirstGeoJson(sources) {
+      const candidates = buildSourceCandidates(sources);
+      let lastError = "HTTP 404";
+
+      for (const source of candidates) {
+        try {
+          const response = await fetch(source, { cache: "no-store" });
+          if (!response.ok) {
+            lastError = `HTTP ${response.status}`;
+            continue;
+          }
+
+          const data = await response.json();
+          if (!data || data.type !== "FeatureCollection" || !Array.isArray(data.features)) {
+            lastError = "Invalid GeoJSON";
+            continue;
+          }
+
+          return { data, source };
+        } catch (err) {
+          lastError = err && err.message ? err.message : "unknown error";
+        }
+      }
+
+      throw new Error(`${lastError}. Tried: ${candidates.join(", ")}`);
+    }
+
     async function loadAirportLookup() {
       const sources = ["ca_apt.geojson", "data/ca_apt.geojson"];
 
-      for (const source of sources) {
+      for (const source of buildSourceCandidates(sources)) {
         try {
           const response = await fetch(source, { cache: "no-store" });
           if (!response.ok) continue;
@@ -828,32 +889,7 @@
           "data/airspace/dah_restricted_sites.geojson"
         ];
 
-        let data = null;
-        let lastError = "HTTP 404";
-
-        for (const source of sources) {
-          try {
-            const response = await fetch(source, { cache: "no-store" });
-            if (!response.ok) {
-              lastError = `HTTP ${response.status}`;
-              continue;
-            }
-            const parsed = await response.json();
-            if (!parsed || parsed.type !== "FeatureCollection" || !Array.isArray(parsed.features)) {
-              lastError = "Invalid GeoJSON";
-              continue;
-            }
-            data = parsed;
-            break;
-          } catch (err) {
-            lastError = err && err.message ? err.message : "unknown error";
-          }
-        }
-
-        if (!data) {
-          throw new Error(lastError);
-        }
-
+        const { data } = await fetchFirstGeoJson(sources);
         dahRestrictedData = data;
         dahRestrictedLayer.clearLayers();
         if (isRestrictedFilterEnabled()) {
@@ -883,15 +919,12 @@
         await loadAirportLookup();
         await loadDahRestrictedSites();
 
-        const response = await fetch("data/airspace/Control_ca_asp.geojson", { cache: "no-store" });
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-
-        const data = await response.json();
-        if (!data || data.type !== "FeatureCollection" || !Array.isArray(data.features)) {
-          throw new Error("Invalid GeoJSON");
-        }
+        const { data, source } = await fetchFirstGeoJson([
+          "data/airspace/Control_ca_asp.geojson",
+          "data/airspace/ca_asp_restricted.geojson",
+          "data/ca_asp.geojson",
+          "ca_asp.geojson"
+        ]);
 
         controlZoneData = data;
 
@@ -933,7 +966,7 @@
             : data.features.length;
           const dahCount = dahRestrictedData && Array.isArray(dahRestrictedData.features) ? dahRestrictedData.features.length : 0;
           const filterText = formatSelectedClasses(selectedClassSet);
-          setStatus(`Loaded ${activeCount} control-zone features for ${filterText} and ${dahCount} DAH restricted-site circles. Set pilot lat/lon to check location.`, "ok");
+          setStatus(`Loaded ${activeCount} control-zone features from ${source} for ${filterText} and ${dahCount} DAH restricted-site circles. Set pilot lat/lon to check location.`, "ok");
         }
       } catch (err) {
         setStatus(`Could not load control zones: ${err.message}`, "warn");
