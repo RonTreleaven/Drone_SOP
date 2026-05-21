@@ -48,6 +48,45 @@
       padding: 0.9rem;
     }
 
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 0.85rem;
+      align-items: start;
+      margin-top: 0.75rem;
+    }
+
+    .layout.filters-collapsed {
+      grid-template-columns: 1fr;
+    }
+
+    .layout.filters-collapsed .side {
+      display: none;
+    }
+
+    .side {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfcfe;
+      padding: 0.6rem;
+    }
+
+    .group {
+      margin-bottom: 0.65rem;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 0.5rem;
+    }
+
+    .group h2 {
+      margin: 0 0 0.4rem;
+      font-size: 0.82rem;
+      color: #34516b;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
     .header h1 {
       margin: 0;
       font-size: 1.25rem;
@@ -61,10 +100,8 @@
 
     .controls {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 0.6rem;
-      margin-top: 0.9rem;
-      align-items: end;
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
     }
 
     .field label {
@@ -83,38 +120,40 @@
       font-size: 0.95rem;
     }
 
-    .field select {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 0.5rem 0.55rem;
-      font-size: 0.95rem;
-      background: #ffffff;
-      color: var(--ink);
-    }
-
-    .field select[multiple] {
-      min-height: 132px;
-      padding: 0.35rem;
-    }
-
-    .mini-actions {
-      margin-top: 0.35rem;
+    .row {
       display: flex;
-      gap: 0.35rem;
+      gap: 0.4rem;
+      align-items: center;
       flex-wrap: wrap;
+      margin-bottom: 0.35rem;
     }
 
-    .mini-actions button {
-      padding: 0.35rem 0.5rem;
-      font-size: 0.8rem;
-      font-weight: 600;
+    .row-top-gap {
+      margin-top: 0.35rem;
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+
+    .check-grid label {
+      font-size: 0.9rem;
     }
 
     .btn-row {
       display: flex;
       gap: 0.45rem;
       flex-wrap: wrap;
+    }
+
+    .map-tools {
+      margin-top: 0.5rem;
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     button {
@@ -139,7 +178,6 @@
     }
 
     .status {
-      margin-top: 0.7rem;
       padding: 0.55rem 0.65rem;
       border-radius: 8px;
       border: 1px solid var(--line);
@@ -160,7 +198,6 @@
     }
 
     .focus-key {
-      margin-top: 0.75rem;
       padding: 0.65rem 0.75rem;
       border: 1px solid #c7d8ea;
       border-left: 5px solid #0e6ba8;
@@ -174,8 +211,14 @@
       color: #123a58;
     }
 
+    .map-panel {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 0.45rem;
+    }
+
     #map {
-      margin-top: 0.85rem;
       height: 70vh;
       min-height: 440px;
       border-radius: 10px;
@@ -210,6 +253,10 @@
     }
 
     @media (max-width: 720px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
       #map {
         height: 62vh;
         min-height: 380px;
@@ -227,49 +274,65 @@
         <p>Loads only control zones from Control_ca_asp.geojson and lets you place the pilot marker by lat/lon.</p>
       </div>
 
-      <div class="controls">
-        <div class="field">
-          <label for="pilotLat">Pilot Latitude (DD)</label>
-          <input id="pilotLat" type="text" inputmode="decimal" placeholder="43.923000">
-        </div>
-        <div class="field">
-          <label for="pilotLon">Pilot Longitude (DD)</label>
-          <input id="pilotLon" type="text" inputmode="decimal" placeholder="-78.897000">
-        </div>
-        <div class="field">
-          <label for="classFilter">Airspace Filter (multi-select)</label>
-          <select id="classFilter" multiple size="7" aria-label="Control zone class filter">
-            <option value="A">Class A</option>
-            <option value="B">Class B</option>
-            <option value="C">Class C</option>
-            <option value="D" selected>Class D</option>
-            <option value="E">Class E</option>
-            <option value="F" selected>Class F</option>
-            <option value="G">Class G</option>
-            <option value="R" selected>Restricted (DAH)</option>
-          </select>
-          <div class="mini-actions">
-            <button id="selectAllClassesBtn" type="button">Select All</button>
-            <button id="clearClassesBtn" type="button">Clear</button>
+      <div class="layout">
+        <aside class="side">
+          <section class="group">
+            <h2>Pilot Location</h2>
+            <div class="controls">
+              <div class="field">
+                <label for="pilotLat">Latitude (DD)</label>
+                <input id="pilotLat" type="text" inputmode="decimal" placeholder="43.923000">
+              </div>
+              <div class="field">
+                <label for="pilotLon">Longitude (DD)</label>
+                <input id="pilotLon" type="text" inputmode="decimal" placeholder="-78.897000">
+              </div>
+            </div>
+            <div class="row">
+              <button id="setPilotBtn" class="primary" type="button">Set Pilot</button>
+              <button id="currentGpsBtn" type="button">My Location</button>
+              <button id="centerPilotBtn" type="button">Center on Pilot</button>
+            </div>
+          </section>
+
+          <section class="group">
+            <h2>Airspace Filter</h2>
+            <div class="check-grid">
+              <label><input type="checkbox" class="class-filter" value="D" checked> Class D Control Zones</label>
+              <label><input type="checkbox" class="class-filter" value="E" checked> Class E Surface/Low-Level</label>
+              <label><input type="checkbox" class="class-filter" value="F" checked> Class F Control/Related</label>
+              <label><input type="checkbox" class="class-filter" value="R" checked> Restricted (CYR/CYD/CYA)</label>
+            </div>
+            <div class="row row-top-gap">
+              <button id="classCheckAll" type="button">Check</button>
+              <button id="classUncheckAll" type="button">Unchk</button>
+              <button id="fitCzBtn" type="button">Fit All</button>
+            </div>
+          </section>
+
+          <section class="group">
+            <div class="focus-key" role="note" aria-label="Operational airspace key">
+              <strong>Operational Key:</strong> Primary check is 0-700 ft AGL control-zone airspace.
+              Defaults are <strong>Class D</strong> and <strong>Class F</strong> because these can begin at the surface (0 AGL).
+              Drone operating ceiling reference: <strong>120 m / 400 ft AGL</strong>.
+            </div>
+          </section>
+
+          <section class="group">
+            <h2>Status</h2>
+            <div id="status" class="status">Loading control zones...</div>
+          </section>
+        </aside>
+
+        <main class="map-panel">
+          <div class="map-tools">
+            <button id="toggleFiltersBtn" type="button">Collapse Filters</button>
+            <button id="fullscreenMapBtn" type="button">Full Screen Map</button>
           </div>
-        </div>
-        <div class="btn-row">
-          <button id="setPilotBtn" class="primary" type="button">Set Pilot Location</button>
-          <button id="currentGpsBtn" type="button">Use Current GPS</button>
-          <button id="fitCzBtn" type="button">Fit All CZ</button>
-        </div>
-      </div>
-
-      <div class="focus-key" role="note" aria-label="Operational airspace key">
-        <strong>Operational Key:</strong> Primary check is 0-700 ft AGL control-zone airspace.
-        Defaults are <strong>Class D</strong> and <strong>Class F</strong> because these can begin at the surface (0 AGL).
-        Typical Class B/C/E airspace floors are higher and are still available via the manual class filter when needed.
-        Drone operating ceiling reference: <strong>120 m / 400 ft AGL</strong>.
-      </div>
-
-      <div id="status" class="status">Loading control zones...</div>
-      <div id="map" aria-label="Control zones map">
-        <button id="centerPilotFab" class="map-fab" type="button" title="Center and focus on pilot" aria-label="Center and focus on pilot">◎</button>
+          <div id="map" aria-label="Control zones map">
+            <button id="centerPilotFab" class="map-fab" type="button" title="Center and focus on pilot" aria-label="Center and focus on pilot">◎</button>
+          </div>
+        </main>
       </div>
     </section>
   </div>
@@ -298,44 +361,9 @@
         const name = normalizeLabel(p.name || "Control Zone");
         const classLetter = getFeatureClassLetter(feature);
         const icaoCode = getFeatureIcaoCode(feature);
-        const upper = p.upperLimit && Number.isFinite(p.upperLimit.value) ? `${p.upperLimit.value} ft` : "n/a";
-        const lower = p.lowerLimit && Number.isFinite(p.lowerLimit.value) ? `${p.lowerLimit.value} ft` : "n/a";
+        const upper = p.upper || (p.upperLimit && Number.isFinite(p.upperLimit.value) ? `${p.upperLimit.value} ft` : "n/a");
+        const lower = p.lower || (p.lowerLimit && Number.isFinite(p.lowerLimit.value) ? `${p.lowerLimit.value} ft` : "n/a");
         layer.bindPopup(`<strong>${name}</strong><br>ICAO: ${icaoCode}<br>Class: ${classLetter}<br>Lower: ${lower}<br>Upper: ${upper}`);
-      }
-    }).addTo(map);
-
-    const dahRestrictedLayer = L.geoJSON(null, {
-      pointToLayer: (feature, latlng) => {
-        const p = feature && feature.properties ? feature.properties : {};
-        const radiusNm = Number(p.radius_nm);
-        const radiusMeters = Number.isFinite(radiusNm) ? radiusNm * 1852 : 926;
-        return L.circle(latlng, {
-          radius: radiusMeters,
-          color: "#8b1f1f",
-          weight: 2,
-          fillColor: "#c74343",
-          fillOpacity: 0.16
-        });
-      },
-      onEachFeature: (feature, layer) => {
-        const p = feature && feature.properties ? feature.properties : {};
-        const name = normalizeLabel(p.name || "DAH Restricted Site");
-        const section = p.section || "n/a";
-        const radiusNm = Number.isFinite(Number(p.radius_nm)) ? `${Number(p.radius_nm).toFixed(1)} NM` : "n/a";
-        const lower = Number.isFinite(Number(p.lower_ft)) ? `${Number(p.lower_ft)} ft` : "n/a";
-        const upper = Number.isFinite(Number(p.upper_ft)) ? `${Number(p.upper_ft)} ft` : "n/a";
-        const timeDesignation = p.time_designation || "n/a";
-        const agency = normalizeLabel(p.user_agency || "n/a");
-
-        layer.bindPopup(
-          `<strong>${name}</strong><br>` +
-          `DAH: ${section}<br>` +
-          `Radius: ${radiusNm}<br>` +
-          `Lower: ${lower}<br>` +
-          `Upper: ${upper}<br>` +
-          `Time: ${timeDesignation}<br>` +
-          `Agency: ${agency}`
-        );
       }
     }).addTo(map);
 
@@ -349,7 +377,6 @@
     let pilotMarker = null;
     let controlZoneData = null;
     let filteredControlZoneData = null;
-    let dahRestrictedData = null;
     let airportLookupEntries = [];
 
     const CLASS_CODE_TO_LETTER = {
@@ -491,53 +518,29 @@
       return hits;
     }
 
-    function dahSitesContainingPoint(lat, lon, featureCollection) {
-      const hits = [];
-      if (!featureCollection || !Array.isArray(featureCollection.features)) return hits;
-
-      featureCollection.features.forEach((feature) => {
-        if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
-        const p = feature.properties || {};
-        const radiusNm = Number(p.radius_nm);
-        if (!Number.isFinite(radiusNm)) return;
-        const center = feature.geometry.coordinates;
-        if (!Array.isArray(center) || center.length < 2) return;
-
-        const centerLon = Number(center[0]);
-        const centerLat = Number(center[1]);
-        if (!Number.isFinite(centerLat) || !Number.isFinite(centerLon)) return;
-
-        const distanceMeters = map.distance([lat, lon], [centerLat, centerLon]);
-        if (distanceMeters <= radiusNm * 1852) {
-          hits.push(feature);
-        }
-      });
-
-      return hits;
-    }
-
     function getCombinedLayerBounds() {
-      let bounds = null;
-
-      if (czLayer.getLayers().length) {
-        bounds = czLayer.getBounds();
-      }
-
-      if (dahRestrictedLayer.getLayers().length) {
-        const dahBounds = dahRestrictedLayer.getBounds();
-        if (!bounds) {
-          bounds = dahBounds;
-        } else {
-          bounds.extend(dahBounds);
-        }
-      }
-
-      return bounds;
+      if (!czLayer.getLayers().length) return null;
+      return czLayer.getBounds();
     }
 
     function getFeatureClassLetter(feature) {
-      const classValue = feature && feature.properties ? feature.properties.icaoClass : null;
+      const p = feature && feature.properties ? feature.properties : {};
+      const classValue = p.class != null ? p.class : p.icaoClass;
       return normalizeIcaoClass(classValue);
+    }
+
+    function isRestrictedFeature(feature) {
+      const p = feature && feature.properties ? feature.properties : {};
+      const id = String(p.id || "").toUpperCase();
+      if (id.startsWith("CYR") || id.startsWith("CYD") || id.startsWith("CYA")) return true;
+
+      const designation = String(p.designation || "").toUpperCase();
+      if (designation === "RESTRICTED" || designation === "DANGER" || designation === "ADVISORY") return true;
+
+      const zoneType = String(p.zone_type || "").toUpperCase();
+      if (zoneType === "RESTRICTED" || zoneType === "DANGER" || zoneType === "ADVISORY") return true;
+
+      return false;
     }
 
     function normalizeLookupName(value) {
@@ -704,9 +707,9 @@
     }
 
     function getSelectedClassSet() {
-      const select = document.getElementById("classFilter");
-      const values = Array.from(select.selectedOptions).map((opt) => opt.value);
-      return new Set(values);
+      return new Set(
+        Array.from(document.querySelectorAll(".class-filter:checked")).map((el) => String(el.value || "").toUpperCase())
+      );
     }
 
     function formatSelectedClasses(selectedClassSet) {
@@ -714,18 +717,13 @@
         return "no filters";
       }
 
-      const ordered = ["A", "B", "C", "D", "E", "F", "G", "R"].filter((v) => selectedClassSet.has(v));
-      if (ordered.length === 8) {
+      const ordered = ["D", "E", "F", "R"].filter((v) => selectedClassSet.has(v));
+      if (ordered.length === 4) {
         return "all selected filters";
       }
 
       const labels = ordered.map((code) => (code === "R" ? "Restricted" : `Class ${code}`));
       return labels.join("+");
-    }
-
-    function isRestrictedFilterEnabled(selectedClassSet = null) {
-      const set = selectedClassSet || getSelectedClassSet();
-      return set.has("R");
     }
 
     function formatHitClasses(hits) {
@@ -744,7 +742,12 @@
         return null;
       }
 
-      const features = sourceData.features.filter((feature) => selectedClassSet.has(getFeatureClassLetter(feature)));
+      const features = sourceData.features.filter((feature) => {
+        const cls = getFeatureClassLetter(feature);
+        if (selectedClassSet.has(cls)) return true;
+        if (selectedClassSet.has("R") && isRestrictedFeature(feature)) return true;
+        return false;
+      });
       return {
         ...sourceData,
         features
@@ -762,17 +765,8 @@
         czLayer.addData(filteredControlZoneData);
       }
 
-      const showRestricted = isRestrictedFilterEnabled(selectedClassSet);
-      dahRestrictedLayer.clearLayers();
-      if (showRestricted && dahRestrictedData && Array.isArray(dahRestrictedData.features)) {
-        dahRestrictedLayer.addData(dahRestrictedData);
-      }
-
       const count = filteredControlZoneData && Array.isArray(filteredControlZoneData.features)
         ? filteredControlZoneData.features.length
-        : 0;
-      const restrictedCount = showRestricted && dahRestrictedData && Array.isArray(dahRestrictedData.features)
-        ? dahRestrictedData.features.length
         : 0;
       const filterText = formatSelectedClasses(selectedClassSet);
 
@@ -780,7 +774,7 @@
         const ll = pilotMarker.getLatLng();
         reportLocation(ll.lat, ll.lng);
       } else {
-        setStatus(`Showing ${count} control-zone features and ${restrictedCount} restricted-site circles for ${filterText}.`, "ok");
+        setStatus(`Showing ${count} DAH gold airspace features for ${filterText}.`, "ok");
       }
     }
 
@@ -793,17 +787,14 @@
       const pilot = pilotMarker.getLatLng();
       const activeData = filteredControlZoneData || controlZoneData;
       const localHits = zonesContainingPoint(pilot.lat, pilot.lng, activeData);
-      const localDahHits = isRestrictedFilterEnabled()
-        ? dahSitesContainingPoint(pilot.lat, pilot.lng, dahRestrictedData)
-        : [];
 
       // Force a local focus window around pilot so zoom is always tight and predictable.
       map.setView(pilot, 12, { animate: true });
       const localWindowBounds = L.circle(pilot, { radius: 8000 }).getBounds();
       map.fitBounds(localWindowBounds, { padding: [24, 24], maxZoom: 12, animate: true });
 
-      if (localHits.length > 0 || localDahHits.length > 0) {
-        setStatus(`Focused on pilot area (8 km view). Pilot is inside ${localHits.length} CZ zone(s) and ${localDahHits.length} DAH restricted site(s).`, "ok");
+      if (localHits.length > 0) {
+        setStatus(`Focused on pilot area (8 km view). Pilot is inside ${localHits.length} filtered airspace feature(s).`, "ok");
       } else {
         setStatus("Focused on pilot area (8 km view).", "ok");
       }
@@ -846,14 +837,11 @@
     function reportLocation(lat, lon) {
       const activeData = filteredControlZoneData || controlZoneData;
       const hits = zonesContainingPoint(lat, lon, activeData);
-      const dahHits = isRestrictedFilterEnabled()
-        ? dahSitesContainingPoint(lat, lon, dahRestrictedData)
-        : [];
 
-      if (!hits.length && !dahHits.length) {
+      if (!hits.length) {
         const selectedClassSet = getSelectedClassSet();
         const filterText = formatSelectedClasses(selectedClassSet);
-        setStatus(`Pilot ${lat.toFixed(6)}, ${lon.toFixed(6)}. No control zone hit in ${filterText}, and no DAH restricted-site hit.`, "ok");
+        setStatus(`Pilot ${lat.toFixed(6)}, ${lon.toFixed(6)}. No airspace hit in ${filterText}.`, "ok");
         return;
       }
 
@@ -873,33 +861,7 @@
         messages.push(`inside ${hitClassText}: ${names}${more}`);
       }
 
-      if (dahHits.length) {
-        const dahNames = Array.from(new Set(dahHits.slice(0, 4).map((f) => normalizeLabel((f.properties && f.properties.name) || "DAH Restricted Site")))).join(" | ");
-        const dahMore = dahHits.length > 4 ? ` (+${dahHits.length - 4} more)` : "";
-        messages.push(`inside DAH restricted site(s): ${dahNames}${dahMore}`);
-      }
-
       setStatus(`Pilot ${lat.toFixed(6)}, ${lon.toFixed(6)} ${messages.join("; ")}`, "ok");
-    }
-
-    async function loadDahRestrictedSites() {
-      try {
-        const sources = [
-          "data/airspace/RestrictedDAH.geoJson",
-          "data/airspace/dah_restricted_sites.geojson"
-        ];
-
-        const { data } = await fetchFirstGeoJson(sources);
-        dahRestrictedData = data;
-        dahRestrictedLayer.clearLayers();
-        if (isRestrictedFilterEnabled()) {
-          dahRestrictedLayer.addData(data);
-        }
-      } catch (err) {
-        dahRestrictedData = null;
-        dahRestrictedLayer.clearLayers();
-        setStatus(`DAH restricted-site layer unavailable: ${err.message}`, "warn");
-      }
     }
 
     function applyStoredPilot() {
@@ -917,9 +879,10 @@
     async function loadControlZones() {
       try {
         await loadAirportLookup();
-        await loadDahRestrictedSites();
 
         const { data, source } = await fetchFirstGeoJson([
+          "data/airspace/dah_gold_airspace.geojson",
+          "dah_gold_airspace.geojson",
           "data/airspace/Control_ca_asp.geojson",
           "data/airspace/ca_asp_restricted.geojson",
           "data/ca_asp.geojson",
@@ -964,12 +927,11 @@
           const activeCount = filteredControlZoneData && Array.isArray(filteredControlZoneData.features)
             ? filteredControlZoneData.features.length
             : data.features.length;
-          const dahCount = dahRestrictedData && Array.isArray(dahRestrictedData.features) ? dahRestrictedData.features.length : 0;
           const filterText = formatSelectedClasses(selectedClassSet);
-          setStatus(`Loaded ${activeCount} control-zone features from ${source} for ${filterText} and ${dahCount} DAH restricted-site circles. Set pilot lat/lon to check location.`, "ok");
+          setStatus(`Loaded ${activeCount} DAH gold airspace features from ${source} for ${filterText}. Set pilot lat/lon to check location.`, "ok");
         }
       } catch (err) {
-        setStatus(`Could not load control zones: ${err.message}`, "warn");
+        setStatus(`Could not load DAH gold airspace: ${err.message}`, "warn");
       }
     }
 
@@ -986,7 +948,7 @@
         return;
       }
       map.fitBounds(allBounds, { padding: [18, 18] });
-      setStatus("Map centered on control zones and DAH restricted-site circles.", "ok");
+      setStatus("Map centered on visible DAH gold airspace features.", "ok");
     });
 
     document.getElementById("currentGpsBtn").addEventListener("click", () => {
@@ -1009,17 +971,16 @@
       );
     });
 
-    document.getElementById("classFilter").addEventListener("change", () => {
+    Array.from(document.querySelectorAll(".class-filter")).forEach((el) => el.addEventListener("change", () => {
       applyClassFilter();
       if (czLayer.getLayers().length) {
         map.fitBounds(czLayer.getBounds(), { padding: [18, 18] });
       }
-    });
+    }));
 
-    document.getElementById("selectAllClassesBtn").addEventListener("click", () => {
-      const select = document.getElementById("classFilter");
-      Array.from(select.options).forEach((opt) => {
-        opt.selected = true;
+    document.getElementById("classCheckAll").addEventListener("click", () => {
+      Array.from(document.querySelectorAll(".class-filter")).forEach((el) => {
+        el.checked = true;
       });
       applyClassFilter();
       if (czLayer.getLayers().length) {
@@ -1027,19 +988,74 @@
       }
     });
 
-    document.getElementById("clearClassesBtn").addEventListener("click", () => {
-      const select = document.getElementById("classFilter");
-      Array.from(select.options).forEach((opt) => {
-        opt.selected = false;
+    document.getElementById("classUncheckAll").addEventListener("click", () => {
+      Array.from(document.querySelectorAll(".class-filter")).forEach((el) => {
+        el.checked = false;
       });
       applyClassFilter();
+    });
+
+    document.getElementById("centerPilotBtn").addEventListener("click", () => {
+      focusOnPilotArea();
     });
 
     document.getElementById("centerPilotFab").addEventListener("click", () => {
       focusOnPilotArea();
     });
 
+    document.getElementById("toggleFiltersBtn").addEventListener("click", () => {
+      const layout = document.querySelector(".layout");
+      const btn = document.getElementById("toggleFiltersBtn");
+      const collapsed = layout.classList.toggle("filters-collapsed");
+      btn.textContent = collapsed ? "Show Filters" : "Collapse Filters";
+      setTimeout(() => map.invalidateSize(), 150);
+    });
+
+    document.getElementById("fullscreenMapBtn").addEventListener("click", async () => {
+      const btn = document.getElementById("fullscreenMapBtn");
+      const panel = document.querySelector(".map-panel");
+      try {
+        if (!document.fullscreenElement) {
+          await panel.requestFullscreen();
+          btn.textContent = "Exit Full Screen";
+        } else {
+          await document.exitFullscreen();
+          btn.textContent = "Full Screen Map";
+        }
+      } catch {
+        setStatus("Fullscreen mode is not available in this browser context.", "warn");
+      } finally {
+        setTimeout(() => map.invalidateSize(), 200);
+      }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      const btn = document.getElementById("fullscreenMapBtn");
+      btn.textContent = document.fullscreenElement ? "Exit Full Screen" : "Full Screen Map";
+      setTimeout(() => map.invalidateSize(), 120);
+    });
+
+    function startPilotLocationTracking(centerOnFirstFix) {
+      if (!navigator.geolocation) return;
+
+      let hasCentered = false;
+      navigator.geolocation.watchPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const shouldCenter = centerOnFirstFix && !hasCentered && !pilotMarker;
+          updatePilot(lat, lon, shouldCenter);
+          hasCentered = true;
+        },
+        () => {
+          // Silent fallback: manual input and stored position still work.
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 15000 }
+      );
+    }
+
     loadControlZones();
+    startPilotLocationTracking(false);
   </script>
 </body>
 </html>
