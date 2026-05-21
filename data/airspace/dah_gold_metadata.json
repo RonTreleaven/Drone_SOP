@@ -1,0 +1,27 @@
+{
+  "source_file": "data\\airspace\\canadian_airspace.air",
+  "source_url": "https://www.navcanada.ca/en/dah20260514.pdf",
+  "publication_date": "20260514",
+  "issue": "319",
+  "valid": "22 JANUARY 2026 to 19 MARCH 2026",
+  "feature_count": 1015,
+  "filters": {
+    "classes": [
+      "D",
+      "E",
+      "F"
+    ],
+    "include_cyr": true,
+    "include_cyd_cya": true,
+    "include_zone_types": [
+      "ADIZ",
+      "ADVISORY",
+      "CONTROL_ZONE",
+      "DANGER",
+      "MOA",
+      "RESTRICTED",
+      "TERMINAL_CONTROL_AREA",
+      "TRANSITION_AREA"
+    ]
+  }
+}
