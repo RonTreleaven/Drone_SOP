@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0456/26 NOTAMR R0442/26\nQ) CZEG/QOLAS/IV/M/AE/000/029/5259N11325W005\nA) CXXX B) 2605220452 C) 2608202359\nE) CEX3 WETASKIWIN REGIONAL \nOBST LGT U/S TOWER 525916N 1132451W (APRX 1.35NM NNW AD) 332FT \nAGL, 2850FT AMSL.)",
+    "startValidity": "2026-05-22T04:52:00",
+    "endValidity": "2026-08-20T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.987778, -113.414167"
+    ]
+  },
+  {
     "raw": "(C1812/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/037/5110N11400W005\nA) CYYC B) 2605221300 C) 2606212300\nD) DAILY 1300-2300\nE) MOBILE CRANE WITHIN 120FT RADIUS CENTRED ON 510952N 1135935W APRX \n5790FT BFR THR 17L AND 640FT WEST EXTENDED RCL. 115FT AGL 3681FT \nAMSL. LGTD, NOT PAINTED.)",
     "startValidity": "2026-05-21T19:33:18.929",
     "endValidity": "2026-06-21T23:00:00",
@@ -24,15 +33,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "51.164444, -113.993056"
-    ]
-  },
-  {
-    "raw": "(C1786/26 NOTAMR C1752/26\nQ) CZEG/QOBCE/IV/M/AE/000/026/5318N11334W005\nA) CYEG B) 2605201829 C) 2605212300\nE) CRANE 531825N 1133335W APRX 4860FT BEYOND THR 30 AND 5720FT NE \nRCL. 100FT AGL 2549FT AMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-05-20T18:29:00",
-    "endValidity": "2026-05-21T23:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "53.306944, -113.559722"
     ]
   },
   {
@@ -87,15 +87,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "54.761389, -113.331667"
-    ]
-  },
-  {
-    "raw": "(R0442/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/029/5259N11325W005\nA) CXXX B) 2605160559 C) 2607162359\nE) CEX3 WETASKIWIN REGIONAL \nOBST LGT U/S TOWER 525916N 1132451W (APRX 1.35NM NNW AD) 332FT \nAGL, 2850FT AMSL.)",
-    "startValidity": "2026-05-16T05:59:00",
-    "endValidity": "2026-07-16T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.987778, -113.414167"
     ]
   },
   {
@@ -888,15 +879,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "60.809722, -115.786944"
-    ]
-  },
-  {
-    "raw": "(R0174/26 NOTAMR R0074/26\nQ) CZEG/QOLAS/IV/M/E/000/045/5106N11437W002\nA) CZEG B) 2602210645 C) 2605212359\nE) OBST LGT U/S TOWER 510549N 1143635W (APRX 9NM WSW \nCALGARY/SPRINGBANK AD (CYBW)) 207FT AGL, 4429FT AMSL.)",
-    "startValidity": "2026-02-21T06:45:00",
-    "endValidity": "2026-05-21T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.096944, -114.609722"
     ]
   },
   {
