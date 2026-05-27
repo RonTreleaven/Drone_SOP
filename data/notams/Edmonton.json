@@ -1,20 +1,38 @@
 [
   {
+    "raw": "(R0478/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5022N11205W002\nA) CZEG B) 2605270840 C) 2608252359\nE) OBST LGT U/S TOWER 502155N 1120509W (APRX 14NM SSW \nBROOKS(COMMUNITY HEALTH CENTRE) (HELI) AD (CFV8)) 360FT AGL, \n2893FT AMSL.)",
+    "startValidity": "2026-05-27T08:40:00",
+    "endValidity": "2026-08-25T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.365278, -112.085833"
+    ]
+  },
+  {
+    "raw": "(R0477/26 NOTAMR R0208/26\nQ) CZEG/QOLAS/IV/M/AE/000/023/5545N11712W005\nA) CXXX B) 2605270615 C) 2608262100\nE) CFM4 DONNELLY \nOBST LGT U/S TOWER 554505N 1171200W (APRX 4.4NM WNW AD) 300FT \nAGL, 2225FT AMSL.)",
+    "startValidity": "2026-05-27T06:15:00",
+    "endValidity": "2026-08-26T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "55.751389, -117.200000"
+    ]
+  },
+  {
+    "raw": "(R0476/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/041/4923N11257W005\nA) CZEG B) 2605270039 C) 2605282359\nE) OBST LGT U/S WIND FARM WITHIN 5NM RADIUS CENTRED ON 492316N \n1125703W (APRX 16NM S LETHBRIDGE AD (CYQL)). 335FT AGL 4010FT \nAMSL.)",
+    "startValidity": "2026-05-27T00:39:00",
+    "endValidity": "2026-05-28T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.387778, -112.950833"
+    ]
+  },
+  {
     "raw": "(R0475/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/013/5755N11521W002\nA) CZEG B) 2605262004 C) 2608242000\nE) OBST LGT U/S TOWER 575445N 1152127W (APRX 32NM SE FORT \nVERMILION/COUNTRY GARDENS B AND B (HELI) AD (CKV9)) 264FT AGL, \n1273FT AMSL.)",
     "startValidity": "2026-05-26T20:04:00",
     "endValidity": "2026-08-24T20:00:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "57.912500, -115.357500"
-    ]
-  },
-  {
-    "raw": "(R0474/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/051/5110N11444W005\nA) CXXX B) 2605262100 C) 2605262200\nE) CKY8 COCHRANE/ARKAYLA SPRINGS \nOBST LGT U/S TOWER 510935N 1144401W (APRX 3.1NM SE AD) 351FT AGL, \n5017FT AMSL.)",
-    "startValidity": "2026-05-26T19:39:28.281",
-    "endValidity": "2026-05-26T22:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.159722, -114.733611"
     ]
   },
   {
@@ -531,21 +549,21 @@
     ]
   },
   {
-    "raw": "(R0342/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5207N11151W002\nA) CZEG B) 2604101300 C) 2607092359\nE) OBST LGT U/S TOWER 520654N 1115123W (APRX 7NM SE CASTOR AD \n(CER2)) 340FT AGL, 3053FT AMSL.)",
-    "startValidity": "2026-04-10T13:00:00",
-    "endValidity": "2026-07-09T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.115000, -111.856389"
-    ]
-  },
-  {
     "raw": "(R0343/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5148N11404W005\nA) CXXX B) 2604101300 C) 2607092359\nE) CFU9 OLDS (HOSP AND CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 514806N 1140427W (APRX 1.58NM ENE AD) 312FT \nAGL, 3683FT AMSL.)",
     "startValidity": "2026-04-10T13:00:00",
     "endValidity": "2026-07-09T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.801667, -114.074167"
+    ]
+  },
+  {
+    "raw": "(R0342/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5207N11151W002\nA) CZEG B) 2604101300 C) 2607092359\nE) OBST LGT U/S TOWER 520654N 1115123W (APRX 7NM SE CASTOR AD \n(CER2)) 340FT AGL, 3053FT AMSL.)",
+    "startValidity": "2026-04-10T13:00:00",
+    "endValidity": "2026-07-09T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.115000, -111.856389"
     ]
   },
   {
@@ -870,15 +888,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "57.201111, -112.902222"
-    ]
-  },
-  {
-    "raw": "(R0208/26 NOTAMR R1309/25\nQ) CZEG/QOLAS/IV/M/AE/000/023/5545N11712W005\nA) CXXX B) 2602280719 C) 2605272100\nE) CFM4 DONNELLY \nOBST LGT U/S TOWER 554505N 1171200W (APRX 4.4NM WNW AD) 300FT \nAGL, 2225FT AMSL.)",
-    "startValidity": "2026-02-28T07:19:00",
-    "endValidity": "2026-05-27T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.751389, -117.200000"
     ]
   },
   {
