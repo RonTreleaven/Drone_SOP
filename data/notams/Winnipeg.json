@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U0938/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/022/5024N10524W005\nA) CXXX B) 2605281254 C) 2607261800\nE) CJS4 MOOSE JAW MUNI \nOBST LGT U/S TOWER 502336N 1052408W (APRX 2.5NM S AD) 320FT AGL, \n2185FT AMSL.)",
+    "startValidity": "2026-05-28T12:54:00",
+    "endValidity": "2026-07-26T18:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.393333, -105.402222"
+    ]
+  },
+  {
     "raw": "(U0936/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/029/5130N10931W002\nA) CZWG B) 2605280331 C) 2608252359\nE) OBST LGT U/S TOWER 513026N 1093101W (APRX 13NM WSW KINDERSLEY \nREGIONAL AD (CYKY)) 290FT AGL, 2803FT AMSL.)",
     "startValidity": "2026-05-28T03:31:00",
     "endValidity": "2026-08-25T23:59:00",
@@ -582,15 +591,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.080556, -97.648611"
-    ]
-  },
-  {
-    "raw": "(U0413/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/021/5025N10440W005\nA) CYQR B) 2603061921 C) 2606011800EST\nE) OBST LGT U/S TOWER 502434N 1043954W (APRX 1.37NM S AD) 154FT AGL, \n2035FT AMSL.)",
-    "startValidity": "2026-03-06T19:21:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.409444, -104.665000"
     ]
   },
   {
