@@ -632,9 +632,11 @@
   <script>
     const map = L.map("map", { zoomControl: true, preferCanvas: true }).setView([56.1304, -106.3468], 4);
 
-    const osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    const googleTerrain = L.tileLayer("https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}", {
+      minZoom: 0,
       maxZoom: 18,
-      attribution: "&copy; OpenStreetMap contributors"
+      maxNativeZoom: 18,
+      attribution: "Terrain (c) Google"
     });
 
     const satellite = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
@@ -642,8 +644,8 @@
       attribution: "Tiles &copy; Esri"
     });
 
-    osm.addTo(map);
-    L.control.layers({ Map: osm, Satellite: satellite }, {}, { collapsed: false }).addTo(map);
+    googleTerrain.addTo(map);
+    L.control.layers({ Map: googleTerrain, Satellite: satellite }, {}, { collapsed: false }).addTo(map);
 
     map.createPane("airportRingsPane");
     map.getPane("airportRingsPane").style.zIndex = "410";
