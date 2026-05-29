@@ -1,20 +1,20 @@
 [
   {
+    "raw": "(J3537/26 NOTAMN\nQ) CZWG/QOBCE/IV/M/AE/000/010/4955N09817W005\nA) CYPG B) 2605282125 C) 2606032100\nE) DRILL RIG 495504N 0981633W APRX 650FT BEYOND THR 09 AND 2380FT \nNORTH RCL. 30FT AGL 914FT AMSL. NOT LGTD.)",
+    "startValidity": "2026-05-28T21:25:00",
+    "endValidity": "2026-06-03T21:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "49.917778, -98.275833"
+    ]
+  },
+  {
     "raw": "(U0938/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/022/5024N10524W005\nA) CXXX B) 2605281254 C) 2607261800\nE) CJS4 MOOSE JAW MUNI \nOBST LGT U/S TOWER 502336N 1052408W (APRX 2.5NM S AD) 320FT AGL, \n2185FT AMSL.)",
     "startValidity": "2026-05-28T12:54:00",
     "endValidity": "2026-07-26T18:00:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.393333, -105.402222"
-    ]
-  },
-  {
-    "raw": "(U0936/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/029/5130N10931W002\nA) CZWG B) 2605280331 C) 2608252359\nE) OBST LGT U/S TOWER 513026N 1093101W (APRX 13NM WSW KINDERSLEY \nREGIONAL AD (CYKY)) 290FT AGL, 2803FT AMSL.)",
-    "startValidity": "2026-05-28T03:31:00",
-    "endValidity": "2026-08-25T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.507222, -109.516944"
     ]
   },
   {
@@ -522,21 +522,21 @@
     ]
   },
   {
-    "raw": "(U0471/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/006/5622N09436W005\nA) CXXX B) 2603111601 C) 2606111545\nE) CJP8 GILLAM (WATER)\nOBST LGT U/S TOWER 562140N 0943600W (APRX 1.96NM ENE AD) 200FT \nAGL, 600FT AMSL.)",
-    "startValidity": "2026-03-11T16:01:00",
-    "endValidity": "2026-06-11T15:45:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "56.361111, -94.600000"
-    ]
-  },
-  {
     "raw": "(U0470/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/012/5123N09654W002\nA) CZWG B) 2603111601 C) 2606111545\nE) OBST LGT U/S TOWER 512321N 0965426W (APRX 14NM SSW PINE DOCK \n(WATER) AD (CKT8)) 419FT AGL, 1141FT AMSL.)",
     "startValidity": "2026-03-11T16:01:00",
     "endValidity": "2026-06-11T15:45:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.389167, -96.907222"
+    ]
+  },
+  {
+    "raw": "(U0471/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/006/5622N09436W005\nA) CXXX B) 2603111601 C) 2606111545\nE) CJP8 GILLAM (WATER)\nOBST LGT U/S TOWER 562140N 0943600W (APRX 1.96NM ENE AD) 200FT \nAGL, 600FT AMSL.)",
+    "startValidity": "2026-03-11T16:01:00",
+    "endValidity": "2026-06-11T15:45:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "56.361111, -94.600000"
     ]
   },
   {
