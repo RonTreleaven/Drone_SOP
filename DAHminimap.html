@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>DAH Gold Airspace Map</title>
+  <link rel="preload" href="data/airspace/dah_gold_airspace.geojson" as="fetch">
+  <link rel="prefetch" href="data/airspace/airports.csv" as="fetch">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.css">
@@ -32,6 +34,11 @@
       font-family: Tahoma, "Segoe UI", sans-serif;
     }
 
+    body.map-app-fullscreen {
+      overflow: hidden;
+      overscroll-behavior: none;
+    }
+
     .page {
       height: 100vh;
       display: grid;
@@ -51,8 +58,14 @@
     .page.is-fullscreen {
       grid-template-columns: 1fr;
       grid-template-rows: 1fr;
-      position: relative;
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 9999;
       overflow: hidden;
+      background: var(--panel);
     }
 
     .page.is-fullscreen .top {
@@ -62,6 +75,7 @@
     .page.is-fullscreen .main {
       grid-column: 1;
       grid-row: 1;
+      height: 100%;
     }
 
     .page.is-fullscreen .side {
@@ -1424,6 +1438,17 @@
       applyFilters();
     }
 
+    function updateCycleMeta(meta = {}, airportSummary = "") {
+      const metaEl = document.getElementById("cycleMeta");
+      if (!metaEl) return;
+      metaEl.textContent = [
+        meta.publication_date ? ("Cycle: " + meta.publication_date) : "",
+        meta.valid ? ("Valid: " + meta.valid) : "",
+        meta.source_url ? ("Source: " + meta.source_url) : "",
+        airportSummary
+      ].filter(Boolean).join(" | ");
+    }
+
     function clearAirportLayers() {
       Object.keys(airportLayersByType).forEach((type) => {
         airportLayersByType[type].markers.clearLayers();
@@ -2022,6 +2047,42 @@
       return window.innerHeight;
     }
 
+    function afterNextPaint() {
+      return new Promise((resolve) => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(resolve);
+        });
+      });
+    }
+
+    async function fetchFirstText(sources, options = {}) {
+      for (const src of sources) {
+        try {
+          const r = await fetch(src, { cache: options.cache || "no-cache" });
+          if (!r.ok) continue;
+          const text = await r.text();
+          if (text) return { src, text };
+        } catch {
+          // Try next source.
+        }
+      }
+      return null;
+    }
+
+    async function fetchFirstJson(sources, options = {}) {
+      for (const src of sources) {
+        try {
+          const r = await fetch(src, { cache: options.cache || "no-cache" });
+          if (!r.ok) continue;
+          const json = await r.json();
+          if (json) return { src, json };
+        } catch {
+          // Try next source.
+        }
+      }
+      return null;
+    }
+
     function updateMapLayout() {
       const page = document.querySelector(".page");
       const top = document.querySelector(".top");
@@ -2032,7 +2093,17 @@
 
       if (!mapEl) return;
 
-      if (!collapsed || isFs) {
+      if (isFs) {
+        const vh = getViewportHeight();
+        const toolsH = mapTools ? mapTools.getBoundingClientRect().height : 0;
+        const target = Math.max(300, Math.floor(vh - toolsH));
+        mapEl.style.height = target + "px";
+        mapEl.style.minHeight = target + "px";
+        setTimeout(() => { map.invalidateSize(); updateCenterReticleState(); }, 60);
+        return;
+      }
+
+      if (!collapsed) {
         mapEl.style.height = "";
         mapEl.style.minHeight = "260px";
         setTimeout(() => { map.invalidateSize(); updateCenterReticleState(); }, 60);
@@ -2047,6 +2118,43 @@
       mapEl.style.height = target + "px";
       mapEl.style.minHeight = target + "px";
       setTimeout(() => { map.invalidateSize(); updateCenterReticleState(); }, 60);
+    }
+
+    function fullscreenElement() {
+      return document.fullscreenElement || document.webkitFullscreenElement || document.webkitCurrentFullScreenElement || null;
+    }
+
+    function nativeFullscreenRequest(el) {
+      if (!el) return null;
+      return el.requestFullscreen || el.webkitRequestFullscreen || null;
+    }
+
+    function nativeFullscreenExit() {
+      return document.exitFullscreen || document.webkitExitFullscreen || document.webkitCancelFullScreen || null;
+    }
+
+    function setMapFullscreen(active) {
+      const page = document.querySelector(".page");
+      const btn = document.getElementById("fullscreenMapBtn");
+      const toggleBtn = document.getElementById("toggleFiltersBtn");
+      if (!page) return;
+
+      page.classList.toggle("is-fullscreen", active);
+      document.body.classList.toggle("map-app-fullscreen", active);
+
+      if (active) {
+        page.classList.remove("filters-collapsed");
+        page.classList.remove("filters-drawer-open");
+        if (toggleBtn) toggleBtn.textContent = "Show Filters";
+      } else {
+        page.classList.remove("filters-drawer-open");
+        if (toggleBtn) {
+          toggleBtn.textContent = page.classList.contains("filters-collapsed") ? "Show Filters" : "Collapse Filters";
+        }
+      }
+
+      if (btn) btn.textContent = active ? "Exit Full Screen" : "Full Screen Map";
+      updateMapLayout();
     }
 
     function applyFilters(fit = false) {
@@ -2170,6 +2278,7 @@
       const options = {
         addMarker: false,
         centerMap: false,
+        statusPrefix: "",
         ...opts
       };
 
@@ -2211,7 +2320,7 @@
       }
 
       const tone = (filteredHits.length || cz) ? "ok key" : "ok";
-      setStatus(parts.join(" "), tone);
+      setStatus((options.statusPrefix || "") + parts.join(" "), tone);
 
       if (options.addMarker) {
         L.circleMarker([lat, lon], {
@@ -2229,6 +2338,73 @@
       return filteredHits;
     }
 
+    function runInitialPilotAirspaceCheck() {
+      if (!pilotMarker) {
+        setStatus("Initial airspace check failed: no saved pilot location. Use Update Pilot Location or set pilot location manually.", "warn");
+        return false;
+      }
+      const ll = pilotMarker.getLatLng();
+      runAirspaceCheck(ll.lat, ll.lng, {
+        addMarker: false,
+        centerMap: false,
+        statusPrefix: "Initial pilot airspace check at " + ll.lat.toFixed(6) + ", " + ll.lng.toFixed(6) + ": "
+      });
+      return true;
+    }
+
+    async function loadAirportData(meta) {
+      const csvSources = [
+        "data/airspace/airports.csv",
+        "/data/airspace/airports.csv",
+        "https://davidmegginson.github.io/ourairports-data/airports.csv",
+        "https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/airports.csv"
+      ];
+
+      await afterNextPaint();
+
+      const csvResult = await fetchFirstText(csvSources);
+      if (csvResult && csvResult.text) {
+        airportRows = parseAirportsCsv(csvResult.text);
+      }
+
+      if (!airportRows.length) {
+        const localAirportCandidates = [
+          "data/airspace/ca_apt.geojson",
+          "/data/airspace/ca_apt.geojson",
+          "ca_apt.geojson",
+          "/ca_apt.geojson",
+          "data/ca_apt.geojson",
+          "/data/ca_apt.geojson"
+        ];
+        const geoResult = await fetchFirstJson(localAirportCandidates);
+        if (geoResult && geoResult.json) {
+          airportRows = parseAirportsGeoJson(geoResult.json);
+        }
+      }
+
+      if (airportRows.length) {
+        ensureProvinceOptions();
+        if (pilotMarker) {
+          const ll = pilotMarker.getLatLng();
+          setProvinceFromPilot(ll.lat, ll.lng, { silent: true });
+          runAirspaceCheck(ll.lat, ll.lng, {
+            addMarker: false,
+            centerMap: false,
+            statusPrefix: "Initial pilot airspace check at " + ll.lat.toFixed(6) + ", " + ll.lng.toFixed(6) + ": "
+          });
+        } else {
+          renderedAirportRows = airportsInCurrentScope(airportRows);
+          renderAirportMarkers();
+          applyAirportTypeFilters();
+        }
+        updateCycleMeta(meta, "Airports: " + airportRows.length + " (local-first)");
+        return;
+      }
+
+      updateCycleMeta(meta, "Airports: unavailable");
+      setStatus("Airspace loaded but no airports were parsed from configured sources.", "warn");
+    }
+
     async function loadData() {
       try {
         const candidates = [
@@ -2236,78 +2412,15 @@
           "/data/airspace/dah_gold_airspace.geojson"
         ];
 
-        let json = null;
-        for (const src of candidates) {
-          const r = await fetch(src, { cache: "no-store" });
-          if (!r.ok) continue;
-          const data = await r.json();
-          if (data && data.type === "FeatureCollection" && Array.isArray(data.features)) {
-            json = data;
-            break;
-          }
-        }
+        const result = await fetchFirstJson(candidates);
+        const json = result ? result.json : null;
 
-        if (!json) {
+        if (!json || json.type !== "FeatureCollection" || !Array.isArray(json.features)) {
           throw new Error("Unable to load dah_gold_airspace.geojson");
         }
 
         sourceData = json;
         updateTypeFilterAvailability();
-
-        const airportSources = [
-          "https://davidmegginson.github.io/ourairports-data/airports.csv",
-          "https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/airports.csv"
-        ];
-        let airportCsv = "";
-        for (const src of airportSources) {
-          try {
-            const ar = await fetch(src, { cache: "no-store" });
-            if (!ar.ok) continue;
-            airportCsv = await ar.text();
-            if (airportCsv) break;
-          } catch {
-            // Try next airport source.
-          }
-        }
-        if (airportCsv) {
-          airportRows = parseAirportsCsv(airportCsv);
-        }
-
-        if (!airportRows.length) {
-          const localAirportCandidates = [
-            "ca_apt.geojson",
-            "/ca_apt.geojson",
-            "data/ca_apt.geojson",
-            "/data/ca_apt.geojson"
-          ];
-          for (const src of localAirportCandidates) {
-            try {
-              const lr = await fetch(src, { cache: "no-store" });
-              if (!lr.ok) continue;
-              const geo = await lr.json();
-              const parsed = parseAirportsGeoJson(geo);
-              if (parsed.length) {
-                airportRows = parsed;
-                break;
-              }
-            } catch {
-              // Try next local source.
-            }
-          }
-        }
-
-        if (airportRows.length) {
-          ensureProvinceOptions();
-          if (pilotMarker) {
-            const ll = pilotMarker.getLatLng();
-            setProvinceFromPilot(ll.lat, ll.lng);
-          } else {
-            renderedAirportRows = airportsInCurrentScope(airportRows);
-            renderAirportMarkers();
-          }
-        } else {
-          setStatus("Airspace loaded but no airports were parsed from configured sources.", "warn");
-        }
 
         // Build airspace layer once; later filter changes only flip visibility styles.
         airspaceFeatureLayers = [];
@@ -2326,24 +2439,24 @@
         });
 
         const meta = json.metadata || {};
-        const metaEl = document.getElementById("cycleMeta");
-        metaEl.textContent = [
-          meta.publication_date ? ("Cycle: " + meta.publication_date) : "",
-          meta.valid ? ("Valid: " + meta.valid) : "",
-          meta.source_url ? ("Source: " + meta.source_url) : "",
-          airportRows.length ? ("Airports: " + airportRows.length + " (NotamsMap type model)") : "Airports: unavailable"
-        ].filter(Boolean).join(" | ");
+        updateCycleMeta(meta, "Airports: loading...");
 
         // Ensure pilot state exists before deciding whether to auto-fit all airspace.
         ensurePilotHydrated();
 
         const hasPilot = !!pilotMarker;
         applyFilters(!hasPilot);
+        runInitialPilotAirspaceCheck();
         if (hasPilot) {
           requestAnimationFrame(() => {
             if (pilotMarker) focusOnPilotAreaAfterLayout(260);
           });
         }
+
+        loadAirportData(meta).catch((err) => {
+          updateCycleMeta(meta, "Airports: unavailable");
+          setStatus("Airport load failed: " + (err.message || "unknown"), "warn");
+        });
       } catch (err) {
         setStatus("Load failed: " + (err.message || "unknown"), "warn");
       }
@@ -2469,47 +2582,54 @@
     });
 
     document.getElementById("fullscreenMapBtn").addEventListener("click", async () => {
-      const btn = document.getElementById("fullscreenMapBtn");
       const page = document.querySelector(".page");
+      const isActive = page.classList.contains("is-fullscreen") || !!fullscreenElement();
       try {
-        if (!document.fullscreenElement) {
-          await page.requestFullscreen();
-          btn.textContent = "Exit Full Screen";
+        if (!isActive) {
+          const request = nativeFullscreenRequest(page);
+          if (request) {
+            try {
+              await request.call(page);
+            } catch {
+              // Mobile Safari and embedded browsers can reject native fullscreen.
+            }
+          }
+          setMapFullscreen(true);
         } else {
-          await document.exitFullscreen();
-          btn.textContent = "Full Screen Map";
+          const exit = nativeFullscreenExit();
+          if (fullscreenElement() && exit) {
+            try {
+              await exit.call(document);
+            } catch {
+              // Fall through to the app-level fullscreen exit below.
+            }
+          }
+          setMapFullscreen(false);
         }
       } catch {
-        setStatus("Fullscreen mode is not available in this browser context.", "warn");
+        setMapFullscreen(!isActive);
       } finally {
         updateMapLayout();
       }
     });
 
     document.addEventListener("fullscreenchange", () => {
-      const page = document.querySelector(".page");
-      const btn = document.getElementById("fullscreenMapBtn");
-      const toggleBtn = document.getElementById("toggleFiltersBtn");
-      const isFs = !!document.fullscreenElement;
+      setMapFullscreen(!!fullscreenElement());
+    });
 
-      page.classList.toggle("is-fullscreen", isFs);
-
-      if (isFs) {
-        page.classList.remove("filters-collapsed");
-        page.classList.remove("filters-drawer-open");
-        toggleBtn.textContent = "Show Filters";
-      } else {
-        page.classList.remove("filters-drawer-open");
-        toggleBtn.textContent = page.classList.contains("filters-collapsed") ? "Show Filters" : "Collapse Filters";
-      }
-
-      btn.textContent = document.fullscreenElement ? "Exit Full Screen" : "Full Screen Map";
-      updateMapLayout();
+    document.addEventListener("webkitfullscreenchange", () => {
+      setMapFullscreen(!!fullscreenElement());
     });
 
     window.addEventListener("resize", () => {
       updateMapLayout();
     });
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", () => {
+        updateMapLayout();
+      });
+    }
 
     document.getElementById("locBtn").addEventListener("click", () => {
       const knownPilot = pilotMarker
@@ -2647,7 +2767,11 @@
     const restoredAtBoot = applyStoredPilotLocation();
     loadData().then(() => {
       ensurePilotHydrated();
-      if (pilotMarker) focusOnPilotAreaAfterLayout(320);
+      if (pilotMarker) {
+        focusOnPilotAreaAfterLayout(320);
+      } else {
+        runInitialPilotAirspaceCheck();
+      }
     });
     if (!restoredAtBoot) {
       setStatus("No saved pilot location. Click My Location or set pilot location manually.", "warn");
