@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(U0945/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/021/4903N09029W005\nA) CXXX B) 2605291531 C) 2608281600EST\nE) CKL8 UPSALA (HELI)\nOBST LGT U/S TOWER 490305N 0902924W (APRX 5002FT W AD) 314FT AGL, \n2003FT AMSL.)",
+    "startValidity": "2026-05-29T15:31:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.051389, -90.490000"
+    ]
+  },
+  {
+    "raw": "(U0944/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4955N09715W005\nA) CYWG B) 2605291515 C) 2608282359\nE) OBST LGT U/S BUILDING 495525N 0971455W (APRX 5409FT NNW AD) 112FT \nAGL, 892FT AMSL.)",
+    "startValidity": "2026-05-29T15:15:00",
+    "endValidity": "2026-08-28T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.923611, -97.248611"
+    ]
+  },
+  {
     "raw": "(J3537/26 NOTAMN\nQ) CZWG/QOBCE/IV/M/AE/000/010/4955N09817W005\nA) CYPG B) 2605282125 C) 2606032100\nE) DRILL RIG 495504N 0981633W APRX 650FT BEYOND THR 09 AND 2380FT \nNORTH RCL. 30FT AGL 914FT AMSL. NOT LGTD.)",
     "startValidity": "2026-05-28T21:25:00",
     "endValidity": "2026-06-03T21:00:00",
@@ -387,21 +405,21 @@
     ]
   },
   {
-    "raw": "(J2465/26 NOTAMR J0284/26\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2604141340 C) 2607141400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-04-14T13:40:00",
-    "endValidity": null,
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "52.467222, -92.960833"
-    ]
-  },
-  {
     "raw": "(U0673/26 NOTAMR U0073/26\nQ) CZWG/QOLAS/IV/M/AE/000/015/5126N09015W005\nA) CYPL B) 2604141340 C) 2607141400EST\nE) OBST LGT U/S TOWER 512531N 0901500W (APRX 1.87NM SW AD) 104FT \nAGL, 1410FT AMSL.)",
     "startValidity": "2026-04-14T13:40:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.425278, -90.250000"
+    ]
+  },
+  {
+    "raw": "(J2465/26 NOTAMR J0284/26\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2604141340 C) 2607141400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
+    "startValidity": "2026-04-14T13:40:00",
+    "endValidity": null,
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "52.467222, -92.960833"
     ]
   },
   {
@@ -522,21 +540,21 @@
     ]
   },
   {
-    "raw": "(U0470/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/012/5123N09654W002\nA) CZWG B) 2603111601 C) 2606111545\nE) OBST LGT U/S TOWER 512321N 0965426W (APRX 14NM SSW PINE DOCK \n(WATER) AD (CKT8)) 419FT AGL, 1141FT AMSL.)",
-    "startValidity": "2026-03-11T16:01:00",
-    "endValidity": "2026-06-11T15:45:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.389167, -96.907222"
-    ]
-  },
-  {
     "raw": "(U0471/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/006/5622N09436W005\nA) CXXX B) 2603111601 C) 2606111545\nE) CJP8 GILLAM (WATER)\nOBST LGT U/S TOWER 562140N 0943600W (APRX 1.96NM ENE AD) 200FT \nAGL, 600FT AMSL.)",
     "startValidity": "2026-03-11T16:01:00",
     "endValidity": "2026-06-11T15:45:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "56.361111, -94.600000"
+    ]
+  },
+  {
+    "raw": "(U0470/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/012/5123N09654W002\nA) CZWG B) 2603111601 C) 2606111545\nE) OBST LGT U/S TOWER 512321N 0965426W (APRX 14NM SSW PINE DOCK \n(WATER) AD (CKT8)) 419FT AGL, 1141FT AMSL.)",
+    "startValidity": "2026-03-11T16:01:00",
+    "endValidity": "2026-06-11T15:45:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.389167, -96.907222"
     ]
   },
   {
@@ -618,15 +636,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.357778, -89.294444"
-    ]
-  },
-  {
-    "raw": "(U0397/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/023/5015N10506W002\nA) CZWG B) 2603051710 C) 2606031800\nE) OBST LGT U/S TOWER 501500N 1050603W (APRX 13NM NNE BRIERCREST \nSOUTH AD (CBS7)) 351FT AGL, 2212FT AMSL.)",
-    "startValidity": "2026-03-05T17:10:00",
-    "endValidity": "2026-06-03T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.250000, -105.100833"
     ]
   },
   {
