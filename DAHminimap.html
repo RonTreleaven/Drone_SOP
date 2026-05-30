@@ -232,6 +232,107 @@
       text-decoration: line-through;
     }
 
+    .airport-type-chip-row {
+      gap: 0.35rem;
+      align-items: stretch;
+    }
+
+    .airport-chip-option {
+      position: relative;
+      margin: 0;
+      text-decoration: none;
+      line-height: 1;
+    }
+
+    .airport-chip-option input.airport-type-filter {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+      pointer-events: none;
+    }
+
+    .airport-type-chip {
+      min-width: 76px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.34rem;
+      border: 1px solid #9bb1ca;
+      border-radius: 999px;
+      padding: 0.28rem 0.56rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #4b5a6a;
+      background: #f4f6f9;
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease, color 120ms ease, border-color 120ms ease;
+    }
+
+    .airport-type-chip.chip-large i { color: darkblue; }
+    .airport-type-chip.chip-medium i { color: #fb8c00; }
+    .airport-type-chip.chip-small i { color: #8e24aa; }
+    .airport-type-chip.chip-heli i { color: #00897b; }
+    .airport-type-chip.chip-seaplane i { color: #0288d1; }
+
+    .airport-type-chip i {
+      font-size: 0.82rem;
+    }
+
+    .airport-chip-option input.airport-type-filter:checked + .airport-type-chip {
+      color: #12283b;
+      transform: translateY(-1px);
+    }
+
+    .airport-chip-option input.airport-type-filter:checked + .airport-type-chip.chip-large {
+      background: #e9efff;
+      border-color: #365caa;
+      box-shadow: 0 0 0 2px rgba(54, 92, 170, 0.28);
+    }
+
+    .airport-chip-option input.airport-type-filter:checked + .airport-type-chip.chip-medium {
+      background: #fff2e4;
+      border-color: #c66b06;
+      box-shadow: 0 0 0 2px rgba(251, 140, 0, 0.26);
+    }
+
+    .airport-chip-option input.airport-type-filter:checked + .airport-type-chip.chip-small {
+      background: #f6e9fb;
+      border-color: #7f2498;
+      box-shadow: 0 0 0 2px rgba(142, 36, 170, 0.25);
+    }
+
+    .airport-chip-option input.airport-type-filter:checked + .airport-type-chip.chip-heli {
+      background: #e5f6f3;
+      border-color: #0a756c;
+      box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.25);
+    }
+
+    .airport-chip-option input.airport-type-filter:checked + .airport-type-chip.chip-seaplane {
+      background: #e6f4fb;
+      border-color: #0b74af;
+      box-shadow: 0 0 0 2px rgba(2, 136, 209, 0.24);
+    }
+
+    .airport-chip-option input.airport-type-filter:not(:checked) + .airport-type-chip {
+      filter: saturate(0.32);
+      opacity: 0.82;
+    }
+
+    .airport-chip-option.filter-disabled {
+      opacity: 0.45;
+      text-decoration: none;
+    }
+
+    .airport-chip-option.filter-disabled .airport-type-chip {
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+      opacity: 0.78;
+    }
+
     input[type="text"] {
       width: 100%;
       border: 1px solid var(--line);
@@ -302,6 +403,86 @@
       box-shadow: inset 0 0 0 1px rgba(29, 107, 60, 0.12);
     }
 
+    .status-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+      margin-top: 0.45rem;
+    }
+
+    .status-actions button {
+      width: 100%;
+      min-height: 30px;
+      font-size: 0.8rem;
+      line-height: 1.1;
+    }
+
+    .status-cue {
+      margin-top: 0.32rem;
+      min-height: 1.05rem;
+      font-size: 0.78rem;
+      color: #4b5563;
+      line-height: 1.2;
+    }
+
+    .status-cue.ok {
+      color: #14532d;
+      font-weight: 600;
+    }
+
+    .status-cue.warn {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+
+    .status-cue.pending {
+      color: #1d4ed8;
+      font-weight: 600;
+    }
+
+    .status-summary {
+      display: grid;
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 0.45rem 0.65rem;
+      align-items: start;
+      line-height: 1.25;
+    }
+
+    .status-summary .status-label {
+      font-weight: 700;
+      color: #0f2a47;
+      text-transform: none;
+      letter-spacing: 0.01em;
+    }
+
+    .status-summary .status-value {
+      color: #172a3d;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+      white-space: pre-line;
+    }
+
+    .status.ok .status-summary .status-value {
+      color: #154f2d;
+    }
+
+    .status.warn .status-summary .status-value {
+      color: #6e3c00;
+    }
+
+    @media (max-width: 640px) {
+      .status-summary {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+      }
+      .status-summary .status-label {
+        margin-top: 0.2rem;
+      }
+      .status-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+
     #map {
       width: 100%;
       flex: 1;
@@ -339,10 +520,10 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at 35% 35%, #6ed0ff, #0f5a92);
+      background: radial-gradient(circle at 35% 35%, #b388ff, #4a148c);
       color: #ffffff;
       border: 2px solid #ffffff;
-      box-shadow: 0 0 0 5px rgba(30, 135, 255, 0.30), 0 0 18px rgba(30, 135, 255, 0.60);
+      box-shadow: 0 0 0 5px rgba(255, 215, 0, 0.34), 0 0 18px rgba(255, 215, 0, 0.66);
       font-size: 16px;
       line-height: 1;
     }
@@ -353,15 +534,15 @@
 
     @keyframes pilotPulse {
       0% {
-        box-shadow: 0 0 0 5px rgba(30, 135, 255, 0.30), 0 0 18px rgba(30, 135, 255, 0.60);
+        box-shadow: 0 0 0 5px rgba(255, 215, 0, 0.34), 0 0 18px rgba(255, 215, 0, 0.66);
         transform: scale(1);
       }
       45% {
-        box-shadow: 0 0 0 13px rgba(30, 135, 255, 0.18), 0 0 22px rgba(30, 135, 255, 0.75);
+        box-shadow: 0 0 0 13px rgba(255, 215, 0, 0.22), 0 0 24px rgba(255, 230, 120, 0.88);
         transform: scale(1.08);
       }
       100% {
-        box-shadow: 0 0 0 5px rgba(30, 135, 255, 0.30), 0 0 18px rgba(30, 135, 255, 0.60);
+        box-shadow: 0 0 0 5px rgba(255, 215, 0, 0.34), 0 0 18px rgba(255, 215, 0, 0.66);
         transform: scale(1);
       }
     }
@@ -530,6 +711,11 @@
       <section class="group">
         <h2>Status</h2>
         <div id="status" class="status">Loading parsed DAH airspace...</div>
+        <div class="status-actions">
+          <button id="statusSetPilotBtn" type="button">Set Pilot from Lat/Lon</button>
+          <button id="statusCheckAirspaceBtn" type="button" class="primary">Check Airspace</button>
+        </div>
+        <div id="statusCue" class="status-cue" aria-live="polite"></div>
         <div id="cycleMeta" class="legend cycle-meta"></div>
       </section>
 
@@ -579,12 +765,37 @@
 
       <section class="group">
         <h2>Airport Types (NotamsMap)</h2>
-        <div class="row">
-          <label><input type="checkbox" class="airport-type-filter" value="large_airport" checked> Large Airport</label>
-          <label><input type="checkbox" class="airport-type-filter" value="medium_airport" checked> Medium Airport</label>
-          <label><input type="checkbox" class="airport-type-filter" value="small_airport" checked> Small Airport</label>
-          <label><input type="checkbox" class="airport-type-filter" value="heliport" checked> Heliport</label>
-          <label><input type="checkbox" class="airport-type-filter" value="seaplane_base" checked> Seaplane Base</label>
+        <div class="row airport-type-chip-row">
+          <label class="airport-chip-option">
+            <input type="checkbox" class="airport-type-filter" value="large_airport" checked>
+            <span class="airport-type-chip chip-large" title="Large Airport">
+              <i class="fa-solid fa-plane"></i><span>Large</span>
+            </span>
+          </label>
+          <label class="airport-chip-option">
+            <input type="checkbox" class="airport-type-filter" value="medium_airport" checked>
+            <span class="airport-type-chip chip-medium" title="Medium Airport">
+              <i class="fa-solid fa-plane-departure"></i><span>Medium</span>
+            </span>
+          </label>
+          <label class="airport-chip-option">
+            <input type="checkbox" class="airport-type-filter" value="small_airport" checked>
+            <span class="airport-type-chip chip-small" title="Small Airport">
+              <i class="fa-solid fa-circle"></i><span>Small</span>
+            </span>
+          </label>
+          <label class="airport-chip-option">
+            <input type="checkbox" class="airport-type-filter" value="heliport" checked>
+            <span class="airport-type-chip chip-heli" title="Heliport">
+              <i class="fa-solid fa-helicopter"></i><span>Heliport</span>
+            </span>
+          </label>
+          <label class="airport-chip-option">
+            <input type="checkbox" class="airport-type-filter" value="seaplane_base" checked>
+            <span class="airport-type-chip chip-seaplane" title="Seaplane Base">
+              <i class="fa-solid fa-ship"></i><span>Seaplane</span>
+            </span>
+          </label>
         </div>
         <div class="row">
           <button id="airportTypeCheckAll">Check</button>
@@ -702,8 +913,8 @@
 
     const NM_TO_M = 1852;
     const PILOT_RANGE_GUIDES = [
-      { radiusNm: 1, label: "1 NM | 1.85 km", color: "#12b886", bearingDeg: 38 },
-      { radiusNm: 3, label: "3 NM | 5.56 km", color: "#1d4ed8", bearingDeg: 58 }
+      { radiusNm: 1, label: "1 NM | 1.85 km", color: "#8e24aa", bearingDeg: 38 },
+      { radiusNm: 3, label: "3 NM | 5.56 km", color: "#4a148c", bearingDeg: 58 }
     ];
 
     const airspaceLayer = L.geoJSON(null, {
@@ -885,6 +1096,7 @@
     let renderedAirportRows = [];
     let pilotRangeGuidesVisible = true;
     let pilotDragNeedsConfirm = false;
+    let airspaceCheckNeedsRefresh = false;
     let hasPromptedGpsOnNoPilot = false;
     let mapHoverTip = null;
     let lastHoverProbeMs = 0;
@@ -900,6 +1112,40 @@
     function setStatus(text, tone) {
       const el = document.getElementById("status");
       el.textContent = text;
+      el.className = "status" + (tone ? " " + tone : "");
+    }
+
+    function setStatusCue(text, tone) {
+      const el = document.getElementById("statusCue");
+      if (!el) return;
+      el.textContent = String(text || "");
+      el.className = "status-cue" + (tone ? " " + tone : "");
+    }
+
+    function escapeStatusHtml(value) {
+      return String(value == null ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function setStatusSummary(summary, tone) {
+      const el = document.getElementById("status");
+      if (!el) return;
+      const pilotLocation = escapeStatusHtml(summary.pilotLocation || "n/a");
+      const airspace = escapeStatusHtml(summary.airspace || "n/a");
+      const nearestAerodrome = escapeStatusHtml(summary.nearestAerodrome || "n/a");
+      const otherDetail = escapeStatusHtml(summary.otherDetail || "n/a");
+
+      el.innerHTML =
+        '<div class="status-summary">' +
+          '<div class="status-label">Pilot Location:</div><div class="status-value">' + pilotLocation + '</div>' +
+          '<div class="status-label">Airspace:</div><div class="status-value">' + airspace + '</div>' +
+          '<div class="status-label">Nearest Aerodrome:</div><div class="status-value">' + nearestAerodrome + '</div>' +
+          '<div class="status-label">Other Detail:</div><div class="status-value">' + otherDetail + '</div>' +
+        '</div>';
       el.className = "status" + (tone ? " " + tone : "");
     }
 
@@ -1020,10 +1266,41 @@
     function updateSetPilotFromInputsButtonState() {
       const btn = document.getElementById("setPilotFromInputsBtn");
       if (!btn) return;
-      btn.classList.toggle("attention", pilotDragNeedsConfirm);
+      const needsAction = !!pilotDragNeedsConfirm || !!airspaceCheckNeedsRefresh;
+      btn.classList.toggle("attention", needsAction);
       btn.title = pilotDragNeedsConfirm
         ? "Pilot marker was dragged. Click to confirm and save this pilot location."
-        : "Set and save pilot location from current Lat/Lon inputs.";
+        : (airspaceCheckNeedsRefresh
+          ? "Pilot location changed. Run Check Airspace to validate the new location."
+          : "Set and save pilot location from current Lat/Lon inputs.");
+
+      const statusBtn = document.getElementById("statusSetPilotBtn");
+      if (statusBtn) {
+        statusBtn.classList.toggle("attention", pilotDragNeedsConfirm);
+        statusBtn.title = btn.title;
+      }
+    }
+
+    function updateCheckAirspaceButtonState() {
+      const mainBtn = document.getElementById("checkBtn");
+      const statusBtn = document.getElementById("statusCheckAirspaceBtn");
+      const hasStale = !!airspaceCheckNeedsRefresh;
+
+      [mainBtn, statusBtn].forEach((btn) => {
+        if (!btn) return;
+        btn.classList.toggle("attention", hasStale);
+        btn.title = hasStale
+          ? "Pilot location changed. Click to refresh airspace evaluation."
+          : "Check current airspace at the entered Lat/Lon.";
+      });
+
+      if (mainBtn) {
+        mainBtn.textContent = hasStale ? "Check Airspace *" : "Check Airspace";
+      }
+      if (statusBtn) {
+        statusBtn.textContent = hasStale ? "Check Airspace *" : "Check Airspace";
+      }
+      updateSetPilotFromInputsButtonState();
     }
 
     function parseDdFromCheckerInputs() {
@@ -1429,7 +1706,7 @@
       renderAirportMarkers();
       applyFilters();
       if (!options.silent) {
-        setStatus("Airport scope set to " + best + " from pilot location.", "ok");
+        setStatusCue("Airport scope set to " + best + " from pilot location.", "ok");
       }
       return true;
     }
@@ -1617,13 +1894,56 @@
       }
     }
 
-    function setPilotFromLatLon(lat, lon, sourceLabel) {
+    function setPilotFromLatLon(lat, lon, sourceLabel, opts = {}) {
+      const options = { accuracyM: null, ...opts };
+      const sourceTag = String(sourceLabel || "").toLowerCase();
+      const fromGps = sourceTag.includes("geo") || sourceTag.includes("gps");
       stopPilotLocationTracking();
-      updatePilotLocation(lat, lon, null);
+      const acc = Number(options.accuracyM);
+      updatePilotLocation(lat, lon, Number.isFinite(acc) && acc > 0 ? acc : null);
       persistPilotLocation(lat, lon, sourceLabel || "dah-manual");
+      pilotDragNeedsConfirm = false;
+      updateSetPilotFromInputsButtonState();
       setProvinceFromPilot(lat, lon, { silent: true });
       focusOnPilotArea();
-      runAirspaceCheck(lat, lon, { addMarker: false, centerMap: false });
+      airspaceCheckNeedsRefresh = true;
+      updateCheckAirspaceButtonState();
+      const cueSource = fromGps ? "GPS update" : "Set Pilot";
+      setStatus("Pilot location saved. Click Check Airspace to refresh STATUS for this Lat/Lon.", "warn");
+      setStatusCue(cueSource + " completed. Check Airspace is required to validate this location.", "pending");
+    }
+
+    function runAirspaceCheckFromInputs(opts = {}) {
+      const options = {
+        centerMap: true,
+        statusPrefix: "",
+        cueOnSuccess: "",
+        resolveStale: false,
+        ...opts
+      };
+      const lat = Number(document.getElementById("latInput").value.trim());
+      const lon = Number(document.getElementById("lonInput").value.trim());
+      if (!Number.isFinite(lat) || !Number.isFinite(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+        setStatus("Enter valid DD latitude/longitude.", "warn");
+        setStatusCue("Check Airspace blocked: invalid Lat/Lon input.", "warn");
+        return false;
+      }
+
+      runAirspaceCheck(lat, lon, {
+        addMarker: false,
+        centerMap: !!options.centerMap,
+        statusPrefix: options.statusPrefix || ""
+      });
+      if (options.resolveStale) {
+        airspaceCheckNeedsRefresh = false;
+      }
+      updateCheckAirspaceButtonState();
+      if (options.cueOnSuccess) {
+        setStatusCue(options.cueOnSuccess, "ok");
+      } else {
+        setStatusCue("Check Airspace updated at " + new Date().toLocaleTimeString(), "ok");
+      }
+      return true;
     }
 
     function ensurePilotLocationPrompted() {
@@ -1769,7 +2089,9 @@
           const ll = pilotMarker.getLatLng();
           updatePilotLocation(ll.lat, ll.lng, null);
           pilotDragNeedsConfirm = true;
+          airspaceCheckNeedsRefresh = true;
           updateSetPilotFromInputsButtonState();
+          updateCheckAirspaceButtonState();
           setProvinceFromPilot(ll.lat, ll.lng, { silent: true });
           map.setView([ll.lat, ll.lng], Math.max(map.getZoom(), 10), { animate: true });
           setStatus("Pilot marker moved: " + ll.lat.toFixed(6) + ", " + ll.lng.toFixed(6) + ". Click Set Pilot from Lat/Lon to confirm.", "warn");
@@ -1940,12 +2262,12 @@
           const lat = pos.coords.latitude;
           const lon = pos.coords.longitude;
           const acc = pos.coords.accuracy;
-          updatePilotLocation(lat, lon, acc);
-          persistPilotLocation(lat, lon, "geolocation");
+          setPilotFromLatLon(lat, lon, "geolocation", {
+            accuracyM: acc
+          });
           if (centerOnFirstFix) {
             focusOnPilotArea();
           }
-          runAirspaceCheck(lat, lon, { addMarker: false, centerMap: false });
         },
         (err) => {
           setStatus("Geolocation error: " + (err.message || "unknown"), "warn");
@@ -2164,7 +2486,10 @@
       applyAirportTypeFilters();
 
       const airportCount = renderedAirportRows.filter((r) => selectedAirportTypeSet().has(normalizeAirportType(r))).length;
-      setStatus("Showing " + airspaceCount + " filtered airspace features and " + airportCount + " airports (loaded: " + airportRows.length + ", scoped: " + renderedAirportRows.length + ").", "ok");
+      setStatusCue(
+        "Filters: " + airspaceCount + " airspace features, " + airportCount + " airports (loaded: " + airportRows.length + ", scoped: " + renderedAirportRows.length + ").",
+        "ok"
+      );
 
       if (fit) {
         fitVisibleAirspaceBounds();
@@ -2218,6 +2543,34 @@
       const name = String(p.name || "Unnamed").trim();
       const kind = String(p.zone_type || p.designation || featureType(p) || "").trim();
       return [id, name].filter(Boolean).join(" | ") + (kind ? (" (" + kind + ")") : "");
+    }
+
+    function airspaceTypeLabel(feature) {
+      const p = (feature && feature.properties) || {};
+      const type = String(featureType(p) || "").toUpperCase();
+      if (type === "CONTROL_ZONE") return "Control Zone";
+      if (type === "RESTRICTED") return "Restricted";
+      if (type === "DANGER") return "Danger";
+      if (type === "ADVISORY") return "Advisory";
+      if (type === "TRANSITION_AREA") return "Transition Area";
+      if (type === "TERMINAL_CONTROL_AREA") return "Terminal Control Area";
+      if (type === "MOA") return "MOA";
+      if (type === "ADIZ") return "ADIZ";
+      if (type === "OTHER") return "Other";
+      return "Airspace";
+    }
+
+    function formatAirspaceSummary(feature, fallbackText) {
+      if (!feature) return fallbackText || "No matching airspace feature.";
+      const p = feature.properties || {};
+      const classText = String(p.class || "").trim().toUpperCase();
+      const typeText = airspaceTypeLabel(feature);
+      const idText = String(p.id || "").trim();
+      const nameText = String(p.name || "").trim();
+
+      const line1 = classText ? ("Class " + classText + ", " + typeText) : typeText;
+      const line2 = idText || nameText || "Unnamed airspace";
+      return line1 + "\n" + line2;
     }
 
     function findHits(lat, lon) {
@@ -2297,32 +2650,60 @@
       });
 
       const parts = [];
+      let filteredSummary = "";
       if (!filteredHits.length) {
-        parts.push("Found 0 matching filtered airspace features.");
+        filteredSummary = "Found 0 matching filtered airspace features.";
+        parts.push(filteredSummary);
       } else {
         const more = filteredHits.length > 4 ? " (plus " + (filteredHits.length - 4) + " more)" : "";
-        parts.push("Found " + filteredHits.length + " matching filtered airspace feature(s): " + labels.join(" | ") + more + ".");
+        filteredSummary = "Found " + filteredHits.length + " matching filtered airspace feature(s): " + labels.join(" | ") + more + ".";
+        parts.push(filteredSummary);
       }
 
+      let hiddenByFilterSummary = "";
       if (!filteredHits.length && allHits.length) {
-        parts.push("Note: " + allHits.length + " airspace feature(s) exist here but are hidden by current filters.");
+        hiddenByFilterSummary = "Note: " + allHits.length + " airspace feature(s) exist here but are hidden by current filters.";
+        parts.push(hiddenByFilterSummary);
       }
 
       const cz = allHits.find((f) => featureType((f && f.properties) || {}) === "CONTROL_ZONE");
+      let controlZoneSummary = "Outside control zone.";
       if (cz) {
-        parts.push("Inside control zone: " + labelForFeature(cz) + ".");
+        controlZoneSummary = "Inside control zone: " + labelForFeature(cz) + ".";
+        parts.push(controlZoneSummary);
       }
 
+      const primaryFeature = cz || preferredHit(filteredHits) || preferredHit(allHits);
+      const airspaceSummary = formatAirspaceSummary(primaryFeature, controlZoneSummary);
+
       const nearest = nearestAirportAt(lat, lon);
+      let nearestSummary = "No nearby aerodrome found in current airport dataset.";
       if (nearest && nearest.row) {
         const r = nearest.row;
         const ident = String(r.ident || "UNK");
         const name = String(r.name || "Unnamed");
-        parts.push("Nearest aerodrome: " + ident + " - " + name + " (" + nearest.distanceNm.toFixed(1) + " NM).");
+        nearestSummary = ident + " - " + name + " (" + nearest.distanceNm.toFixed(1) + " NM).";
+        parts.push("Nearest aerodrome: " + nearestSummary);
       }
 
       const tone = (filteredHits.length || cz) ? "ok key" : "ok";
-      setStatus((options.statusPrefix || "") + parts.join(" "), tone);
+      const otherDetails = [];
+      if (options.statusPrefix) {
+        otherDetails.push(options.statusPrefix.trim().replace(/:\s*$/, ""));
+      }
+      if (hiddenByFilterSummary) {
+        otherDetails.push(hiddenByFilterSummary);
+      }
+      if (!otherDetails.length && !primaryFeature) {
+        otherDetails.push(filteredSummary);
+      }
+
+      setStatusSummary({
+        pilotLocation: lat.toFixed(6) + ", " + lon.toFixed(6),
+        airspace: airspaceSummary,
+        nearestAerodrome: nearestSummary,
+        otherDetail: otherDetails.join(" ")
+      }, tone);
 
       if (options.addMarker) {
         L.circleMarker([lat, lon], {
@@ -2537,6 +2918,10 @@
       setClickPilotArmed(false);
     });
 
+    document.getElementById("statusSetPilotBtn").addEventListener("click", () => {
+      document.getElementById("setPilotFromInputsBtn").click();
+    });
+
     document.getElementById("manualLatLonBtn").addEventListener("click", () => {
       const parsed = parseDdFromCheckerInputs();
       if (!parsed.ok) {
@@ -2647,7 +3032,10 @@
           updatePilotLocation(knownPilot.lat, knownPilot.lng, null);
           setProvinceFromPilot(knownPilot.lat, knownPilot.lng);
           focusOnPilotArea();
-          runAirspaceCheck(knownPilot.lat, knownPilot.lng, { addMarker: false, centerMap: false });
+          runAirspaceCheckFromInputs({
+            centerMap: false,
+            statusPrefix: "Pilot location updated: "
+          });
           return;
         }
       }
@@ -2756,14 +3144,11 @@
     });
 
     document.getElementById("checkBtn").addEventListener("click", () => {
-      const lat = Number(document.getElementById("latInput").value.trim());
-      const lon = Number(document.getElementById("lonInput").value.trim());
-      if (!Number.isFinite(lat) || !Number.isFinite(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
-        setStatus("Enter valid DD latitude/longitude.", "warn");
-        return;
-      }
+      runAirspaceCheckFromInputs({ centerMap: true, resolveStale: true });
+    });
 
-      runAirspaceCheck(lat, lon, { addMarker: true, centerMap: true });
+    document.getElementById("statusCheckAirspaceBtn").addEventListener("click", () => {
+      document.getElementById("checkBtn").click();
     });
 
     const restoredAtBoot = applyStoredPilotLocation();
@@ -2780,6 +3165,7 @@
     }
     updateMyLocationButtonState();
     updateSetPilotFromInputsButtonState();
+    updateCheckAirspaceButtonState();
     updateVlosToggleButtonState();
     updateMapLayout();
   </script>
