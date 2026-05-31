@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0499/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/027/5312N11116W002\nA) CZEG B) 2605311627 C) 2608292359\nE) OBST LGT U/S TOWER 531142N 1111617W (APRX 17NM SW VERMILION \nHEALTH CENTRE (HELI) AD (CVH2)) 230FT AGL, 2691FT AMSL.)",
+    "startValidity": "2026-05-31T16:27:00",
+    "endValidity": "2026-08-29T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.195000, -111.271389"
+    ]
+  },
+  {
     "raw": "(R0498/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/027/5353N11324W002\nA) CZEG B) 2605311347 C) 2607302359\nE) OBST LGT U/S TOWER 535311N 1132414W (APRX 6NM NE \nEDMONTON/MORINVILLE (MIKE'S FIELD) AD (CMN6)) 348FT AGL, 2627FT \nAMSL.)",
     "startValidity": "2026-05-31T13:47:00",
     "endValidity": "2026-07-30T23:59:00",
@@ -33,15 +42,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.491667, -109.941111"
-    ]
-  },
-  {
-    "raw": "(R0490/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/028/5839N11730W002\nA) CZEG B) 2605301541 C) 2608282359\nE) OBST LGT U/S TOWER 583853N 1172949W (APRX 11NM W HIGH LEVEL AD \n(CYOJ)) 171FT AGL, 2746FT AMSL.)",
-    "startValidity": "2026-05-30T15:41:00",
-    "endValidity": "2026-08-28T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "58.648056, -117.496944"
     ]
   },
   {
@@ -612,21 +612,21 @@
     ]
   },
   {
-    "raw": "(R0343/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5148N11404W005\nA) CXXX B) 2604101300 C) 2607092359\nE) CFU9 OLDS (HOSP AND CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 514806N 1140427W (APRX 1.58NM ENE AD) 312FT \nAGL, 3683FT AMSL.)",
-    "startValidity": "2026-04-10T13:00:00",
-    "endValidity": "2026-07-09T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.801667, -114.074167"
-    ]
-  },
-  {
     "raw": "(R0342/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5207N11151W002\nA) CZEG B) 2604101300 C) 2607092359\nE) OBST LGT U/S TOWER 520654N 1115123W (APRX 7NM SE CASTOR AD \n(CER2)) 340FT AGL, 3053FT AMSL.)",
     "startValidity": "2026-04-10T13:00:00",
     "endValidity": "2026-07-09T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "52.115000, -111.856389"
+    ]
+  },
+  {
+    "raw": "(R0343/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5148N11404W005\nA) CXXX B) 2604101300 C) 2607092359\nE) CFU9 OLDS (HOSP AND CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 514806N 1140427W (APRX 1.58NM ENE AD) 312FT \nAGL, 3683FT AMSL.)",
+    "startValidity": "2026-04-10T13:00:00",
+    "endValidity": "2026-07-09T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.801667, -114.074167"
     ]
   },
   {
