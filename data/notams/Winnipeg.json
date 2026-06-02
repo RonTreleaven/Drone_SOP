@@ -1,5 +1,32 @@
 [
   {
+    "raw": "(U0972/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/021/5244N10413W002\nA) CZWG B) 2606021704 C) 2608311800\nE) OBST LGT U/S TOWER 524334N 1041314W (APRX 9NM SSW TISDALE AD \n(CJY3)) 351FT AGL, 2024FT AMSL.)",
+    "startValidity": "2026-06-02T17:04:00",
+    "endValidity": "2026-08-31T18:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.726111, -104.220556"
+    ]
+  },
+  {
+    "raw": "(U0970/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/037/4949N10241W002\nA) CZWG B) 2606021501 C) 2608312100\nE) OBST LGT U/S TOWER 494837N 1024114W (APRX 12NM N KISBEY/BRIGDEN \nFIELD AD (CBR3)) 1000FT AGL, 3628FT AMSL.)",
+    "startValidity": "2026-06-02T15:01:00",
+    "endValidity": "2026-08-31T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.810278, -102.687222"
+    ]
+  },
+  {
+    "raw": "(U0967/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/018/4924N08807W002\nA) CZWG B) 2606012152 C) 2609011800EST\nE) OBST LGT U/S TOWER 492412N 0880644W (APRX 14NM SSW BEARDMORE \n(HEALTH CENTRE) (HELI) AD (CPY3)) 335FT AGL, 1729FT AMSL.)",
+    "startValidity": "2026-06-01T21:52:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.403333, -88.112222"
+    ]
+  },
+  {
     "raw": "(U0963/26 NOTAMR U0701/26\nQ) CZWG/QOLAS/IV/M/E/000/020/4848N09353W002\nA) CZWG B) 2606010915 C) 2607162359EST\nE) OBST LGT U/S TOWER 484829N 0935309W (APRX 7NM SSW BURDITT LAKE \n(WATER) AD (CJC7)) 609FT AGL, 1925FT AMSL.)",
     "startValidity": "2026-06-01T09:15:00",
     "endValidity": null,
@@ -636,15 +663,6 @@
     "q_code": "QOBCH",
     "coordinates_dd": [
       "54.576389, -100.621944"
-    ]
-  },
-  {
-    "raw": "(U0370/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/017/4849N08716W002\nA) CZWG B) 2603020117 C) 2606012359\nE) OBST LGT U/S TOWER 484907N 0871535W (APRX 36NM WNW MARATHON \n(WILSON MEMORIAL HOSPITAL) (HELI) AD (CPX2)) 288FT AGL, 1637FT \nAMSL.)",
-    "startValidity": "2026-03-02T01:17:00",
-    "endValidity": "2026-06-01T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "48.818611, -87.259722"
     ]
   },
   {
