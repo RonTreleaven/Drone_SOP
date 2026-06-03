@@ -1,0 +1,7 @@
+feature_type,name,section_or_sector,page_ref,polygon_text_present,first_coordinate_example,notes
+ADIZ,Air Defence Identification Zone (ADIZ),North and East,210,yes,"N72°00'00.00\" W066°40'00.00\"","Contains explicit 'bounded by a line beginning at' polygon coordinates."
+MOA,Algonquin Military Operational Area (MOA),Main area,15,yes,"N44°44'00.00\" W078°03'00.00\"","Explicit boundary coordinate chain ending at point of beginning."
+MOA,Elk Military Operational Area (MOA),Main area,15,yes,"N43°00'00.00\" W066°00'00.00\"","Explicit boundary coordinate chain; includes arc and latitude segments."
+MOA,Shearwater Military Operational Area (MOA),DIP Sector 1,16,yes,"N44°37'57.39\" W063°08'59.49\"","Explicit boundary coordinates with arc segments."
+MOA,Shearwater Military Operational Area (MOA),DIP Sector 2,16,yes,"N44°28'19.70\" W063°13'57.01\"","Explicit boundary coordinates with arc segments."
+MOA,Shearwater Military Operational Area (MOA),DIP Sector 3,16,yes,"N44°23'12.96\" W063°26'21.90\"","Explicit boundary coordinates with arc segments."

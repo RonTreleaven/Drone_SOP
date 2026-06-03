@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>DAH Gold Airspace Map</title>
   <link rel="preload" href="data/airspace/dah_gold_airspace.geojson" as="fetch">
-  <link rel="prefetch" href="data/airspace/airports.csv" as="fetch">
+  <link rel="prefetch" href="data/airspace/_sources/airports.csv" as="fetch">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.css">
@@ -2737,8 +2737,8 @@
 
     async function loadAirportData(meta) {
       const csvSources = [
-        "data/airspace/airports.csv",
-        "/data/airspace/airports.csv",
+        "data/airspace/_sources/airports.csv",
+        "/data/airspace/_sources/airports.csv",
         "https://davidmegginson.github.io/ourairports-data/airports.csv",
         "https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/airports.csv"
       ];
@@ -2752,10 +2752,8 @@
 
       if (!airportRows.length) {
         const localAirportCandidates = [
-          "data/airspace/ca_apt.geojson",
-          "/data/airspace/ca_apt.geojson",
-          "ca_apt.geojson",
-          "/ca_apt.geojson",
+          "data/airspace/_sources/ca_apt.geojson",
+          "/data/airspace/_sources/ca_apt.geojson",
           "data/ca_apt.geojson",
           "/data/ca_apt.geojson"
         ];

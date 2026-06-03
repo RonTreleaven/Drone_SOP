@@ -2,7 +2,7 @@
   "type": "FeatureCollection",
   "name": "canadian_airspace",
   "metadata": {
-    "source": "ca_asp.geojson",
+    "source": "C:\\Users\\Ron Treleaven\\Drone_SOP\\data\\airspace\\_sources\\ca_asp.geojson",
     "input_feature_count": 2264,
     "feature_count": 212,
     "dropped_non_polygon": 0,

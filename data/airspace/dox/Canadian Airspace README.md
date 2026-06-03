@@ -52,13 +52,15 @@ The builder accepts:
 
 Preferred local files workflow:
 
-data/airspace/ca_asp.geojson  (input)
+data/airspace/ca_asp.geojson  (***input***)
 
-data/airspace/canadian_airspace.geojson (output)
+data/airspace/canadian_airspace.geojson (***output***)
 
 ```powershell
 python scripts/build_canadian_airspace_geojson.py --input ca_asp.geojson --output data/canadian_airspace.geojson --classes B,C,D,E,F
 ```
+
+
 
 ```python scripts/build_canadian_airspace_geojson.py --input data/airspace/ca_asp.geojson --output data/airspace/canadian_airspace.geojson --classes B,C,D,E,F 
 \Drone_SOP\python scripts/build_canadian_airspace_geojson.py --input data/airspace/ca_asp.geojson --output data/airspace/canadian_airspace.geojson --classes B,C,D,E,F
@@ -97,7 +99,7 @@ This is intended to answer a practical question for mission planning:
 
 ## Output contract
 
-`gcode.html` supports GeoJSON `FeatureCollection` with `Polygon` and `MultiPolygon` geometries.
+`ggcode.html` supports GeoJSON `FeatureCollection` with `Polygon` and `MultiPolygon` geometries.
 
 Expected properties per feature:
 

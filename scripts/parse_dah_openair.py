@@ -380,6 +380,20 @@ def parse_blocks(text: str) -> tuple[list[Block], dict[str, str]]:
     return blocks, header
 
 
+def looks_like_geojson(text: str) -> bool:
+    sample = text.lstrip()[:2000]
+    if not sample:
+        return False
+    return (
+        '"type"' in sample and (
+            '"FeatureCollection"' in sample
+            or '"Feature"' in sample
+            or '"features"' in sample
+            or '"geometry"' in sample
+        )
+    )
+
+
 def commands_to_polygon(block: Block) -> list[list[float]] | None:
     points: list[tuple[float, float]] = []
     center: tuple[float, float] | None = None
@@ -543,6 +557,13 @@ def main() -> None:
     input_path = Path(args.input)
     output_path = Path(args.output)
     text = input_path.read_text(encoding="utf-8", errors="replace")
+
+    if looks_like_geojson(text):
+        raise SystemExit(
+            "Input appears to be GeoJSON. parse_dah_openair.py expects OpenAir .air text "
+            "(AC/AN/AL/AH/DP/DB/V X lines), not GeoJSON. "
+            "Use scripts/build_canadian_airspace_geojson.py for ca_asp.geojson inputs."
+        )
 
     blocks, header = parse_blocks(text)
 

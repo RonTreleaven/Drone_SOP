@@ -1,0 +1,107 @@
+PDF: data\airspace\_maintenance required\dah20260514.pdf
+Pages: 216
+Total hits: 15
+
+MOA hits: 12
+Pages: 2, 3, 15, 16, 214, 215, 216
+
+ADIZ hits: 3
+Pages: 2, 6, 210
+
+Detailed hits:
+
+[Page 2, line 43, term MOA, coord_like_nearby=False]
+Required Navigation Performance Capability (RNPC) Airspace.....................................................................................209
+M8: Emergency Security Control of Air Traffic (ESCAT) .........................................................................................................210
+M9: Algonquin Military Operational Area (MOA)......................................................................................................................211
+M10: Elk Military Operational Area (MOA)...............................................................................................................................212
+
+[Page 2, line 44, term MOA, coord_like_nearby=False]
+M8: Emergency Security Control of Air Traffic (ESCAT) .........................................................................................................210
+M9: Algonquin Military Operational Area (MOA)......................................................................................................................211
+M10: Elk Military Operational Area (MOA)...............................................................................................................................212
+
+[Page 2, line 38, term ADIZ, coord_like_nearby=False]
+M4: Designated Mountainous Regions in Canada...................................................................................................................205
+M5: Flight Information Regions................................................................................................................................................206
+M6: Air Defence Identification Zone (ADIZ) .............................................................................................................................207
+M7: Canadian Minimum Navigation Performance Specifications (CMNPS) Airspace and
+Canadian Minimum Navigation Performance Specifications (CMNPS) Transition Area
+
+[Page 3, line 2, term MOA, coord_like_nearby=False]
+DAH April 2, 2026 9:44 am
+M11: Shearwater Military Operational Area (MOA) .................................................................................................................213
+
+[Page 6, line 23, term ADIZ, coord_like_nearby=False]
+ACC............................Area Control Centre
+AD ..............................Aerodrome
+ADIZ ...........................Air Defence Identification Zone
+AGL ............................Above Ground Level
+AIP .............................Aeronautical Information Publication
+
+[Page 15, line 13, term MOA, coord_like_nearby=False]
+Airspace of defined dimensions established to segregate certain military activities from IFR traffic and to identify for
+VFR traffic where these activities are conducted.
+a) ALGONQUIN MOA, ON:
+All airspace within the area bounded by a line beginning at:
+N44°44'00.00" W078°03'00.00" to
+
+[Page 15, line 47, term MOA, coord_like_nearby=False]
+conditions, both day and night. During VFR weather conditions formations may depart the area and continue to
+operate low level. (See map page M9)
+b) ELK MOA:
+The airspace within the area bounded by a line beginning at:
+N43°00'00.00" W066°00'00.00" thence easterly along latitude N43°00'00.00" \ to
+
+[Page 16, line 13, term MOA, coord_like_nearby=False]
+rjocawatchofficer@forces.gc.ca or MAFF (902)427-2502 CSN 427-2502,
+rjoca.maff@forces.gc.ca
+Maritime surveillance aircraft conduct daily all-weather operational flights in ELK MOA. These aircraft are required
+to operate on various headings and altitudes up to and including FL050 and to make rapid climbs and descents
+without prior warning. Because of operational considerations they operate without navigation or identification lights
+
+[Page 16, line 19, term MOA, coord_like_nearby=False]
+(IFF).
+In the interest of Flight Safety, it is essential that RJOC (Atlantic) be informed in advance of all flights or proposed
+flights in or through ELK MOA. Aircraft flight level(s), track and approximate times of ELK MOA penetration and exit
+are required. Military aircraft are encouraged to communicate directly with RJOC (Atlantic). On prior request,
+frequencies will be assigned on which to report position and obtain ELK MOA clearance. Anti-submarine warfare
+
+[Page 16, line 21, term MOA, coord_like_nearby=False]
+flights in or through ELK MOA. Aircraft flight level(s), track and approximate times of ELK MOA penetration and exit
+are required. Military aircraft are encouraged to communicate directly with RJOC (Atlantic). On prior request,
+frequencies will be assigned on which to report position and obtain ELK MOA clearance. Anti-submarine warfare
+(ASW) aircraft will be routed clear of all known military and civil traffic. In-flight position reports or advisories, when
+not transmitted directly as above, may be relayed through Gander or Moncton ACC. These messages should
+
+[Page 16, line 27, term MOA, coord_like_nearby=False]
+On request of the pilot when filing flight plans at departure points in North America, aircraft flight plans may be
+relayed through ATC channels to Moncton ACC for RJOC (Atlantic). (See map page M10)
+c) SHEARWATER MOA, NS:
+i) Shearwater DIP Sector 1:
+The airspace within the area bounded by a line beginning at:
+
+[Page 210, line 7, term ADIZ, coord_like_nearby=False]
+© 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada
+M6
+Air Defence Identification Zone (ADIZ)
+AIR DEFENCE IDENTIFICATION ZONE
+The airspace within the area bounded by a line beginning at:
+
+[Page 214, line 7, term MOA, coord_like_nearby=False]
+© 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada
+M9
+Algonquin Military Operational Area (MOA)
+NOTE: For coordinates refer to the "Glossary of Aeronautical Terms and Designations of Miscellaneous Airspace”.
+
+[Page 215, line 7, term MOA, coord_like_nearby=False]
+© 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada
+M10
+Elk Military Operational Area (MOA)
+NOTE: For coordinates refer to the "Glossary of Aeronautical Terms and Designations of Miscellaneous Airspace".
+
+[Page 216, line 7, term MOA, coord_like_nearby=False]
+© 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada
+M11
+Shearwater Military Operational Area (MOA)
+NOTE: For coordinates refer to the "Glossary of Aeronautical Terms and Designations of Miscellaneous Airspace".
