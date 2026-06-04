@@ -1,5 +1,32 @@
 [
   {
+    "raw": "(I2594/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/025/5326N11307W005\nA) CXXX B) 2606041530 C) 2606041830\nE) CEZ3 EDMONTON/COOKING LAKE \nCRANE 532537N 1130712W APRX 740FT BEYOND THR 10 AND 660FT SOUTH \nRCL. 50FT AGL 2500FT AMSL. PAINTED.)",
+    "startValidity": "2026-06-04T14:35:31.048",
+    "endValidity": "2026-06-04T18:30:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "53.426944, -113.120000"
+    ]
+  },
+  {
+    "raw": "(R0515/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/025/5347N11308W005\nA) CXXX B) 2606041416 C) 2608041400\nE) CRP3 REDWATER (PEMBINA) (HELI)\nOBST LGT U/S TOWER 534634N 1130748W (APRX 2.9NM SSE AD) 361FT \nAGL, 2434FT AMSL.)",
+    "startValidity": "2026-06-04T14:16:00",
+    "endValidity": "2026-08-04T14:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.776111, -113.130000"
+    ]
+  },
+  {
+    "raw": "(R0513/26 NOTAMR R0249/26\nQ) CZEG/QOLAS/IV/M/AE/000/027/5255N11229W005\nA) CXXX B) 2606041117 C) 2609031800EST\nE) CFR2 BAWLF (BLACKWELLS) \nOBST LGT U/S TOWER 525455N 1122830W (APRX 2.9NM NE AD) 344FT AGL, \n2657FT AMSL.)",
+    "startValidity": "2026-06-04T11:17:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.915278, -112.475000"
+    ]
+  },
+  {
     "raw": "(R0512/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/035/4948N11116W002\nA) CZEG B) 2606022309 C) 2606061300\nE) OBST LGT U/S WIND FARM WITHIN 5FT RADIUS CENTRED ON 494750N \n1111537W (APRX 6NM SE BOW ISLAND AD (CEF3)). 609FT AGL 3409FT \nAMSL.)",
     "startValidity": "2026-06-02T23:09:00",
     "endValidity": "2026-06-06T13:00:00",
@@ -42,15 +69,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "53.541944, -113.539722"
-    ]
-  },
-  {
-    "raw": "(R0499/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/027/5312N11116W002\nA) CZEG B) 2605311627 C) 2608292359\nE) OBST LGT U/S TOWER 531142N 1111617W (APRX 17NM SW VERMILION \nHEALTH CENTRE (HELI) AD (CVH2)) 230FT AGL, 2691FT AMSL.)",
-    "startValidity": "2026-05-31T16:27:00",
-    "endValidity": "2026-08-29T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.195000, -111.271389"
     ]
   },
   {
@@ -603,21 +621,21 @@
     ]
   },
   {
-    "raw": "(R0343/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5148N11404W005\nA) CXXX B) 2604101300 C) 2607092359\nE) CFU9 OLDS (HOSP AND CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 514806N 1140427W (APRX 1.58NM ENE AD) 312FT \nAGL, 3683FT AMSL.)",
-    "startValidity": "2026-04-10T13:00:00",
-    "endValidity": "2026-07-09T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.801667, -114.074167"
-    ]
-  },
-  {
     "raw": "(R0342/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5207N11151W002\nA) CZEG B) 2604101300 C) 2607092359\nE) OBST LGT U/S TOWER 520654N 1115123W (APRX 7NM SE CASTOR AD \n(CER2)) 340FT AGL, 3053FT AMSL.)",
     "startValidity": "2026-04-10T13:00:00",
     "endValidity": "2026-07-09T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "52.115000, -111.856389"
+    ]
+  },
+  {
+    "raw": "(R0343/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5148N11404W005\nA) CXXX B) 2604101300 C) 2607092359\nE) CFU9 OLDS (HOSP AND CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 514806N 1140427W (APRX 1.58NM ENE AD) 312FT \nAGL, 3683FT AMSL.)",
+    "startValidity": "2026-04-10T13:00:00",
+    "endValidity": "2026-07-09T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.801667, -114.074167"
     ]
   },
   {
@@ -861,15 +879,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "54.094444, -110.399167"
-    ]
-  },
-  {
-    "raw": "(R0249/26 NOTAMR R1413/25\nQ) CZEG/QOLAS/IV/M/AE/000/027/5255N11229W005\nA) CXXX B) 2603111302 C) 2606101800EST\nE) CFR2 BAWLF (BLACKWELLS) \nOBST LGT U/S TOWER 525455N 1122830W (APRX 2.9NM NE AD) 344FT AGL, \n2657FT AMSL.)",
-    "startValidity": "2026-03-11T13:02:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.915278, -112.475000"
     ]
   },
   {
