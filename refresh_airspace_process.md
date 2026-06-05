@@ -1,4 +1,4 @@
-# Airspace Refresh Process
+# Airspace Refresh Runbook
 
 June 3, 2026 - created end to end refresh process.
 
@@ -9,21 +9,28 @@ This runbook defines the end-to-end process to refresh airspace data used by bot
 - GGcode uses [data/canadian_airspace.geojson](data/canadian_airspace.geojson)
 - DAHminimap uses [data/airspace/dah_gold_airspace.geojson](data/airspace/dah_gold_airspace.geojson)
 - Canonical source folder is [data/airspace/_sources](data/airspace/_sources)
+  
 
 ## Canonical source files
 
 Store source files in one folder with one fixed name each:
 
-1. [data/airspace/_sources/canadian_airspace.air](data/airspace/_sources/canadian_airspace.air)
-2. [data/airspace/_sources/ca_asp.geojson](data/airspace/_sources/ca_asp.geojson)
-3. [data/airspace/_sources/ca_apt.geojson](data/airspace/_sources/ca_apt.geojson)
-4. [data/airspace/_sources/airports.csv](data/airspace/_sources/airports.csv)
+./data/airspace/_sources/ 
 
-Do not keep rotating names like Mayxx or delete-me variants in the refresh path.
+
+
+1. [data/airspace/_sources/**canadian_airspace.air**](data/airspace/_sources/canadian_airspace.air)
+2. [data/airspace/_sources/**ca_asp.geojson**](data/airspace/_sources/ca_asp.geojson)
+3. [data/airspace/_sources/**ca_apt.geojson**](data/airspace/_sources/ca_apt.geojson)
+4. [data/airspace/sources/**airports.cs**v](data/airspace/_sources/airports.csv)
+
+// Do not keep rotating names like May_xx_yy or delete-me variants in the refresh path.
+
+
 
 ## Source systems
 
-1. OpenAir source for canadian_airspace.air
+1. OpenAir source for "**<u>canadian_airspace.air</u>**"
 - URL: https://airspace.canadarasp.com/OpenAirFiles/canadian_airspace.air
 - Note: DAH PDF is treated as the gold source for ADIZ/MOA polygon extraction.
 

@@ -377,6 +377,11 @@
       box-shadow: 0 0 0 2px rgba(198, 40, 40, 0.18);
     }
 
+    button:disabled {
+      opacity: 0.58;
+      cursor: not-allowed;
+    }
+
     .status {
       border: 1px solid var(--line);
       border-radius: 6px;
@@ -468,6 +473,32 @@
 
     .status.warn .status-summary .status-value {
       color: #6e3c00;
+    }
+
+    .status-source-links {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.32rem;
+    }
+
+    .status-source-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #9eb9d2;
+      background: #ffffff;
+      color: #1f4a72;
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 0.16rem 0.5rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .status-source-link:hover {
+      background: #edf4fb;
     }
 
     @media (max-width: 640px) {
@@ -660,6 +691,33 @@
       line-height: 1.25;
     }
 
+    .pilot-relocation-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.4rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .pilot-relocation-actions button {
+      width: 100%;
+      min-height: 40px;
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 0.45rem 0.5rem;
+    }
+
+    .pilot-relocation-tip {
+      margin: 0;
+      padding: 0.48rem 0.55rem;
+      font-size: 0.79rem;
+      line-height: 1.3;
+      color: #38556f;
+      background: #eef6ff;
+      border: 1px solid #c7dcf0;
+      border-radius: 8px;
+    }
+
     .airspace-quick-tip {
       background: rgba(10, 25, 45, 0.92);
       border: 1px solid rgba(255, 255, 255, 0.45);
@@ -692,6 +750,7 @@
       .top { grid-column: 1; }
       .side { border-right: none; border-bottom: 1px solid var(--line); max-height: 44vh; }
     }
+
   </style>
 </head>
 <body>
@@ -758,8 +817,15 @@
           <label><input type="checkbox" class="type-filter" value="OTHER" checked> Other</label>
         </div>
         <div class="row">
+          <label><input type="checkbox" id="droneOpsFocusToggle" checked> Drone Focus: hide higher-floor contextual airspace (&gt;400 ft AGL)</label>
+        </div>
+        <div class="row">
+          <label><input type="checkbox" id="includeContextualSummaryToggle"> Include all-class contextual airspace in summary</label>
+        </div>
+        <div class="row">
           <button id="typeCheckAll">Type Check</button>
           <button id="typeUncheckAll">Type Unchk</button>
+          <button id="refreshFilterAirspaceBtn" class="primary" type="button">Refresh Airspace Check</button>
         </div>
       </section>
 
@@ -818,11 +884,13 @@
 
       <section class="group">
         <h2>Pilot Relocation</h2>
-        <div class="row">
-          <button id="setPilotFromInputsBtn">Set Pilot from Lat/Lon</button>
-          <button id="setPilotByClickBtn">Arm Click-to-Set</button>
-          <button id="confirmClickPilotBtn" disabled>Set Clicked Point</button>
+        <div class="pilot-relocation-actions" role="group" aria-label="Pilot relocation actions">
+          <button id="setPilotFromInputsBtn" class="primary" type="button">Set Pilot from Lat/Lon</button>
+          <button id="getPilotGpsBtn" type="button">Get Current GPS</button>
+          <button id="setPilotByClickBtn" type="button" aria-pressed="false">Tap Map to Place Pilot</button>
+          <button id="confirmClickPilotBtn" class="primary" type="button" disabled>Save Tapped Point</button>
         </div>
+        <p class="pilot-relocation-tip">Mobile flow: drag marker, then tap <strong>Save Dragged Marker</strong>. Need a reset? tap <strong>Get Current GPS</strong>. Or use tap-map mode, then save tapped point.</p>
         <div class="pilot-guide-note">Use the map ruler button to toggle VLOS guides (1 NM / 3 NM).</div>
       </section>
 
@@ -1137,13 +1205,14 @@
       const pilotLocation = escapeStatusHtml(summary.pilotLocation || "n/a");
       const airspace = escapeStatusHtml(summary.airspace || "n/a");
       const nearestAerodrome = escapeStatusHtml(summary.nearestAerodrome || "n/a");
+      const nearestAerodromeHtml = String(summary.nearestAerodromeHtml || "").trim();
       const otherDetail = escapeStatusHtml(summary.otherDetail || "n/a");
 
       el.innerHTML =
         '<div class="status-summary">' +
           '<div class="status-label">Pilot Location:</div><div class="status-value">' + pilotLocation + '</div>' +
           '<div class="status-label">Airspace:</div><div class="status-value">' + airspace + '</div>' +
-          '<div class="status-label">Nearest Aerodrome:</div><div class="status-value">' + nearestAerodrome + '</div>' +
+          '<div class="status-label">Nearest Aerodrome:</div><div class="status-value">' + (nearestAerodromeHtml || nearestAerodrome) + '</div>' +
           '<div class="status-label">Other Detail:</div><div class="status-value">' + otherDetail + '</div>' +
         '</div>';
       el.className = "status" + (tone ? " " + tone : "");
@@ -1256,6 +1325,14 @@
       return new Set(Array.from(document.querySelectorAll(".airport-type-filter:checked")).map((el) => el.value));
     }
 
+    function droneOpsFocusEnabled() {
+      return !!document.getElementById("droneOpsFocusToggle")?.checked;
+    }
+
+    function includeContextualSummaryHits() {
+      return !!document.getElementById("includeContextualSummaryToggle")?.checked;
+    }
+
     function validLatLon(lat, lon) {
       if (!Number.isFinite(lat) || !Number.isFinite(lon)) return false;
       if (lat < -90 || lat > 90) return false;
@@ -1266,17 +1343,20 @@
     function updateSetPilotFromInputsButtonState() {
       const btn = document.getElementById("setPilotFromInputsBtn");
       if (!btn) return;
-      const needsAction = !!pilotDragNeedsConfirm || !!airspaceCheckNeedsRefresh;
-      btn.classList.toggle("attention", needsAction);
-      btn.title = pilotDragNeedsConfirm
-        ? "Pilot marker was dragged. Click to confirm and save this pilot location."
-        : (airspaceCheckNeedsRefresh
-          ? "Pilot location changed. Run Check Airspace to validate the new location."
+      const needsConfirm = !!pilotDragNeedsConfirm;
+      const needsAirspaceRefresh = !!airspaceCheckNeedsRefresh;
+      btn.classList.toggle("attention", needsConfirm);
+      btn.textContent = needsConfirm ? "Save Dragged Marker" : "Set Pilot from Lat/Lon";
+      btn.title = needsConfirm
+        ? "Pilot marker was dragged. Tap to confirm and save this pilot location."
+        : (needsAirspaceRefresh
+          ? "Pilot location is saved. Run Check Airspace to validate the new location."
           : "Set and save pilot location from current Lat/Lon inputs.");
 
       const statusBtn = document.getElementById("statusSetPilotBtn");
       if (statusBtn) {
-        statusBtn.classList.toggle("attention", pilotDragNeedsConfirm);
+        statusBtn.classList.toggle("attention", needsConfirm);
+        statusBtn.textContent = needsConfirm ? "Save Dragged Marker" : "Set Pilot from Lat/Lon";
         statusBtn.title = btn.title;
       }
     }
@@ -1816,28 +1896,18 @@
         });
       }
 
-      function externalAirportLinkInfo(identRaw) {
-        const code = String(identRaw || "").trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
-        if (!code) return null;
-        const isIcao = /^[A-Z0-9]{4}$/.test(code);
-        return {
-          code,
-          label: isIcao ? "SkyVector" : "OurAirports",
-          url: isIcao
-            ? ("https://skyvector.com/airport/" + encodeURIComponent(code))
-            : ("https://ourairports.com/airports/" + encodeURIComponent(code))
-        };
-      }
-
       renderedAirportRows.forEach((row) => {
         const type = normalizeAirportType(row);
         const cfg = airportTypeConfig[type];
         const targetLayer = airportLayersByType[type];
         if (!cfg || !targetLayer) return;
 
-        const linkInfo = externalAirportLinkInfo(row.ident);
+        const linkInfo = externalAirportLinkInfo(row.ident, row.lat, row.lon);
         const openLinkHtml = linkInfo
-          ? ("<button type='button' class='open-notams-focus' data-url='" + linkInfo.url + "'>Open in " + linkInfo.label + "</button>")
+          ? (
+            "<button type='button' class='open-notams-focus' data-url='" + linkInfo.ourAirportsUrl + "'>Open in OurAirports</button>" +
+            "<button type='button' class='open-notams-focus' data-url='" + linkInfo.skyvectorUrl + "'>Open in SkyVector</button>"
+          )
           : "<span style='font-size:0.82rem;color:#6b7280;'>External link unavailable</span>";
 
         const popup =
@@ -1946,6 +2016,31 @@
       return true;
     }
 
+    function refreshAirspaceSummaryIfInputsValid() {
+      const parsed = parseDdFromCheckerInputs();
+      if (!parsed.ok) return false;
+      runAirspaceCheck(parsed.lat, parsed.lon, {
+        addMarker: false,
+        centerMap: false
+      });
+      updateCheckAirspaceButtonState();
+      setStatusCue("Airspace summary refreshed for current filters.", "ok");
+      return true;
+    }
+
+    function setAllClassFiltersChecked(checked) {
+      document.querySelectorAll(".class-filter").forEach((el) => {
+        el.checked = !!checked;
+      });
+    }
+
+    function refreshFromAirspaceFilters() {
+      applyFilters();
+      if (!refreshAirspaceSummaryIfInputsValid()) {
+        setStatusCue("Filters changed. Enter valid Lat/Lon and press Check Airspace to refresh results.", "pending");
+      }
+    }
+
     function ensurePilotLocationPrompted() {
       if (pilotMarker || hasPromptedGpsOnNoPilot) return;
       hasPromptedGpsOnNoPilot = true;
@@ -1958,13 +2053,17 @@
         map.removeLayer(pendingPilotMarker);
         pendingPilotMarker = null;
       }
-      document.getElementById("confirmClickPilotBtn").disabled = true;
+      const confirmBtn = document.getElementById("confirmClickPilotBtn");
+      confirmBtn.disabled = true;
+      confirmBtn.classList.remove("ready");
     }
 
     function setClickPilotArmed(armed) {
       clickSetPilotArmed = !!armed;
       const btn = document.getElementById("setPilotByClickBtn");
-      btn.textContent = clickSetPilotArmed ? "Click Mode: ON" : "Arm Click-to-Set";
+      btn.textContent = clickSetPilotArmed ? "Tap Map Mode: ON" : "Tap Map to Place Pilot";
+      btn.classList.toggle("ready", clickSetPilotArmed);
+      btn.setAttribute("aria-pressed", clickSetPilotArmed ? "true" : "false");
       if (!clickSetPilotArmed) {
         clearPendingClickPilot();
       }
@@ -2025,12 +2124,48 @@
       const type = featureType(p);
       if (!types.has(type)) return false;
 
-      // Keep key operational types visible independently of class filters.
-      if (type === "RESTRICTED" || type === "DANGER" || type === "ADVISORY" || type === "CONTROL_ZONE") {
+      if (droneOpsFocusEnabled() && !isDroneRelevantAirspaceFeature(feature)) {
+        return false;
+      }
+
+      // Keep key operational CYR/CYD/CYA overlays visible independently of class filters.
+      if (type === "RESTRICTED" || type === "DANGER" || type === "ADVISORY") {
         return true;
       }
 
       return classes.has(String(p.class || "").toUpperCase());
+    }
+
+    function parseLowerLimitAglFeet(feature) {
+      const p = (feature && feature.properties) || {};
+      const raw = String(p.lower || "").trim().toUpperCase();
+      if (!raw) return null;
+      if (/\b(SFC|SURFACE|GND|GROUND)\b/.test(raw)) return 0;
+      if (!/\bAGL\b/.test(raw)) return null;
+
+      const m = raw.match(/(-?\d+(?:\.\d+)?)/);
+      if (!m) return null;
+      const value = Number(m[1]);
+      if (!Number.isFinite(value)) return null;
+
+      const inMeters = /\b(M|METER|METERS|METRE|METRES)\b/.test(raw);
+      return inMeters ? (value * 3.28084) : value;
+    }
+
+    function isDroneRelevantAirspaceFeature(feature) {
+      if (!droneOpsFocusEnabled()) return true;
+
+      const p = (feature && feature.properties) || {};
+      const type = featureType(p);
+      const cls = String(p.class || "").trim().toUpperCase();
+
+      // Keep high-priority drone safety layers visible.
+      if (type === "RESTRICTED" || type === "DANGER" || type === "ADVISORY" || type === "CONTROL_ZONE") return true;
+      if (cls === "D" || cls === "F") return true;
+
+      const lowerAglFt = parseLowerLimitAglFeet(feature);
+      if (!Number.isFinite(lowerAglFt)) return true;
+      return lowerAglFt <= 400;
     }
 
     function updateTypeFilterAvailability() {
@@ -2094,7 +2229,7 @@
           updateCheckAirspaceButtonState();
           setProvinceFromPilot(ll.lat, ll.lng, { silent: true });
           map.setView([ll.lat, ll.lng], Math.max(map.getZoom(), 10), { animate: true });
-          setStatus("Pilot marker moved: " + ll.lat.toFixed(6) + ", " + ll.lng.toFixed(6) + ". Click Set Pilot from Lat/Lon to confirm.", "warn");
+          setStatus("Pilot marker moved: " + ll.lat.toFixed(6) + ", " + ll.lng.toFixed(6) + ". Tap Save Dragged Marker to confirm.", "warn");
         });
       } else {
         pilotMarker.setLatLng([lat, lon]);
@@ -2629,6 +2764,21 @@
       };
     }
 
+    function externalAirportLinkInfo(identRaw, lat, lon) {
+      const code = String(identRaw || "").trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
+      if (!code) return null;
+      const isIcao = /^[A-Z0-9]{4}$/.test(code);
+      const skyvectorUrl = isIcao
+        ? ("https://skyvector.com/airport/" + encodeURIComponent(code))
+        : ("https://skyvector.com/?ll=" + encodeURIComponent(String(lat)) + "," + encodeURIComponent(String(lon)) + "&chart=301&zoom=3");
+      return {
+        code,
+        isIcao,
+        ourAirportsUrl: "https://ourairports.com/airports/" + encodeURIComponent(code),
+        skyvectorUrl
+      };
+    }
+
     function runAirspaceCheck(lat, lon, opts = {}) {
       const options = {
         addMarker: false,
@@ -2638,7 +2788,9 @@
       };
 
       const filteredHits = findHits(lat, lon);
-      const allHits = findAllAirspaceHits(lat, lon);
+      const allHitsRaw = findAllAirspaceHits(lat, lon);
+      const allHitsDroneScoped = allHitsRaw.filter((f) => isDroneRelevantAirspaceFeature(f));
+      const allHits = includeContextualSummaryHits() ? allHitsRaw : filteredHits;
       const labels = [];
       const seen = new Set();
       filteredHits.slice(0, 4).forEach((f) => {
@@ -2661,9 +2813,12 @@
       }
 
       let hiddenByFilterSummary = "";
-      if (!filteredHits.length && allHits.length) {
-        hiddenByFilterSummary = "Note: " + allHits.length + " airspace feature(s) exist here but are hidden by current filters.";
+      if (!filteredHits.length && allHitsDroneScoped.length) {
+        hiddenByFilterSummary = "Note: " + allHitsDroneScoped.length + " airspace feature(s) exist here but are hidden by current filters.";
         parts.push(hiddenByFilterSummary);
+      }
+      if (!includeContextualSummaryHits() && allHitsRaw.length > allHitsDroneScoped.length) {
+        parts.push("Drone Focus suppressed " + (allHitsRaw.length - allHitsDroneScoped.length) + " high-floor contextual feature(s). Toggle 'Include all-class contextual airspace in summary' to show them.");
       }
 
       const cz = allHits.find((f) => featureType((f && f.properties) || {}) === "CONTROL_ZONE");
@@ -2678,11 +2833,24 @@
 
       const nearest = nearestAirportAt(lat, lon);
       let nearestSummary = "No nearby aerodrome found in current airport dataset.";
+      let nearestSummaryHtml = "";
       if (nearest && nearest.row) {
         const r = nearest.row;
         const ident = String(r.ident || "UNK");
         const name = String(r.name || "Unnamed");
-        nearestSummary = ident + " - " + name + " (" + nearest.distanceNm.toFixed(1) + " NM).";
+        const distanceKm = nearest.distanceM / 1000;
+        const likelySmall = /^CA-\d{4,6}$/i.test(ident) ? " (likely small aerodrome)" : "";
+        nearestSummary = ident + " - " + name + likelySmall + " (" + nearest.distanceNm.toFixed(1) + " NM / " + distanceKm.toFixed(1) + " km).";
+        const nearestSafe = escapeStatusHtml(nearestSummary);
+        const links = externalAirportLinkInfo(ident, r.lat, r.lon);
+        if (links) {
+          nearestSummaryHtml =
+            nearestSafe +
+            "<div class='status-source-links'>" +
+              "<a class='status-source-link' href='" + links.ourAirportsUrl + "' target='_blank' rel='noopener noreferrer'>Open in OurAirports</a>" +
+              "<a class='status-source-link' href='" + links.skyvectorUrl + "' target='_blank' rel='noopener noreferrer'>Open in SkyVector</a>" +
+            "</div>";
+        }
         parts.push("Nearest aerodrome: " + nearestSummary);
       }
 
@@ -2702,6 +2870,7 @@
         pilotLocation: lat.toFixed(6) + ", " + lon.toFixed(6),
         airspace: airspaceSummary,
         nearestAerodrome: nearestSummary,
+        nearestAerodromeHtml: nearestSummaryHtml,
         otherDetail: otherDetails.join(" ")
       }, tone);
 
@@ -2854,9 +3023,25 @@
     }
     updateToggleAllGroupsButton();
 
-    document.querySelectorAll(".class-filter").forEach((el) => el.addEventListener("change", () => applyFilters()));
-    document.querySelectorAll(".type-filter").forEach((el) => el.addEventListener("change", () => applyFilters()));
+    document.querySelectorAll(".class-filter").forEach((el) => el.addEventListener("change", () => refreshFromAirspaceFilters()));
+    document.querySelectorAll(".type-filter").forEach((el) => el.addEventListener("change", () => refreshFromAirspaceFilters()));
     document.querySelectorAll(".airport-type-filter").forEach((el) => el.addEventListener("change", () => applyFilters()));
+    document.getElementById("droneOpsFocusToggle").addEventListener("change", () => {
+      applyFilters();
+      refreshAirspaceSummaryIfInputsValid();
+    });
+    document.getElementById("includeContextualSummaryToggle").addEventListener("change", () => {
+      const includeAll = includeContextualSummaryHits();
+      if (includeAll) {
+        setAllClassFiltersChecked(true);
+      }
+      applyFilters();
+      if (!refreshAirspaceSummaryIfInputsValid()) {
+        setStatusCue("All class filters updated. Enter valid Lat/Lon and press Check Airspace to refresh results.", "pending");
+      } else if (includeAll) {
+        setStatusCue("Include all-class enabled. Class A-F selected and airspace summary refreshed.", "ok");
+      }
+    });
     document.getElementById("airportShowMarkers").addEventListener("change", () => applyFilters());
     document.getElementById("airportShowRings").addEventListener("change", () => applyFilters());
     document.getElementById("airportLimitProvince").addEventListener("change", () => rebuildAirportRowsForScope());
@@ -2876,24 +3061,32 @@
     });
     document.getElementById("classCheckAll").addEventListener("click", () => {
       document.querySelectorAll(".class-filter").forEach((el) => { el.checked = true; });
-      applyFilters();
+      refreshFromAirspaceFilters();
     });
 
     document.getElementById("classUncheckAll").addEventListener("click", () => {
       document.querySelectorAll(".class-filter").forEach((el) => { el.checked = false; });
-      applyFilters();
+      refreshFromAirspaceFilters();
     });
 
     document.getElementById("typeCheckAll").addEventListener("click", () => {
       document.querySelectorAll(".type-filter").forEach((el) => {
         if (!el.disabled) el.checked = true;
       });
-      applyFilters();
+      refreshFromAirspaceFilters();
     });
 
     document.getElementById("typeUncheckAll").addEventListener("click", () => {
       document.querySelectorAll(".type-filter").forEach((el) => { el.checked = false; });
-      applyFilters();
+      refreshFromAirspaceFilters();
+    });
+
+    document.getElementById("refreshFilterAirspaceBtn").addEventListener("click", () => {
+      if (refreshAirspaceSummaryIfInputsValid()) {
+        setStatusCue("Airspace check refreshed from Airspace Filters.", "ok");
+      } else {
+        setStatusCue("Enter valid Lat/Lon and press Check Airspace to refresh results.", "pending");
+      }
     });
 
     document.getElementById("airportTypeCheckAll").addEventListener("click", () => {
@@ -2930,10 +3123,14 @@
       setClickPilotArmed(false);
     });
 
+    document.getElementById("getPilotGpsBtn").addEventListener("click", () => {
+      document.getElementById("locBtn").click();
+    });
+
     document.getElementById("setPilotByClickBtn").addEventListener("click", () => {
       setClickPilotArmed(!clickSetPilotArmed);
       if (clickSetPilotArmed) {
-        setStatus("Click a map location, then choose 'Set Clicked Point'.", "ok");
+        setStatus("Tap a map location, then tap 'Save Tapped Point'.", "ok");
       }
     });
 
@@ -3096,7 +3293,9 @@
       }
       document.getElementById("latInput").value = e.latlng.lat.toFixed(6);
       document.getElementById("lonInput").value = e.latlng.lng.toFixed(6);
-      document.getElementById("confirmClickPilotBtn").disabled = false;
+      const confirmBtn = document.getElementById("confirmClickPilotBtn");
+      confirmBtn.disabled = false;
+      confirmBtn.classList.add("ready");
       setStatus("Clicked " + e.latlng.lat.toFixed(6) + ", " + e.latlng.lng.toFixed(6) + ". Confirm to set as pilot location.", "ok");
     });
 
