@@ -136,6 +136,13 @@
       text-align: center;
     }
 
+    .btn-link {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .btn:active { transform: translateY(1px); }
 
     .btn-primary {
@@ -555,6 +562,7 @@
           <p>Survey First. Fly Smart.</p>
         </div>
         <div class="top-actions">
+          <a href="Sections.html" class="btn btn-ghost btn-link">Back to Sections</a>
           <button id="clearDataTop" class="btn btn-ghost" type="button">Clear Data + Refresh</button>
           <button id="openEmergencyTop" class="btn btn-danger" type="button">Emergency</button>
         </div>
@@ -653,37 +661,6 @@
         </div>
       </section>
 
-      <section class="section" aria-label="Validation and returning user behavior">
-        <h3>User Validation and Gate Behavior</h3>
-        <p class="subtle">Returning validated users can quick-launch without repeating disclaimer and terms acceptance.</p>
-
-        <div class="stack">
-          <label class="radio-pill" style="width: fit-content;">
-            <input id="isValidated" type="checkbox" style="accent-color: #0a6ea4;">
-            Simulate validated returning user
-          </label>
-
-          <div id="gateBlock" class="gate">
-            <strong>Disclaimer and Terms Gate</strong>
-            <p>First-time users must acknowledge operational responsibility and agree before continuing.</p>
-            <button id="acceptGate" class="btn btn-primary" type="button" style="margin-top: 0.55rem;">Accept and Continue</button>
-          </div>
-
-          <div id="quickBlock" class="gate" hidden>
-            <strong>Quick-Launch Enabled</strong>
-            <p>Gate is skipped because this session is treated as validated and returning.</p>
-          </div>
-        </div>
-      </section>
-
-      <details class="advanced" aria-label="Advanced optional section">
-        <summary>Advanced Mission Automation (Optional)</summary>
-        <div class="advanced-body">
-          This section is intentionally secondary in MVP. It stays collapsed unless the pilot explicitly expands it.
-          <br>
-          <a href="GGcode.html">Open Mission Automation Workspace</a>
-        </div>
-      </details>
     </main>
   </div>
 
@@ -744,11 +721,6 @@
     const categoryHint = document.getElementById('categoryHint');
     const advancedReqNote = document.getElementById('advancedReqNote');
 
-    const validatedToggle = document.getElementById('isValidated');
-    const gateBlock = document.getElementById('gateBlock');
-    const quickBlock = document.getElementById('quickBlock');
-    const acceptGate = document.getElementById('acceptGate');
-
     const emergencyPanel = document.getElementById('emergencyPanel');
     const shade = document.getElementById('shade');
     const clearDataTop = document.getElementById('clearDataTop');
@@ -785,9 +757,7 @@
       const data = {
         checks,
         weight: weightInput.value,
-        planningType: planningType.value,
-        validated: validatedToggle.checked,
-        gateAccepted: acceptGate.dataset.accepted === 'true'
+        planningType: planningType.value
       };
       localStorage.setItem(storageKey, JSON.stringify(data));
     }
@@ -805,11 +775,6 @@
         if (data && data.weight) weightInput.value = data.weight;
         if (data && data.planningType) planningType.value = data.planningType;
         if (planningType.value === 'auto') planningType.value = Number(weightInput.value || 0) > 250 ? 'basic' : 'micro';
-        if (data && typeof data.validated === 'boolean') validatedToggle.checked = data.validated;
-        if (data && data.gateAccepted) {
-          acceptGate.dataset.accepted = 'true';
-          acceptGate.textContent = 'Accepted';
-        }
       } catch (_) {
         // Ignore invalid local state for this working prototype.
       }
@@ -865,13 +830,6 @@
       readinessText.style.color = isReady ? '#205d36' : '#4d657c';
     }
 
-    function updateGateView() {
-      const validated = validatedToggle.checked;
-      gateBlock.hidden = validated;
-      quickBlock.hidden = !validated;
-      saveState();
-    }
-
     function openEmergency() {
       emergencyPanel.classList.add('open');
       emergencyPanel.setAttribute('aria-hidden', 'false');
@@ -899,7 +857,6 @@
       updateCategory();
       ['airspace', 'weather', 'notam'].forEach(key => applyCheckVisual(key));
       updateReadiness();
-      updateGateView();
 
       document.querySelectorAll('[data-mark]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -915,13 +872,6 @@
       planningType.addEventListener('change', () => {
         updateWeightInputConstraints(true);
         updateCategory();
-      });
-      validatedToggle.addEventListener('change', updateGateView);
-
-      acceptGate.addEventListener('click', () => {
-        acceptGate.dataset.accepted = 'true';
-        acceptGate.textContent = 'Accepted';
-        saveState();
       });
 
       document.getElementById('quickLaunchBtn').addEventListener('click', () => {

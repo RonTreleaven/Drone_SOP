@@ -334,6 +334,7 @@ function renderIndex(sections) {
   const chosen    = new Set();
   const checkboxById = new Map();
   let activePresetIds = null;
+  const SOP_PREFLIGHT_STORAGE_KEY = 'drone-sop-working-copy-state';
 
   const presets = {
     micro: ['1_0_Micro_Pre-Flight', '2_0_Takeoff_Procedures', '3_0_Landing_Procedures'],
@@ -343,7 +344,7 @@ function renderIndex(sections) {
 
   const intro = document.createElement('div');
   intro.style.marginBottom = '1rem';
-  intro.innerHTML = '<strong>Choose a profile:</strong> Micro, Basic, or Advanced.';
+  intro.innerHTML = '<strong>Choose a profile:</strong>';
 
   const presetWrap = document.createElement('div');
   presetWrap.className = 'profile-badge-wrap';
@@ -400,7 +401,80 @@ function renderIndex(sections) {
 
   decisionWrap.append(acceptDefaultsBtn, addMoreBtn);
 
-  container.before(intro, presetWrap, promptLine, decisionWrap);
+  function readPreflightStatus() {
+    try {
+      const raw = localStorage.getItem(SOP_PREFLIGHT_STORAGE_KEY);
+      const data = raw ? JSON.parse(raw) : null;
+      const checks = (data && data.checks) || {};
+      const doneCount = ['airspace', 'weather', 'notam'].filter(key => !!checks[key]).length;
+
+      if (doneCount === 3) {
+        return {
+          state: 'ok',
+          label: 'Complete',
+          detail: 'All 3 Quick Pre-Flight checks are complete (NOTAM, Airspace, Weather).'
+        };
+      }
+
+      if (doneCount > 0) {
+        return {
+          state: 'warn',
+          label: 'In Progress',
+          detail: doneCount + '/3 Quick Pre-Flight checks complete (NOTAM, Airspace, Weather).'
+        };
+      }
+
+      return {
+        state: 'pending',
+        label: 'Not Started',
+        detail: 'Run Quick Pre-Flight checks (NOTAM, Airspace, Weather) before launching mission procedures.'
+      };
+    } catch (_err) {
+      return {
+        state: 'pending',
+        label: 'Not Started',
+        detail: 'Run Quick Pre-Flight checks (NOTAM, Airspace, Weather) before launching mission procedures.'
+      };
+    }
+  }
+
+  const utilityCard = document.createElement('section');
+  utilityCard.className = 'index-utility-card';
+
+  const utilityHeader = document.createElement('div');
+  utilityHeader.className = 'index-utility-header';
+
+  const utilityTitle = document.createElement('h3');
+  utilityTitle.textContent = 'Utility';
+
+  const preflightState = readPreflightStatus();
+  const utilityStatePill = document.createElement('span');
+  utilityStatePill.className = 'preflight-state preflight-state-' + preflightState.state;
+  utilityStatePill.innerHTML = '<span class="preflight-state-dot" aria-hidden="true"></span>Pre-Flight SOP: ' + preflightState.label;
+
+  utilityHeader.append(utilityTitle, utilityStatePill);
+
+  const utilityDetail = document.createElement('p');
+  utilityDetail.className = 'subtle';
+  utilityDetail.textContent = preflightState.detail;
+
+  const utilityActions = document.createElement('div');
+  utilityActions.className = 'index-utility-actions';
+
+  const preflightLink = document.createElement('a');
+  preflightLink.href = 'SOP.html';
+  preflightLink.className = 'index-utility-link index-utility-link-primary';
+  preflightLink.textContent = 'Open Quick Pre-Flight Checks';
+
+  const toolsLink = document.createElement('a');
+  toolsLink.href = 'tools.html';
+  toolsLink.className = 'index-utility-link';
+  toolsLink.textContent = 'Return to Tools';
+
+  utilityActions.append(preflightLink, toolsLink);
+  utilityCard.append(utilityHeader, utilityDetail, utilityActions);
+
+  container.before(intro, presetWrap, promptLine, decisionWrap, utilityCard);
 
   function getPersistedSelection() {
     const progress = safeParseJSON('droneSOPProgress', {});
@@ -487,7 +561,7 @@ function renderIndex(sections) {
 
   function hydrateSelectionsFromSession() {
     const restored = getPersistedSelection();
-    if (!restored.length) return;
+    if (!restored.length) return false;
 
     restored.forEach(id => {
       if (checkboxById.has(id)) chosen.add(id);
@@ -507,6 +581,7 @@ function renderIndex(sections) {
     activePresetIds = matchingPresetEntry ? [...matchingPresetEntry[1]] : null;
     updateProfileButtonState(matchingPresetEntry ? matchingPresetEntry[0] : null);
     updateStartActionHighlights();
+    return true;
   }
 
   sections.forEach(sec => {
@@ -555,7 +630,10 @@ function renderIndex(sections) {
 
   btn.addEventListener('click', () => beginWithSelection());
   updateBeginButtonState();
-  hydrateSelectionsFromSession();
+  const restoredSession = hydrateSelectionsFromSession();
+  if (!restoredSession) {
+    applyPreset('micro');
+  }
 
   setupIndexLocationCard();
 }

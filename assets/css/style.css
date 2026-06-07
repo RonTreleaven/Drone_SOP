@@ -178,6 +178,119 @@ button:hover:not(:disabled) { background: #005fa3; }
   display: block;
 }
 
+.index-utility-card {
+  margin: 0.35rem 0 1rem;
+  border: 1px solid #d7e3ef;
+  border-radius: 12px;
+  background: #f7fbff;
+  padding: 0.75rem 0.8rem;
+}
+
+.index-utility-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.index-utility-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #0f3a5d;
+}
+
+.preflight-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid #bfd0e2;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: #ffffff;
+  color: #1f4464;
+}
+
+.preflight-state-dot {
+  width: 0.58rem;
+  height: 0.58rem;
+  border-radius: 999px;
+  background: #9aa8b6;
+  box-shadow: 0 0 0 2px rgba(154, 168, 182, 0.25);
+}
+
+.preflight-state-ok {
+  border-color: #8bc59a;
+  color: #1e5d35;
+  background: #f2fbf5;
+}
+
+.preflight-state-ok .preflight-state-dot {
+  background: #2f9e44;
+  box-shadow: 0 0 0 2px rgba(47, 158, 68, 0.25);
+}
+
+.preflight-state-warn {
+  border-color: #e5c087;
+  color: #6f4d07;
+  background: #fff8e9;
+}
+
+.preflight-state-warn .preflight-state-dot {
+  background: #d17e00;
+  box-shadow: 0 0 0 2px rgba(209, 126, 0, 0.25);
+}
+
+.preflight-state-pending {
+  border-color: #c5d2df;
+  color: #425b72;
+  background: #f8fbff;
+}
+
+.preflight-state-pending .preflight-state-dot {
+  background: #6b7e90;
+  box-shadow: 0 0 0 2px rgba(107, 126, 144, 0.24);
+}
+
+.index-utility-actions {
+  margin-top: 0.55rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.index-utility-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: 1px solid #8fb2d0;
+  border-radius: 10px;
+  padding: 0.46rem 0.7rem;
+  background: #ffffff;
+  color: #0f4c78;
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+
+.index-utility-link:hover {
+  background: #edf6ff;
+  text-decoration: none;
+}
+
+.index-utility-link-primary {
+  background: #0f5a92;
+  border-color: #0f5a92;
+  color: #ffffff;
+}
+
+.index-utility-link-primary:hover {
+  background: #0d4f80;
+}
+
 /* ---- Print Styles ---- */
 @media print {
   /* hide nav + interactive buttons */
