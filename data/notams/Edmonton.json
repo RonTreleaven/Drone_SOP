@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0527/26 NOTAMR R0348/26\nQ) CZEG/QOLAS/IV/M/AE/000/035/5540N12135W005\nA) CYCQ B) 2606070505 C) 2608072359\nE) OBST LGT U/S TOWER 554007N 1213453W (APRX 1.9NM ESE AD) 180FT \nAGL, 3487FT AMSL.)",
+    "startValidity": "2026-06-07T05:05:00",
+    "endValidity": "2026-08-07T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "55.668611, -121.581389"
+    ]
+  },
+  {
     "raw": "(R0526/26 NOTAMR R0246/26\nQ) CZEG/QOLAS/IV/M/E/000/023/5406N11049W002\nA) CZEG B) 2606061907 C) 2609042359\nE) OBST LGT U/S TOWER 540608N 1104900W (APRX 10NM S BONNYVILLE \nHEALTH CENTRE (HELI) AD (CBN2)) 366FT AGL, 2282FT AMSL.)",
     "startValidity": "2026-06-06T19:07:00",
     "endValidity": "2026-09-04T23:59:00",
@@ -42,15 +51,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.310833, -110.198056"
-    ]
-  },
-  {
-    "raw": "(O1635/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/048/5111N11535W005\nA) CXXX B) 2606061400 C) 2606062100\nE) CBM7 BANFF MINERAL SPRINGS (HOSPITAL) (HELI)\nCRANE 511047N 1153436W (APRX 139FT W AD (CBM7)). 132FT AGL 4730FT \nAMSL. LGTD, PAINTED.)",
-    "startValidity": "2026-06-05T14:46:59.543",
-    "endValidity": "2026-06-06T21:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "51.179722, -115.576667"
     ]
   },
   {
@@ -600,15 +600,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.781389, -114.747778"
-    ]
-  },
-  {
-    "raw": "(R0348/26 NOTAMR R0158/26\nQ) CZEG/QOLAS/IV/M/AE/000/035/5540N12135W005\nA) CYCQ B) 2604120455 C) 2606122359\nE) OBST LGT U/S TOWER 554007N 1213453W (APRX 1.9NM ESE AD) 180FT \nAGL, 3487FT AMSL.)",
-    "startValidity": "2026-04-12T04:55:00",
-    "endValidity": "2026-06-12T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.668611, -121.581389"
     ]
   },
   {
