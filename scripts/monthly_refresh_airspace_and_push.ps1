@@ -35,6 +35,9 @@ if (-not $SkipRefresh) {
 
     Write-Log "Running refresh script: $refreshScript"
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $refreshScript 2>&1 | Tee-Object -FilePath $logPath -Append
+    if ($LASTEXITCODE -ne 0) {
+        throw "Refresh script failed with exit code $LASTEXITCODE."
+    }
     Write-Log "Refresh script completed."
 }
 else {
@@ -46,7 +49,7 @@ if ($LASTEXITCODE -ne 0 -or $insideRepo -ne "true") {
     throw "Current directory is not a git repository."
 }
 
-$pathsToStage = @(
+$corePathsToStage = @(
     "data/airspace/_sources/canadian_airspace.air",
     "data/airspace/_sources/airports.csv",
     "data/airspace/_sources/ca_asp.geojson",
@@ -55,17 +58,58 @@ $pathsToStage = @(
     "data/airspace/_derived/dah_gold_airspace.metadata.json",
     "data/airspace/_derived/dah_special_zones.geojson",
     "data/airspace/dah_gold_airspace.geojson",
-    "data/canadian_airspace.geojson",
-    "data/airspace/reports/monthly_refresh_*.log",
+    "data/canadian_airspace.geojson"
+)
+
+$logPathsToStage = @(
+    "data/airspace/reports/monthly_refresh_[0-9]*.log",
     "data/airspace/reports/dah*_moa_adiz_*.txt",
     "data/airspace/reports/dah*_moa_adiz_*.csv"
 )
 
-Write-Log "Staging refreshed airspace artifacts."
-git add -- $pathsToStage
-if ($LASTEXITCODE -ne 0) {
-    throw "git add failed."
+Write-Log "Staging core refreshed airspace artifacts."
+$coreStageFiles = @()
+foreach ($pattern in $corePathsToStage) {
+    $coreStageFiles += Get-ChildItem -Path $pattern -File -ErrorAction SilentlyContinue | ForEach-Object {
+        $_.FullName
+    }
 }
+
+if ($coreStageFiles.Count -gt 0) {
+    git add -- $coreStageFiles
+    if ($LASTEXITCODE -ne 0) {
+        throw "git add failed."
+    }
+}
+
+$coreStagedDiff = git diff --cached --name-only
+if ($LASTEXITCODE -ne 0) {
+    throw "Unable to inspect staged core changes."
+}
+
+if (-not $coreStagedDiff) {
+    Write-Log "No core data changes detected; skipping commit to avoid log-only churn."
+    Write-Log "Refresh-and-push run completed with no core git changes."
+    exit 0
+}
+
+Write-Log "Core changes detected; staging refresh logs for traceability."
+$logStageFiles = @()
+foreach ($pattern in $logPathsToStage) {
+    $logStageFiles += Get-ChildItem -Path $pattern -File -ErrorAction SilentlyContinue | ForEach-Object {
+        $_.FullName
+    }
+}
+
+if ($logStageFiles.Count -gt 0) {
+    git add -- $logStageFiles
+    if ($LASTEXITCODE -ne 0) {
+        throw "git add for log artifacts failed."
+    }
+}
+
+# Do not stage the currently written push log; it is still being appended.
+git restore --staged -- $logPath 2>$null
 
 $stagedDiff = git diff --cached --name-only
 if ($LASTEXITCODE -ne 0) {
@@ -95,10 +139,35 @@ if ($SkipPush) {
 }
 
 Write-Log "Pushing to $RemoteName/$BranchName"
-git push $RemoteName $BranchName 2>&1 | Tee-Object -FilePath $logPath -Append
-if ($LASTEXITCODE -ne 0) {
-    throw "git push failed. Ensure local credentials are configured for unattended pushes."
+$nativeErrPref = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
+$pushOutput = & git push $RemoteName $BranchName 2>&1
+$pushExit = $LASTEXITCODE
+$ErrorActionPreference = $nativeErrPref
+if ($pushOutput) {
+    $pushOutput | Tee-Object -FilePath $logPath -Append
+}
+if ($pushExit -ne 0) {
+    Write-Log "git push returned non-zero exit code: $pushExit"
+
+    $nativeErrPref = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    $fetchOutput = & git fetch $RemoteName $BranchName --quiet 2>&1
+    $ErrorActionPreference = $nativeErrPref
+    if ($fetchOutput) {
+        $fetchOutput | Tee-Object -FilePath $logPath -Append
+    }
+    $localHead = (git rev-parse HEAD).Trim()
+    $remoteHead = (git rev-parse "$RemoteName/$BranchName").Trim()
+
+    if ($localHead -eq $remoteHead) {
+        Write-Log "Remote is already at local HEAD despite non-zero push exit; continuing as success."
+    }
+    else {
+        throw "git push failed and remote is not at local HEAD. Ensure local credentials are configured for unattended pushes."
+    }
 }
 
 Write-Log "Push completed successfully."
 Write-Log "Refresh-and-push run completed."
+exit 0
