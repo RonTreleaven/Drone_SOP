@@ -155,6 +155,28 @@ Schedule:
 
 Monthly, first day, 06:00 local time.
 
+## 56-day automation (recommended)
+
+For an exact 56-day cadence, use the 8-week task registration helper:
+
+Register:
+
+powershell -NoProfile -ExecutionPolicy Bypass -File "scripts/register_airspace_refresh_56day_task.ps1" -Time "06:00"
+
+Optional day anchor (defaults to today):
+
+powershell -NoProfile -ExecutionPolicy Bypass -File "scripts/register_airspace_refresh_56day_task.ps1" -DayOfWeek "Friday" -Time "06:00"
+
+Remove task:
+
+powershell -NoProfile -ExecutionPolicy Bypass -File "scripts/unregister_airspace_refresh_56day_task.ps1"
+
+Notes:
+
+1. The registered task runs [scripts/monthly_refresh_airspace.ps1](scripts/monthly_refresh_airspace.ps1).
+2. Cadence is weekly every 8 weeks, which equals 56 days.
+3. If CA ASP/APT provider URLs are required for unattended pulls, set OPENAIP_CA_ASP_URL and OPENAIP_CA_APT_URL in the account environment used by Task Scheduler.
+
 ## Operational guardrails
 
 1. Do not feed GeoJSON into [scripts/parse_dah_openair.py](scripts/parse_dah_openair.py).
