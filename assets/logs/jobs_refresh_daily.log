@@ -3602,3 +3602,486 @@ KeyboardInterrupt
 [OK] Outputs: data\jobs.db, data\jobs.json, data\jobs_review.csv, data\jobs_review_latest.csv (fallback)
 [Mon 06/01/2026  9:41:13.90] Daily jobs refresh completed successfully
 
+==================================================
+[Fri 06/12/2026 13:30:12.72] Daily jobs refresh started
+[INFO] Updating jobs dataset...
+Cleared existing jobs table
+Selected sources: jobbank, simplyhired, talent, jobs_bear, greenhouse, lever
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=rpas+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=remote+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uas+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+survey&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=photogrammetry+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=lidar+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=geospatial+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+mapping&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=powerline+drone+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=infrastructure+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+videographer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=aerial+photographer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+photographer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+operations+coordinator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=rpas+platform+engineer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 6
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+field+engineer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uas+field+engineer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.simplyhired.ca/search?q=drone+pilot
+HTTP Status: 200
+Detail links found: 14
+ - Agricultural Drone Pilot
+ - UAV Pilot
+ - Advanced Drone Pilot
+ - Drone Spray Pilot
+ - Drone Pilot
+ - UAV (RPA) Safety Pilot - Test Site
+ - UAV Operator (Flight Mission Planner)
+
+Fetching: https://www.simplyhired.ca/search?q=uav+operator
+HTTP Status: 200
+Detail links found: 12
+ - UAV Pilot
+ - UAV Operator (Flight Mission Planner)
+ - UAS Field Engineer
+ - UAV (RPA) Safety Pilot - Test Site
+
+Fetching: https://www.simplyhired.ca/search?q=rpas+pilot
+HTTP Status: 200
+Detail links found: 20
+ - Contract RPAS Pilot/Aerial Survey Technician
+ - Drone Spray Pilot
+ - UAV (RPA) Safety Pilot - Test Site
+ - Drone Pilot
+ - Digital Automation & RPAS Program Lead (Chief Pilot)
+ - MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)
+
+Fetching: https://www.simplyhired.ca/search?q=remote+pilot
+HTTP Status: 200
+Detail links found: 20
+ - Contract RPAS Pilot/Aerial Survey Technician
+
+Fetching: https://www.simplyhired.ca/search?q=uas+operator
+HTTP Status: 200
+Detail links found: 3
+ - UAV Pilot
+ - UAS Field Engineer
+
+Fetching: https://www.simplyhired.ca/search?q=drone+survey
+HTTP Status: 200
+Detail links found: 20
+ - Contract RPAS Pilot/Aerial Survey Technician
+ - Surveying Drone Lead
+
+Fetching: https://www.simplyhired.ca/search?q=photogrammetry+drone
+HTTP Status: 200
+Detail links found: 15
+ - Contract RPAS Pilot/Aerial Survey Technician
+ - Drone Pilot
+ - Surveying Drone Lead
+
+Fetching: https://www.simplyhired.ca/search?q=lidar+drone
+HTTP Status: 200
+Detail links found: 20
+ - Contract RPAS Pilot/Aerial Survey Technician
+ - Drone Pilot
+ - Surveying Drone Lead
+
+Fetching: https://www.simplyhired.ca/search?q=geospatial+drone
+HTTP Status: 200
+Detail links found: 20
+ - Drone Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=uav+mapping
+HTTP Status: 200
+Detail links found: 17
+ - UAV Flight Controls Engineer (ArduPilot)
+
+Fetching: https://www.simplyhired.ca/search?q=drone+inspection
+HTTP Status: 200
+Detail links found: 20
+ - Appointment Setter / Drone Roof Inspector Trainee
+ - Advanced Drone Pilot
+ - UAV Pilot
+ - Drone Spray Pilot
+ - Drone Pilot
+ - UAV (RPA) Safety Pilot - Test Site
+ - Surveying Drone Lead
+
+Fetching: https://www.simplyhired.ca/search?q=uav+inspection
+HTTP Status: 200
+Detail links found: 20
+ - UAV Pilot
+ - UAV (RPA) Safety Pilot - Test Site
+ - UAV Flight Controls Engineer (ArduPilot)
+
+Fetching: https://www.simplyhired.ca/search?q=powerline+drone+inspection
+HTTP Status: 200
+Detail links found: 0
+
+Fetching: https://www.simplyhired.ca/search?q=infrastructure+drone
+HTTP Status: 200
+Detail links found: 20
+ - Contract RPAS Pilot/Aerial Survey Technician
+ - Drone Pilot
+ - UAV (RPA) Safety Pilot - Test Site
+
+Fetching: https://www.simplyhired.ca/search?q=drone+videographer
+HTTP Status: 200
+Detail links found: 20
+ - Toronto Event Drone Videographer Intern June
+
+Fetching: https://www.simplyhired.ca/search?q=aerial+photographer
+HTTP Status: 200
+Detail links found: 6
+
+Fetching: https://www.simplyhired.ca/search?q=drone+photographer
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://www.simplyhired.ca/search?q=uav+operations+coordinator
+HTTP Status: 200
+Detail links found: 5
+
+Fetching: https://www.simplyhired.ca/search?q=rpas+platform+engineer
+HTTP Status: 200
+Detail links found: 6
+ - UAS Field Engineer
+ - Digital Automation & RPAS Program Lead (Chief Pilot)
+
+Fetching: https://www.simplyhired.ca/search?q=drone+field+engineer
+HTTP Status: 200
+Detail links found: 20
+ - UAS Field Engineer
+
+Fetching: https://www.simplyhired.ca/search?q=uas+field+engineer
+HTTP Status: 200
+Detail links found: 6
+ - UAS Field Engineer
+ - UAS Technician
+
+Fetching: https://ca.talent.com/jobs?k=drone+pilot&l=Canada
+HTTP Status: 200
+Detail links found: 14
+
+Fetching: https://ca.talent.com/jobs?k=uav+operator&l=Canada
+HTTP Status: 200
+Detail links found: 17
+
+Fetching: https://ca.talent.com/jobs?k=rpas+pilot&l=Canada
+HTTP Status: 200
+Detail links found: 16
+Traceback (most recent call last):
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 1025, in <module>
+    run(reset=args.reset, sources=parse_sources(args.sources), no_write=args.no_write)
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 970, in run
+    collected.extend(source_fetchers[source]())
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 763, in fetch_talent
+    detail = fetch_url(link)
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 118, in fetch_url
+    response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=20)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\sessions.py", line 592, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\sessions.py", line 706, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\adapters.py", line 645, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connectionpool.py", line 1093, in _validate_conn
+    conn.connect()
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connection.py", line 796, in connect
+    sock_and_verified = _ssl_wrap_socket_and_match_hostname(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connection.py", line 975, in _ssl_wrap_socket_and_match_hostname
+    ssl_sock = ssl_wrap_socket(
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\util\ssl_.py", line 461, in ssl_wrap_socket
+    context.load_verify_locations(ca_certs, ca_cert_dir, ca_cert_data)
+KeyboardInterrupt
+^CTerminate batch job (Y/N)? 
+^C[INFO] Exporting JSON/CSV artifacts to data\...
+[OK] Job board data refreshed.
+[OK] Outputs: data\jobs.db, data\jobs.json, data\jobs_review.csv, data\jobs_review_latest.csv (fallback)
+[Fri 06/12/2026 13:41:04.33] Daily jobs refresh completed successfully
+
+==================================================
+[Fri 06/12/2026 13:41:18.41] Daily jobs refresh started
+[INFO] Updating jobs dataset...
+Cleared existing jobs table
+Selected sources: jobbank, simplyhired, talent, jobs_bear, greenhouse, lever
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=rpas+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=remote+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uas+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+survey&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=photogrammetry+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+Traceback (most recent call last):
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 1025, in <module>
+    run(reset=args.reset, sources=parse_sources(args.sources), no_write=args.no_write)
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 970, in run
+    collected.extend(source_fetchers[source]())
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 699, in fetch_jobbank
+    parsed = enrich_jobbank_with_detail(parsed)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 331, in enrich_jobbank_with_detail
+    detail = fetch_url(base_job["link"])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 118, in fetch_url
+    response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=20)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\sessions.py", line 592, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\sessions.py", line 706, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\adapters.py", line 645, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connection.py", line 571, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
+    response.begin()
+  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\ssl.py", line 1251, in recv_into
+    return self.read(nbytes, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\ssl.py", line 1103, in read
+    return self._sslobj.read(len, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+^CTerminate batch job (Y/N)? Terminate batch job (Y/N)? 
+^CThe syntax of the command is incorrect.
+==================================================
+[Fri 06/12/2026 13:42:32.61] Daily jobs refresh started
+[INFO] Updating jobs dataset...
+Cleared existing jobs table
+Selected sources: jobbank, simplyhired, talent, jobs_bear, greenhouse, lever
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=rpas+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=remote+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uas+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+survey&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=photogrammetry+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=lidar+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=geospatial+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+mapping&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+Traceback (most recent call last):
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 1025, in <module>
+    run(reset=args.reset, sources=parse_sources(args.sources), no_write=args.no_write)
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 970, in run
+    collected.extend(source_fetchers[source]())
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 699, in fetch_jobbank
+    parsed = enrich_jobbank_with_detail(parsed)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 331, in enrich_jobbank_with_detail
+    detail = fetch_url(base_job["link"])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 118, in fetch_url
+    response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=20)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\sessions.py", line 592, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\sessions.py", line 706, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\adapters.py", line 645, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connection.py", line 571, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
+    response.begin()
+  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\ssl.py", line 1251, in recv_into
+    return self.read(nbytes, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\ssl.py", line 1103, in read
+    return self._sslobj.read(len, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+^CTerminate batch job (Y/N)? 
+^CThe syntax of the command is incorrect.
