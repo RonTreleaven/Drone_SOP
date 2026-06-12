@@ -2,9 +2,9 @@
   "source_file": "C:\\Users\\Ron Treleaven\\Drone_SOP\\data\\airspace\\_sources\\canadian_airspace.air",
   "source_url": "https://www.navcanada.ca/en/dah20260514.pdf",
   "publication_date": "20260514",
-  "issue": "319",
-  "valid": "22 JANUARY 2026 to 19 MARCH 2026",
-  "feature_count": 710,
+  "issue": "321",
+  "valid": "14 MAY 2026 to 09 JULY 2026",
+  "feature_count": 709,
   "filters": {
     "classes": [
       "D",

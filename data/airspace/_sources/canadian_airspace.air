@@ -1,6 +1,6 @@
 *                              Canadian Airspace                               *
 *                                                                              *
-*                       Created Fri May  8 21:13:13 2026                       *
+*                       Created Fri Jun  5 10:24:53 2026                       *
 *           Extracted from the Canadian Designated Airspace Handbook           *
 *                   In Open Air Special Use Airspace Format                    *
 *                      Using the parsing program cdah.py                       *
@@ -23,9 +23,9 @@
 *                                                                              *
 
 * Source: Canadian Designated Airspace Handbook
-* Issue: 319
-* Valid: 22 JANUARY 2026 to 19 MARCH 2026
-* Created: Fri May  8 21:13:12 2026
+* Issue: 321
+* Valid: 14 MAY 2026 to 09 JULY 2026
+* Created: Fri Jun  5 10:24:52 2026
 
 
 AC E
@@ -6402,10 +6402,10 @@ DB 50:10:44.6N 98:36:25.0W, 50:12:51.9N 98:01:37.5W
 
 
 AC C
-AN Winnipeg/James Armstrong Richardson Intl, MB [CZ]
+AN The airspace to 5000ft (3300ft AAE) within the area bounded by a line beginning at: N52°16'43.85" W106°37'44.94" thence clockwise along the arc of a circle of 7 miles radius centred on N52°10'15.00" W106°41'59.00" (Saskatoon/John G. Diefenbaker Intl, SK - AD) to N52°17'08.75" W106°43'47.45" to N52°15'12.88" W106°42'41.64" thence clockwise along the arc of a circle of 5 miles radius centred on N52°10'15.00" W106°41'59.00" (Saskatoon/John G. Diefenbaker Intl, SK - AD) to N52°14'52.11" W106°38'55.32" to N52°16'43.85" W106°37'44.94" point of beginning Winnipeg/James Armstrong Richardson Intl, MB [CZ]
 AL SFC
 AH 3000MSL
-* CDAH section: 3.3.4-3
+* CDAH section: 3.3.4-4
 * Transponder required
 * Canadian airspace type: Control Zone [CZ]
 * (2200ft AAE)
@@ -6419,7 +6419,7 @@ AC D
 AN Moose Jaw, SK [CZ]
 AL SFC
 AH 8000MSL
-* CDAH section: 3.3.4-6
+* CDAH section: 3.3.4-7
 * Canadian airspace type: Control Zone [CZ]
 * (6100ft AAE)
 * Altitudes: SFC to 8000ft (6100ft AAE)
@@ -6442,7 +6442,7 @@ AC D
 AN Regina Intl, SK [CZ]
 AL SFC
 AH 5000MSL
-* CDAH section: 3.3.4-8
+* CDAH section: 3.3.4-9
 * Canadian airspace type: Control Zone [CZ]
 * (3100ft AAE)
 * Altitudes: SFC to 5000ft (3100ft AAE)
@@ -6452,23 +6452,10 @@ DC 5
 
 
 AC D
-AN Saskatoon/John G. Diefenbaker Intl, SK [CZ]
-AL SFC
-AH 5000MSL
-* CDAH section: 3.3.4-10
-* Canadian airspace type: Control Zone [CZ]
-* (3300ft AAE)
-* Altitudes: SFC to 5000ft (3300ft AAE)
-V X= 52:10:15.0N 106:41:59.0W
-DC 5
-*  (Saskatoon/John G. Diefenbaker Intl, SK - AD)
-
-
-AC D
 AN Southport, MB [CZ]
 AL SFC
 AH 4000MSL
-* CDAH section: 3.3.4-12
+* CDAH section: 3.3.4-11
 * Transponder required (3.3.5-10)
 * Canadian airspace type: Control Zone [CZ]
 * (3100ft AAE)
@@ -6486,7 +6473,7 @@ AC D
 AN St. Andrews, MB [CZ]
 AL SFC
 AH 3000MSL
-* CDAH section: 3.3.4-14
+* CDAH section: 3.3.4-13
 * Canadian airspace type: Control Zone [CZ]
 * (2200ft AAE)
 * Altitudes: SFC to 3000ft (2200ft AAE)
@@ -6512,7 +6499,7 @@ AC D
 AN Thunder Bay, ON [CZ]
 AL SFC
 AH 4000MSL
-* CDAH section: 3.3.4-16
+* CDAH section: 3.3.4-15
 * Canadian airspace type: Control Zone [CZ]
 * (3300ft AAE)
 * Altitudes: SFC to 4000ft (3300ft AAE)
@@ -6525,7 +6512,7 @@ AC E
 AN Brandon Muni, MB [CZ]
 AL SFC
 AH 4000MSL
-* CDAH section: 3.3.4-19
+* CDAH section: 3.3.4-18
 * Canadian airspace type: Control Zone [CZ]
 * (2700ft AAE)
 * Altitudes: SFC to 4000ft (2700ft AAE)
@@ -6538,7 +6525,7 @@ AC E
 AN Churchill, MB [CZ]
 AL SFC
 AH 3000MSL
-* CDAH section: 3.3.4-21
+* CDAH section: 3.3.4-20
 * Canadian airspace type: Control Zone [CZ]
 * (2900ft AAE)
 * Altitudes: SFC to 3000ft (2900ft AAE)
@@ -6551,7 +6538,7 @@ AC E
 AN Dauphin, MB [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-23
+* CDAH section: 3.3.4-22
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 51:06:03.0N 100:03:09.0W
@@ -6563,7 +6550,7 @@ AC E
 AN Dryden Regional, ON [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-25
+* CDAH section: 3.3.4-24
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 49:49:54.0N 92:44:39.0W
@@ -6575,7 +6562,7 @@ AC E
 AN Flin Flon, MB [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-27
+* CDAH section: 3.3.4-26
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 54:40:41.0N 101:40:54.0W
@@ -6587,7 +6574,7 @@ AC E
 AN Geraldton (Greenstone Regional), ON [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-29
+* CDAH section: 3.3.4-28
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 49:46:42.0N 86:56:22.0W
@@ -6599,7 +6586,7 @@ AC E
 AN Gillam, MB [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-31
+* CDAH section: 3.3.4-30
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 56:21:27.0N 94:42:38.0W
@@ -6611,7 +6598,7 @@ AC E
 AN Kenora, ON [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-33
+* CDAH section: 3.3.4-32
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 49:47:18.0N 94:21:47.0W
@@ -6623,7 +6610,7 @@ AC E
 AN La Ronge (Barber Field), SK [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-35
+* CDAH section: 3.3.4-34
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 55:09:05.0N 105:15:43.0W
@@ -6635,7 +6622,7 @@ AC E
 AN Lynn Lake, MB [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-37
+* CDAH section: 3.3.4-36
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 56:51:50.0N 101:04:34.0W
@@ -6647,7 +6634,7 @@ AC E
 AN North Battleford (Cameron McIntosh), SK [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-39
+* CDAH section: 3.3.4-38
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 52:46:09.0N 108:14:37.0W
@@ -6659,7 +6646,7 @@ AC E
 AN Norway House, MB [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-41
+* CDAH section: 3.3.4-40
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 53:57:30.0N 97:50:39.0W
@@ -6671,7 +6658,7 @@ AC E
 AN Prince Albert (Glass Field), SK [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-43
+* CDAH section: 3.3.4-42
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 53:12:51.0N 105:40:22.0W
@@ -6683,7 +6670,7 @@ AC E
 AN Red Lake, ON [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-45
+* CDAH section: 3.3.4-44
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 51:03:40.0N 93:47:05.0W
@@ -6695,7 +6682,7 @@ AC E
 AN Sioux Lookout, ON a) [CZ]
 AL SFC
 AH 700AGL
-* CDAH section: 3.3.4-47
+* CDAH section: 3.3.4-46
 * Transponder required (3.3.5-17)
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 700ft AGL
@@ -6712,7 +6699,7 @@ AC E
 AN Sioux Lookout, ON b) [CZ]
 AL 700AGL
 AH 3000AGL
-* CDAH section: 3.3.4-48
+* CDAH section: 3.3.4-47
 * Transponder required (3.3.5-17)
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: 700ft AGL to 3000ft AGL
@@ -6725,7 +6712,7 @@ AC E
 AN Swift Current, SK [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-50
+* CDAH section: 3.3.4-49
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 50:17:31.0N 107:41:26.0W
@@ -6737,7 +6724,7 @@ AC E
 AN The Pas, MB [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-52
+* CDAH section: 3.3.4-51
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 53:58:17.0N 101:05:28.0W
@@ -6749,7 +6736,7 @@ AC E
 AN Thompson, MB [CZ]
 AL SFC
 AH 4000MSL
-* CDAH section: 3.3.4-54
+* CDAH section: 3.3.4-53
 * Canadian airspace type: Control Zone [CZ]
 * (3300ft AAE)
 * Altitudes: SFC to 4000ft (3300ft AAE)
@@ -6762,7 +6749,7 @@ AC E
 AN Yorkton Muni, SK [CZ]
 AL SFC
 AH 3000AGL
-* CDAH section: 3.3.4-56
+* CDAH section: 3.3.4-55
 * Canadian airspace type: Control Zone [CZ]
 * Altitudes: SFC to 3000ft AGL
 V X= 51:15:53.0N 102:27:42.0W
@@ -6774,7 +6761,7 @@ AC E
 AN Falls Intl, MN c) [CZ]
 AL SFC
 AH 14500MSL
-* CDAH section: 3.3.4-60
+* CDAH section: 3.3.4-59
 * Canadian airspace type: Control Zone [CZ]
 * CLASS=B above 12500ft
 * Altitudes: SFC to 14500ft
@@ -15211,10 +15198,11 @@ AH 3000MSL
 * Canadian airspace type: Control Zone [CZ]
 * (2900ft AAE)
 * Altitudes: SFC to 3000ft (2900ft AAE)
-DP 45:34:51.5N 73:28:28.4W
-DP 45:32:35.9N 73:30:35.4W
-DP 45:31:58.4N 73:31:22.4W
-DP 45:29:40.6N 73:30:48.5W
+DP 45:35:44.9N 73:31:21.9W
+DP 45:35:07.5N 73:29:20.4W
+DP 45:31:55.0N 73:32:02.0W
+DP 45:30:25.0N 73:32:19.0W
+DP 45:29:29.0N 73:31:49.0W
 DP 45:28:03.8N 73:31:58.3W
 DP 45:27:46.8N 73:32:20.7W
 DP 45:27:33.5N 73:32:23.0W
@@ -15231,7 +15219,6 @@ DB 45:21:31.5N 73:41:00.8W, 45:35:03.9N 73:45:10.8W
 * Radius = 7
 *  (Montréal/Pierre Elliott Trudeau Intl, QC - AD)
 DP 45:35:44.9N 73:31:21.9W
-DP 45:34:51.5N 73:28:28.4W
 
 
 AC C
@@ -15354,9 +15341,10 @@ DP 45:26:55.1N 73:32:53.0W
 DP 45:27:33.5N 73:32:23.0W
 DP 45:27:46.8N 73:32:20.7W
 DP 45:28:03.8N 73:31:58.3W
-DP 45:29:40.6N 73:30:48.5W
-DP 45:31:58.4N 73:31:22.4W
-DP 45:32:35.9N 73:30:35.4W
+DP 45:29:29.0N 73:31:49.0W
+DP 45:30:25.0N 73:32:19.0W
+DP 45:31:55.0N 73:32:02.0W
+DP 45:35:07.5N 73:29:20.4W
 DP 45:34:51.5N 73:28:28.4W
 DP 45:35:56.5N 73:27:25.6W
 DP 45:37:10.9N 73:27:29.6W
@@ -25578,10 +25566,10 @@ AL SFC
 AH 10000MSL
 * Canadian airspace type: Restricted Area [CYR]
 * Designated Altitude - Surface to 10000ft
-* Time of Designation - Ocsl by NOTAM, August 1 to May 31, 24 hr PN
+* Time of Designation - Ocsl by NOTAM, 24 hr PN
 * User Agency - The Village of Foremost (403) 488-7208 or (406) 890-4514
 * Controlling Agency - Edmonton ACC (780) 890-8397
-* Operating Procedures - No person shall operate an aircraft within the area described unless the flight has been authorized by the User/Controlling Agency.
+* Operating Procedures - No person shall operate an aircraft within the area described unless the flight has been authorized by the User/Controlling Agency. Access to this airspace shall be granted to aircraft conducting aerial application for agricultural purposes upon request.
 DP 49:31:25.0N 111:51:59.8W
 DP 49:31:25.0N 111:48:00.0W
 DP 49:29:40.0N 111:48:00.0W
@@ -25602,10 +25590,10 @@ AL 4000MSL
 AH 10000MSL
 * Canadian airspace type: Restricted Area [CYR]
 * Designated Altitude - 4000ft to 10000ft
-* Time of Designation - Ocsl by NOTAM, August 1 to May 31, 24 hr PN
+* Time of Designation - Ocsl by NOTAM, 24 hr PN
 * User Agency - The Village of Foremost (403) 488-7208 or (406) 890-4514
 * Controlling Agency - Edmonton ACC (780) 890-8397
-* Operating Procedures - No person shall operate an aircraft within the area described unless the flight has been authorized by the User/Controlling Agency.
+* Operating Procedures - No person shall operate an aircraft within the area described unless the flight has been authorized by the User/Controlling Agency. Access to this airspace shall be granted to aircraft conducting aerial application for agricultural purposes upon request.
 DP 49:27:53.9N 111:26:26.3W
 DP 49:27:53.9N 111:13:00.0W
 DP 49:28:44.7N 111:13:00.0W
@@ -25626,7 +25614,7 @@ AL 10000MSL
 AH 18000MSL
 * Canadian airspace type: Restricted Area [CYR]
 * Designated Altitude - 10000ft to 18000ft
-* Time of Designation - Ocsl by NOTAM, August 1 to May 31, 24 hr PN
+* Time of Designation - Ocsl by NOTAM, 24 hr PN
 * User Agency - The Village of Foremost (403) 488-7208 or (406) 890-4514
 * Controlling Agency - Edmonton ACC (780) 890-8397
 * Operating Procedures - No person shall operate an aircraft within the area described unless the flight has been authorized by the User/Controlling Agency.
