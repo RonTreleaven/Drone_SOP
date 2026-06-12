@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0541/26 NOTAMR R0483/26\nQ) CZEG/QOLAS/IV/M/E/000/042/5402N11543W002\nA) CZEG B) 2606120504 C) 2608122359\nE) OBST LGT U/S TOWER 540205N 1154257W (APRX 7NM SE WHITECOURT AD \n(CYZU)) 320FT AGL, 4133FT AMSL.)",
+    "startValidity": "2026-06-12T05:04:00",
+    "endValidity": "2026-08-12T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "54.034722, -115.715833"
+    ]
+  },
+  {
     "raw": "(C2258/26 NOTAMR C1828/26\nQ) CZEG/QOBCE/IV/M/AE/000/025/5321N11333W005\nA) CYEG B) 2606111638 C) 2606262200\nD) DAILY 1300-2200\nE) MOBILE CRANE WITHIN 144FT RADIUS CENTRED ON 532056N 1133306W APRX \n1.1NM BFR THR 20 AND 390FT WEST EXTENDED RCL. 99FT AGL 2438FT \nAMSL. NOT LGTD, NOT PAINTED.)",
     "startValidity": "2026-06-11T16:38:00",
     "endValidity": "2026-06-26T22:00:00",
@@ -9,30 +18,12 @@
     ]
   },
   {
-    "raw": "(C2257/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/007/6228N11421W005\nA) CYZF B) 2606111616 C) 2606120015\nE) CRANE 622746N 1142058W APRX 2NM BFR THR 28 AND 4970FT NORTH \nEXTENDED RCL. 100FT AGL 690FT AMSL. LGTD, PAINTED.)",
-    "startValidity": "2026-06-11T16:16:00",
-    "endValidity": "2026-06-12T00:15:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "62.462778, -114.349444"
-    ]
-  },
-  {
     "raw": "(C2254/26 NOTAMN\nQ) CZEG/QOBTT/IV/BO/AE/000/040/5107N11401W030\nA) CYYC B) 2606111245 C) 2606242359\nE) TRIGGER NOTAM - AIP SUP 049/2026 WEF 11 JUN 2026. \nCRANES - WITHIN 30 NAUTICAL MILES OF CALGARY / YYC CALGARY INTL \nAIRPORT (CYYC)",
     "startValidity": "2026-06-11T12:45:00",
     "endValidity": "2026-06-24T23:59:00",
     "q_code": "QOBTT",
     "coordinates_dd": [
       "51.116667, -114.016667"
-    ]
-  },
-  {
-    "raw": "(R0537/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/036/5237N11439W002\nA) CZEG B) 2606120601 C) 2606121001\nE) OBST LGT U/S TOWER 523659N 1143851W (APRX 15NM NNE ROCKY MOUNTAIN \nHOUSE AD (CYRM)) 349FT AGL, 3592FT AMSL.)",
-    "startValidity": "2026-06-10T23:56:28.753",
-    "endValidity": "2026-06-12T10:01:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.616389, -114.647500"
     ]
   },
   {
@@ -60,15 +51,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "55.180278, -118.826389"
-    ]
-  },
-  {
-    "raw": "(R0531/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/002/6248N09205W005\nA) CYRT B) 2606090609 C) 2606112100\nE) OBST LGT U/S TOWER 624826N 0920435W (APRX 1.07NM ESE AD) 101FT \nAGL, 183FT AMSL.)",
-    "startValidity": "2026-06-09T06:09:00",
-    "endValidity": "2026-06-11T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "62.807222, -92.076389"
     ]
   },
   {
@@ -195,15 +177,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.213333, -114.121944"
-    ]
-  },
-  {
-    "raw": "(R0483/26 NOTAMR R0323/26\nQ) CZEG/QOLAS/IV/M/E/000/042/5402N11543W002\nA) CZEG B) 2605290502 C) 2607292359\nE) OBST LGT U/S TOWER 540205N 1154257W (APRX 7NM SE WHITECOURT AD \n(CYZU)) 320FT AGL, 4133FT AMSL.)",
-    "startValidity": "2026-05-29T05:02:00",
-    "endValidity": "2026-07-29T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "54.034722, -115.715833"
     ]
   },
   {
