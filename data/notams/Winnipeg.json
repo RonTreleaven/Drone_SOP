@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U1039/26 NOTAMR U0698/26\nQ) CZWG/QOLAS/IV/M/E/000/014/4958N09655W002\nA) CZWG B) 2606130758 C) 2608132359\nE) OBST LGT U/S TOWER 495817N 0965446W (APRX 7NM SE WINNIPEG/ST. \nANDREWS AD (CYAV)) 501FT AGL, 1327FT AMSL.)",
+    "startValidity": "2026-06-13T07:58:00",
+    "endValidity": "2026-08-13T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.971389, -96.912778"
+    ]
+  },
+  {
     "raw": "(U1032/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/025/4940N10421W002\nA) CZWG B) 2606112325 C) 2609091800\nE) OBST LGT U/S TOWER 493941N 1042124W (APRX 12NM ENE PANGMAN AD \n(CKC9)) 351FT AGL, 2465FT AMSL.)",
     "startValidity": "2026-06-11T23:25:00",
     "endValidity": "2026-09-09T18:00:00",
@@ -96,15 +105,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.121667, -108.505278"
-    ]
-  },
-  {
-    "raw": "(J3658/26 NOTAMN\nQ) CZWG/QOBCE/IV/M/AE/000/019/5312N10547W005\nA) CXXX B) 2606031300 C) 2606122300\nE) CAL6 PRINCE ALBERT (FIRE CENTRE) (HELI)\nMOBILE CRANE WITHIN 344FT RADIUS CENTRED ON 531135N 1054705W \n(APRX 2.4NM SSW AD (CAL6)). 316FT AGL 1812FT AMSL. LGTD, NOT \nPAINTED.)",
-    "startValidity": "2026-06-02T18:31:38.674",
-    "endValidity": "2026-06-12T23:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "53.193056, -105.784722"
     ]
   },
   {
@@ -429,15 +429,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.357778, -89.294722"
-    ]
-  },
-  {
-    "raw": "(U0698/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/014/4958N09655W002\nA) CZWG B) 2604180958 C) 2606181200\nE) OBST LGT U/S TOWER 495817N 0965446W (APRX 7NM SE WINNIPEG/ST. \nANDREWS AD (CYAV)) 501FT AGL, 1327FT AMSL.)",
-    "startValidity": "2026-04-18T09:58:00",
-    "endValidity": "2026-06-18T12:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.971389, -96.912778"
     ]
   },
   {
