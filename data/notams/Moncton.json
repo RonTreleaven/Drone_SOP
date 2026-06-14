@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(V0698/26 NOTAMN\nQ) CZQM/QOLAS/IV/M/E/000/005/4749N06509W002\nA) CZQM B) 2606141101 C) 2609112100\nE) OBST LGT U/S TOWER 474902N 0650849W (APRX 12NM NW POKEMOUCHE AD \n(CDA4)) 400FT AGL, 435FT AMSL.)",
+    "startValidity": "2026-06-14T11:01:00",
+    "endValidity": "2026-09-11T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "47.817222, -65.146944"
+    ]
+  },
+  {
     "raw": "(K1914/26 NOTAMN\nQ) CZQM/QOBCE/IV/M/AE/000/004/4551N06627W005\nA) CYFC B) 2606111806 C) 2609111800EST\nE) MOBILE CRANE WITHIN 1000FT RADIUS CENTRED ON 455043N 0662716W \n(APRX 3.7NM SE AD (CYFC)). 226FT AGL 392FT AMSL. NOT LGTD, \nPAINTED.)",
     "startValidity": "2026-06-11T18:06:00",
     "endValidity": null,
@@ -63,21 +72,21 @@
     ]
   },
   {
-    "raw": "(V0598/26 NOTAMR V0590/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2605261352 C) 2608251400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
-    "startValidity": "2026-05-26T13:52:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.647222, -61.455000"
-    ]
-  },
-  {
     "raw": "(V0597/26 NOTAMR V0591/26\nQ) CZQM/QOLAS/IV/M/AE/000/005/4540N06125W005\nA) CYPD B) 2605261352 C) 2608251400EST\nE) OBST LGT U/S TOWER 453935N 0612515W (APRX 2.2NM WNW AD) 391FT \nAGL, 426FT AMSL.)",
     "startValidity": "2026-05-26T13:52:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.659722, -61.420833"
+    ]
+  },
+  {
+    "raw": "(V0598/26 NOTAMR V0590/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2605261352 C) 2608251400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
+    "startValidity": "2026-05-26T13:52:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.647222, -61.455000"
     ]
   },
   {
