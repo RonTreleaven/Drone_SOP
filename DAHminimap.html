@@ -796,11 +796,9 @@
       <section class="group">
         <h2>Airspace Filters</h2>
         <div class="row">
-          <label><input type="checkbox" class="class-filter" value="A"> A</label>
-          <label><input type="checkbox" class="class-filter" value="B"> B</label>
-          <label><input type="checkbox" class="class-filter" value="C"> C</label>
+          <label><input type="checkbox" class="class-filter" value="C" checked> C</label>
           <label><input type="checkbox" class="class-filter" value="D" checked> D</label>
-          <label><input type="checkbox" class="class-filter" value="E"> E</label>
+          <label><input type="checkbox" class="class-filter" value="E" checked> E</label>
           <label><input type="checkbox" class="class-filter" value="F" checked> F</label>
         </div>
         <div class="row">
@@ -812,15 +810,9 @@
           <label><input type="checkbox" class="type-filter" value="DANGER" checked> CYD Danger</label>
           <label><input type="checkbox" class="type-filter" value="ADVISORY" checked> CYA Advisory</label>
           <label><input type="checkbox" class="type-filter" value="CONTROL_ZONE" checked> Control Zone</label>
-          <label><input type="checkbox" class="type-filter" value="MOA"> MOA</label>
-          <label><input type="checkbox" class="type-filter" value="ADIZ"> ADIZ</label>
+          <label><input type="checkbox" class="type-filter" value="MOA" checked> MOA</label>
+          <label><input type="checkbox" class="type-filter" value="ADIZ" checked> ADIZ</label>
           <label><input type="checkbox" class="type-filter" value="OTHER" checked> Other</label>
-        </div>
-        <div class="row">
-          <label><input type="checkbox" id="droneOpsFocusToggle" checked> Drone Focus: hide higher-floor contextual airspace (&gt;400 ft AGL)</label>
-        </div>
-        <div class="row">
-          <label><input type="checkbox" id="includeContextualSummaryToggle"> Include all-class contextual airspace in summary</label>
         </div>
         <div class="row">
           <button id="typeCheckAll">Type Check</button>
@@ -1099,6 +1091,7 @@
         label: "Large Airport",
         markerColor: "darkblue",
         icon: "plane",
+        markerSize: 30,
         circleColor: "#e53935",
         circleRadiusNm: 5,
         circleFillOpacity: 0.08
@@ -1107,6 +1100,7 @@
         label: "Medium Airport",
         markerColor: "#fb8c00",
         icon: "plane-departure",
+        markerSize: 30,
         circleColor: "#fb8c00",
         circleRadiusNm: 3,
         circleFillOpacity: 0.1
@@ -1123,6 +1117,7 @@
         label: "Heliport",
         markerColor: "#00897b",
         icon: "helicopter",
+        markerSize: 30,
         circleColor: "#00897b",
         circleRadiusNm: 1,
         circleFillOpacity: 0.1
@@ -1168,6 +1163,7 @@
     let hasPromptedGpsOnNoPilot = false;
     let mapHoverTip = null;
     let lastHoverProbeMs = 0;
+    const AIRSPACE_ARTIFACT_STORAGE_KEY = "dahAirspaceLatest";
 
     const FILTER_GROUP_UI_DEFAULTS = {
       "status": { collapsed: false, toggle: true },
@@ -1323,14 +1319,6 @@
 
     function selectedAirportTypeSet() {
       return new Set(Array.from(document.querySelectorAll(".airport-type-filter:checked")).map((el) => el.value));
-    }
-
-    function droneOpsFocusEnabled() {
-      return !!document.getElementById("droneOpsFocusToggle")?.checked;
-    }
-
-    function includeContextualSummaryHits() {
-      return !!document.getElementById("includeContextualSummaryToggle")?.checked;
     }
 
     function validLatLon(lat, lon) {
@@ -1887,12 +1875,16 @@
       clearAirportLayers();
 
       function buildAirportIcon(cfg) {
+        const size = Number(cfg.markerSize) > 0 ? Number(cfg.markerSize) : 22;
+        const half = Math.round(size / 2);
+        const pinSize = Math.max(16, Math.round(size));
+        const glyphSize = Math.max(10, Math.round(pinSize * 0.48));
         return L.divIcon({
           className: "airport-fallback-icon",
-          html: "<span class='airport-type-pin' style='background:" + cfg.markerColor + "'><i class='fa-solid fa-" + cfg.icon + "'></i></span>",
-          iconSize: [22, 22],
-          iconAnchor: [11, 11],
-          popupAnchor: [0, -10]
+          html: "<span class='airport-type-pin' style='background:" + cfg.markerColor + ";width:" + pinSize + "px;height:" + pinSize + "px;font-size:" + glyphSize + "px;'><i class='fa-solid fa-" + cfg.icon + "'></i></span>",
+          iconSize: [size, size],
+          iconAnchor: [half, half],
+          popupAnchor: [0, -(half - 1)]
         });
       }
 
@@ -2124,48 +2116,12 @@
       const type = featureType(p);
       if (!types.has(type)) return false;
 
-      if (droneOpsFocusEnabled() && !isDroneRelevantAirspaceFeature(feature)) {
-        return false;
-      }
-
       // Keep key operational CYR/CYD/CYA overlays visible independently of class filters.
       if (type === "RESTRICTED" || type === "DANGER" || type === "ADVISORY") {
         return true;
       }
 
       return classes.has(String(p.class || "").toUpperCase());
-    }
-
-    function parseLowerLimitAglFeet(feature) {
-      const p = (feature && feature.properties) || {};
-      const raw = String(p.lower || "").trim().toUpperCase();
-      if (!raw) return null;
-      if (/\b(SFC|SURFACE|GND|GROUND)\b/.test(raw)) return 0;
-      if (!/\bAGL\b/.test(raw)) return null;
-
-      const m = raw.match(/(-?\d+(?:\.\d+)?)/);
-      if (!m) return null;
-      const value = Number(m[1]);
-      if (!Number.isFinite(value)) return null;
-
-      const inMeters = /\b(M|METER|METERS|METRE|METRES)\b/.test(raw);
-      return inMeters ? (value * 3.28084) : value;
-    }
-
-    function isDroneRelevantAirspaceFeature(feature) {
-      if (!droneOpsFocusEnabled()) return true;
-
-      const p = (feature && feature.properties) || {};
-      const type = featureType(p);
-      const cls = String(p.class || "").trim().toUpperCase();
-
-      // Keep high-priority drone safety layers visible.
-      if (type === "RESTRICTED" || type === "DANGER" || type === "ADVISORY" || type === "CONTROL_ZONE") return true;
-      if (cls === "D" || cls === "F") return true;
-
-      const lowerAglFt = parseLowerLimitAglFeet(feature);
-      if (!Number.isFinite(lowerAglFt)) return true;
-      return lowerAglFt <= 400;
     }
 
     function updateTypeFilterAvailability() {
@@ -2720,18 +2676,6 @@
       return hits;
     }
 
-    function findAllAirspaceHits(lat, lon) {
-      if (!sourceData || !Array.isArray(sourceData.features)) return [];
-      const hits = [];
-      sourceData.features.forEach((feature) => {
-        const g = feature.geometry || {};
-        if (pointInGeometry(lat, lon, g)) {
-          hits.push(feature);
-        }
-      });
-      return hits;
-    }
-
     function haversineDistanceMeters(lat1, lon1, lat2, lon2) {
       const R = 6371000;
       const p1 = (lat1 * Math.PI) / 180;
@@ -2788,9 +2732,6 @@
       };
 
       const filteredHits = findHits(lat, lon);
-      const allHitsRaw = findAllAirspaceHits(lat, lon);
-      const allHitsDroneScoped = allHitsRaw.filter((f) => isDroneRelevantAirspaceFeature(f));
-      const allHits = includeContextualSummaryHits() ? allHitsRaw : filteredHits;
       const labels = [];
       const seen = new Set();
       filteredHits.slice(0, 4).forEach((f) => {
@@ -2812,24 +2753,18 @@
         parts.push(filteredSummary);
       }
 
-      let hiddenByFilterSummary = "";
-      if (!filteredHits.length && allHitsDroneScoped.length) {
-        hiddenByFilterSummary = "Note: " + allHitsDroneScoped.length + " airspace feature(s) exist here but are hidden by current filters.";
-        parts.push(hiddenByFilterSummary);
-      }
-      if (!includeContextualSummaryHits() && allHitsRaw.length > allHitsDroneScoped.length) {
-        parts.push("Drone Focus suppressed " + (allHitsRaw.length - allHitsDroneScoped.length) + " high-floor contextual feature(s). Toggle 'Include all-class contextual airspace in summary' to show them.");
-      }
-
-      const cz = allHits.find((f) => featureType((f && f.properties) || {}) === "CONTROL_ZONE");
+      const cz = filteredHits.find((f) => featureType((f && f.properties) || {}) === "CONTROL_ZONE");
       let controlZoneSummary = "Outside control zone.";
       if (cz) {
         controlZoneSummary = "Inside control zone: " + labelForFeature(cz) + ".";
         parts.push(controlZoneSummary);
       }
 
-      const primaryFeature = cz || preferredHit(filteredHits) || preferredHit(allHits);
+      const primaryFeature = cz || preferredHit(filteredHits);
       const airspaceSummary = formatAirspaceSummary(primaryFeature, controlZoneSummary);
+      const primaryProps = (primaryFeature && primaryFeature.properties) || {};
+      const primaryClass = String(primaryProps.class || "").toUpperCase() || null;
+      const primaryType = primaryFeature ? featureType(primaryProps) : null;
 
       const nearest = nearestAirportAt(lat, lon);
       let nearestSummary = "No nearby aerodrome found in current airport dataset.";
@@ -2859,9 +2794,6 @@
       if (options.statusPrefix) {
         otherDetails.push(options.statusPrefix.trim().replace(/:\s*$/, ""));
       }
-      if (hiddenByFilterSummary) {
-        otherDetails.push(hiddenByFilterSummary);
-      }
       if (!otherDetails.length && !primaryFeature) {
         otherDetails.push(filteredSummary);
       }
@@ -2873,6 +2805,23 @@
         nearestAerodromeHtml: nearestSummaryHtml,
         otherDetail: otherDetails.join(" ")
       }, tone);
+
+      try {
+        const artifact = {
+          timestamp: new Date().toISOString(),
+          pilotLocation: lat.toFixed(6) + ", " + lon.toFixed(6),
+          filteredHitCount: filteredHits.length,
+          inControlZone: !!cz,
+          airspaceSummary,
+          nearestAerodrome: nearestSummary,
+          primaryClass,
+          primaryType,
+          statusTone: tone
+        };
+        localStorage.setItem(AIRSPACE_ARTIFACT_STORAGE_KEY, JSON.stringify(artifact));
+      } catch (_err) {
+        // Ignore storage-write failures and continue map interaction.
+      }
 
       if (options.addMarker) {
         L.circleMarker([lat, lon], {
@@ -3026,22 +2975,6 @@
     document.querySelectorAll(".class-filter").forEach((el) => el.addEventListener("change", () => refreshFromAirspaceFilters()));
     document.querySelectorAll(".type-filter").forEach((el) => el.addEventListener("change", () => refreshFromAirspaceFilters()));
     document.querySelectorAll(".airport-type-filter").forEach((el) => el.addEventListener("change", () => applyFilters()));
-    document.getElementById("droneOpsFocusToggle").addEventListener("change", () => {
-      applyFilters();
-      refreshAirspaceSummaryIfInputsValid();
-    });
-    document.getElementById("includeContextualSummaryToggle").addEventListener("change", () => {
-      const includeAll = includeContextualSummaryHits();
-      if (includeAll) {
-        setAllClassFiltersChecked(true);
-      }
-      applyFilters();
-      if (!refreshAirspaceSummaryIfInputsValid()) {
-        setStatusCue("All class filters updated. Enter valid Lat/Lon and press Check Airspace to refresh results.", "pending");
-      } else if (includeAll) {
-        setStatusCue("Include all-class enabled. Class A-F selected and airspace summary refreshed.", "ok");
-      }
-    });
     document.getElementById("airportShowMarkers").addEventListener("change", () => applyFilters());
     document.getElementById("airportShowRings").addEventListener("change", () => applyFilters());
     document.getElementById("airportLimitProvince").addEventListener("change", () => rebuildAirportRowsForScope());

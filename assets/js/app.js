@@ -9,7 +9,11 @@ const FLIGHT_RUN_STORAGE_KEYS = [
   'flightObservers',
   'flightStart',
   'flightEnd',
-  'flightLocation'
+  'flightLocation',
+  'preflightSnapshotLatest',
+  'preflightSnapshotHistory',
+  'preflightSnapshotSavedAt',
+  'dahAirspaceLatest'
 ];
 
 const WEATHER_CHECK_STORAGE_KEYS = [
@@ -35,6 +39,7 @@ const PILOT_LOCATION_KEYS = [
 
 const PROFILE_STATE_KEY = 'dsop.profileState.v1';
 const PROFILE_SESSION_STATE_KEY = 'dsop.profileState.session.v1';
+const PREFLIGHT_SNAPSHOT_STORAGE_KEY = 'preflightSnapshotLatest';
 
 function safeParseJSON(key, fallback = {}) {
   try {
@@ -137,6 +142,24 @@ function parseJSONRaw(raw) {
   } catch {
     return null;
   }
+}
+
+function readPreflightSnapshot() {
+  return safeParseJSON(PREFLIGHT_SNAPSHOT_STORAGE_KEY, null);
+}
+
+function formatSnapshotWhen(stamp) {
+  if (!stamp) return 'n/a';
+  const ms = new Date(stamp).getTime();
+  if (!Number.isFinite(ms)) return 'n/a';
+  return new Date(ms).toLocaleString();
+}
+
+function formatPreflightSummaryLine(snapshot) {
+  if (!snapshot) return 'No pre-flight snapshot saved yet.';
+  const completed = Number(snapshot?.completion?.completedChecks || 0);
+  const saved = formatSnapshotWhen(snapshot.savedAt);
+  return `Saved ${completed}/3 checks at ${saved}.`;
 }
 
 function normalizeWeatherState() {
@@ -389,6 +412,12 @@ function renderIndex(sections) {
   decisionWrap.style.flexWrap = 'wrap';
   decisionWrap.style.marginBottom = '0.9rem';
 
+  function formatSavedStamp(ts) {
+    const stamp = Number(ts);
+    if (!Number.isFinite(stamp) || stamp <= 0) return 'n/a';
+    return new Date(stamp).toLocaleString();
+  }
+
   const acceptDefaultsBtn = document.createElement('button');
   acceptDefaultsBtn.type = 'button';
   acceptDefaultsBtn.textContent = 'Accept Defaults and Start';
@@ -407,12 +436,14 @@ function renderIndex(sections) {
       const data = raw ? JSON.parse(raw) : null;
       const checks = (data && data.checks) || {};
       const doneCount = ['airspace', 'weather', 'notam'].filter(key => !!checks[key]).length;
+      const savedAtLabel = formatSavedStamp(data && data.checkStatusSavedAt);
 
       if (doneCount === 3) {
         return {
           state: 'ok',
           label: 'Complete',
-          detail: 'All 3 Quick Pre-Flight checks are complete (NOTAM, Airspace, Weather).'
+          detail: 'All 3 Quick Pre-Flight checks are complete (NOTAM, Airspace, Weather).',
+          stamp: 'Last updated: ' + savedAtLabel
         };
       }
 
@@ -420,20 +451,23 @@ function renderIndex(sections) {
         return {
           state: 'warn',
           label: 'In Progress',
-          detail: doneCount + '/3 Quick Pre-Flight checks complete (NOTAM, Airspace, Weather).'
+          detail: doneCount + '/3 Quick Pre-Flight checks complete (NOTAM, Airspace, Weather).',
+          stamp: 'Last updated: ' + savedAtLabel
         };
       }
 
       return {
         state: 'pending',
         label: 'Not Started',
-        detail: 'Run Quick Pre-Flight checks (NOTAM, Airspace, Weather) before launching mission procedures.'
+        detail: 'Run Quick Pre-Flight checks (NOTAM, Airspace, Weather) before launching mission procedures.',
+        stamp: 'Last updated: n/a'
       };
     } catch (_err) {
       return {
         state: 'pending',
         label: 'Not Started',
-        detail: 'Run Quick Pre-Flight checks (NOTAM, Airspace, Weather) before launching mission procedures.'
+        detail: 'Run Quick Pre-Flight checks (NOTAM, Airspace, Weather) before launching mission procedures.',
+        stamp: 'Last updated: n/a'
       };
     }
   }
@@ -445,7 +479,7 @@ function renderIndex(sections) {
   utilityHeader.className = 'index-utility-header';
 
   const utilityTitle = document.createElement('h3');
-  utilityTitle.textContent = 'Utility';
+  utilityTitle.textContent = 'Quick Pre-Flight Checks';
 
   const preflightState = readPreflightStatus();
   const utilityStatePill = document.createElement('span');
@@ -457,6 +491,11 @@ function renderIndex(sections) {
   const utilityDetail = document.createElement('p');
   utilityDetail.className = 'subtle';
   utilityDetail.textContent = preflightState.detail;
+
+  const utilityStamp = document.createElement('p');
+  utilityStamp.className = 'subtle';
+  utilityStamp.style.margin = '0.1rem 0 0';
+  utilityStamp.textContent = preflightState.stamp;
 
   const utilityActions = document.createElement('div');
   utilityActions.className = 'index-utility-actions';
@@ -472,9 +511,9 @@ function renderIndex(sections) {
   toolsLink.textContent = 'Return to Tools';
 
   utilityActions.append(preflightLink, toolsLink);
-  utilityCard.append(utilityHeader, utilityDetail, utilityActions);
+  utilityCard.append(utilityHeader, utilityDetail, utilityStamp, utilityActions);
 
-  container.before(intro, presetWrap, promptLine, decisionWrap, utilityCard);
+  container.before(utilityCard, intro, presetWrap, promptLine, decisionWrap);
 
   function getPersistedSelection() {
     const progress = safeParseJSON('droneSOPProgress', {});
@@ -846,6 +885,15 @@ function renderFlightLog() {
     form.appendChild(summaryQuickLink);
   }
 
+  let preflightStatus = document.getElementById('flight-log-preflight-status');
+  if (!preflightStatus && form) {
+    preflightStatus = document.createElement('p');
+    preflightStatus.id = 'flight-log-preflight-status';
+    preflightStatus.className = 'subtle';
+    preflightStatus.style.marginTop = '8px';
+    form.parentNode.insertBefore(preflightStatus, form.nextSibling);
+  }
+
   if (saved && (saved.date || saved.pilot || saved.location)) {
     if (submitBtn) submitBtn.textContent = 'Update Flight Log';
     if (flightLogStatus) {
@@ -870,10 +918,16 @@ function renderFlightLog() {
 
   updateFlightLogLocationButtonLabel();
   renderFlightWeatherStatus();
+  if (preflightStatus) {
+    preflightStatus.textContent = 'Pre-Flight Snapshot: ' + formatPreflightSummaryLine(readPreflightSnapshot());
+  }
 
   window.addEventListener('pageshow', () => {
     updateFlightLogLocationButtonLabel();
     renderFlightWeatherStatus();
+    if (preflightStatus) {
+      preflightStatus.textContent = 'Pre-Flight Snapshot: ' + formatPreflightSummaryLine(readPreflightSnapshot());
+    }
   });
 
   if (weatherRefreshBtn) {
@@ -1290,6 +1344,41 @@ function renderSummary(sections) {
 
   container.append(weatherDiv);
 
+  const preflightSnapshot = readPreflightSnapshot();
+  const preflightDiv = document.createElement('div');
+  preflightDiv.className = 'section-block';
+  if (preflightSnapshot) {
+    const airspace = preflightSnapshot?.tools?.airspace || {};
+    const weatherSnap = preflightSnapshot?.tools?.weather || {};
+    const notam = preflightSnapshot?.tools?.notam || {};
+    const checks = preflightSnapshot?.checks || {};
+    const completed = Number(preflightSnapshot?.completion?.completedChecks || 0);
+
+    preflightDiv.innerHTML = `
+      <div class="summary-header">
+        <h2>Pre-Flight Snapshot</h2>
+        <a href="SOP.html" class="summary-cta summary-cta-green">Open Pre-Flight SOP</a>
+      </div>
+      <ul>
+        <li>Saved At: ${formatSnapshotWhen(preflightSnapshot.savedAt)}</li>
+        <li>Completion: ${completed}/3 checks</li>
+        <li>Category: ${preflightSnapshot?.category?.output || '—'} (${preflightSnapshot?.category?.planningType || '—'})</li>
+        <li>Airspace: ${checks.airspace ? 'Complete' : 'Pending'}${airspace.summary ? ` - ${airspace.summary}` : ''}</li>
+        <li>Weather: ${checks.weather ? 'Complete' : 'Pending'}${weatherSnap.riskLabel ? ` - ${weatherSnap.riskLabel} (${weatherSnap.riskScore ?? '—'})` : ''}</li>
+        <li>NOTAM: ${checks.notam ? 'Complete' : 'Pending'}${Number.isFinite(notam.recordCount) ? ` - ${notam.recordCount} mapped record(s)` : ''}${notam.fir ? ` in ${notam.fir}` : ''}</li>
+      </ul>
+    `;
+  } else {
+    preflightDiv.innerHTML = `
+      <div class="summary-header">
+        <h2>Pre-Flight Snapshot</h2>
+        <a href="SOP.html" class="summary-cta summary-cta-red">Save Pre-Flight Data</a>
+      </div>
+      <p><em>No pre-flight snapshot saved for this session.</em></p>
+    `;
+  }
+  container.append(preflightDiv);
+
   // Prefer the current key; keep legacy fallback for older saved sessions.
   const sopProgress = safeParseJSON('droneSOPProgress', {});
   const selected = sopProgress.selectedSOPs || safeParseJSON('selectedSections', []);
@@ -1481,6 +1570,7 @@ function renderSummary(sections) {
 
   document.getElementById('export-csv').addEventListener('click', async () => {
     const weather = safeParseJSON('dwCheckLatest', null);
+    const preflightSnapshot = readPreflightSnapshot();
     const weatherComplete = localStorage.getItem('dwCheckCompleted') === 'true';
     const weatherCompleteAt = localStorage.getItem('dwCheckCompletedAt');
     const nearestStations = (weather && Array.isArray(weather.nearestStations))
@@ -1512,6 +1602,23 @@ function renderSummary(sections) {
         + `Weather Nearest Stations,${csvEscape(nearestStations)}\n`;
     } else {
       csv += 'Weather Check Saved,No\n';
+    }
+
+    if (preflightSnapshot) {
+      const checks = preflightSnapshot.checks || {};
+      const preflightTools = preflightSnapshot.tools || {};
+      csv += `Preflight Snapshot Saved At,${csvEscape(formatSnapshotWhen(preflightSnapshot.savedAt))}\n`
+        + `Preflight Completion,${csvEscape(`${Number(preflightSnapshot?.completion?.completedChecks || 0)}/3`)}\n`
+        + `Preflight Category,${csvEscape(preflightSnapshot?.category?.output || '')}\n`
+        + `Preflight Airspace Complete,${csvEscape(checks.airspace ? 'Yes' : 'No')}\n`
+        + `Preflight Airspace Summary,${csvEscape((preflightTools.airspace && preflightTools.airspace.summary) || '')}\n`
+        + `Preflight Weather Complete,${csvEscape(checks.weather ? 'Yes' : 'No')}\n`
+        + `Preflight Weather Risk,${csvEscape((preflightTools.weather && preflightTools.weather.riskLabel) || '')}\n`
+        + `Preflight NOTAM Complete,${csvEscape(checks.notam ? 'Yes' : 'No')}\n`
+        + `Preflight NOTAM FIR,${csvEscape((preflightTools.notam && preflightTools.notam.fir) || '')}\n`
+        + `Preflight NOTAM Count,${csvEscape((preflightTools.notam && preflightTools.notam.recordCount) ?? '')}\n`;
+    } else {
+      csv += 'Preflight Snapshot Saved,No\n';
     }
 
     csv += '\nSOP Section,Status\n';
@@ -1596,6 +1703,7 @@ function renderSummary(sections) {
 
   function buildSummarySnapshot() {
     const weatherLatest = safeParseJSON('dwCheckLatest', null);
+    const preflightSnapshot = readPreflightSnapshot();
     const weatherCompleted = localStorage.getItem('dwCheckCompleted') === 'true';
     const weatherCompletedAt = localStorage.getItem('dwCheckCompletedAt') || null;
     const sopLatest = safeParseJSON('droneSOPProgress', {});
@@ -1625,6 +1733,7 @@ function renderSummary(sections) {
     return {
       createdAt,
       flightLog,
+      preflight: preflightSnapshot,
       weather: {
         completed: weatherCompleted,
         completedAt: weatherCompletedAt,

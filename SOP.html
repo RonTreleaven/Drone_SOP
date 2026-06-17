@@ -52,6 +52,7 @@
       position: sticky;
       top: 0;
       z-index: 40;
+      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       background: rgba(247, 252, 250, 0.88);
       border-bottom: 1px solid rgba(16, 36, 58, 0.08);
@@ -70,6 +71,34 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
+    }
+
+    .brand-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-width: 0;
+    }
+
+    .brand-logo-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid #c8d9e8;
+      background: #fff;
+      overflow: hidden;
+      flex: 0 0 auto;
+      text-decoration: none;
+    }
+
+    .brand-logo-link img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     .brand {
@@ -97,7 +126,19 @@
       gap: 0.4rem;
       overflow-x: auto;
       padding: 0.55rem 0 0.05rem;
-      scrollbar-width: thin;
+    }
+
+    .chip-row::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .chip-row::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .chip-row::-webkit-scrollbar-thumb {
+      background: #b7c8d8;
+      border-radius: 999px;
     }
 
     .chip {
@@ -367,6 +408,7 @@
       padding: 0.7rem 0.75rem;
       font-weight: 700;
       color: #16486d;
+      -webkit-user-select: none;
       user-select: none;
     }
 
@@ -407,14 +449,19 @@
       background: rgba(255, 255, 255, 0.96);
       border-top: 1px solid #d2e0eb;
       padding: 0.45rem 0.55rem calc(0.45rem + env(safe-area-inset-bottom));
+      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
+    }
+
+    .field-mt {
+      margin-top: 0.65rem;
     }
 
     .thumb-nav {
       width: min(980px, 100%);
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 0.4rem;
     }
 
@@ -429,6 +476,13 @@
       line-height: 1.1;
       padding: 0.35rem 0.25rem;
       text-align: center;
+    }
+
+    .thumb-link {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .thumb-btn.alert {
@@ -455,6 +509,61 @@
     }
 
     .ready-pill strong { color: #113b5d; }
+
+    .save-preflight-row {
+      margin-top: 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .save-preflight-status {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .preflight-summary-card {
+      margin-top: 0.75rem;
+      border: 1px solid #d4e0ea;
+      border-radius: 12px;
+      background: #f9fcff;
+      padding: 0.75rem;
+    }
+
+    .preflight-summary-card h4 {
+      margin: 0 0 0.35rem;
+      font-size: 0.98rem;
+      color: #143f62;
+    }
+
+    .preflight-summary-grid {
+      margin-top: 0.45rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+    }
+
+    .preflight-summary-item {
+      border: 1px solid #d8e6f2;
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 0.5rem 0.6rem;
+    }
+
+    .preflight-summary-item b {
+      display: block;
+      color: #113b5e;
+      font-size: 0.83rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .preflight-summary-item span {
+      color: #4d657c;
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
 
     .emergency-panel {
       position: fixed;
@@ -548,7 +657,12 @@
       }
 
       .thumb-nav {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 220px));
+        justify-content: end;
+      }
+
+      .preflight-summary-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
   </style>
@@ -557,12 +671,17 @@
   <div class="app">
     <header class="top-bar">
       <div class="top-row">
-        <div class="brand">
-          <h1>Drone SOP Mission Hub</h1>
-          <p>Survey First. Fly Smart.</p>
+        <div class="brand-wrap">
+          <a href="index.html" class="brand-logo-link" aria-label="Go to Home">
+            <img src="assets/img/logo.png" alt="Drone SOP Home">
+          </a>
+          <div class="brand">
+            <h1>Drone SOP Mission Hub</h1>
+            <p>Survey First. Fly Smart.</p>
+          </div>
         </div>
         <div class="top-actions">
-          <a href="Sections.html" class="btn btn-ghost btn-link">Back to Sections</a>
+          <a href="tools.html" class="btn btn-ghost btn-link">Back to Tools</a>
           <button id="clearDataTop" class="btn btn-ghost" type="button">Clear Data + Refresh</button>
           <button id="openEmergencyTop" class="btn btn-danger" type="button">Emergency</button>
         </div>
@@ -607,7 +726,7 @@
           </div>
         </div>
 
-        <div class="field" style="margin-top: 0.65rem;">
+        <div class="field field-mt">
           <label>Category Output</label>
           <div class="radio-row">
             <span id="categoryResult" class="radio-pill">Micro</span>
@@ -629,7 +748,7 @@
             <h4>1) Airspace Survey</h4>
             <p>Review class of airspace, flight area boundaries, and local traffic pattern risk.</p>
             <div class="check-actions">
-              <a href="DAHminimap.html" class="btn btn-ghost" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Open Airspace Tools</a>
+              <a href="DAHminimap.html" class="btn btn-ghost btn-link">Open Airspace Tools</a>
               <button class="btn btn-primary" type="button" data-mark="airspace">Mark Complete</button>
             </div>
             <div id="state-airspace" class="state">Status: Pending</div>
@@ -639,7 +758,7 @@
             <h4>2) Weather Check</h4>
             <p>Verify wind, visibility, and local conditions before takeoff and during mission windows.</p>
             <div class="check-actions">
-              <a href="DWCheck.html" class="btn btn-ghost" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Open Weather Tools</a>
+              <a href="DWCheck.html" class="btn btn-ghost btn-link">Open Weather Tools</a>
               <button class="btn btn-primary" type="button" data-mark="weather">Mark Complete</button>
             </div>
             <div id="state-weather" class="state">Status: Pending</div>
@@ -649,7 +768,7 @@
             <h4>3) NOTAM Check</h4>
             <p>Refresh NOTAMs in real time and confirm temporary restrictions or no-fly notices.</p>
             <div class="check-actions">
-              <a href="NotamsMap.html" class="btn btn-ghost" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Open NOTAM Tools</a>
+              <a href="NotamsMap.html" class="btn btn-ghost btn-link">Open NOTAM Tools</a>
               <button class="btn btn-primary" type="button" data-mark="notam">Mark Complete</button>
             </div>
             <div id="state-notam" class="state">Status: Pending</div>
@@ -658,6 +777,17 @@
 
         <div class="notice" role="note">
           Best-practice warning: Micro flights may be lower-risk, but pilots should still check NOTAMs for temporary restrictions, emergency activity, and local no-fly updates.
+        </div>
+
+        <div class="save-preflight-row">
+          <button id="savePreflightBtn" class="btn btn-primary" type="button">Save Pre-Flight Checks</button>
+          <p id="savePreflightStatus" class="save-preflight-status">Save a compact pre-flight snapshot for Summary and Flight Log reporting.</p>
+        </div>
+
+        <div id="preflightSummaryCard" class="preflight-summary-card" aria-live="polite">
+          <h4>Pre-Flight Snapshot Summary</h4>
+          <p id="preflightSummaryIntro" class="subtle">No saved snapshot yet. Complete checks, then click Save Pre-Flight Checks.</p>
+          <div id="preflightSummaryGrid" class="preflight-summary-grid" hidden></div>
         </div>
       </section>
 
@@ -687,10 +817,7 @@
 
   <nav class="sticky-bottom" aria-label="Thumb-friendly quick actions">
     <div class="thumb-nav">
-      <button class="thumb-btn" data-scroll="airspace">Airspace</button>
-      <button class="thumb-btn" data-scroll="weather">Weather</button>
-      <button class="thumb-btn" data-scroll="notam">NOTAM</button>
-      <a class="thumb-btn" href="Sections.html" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">SOP</a>
+      <a class="thumb-btn thumb-link" href="tools.html">Tools</a>
       <button id="openEmergencyBottom" class="thumb-btn alert" type="button">Emergency</button>
     </div>
   </nav>
@@ -724,9 +851,24 @@
     const emergencyPanel = document.getElementById('emergencyPanel');
     const shade = document.getElementById('shade');
     const clearDataTop = document.getElementById('clearDataTop');
+    const savePreflightBtn = document.getElementById('savePreflightBtn');
+    const savePreflightStatus = document.getElementById('savePreflightStatus');
+    const preflightSummaryIntro = document.getElementById('preflightSummaryIntro');
+    const preflightSummaryGrid = document.getElementById('preflightSummaryGrid');
 
     const storageKey = 'drone-sop-working-copy-state';
+    const preflightSnapshotKey = 'preflightSnapshotLatest';
+    const preflightSnapshotHistoryKey = 'preflightSnapshotHistory';
+    const airspaceArtifactKey = 'dahAirspaceLatest';
+    const weatherArtifactKey = 'dwCheckLatest';
+    const weatherCompletedAtKey = 'dwCheckCompletedAt';
+    const notamLivePayloadKey = 'fetchnotams:map:live:latest';
+    const notamLastFirKey = 'fetchnotams:lastFir';
+    const notamLastIcaoKey = 'fetchnotams:lastIcao';
     const BASIC_ADVANCED_MAX_G = 24999;
+    const QUICK_CHECK_EXPIRY_MS = 3 * 60 * 60 * 1000;
+
+    let checkStatusSavedAt = null;
 
     function updateWeightInputConstraints(forcePreset=false) {
       const selectedPlan = planningType.value;
@@ -757,14 +899,25 @@
       const data = {
         checks,
         weight: weightInput.value,
-        planningType: planningType.value
+        planningType: planningType.value,
+        checkStatusSavedAt
       };
       localStorage.setItem(storageKey, JSON.stringify(data));
     }
 
+    function hasAnyCompletedCheck() {
+      return Object.values(checks).some(Boolean);
+    }
+
+    function isQuickCheckStateExpired(savedAt) {
+      const ts = Number(savedAt);
+      if (!Number.isFinite(ts) || ts <= 0) return hasAnyCompletedCheck();
+      return (Date.now() - ts) >= QUICK_CHECK_EXPIRY_MS;
+    }
+
     function loadState() {
       const raw = localStorage.getItem(storageKey);
-      if (!raw) return;
+      if (!raw) return false;
       try {
         const data = JSON.parse(raw);
         if (data && data.checks) {
@@ -772,12 +925,22 @@
           checks.weather = Boolean(data.checks.weather);
           checks.notam = Boolean(data.checks.notam);
         }
+        checkStatusSavedAt = data && data.checkStatusSavedAt ? Number(data.checkStatusSavedAt) : null;
         if (data && data.weight) weightInput.value = data.weight;
         if (data && data.planningType) planningType.value = data.planningType;
         if (planningType.value === 'auto') planningType.value = Number(weightInput.value || 0) > 250 ? 'basic' : 'micro';
+
+        if (hasAnyCompletedCheck() && isQuickCheckStateExpired(checkStatusSavedAt)) {
+          clearDataAndRefresh({
+            requireConfirm: false,
+            reason: 'Saved quick-check status is older than 3 hours. Data was cleared and refreshed.'
+          });
+          return true;
+        }
       } catch (_) {
         // Ignore invalid local state for this working prototype.
       }
+      return false;
     }
 
     function updateCategory() {
@@ -828,6 +991,192 @@
       readinessText.style.borderColor = isReady ? '#96d3ad' : '#b7cbdd';
       readinessText.style.background = isReady ? '#effbf3' : '#f9fcff';
       readinessText.style.color = isReady ? '#205d36' : '#4d657c';
+      updateSavePreflightButtonState();
+    }
+
+    function parseStoredJson(key) {
+      const raw = localStorage.getItem(key);
+      if (!raw) return null;
+      try {
+        return JSON.parse(raw);
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    function formatTimestamp(value) {
+      if (!value) return '';
+      const t = new Date(value).getTime();
+      if (!Number.isFinite(t)) return '';
+      return new Date(t).toISOString();
+    }
+
+    function buildNotamSnapshot() {
+      const livePayload = parseStoredJson(notamLivePayloadKey);
+      const records = Array.isArray(livePayload && livePayload.records) ? livePayload.records : [];
+      const createdAt = Number(livePayload && livePayload.createdAt) || 0;
+      const firFromPayload = String((livePayload && livePayload.fir) || '').trim().toUpperCase();
+      const fir = firFromPayload || String(localStorage.getItem(notamLastFirKey) || '').trim().toUpperCase();
+      const icao = String(localStorage.getItem(notamLastIcaoKey) || '').trim().toUpperCase();
+
+      return {
+        artifactAvailable: !!(records.length || createdAt || fir || icao),
+        timestamp: createdAt ? new Date(createdAt).toISOString() : null,
+        fir: fir || null,
+        icao: icao || null,
+        recordCount: records.length,
+        sourceScope: String((livePayload && livePayload.scope) || '').trim() || null
+      };
+    }
+
+    function buildPreflightSnapshot() {
+      const nowIso = new Date().toISOString();
+      const weight = Number(weightInput.value || 0);
+      const doneCount = Object.values(checks).filter(Boolean).length;
+
+      const airspaceArtifact = checks.airspace ? parseStoredJson(airspaceArtifactKey) : null;
+      const weatherArtifact = checks.weather ? parseStoredJson(weatherArtifactKey) : null;
+      const notamArtifact = checks.notam ? buildNotamSnapshot() : { artifactAvailable: false };
+
+      return {
+        version: 'preflight-log.v1',
+        savedAt: nowIso,
+        completion: {
+          completedChecks: doneCount,
+          isReady: doneCount === 3
+        },
+        category: {
+          planningType: planningType.value,
+          output: categoryResult.textContent,
+          weightG: Number.isFinite(weight) ? weight : null
+        },
+        checks: {
+          airspace: !!checks.airspace,
+          weather: !!checks.weather,
+          notam: !!checks.notam
+        },
+        checkStatusSavedAt: checkStatusSavedAt ? new Date(checkStatusSavedAt).toISOString() : null,
+        tools: {
+          airspace: {
+            artifactAvailable: !!airspaceArtifact,
+            timestamp: formatTimestamp(airspaceArtifact && airspaceArtifact.timestamp),
+            pilotLocation: airspaceArtifact ? airspaceArtifact.pilotLocation : null,
+            inControlZone: airspaceArtifact ? !!airspaceArtifact.inControlZone : null,
+            filteredHitCount: airspaceArtifact ? Number(airspaceArtifact.filteredHitCount || 0) : null,
+            summary: airspaceArtifact ? airspaceArtifact.airspaceSummary : null,
+            nearestAerodrome: airspaceArtifact ? airspaceArtifact.nearestAerodrome : null,
+            primaryClass: airspaceArtifact ? airspaceArtifact.primaryClass : null,
+            primaryType: airspaceArtifact ? airspaceArtifact.primaryType : null
+          },
+          weather: {
+            artifactAvailable: !!weatherArtifact,
+            timestamp: formatTimestamp((weatherArtifact && weatherArtifact.committedAt) || (weatherArtifact && weatherArtifact.timestamp) || localStorage.getItem(weatherCompletedAtKey)),
+            icao: weatherArtifact ? weatherArtifact.icao : null,
+            riskLabel: weatherArtifact ? weatherArtifact.riskLabel : null,
+            riskScore: weatherArtifact ? weatherArtifact.riskScore : null,
+            kpIndex: weatherArtifact ? weatherArtifact.kpIndex : null,
+            windKt: weatherArtifact ? weatherArtifact.windKt : null,
+            gustKt: weatherArtifact ? weatherArtifact.gustKt : null,
+            visibilitySm: weatherArtifact ? weatherArtifact.visibilitySm : null,
+            ceilingFt: weatherArtifact ? weatherArtifact.ceilingFt : null
+          },
+          notam: notamArtifact
+        }
+      };
+    }
+
+    function savePreflightSnapshot(snapshot) {
+      localStorage.setItem(preflightSnapshotKey, JSON.stringify(snapshot));
+      const prior = parseStoredJson(preflightSnapshotHistoryKey);
+      const list = Array.isArray(prior) ? prior : [];
+      list.unshift(snapshot);
+      localStorage.setItem(preflightSnapshotHistoryKey, JSON.stringify(list.slice(0, 50)));
+      localStorage.setItem('preflightSnapshotSavedAt', snapshot.savedAt);
+      return snapshot;
+    }
+
+    function summaryValue(value, fallback = 'n/a') {
+      if (value === null || value === undefined) return fallback;
+      const txt = String(value).trim();
+      return txt ? txt : fallback;
+    }
+
+    function addSummaryItem(label, value) {
+      const card = document.createElement('div');
+      card.className = 'preflight-summary-item';
+      const title = document.createElement('b');
+      title.textContent = label;
+      const detail = document.createElement('span');
+      detail.textContent = summaryValue(value);
+      card.appendChild(title);
+      card.appendChild(detail);
+      preflightSummaryGrid.appendChild(card);
+    }
+
+    function renderSavedPreflightSummary(snapshot) {
+      if (!preflightSummaryIntro || !preflightSummaryGrid) return;
+      const saved = snapshot || parseStoredJson(preflightSnapshotKey);
+      if (!saved) {
+        preflightSummaryIntro.textContent = 'No saved snapshot yet. Complete checks, then click Save Pre-Flight Checks.';
+        preflightSummaryGrid.hidden = true;
+        preflightSummaryGrid.innerHTML = '';
+        return;
+      }
+
+      const airspace = (saved.tools && saved.tools.airspace) || {};
+      const weather = (saved.tools && saved.tools.weather) || {};
+      const notam = (saved.tools && saved.tools.notam) || {};
+      const doneCount = Number((saved.completion && saved.completion.completedChecks) || 0);
+      const savedAtText = saved.savedAt ? new Date(saved.savedAt).toLocaleString() : 'n/a';
+      const weatherLine = weather.riskLabel
+        ? (weather.riskLabel + ' (score ' + summaryValue(weather.riskScore) + ')')
+        : 'n/a';
+      const notamLine = (Number.isFinite(notam.recordCount) ? String(notam.recordCount) : 'n/a') + (notam.fir ? (' in ' + notam.fir) : '');
+
+      preflightSummaryIntro.textContent = 'Saved ' + savedAtText + ' | Completed checks: ' + doneCount + '/3';
+      preflightSummaryGrid.hidden = false;
+      preflightSummaryGrid.innerHTML = '';
+
+      addSummaryItem('Category', summaryValue(saved.category && saved.category.output) + ' (' + summaryValue(saved.category && saved.category.planningType) + ')');
+      addSummaryItem('Airspace Status', saved.checks && saved.checks.airspace ? 'Complete' : 'Pending');
+      addSummaryItem('Airspace Summary', summaryValue(airspace.summary));
+      addSummaryItem('Nearest Aerodrome', summaryValue(airspace.nearestAerodrome));
+      addSummaryItem('Weather Status', saved.checks && saved.checks.weather ? 'Complete' : 'Pending');
+      addSummaryItem('Weather Risk', weatherLine);
+      addSummaryItem('Weather Conditions', 'Wind ' + summaryValue(weather.windKt) + ' kt | Gust ' + summaryValue(weather.gustKt) + ' kt');
+      addSummaryItem('NOTAM Status', saved.checks && saved.checks.notam ? 'Complete' : 'Pending');
+      addSummaryItem('NOTAM Scope', summaryValue(notamLine));
+    }
+
+    function updateSavePreflightButtonState() {
+      if (!savePreflightBtn) return;
+      const doneCount = Object.values(checks).filter(Boolean).length;
+      savePreflightBtn.disabled = doneCount === 0;
+      if (!savePreflightStatus) return;
+      if (!doneCount) {
+        savePreflightStatus.textContent = 'Complete at least one pre-flight check before saving a snapshot.';
+      }
+    }
+
+    function onSavePreflightData() {
+      const doneCount = Object.values(checks).filter(Boolean).length;
+      if (!doneCount) {
+        if (savePreflightStatus) savePreflightStatus.textContent = 'Save blocked: no checks are complete yet.';
+        return;
+      }
+
+      const snapshot = savePreflightSnapshot(buildPreflightSnapshot());
+      const missing = [];
+      if (checks.airspace && !snapshot.tools.airspace.artifactAvailable) missing.push('Airspace details');
+      if (checks.weather && !snapshot.tools.weather.artifactAvailable) missing.push('Weather details');
+      if (checks.notam && !snapshot.tools.notam.artifactAvailable) missing.push('NOTAM details');
+
+      const savedAtText = new Date(snapshot.savedAt).toLocaleString();
+      const tail = missing.length ? (' Missing source details: ' + missing.join(', ') + '.') : '';
+      if (savePreflightStatus) {
+        savePreflightStatus.textContent = 'Pre-flight snapshot saved at ' + savedAtText + '. Completed checks: ' + doneCount + '/3.' + tail;
+      }
+      renderSavedPreflightSummary(snapshot);
     }
 
     function openEmergency() {
@@ -844,15 +1193,26 @@
       shade.setAttribute('aria-hidden', 'true');
     }
 
-    function clearDataAndRefresh() {
-      const accepted = window.confirm('Clear all saved SOP1 selections and refresh now?');
-      if (!accepted) return;
+    function clearDataAndRefresh(options = {}) {
+      const opts = {
+        requireConfirm: true,
+        reason: '',
+        ...options
+      };
+      if (opts.requireConfirm) {
+        const accepted = window.confirm('Clear all saved SOP1 selections and refresh now?');
+        if (!accepted) return;
+      }
       localStorage.removeItem(storageKey);
+      if (opts.reason) {
+        window.alert(opts.reason);
+      }
       window.location.reload();
     }
 
     function initialize() {
-      loadState();
+      const reloadedForExpiry = loadState();
+      if (reloadedForExpiry) return;
       updateWeightInputConstraints();
       updateCategory();
       ['airspace', 'weather', 'notam'].forEach(key => applyCheckVisual(key));
@@ -862,6 +1222,7 @@
         btn.addEventListener('click', () => {
           const key = btn.dataset.mark;
           checks[key] = true;
+          checkStatusSavedAt = Date.now();
           applyCheckVisual(key);
           updateReadiness();
           saveState();
@@ -891,6 +1252,9 @@
       document.getElementById('closeEmergency').addEventListener('click', closeEmergency);
       shade.addEventListener('click', closeEmergency);
       clearDataTop.addEventListener('click', clearDataAndRefresh);
+      if (savePreflightBtn) savePreflightBtn.addEventListener('click', onSavePreflightData);
+      updateSavePreflightButtonState();
+      renderSavedPreflightSummary();
     }
 
     initialize();
