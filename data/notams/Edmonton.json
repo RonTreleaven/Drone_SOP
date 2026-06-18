@@ -1,5 +1,32 @@
 [
   {
+    "raw": "(R0576/26 NOTAMR R0566/26\nQ) CZEG/QOLAS/IV/M/E/000/044/5518N12124W014\nA) CZEG B) 2606172257 C) 2606230600\nE) OBST LGT U/S WIND TURBINE GROUP WITHIN 14NM RADIUS CENTRED ON \n551745N 1212428W (APRX 23NM WNW TUMBLER RIDGE AD (CBX7)). 558FT \nAGL 4304FT AMSL.)",
+    "startValidity": "2026-06-17T22:57:00",
+    "endValidity": "2026-06-23T06:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "55.295833, -121.407778"
+    ]
+  },
+  {
+    "raw": "(R0575/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/013/5843N11109W005\nA) CYPY B) 2606172229 C) 2609151800\nE) OBST LGT U/S TOWER 584324N 1110913W (APRX 2.9NM SSW AD) 348FT \nAGL, 1214FT AMSL.)",
+    "startValidity": "2026-06-17T22:29:00",
+    "endValidity": "2026-09-15T18:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "58.723333, -111.153611"
+    ]
+  },
+  {
+    "raw": "(R0574/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/030/5707N12143W002\nA) CZEG B) 2606172210 C) 2609151800\nE) OBST LGT U/S TOWER 570706N 1214321W (APRX 62NM NW FORT ST. JOHN \nAD (CYXJ)) 180FT AGL, 2977FT AMSL.)",
+    "startValidity": "2026-06-17T22:10:00",
+    "endValidity": "2026-09-15T18:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "57.118333, -121.722500"
+    ]
+  },
+  {
     "raw": "(R0572/26 NOTAMR R0552/26\nQ) CZEG/QOLAS/IV/M/AE/000/027/5938N13341W005\nA) CYSQ B) 2606171735 C) 2606262359\nE) OBST LGT U/S TOWER 593734N 1334037W (APRX 3NM NNW AD) 209FT AGL, \n2657FT AMSL.)",
     "startValidity": "2026-06-17T17:35:00",
     "endValidity": "2026-06-26T23:59:00",
@@ -42,15 +69,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "55.669167, -121.580000"
-    ]
-  },
-  {
-    "raw": "(R0566/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/044/5518N12124W014\nA) CZEG B) 2606170105 C) 2606190600\nE) OBST LGT U/S WIND TURBINE GROUP WITHIN 14NM RADIUS CENTRED ON \n551745N 1212428W (APRX 23NM WNW TUMBLER RIDGE AD (CBX7)). 558FT \nAGL 4304FT AMSL.)",
-    "startValidity": "2026-06-17T01:05:00",
-    "endValidity": "2026-06-19T06:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.295833, -121.407778"
     ]
   },
   {
@@ -222,15 +240,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.848333, -113.370833"
-    ]
-  },
-  {
-    "raw": "(I2822/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/030/5030N11600W005\nA) CXXX B) 2606151400 C) 2606172200\nD) DAILY 1400-2200\nE) CAA8 INVERMERE \nCRANE 503022N 1160013W (APRX 3944FT S AD (CAA8)). 60FT AGL 2960FT \nAMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-06-13T18:03:30.092",
-    "endValidity": "2026-06-17T22:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "50.506111, -116.003611"
     ]
   },
   {
