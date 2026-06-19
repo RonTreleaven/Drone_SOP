@@ -2245,7 +2245,7 @@
         setAirspaceStatus(`Airspace dataset unavailable (${airspaceLoadError}).`, 'warn');
       });
 
-    fetch('./ca_apt.geojson')
+    fetch('./data/airspace/_sources/ca_apt.geojson')
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (data && data.type === 'FeatureCollection' && Array.isArray(data.features)) {
