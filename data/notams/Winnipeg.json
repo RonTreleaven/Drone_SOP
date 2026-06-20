@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(U1077/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/024/5113N10244W002\nA) CZWG B) 2606192154 C) 2609162100\nE) OBST LGT U/S TOWER 511233N 1024359W (APRX 11NM WSW YORKTON \nREGIONAL AD (CYQV)) 616FT AGL, 2334FT AMSL.)",
+    "startValidity": "2026-06-19T21:54:00",
+    "endValidity": "2026-09-16T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.209167, -102.733056"
+    ]
+  },
+  {
+    "raw": "(U1075/26 NOTAMR U1060/26\nQ) CZWG/QOLAS/IV/M/E/000/029/5353N10825W002\nA) CZWG B) 2606192133 C) 2606212100\nE) OBST LGT U/S TOWER 535308N 1082443W (APRX 15NM SSE MEADOW LAKE AD \n(CYLJ)) 520FT AGL, 2870FT AMSL.)",
+    "startValidity": "2026-06-19T21:33:00",
+    "endValidity": "2026-06-21T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.885556, -108.411944"
+    ]
+  },
+  {
     "raw": "(U1073/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/025/5110N10329W005\nA) CXXX B) 2606190329 C) 2609181800\nE) CJM2 ITUNA \nOBST LGT U/S TOWER 511027N 1032928W (APRX 3NM WNW AD) 285FT AGL, \n2490FT AMSL.)",
     "startValidity": "2026-06-19T03:29:00",
     "endValidity": "2026-09-18T18:00:00",
@@ -96,15 +114,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.680000, -105.446944"
-    ]
-  },
-  {
-    "raw": "(U1060/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/029/5353N10825W002\nA) CZWG B) 2606170014 C) 2606202100\nE) OBST LGT U/S TOWER 535308N 1082443W (APRX 15NM SSE MEADOW LAKE AD \n(CYLJ)) 520FT AGL, 2870FT AMSL.)",
-    "startValidity": "2026-06-17T00:14:00",
-    "endValidity": "2026-06-20T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.885556, -108.411944"
     ]
   },
   {
@@ -231,15 +240,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.080556, -97.648611"
-    ]
-  },
-  {
-    "raw": "(O1615/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/020/5713N10540W005\nA) CYKJ B) 2606051200 C) 2606192300\nE) CRANE 571244N 1054027W APRX 2.8NM BFR THR 03 AND 2780FT SE \nEXTENDED RCL. 200FT AGL 1965FT AMSL. NOT LGTD, PAINTED.)",
-    "startValidity": "2026-06-04T17:09:28.317",
-    "endValidity": "2026-06-19T23:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "57.212222, -105.674167"
     ]
   },
   {
@@ -540,15 +540,6 @@
     ]
   },
   {
-    "raw": "(U0722/26 NOTAMR U0133/26\nQ) CZWG/QOLAS/IV/M/E/000/024/5113N10244W002\nA) CZWG B) 2604230649 C) 2607212100\nE) OBST LGT U/S TOWER 511233N 1024359W (APRX 11NM WSW YORKTON \nREGIONAL AD (CYQV)) 616FT AGL, 2334FT AMSL.)",
-    "startValidity": "2026-04-23T06:49:00",
-    "endValidity": "2026-07-21T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.209167, -102.733056"
-    ]
-  },
-  {
     "raw": "(U0708/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/008/4821N08918W005\nA) CYQT B) 2604201831 C) 2607201600EST\nE) OBST LGT U/S TOWER 482128N 0891741W (APRX 1.38NM SE AD) 151FT \nAGL, 784FT AMSL.)",
     "startValidity": "2026-04-20T18:31:00",
     "endValidity": null,
@@ -603,21 +594,21 @@
     ]
   },
   {
-    "raw": "(U0673/26 NOTAMR U0073/26\nQ) CZWG/QOLAS/IV/M/AE/000/015/5126N09015W005\nA) CYPL B) 2604141340 C) 2607141400EST\nE) OBST LGT U/S TOWER 512531N 0901500W (APRX 1.87NM SW AD) 104FT \nAGL, 1410FT AMSL.)",
-    "startValidity": "2026-04-14T13:40:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.425278, -90.250000"
-    ]
-  },
-  {
     "raw": "(J2465/26 NOTAMR J0284/26\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2604141340 C) 2607141400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
     "startValidity": "2026-04-14T13:40:00",
     "endValidity": null,
     "q_code": "QOBCE",
     "coordinates_dd": [
       "52.467222, -92.960833"
+    ]
+  },
+  {
+    "raw": "(U0673/26 NOTAMR U0073/26\nQ) CZWG/QOLAS/IV/M/AE/000/015/5126N09015W005\nA) CYPL B) 2604141340 C) 2607141400EST\nE) OBST LGT U/S TOWER 512531N 0901500W (APRX 1.87NM SW AD) 104FT \nAGL, 1410FT AMSL.)",
+    "startValidity": "2026-04-14T13:40:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.425278, -90.250000"
     ]
   },
   {
@@ -690,15 +681,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.044444, -85.862222"
-    ]
-  },
-  {
-    "raw": "(U0532/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/011/4951N09651W005\nA) CXXX B) 2603200920 C) 2606192359\nE) CJL5 WINNIPEG/LYNCREST \nOBST LGT U/S TOWER 495051N 0965044W (APRX 5NM E AD) 230FT AGL, \n1026FT AMSL.)",
-    "startValidity": "2026-03-20T09:20:00",
-    "endValidity": "2026-06-19T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.847500, -96.845556"
     ]
   },
   {
