@@ -9,15 +9,6 @@
     ]
   },
   {
-    "raw": "(U1075/26 NOTAMR U1060/26\nQ) CZWG/QOLAS/IV/M/E/000/029/5353N10825W002\nA) CZWG B) 2606192133 C) 2606212100\nE) OBST LGT U/S TOWER 535308N 1082443W (APRX 15NM SSE MEADOW LAKE AD \n(CYLJ)) 520FT AGL, 2870FT AMSL.)",
-    "startValidity": "2026-06-19T21:33:00",
-    "endValidity": "2026-06-21T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.885556, -108.411944"
-    ]
-  },
-  {
     "raw": "(U1073/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/025/5110N10329W005\nA) CXXX B) 2606190329 C) 2609181800\nE) CJM2 ITUNA \nOBST LGT U/S TOWER 511027N 1032928W (APRX 3NM WNW AD) 285FT AGL, \n2490FT AMSL.)",
     "startValidity": "2026-06-19T03:29:00",
     "endValidity": "2026-09-18T18:00:00",
@@ -36,21 +27,21 @@
     ]
   },
   {
-    "raw": "(U1070/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495533N 0971541W (APRX 1.27NM NW AD) 62FT AGL, \n846FT AMSL.)",
-    "startValidity": "2026-06-19T01:02:00",
-    "endValidity": "2026-09-11T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925833, -97.261389"
-    ]
-  },
-  {
     "raw": "(U1071/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
     "startValidity": "2026-06-19T01:02:00",
     "endValidity": "2026-09-11T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.925556, -97.261111"
+    ]
+  },
+  {
+    "raw": "(U1070/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495533N 0971541W (APRX 1.27NM NW AD) 62FT AGL, \n846FT AMSL.)",
+    "startValidity": "2026-06-19T01:02:00",
+    "endValidity": "2026-09-11T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.925833, -97.261389"
     ]
   },
   {
