@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0591/26 NOTAMR R0296/26\nQ) CZVR/QOLAS/IV/M/E/000/025/5405N12243W002\nA) CZVR B) 2606211819 C) 2606221700EST\nE) OBST LGT U/S TOWER 540507N 1224243W (APRX 12NM NNW PRINCE GEORGE \nAD (CYXS)) 318FT AGL, 2487FT AMSL.)",
+    "startValidity": "2026-06-21T18:19:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "54.085278, -122.711944"
+    ]
+  },
+  {
     "raw": "(R0586/26 NOTAMN\nQ) CZVR/QOLAS/IV/M/AE/000/059/4932N11718W005\nA) CXXX B) 2606210333 C) 2606222100\nE) CYB3 NELSON/BLAYLOCK ESTATE (HELI)\nOBST LGT U/S TOWER 493150N 1171758W (APRX 1.74NM SW AD) 230FT \nAGL, 5821FT AMSL.)",
     "startValidity": "2026-06-21T03:33:00",
     "endValidity": "2026-06-22T21:00:00",
@@ -654,15 +663,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "50.008889, -125.244167"
-    ]
-  },
-  {
-    "raw": "(R0296/26 NOTAMN\nQ) CZVR/QOLAS/IV/M/E/000/025/5405N12243W002\nA) CZVR B) 2603242316 C) 2606172000EST\nE) OBST LGT U/S TOWER 540507N 1224243W (APRX 12NM NNW PRINCE GEORGE \nAD (CYXS)) 318FT AGL, 2487FT AMSL.)",
-    "startValidity": "2026-03-24T23:16:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "54.085278, -122.711944"
     ]
   },
   {
