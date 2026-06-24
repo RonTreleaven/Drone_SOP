@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(R0600/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/E/000/015/5704N11136W002\nA) CZEG B) 2606241404 C) 2608011800\nE) TOWER 570426N 1113600W (APRX 11NM SSW FORT MACKAY/ALBIAN AD \n(CAL4)). 399FT AGL 1425FT AMSL. NOT LGTD, NOT PAINTED.)",
+    "startValidity": "2026-06-24T14:04:00",
+    "endValidity": "2026-08-01T18:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "57.073889, -111.600000"
+    ]
+  },
+  {
+    "raw": "(R0598/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/007/6121N11739W005\nA) CYJP B) 2606241305 C) 2606262100\nE) OBST LGT U/S TOWER 612104N 1173846W (APRX 2.2NM NW AD) 99FT AGL, \n624FT AMSL.)",
+    "startValidity": "2026-06-24T13:05:00",
+    "endValidity": "2026-06-26T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "61.351111, -117.646111"
+    ]
+  },
+  {
     "raw": "(I3096/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/031/5211N11354W005\nA) CYQF B) 2606231934 C) PERM\nE) AMEND PUBLICATIONS: NEW TOWER 521045N 1135413W APRX 680FT BFR \nDTHR 12 AND 530FT SW EXTENDED RCL. 59FT AGL 3051FT AMSL. LGTD, \nPAINTED.)",
     "startValidity": "2026-06-23T19:34:00",
     "endValidity": null,
@@ -33,15 +51,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "52.262222, -113.817778"
-    ]
-  },
-  {
-    "raw": "(R0595/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/024/5345N11308W005\nA) CXXX B) 2606222006 C) 2606242000\nE) CFB6 EDMONTON/JOSEPHBURG \nOBST LGT U/S MULTIPLE CRANES WITHIN 1NM RADIUS CENTRED ON 534447N \n1130757W (APRX 1.96NM WNW AD (CFB6)). 325FT AGL 2386FT AMSL.)",
-    "startValidity": "2026-06-22T20:06:00",
-    "endValidity": "2026-06-24T20:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.746389, -113.132500"
     ]
   },
   {
@@ -375,15 +384,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.330278, -113.416667"
-    ]
-  },
-  {
-    "raw": "(R0533/26 NOTAMR R0243/26\nQ) CZEG/QOLAS/IV/M/E/000/035/5247N11404W002\nA) CZEG B) 2606091742 C) 2607091800EST\nE) OBST LGT U/S TOWER 524637N 1140417W (APRX 8NM NE RIMBEY AD \n(CFC7)) 353FT AGL, 3466FT AMSL.)",
-    "startValidity": "2026-06-09T17:42:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.776944, -114.071389"
     ]
   },
   {
