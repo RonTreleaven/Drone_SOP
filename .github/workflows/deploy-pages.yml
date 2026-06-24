@@ -44,7 +44,8 @@ jobs:
         run: |
           mkdir -p _site/assets/js _site/assets/css _site/assets/img \
                    _site/assets/Emergency _site/assets/CFS _site/assets/pdf \
-                   _site/data/notams _site/data/airspace/_sources _site/sections
+                   _site/data/notams _site/data/airspace/_sources \
+                   _site/data/schema _site/sections
 
           # Root-level HTML pages
           cp *.html _site/
@@ -79,7 +80,11 @@ jobs:
 
           # Data — live NOTAM JSON files (auto-updated by fetch-notams CRON)
           cp data/notams/*.json _site/data/notams/  2>/dev/null || true
-          # Data - RC2 automation bundle (scripts, docs, schema, index)
+
+          # JSON schemas referenced by RC2 documentation and manifests
+          cp data/schema/*.schema.json _site/data/schema/
+
+          # Data - RC2 automation bundle (scripts, docs, index)
           cp -r data/rc2 _site/data/
 
           # Disable Jekyll processing

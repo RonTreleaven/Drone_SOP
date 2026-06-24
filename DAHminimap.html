@@ -41,18 +41,12 @@
 
     .page {
       height: 100vh;
+      height: 100dvh;
       display: grid;
-      grid-template-columns: 360px 1fr;
+      grid-template-columns: 1fr;
       grid-template-rows: auto 1fr;
       gap: 0;
-    }
-
-    .page.filters-collapsed {
-      grid-template-columns: 1fr;
-    }
-
-    .page.filters-collapsed .side {
-      display: none;
+      overflow: hidden;
     }
 
     .page.is-fullscreen {
@@ -78,42 +72,47 @@
       height: 100%;
     }
 
-    .page.is-fullscreen .side {
-      display: block;
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: min(360px, 88vw);
-      z-index: 1400;
-      border-right: 1px solid var(--line);
-      box-shadow: 10px 0 26px rgba(0, 0, 0, 0.2);
-      transform: translateX(-104%);
-      transition: transform 0.22s ease;
-      background: var(--panel);
-      overflow: auto;
-    }
-
-    .page.is-fullscreen.filters-collapsed .side {
-      display: block;
-    }
-
-    .page.is-fullscreen.filters-drawer-open .side {
+    .page.filters-drawer-open .side {
       transform: translateX(0);
     }
 
+    .page.filters-drawer-open .filter-drawer-backdrop {
+      display: block;
+    }
+
     .top {
-      grid-column: 1 / 3;
+      grid-column: 1;
       border-bottom: 1px solid var(--line);
       background: var(--panel);
       padding: 0.4rem 0.7rem;
     }
 
     .side {
-      border-right: 1px solid var(--line);
-      background: var(--panel);
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: min(360px, 88vw);
+      z-index: 1400;
+      border-right: 1px solid rgba(201, 208, 217, 0.6);
+      box-shadow: 10px 0 32px rgba(0, 0, 0, 0.28);
+      transform: translateX(-104%);
+      transition: transform 0.22s ease;
+      background: rgba(255, 255, 255, 0);
+      -webkit-backdrop-filter: blur(20px) saturate(1.5) brightness(1.12);
+      backdrop-filter: blur(10px) saturate(1.5) brightness(1.12);
+      overflow-y: auto;
+      overscroll-behavior: contain;
       padding: 0.75rem;
-      overflow: auto;
+      padding-bottom: env(safe-area-inset-bottom, 0.75rem);
+    }
+
+    .filter-drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1399;
+      background: rgba(0, 0, 0, 0.38);
     }
 
     .main {
@@ -522,7 +521,7 @@
 
     .legend {
       font-size: 0.83rem;
-      color: var(--muted);
+      color: #1a2533;
       line-height: 1.35;
     }
 
@@ -743,12 +742,7 @@
     }
 
     @media (max-width: 980px) {
-      .page {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr;
-      }
-      .top { grid-column: 1; }
-      .side { border-right: none; border-bottom: 1px solid var(--line); max-height: 44vh; }
+      .map-tools { justify-content: center; }
     }
 
   </style>
@@ -891,9 +885,11 @@
       </section>
     </aside>
 
+    <div id="filterDrawerBackdrop" class="filter-drawer-backdrop"></div>
+
     <main class="main" id="mapMain">
       <div class="map-tools">
-        <button id="toggleFiltersBtn" type="button">Collapse Filters</button>
+        <button id="toggleFiltersBtn" type="button">Show Filters</button>
         <button id="fullscreenMapBtn" type="button">Full Screen Map</button>
       </div>
       <div id="map"></div>
@@ -1166,8 +1162,8 @@
     const AIRSPACE_ARTIFACT_STORAGE_KEY = "dahAirspaceLatest";
 
     const FILTER_GROUP_UI_DEFAULTS = {
-      "status": { collapsed: false, toggle: true },
-      "airspace checker": { collapsed: false, toggle: true },
+      "status": { collapsed: true, toggle: true },
+      "airspace checker": { collapsed: true, toggle: true },
       "airspace filters": { collapsed: true, toggle: true },
       "airport types (notamsmap)": { collapsed: true, toggle: true },
       "pilot relocation": { collapsed: true, toggle: true }
@@ -2503,35 +2499,25 @@
       const top = document.querySelector(".top");
       const mapTools = document.querySelector(".map-tools");
       const mapEl = document.getElementById("map");
-      const collapsed = page && page.classList.contains("filters-collapsed");
       const isFs = page && page.classList.contains("is-fullscreen");
 
       if (!mapEl) return;
 
+      const vh = getViewportHeight();
+
       if (isFs) {
-        const vh = getViewportHeight();
         const toolsH = mapTools ? mapTools.getBoundingClientRect().height : 0;
         const target = Math.max(300, Math.floor(vh - toolsH));
         mapEl.style.height = target + "px";
         mapEl.style.minHeight = target + "px";
-        setTimeout(() => { map.invalidateSize(); updateCenterReticleState(); }, 60);
-        return;
+      } else {
+        const topH = top ? top.getBoundingClientRect().height : 0;
+        const toolsH = mapTools ? mapTools.getBoundingClientRect().height : 0;
+        const target = Math.max(300, Math.floor(vh - topH - toolsH - 8));
+        mapEl.style.height = target + "px";
+        mapEl.style.minHeight = target + "px";
       }
 
-      if (!collapsed) {
-        mapEl.style.height = "";
-        mapEl.style.minHeight = "260px";
-        setTimeout(() => { map.invalidateSize(); updateCenterReticleState(); }, 60);
-        return;
-      }
-
-      const vh = getViewportHeight();
-      const topH = top ? top.getBoundingClientRect().height : 0;
-      const toolsH = mapTools ? mapTools.getBoundingClientRect().height : 0;
-      const target = Math.max(300, Math.floor(vh - topH - toolsH - 8));
-
-      mapEl.style.height = target + "px";
-      mapEl.style.minHeight = target + "px";
       setTimeout(() => { map.invalidateSize(); updateCenterReticleState(); }, 60);
     }
 
@@ -2556,18 +2542,8 @@
 
       page.classList.toggle("is-fullscreen", active);
       document.body.classList.toggle("map-app-fullscreen", active);
-
-      if (active) {
-        page.classList.remove("filters-collapsed");
-        page.classList.remove("filters-drawer-open");
-        if (toggleBtn) toggleBtn.textContent = "Show Filters";
-      } else {
-        page.classList.remove("filters-drawer-open");
-        if (toggleBtn) {
-          toggleBtn.textContent = page.classList.contains("filters-collapsed") ? "Show Filters" : "Collapse Filters";
-        }
-      }
-
+      page.classList.remove("filters-drawer-open");
+      if (toggleBtn) toggleBtn.textContent = "Show Filters";
       if (btn) btn.textContent = active ? "Exit Full Screen" : "Full Screen Map";
       updateMapLayout();
     }
@@ -3083,16 +3059,8 @@
     document.getElementById("toggleFiltersBtn").addEventListener("click", () => {
       const page = document.querySelector(".page");
       const btn = document.getElementById("toggleFiltersBtn");
-
-      if (page.classList.contains("is-fullscreen")) {
-        const open = page.classList.toggle("filters-drawer-open");
-        btn.textContent = open ? "Hide Filters" : "Show Filters";
-        updateMapLayout();
-        return;
-      }
-
-      const collapsed = page.classList.toggle("filters-collapsed");
-      btn.textContent = collapsed ? "Show Filters" : "Collapse Filters";
+      const open = page.classList.toggle("filters-drawer-open");
+      btn.textContent = open ? "Hide Filters" : "Show Filters";
       updateMapLayout();
     });
 
@@ -3130,6 +3098,13 @@
 
     document.addEventListener("fullscreenchange", () => {
       setMapFullscreen(!!fullscreenElement());
+    });
+
+    document.getElementById("filterDrawerBackdrop").addEventListener("click", () => {
+      const page = document.querySelector(".page");
+      const btn = document.getElementById("toggleFiltersBtn");
+      page.classList.remove("filters-drawer-open");
+      if (btn) btn.textContent = "Show Filters";
     });
 
     document.addEventListener("webkitfullscreenchange", () => {
