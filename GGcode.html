@@ -1038,6 +1038,62 @@ body {
   height: 100vh;
 }
 
+/* ── Floating draw-mode toolbar ─────────────────────────────────────── */
+.draw-mode-bar {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(10, 20, 40, 0.90);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  backdrop-filter: blur(14px) saturate(1.3);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  padding: 12px 14px 10px;
+  color: #f1f5f9;
+  min-width: 264px;
+  max-width: calc(100vw - 24px);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.45);
+  pointer-events: auto;
+  touch-action: none; /* prevent map pan when touching bar */
+}
+.draw-mode-bar[hidden] { display: none; }
+.draw-mode-bar-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.83rem;
+  opacity: 0.78;
+  padding: 0 2px 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+.draw-mode-bar-actions {
+  display: flex;
+  gap: 8px;
+}
+.draw-mode-btn {
+  flex: 1;
+  min-height: 48px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  letter-spacing: 0.01em;
+  transition: filter 0.15s;
+}
+.draw-mode-btn:active { filter: brightness(0.88); }
+.draw-mode-btn-undo   { background: #475569; }
+.draw-mode-btn-cancel { background: #dc2626; }
+.draw-mode-btn-commit { background: #16a34a; }
+.draw-mode-btn-commit:disabled { background: #334155; color: #94a3b8; cursor: not-allowed; }
+/* ── End draw-mode toolbar ──────────────────────────────────────────── */
+
 .map-panel.map-immersive-active {
   position: fixed;
   inset: 0;
@@ -1702,6 +1758,18 @@ body.map-immersive {
         </div>
       </div>
       <div id="map"></div>
+      <!-- Floating draw-mode toolbar: appears at bottom of map while drawing WP or Polygon -->
+      <div id="drawModeBar" class="draw-mode-bar" hidden>
+        <div class="draw-mode-bar-info">
+          <span id="drawModeBarLabel">Drawing Waypoints</span>
+          <span id="drawModeBarCount">0 pts</span>
+        </div>
+        <div class="draw-mode-bar-actions">
+          <button id="drawModeUndoBtn"   class="btn draw-mode-btn draw-mode-btn-undo"   type="button">↩ Undo</button>
+          <button id="drawModeCancelBtn" class="btn draw-mode-btn draw-mode-btn-cancel" type="button">✕ Cancel</button>
+          <button id="drawModeCommitBtn" class="btn draw-mode-btn draw-mode-btn-commit" type="button">✓ Done</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1812,7 +1880,22 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.getElementById('drawPolygonBtn').addEventListener('click', handleDrawPolygonToggle);
   document.getElementById('setSurveyPatternBtn').addEventListener('click', activateSurveyPatternMode);
   document.getElementById('snapRouteBtn').addEventListener('click', snapRouteToNearestWaypoint);
-  document.getElementById('closePolygonBtn').addEventListener('click', closeCurrentRoutePolygon);
+  document.getElementById('closePolygonBtn').addEventListener('click', () => {
+    // If in polygon draw mode, commit the live preview as polygon
+    if (customDrawMode === 'polygon' && liveDrawPreviewPoints.length >= 3) {
+      commitLiveDrawAsPolygon();
+    } else {
+      closeCurrentRoutePolygon();
+    }
+  });
+
+  // Draw mode toolbar buttons
+  document.getElementById('drawModeCommitBtn').addEventListener('click', commitLiveDrawCurrent);
+  document.getElementById('drawModeCancelBtn').addEventListener('click', () => {
+    cancelLiveDrawCurrent();
+    showLookupMessage('Draw cancelled.', 'dim');
+  });
+  document.getElementById('drawModeUndoBtn').addEventListener('click', undoLiveDrawPoint);
   document.getElementById('setPOIByClickBtn').addEventListener('click', toggleOrbitMode);
   document.getElementById('startOrbitalMissionBtn').addEventListener('click', startOrbitalMissionMode);
   document.getElementById('clearPOIsBtn').addEventListener('click', clearMissionPOI);
@@ -1965,7 +2048,7 @@ const GEOCODE_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.GEO
 const MAPS_API_BOOTSTRAP_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.MAPS_API_BOOTSTRAP_ENDPOINT)
   ? window.DRONE_SOP_CONFIG.MAPS_API_BOOTSTRAP_ENDPOINT
   : "https://navcan-proxy.rontreleaven.workers.dev/maps-bootstrap";
-const MAPS_API_LIBRARIES = "drawing,geometry";
+const MAPS_API_LIBRARIES = "geometry";
 const AUTOCOMPLETE_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.AUTOCOMPLETE_ENDPOINT)
   ? window.DRONE_SOP_CONFIG.AUTOCOMPLETE_ENDPOINT
   : "https://navcan-proxy.rontreleaven.workers.dev/places-autocomplete";
@@ -1987,7 +2070,8 @@ const DEFAULT_CENTER = { lat: 43.7, lng: -79.4 }; // Toronto default
 const DEFAULT_ZOOM = 10;
 let map;
 let marker;
-let drawingManager;
+let customDrawMode = null; // null | 'polyline' | 'polygon' — replaces DrawingManager
+let liveDrawPreviewPolyline = null; // google.maps.Polyline rendering the tap-draw preview line
 let activePolyline = null;
 let routePath = [];
 let routeEditEnabled = true;
@@ -2599,8 +2683,7 @@ function updateDrawShapeSummary() {
   const hasOrbit = isPOIPatternActive() && (missionPOIs.length > 0 || isPendingPOIClickMode() || !!poiCircle);
   const hasRoute = !!activePolyline || routePath.length > 0;
   const isDrawingWP = isRouteDrawingActive();
-  const isDrawingPoly = !!(drawingManager && window.google && google.maps.drawing &&
-    drawingManager.getDrawingMode() === google.maps.drawing.OverlayType.POLYGON);
+  const isDrawingPoly = customDrawMode === 'polygon';
 
   if (hasOrbit) {
     const rawRadius = Number(document.getElementById('orbitRadiusMeters')?.value);
@@ -2888,7 +2971,7 @@ function updateLookupActionButtons() {
 }
 
 function loadGoogleMapsApi() {
-  if (window.google && window.google.maps && window.google.maps.drawing && window.google.maps.geometry) {
+  if (window.google && window.google.maps && window.google.maps.geometry) {
     return Promise.resolve();
   }
 
@@ -2926,7 +3009,7 @@ function loadGoogleMapsApi() {
     await new Promise((resolve, reject) => {
       const existing = document.querySelector('script[data-google-maps-loader="1"]');
       if (existing) {
-        if (window.google && window.google.maps && window.google.maps.drawing && window.google.maps.geometry) {
+        if (window.google && window.google.maps && window.google.maps.geometry) {
           resolve();
           return;
         }
@@ -2945,7 +3028,7 @@ function loadGoogleMapsApi() {
       document.head.appendChild(script);
     });
 
-    if (!(window.google && window.google.maps && window.google.maps.drawing && window.google.maps.geometry)) {
+    if (!(window.google && window.google.maps && window.google.maps.geometry)) {
       throw new Error('Google Maps libraries did not initialize correctly.');
     }
   })();
@@ -2968,56 +3051,11 @@ function initGoogleMap() {
     gestureHandling: 'greedy'
   });
 
-  drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: null,
-    drawingControl: false,
-    polylineOptions: {
-      clickable: true,
-      editable: true,
-      draggable: true,
-      strokeColor: '#2196F3',
-      strokeWeight: 3
-    },
-    polygonOptions: {
-      clickable: true,
-      editable: true,
-      draggable: true,
-      strokeColor: '#1a73e8',
-      strokeWeight: 3,
-      fillColor: '#5ba3ff',
-      fillOpacity: 0.12
+  // Double-tap/click commits a polygon draw in progress
+  map.addListener('dblclick', () => {
+    if (customDrawMode === 'polygon' && liveDrawPreviewPoints.length >= 3) {
+      commitLiveDrawCurrent();
     }
-  });
-  drawingManager.setMap(map);
-
-  google.maps.event.addListener(drawingManager, 'polylinecomplete', (poly) => {
-    drawingManager.setDrawingMode(null);
-    clearLiveDrawPreview();
-    setActivePolyline(poly);
-    snapRouteToNearestWaypoint();
-    extractPathFromPolyline(poly);
-    updateDrawRouteButtonState();
-  });
-
-  google.maps.event.addListener(drawingManager, 'polygoncomplete', (polygon) => {
-    drawingManager.setDrawingMode(null);
-    const points = polygon.getPath().getArray().map(ll => ({ lat: ll.lat(), lng: ll.lng() }));
-    polygon.setMap(null);
-    if (points.length >= 3) {
-      if (Math.abs(points[0].lat - points[points.length - 1].lat) > 1e-8 || Math.abs(points[0].lng - points[points.length - 1].lng) > 1e-8) {
-        points.push({ ...points[0] });
-      }
-      setRouteFromLatLngPoints(points, { setPatternSeed: true });
-    }
-    updateDrawRouteButtonState();
-  });
-
-  google.maps.event.addListener(drawingManager, 'drawingmode_changed', () => {
-    const mode = drawingManager.getDrawingMode();
-    if (mode !== google.maps.drawing.OverlayType.POLYLINE) {
-      clearLiveDrawPreview();
-    }
-    updateDrawRouteButtonState();
   });
 
   map.addListener('click', (event) => {
@@ -3043,7 +3081,7 @@ function initGoogleMap() {
       return;
     }
 
-    if (isNativeRouteDrawingActive()) {
+    if (customDrawMode === 'polyline' || customDrawMode === 'polygon') {
       addLiveDrawPreviewPoint(latLng);
     }
   });
@@ -3715,11 +3753,7 @@ function toggleRouteEdit() {
 }
 
 function isNativeRouteDrawingActive() {
-  return !!(drawingManager
-    && window.google
-    && google.maps
-    && google.maps.drawing
-    && drawingManager.getDrawingMode() === google.maps.drawing.OverlayType.POLYLINE);
+  return customDrawMode === 'polyline';
 }
 
 function isRouteDrawingActive() {
@@ -3727,8 +3761,6 @@ function isRouteDrawingActive() {
 }
 
 function updateDrawingToolActiveState() {
-  if (!drawingManager || !window.google || !google.maps || !google.maps.drawing) return;
-  const mode = drawingManager.getDrawingMode();
   const hasRoute = !!activePolyline || routePath.length > 0;
   const isDrawing = isRouteDrawingActive();
 
@@ -3737,18 +3769,29 @@ function updateDrawingToolActiveState() {
 
   if (wpBtn) {
     const labelSpan = wpBtn.querySelector('span:last-child');
-    const active = hasRoute || isDrawing;
+    const active = hasRoute || isDrawing || customDrawMode === 'polyline';
     wpBtn.classList.toggle('btn-active', active);
-    if (labelSpan) labelSpan.textContent = routeAppendModeActive ? 'Done' : (active ? 'Clear' : 'WP');
-    wpBtn.title = routeAppendModeActive ? 'Finish waypoint append mode' : (active ? 'Clear current shape' : 'Waypoints');
+    if (routeAppendModeActive) {
+      if (labelSpan) labelSpan.textContent = 'Done';
+      wpBtn.title = 'Finish waypoint append mode';
+    } else if (customDrawMode === 'polyline') {
+      if (labelSpan) labelSpan.textContent = 'Done';
+      wpBtn.title = 'Finish drawing waypoints';
+    } else if (active) {
+      if (labelSpan) labelSpan.textContent = 'Clear';
+      wpBtn.title = 'Clear current shape';
+    } else {
+      if (labelSpan) labelSpan.textContent = 'WP';
+      wpBtn.title = 'Waypoints';
+    }
     wpBtn.setAttribute('aria-label', wpBtn.title);
   }
   if (polyBtn) {
     const labelSpan = polyBtn.querySelector('span:last-child');
-    const active = mode === google.maps.drawing.OverlayType.POLYGON;
+    const active = customDrawMode === 'polygon';
     polyBtn.classList.toggle('btn-active', active);
-    if (labelSpan) labelSpan.textContent = active ? 'Clear' : 'Poly';
-    polyBtn.title = active ? 'Clear polygon mode' : 'Polygon';
+    if (labelSpan) labelSpan.textContent = active ? 'Cancel' : 'Poly';
+    polyBtn.title = active ? 'Cancel polygon draw' : 'Polygon';
     polyBtn.setAttribute('aria-label', polyBtn.title);
   }
   updateDrawShapeSummary();
@@ -3759,9 +3802,7 @@ function updateDrawRouteButtonState() {
 }
 
 function clearActiveRoute() {
-  if (drawingManager) {
-    drawingManager.setDrawingMode(null);
-  }
+  setCustomDrawMode(null);
   routeAppendModeActive = false;
   clearLiveDrawPreview();
   if (activePolyline) {
@@ -3783,40 +3824,44 @@ function clearActiveRoute() {
 }
 
 function handleDrawRouteToggle() {
-  if (!drawingManager || !window.google || !google.maps || !google.maps.drawing) return;
-
   if (routeAppendModeActive) {
     setRouteAppendMode(false);
     showLookupMessage('Waypoint append mode ended.', 'dim');
     return;
   }
 
+  if (customDrawMode === 'polyline') {
+    // Tap WP button again while drawing = commit (if enough points) or cancel
+    if (liveDrawPreviewPoints.length >= 2) {
+      commitLiveDrawAsRoute();
+    } else {
+      cancelLiveDrawCurrent();
+      showLookupMessage('Draw cancelled.', 'dim');
+    }
+    return;
+  }
+
   const hasRoute = !!activePolyline || routePath.length > 0;
-  if (hasRoute || isNativeRouteDrawingActive()) {
+  if (hasRoute) {
     clearActiveRoute();
     return;
   }
 
-  clearLiveDrawPreview();
-  drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
   const patternEl = document.getElementById('patternType');
   if (patternEl) patternEl.value = 'perimeter';
-  showLookupMessage('Waypoint mode enabled. Tap map to place points.', 'dim');
-  updateDrawRouteButtonState();
+  setCustomDrawMode('polyline');
+  showLookupMessage('Waypoint draw: tap the map to place points, then tap ✓ Done.', 'dim');
 }
 
 function handleDrawPolygonToggle() {
-  if (!drawingManager || !window.google || !google.maps || !google.maps.drawing) return;
-  if (drawingManager.getDrawingMode() === google.maps.drawing.OverlayType.POLYGON) {
-    drawingManager.setDrawingMode(null);
-    showLookupMessage('Polygon mode cleared.', 'dim');
-    updateDrawRouteButtonState();
+  if (customDrawMode === 'polygon') {
+    cancelLiveDrawCurrent();
+    showLookupMessage('Polygon draw cancelled.', 'dim');
     return;
   }
   clearActiveRoute();
-  drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
-  showLookupMessage('Polygon mode enabled. Draw an area and release to finish.', 'dim');
-  updateDrawRouteButtonState();
+  setCustomDrawMode('polygon');
+  showLookupMessage('Polygon draw: tap the map to place vertices, then tap ✓ Done (or double-tap).', 'dim');
 }
 
 function activateSurveyPatternMode() {
@@ -3825,24 +3870,19 @@ function activateSurveyPatternMode() {
   patternEl.value = 'survey';
   handlePatternTypeChange();
 
-  if (!drawingManager || !window.google || !google.maps || !google.maps.drawing) {
-    showLookupMessage('Survey pattern selected. Generate Pattern when ready.', 'dim');
-    return;
-  }
-
-  if (drawingManager.getDrawingMode() !== google.maps.drawing.OverlayType.POLYGON) {
+  if (customDrawMode !== 'polygon') {
     clearActiveRoute();
-    drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+    setCustomDrawMode('polygon');
   }
 
-  showLookupMessage('Survey mode enabled. Draw polygon boundary on map, then Generate Pattern.', 'dim');
+  showLookupMessage('Survey mode: tap map to place boundary vertices, then tap ✓ Done.', 'dim');
   updateDrawRouteButtonState();
 }
 
 function undoLastWaypoint() {
   if (!activePolyline) {
-    if (isNativeRouteDrawingActive()) {
-      showLookupMessage('Finish the current draw first, then use Undo Last WP.', 'dim');
+    if (customDrawMode === 'polyline' || customDrawMode === 'polygon') {
+      undoLiveDrawPoint();
       return;
     }
     showLookupMessage('No route to undo. Draw or import a route first.', 'dim');
@@ -4817,6 +4857,11 @@ function clearLiveDrawPreview() {
   liveDrawPreviewMarkers.forEach((m) => m.setMap(null));
   liveDrawPreviewMarkers = [];
   liveDrawPreviewPoints = [];
+  if (liveDrawPreviewPolyline) {
+    liveDrawPreviewPolyline.setMap(null);
+    liveDrawPreviewPolyline = null;
+  }
+  updateDrawModeBar();
 }
 
 function redrawLiveDrawPreviewMarkers() {
@@ -4850,7 +4895,138 @@ function addLiveDrawPreviewPoint(latLng) {
 
   liveDrawPreviewPoints.push({ lat: latLng.lat(), lng: latLng.lng() });
   redrawLiveDrawPreviewMarkers();
+  updateLiveDrawPreviewLine();
+  updateDrawModeBar();
 }
+
+// ── Draw Mode: live preview line ──────────────────────────────────────────
+function updateLiveDrawPreviewLine() {
+  if (!map || !window.google) return;
+  const pts = liveDrawPreviewPoints;
+  if (pts.length < 2) {
+    if (liveDrawPreviewPolyline) {
+      liveDrawPreviewPolyline.setMap(null);
+      liveDrawPreviewPolyline = null;
+    }
+    return;
+  }
+
+  const path = pts.map(p => new google.maps.LatLng(p.lat, p.lng));
+  // Close the path visually when in polygon mode
+  const isPolygon = customDrawMode === 'polygon';
+  if (isPolygon && path.length >= 3) path.push(path[0]);
+
+  if (!liveDrawPreviewPolyline) {
+    liveDrawPreviewPolyline = new google.maps.Polyline({
+      path,
+      geodesic: true,
+      strokeColor: isPolygon ? '#f59e0b' : '#2196F3',
+      strokeOpacity: 0.75,
+      strokeWeight: 2.5,
+      map,
+      zIndex: 8000,
+      clickable: false
+    });
+  } else {
+    liveDrawPreviewPolyline.setPath(path);
+    liveDrawPreviewPolyline.setOptions({
+      strokeColor: isPolygon ? '#f59e0b' : '#2196F3'
+    });
+  }
+}
+
+// ── Draw Mode: floating toolbar state ────────────────────────────────────
+function setCustomDrawMode(mode) {
+  customDrawMode = mode;
+  const bar = document.getElementById('drawModeBar');
+  if (!bar) return;
+  if (!mode) {
+    bar.hidden = true;
+    if (map) map.setOptions({ cursor: '' });
+  } else {
+    const label = document.getElementById('drawModeBarLabel');
+    if (label) label.textContent = mode === 'polygon' ? 'Drawing Polygon' : 'Drawing Waypoints';
+    bar.hidden = false;
+    if (map) map.setOptions({ cursor: 'crosshair' });
+    updateDrawModeBar();
+  }
+  updateDrawRouteButtonState();
+}
+
+function updateDrawModeBar() {
+  const bar = document.getElementById('drawModeBar');
+  if (!bar || bar.hidden) return;
+  const count = liveDrawPreviewPoints.length;
+  const countEl = document.getElementById('drawModeBarCount');
+  if (countEl) countEl.textContent = count + ' pt' + (count !== 1 ? 's' : '');
+  const commitBtn = document.getElementById('drawModeCommitBtn');
+  if (commitBtn) {
+    const minPts = customDrawMode === 'polygon' ? 3 : 2;
+    commitBtn.disabled = count < minPts;
+    commitBtn.textContent = '✓ Done' + (count < minPts ? ' (' + minPts + '+ pts)' : '');
+  }
+}
+
+function commitLiveDrawAsRoute() {
+  if (liveDrawPreviewPoints.length < 2) return;
+  const pts = liveDrawPreviewPoints.slice();
+  clearLiveDrawPreview();
+  setCustomDrawMode(null);
+
+  const gpath = pts.map(p => new google.maps.LatLng(p.lat, p.lng));
+  const poly = new google.maps.Polyline({
+    path: gpath,
+    strokeColor: '#2196F3',
+    strokeWeight: 3,
+    editable: true,
+    draggable: true,
+    clickable: true,
+    map
+  });
+  setActivePolyline(poly);
+  snapRouteToNearestWaypoint();
+  extractPathFromPolyline(poly);
+  updateDrawRouteButtonState();
+}
+
+function commitLiveDrawAsPolygon() {
+  if (liveDrawPreviewPoints.length < 3) return;
+  const pts = liveDrawPreviewPoints.slice();
+  clearLiveDrawPreview();
+  setCustomDrawMode(null);
+
+  // Close the polygon if not already closed
+  const first = pts[0];
+  const last = pts[pts.length - 1];
+  if (Math.abs(first.lat - last.lat) > 1e-8 || Math.abs(first.lng - last.lng) > 1e-8) {
+    pts.push({ ...first });
+  }
+  setRouteFromLatLngPoints(pts, { setPatternSeed: true });
+  updateDrawRouteButtonState();
+}
+
+function commitLiveDrawCurrent() {
+  if (customDrawMode === 'polygon') {
+    commitLiveDrawAsPolygon();
+  } else if (customDrawMode === 'polyline') {
+    commitLiveDrawAsRoute();
+  }
+}
+
+function cancelLiveDrawCurrent() {
+  clearLiveDrawPreview();
+  setCustomDrawMode(null);
+  updateDrawRouteButtonState();
+}
+
+function undoLiveDrawPoint() {
+  if (liveDrawPreviewPoints.length === 0) return;
+  liveDrawPreviewPoints.pop();
+  redrawLiveDrawPreviewMarkers();
+  updateLiveDrawPreviewLine();
+  updateDrawModeBar();
+}
+// ── End draw mode helpers ─────────────────────────────────────────────────
 
 function normalizeHeadingDegrees(value) {
   const n = Number(value);

@@ -746,6 +746,7 @@
     <p id="mission-profile-status" class="profile-field-note">Use Load UUID Roles to read REGISTRY/uuid_roles.json and fill Mission A/B/C UUID slots.</p>
     <div class="profile-drawer-footer">
       <button id="load-mission-uuid-roles" class="profile-import-btn" type="button">Load UUID Roles</button>
+      <button id="clear-uuid-slots" class="profile-cancel-btn" type="button" title="Clear stale UUID slot assignments from browser cache">Clear UUID Slots</button>
       <button id="import-mission-config" class="profile-import-btn" type="button">Import Config</button>
       <button id="export-mission-config" class="profile-export-btn" type="button">Export Config</button>
       <button id="cancel-mission-profile-save" class="profile-cancel-btn" type="button">Cancel</button>
@@ -770,6 +771,24 @@
     const PROFILE_EXPORT_FILENAME = 'DroneSOP_user.json';
     const PLACEHOLDER_EMAIL_TOKENS = ['garbage', 'fake', 'invalid', 'example', 'test', 'noreply', 'no-reply'];
     let rc2ProfileRootHandle = null;
+
+    // Detect whether this device/browser can support the RC2 Mission Automation workflow.
+    // Requires the File System Access API (Chrome/Edge desktop) and a non-mobile platform.
+    function detectRc2Capability() {
+      const hasFileSystemAccess = 'showDirectoryPicker' in window;
+      const uaDataMobile = navigator.userAgentData && navigator.userAgentData.mobile === true;
+      const uaStringMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const isMobile = uaDataMobile || uaStringMobile;
+      const supported = hasFileSystemAccess && !isMobile;
+      let reason = null;
+      if (isMobile) {
+        reason = 'RC2 Mission Automation requires a Windows PC with the DJI RC2 connected via USB. Not available on mobile devices.';
+      } else if (!hasFileSystemAccess) {
+        reason = 'RC2 Mission Automation requires Chrome or Edge on a Windows PC (File System Access API not available in this browser).';
+      }
+      return { supported, isMobile, hasFileSystemAccess, reason };
+    }
+    const RC2_CAPABILITY = detectRc2Capability();
 
     let profileState = null;
     let missionAutomationState = null;
@@ -883,42 +902,50 @@
       const openMissionProfileBtn = document.getElementById('open-mission-profile-drawer');
       const saveMissionProfileBtn = document.getElementById('save-mission-profile-state');
       const accessState = getAdvancedAccessState();
-      const windowsOnlyNotice = ' Windows only: requires completed onboarding and a Windows PC; iOS/iPadOS are not compatible for RC2_Missions/MTP workflow steps.';
       if (!missionAutomationEnabledInput || !missionManagerActions) return;
 
       const mamEnabled = missionAutomationEnabledInput.checked;
-      const canOpenAdvancedProfile = accessState.validated;
-      missionAutomationEnabledInput.disabled = !accessState.validated;
-      missionAutomationEnabledInput.title = accessState.validated
-        ? ''
-        : 'Mission Manager is locked until advanced access is validated.';
+      const canOpenAdvancedProfile = accessState.validated && RC2_CAPABILITY.supported;
+      const platformBlocked = !RC2_CAPABILITY.supported;
+      const platformReason = RC2_CAPABILITY.reason || '';
+
+      missionAutomationEnabledInput.disabled = !accessState.validated || platformBlocked;
+      missionAutomationEnabledInput.title = platformBlocked
+        ? platformReason
+        : accessState.validated ? '' : 'Mission Manager is locked until advanced access is validated.';
       if (openMissionProfileBtn) {
         openMissionProfileBtn.disabled = !canOpenAdvancedProfile;
-        openMissionProfileBtn.title = canOpenAdvancedProfile
-          ? 'Open Advanced Profile details (Mission slots, UUIDs, and export subfolders).'
-          : accessState.message;
+        openMissionProfileBtn.title = platformBlocked
+          ? platformReason
+          : canOpenAdvancedProfile
+            ? 'Open Advanced Profile details (Mission slots, UUIDs, and export subfolders).'
+            : accessState.message;
       }
       if (saveMissionProfileBtn) {
-        saveMissionProfileBtn.disabled = !accessState.validated;
-        saveMissionProfileBtn.setAttribute('aria-disabled', accessState.validated ? 'false' : 'true');
+        saveMissionProfileBtn.disabled = !accessState.validated || platformBlocked;
+        saveMissionProfileBtn.setAttribute('aria-disabled', (accessState.validated && !platformBlocked) ? 'false' : 'true');
       }
       missionManagerActions.hidden = !canOpenAdvancedProfile;
       missionManagerActions.style.display = canOpenAdvancedProfile ? 'flex' : 'none';
 
       if (missionAutomationStateNote) {
-        missionAutomationStateNote.textContent = !accessState.validated
-          ? `MAM status: Locked. ${accessState.message}`
-          : mamEnabled
-            ? 'MAM status: On. Managed in Advanced Profile Details.'
-            : 'MAM status: Off. You can still open Advanced Profile Details to prefill slot mappings.';
+        missionAutomationStateNote.textContent = platformBlocked
+          ? `MAM status: Not available. ${platformReason}`
+          : !accessState.validated
+            ? `MAM status: Locked. ${accessState.message}`
+            : mamEnabled
+              ? 'MAM status: On. Managed in Advanced Profile Details.'
+              : 'MAM status: Off. You can still open Advanced Profile Details to prefill slot mappings.';
       }
 
       if (missionAutomationNote) {
-        missionAutomationNote.textContent = !accessState.validated
-          ? `Mission Automation Manager is locked until advanced access is validated.${windowsOnlyNotice}`
-          : mamEnabled
-            ? `MAM is active. Advanced Profile Details are available.${windowsOnlyNotice}`
-            : `MAM is off. Advanced Profile Details are still available for setup.${windowsOnlyNotice}`;
+        missionAutomationNote.textContent = platformBlocked
+          ? platformReason
+          : !accessState.validated
+            ? `Mission Automation Manager is locked until advanced access is validated. Windows PC with Chrome or Edge required.`
+            : mamEnabled
+              ? `MAM is active. Advanced Profile Details are available. UUID slots load from REGISTRY/uuid_roles.json each session.`
+              : `MAM is off. Advanced Profile Details are still available for setup. UUID slots load from REGISTRY/uuid_roles.json each session.`;
       }
 
       updateAdvancedProfileTriggerUi(accessState, mamEnabled);
@@ -1299,9 +1326,12 @@
 
       state.missionAutomationEnabled = normalizeBoolean(state.missionAutomationEnabled);
       state.defaultExportSlot = normalizeExportSlot(state.defaultExportSlot);
-      state.rc2UuidMissionA = normalizeUuidOrEmpty(state.rc2UuidMissionA);
-      state.rc2UuidMissionB = normalizeUuidOrEmpty(state.rc2UuidMissionB);
-      state.rc2UuidMissionC = normalizeUuidOrEmpty(state.rc2UuidMissionC);
+      // UUIDs are intentionally NOT restored from localStorage.
+      // They must always be read live from REGISTRY/uuid_roles.json each session
+      // to prevent stale slot assignments after Step 4 is re-run.
+      state.rc2UuidMissionA = '';
+      state.rc2UuidMissionB = '';
+      state.rc2UuidMissionC = '';
       state.rc2ExportDirMissionA = normalizeExportDir(state.rc2ExportDirMissionA, 'Mission_A');
       state.rc2ExportDirMissionB = normalizeExportDir(state.rc2ExportDirMissionB, 'Mission_B');
       state.rc2ExportDirMissionC = normalizeExportDir(state.rc2ExportDirMissionC, 'Mission_C');
@@ -1358,7 +1388,9 @@
     function persistMissionAutomationState() {
       if (!missionAutomationState) return;
       missionAutomationState.profileUpdatedAt = new Date().toISOString();
-      localStorage.setItem(MISSION_AUTOMATION_PROFILE_KEY, JSON.stringify(missionAutomationState));
+      // Strip UUIDs before persisting — they must always come from the live uuid_roles.json.
+      const { rc2UuidMissionA, rc2UuidMissionB, rc2UuidMissionC, ...persistable } = missionAutomationState;
+      localStorage.setItem(MISSION_AUTOMATION_PROFILE_KEY, JSON.stringify(persistable));
     }
 
     function buildAdvancedConfigBackupPayload() {
@@ -1589,21 +1621,14 @@
         missionAutomationState.rc2UuidMissionA = roles.missionA;
         missionAutomationState.rc2UuidMissionB = roles.missionB;
         missionAutomationState.rc2UuidMissionC = roles.missionC;
-        localStorage.setItem(UUID_ROLES_REGISTRY_KEY, JSON.stringify({
-          source: 'REGISTRY/uuid_roles.json',
-          loadedAt: new Date().toISOString(),
-          updatedAt: roles.updatedAt || null,
-          missionA: roles.missionA,
-          missionB: roles.missionB,
-          missionC: roles.missionC
-        }));
+        // UUIDs live in memory only — not cached to localStorage.
         persistMissionAutomationState();
         fillMissionAutomationForm();
         updateMissionAutomationUi();
 
         const stamp = roles.updatedAt ? ` (updated ${roles.updatedAt})` : '';
         if (status) {
-          status.textContent = `Loaded Mission UUID slots from REGISTRY/uuid_roles.json${stamp}.`;
+          status.textContent = `Loaded Mission UUID slots from REGISTRY/uuid_roles.json${stamp}. (Session only — not saved to browser cache.)`;
         }
       } catch (error) {
         if (error && error.name === 'AbortError') {
@@ -1945,6 +1970,12 @@
       const status = document.getElementById('pilot-location-status');
       const accessState = getAdvancedAccessState();
       if (!drawer || !backdrop) return;
+
+      if (!RC2_CAPABILITY.supported) {
+        if (status) status.textContent = RC2_CAPABILITY.reason;
+        return;
+      }
+
       if (!accessState.validated) {
         if (status) status.textContent = accessState.message;
         return;
@@ -2642,6 +2673,21 @@
             return;
           }
           await loadUuidRolesIntoMissionSlots(feedback);
+        });
+      }
+
+      const clearUuidSlotsBtn = document.getElementById('clear-uuid-slots');
+      if (clearUuidSlotsBtn) {
+        clearUuidSlotsBtn.addEventListener('click', () => {
+          const feedback = missionProfileStatus || status;
+          missionAutomationState = missionAutomationState || getDefaultMissionAutomationState();
+          missionAutomationState.rc2UuidMissionA = '';
+          missionAutomationState.rc2UuidMissionB = '';
+          missionAutomationState.rc2UuidMissionC = '';
+          localStorage.removeItem(UUID_ROLES_REGISTRY_KEY);
+          persistMissionAutomationState();
+          fillMissionAutomationForm();
+          if (feedback) feedback.textContent = 'UUID slots cleared. Re-run Step 4 and use Load UUID Roles to reassign.';
         });
       }
 
