@@ -501,50 +501,33 @@
           </summary>
           <div class="introduction-body">
             <p>
-              <strong>Drone Mission Hub</strong> is built around a <em>Know Before You Go</em> philosophy, bringing the essential elements of pre-flight planning into a single, structured workflow.
+              This Drone Mission Hub is built around a <em>Know Before You Go</em> approach-giving you a streamlined, repeatable workflow to prepare for every flight.
             </p>
             <p>
-              Before every flight, Canadian drone pilots are responsible for gathering operational information and determining that the proposed flight can be conducted safely. This includes conducting a site survey and assessing the operational volume, taking into account applicable regulations, environmental conditions, nearby hazards, airspace restrictions, people, structures, and other factors relevant to the planned operation.
+              Quickly review key factors like <strong>NOTAMs, local weather, Kp index, and airspace considerations</strong>, then step through a structured mission checklist designed for consistency and safety.
             </p>
             <p>
-              The Drone Mission Hub consolidates many of the resources needed to support that decision-making process. Review current <strong>NOTAMs, aviation weather, space weather, airspace information, and mission-specific considerations</strong> before working through a consistent pre-flight checklist designed to improve preparation, situational awareness, and operational safety.
+              Optimized for mobile use, this hub helps drone operators plan and execute missions with confidence-while staying aligned with applicable regulations and best practices.
             </p>
             <p>
-              Whether you're flying recreationally or commercially, the Hub promotes a repeatable mission-planning workflow that supports informed Go / No-Go decisions while helping reduce the chance of overlooked items. It is designed for both desktop and mobile devices, providing quick access to the information and tools needed before every mission.
-            </p>
-            <p>
-              <strong>New to drone operations?</strong> Begin by reviewing
-              <a href="https://tc.canada.ca/en/aviation/drone-safety/learn-rules-you-fly-your-drone/flying-your-drone-safely-legally?utm_campaign=tc-drone-safety-ongoing&amp;utm_medium=vurl&amp;utm_source=canada-ca-safe-legal-drones" target="_blank" rel="noopener">Transport Canada's Flying Your Drone Safely and Legally</a>
-              guide, together with the applicable requirements of <strong>Canadian Aviation Regulations (CARs) Part IX</strong>, including
-              <a href="https://laws-lois.justice.gc.ca/eng/regulations/SOR-96-433/section-901.24.html" target="_blank" rel="noopener">CAR 901.24 – Pre-flight Information</a>
-              and
-              <a href="https://laws-lois.justice.gc.ca/eng/regulations/SOR-96-433/section-901.27.html" target="_blank" rel="noopener">CAR 901.27 – Site Survey</a>.
+              New to drone ops? Review
+              <a href="https://tc.canada.ca/en/aviation/drone-safety/learn-rules-you-fly-your-drone/flying-your-drone-safely-legally?utm_campaign=tc-drone-safety-ongoing&utm_medium=vurl&utm_source=canada-ca-safe-legal-drones" target="_blank" rel="noopener">Transport Canada: Flying Your Drone Safely and Legally</a>.
             </p>
           </div>
         </details>
         <details id="disclaimer-panel" class="disclaimer-panel" open>
           <summary class="disclaimer-summary">
-            <span>⚠&#xA0; Disclaimer &amp; User Acknowledgement</span>
+            <span>⚠&#xA0; Disclaimer – Use at your own risk</span>
           </summary>
           <div class="disclaimer-body">
-            <p class="waiver-note">
-              The <strong>Drone Mission Hub</strong> is provided as a planning and decision-support tool for remotely piloted aircraft (RPAS) operations. It is intended to assist with pre-flight planning and site survey activities but does <strong>not</strong> replace official aeronautical information, regulatory publications, or operational approvals.
-            </p>
-            <p class="waiver-note">
-              Before every flight, pilots are responsible for obtaining and verifying current information from the appropriate official sources, including NAV CANADA, Transport Canada, and any other applicable authorities.
-            </p>
-            <p class="waiver-ack">By selecting <strong>I Acknowledge &amp; Continue</strong>, you acknowledge that:</p>
+            <p class="waiver-note">This tool is provided for <strong>informational and planning support only</strong>. It does not replace official sources such as NAV CANADA, nor does it constitute legal or operational authorization.</p>
+            <p class="waiver-ack">By proceeding, you acknowledge that:</p>
             <ul class="waiver-list">
-              <li>You understand this site is an informational planning tool and is not an official aviation information service.</li>
-              <li>You are responsible for verifying all operational information using official and current sources before commencing a flight.</li>
-              <li>You are responsible for complying with the Canadian Aviation Regulations (CARs) and any other applicable federal, provincial, municipal, or local requirements.</li>
-              <li>You are responsible for conducting an appropriate pre-flight assessment and site survey for your planned operation.</li>
-              <li>You assume full responsibility for the safe and lawful conduct of your RPAS operation.</li>
+              <li>You are responsible for verifying all flight information through official sources</li>
+              <li>You understand and will comply with applicable regulations</li>
+              <li>You assume full responsibility for the safe conduct of your drone operations</li>
             </ul>
-            <p class="waiver-note">
-              Your acknowledgement is stored locally in your browser so that this introduction is not displayed each time you return. No personal information is collected as part of this acknowledgement.
-            </p>
-            <button class="waiver-accept">I Acknowledge &amp; Continue</button>
+            <button class="waiver-accept">Accept &amp; Continue</button>
           </div>
         </details>
       </section>
@@ -2461,13 +2444,13 @@
 
       if (accepted) {
         acceptBtn.classList.add('is-complete');
-        acceptBtn.textContent = 'Acknowledgement Saved';
+        acceptBtn.textContent = 'Terms Accepted';
         acceptBtn.disabled = true;
         acceptBtn.setAttribute('aria-disabled', 'true');
         if (disclaimer) disclaimer.removeAttribute('open');
       } else {
         acceptBtn.classList.remove('is-complete');
-        acceptBtn.textContent = 'I Acknowledge & Continue';
+        acceptBtn.textContent = 'Accept & Continue';
         acceptBtn.disabled = false;
         acceptBtn.removeAttribute('aria-disabled');
         if (disclaimer) disclaimer.setAttribute('open', '');
