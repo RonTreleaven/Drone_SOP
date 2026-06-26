@@ -145,6 +145,8 @@ button:hover:not(:disabled) { background: #005fa3; }
 
 .profile-badge-wrap {
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .profile-badge-btn {
@@ -173,7 +175,7 @@ button:hover:not(:disabled) { background: #005fa3; }
 }
 
 .profile-badge-img {
-  width: 94px;
+  width: 108px;
   height: auto;
   display: block;
 }
@@ -362,7 +364,7 @@ main {
   }
 
   .profile-badge-img {
-    width: 82px;
+    width: 94px;
   }
 }
 .checklist {

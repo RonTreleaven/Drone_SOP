@@ -33,7 +33,7 @@
       min-height: 100vh;
     }
     .shell {
-      max-width: 1080px;
+      max-width: 800px;
       margin: 0 auto;
       padding: 1.25rem;
     }
@@ -82,30 +82,26 @@
       background: #d8ecff;
       border-color: #7db2db;
     }
-    .hero {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-top: 4px solid var(--accent-red);
-      border-radius: 14px;
-      padding: 1.25rem;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
-      margin-bottom: 1.25rem;
-    }
-    .brand {
+    .site-header {
       display: flex;
       align-items: center;
+      margin-bottom: 1.5rem;
       gap: 1rem;
     }
-    .brand img {
-      width: 74px;
-      height: auto;
+
+    .site-logo {
+      height: 80px;
+      margin-right: 1rem;
     }
-    h1 {
+
+    .page-title {
       margin: 0;
-      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-size: 2rem;
+      font-weight: 600;
     }
-    .sub {
-      margin: 0.55rem 0 0;
+
+    .toolbox-intro {
+      margin: -0.8rem 0 1.25rem;
       color: var(--muted);
       max-width: 68ch;
     }
@@ -271,7 +267,15 @@
       font-size: 0.7rem;
       letter-spacing: 0.03em;
     }
-    @media (max-width: 720px) {
+    @media (max-width: 600px) {
+      .site-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .site-logo {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+      }
       .summary-sub { display: none; }
       .tool-list li { grid-template-columns: 40px 1fr; }
       .tool-icon { width: 36px; height: 36px; }
@@ -344,15 +348,11 @@
       });
     </script>
 
-    <section class="hero">
-      <div class="brand">
-        <img src="assets/img/logo_25.svg" alt="Logo">
-        <div>
-          <h1>Drone Toolbox</h1>
-          <p class="sub">Perform a Pre-Flight site survey to know your airspace, NOTAM obstacles, restrictions, hazards and local weather.</p>
-        </div>
-      </div>
-    </section>
+    <header class="site-header">
+      <img src="assets/img/logo_25.svg" alt="Logo" class="site-logo">
+      <h1 class="page-title">Drone Toolbox</h1>
+    </header>
+    <p class="toolbox-intro">Perform a Pre-Flight site survey to know your airspace, NOTAM obstacles, restrictions, hazards and local weather.</p>
 
     <!-- Layout B (refined) -->
     <section class="mock-block">
