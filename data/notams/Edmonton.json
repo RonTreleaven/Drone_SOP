@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(U1116/26 NOTAMR U0573/26\nQ) CZWG/QOLAS/IV/M/E/000/027/5309N10929W002\nA) CZWG B) 2606261923 C) 2609252359\nE) OBST LGT U/S TOWER 530910N 1092913W (APRX 7NM WNW MAIDSTONE AD \n(CJH3)) 500FT AGL, 2700FT AMSL.)",
+    "startValidity": "2026-06-26T19:23:00",
+    "endValidity": "2026-09-25T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.152778, -109.486944"
+    ]
+  },
+  {
+    "raw": "(R0609/26 NOTAMR R0304/26\nQ) CZEG/QOLAS/IV/M/AE/000/999/5825N13002W005\nA) CYDL B) 2606261733 C) 2609231700EST\nE) ALL HBN U/S)",
+    "startValidity": "2026-06-26T17:33:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "58.416667, -130.033333"
+    ]
+  },
+  {
     "raw": "(I3164/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/038/5104N11408W005\nA) CXXX B) 2606291200 C) 2606292300\nE) CMT3 CALGARY (FOOTHILLS HOSP MCCAIG TOWER) (HELI)\nMOBILE CRANE WITHIN 136FT RADIUS CENTRED ON 510356N 1140752W \n(APRX 915FT ENE AD (CMT3)). 136FT AGL 3726FT AMSL. LGTD, PAINTED.)",
     "startValidity": "2026-06-26T14:56:43.286",
     "endValidity": "2026-06-29T23:00:00",
@@ -60,15 +78,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "58.455556, -114.545833"
-    ]
-  },
-  {
-    "raw": "(R0603/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/032/5216N11203W005\nA) CZEG B) 2606242320 C) 2606261800\nE) OBST LGT U/S WIND FARM WITHIN 4NM RADIUS CENTRED ON 521616N \n1120311W (APRX 5NM WNW CASTOR AD (CER2)). 397FT AGL 3153FT AMSL.)",
-    "startValidity": "2026-06-24T23:20:00",
-    "endValidity": "2026-06-26T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.271111, -112.053056"
     ]
   },
   {
@@ -936,21 +945,21 @@
     ]
   },
   {
-    "raw": "(R0342/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5207N11151W002\nA) CZEG B) 2604101300 C) 2607092359\nE) OBST LGT U/S TOWER 520654N 1115123W (APRX 7NM SE CASTOR AD \n(CER2)) 340FT AGL, 3053FT AMSL.)",
-    "startValidity": "2026-04-10T13:00:00",
-    "endValidity": "2026-07-09T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.115000, -111.856389"
-    ]
-  },
-  {
     "raw": "(R0343/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5148N11404W005\nA) CXXX B) 2604101300 C) 2607092359\nE) CFU9 OLDS (HOSP AND CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 514806N 1140427W (APRX 1.58NM ENE AD) 312FT \nAGL, 3683FT AMSL.)",
     "startValidity": "2026-04-10T13:00:00",
     "endValidity": "2026-07-09T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.801667, -114.074167"
+    ]
+  },
+  {
+    "raw": "(R0342/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5207N11151W002\nA) CZEG B) 2604101300 C) 2607092359\nE) OBST LGT U/S TOWER 520654N 1115123W (APRX 7NM SE CASTOR AD \n(CER2)) 340FT AGL, 3053FT AMSL.)",
+    "startValidity": "2026-04-10T13:00:00",
+    "endValidity": "2026-07-09T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.115000, -111.856389"
     ]
   },
   {
@@ -1005,33 +1014,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.680000, -115.735556"
-    ]
-  },
-  {
-    "raw": "(R0310/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/040/4923N11258W002\nA) CZEG B) 2603291247 C) 2606261800\nE) OBST LGT U/S TOWER 492311N 1125811W (APRX 16NM SSW LETHBRIDGE AD \n(CYQL)) 300FT AGL, 3920FT AMSL.)",
-    "startValidity": "2026-03-29T12:47:00",
-    "endValidity": "2026-06-26T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.386389, -112.969722"
-    ]
-  },
-  {
-    "raw": "(U0573/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/027/5309N10929W002\nA) CZWG B) 2603271918 C) 2606271915\nE) OBST LGT U/S TOWER 530910N 1092913W (APRX 7NM WNW MAIDSTONE AD \n(CJH3)) 500FT AGL, 2700FT AMSL.)",
-    "startValidity": "2026-03-27T19:18:00",
-    "endValidity": "2026-06-27T19:15:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.152778, -109.486944"
-    ]
-  },
-  {
-    "raw": "(R0304/26 NOTAMR R1420/25\nQ) CZEG/QOLAS/IV/M/AE/000/999/5825N13002W005\nA) CYDL B) 2603271640 C) 2606261700EST\nE) ALL HBN U/S)",
-    "startValidity": "2026-03-27T16:40:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "58.416667, -130.033333"
     ]
   },
   {
