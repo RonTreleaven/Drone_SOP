@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0611/26 NOTAMR R0413/26\nQ) CZEG/QOLAS/IV/M/E/000/033/5625N12110W002\nA) CZEG B) 2606270615 C) 2608272359\nE) OBST LGT U/S TOWER 562430N 1211017W (APRX 18NM WNW FORT ST. JOHN \nAD (CYXJ)) 292FT AGL, 3245FT AMSL.)",
+    "startValidity": "2026-06-27T06:15:00",
+    "endValidity": "2026-08-27T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "56.408333, -121.171389"
+    ]
+  },
+  {
     "raw": "(U1116/26 NOTAMR U0573/26\nQ) CZWG/QOLAS/IV/M/E/000/027/5309N10929W002\nA) CZWG B) 2606261923 C) 2609252359\nE) OBST LGT U/S TOWER 530910N 1092913W (APRX 7NM WNW MAIDSTONE AD \n(CJH3)) 500FT AGL, 2700FT AMSL.)",
     "startValidity": "2026-06-26T19:23:00",
     "endValidity": "2026-09-25T23:59:00",
@@ -72,15 +81,6 @@
     ]
   },
   {
-    "raw": "(R0604/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/011/5827N11433W005\nA) CXXX B) 2606250429 C) 2606272100\nE) CEC3 FOX LAKE \nOBST LGT U/S TOWER 582720N 1143245W (APRX 1.06NM S AD) 160FT AGL, \n1020FT AMSL.)",
-    "startValidity": "2026-06-25T04:29:00",
-    "endValidity": "2026-06-27T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "58.455556, -114.545833"
-    ]
-  },
-  {
     "raw": "(R0602/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/023/5346N11309W005\nA) CXXX B) 2606241924 C) 2609241900\nE) CFB6 EDMONTON/JOSEPHBURG \nOBST LGT U/S TOWER 534544N 1130929W (APRX 3.3NM WNW AD) 262FT \nAGL, 2287FT AMSL.)",
     "startValidity": "2026-06-24T19:24:00",
     "endValidity": "2026-09-24T19:00:00",
@@ -96,15 +96,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "57.073889, -111.600000"
-    ]
-  },
-  {
-    "raw": "(R0598/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/007/6121N11739W005\nA) CYJP B) 2606241305 C) 2606262100\nE) OBST LGT U/S TOWER 612104N 1173846W (APRX 2.2NM NW AD) 99FT AGL, \n624FT AMSL.)",
-    "startValidity": "2026-06-24T13:05:00",
-    "endValidity": "2026-06-26T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "61.351111, -117.646111"
     ]
   },
   {
@@ -411,15 +402,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "54.034722, -115.715833"
-    ]
-  },
-  {
-    "raw": "(C2258/26 NOTAMR C1828/26\nQ) CZEG/QOBCE/IV/M/AE/000/025/5321N11333W005\nA) CYEG B) 2606111638 C) 2606262200\nD) DAILY 1300-2200\nE) MOBILE CRANE WITHIN 144FT RADIUS CENTRED ON 532056N 1133306W APRX \n1.1NM BFR THR 20 AND 390FT WEST EXTENDED RCL. 99FT AGL 2438FT \nAMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-06-11T16:38:00",
-    "endValidity": "2026-06-26T22:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "53.348889, -113.551667"
     ]
   },
   {
@@ -762,15 +744,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.803056, -110.893333"
-    ]
-  },
-  {
-    "raw": "(R0413/26 NOTAMR R0224/26\nQ) CZEG/QOLAS/IV/M/E/000/033/5625N12110W002\nA) CZEG B) 2605020505 C) 2607022359\nE) OBST LGT U/S TOWER 562430N 1211017W (APRX 18NM WNW FORT ST. JOHN \nAD (CYXJ)) 292FT AGL, 3245FT AMSL.)",
-    "startValidity": "2026-05-02T05:05:00",
-    "endValidity": "2026-07-02T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "56.408333, -121.171389"
     ]
   },
   {
