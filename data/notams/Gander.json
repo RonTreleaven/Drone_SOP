@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(V0778/26 NOTAMR V0401/26\nQ) CZQX/QOLAS/IV/M/E/000/016/4849N05643W002\nA) CZQX B) 2606301558 C) 2609292359EST\nE) OBST LGT U/S TOWER 484912N 0564315W (APRX 35NM SSE DEER LAKE AD \n(CYDF)) 413FT AGL, 1528FT AMSL.)",
+    "startValidity": "2026-06-30T15:58:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "48.820000, -56.720833"
+    ]
+  },
+  {
     "raw": "(Q0632/26 NOTAMN\nQ) CZQX/QOBCE/IV/M/AE/000/002/5124N05605W005\nA) CYAY B) 2606090800 C) 2608241830\nE) CRANE 512342N 0560503W APRX 1970FT BEYOND THR 10 AND 1160FT NORTH \nRCL. 75FT AGL 154FT AMSL.)",
     "startValidity": "2026-06-08T15:48:26.447",
     "endValidity": "2026-08-24T18:30:00",
@@ -60,15 +69,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.597500, -54.699444"
-    ]
-  },
-  {
-    "raw": "(V0401/26 NOTAMR V0003/26\nQ) CZQX/QOLAS/IV/M/E/000/016/4849N05643W002\nA) CZQX B) 2604011411 C) 2607012359EST\nE) OBST LGT U/S TOWER 484912N 0564315W (APRX 35NM SSE DEER LAKE AD \n(CYDF)) 413FT AGL, 1528FT AMSL.)",
-    "startValidity": "2026-04-01T14:11:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "48.820000, -56.720833"
     ]
   }
 ]
