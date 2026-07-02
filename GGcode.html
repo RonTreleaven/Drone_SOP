@@ -420,10 +420,21 @@ body {
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   touch-action: manipulation;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
 }
 
 .map-fullscreen-fab:hover {
   background: #f0f5ff;
+}
+
+.map-fullscreen-label {
+  display: none;
+  font-size: 0.88rem;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .map-center-fab {
@@ -1379,8 +1390,24 @@ body.map-immersive {
     display: block;
   }
 
+  .map-fullscreen-fab {
+    display: inline-flex;
+  }
+
   #routeFile {
     max-width: 100%;
+  }
+}
+
+@media (pointer: coarse) and (min-width: 781px) {
+  .map-fullscreen-fab {
+    width: auto;
+    min-width: 132px;
+    padding: 0 12px;
+  }
+
+  .map-fullscreen-label {
+    display: inline;
   }
 }
 </style>
@@ -1490,7 +1517,7 @@ body.map-immersive {
   <div class="panel map-panel section">
     <h2>Map Preview</h2>
     <div id="mapShell">
-      <button class="btn map-fullscreen-fab" id="toggleMapFullscreenTopBtn" type="button" title="Toggle full screen" aria-label="Toggle full screen">⤢</button>
+      <button class="btn map-fullscreen-fab" id="toggleMapFullscreenTopBtn" type="button" title="Expand map" aria-label="Expand map" aria-pressed="false"><span class="map-fullscreen-icon" aria-hidden="true">⤢</span><span class="map-fullscreen-label">Expand Map</span></button>
       <button class="btn map-center-fab" id="centerPilotMarkerBtn" type="button" title="Center to mission (or pilot if no route)" aria-label="Center to mission or pilot"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7.5" fill="none" stroke="#333" stroke-width="1.8"/><circle cx="11" cy="11" r="2.2" fill="#333"/><line x1="11" y1="1" x2="11" y2="5.5" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="16.5" x2="11" y2="21" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="11" x2="5.5" y2="11" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="16.5" y1="11" x2="21" y2="11" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg></button>
       <button class="btn map-range-fab" id="toggleRangeGuideBtn" type="button" title="Distance guide (10m rings)" aria-label="Toggle distance guide">◎</button>
       <button class="btn mobile-tools-toggle" id="toggleRouteToolsBtn" type="button" aria-controls="routeTools" aria-expanded="false">☰ Tools</button>
@@ -3119,6 +3146,11 @@ async function toggleMapFullscreen() {
       return;
     }
 
+    if (isIOSFullscreenFallbackDevice()) {
+      enterMapPseudoFullscreen(mapPanel);
+      return;
+    }
+
     const nativeFullscreenEl = getNativeFullscreenElement();
     if (nativeFullscreenEl) {
       const exit = getNativeFullscreenExit();
@@ -3167,6 +3199,14 @@ function getNativeFullscreenExit() {
     null;
 }
 
+function isIOSFullscreenFallbackDevice() {
+  const ua = navigator.userAgent || '';
+  const platform = navigator.platform || '';
+  const isClassicIOS = /iPad|iPhone|iPod/.test(ua);
+  const isDesktopModeIPad = platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+  return isClassicIOS || isDesktopModeIPad;
+}
+
 function handleNativeFullscreenChange() {
   const isFull = !!getNativeFullscreenElement() || mapPseudoFullscreenActive;
   setMapFullscreenButtons(isFull);
@@ -3213,7 +3253,13 @@ function setMapFullscreenButtons(isFull) {
     btn.textContent = isFull ? 'Exit Full Screen' : 'Full Screen';
   }
   if (topBtn) {
-    topBtn.textContent = isFull ? '⤡' : '⤢';
+    const icon = topBtn.querySelector('.map-fullscreen-icon');
+    const label = topBtn.querySelector('.map-fullscreen-label');
+    if (icon) icon.textContent = isFull ? '⤡' : '⤢';
+    if (label) label.textContent = isFull ? 'Exit Map' : 'Expand Map';
+    topBtn.title = isFull ? 'Exit map' : 'Expand map';
+    topBtn.setAttribute('aria-label', isFull ? 'Exit map' : 'Expand map');
+    topBtn.setAttribute('aria-pressed', isFull ? 'true' : 'false');
   }
 }
 
