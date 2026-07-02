@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>Mission Automation Planner</title>
 
@@ -419,6 +419,7 @@ body {
   font-size: 1.1rem;
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  touch-action: manipulation;
 }
 
 .map-fullscreen-fab:hover {
@@ -1036,6 +1037,16 @@ body {
 
 #mapShell:fullscreen #map {
   height: 100vh;
+  height: 100dvh;
+}
+
+#mapShell:-webkit-full-screen {
+  border-radius: 0;
+}
+
+#mapShell:-webkit-full-screen #map {
+  height: 100vh;
+  height: 100dvh;
 }
 
 /* ── Floating draw-mode toolbar ─────────────────────────────────────── */
@@ -1098,10 +1109,13 @@ body {
   position: fixed;
   inset: 0;
   z-index: 9998;
+  width: 100vw;
+  max-width: none;
   margin: 0;
   border-radius: 0;
   padding: 0;
   border: 0;
+  background: #fff;
 }
 
 .map-panel.map-immersive-active h2 {
@@ -1120,6 +1134,8 @@ body {
 
 body.map-immersive {
   overflow: hidden;
+  overscroll-behavior: none;
+  width: 100%;
 }
 
 .modal-shell {
@@ -2089,6 +2105,7 @@ let autocompleteActiveIndex = -1;
 let autocompleteRequestId = 0;
 let mapPseudoFullscreenActive = false;
 let mapPseudoFullscreenScrollY = 0;
+let mapPseudoFullscreenBodyStyles = null;
 let routeSnapGuard = false;
 let activeRouteToolsPanel = null;
 let routeToolsFlyoutActivatedAt = 0;
@@ -3102,17 +3119,91 @@ async function toggleMapFullscreen() {
       return;
     }
 
-    if (document.fullscreenElement === shell) {
-      await document.exitFullscreen();
-    } else if (document.fullscreenEnabled && typeof shell.requestFullscreen === 'function') {
-      await shell.requestFullscreen();
+    const nativeFullscreenEl = getNativeFullscreenElement();
+    if (nativeFullscreenEl) {
+      const exit = getNativeFullscreenExit();
+      if (exit) {
+        await Promise.resolve(exit.call(document));
+        handleNativeFullscreenChange();
+      } else {
+        enterMapPseudoFullscreen(mapPanel);
+      }
     } else {
-      enterMapPseudoFullscreen(mapPanel);
+      const request = getNativeFullscreenRequest(shell);
+      if (request) {
+        await Promise.resolve(request.call(shell));
+        handleNativeFullscreenChange();
+      } else {
+        enterMapPseudoFullscreen(mapPanel);
+      }
     }
   } catch {
     // Fallback for browsers (notably iOS Safari) that block element fullscreen.
-    enterMapPseudoFullscreen(mapPanel);
+    if (!getNativeFullscreenElement()) {
+      enterMapPseudoFullscreen(mapPanel);
+    }
   }
+}
+
+function getNativeFullscreenElement() {
+  return document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.webkitCurrentFullScreenElement ||
+    null;
+}
+
+function getNativeFullscreenRequest(el) {
+  if (!el) return null;
+  return el.requestFullscreen ||
+    el.webkitRequestFullscreen ||
+    el.webkitEnterFullscreen ||
+    null;
+}
+
+function getNativeFullscreenExit() {
+  return document.exitFullscreen ||
+    document.webkitExitFullscreen ||
+    document.webkitCancelFullScreen ||
+    null;
+}
+
+function handleNativeFullscreenChange() {
+  const isFull = !!getNativeFullscreenElement() || mapPseudoFullscreenActive;
+  setMapFullscreenButtons(isFull);
+  applyRouteToolsPanelState();
+  triggerMapResizeWithCenterPreserved();
+}
+
+function lockBodyForPseudoFullscreen() {
+  mapPseudoFullscreenBodyStyles = {
+    position: document.body.style.position,
+    top: document.body.style.top,
+    left: document.body.style.left,
+    right: document.body.style.right,
+    width: document.body.style.width,
+    overflow: document.body.style.overflow
+  };
+
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${mapPseudoFullscreenScrollY}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
+}
+
+function unlockBodyForPseudoFullscreen() {
+  if (!mapPseudoFullscreenBodyStyles) {
+    return;
+  }
+
+  document.body.style.position = mapPseudoFullscreenBodyStyles.position;
+  document.body.style.top = mapPseudoFullscreenBodyStyles.top;
+  document.body.style.left = mapPseudoFullscreenBodyStyles.left;
+  document.body.style.right = mapPseudoFullscreenBodyStyles.right;
+  document.body.style.width = mapPseudoFullscreenBodyStyles.width;
+  document.body.style.overflow = mapPseudoFullscreenBodyStyles.overflow;
+  mapPseudoFullscreenBodyStyles = null;
 }
 
 function setMapFullscreenButtons(isFull) {
@@ -3385,11 +3476,14 @@ function enterMapPseudoFullscreen(mapPanel) {
   mapPseudoFullscreenScrollY = window.scrollY;
   mapPanel.classList.add('map-immersive-active');
   document.body.classList.add('map-immersive');
+  lockBodyForPseudoFullscreen();
   setMapFullscreenButtons(true);
   updatePseudoFullscreenMapHeight();
   window.addEventListener('resize', updatePseudoFullscreenMapHeight);
+  window.addEventListener('orientationchange', updatePseudoFullscreenMapHeight);
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', updatePseudoFullscreenMapHeight);
+    window.visualViewport.addEventListener('scroll', updatePseudoFullscreenMapHeight);
   }
 }
 
@@ -3404,21 +3498,20 @@ function exitMapPseudoFullscreen() {
 
   mapPseudoFullscreenActive = false;
   document.body.classList.remove('map-immersive');
+  unlockBodyForPseudoFullscreen();
   setMapFullscreenButtons(false);
   window.removeEventListener('resize', updatePseudoFullscreenMapHeight);
+  window.removeEventListener('orientationchange', updatePseudoFullscreenMapHeight);
   if (window.visualViewport) {
     window.visualViewport.removeEventListener('resize', updatePseudoFullscreenMapHeight);
+    window.visualViewport.removeEventListener('scroll', updatePseudoFullscreenMapHeight);
   }
   window.scrollTo(0, mapPseudoFullscreenScrollY);
   triggerMapResizeWithCenterPreserved();
 }
 
-document.addEventListener('fullscreenchange', function() {
-  const isFull = !!document.fullscreenElement || mapPseudoFullscreenActive;
-  setMapFullscreenButtons(isFull);
-  applyRouteToolsPanelState();
-  triggerMapResizeWithCenterPreserved();
-});
+document.addEventListener('fullscreenchange', handleNativeFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleNativeFullscreenChange);
 
 function isMobileViewport() {
   return window.matchMedia('(max-width: 780px)').matches;
