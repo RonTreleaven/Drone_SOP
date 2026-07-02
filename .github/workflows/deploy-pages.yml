@@ -24,7 +24,6 @@ permissions:
   contents: read
   pages: write
   id-token: write
-  actions: write
 
 concurrency:
   group: pages
@@ -91,15 +90,10 @@ jobs:
           # Disable Jekyll processing
           touch _site/.nojekyll
 
-      - name: Delete stale github-pages artifacts
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Summarize site artifact
         run: |
-          gh api "repos/${{ github.repository }}/actions/artifacts?name=github-pages&per_page=100" \
-            --jq '.artifacts[].id' | \
-          while read -r id; do
-            gh api -X DELETE "repos/${{ github.repository }}/actions/artifacts/$id" || true
-          done
+          du -sh _site
+          find _site -type f | wc -l
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
@@ -109,3 +103,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          timeout: 1800000
+          reporting_interval: 10000
