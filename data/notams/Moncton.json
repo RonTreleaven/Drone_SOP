@@ -126,21 +126,21 @@
     ]
   },
   {
-    "raw": "(V0639/26 NOTAMR V0236/26\nQ) CZQM/QOLAS/IV/M/AE/000/003/4618N06307W005\nA) CYYG B) 2606011103 C) 2607312359EST\nE) OBST LGT U/S ANTENNA 461752N 0630711W (APRX 2861FT NNE AD) 39FT \nAGL, 206FT AMSL.)",
-    "startValidity": "2026-06-01T11:03:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "46.297778, -63.119722"
-    ]
-  },
-  {
     "raw": "(V0638/26 NOTAMR V0235/26\nQ) CZQM/QOLAS/IV/M/AE/000/001/4552N06632W005\nA) CYFC B) 2606011103 C) 2607312359EST\nE) OBST LGT U/S ANTENNA 455152N 0663213W (APRX 1620FT SSW AD) 33FT \nAGL, 94FT AMSL.)",
     "startValidity": "2026-06-01T11:03:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.864444, -66.536944"
+    ]
+  },
+  {
+    "raw": "(V0639/26 NOTAMR V0236/26\nQ) CZQM/QOLAS/IV/M/AE/000/003/4618N06307W005\nA) CYYG B) 2606011103 C) 2607312359EST\nE) OBST LGT U/S ANTENNA 461752N 0630711W (APRX 2861FT NNE AD) 39FT \nAGL, 206FT AMSL.)",
+    "startValidity": "2026-06-01T11:03:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "46.297778, -63.119722"
     ]
   },
   {
@@ -312,15 +312,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "44.985556, -64.911389"
-    ]
-  },
-  {
-    "raw": "(V0417/26 NOTAMN\nQ) CZQM/QOLAS/IV/M/AE/000/005/4546N06628W005\nA) CYCX B) 2604091811 C) 2607061800EST\nE) OBST LGT U/S TOWER 454602N 0662752W (APRX 4.4NM SSW AD) 325FT \nAGL, 478FT AMSL.)",
-    "startValidity": "2026-04-09T18:11:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.767222, -66.464444"
     ]
   },
   {
