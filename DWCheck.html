@@ -1026,7 +1026,12 @@ font-size:13px;
 <span id="riskScoreKeyDot" class="risk-key-dot risk-key-unknown" aria-hidden="true"></span>
 <span id="riskScoreKeyText">Drone Weather Survey</span>
 </h3>
+<div class="risk-survey-body">
 <div class="risk-placeholder">Run METAR Weather Check to load current survey details.</div>
+<div class="risk-compass-wrap">
+<img class="risk-compass" src="assets/img/Compass_360.svg" alt="Compass rose for reviewing wind direction" onerror="if(this.src.endsWith('Compass_360.svg')){this.src='assets/img/Compass_360.png';return;}this.onerror=null;this.src='assets/img/Compass_360%20v1.png';">
+</div>
+</div>
 <details class="risk-score-guide">
 <summary>Risk Score Guide</summary>
 <div class="table-wrap">
@@ -3518,7 +3523,7 @@ panel.innerHTML = `
 		<div class="metric">Ceiling: ${risk.ceiling} ft</div>
 	</div>
 	<div class="risk-compass-wrap">
-	<img class="risk-compass" src="assets/img/compass_360.png" alt="Compass rose for reviewing wind direction">
+	<img class="risk-compass" src="assets/img/Compass_360.svg" alt="Compass rose for reviewing wind direction" onerror="if(this.src.endsWith('Compass_360.svg')){this.src='assets/img/Compass_360.png';return;}this.onerror=null;this.src='assets/img/Compass_360%20v1.png';">
 	</div>
 	</div>
 

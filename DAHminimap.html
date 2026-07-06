@@ -3267,6 +3267,21 @@
     });
     if (!restoredAtBoot) {
       setStatus("No saved pilot location. Click My Location or set pilot location manually.", "warn");
+      // Prompt user to get current location if none is saved
+      setTimeout(() => {
+        if (!hasPromptedGpsOnNoPilot && !pilotMarker) {
+          hasPromptedGpsOnNoPilot = true;
+          const shouldGetLocation = window.confirm(
+            "No pilot location is saved.\n\n" +
+            "Would you like to use your device's GPS to set your pilot location now?"
+          );
+          if (shouldGetLocation) {
+            stopPilotLocationTracking();
+            setStatus("Requesting device location...", "warn");
+            startPilotLocationTracking(true, true);
+          }
+        }
+      }, 500);
     }
     updateMyLocationButtonState();
     updateSetPilotFromInputsButtonState();

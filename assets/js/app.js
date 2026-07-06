@@ -389,6 +389,8 @@ function renderIndex(sections) {
     img.src = imagePath;
     img.alt = `${label} profile`;
     img.className = 'profile-badge-img';
+    img.style.transform = 'scale(1.5)';
+    img.style.transformOrigin = 'center';
 
     button.appendChild(img);
     profileButtons.set(profileKey, button);
