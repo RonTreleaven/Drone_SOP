@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(R0644/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/025/5500N11148W002\nA) CZEG B) 2607091734 C) 2607232359\nE) OBST LGT U/S TOWER 545959N 1114818W (APRX 16NM NNE LAC LA BICHE \nAD (CYLB)) 321FT AGL, 2425FT AMSL.)",
+    "startValidity": "2026-07-09T17:34:00",
+    "endValidity": "2026-07-23T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "54.999722, -111.805000"
+    ]
+  },
+  {
+    "raw": "(R0643/26 NOTAMR R0345/26\nQ) CZEG/QOLAS/IV/M/AE/000/002/6214N09236W005\nA) CYXN B) 2607091652 C) 2610022359\nE) OBST LGT U/S NDB TOWER 621410N 0923604W (APRX 1546FT SSW AD) \n156FT AGL, 194FT AMSL.)",
+    "startValidity": "2026-07-09T16:52:00",
+    "endValidity": "2026-10-02T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "62.236111, -92.601111"
+    ]
+  },
+  {
     "raw": "(R0642/26 NOTAMR R0344/26\nQ) CZEG/QOLAS/IV/M/AE/000/003/6320N09044W005\nA) CYCS B) 2607091644 C) 2607102359\nE) OBST LGT U/S NDB TOWER 632018N 0904348W (APRX 3211FT S AD) 155FT \nAGL, 205FT AMSL.)",
     "startValidity": "2026-07-09T16:44:00",
     "endValidity": "2026-07-10T23:59:00",
@@ -24,15 +42,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "55.177222, -118.867222"
-    ]
-  },
-  {
-    "raw": "(R0641/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/047/5512N12051W005\nA) CZEG B) 2607091228 C) 2607092000\nE) OBST LGT U/S WIND FARM WITHIN 5NM RADIUS CENTRED ON 551153N \n1205042W (APRX 11NM N TUMBLER RIDGE AD (CBX7)). 476FT AGL 4687FT \nAMSL.)",
-    "startValidity": "2026-07-09T12:28:00",
-    "endValidity": "2026-07-09T20:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.198056, -120.845000"
     ]
   },
   {
@@ -846,15 +855,6 @@
     ]
   },
   {
-    "raw": "(R0436/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/014/5715N11124W005\nA) CXXX B) 2605090514 C) 2607091800\nE) CAL4 FORT MACKAY/ALBIAN \nOBST LGT U/S TOWER 571447N 1112354W (APRX 1.51NM NNE AD) 300FT \nAGL, 1304FT AMSL.)",
-    "startValidity": "2026-05-09T05:14:00",
-    "endValidity": "2026-07-09T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "57.246389, -111.398333"
-    ]
-  },
-  {
     "raw": "(R0435/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/026/5343N11324W005\nA) CYED B) 2605081907 C) 2608062359\nE) OBST LGT U/S TOWER 534321N 1132416W (APRX 4.1NM NNE AD) 333FT \nAGL, 2536FT AMSL.)",
     "startValidity": "2026-05-08T19:07:00",
     "endValidity": "2026-08-06T23:59:00",
@@ -1041,15 +1041,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "52.990278, -113.089722"
-    ]
-  },
-  {
-    "raw": "(R0345/26 NOTAMR R0050/26\nQ) CZEG/QOLAS/IV/M/AE/000/002/6214N09236W005\nA) CYXN B) 2604101452 C) 2607092359\nE) OBST LGT U/S NDB TOWER 621410N 0923604W (APRX 1546FT SSW AD) \n156FT AGL, 194FT AMSL.)",
-    "startValidity": "2026-04-10T14:52:00",
-    "endValidity": "2026-07-09T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "62.236111, -92.601111"
     ]
   },
   {
