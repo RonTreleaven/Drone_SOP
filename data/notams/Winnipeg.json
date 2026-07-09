@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U1206/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/031/5020N10747W005\nA) CXXX B) 2607090644 C) 2607112100\nE) CCY2 SWIFT CURRENT (CYPRESS REGIONAL HOSPITAL) (HELI)\nOBST LGT U/S TOWER 502020N 1074724W (APRX 1.79NM NNW AD) 406FT \nAGL, 3089FT AMSL.)",
+    "startValidity": "2026-07-09T06:44:00",
+    "endValidity": "2026-07-11T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.338889, -107.790000"
+    ]
+  },
+  {
     "raw": "(U1198/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/023/4914N10328W002\nA) CZWG B) 2607071613 C) 2610021800\nE) OBST LGT U/S TOWER 491417N 1032746W (APRX 18NM WSW ESTEVAN (BLUE \nSKY) AD (CBS2)) 351FT AGL, 2256FT AMSL.)",
     "startValidity": "2026-07-07T16:13:00",
     "endValidity": "2026-10-02T18:00:00",
@@ -60,15 +69,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.657500, -104.140833"
-    ]
-  },
-  {
-    "raw": "(U1151/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/031/5020N10747W005\nA) CXXX B) 2607020921 C) 2609292100\nE) CCY2 SWIFT CURRENT (CYPRESS REGIONAL HOSPITAL) (HELI)\nOBST LGT U/S TOWER 502020N 1074724W (APRX 1.79NM NNW AD) 406FT \nAGL, 3089FT AMSL.)",
-    "startValidity": "2026-07-02T09:21:00",
-    "endValidity": "2026-09-29T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.338889, -107.790000"
     ]
   },
   {
@@ -171,21 +171,21 @@
     ]
   },
   {
-    "raw": "(U1071/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
-    "startValidity": "2026-06-19T01:02:00",
-    "endValidity": "2026-09-11T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925556, -97.261111"
-    ]
-  },
-  {
     "raw": "(U1070/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495533N 0971541W (APRX 1.27NM NW AD) 62FT AGL, \n846FT AMSL.)",
     "startValidity": "2026-06-19T01:02:00",
     "endValidity": "2026-09-11T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.925833, -97.261389"
+    ]
+  },
+  {
+    "raw": "(U1071/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
+    "startValidity": "2026-06-19T01:02:00",
+    "endValidity": "2026-09-11T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.925556, -97.261111"
     ]
   },
   {
