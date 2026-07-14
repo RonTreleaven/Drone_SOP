@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0666/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/035/4939N11117W006\nA) CZEG B) 2607141141 C) 2607161130\nE) OBST LGT U/S WIND FARM WITHIN 6NM RADIUS CENTRED ON 493907N \n1111726W (APRX 13NM NNE FOREMOST AD (CFD4)). 571FT AGL 3416FT \nAMSL.)",
+    "startValidity": "2026-07-14T11:41:00",
+    "endValidity": "2026-07-16T11:30:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.651944, -111.290556"
+    ]
+  },
+  {
     "raw": "(R0665/26 NOTAMR R0360/26\nQ) CZEG/QOLAS/IV/M/AE/000/003/7442N09453W005\nA) CYRB B) 2607140855 C) 2608112100\nE) OBST LGT U/S TOWER 744155N 0945258W (APRX 1.76NM SE AD) 87FT AGL, \n228FT AMSL.)",
     "startValidity": "2026-07-14T08:55:00",
     "endValidity": "2026-08-11T21:00:00",
@@ -969,15 +978,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "52.836111, -109.606667"
-    ]
-  },
-  {
-    "raw": "(R0386/26 NOTAMR R0206/26\nQ) CZEG/QOLAS/IV/M/E/000/036/5111N11302W002\nA) CZEG B) 2604221354 C) 2607221800EST\nE) OBST LGT U/S TOWER 511105N 1130138W (APRX 6NM SE ROCKYFORD AD \n(CFC6)) 300FT AGL, 3545FT AMSL.)",
-    "startValidity": "2026-04-22T13:54:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.184722, -113.027222"
     ]
   },
   {
