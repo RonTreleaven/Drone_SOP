@@ -1295,6 +1295,20 @@ const entry = BEAUFORT_SCALE.find(b => kts >= b.min && kts <= b.max)
 return entry ? entry.level : null
 }
 
+function knotsToKmh(knots){
+const n = Number(knots)
+if(!Number.isFinite(n)) return null
+return n * 1.852
+}
+
+function formatWindWithDualUnits(knots){
+const n = Number(knots)
+if(!Number.isFinite(n)) return "Unavailable"
+const kmh = knotsToKmh(n)
+if(!Number.isFinite(kmh)) return `${n} kt`
+return `${n} kt (${kmh.toFixed(1)} km/h)`
+}
+
 function getDroneRisk(beaufort){
 if(beaufort == null) return "Unavailable"
 if(beaufort <= 4) return "LOW"
@@ -3120,7 +3134,7 @@ speedKt,
 gustKt,
 variableFrom: variableMatch ? Number(variableMatch[1]) : null,
 variableTo: variableMatch ? Number(variableMatch[2]) : null,
-display: `${directionText} at ${speedKt} kt${gustKt > speedKt ? ` gust ${gustKt} kt` : ""}${variableText}`
+display: `${directionText} at ${formatWindWithDualUnits(speedKt)}${gustKt > speedKt ? ` gust ${formatWindWithDualUnits(gustKt)}` : ""}${variableText}`
 }
 }
 
@@ -3515,8 +3529,8 @@ panel.innerHTML = `
 	<hr>
 
 	<div class="metric">Wind Direction: ${risk.windDir}</div>
-	<div class="metric">Wind: ${risk.wind} kt</div>
-	<div class="metric">Gust: ${risk.gust} kt</div>
+	<div class="metric">Wind: ${formatWindWithDualUnits(risk.wind)}</div>
+	<div class="metric">Gust: ${formatWindWithDualUnits(risk.gust)}</div>
 	<div class="metric">Beaufort Scale (Gusts): ${risk.beaufortGust == null ? "Unavailable" : `Level ${risk.beaufortGust}`}</div>
 		<div class="metric">Beaufort Risk Level: ${risk.beaufortRisk || "Unavailable"}</div>
 		<div class="metric">Visibility: ${risk.visibility} SM</div>
