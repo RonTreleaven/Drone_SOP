@@ -27,15 +27,6 @@
     ]
   },
   {
-    "raw": "(R0696/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/044/4931N11330W002\nA) CZEG B) 2607202319 C) 2607232359\nE) OBST LGT U/S WIND FARM WITHIN 2NM RADIUS CENTRED ON 493048N \n1133020W (APRX 9NM SW FORT MACLEOD (ALCOCK FARM) AD (CFM8)). \n533FT AGL 4400FT AMSL.)",
-    "startValidity": "2026-07-20T23:19:00",
-    "endValidity": "2026-07-23T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.513333, -113.505556"
-    ]
-  },
-  {
     "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
     "startValidity": "2026-07-20T17:14:00",
     "endValidity": "2026-10-20T17:00:00",
@@ -45,21 +36,21 @@
     ]
   },
   {
-    "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
-    "startValidity": "2026-07-20T17:14:00",
-    "endValidity": "2026-10-20T17:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.480833, -109.194167"
-    ]
-  },
-  {
     "raw": "(R0695/26 NOTAMR R0383/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
     "startValidity": "2026-07-20T17:14:00",
     "endValidity": "2026-10-20T17:00:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "56.386111, -111.272778"
+    ]
+  },
+  {
+    "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
+    "startValidity": "2026-07-20T17:14:00",
+    "endValidity": "2026-10-20T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.480833, -109.194167"
     ]
   },
   {
@@ -78,15 +69,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "52.396111, -114.928889"
-    ]
-  },
-  {
-    "raw": "(R0691/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/040/5038N11315W002\nA) CZEG B) 2607211700 C) 2607212100\nE) OBST LGT U/S TOWER 503754N 1131527W (APRX 13NM ENE \nBLACKIE/MCELROY RANCH (HELI) AD (CMC5)) 338FT AGL, 3990FT AMSL.)",
-    "startValidity": "2026-07-19T14:28:19.814",
-    "endValidity": "2026-07-21T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.631667, -113.257500"
     ]
   },
   {
