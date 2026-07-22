@@ -90,15 +90,6 @@
     ]
   },
   {
-    "raw": "(U1247/26 NOTAMR U0674/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2607141316 C) 2610121400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
-    "startValidity": "2026-07-14T13:16:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.959167, -91.303889"
-    ]
-  },
-  {
     "raw": "(J4720/26 NOTAMR J2465/26\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2607141316 C) 2610121400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
     "startValidity": "2026-07-14T13:16:00",
     "endValidity": null,
@@ -108,21 +99,21 @@
     ]
   },
   {
+    "raw": "(U1247/26 NOTAMR U0674/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2607141316 C) 2610121400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
+    "startValidity": "2026-07-14T13:16:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.959167, -91.303889"
+    ]
+  },
+  {
     "raw": "(U1246/26 NOTAMR U0673/26\nQ) CZWG/QOLAS/IV/M/AE/000/015/5126N09015W005\nA) CYPL B) 2607141315 C) 2610121400EST\nE) OBST LGT U/S TOWER 512531N 0901500W (APRX 1.87NM SW AD) 104FT \nAGL, 1410FT AMSL.)",
     "startValidity": "2026-07-14T13:15:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.425278, -90.250000"
-    ]
-  },
-  {
-    "raw": "(U1235/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/023/5217N10415W002\nA) CZWG B) 2607102317 C) 2610081800\nE) OBST LGT U/S TOWER 521700N 1041435W (APRX 13NM N QUILL LAKE AD \n(CKE2)) 351FT AGL, 2215FT AMSL.)",
-    "startValidity": "2026-07-10T23:17:00",
-    "endValidity": "2026-10-08T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.283333, -104.243056"
     ]
   },
   {
@@ -324,21 +315,21 @@
     ]
   },
   {
-    "raw": "(U1070/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495533N 0971541W (APRX 1.27NM NW AD) 62FT AGL, \n846FT AMSL.)",
-    "startValidity": "2026-06-19T01:02:00",
-    "endValidity": "2026-09-11T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925833, -97.261389"
-    ]
-  },
-  {
     "raw": "(U1071/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
     "startValidity": "2026-06-19T01:02:00",
     "endValidity": "2026-09-11T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.925556, -97.261111"
+    ]
+  },
+  {
+    "raw": "(U1070/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495533N 0971541W (APRX 1.27NM NW AD) 62FT AGL, \n846FT AMSL.)",
+    "startValidity": "2026-06-19T01:02:00",
+    "endValidity": "2026-09-11T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.925833, -97.261389"
     ]
   },
   {
@@ -366,15 +357,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.299444, -103.021389"
-    ]
-  },
-  {
-    "raw": "(U1062/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/023/5014N10506W002\nA) CZWG B) 2606171452 C) 2609151800\nE) OBST LGT U/S TOWER 501400N 1050603W (APRX 13NM NNE BRIERCREST \nSOUTH AD (CBS7)) 351FT AGL, 2212FT AMSL.)",
-    "startValidity": "2026-06-17T14:52:00",
-    "endValidity": "2026-09-15T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.233333, -105.100833"
     ]
   },
   {
@@ -654,15 +636,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.486111, -104.441944"
-    ]
-  },
-  {
-    "raw": "(U0752/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/021/5146N10648W002\nA) CZWG B) 2604291728 C) 2607281800\nE) OBST LGT U/S TOWER 514551N 1064820W (APRX 19NM SSW \nSASKATOON/BANGA AIR AD (CJN5)) 351FT AGL, 2009FT AMSL.)",
-    "startValidity": "2026-04-29T17:28:00",
-    "endValidity": "2026-07-28T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.764167, -106.805556"
     ]
   },
   {
