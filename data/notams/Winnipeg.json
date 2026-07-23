@@ -27,15 +27,6 @@
     ]
   },
   {
-    "raw": "(U1274/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/034/5128N10043W002\nA) CZWG B) 2607202022 C) 2607222100\nE) OBST LGT U/S TOWER 512814N 1004310W (APRX 29NM NE ROBLIN AD \n(CKB7)) 612FT AGL, 3339FT AMSL.)",
-    "startValidity": "2026-07-20T20:22:00",
-    "endValidity": "2026-07-22T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.470556, -100.719444"
-    ]
-  },
-  {
     "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
     "startValidity": "2026-07-20T17:14:00",
     "endValidity": "2026-10-20T17:00:00",
@@ -663,15 +654,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.133056, -93.242222"
-    ]
-  },
-  {
-    "raw": "(U0727/26 NOTAMR U0123/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5250N10936W005\nA) CXXX B) 2604231828 C) 2607222359\nE) CJV2 NEILBURG \nOBST LGT U/S TOWER 525010N 1093624W (APRX 1.25NM ENE AD) 350FT \nAGL, 2580FT AMSL.)",
-    "startValidity": "2026-04-23T18:28:00",
-    "endValidity": "2026-07-22T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.836111, -109.606667"
     ]
   },
   {
