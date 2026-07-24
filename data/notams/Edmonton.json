@@ -81,39 +81,12 @@
     ]
   },
   {
-    "raw": "(C3124/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/024/6044N13505W005\nA) CYXY B) 2607231530 C) 2607232030\nE) MOBILE CRANE WITHIN 85FT RADIUS CENTRED ON 604353N 1350516W APRX \n4010FT BFR THR 14R AND 610FT SW EXTENDED RCL. 85FT AGL 2339FT \nAMSL. NOT LGTD.)",
-    "startValidity": "2026-07-22T18:45:11.360",
-    "endValidity": "2026-07-23T20:30:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "60.731389, -135.087778"
-    ]
-  },
-  {
     "raw": "(C3070/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/037/5102N11359W005\nA) CYYC B) 2607231200 C) 2610192359EST\nE) CRANE 510212N 1135910W (APRX 4.8NM SSE AD (CYYC)). 194FT AGL \n3685FT AMSL. LGTD, PAINTED.)",
     "startValidity": "2026-07-21T13:14:05.623",
     "endValidity": null,
     "q_code": "QOBCE",
     "coordinates_dd": [
       "51.036667, -113.986111"
-    ]
-  },
-  {
-    "raw": "(C3060/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/037/5108N11402W005\nA) CYYC B) 2607231500 C) 2607232100\nE) MOBILE CRANE WITHIN 262FT RADIUS CENTRED ON 510827N 1140139W APRX \n3460FT BFR THR 17R AND 1420FT WEST EXTENDED RCL. 115FT AGL 3655FT \nAMSL. LGTD, NOT PAINTED.)",
-    "startValidity": "2026-07-21T11:43:45.203",
-    "endValidity": "2026-07-23T21:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "51.140833, -114.027500"
-    ]
-  },
-  {
-    "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
-    "startValidity": "2026-07-20T17:14:00",
-    "endValidity": "2026-10-20T17:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.099167, -110.165278"
     ]
   },
   {
@@ -132,6 +105,15 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.480833, -109.194167"
+    ]
+  },
+  {
+    "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
+    "startValidity": "2026-07-20T17:14:00",
+    "endValidity": "2026-10-20T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.099167, -110.165278"
     ]
   },
   {
@@ -303,15 +285,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "54.094444, -110.390833"
-    ]
-  },
-  {
-    "raw": "(R0644/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/025/5500N11148W002\nA) CZEG B) 2607091734 C) 2607232359\nE) OBST LGT U/S TOWER 545959N 1114818W (APRX 16NM NNE LAC LA BICHE \nAD (CYLB)) 321FT AGL, 2425FT AMSL.)",
-    "startValidity": "2026-07-09T17:34:00",
-    "endValidity": "2026-07-23T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "54.999722, -111.805000"
     ]
   },
   {
@@ -1077,15 +1050,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "51.062778, -114.131389"
-    ]
-  },
-  {
-    "raw": "(R0397/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5109N11407W005\nA) CYYC B) 2604241420 C) 2607232359\nE) OBST LGT U/S TOWER 510927N 1140715W (APRX 4.6NM WNW AD) 98FT AGL, \n3688FT AMSL.)",
-    "startValidity": "2026-04-24T14:20:00",
-    "endValidity": "2026-07-23T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.157500, -114.120833"
     ]
   },
   {
