@@ -67,6 +67,33 @@ font-weight:700;
 box-shadow:0 0 0 3px rgba(47,158,68,0.25);
 }
 
+button.step-prompt{
+display:inline-flex;
+align-items:center;
+gap:8px;
+}
+
+button.step-prompt::after{
+content:attr(data-step);
+display:inline-flex;
+align-items:center;
+justify-content:center;
+min-width:1.35rem;
+height:1.35rem;
+border-radius:999px;
+background:#fff3b0;
+color:#7a4e00;
+font-size:0.78rem;
+font-weight:800;
+line-height:1;
+box-shadow:0 0 0 2px rgba(255,255,255,0.82);
+}
+
+button.next-step-highlight.step-prompt::after{
+background:#ffffff;
+color:#14532d;
+}
+
 .panel{
 background:var(--panel);
 padding:16px;
@@ -342,6 +369,64 @@ border-radius:8px;
 
 .flow-next-card.is-hidden{
 display:none;
+}
+
+.record-flow{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin:8px 0 10px;
+}
+
+.record-flow-step{
+display:inline-flex;
+align-items:center;
+gap:6px;
+padding:5px 10px;
+border-radius:999px;
+background:#eef3f8;
+border:1px solid #cad8e6;
+font-size:12px;
+font-weight:700;
+color:#415466;
+}
+
+.record-flow-step::before{
+content:"";
+width:0.7rem;
+height:0.7rem;
+border-radius:999px;
+background:#9fb3c8;
+}
+
+.record-flow-step.is-complete{
+background:#e8f8ea;
+border-color:#7acb8b;
+color:#14532d;
+}
+
+.record-flow-step.is-complete::before{
+background:#2f9e44;
+}
+
+.record-flow-step.is-current{
+background:#fff3b0;
+border-color:#e0bc42;
+color:#7a4e00;
+}
+
+.record-flow-step.is-current::before{
+background:#e0bc42;
+}
+
+.record-flow-step.is-stale{
+background:#ffd8d8;
+border-color:#c92a2a;
+color:#7f1d1d;
+}
+
+.record-flow-step.is-stale::before{
+background:#c92a2a;
 }
 
 .flow-next-link{
@@ -785,6 +870,23 @@ color:#445;
 font-size:14px;
 }
 
+.prompt-step-badge{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+min-width:1.35rem;
+height:1.35rem;
+margin-right:8px;
+border-radius:999px;
+background:#fff3b0;
+color:#7a4e00;
+font-size:0.78rem;
+font-weight:800;
+line-height:1;
+vertical-align:middle;
+box-shadow:0 0 0 2px rgba(255,255,255,0.8);
+}
+
 .kp-badge{
 display:inline-block;
 padding:4px 8px;
@@ -1010,7 +1112,7 @@ font-size:13px;
 <div class="controls">
 <input id="icao" placeholder="ICAO (CYOO)">
 <button id="locBtn" onclick="useCurrentLocation()">Get Pilot Location</button>
-<button id="checkBtn" onclick="runCheck()">Fetch METAR/KP Risk Assessment</button>
+<button id="checkBtn" onclick="runCheck()">Fetch Weather/Risk Assessment</button>
 <button id="completeBtn" type="button" onclick="markWeatherCheckComplete()">Save Weather Check</button>
 </div>
 
@@ -1024,10 +1126,10 @@ font-size:13px;
 <div id="riskPanel" class="panel">
 <h3 id="riskScoreKeyTitle" class="risk-key-title">
 <span id="riskScoreKeyDot" class="risk-key-dot risk-key-unknown" aria-hidden="true"></span>
-<span id="riskScoreKeyText">Drone Weather Survey</span>
+<span id="riskScoreKeyText">Drone Weather &amp; Risk Assessment</span>
 </h3>
 <div class="risk-survey-body">
-<div class="risk-placeholder">Run METAR Weather Check to load current survey details.</div>
+<div class="risk-placeholder">Fetch Weather/Risk Assessment, based on your current Pilot location, to load current survey details.</div>
 <div class="risk-compass-wrap">
 <img class="risk-compass" src="assets/img/Compass_360.svg" alt="Compass rose for reviewing wind direction" onerror="if(this.src.endsWith('Compass_360.svg')){this.src='assets/img/Compass_360.png';return;}this.onerror=null;this.src='assets/img/Compass_360%20v1.png';">
 </div>
@@ -1108,7 +1210,7 @@ font-size:13px;
 </div>
 <div id="weatherReportContent" class="is-hidden">
 <pre id="metarText"></pre>
-<div id="weatherSummaryPanel" class="weather-summary-empty">Run METAR Weather Check to load structured observation details.</div>
+<div id="weatherSummaryPanel" class="weather-summary-empty">Fetch Weather/Risk Assessment, based on your current Pilot location, to load structured observation details.</div>
 </div>
 </div>
 
@@ -1993,7 +2095,7 @@ try{
 const knownPilot = getKnownPilotLocation()
 if(!knownPilot || isPilotLocationUndefined(knownPilot.lat,knownPilot.lon)){
 renderCurrentLocationDetails("0.000000, 0.000000","0\u00B00'0.0\"N, 0\u00B00'0.0\"E")
-showError("Pilot location not defined. Click Get/Update Pilot Location first, then run Fetch METAR/KP Risk Assessment.")
+showError("Pilot location not defined. Click Get/Update Pilot Location first, then run Fetch Weather/Risk Assessment.")
 return
 }
 
@@ -2306,6 +2408,41 @@ updateActionButtonHighlights()
 }
 
 
+function setStepPrompt(button,step,titleText){
+if(!button) return
+if(step){
+button.dataset.step = String(step)
+button.classList.add("step-prompt")
+if(titleText) button.title = titleText
+}
+else{
+delete button.dataset.step
+button.classList.remove("step-prompt")
+button.removeAttribute("title")
+}
+}
+
+
+function updateWeatherPromptCopy(){
+const placeholder = document.querySelector(".risk-placeholder")
+const summaryPrompt = document.getElementById("weatherSummaryPanel")
+const known = getKnownPilotLocation()
+const hasPilotLocation = !!(known && !isPilotLocationUndefined(known.lat,known.lon))
+
+if(placeholder){
+placeholder.innerHTML = hasPilotLocation
+? `<span class="prompt-step-badge" aria-hidden="true">2</span>Fetch Weather/Risk Assessment, based on your current Pilot location, to load current survey details.`
+: `<span class="prompt-step-badge" aria-hidden="true">1</span>Get Pilot Location first, then Fetch Weather/Risk Assessment.`
+}
+
+if(summaryPrompt && summaryPrompt.classList.contains("weather-summary-empty")){
+summaryPrompt.innerHTML = hasPilotLocation
+? `<span class="prompt-step-badge" aria-hidden="true">2</span>Fetch Weather/Risk Assessment, based on your current Pilot location, to load structured observation details.`
+: `<span class="prompt-step-badge" aria-hidden="true">1</span>Get Pilot Location first, then Fetch Weather/Risk Assessment.`
+}
+}
+
+
 function updateActionButtonHighlights(){
 const locButton = document.getElementById("locBtn")
 const checkButton = document.getElementById("checkBtn")
@@ -2323,6 +2460,10 @@ saveButton.classList.toggle("next-step-highlight", shouldHighlightSave)
 if(shouldHighlightSave){
 locButton.classList.remove("next-step-highlight")
 checkButton.classList.remove("next-step-highlight")
+setStepPrompt(locButton,null)
+setStepPrompt(checkButton,null)
+setStepPrompt(saveButton,3,"Step 3: Save Weather Check")
+updateWeatherPromptCopy()
 return
 }
 
@@ -2331,6 +2472,18 @@ const hasPilotLocation = !!(known && !isPilotLocationUndefined(known.lat,known.l
 
 locButton.classList.toggle("next-step-highlight", !hasPilotLocation)
 checkButton.classList.toggle("next-step-highlight", hasPilotLocation)
+setStepPrompt(saveButton,null)
+
+if(hasPilotLocation){
+setStepPrompt(locButton,null)
+setStepPrompt(checkButton,2,"Step 2: Fetch Weather/Risk Assessment")
+}
+else{
+setStepPrompt(locButton,1,"Step 1: Get Pilot Location")
+setStepPrompt(checkButton,null)
+}
+
+updateWeatherPromptCopy()
 }
 
 
@@ -2385,7 +2538,7 @@ el.classList.add("location-not-defined")
 el.innerHTML = `
 <b>Pilot Location Not Yet Defined</b><br>
 Pilot Location: DD: [ ${escapeHtml(ddText)} ] | DMS: [ ${escapeHtml(dmsText || "0\u00B00'0.0\"N, 0\u00B00'0.0\"E")} ]<br>
-Use <b>Get/Update Pilot Location</b> to set your pilot location before running METAR/KP Risk Assessment.
+Use <b>Get/Update Pilot Location</b> to set your pilot location before running Weather/Risk Assessment.
 `
 return
 }
@@ -2544,10 +2697,10 @@ committedWeatherArtifact = parseStoredArtifact("dwCheckLatest")
 
 if(!latestWeatherArtifact){
 if(committedWeatherArtifact){
-showError("No new weather check to save. Run Fetch METAR/KP Risk Assessment to create an updated draft.")
+showError("No new weather check to save. Run Fetch Weather/Risk Assessment to create an updated draft.")
 }
 else{
-showError("Run Fetch METAR/KP Risk Assessment first to create a weather record.")
+showError("Run Fetch Weather/Risk Assessment first to create a weather record.")
 }
 renderWeatherCheckStatus()
 return
@@ -2555,7 +2708,7 @@ return
 
 const hasPendingDraft = localStorage.getItem("dwCheckDraftPending") === "true"
 if(!hasPendingDraft){
-showError("Latest weather check is already saved. Run Fetch METAR/KP Risk Assessment to create a new draft.")
+showError("Latest weather check is already saved. Run Fetch Weather/Risk Assessment to create a new draft.")
 renderWeatherCheckStatus()
 return
 }
@@ -2621,7 +2774,14 @@ catch{ latestWeatherArtifact = null }
 
 if(!committedWeatherArtifact){
 if(latestWeatherArtifact){
-el.innerHTML = `<div>Draft check ready. Click <b>Save Weather Check</b> to commit.</div>`
+el.innerHTML = `
+<div class="record-flow" aria-label="Weather check progress">
+<span class="record-flow-step is-complete">1 Pilot Location</span>
+<span class="record-flow-step is-complete">2 Weather/Risk</span>
+<span class="record-flow-step is-current">3 Save</span>
+</div>
+<div>Draft check ready. Click <b>Save Weather Check</b> to commit.</div>
+`
 if(saveBtn) saveBtn.disabled = false
 if(rerunBtn) rerunBtn.classList.add("is-hidden")
 }
@@ -2637,11 +2797,17 @@ return
 const ageMs = Date.now() - new Date(committedWeatherArtifact.timestamp).getTime()
 const isStale = Number.isFinite(ageMs) && ageMs > 3600000
 const hoursSince = formatHoursSince(committedWeatherArtifact.timestamp)
+const savedLabel = completedAt ? `Saved ${formatHoursSince(completedAt)} ago` : "Saved"
 const kpDisplayValue = committedWeatherArtifact.kpIndex ?? committedWeatherArtifact.kpNumeric ?? "-"
 const kpCondition = getKpCondition(kpDisplayValue)
 
 const completeLine = completed
-? `<div class="${isStale ? "status-alert" : "status-ok"}">Record State: ${hoursSince ? `${hoursSince} since last saved weather assessment${isStale ? ". Re-poll recommended." : ""}` : "Saved"}</div>`
+? `<div class="record-flow" aria-label="Weather check progress">
+<span class="record-flow-step is-complete">1 Pilot Location</span>
+<span class="record-flow-step is-complete">2 Weather/Risk</span>
+<span class="record-flow-step ${isStale ? "is-stale" : "is-complete"}">3 Saved</span>
+</div>
+<div class="${isStale ? "status-alert" : "status-ok"}">Record State: ${hoursSince ? `${hoursSince} since last saved weather assessment${isStale ? ". Re-poll recommended." : ""}` : savedLabel}</div>`
 : `<div class="status-alert">Record State: Not saved</div>`
 
 if(hasPendingDraft && latestWeatherArtifact && latestWeatherArtifact.timestamp){
@@ -2653,6 +2819,7 @@ if(saveBtn) saveBtn.disabled = true
 
 el.innerHTML = `
 ${completeLine}
+${completed ? `<div class="subtle">Completed at ${completedAt ? new Date(completedAt).toLocaleString() : "unknown"}</div>` : ""}
 <div>ICAO: ${committedWeatherArtifact.icao || "-"}</div>
 <div>Risk: ${committedWeatherArtifact.riskLabel} (score ${committedWeatherArtifact.riskScore})</div>
 <div>Kp: ${kpDisplayValue} (${kpCondition})</div>
@@ -3431,7 +3598,7 @@ normalized.sourceUrl = lastMetarFetchInfo.winnerUrl
 
 if(!normalized || !normalized.rawText){
 panel.className = "weather-summary-empty"
-panel.textContent = "Run METAR Weather Check to load structured observation details."
+panel.textContent = "Fetch Weather/Risk Assessment, based on your current Pilot location, to load structured observation details."
 return
 }
 
@@ -3513,7 +3680,7 @@ panel.innerHTML = `
 
 		<h3 id="riskScoreKeyTitle" class="risk-key-title">
 		<span id="riskScoreKeyDot" class="risk-key-dot risk-key-unknown" aria-hidden="true"></span>
-		<span id="riskScoreKeyText">Drone Weather Survey</span>
+		<span id="riskScoreKeyText">Drone Weather &amp; Risk Assessment</span>
 		</h3>
 
 	<div class="risk-survey-body">
@@ -3587,12 +3754,12 @@ if(!textEl || !dotEl) return
 
 const n = Number(score)
 if(!Number.isFinite(n)){
-textEl.textContent = "Drone Weather Survey"
+textEl.textContent = "Drone Weather & Risk Assessment"
 dotEl.className = "risk-key-dot risk-key-unknown"
 return
 }
 
-textEl.textContent = `Drone Weather Survey: Risk Score ${n}`
+textEl.textContent = `Drone Weather & Risk Assessment: Risk Score ${n}`
 
 if(n <= 2){
 dotEl.className = "risk-key-dot risk-key-green"
