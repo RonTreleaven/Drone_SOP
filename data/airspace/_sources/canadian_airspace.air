@@ -1,6 +1,6 @@
 *                              Canadian Airspace                               *
 *                                                                              *
-*                       Created Fri Jun  5 10:24:53 2026                       *
+*                       Created Sat Jul 25 16:54:57 2026                       *
 *           Extracted from the Canadian Designated Airspace Handbook           *
 *                   In Open Air Special Use Airspace Format                    *
 *                      Using the parsing program cdah.py                       *
@@ -23,9 +23,9 @@
 *                                                                              *
 
 * Source: Canadian Designated Airspace Handbook
-* Issue: 321
-* Valid: 14 MAY 2026 to 09 JULY 2026
-* Created: Fri Jun  5 10:24:52 2026
+* Issue: 322
+* Valid: 09 JULY 2026 to 03 SEPTEMBER 2026
+* Created: Sat Jul 25 16:54:56 2026
 
 
 AC E
@@ -6090,7 +6090,6 @@ AH 18000MSL
 * Altitudes: 12500ft to overlying airspace
 V X= 48:20:48.0N 89:26:01.0W
 DC 60
-*  (Thunder Bay, ON - NDB) 
 * Excluding the airspace under the jurisdiction of the Minneapolis ARTCC.
 
 
@@ -26179,7 +26178,7 @@ AH 3000MSL
 * Designated Altitude - Surface to 3000ft
 * Time of Designation - Cont
 * User/Controlling Agency - Parliamentary Protective Service Operational Support Center (613) 992- 7217 or requestscyr537demandes@pps-spp.parl.gc.ca
-* Operating Procedures - No person shall operate an aircraft, including model aircraft, within the area described unless the flight has been authorized by the User/Controlling Agency, except for medical, police and military aircraft on official duty flights and IFR flights.
+* Operating Procedures - No person shall operate an aircraft, including model aircraft, within the area described unless the flight has been authorized by the User/Controlling Agency, except for medical, police and military aircraft on official duty flights and IFR flights. It is requested medical, police and military aircraft notify user/controlling agency as soon as practical when operating within CYR537.
 V X= 45:25:29.0N 75:41:56.7W
 DC 0.4
 

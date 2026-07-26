@@ -13202,3 +13202,6 @@ Average confidence: 0.922
 [OK] Outputs: data\jobs.db, data\jobs.json, data\jobs_review.csv, data\jobs_review_latest.csv (fallback)
 [Fri 07/24/2026  6:33:31.99] Daily jobs refresh completed successfully
 
+==================================================
+[Sun 07/26/2026 10:59:14.14] Daily jobs refresh started
+[INFO] Updating jobs dataset...
