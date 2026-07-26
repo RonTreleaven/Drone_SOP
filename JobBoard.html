@@ -107,6 +107,65 @@
     .filter-item.search {
       grid-column: 1 / -1;
     }
+    .filter-item.full {
+      grid-column: 1 / -1;
+    }
+    .province-filter-group {
+      border: 1px solid #d8e4f1;
+      border-radius: 9px;
+      background: #fbfdff;
+      padding: 8px;
+    }
+    .province-filter-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .province-filter-btn {
+      width: auto;
+      min-height: 30px;
+      padding: 5px 10px;
+      border: 1px solid #b9cde3;
+      border-radius: 999px;
+      background: #eef5ff;
+      color: #234264;
+      font-size: 0.76rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .province-filter-btn.active {
+      background: linear-gradient(130deg, var(--accent), var(--accent-2));
+      color: #ffffff;
+      border-color: #0d6f87;
+    }
+    .province-checkboxes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px 10px;
+    }
+    .province-option {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0;
+      font-size: 12px;
+      color: #2a4768;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .province-option input {
+      width: 15px;
+      height: 15px;
+      margin: 0;
+      accent-color: #0f766e;
+      flex: 0 0 auto;
+    }
+    .province-empty {
+      font-size: 12px;
+      color: #5a6e87;
+      font-style: italic;
+    }
     label {
       display: block;
       margin-bottom: 4px;
@@ -678,6 +737,16 @@
               <option value="intl">International</option>
             </select>
           </div>
+          <div class="filter-item full">
+            <label for="provinceFilterGroup">Province</label>
+            <div id="provinceFilterGroup" class="province-filter-group">
+              <div class="province-filter-actions">
+                <button id="provinceAllBtn" class="province-filter-btn active" type="button" title="Show all provinces">All Provinces</button>
+                <button id="provinceDefaultBtn" class="province-filter-btn" type="button" title="Use default provinces of interest">Default Provinces</button>
+              </div>
+              <div id="provinceCheckboxes" class="province-checkboxes"></div>
+            </div>
+          </div>
         </div>
         <div class="actions">
           <button id="applyBtn" type="button">Apply Filters</button>
@@ -729,6 +798,43 @@
     const selectedJobKeys = new Set();
     let activeJobKey = "";
     const MIN_CONF_PRESETS = [0.25, 0.35, 0.45, 0.5, 0.6, 0.7, 0.75, 0.85, 0.95, 1.0];
+    const PROVINCE_FILTER_SESSION_KEY = "jobBoardProvinceFilterV1";
+    const DEFAULT_PROVINCE_CODES = ["ON", "QC", "BC", "AB"];
+    const PROVINCE_LABELS = {
+      AB: "Alberta",
+      BC: "British Columbia",
+      MB: "Manitoba",
+      NB: "New Brunswick",
+      NL: "Newfoundland and Labrador",
+      NS: "Nova Scotia",
+      NT: "Northwest Territories",
+      NU: "Nunavut",
+      ON: "Ontario",
+      PE: "Prince Edward Island",
+      QC: "Quebec",
+      SK: "Saskatchewan",
+      YT: "Yukon",
+    };
+    const PROVINCE_MATCHERS = [
+      { code: "NL", pattern: /(^|,|\s)(nl|newfoundland and labrador|newfoundland|labrador)(\b|,|$)/i },
+      { code: "PE", pattern: /(^|,|\s)(pe|prince edward island)(\b|,|$)/i },
+      { code: "NS", pattern: /(^|,|\s)(ns|nova scotia)(\b|,|$)/i },
+      { code: "NB", pattern: /(^|,|\s)(nb|new brunswick)(\b|,|$)/i },
+      { code: "QC", pattern: /(^|,|\s)(qc|quebec)(\b|,|$)/i },
+      { code: "ON", pattern: /(^|,|\s)(on|ontario)(\b|,|$)/i },
+      { code: "MB", pattern: /(^|,|\s)(mb|manitoba)(\b|,|$)/i },
+      { code: "SK", pattern: /(^|,|\s)(sk|saskatchewan)(\b|,|$)/i },
+      { code: "AB", pattern: /(^|,|\s)(ab|alberta)(\b|,|$)/i },
+      { code: "BC", pattern: /(^|,|\s)(bc|british columbia)(\b|,|$)/i },
+      { code: "YT", pattern: /(^|,|\s)(yt|yukon)(\b|,|$)/i },
+      { code: "NT", pattern: /(^|,|\s)(nt|northwest territories)(\b|,|$)/i },
+      { code: "NU", pattern: /(^|,|\s)(nu|nunavut)(\b|,|$)/i },
+    ];
+    let provinceFilter = {
+      mode: "all",
+      selected: new Set(),
+      available: [],
+    };
 
     function normalizeText(value) {
       if (value === null || value === undefined) return "";
@@ -862,6 +968,160 @@
       return options.join("");
     }
 
+    function detectProvinceCode(locationText) {
+      const raw = normalizeText(locationText).toLowerCase();
+      if (!raw) return "";
+      if (!isCanadaLocation(raw)) return "";
+
+      for (const matcher of PROVINCE_MATCHERS) {
+        if (matcher.pattern.test(raw)) return matcher.code;
+      }
+      return "";
+    }
+
+    function saveProvinceFilterSession() {
+      const payload = {
+        mode: provinceFilter.mode,
+        selected: [...provinceFilter.selected],
+      };
+      sessionStorage.setItem(PROVINCE_FILTER_SESSION_KEY, JSON.stringify(payload));
+    }
+
+    function loadProvinceFilterSession() {
+      const raw = sessionStorage.getItem(PROVINCE_FILTER_SESSION_KEY);
+      if (!raw) return null;
+      try {
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== "object") return null;
+        const mode = parsed.mode === "custom" ? "custom" : "all";
+        const selected = Array.isArray(parsed.selected)
+          ? parsed.selected.map(v => String(v || "").toUpperCase()).filter(Boolean)
+          : [];
+        return { mode, selected };
+      } catch {
+        return null;
+      }
+    }
+
+    function syncProvinceUi() {
+      const allBtn = document.getElementById("provinceAllBtn");
+      const defaultBtn = document.getElementById("provinceDefaultBtn");
+      const checkboxes = document.querySelectorAll("#provinceCheckboxes input[data-province-code]");
+      const isAll = provinceFilter.mode === "all";
+
+      if (allBtn) allBtn.classList.toggle("active", isAll);
+      if (defaultBtn) {
+        const isDefault = !isAll
+          && provinceFilter.selected.size > 0
+          && DEFAULT_PROVINCE_CODES.every(code => {
+            if (!provinceFilter.available.includes(code)) return true;
+            return provinceFilter.selected.has(code);
+          })
+          && [...provinceFilter.selected].every(code => !provinceFilter.available.includes(code) || DEFAULT_PROVINCE_CODES.includes(code));
+        defaultBtn.classList.toggle("active", isDefault);
+      }
+
+      checkboxes.forEach((checkbox) => {
+        const code = checkbox.getAttribute("data-province-code") || "";
+        checkbox.checked = isAll || provinceFilter.selected.has(code);
+      });
+    }
+
+    function setProvinceModeAll(shouldRender = true) {
+      provinceFilter.mode = "all";
+      provinceFilter.selected = new Set(provinceFilter.available);
+      syncProvinceUi();
+      saveProvinceFilterSession();
+      if (shouldRender) render();
+    }
+
+    function setProvinceModeDefault(shouldRender = true) {
+      const defaults = DEFAULT_PROVINCE_CODES.filter(code => provinceFilter.available.includes(code));
+      if (!defaults.length) {
+        setProvinceModeAll(shouldRender);
+        return;
+      }
+      provinceFilter.mode = "custom";
+      provinceFilter.selected = new Set(defaults);
+      syncProvinceUi();
+      saveProvinceFilterSession();
+      if (shouldRender) render();
+    }
+
+    function setProvinceCustomFromUi(shouldRender = true) {
+      const selected = new Set();
+      document.querySelectorAll("#provinceCheckboxes input[data-province-code]").forEach((checkbox) => {
+        if (checkbox.checked) {
+          selected.add(checkbox.getAttribute("data-province-code") || "");
+        }
+      });
+
+      const allSelected = provinceFilter.available.length > 0
+        && provinceFilter.available.every(code => selected.has(code));
+
+      if (allSelected || selected.size === 0) {
+        provinceFilter.mode = "all";
+        provinceFilter.selected = new Set(provinceFilter.available);
+      } else {
+        provinceFilter.mode = "custom";
+        provinceFilter.selected = selected;
+      }
+
+      syncProvinceUi();
+      saveProvinceFilterSession();
+      if (shouldRender) render();
+    }
+
+    function buildProvinceFilter() {
+      const container = document.getElementById("provinceCheckboxes");
+      if (!container) return;
+
+      const available = [...new Set(jobs.map(j => j._provinceCode).filter(Boolean))]
+        .sort((a, b) => (PROVINCE_LABELS[a] || a).localeCompare(PROVINCE_LABELS[b] || b));
+      provinceFilter.available = available;
+
+      if (!available.length) {
+        container.innerHTML = '<div class="province-empty">No Canadian province tags found in this dataset.</div>';
+        provinceFilter.mode = "all";
+        provinceFilter.selected = new Set();
+        return;
+      }
+
+      container.innerHTML = available.map((code) => {
+        const label = PROVINCE_LABELS[code] || code;
+        return `
+          <label class="province-option">
+            <input type="checkbox" data-province-code="${escapeHtml(code)}" />
+            <span>${escapeHtml(code)} - ${escapeHtml(label)}</span>
+          </label>
+        `;
+      }).join("");
+
+      const persisted = loadProvinceFilterSession();
+      if (persisted && persisted.mode === "custom") {
+        const keep = persisted.selected.filter(code => available.includes(code));
+        if (keep.length) {
+          provinceFilter.mode = "custom";
+          provinceFilter.selected = new Set(keep);
+        } else {
+          provinceFilter.mode = "all";
+          provinceFilter.selected = new Set(available);
+        }
+      } else {
+        provinceFilter.mode = "all";
+        provinceFilter.selected = new Set(available);
+      }
+
+      syncProvinceUi();
+
+      container.addEventListener("change", (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLInputElement)) return;
+        if (!target.matches("input[data-province-code]")) return;
+        setProvinceCustomFromUi();
+      });
+    }
+
     function jobKey(job) {
       if (job && job._jobKey) return job._jobKey;
       const linkKey = String(job && job.link ? job.link : "").trim();
@@ -883,6 +1143,8 @@
         category: document.getElementById("category").value,
         minConf: parseFloat(document.getElementById("minConf").value || "0"),
         canadaOnly: document.getElementById("canadaOnly").value,
+        provinceMode: provinceFilter.mode,
+        provinces: new Set(provinceFilter.selected),
       };
     }
 
@@ -948,12 +1210,17 @@
         const category = normalizeText(job.category);
         const confidence = Number(job.confidence || 0);
         const inCanada = isCanadaLocation(location);
+        const provinceCode = normalizeText(job._provinceCode).toUpperCase();
 
         if (f.source && source !== f.source) return false;
         if (f.category && category !== f.category) return false;
         if (confidence < f.minConf) return false;
         if (f.canadaOnly === "yes" && !inCanada) return false;
         if (f.canadaOnly === "intl" && inCanada) return false;
+        if (f.provinceMode !== "all") {
+          if (!provinceCode) return false;
+          if (!f.provinces.has(provinceCode)) return false;
+        }
 
         if (f.q) {
           const hay = `${company} ${title} ${location} ${source} ${category} ${description} ${summary}`.toLowerCase();
@@ -1251,6 +1518,7 @@
       jobs = jobs.map(j => ({
         ...j,
         _jobKey: jobKey(j),
+        _provinceCode: detectProvinceCode(j.location),
         company: normalizeText(j.company),
         title: normalizeText(j.title),
         location: normalizeText(j.location),
@@ -1263,6 +1531,7 @@
       }));
 
       buildFilters();
+      buildProvinceFilter();
       setupMinConfidenceHelper();
       render();
 
@@ -1272,6 +1541,8 @@
       document.getElementById("category").addEventListener("change", render);
       document.getElementById("minConf").addEventListener("input", render);
       document.getElementById("canadaOnly").addEventListener("change", render);
+      document.getElementById("provinceAllBtn").addEventListener("click", () => setProvinceModeAll());
+      document.getElementById("provinceDefaultBtn").addEventListener("click", () => setProvinceModeDefault());
       document.getElementById("toggleAllBtn").addEventListener("click", toggleAllFilteredCards);
       document.getElementById("exportSelectedTopBtn").addEventListener("click", exportSelectedJobs);
       document.getElementById("clearExportsBtn").addEventListener("click", clearAllExports);
@@ -1308,6 +1579,7 @@
         document.getElementById("category").value = "";
         document.getElementById("minConf").value = "0.50";
         document.getElementById("canadaOnly").value = "yes";
+        setProvinceModeAll(false);
         document.getElementById("statusError").textContent = "";
         render();
       });
