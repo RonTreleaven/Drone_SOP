@@ -1,14 +1,5 @@
 [
   {
-    "raw": "(U1305/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/019/5301N10505W002\nA) CZWG B) 2607260119 C) 2609082359\nE) OBST LGT U/S TOWER 530104N 1050517W (APRX 13NM ENE BIRCH HILLS AD \n(CJD3)) 353FT AGL, 1833FT AMSL.)",
-    "startValidity": "2026-07-26T01:19:00",
-    "endValidity": "2026-09-08T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.017778, -105.088056"
-    ]
-  },
-  {
     "raw": "(J4997/26 NOTAMR J2805/26\nQ) CZWG/QOBCE/IV/M/AE/000/010/4826N08916W005\nA) CXXX B) 2607232300 C) 2610231500EST\nE) CTB2 THUNDER BAY (HEALTH SCIENCE CENTRE) (HELI)\nCRANE 482530N 0891612W (APRX 624FT N AD (CTB2)). 200FT AGL 910FT \nAMSL. NOT LGTD, PAINTED.)",
     "startValidity": "2026-07-23T23:00:00",
     "endValidity": null,
@@ -333,21 +324,21 @@
     ]
   },
   {
-    "raw": "(U1071/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
-    "startValidity": "2026-06-19T01:02:00",
-    "endValidity": "2026-09-11T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925556, -97.261111"
-    ]
-  },
-  {
     "raw": "(U1070/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495533N 0971541W (APRX 1.27NM NW AD) 62FT AGL, \n846FT AMSL.)",
     "startValidity": "2026-06-19T01:02:00",
     "endValidity": "2026-09-11T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.925833, -97.261389"
+    ]
+  },
+  {
+    "raw": "(U1071/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
+    "startValidity": "2026-06-19T01:02:00",
+    "endValidity": "2026-09-11T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.925556, -97.261111"
     ]
   },
   {
