@@ -13205,3 +13205,1276 @@ Average confidence: 0.922
 ==================================================
 [Sun 07/26/2026 10:59:14.14] Daily jobs refresh started
 [INFO] Updating jobs dataset...
+Cleared existing jobs table
+Selected sources: jobbank, simplyhired, talent, jobs_bear, greenhouse, lever
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=rpas+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=remote+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 1
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uas+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+survey&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=photogrammetry+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 15
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=lidar+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 15
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=geospatial+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+mapping&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=powerline+drone+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=infrastructure+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+videographer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 22
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=aerial+photographer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+photographer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+operations+coordinator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=rpas+platform+engineer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 13
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+field+engineer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 17
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uas+field+engineer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.simplyhired.ca/search?q=drone+pilot
+HTTP Status: 200
+Detail links found: 14
+ - Agricultural Drone Pilot
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Drone/RPAS Pilot (Contract)
+ - Freelance Photographer / Videographer / Drone Pilot
+ - Drone Pilot Trainee
+ - Experienced Advanced Drone Pilot
+ - Window Cleaner /Drone Pilot Assistant/General Labour
+ - Window Cleaner / General Labour/Drone Pilot Assistant
+ - UAV Pilot
+ - UAV Operator (Flight Mission Planner)
+ - Senior Robotics Engineer - ingenieur robotique senior / UGV, UAV & Autonomous Systems
+
+Fetching: https://www.simplyhired.ca/search?q=uav+operator
+HTTP Status: 200
+Detail links found: 17
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - UAV Pilot
+ - UAV Operator (Flight Mission Planner)
+
+Fetching: https://www.simplyhired.ca/search?q=rpas+pilot
+HTTP Status: 200
+Detail links found: 20
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Drone/RPAS Pilot (Contract)
+ - Drone Pilot Trainee
+ - UAV Pilot
+ - MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)
+
+Fetching: https://www.simplyhired.ca/search?q=remote+pilot
+HTTP Status: 200
+Detail links found: 20
+ - Drone Pilot (RPAS) - Industrial Inspections
+
+Fetching: https://www.simplyhired.ca/search?q=uas+operator
+HTTP Status: 200
+Detail links found: 5
+ - Drone/RPAS Pilot (Contract)
+
+Fetching: https://www.simplyhired.ca/search?q=drone+survey
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+
+Fetching: https://www.simplyhired.ca/search?q=photogrammetry+drone
+HTTP Status: 200
+Detail links found: 19
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Drone Pilot Trainee
+ - UAV Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=lidar+drone
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Drone Pilot Trainee
+ - UAV Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=geospatial+drone
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - UAV Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=uav+mapping
+HTTP Status: 200
+Detail links found: 20
+ - Senior Robotics Engineer - ingenieur robotique senior / UGV, UAV & Autonomous Systems
+ - UAV Pilot
+ - UAV Flight Controls Engineer (ArduPilot)
+
+Fetching: https://www.simplyhired.ca/search?q=drone+inspection
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Drone/RPAS Pilot (Contract)
+
+Fetching: https://www.simplyhired.ca/search?q=uav+inspection
+HTTP Status: 200
+Detail links found: 20
+ - Senior Robotics Engineer - ingenieur robotique senior / UGV, UAV & Autonomous Systems
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - UAV Pilot
+ - UAV Flight Controls Engineer (ArduPilot)
+ - Computer Vision Engineer - UAV Systems
+ - Drone Pilot Trainee
+
+Fetching: https://www.simplyhired.ca/search?q=powerline+drone+inspection
+HTTP Status: 200
+Detail links found: 0
+
+Fetching: https://www.simplyhired.ca/search?q=infrastructure+drone
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Drone Pilot Trainee
+
+Fetching: https://www.simplyhired.ca/search?q=drone+videographer
+HTTP Status: 200
+Detail links found: 18
+ - Freelance Photographer / Videographer / Drone Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=aerial+photographer
+HTTP Status: 200
+Detail links found: 4
+ - Freelance Photographer / Videographer / Drone Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=drone+photographer
+HTTP Status: 200
+Detail links found: 16
+ - Freelance Photographer / Videographer / Drone Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=uav+operations+coordinator
+HTTP Status: 200
+Detail links found: 5
+
+Fetching: https://www.simplyhired.ca/search?q=rpas+platform+engineer
+HTTP Status: 200
+Detail links found: 6
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Drone/RPAS Pilot (Contract)
+
+Fetching: https://www.simplyhired.ca/search?q=drone+field+engineer
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+
+Fetching: https://www.simplyhired.ca/search?q=uas+field+engineer
+HTTP Status: 200
+Detail links found: 12
+ - UAS Technician
+
+Fetching: https://ca.talent.com/jobs?k=drone+pilot&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=uav+operator&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=rpas+pilot&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=remote+pilot&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=uas+operator&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=drone+survey&l=Canada
+HTTP Status: 200
+Detail links found: 15
+
+Fetching: https://ca.talent.com/jobs?k=photogrammetry+drone&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=lidar+drone&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=geospatial+drone&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=uav+mapping&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=drone+inspection&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=uav+inspection&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=powerline+drone+inspection&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=infrastructure+drone&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=drone+videographer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+Request failed: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+
+Fetching: https://ca.talent.com/jobs?k=aerial+photographer&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=drone+photographer&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=uav+operations+coordinator&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=rpas+platform+engineer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+ - MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)
+
+Fetching: https://ca.talent.com/jobs?k=drone+field+engineer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=uas+field+engineer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+pilot
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uav+operator
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=rpas+pilot
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=remote+pilot
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uas+operator
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+survey
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=photogrammetry+drone
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=lidar+drone
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=geospatial+drone
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uav+mapping
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+inspection
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uav+inspection
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=powerline+drone+inspection
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=infrastructure+drone
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+videographer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=aerial+photographer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+photographer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uav+operations+coordinator
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=rpas+platform+engineer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+field+engineer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uas+field+engineer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://boards-api.greenhouse.io/v1/boards/wing/jobs?content=true
+HTTP Status: 200
+Jobs found: 37
+ - sUAS Flight Operator (FTC)
+Request failed: 404 Client Error: Not Found for url: https://boards-api.greenhouse.io/v1/boards/zipline/jobs?content=true
+Request failed: 404 Client Error: Not Found for url: https://boards-api.greenhouse.io/v1/boards/skydio/jobs?content=true
+
+Fetching: https://api.lever.co/v0/postings/shieldai?mode=json
+HTTP Status: 200
+Jobs found: 423
+ - Drone Operator (R5145)
+
+Fetching: https://api.lever.co/v0/postings/aero?mode=json
+HTTP Status: 200
+Jobs found: 10
+
+Collected 56 matched jobs
+Deduped to 19 unique jobs
+Inserted 19 new jobs
+By source: {'simplyhired': 16, 'talent': 1, 'greenhouse': 1, 'lever': 1}
+By query family: {'operations': 15, 'mapping': 1, 'inspection': 1, 'technical': 2}
+Average confidence: 0.924
+[INFO] Exporting JSON/CSV artifacts to data\...
+[OK] Job board data refreshed.
+[OK] Outputs: data\jobs.db, data\jobs.json, data\jobs_review.csv, data\jobs_review_latest.csv (fallback)
+[Tue 07/28/2026  6:40:23.90] Daily jobs refresh completed successfully
+
+==================================================
+[Wed 07/29/2026  6:15:01.11] Daily jobs refresh started
+[INFO] Updating jobs dataset...
+Cleared existing jobs table
+Selected sources: jobbank, simplyhired, talent, jobs_bear, greenhouse, lever
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=rpas+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=remote+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 1
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uas+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+survey&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=photogrammetry+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 18
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=lidar+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 18
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=geospatial+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+mapping&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=powerline+drone+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=infrastructure+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+videographer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=aerial+photographer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+photographer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+operations+coordinator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=rpas+platform+engineer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 16
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+field+engineer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 20
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uas+field+engineer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.simplyhired.ca/search?q=drone+pilot
+HTTP Status: 200
+Detail links found: 14
+ - Drone Pilot - Aerial Photography (Contract)
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Drone Security Operator (RPAS Pilot) - Wesleyville Wetlands - $20/hr
+ - Drone/RPAS Pilot (Contract)
+ - Drone Pilot Trainee
+ - Freelance Photographer / Videographer / Drone Pilot
+ - Experienced Advanced Drone Pilot
+ - UAV Pilot
+ - Window Cleaner /Drone Pilot Assistant/General Labour
+ - Window Cleaner / General Labour/Drone Pilot Assistant
+ - UAV Operator (Flight Mission Planner)
+
+Fetching: https://www.simplyhired.ca/search?q=uav+operator
+HTTP Status: 200
+Detail links found: 17
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - UAV Operator (Flight Mission Planner)
+ - UAV Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=rpas+pilot
+HTTP Status: 200
+Detail links found: 20
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Drone Security Operator (RPAS Pilot) - Wesleyville Wetlands - $20/hr
+ - Drone/RPAS Pilot (Contract)
+ - Drone Pilot Trainee
+ - UAV Pilot
+ - MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)
+
+Fetching: https://www.simplyhired.ca/search?q=remote+pilot
+HTTP Status: 200
+Detail links found: 20
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Drone Security Operator (RPAS Pilot) - Wesleyville Wetlands - $20/hr
+
+Fetching: https://www.simplyhired.ca/search?q=uas+operator
+HTTP Status: 200
+Detail links found: 4
+ - Drone Security Operator (RPAS Pilot) - Wesleyville Wetlands - $20/hr
+ - Drone/RPAS Pilot (Contract)
+
+Fetching: https://www.simplyhired.ca/search?q=drone+survey
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+
+Fetching: https://www.simplyhired.ca/search?q=photogrammetry+drone
+HTTP Status: 200
+Detail links found: 18
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Drone Pilot Trainee
+ - UAV Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=lidar+drone
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Drone Pilot Trainee
+ - Senior Robotics Engineer - ingenieur robotique senior / UGV, UAV & Autonomous Systems
+ - UAV Pilot
+ - Computer Vision Engineer - UAV Systems
+
+Fetching: https://www.simplyhired.ca/search?q=geospatial+drone
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - UAV Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=uav+mapping
+HTTP Status: 200
+Detail links found: 20
+ - Senior Robotics Engineer - ingenieur robotique senior / UGV, UAV & Autonomous Systems
+ - UAV Pilot
+ - UAV Flight Controls Engineer (ArduPilot)
+
+Fetching: https://www.simplyhired.ca/search?q=drone+inspection
+HTTP Status: 200
+Detail links found: 20
+ - Drone Pilot (RPAS) - Industrial Inspections
+
+Fetching: https://www.simplyhired.ca/search?q=uav+inspection
+HTTP Status: 200
+Detail links found: 20
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Senior Robotics Engineer - ingenieur robotique senior / UGV, UAV & Autonomous Systems
+ - UAV Pilot
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Computer Vision Engineer - UAV Systems
+ - UAV Flight Controls Engineer (ArduPilot)
+
+Fetching: https://www.simplyhired.ca/search?q=powerline+drone+inspection
+HTTP Status: 200
+Detail links found: 0
+
+Fetching: https://www.simplyhired.ca/search?q=infrastructure+drone
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Drone Pilot Trainee
+
+Fetching: https://www.simplyhired.ca/search?q=drone+videographer
+HTTP Status: 200
+Detail links found: 20
+ - Freelance Photographer / Videographer / Drone Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=aerial+photographer
+HTTP Status: 200
+Detail links found: 6
+ - Freelance Photographer / Videographer / Drone Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=drone+photographer
+HTTP Status: 200
+Detail links found: 16
+ - Freelance Photographer / Videographer / Drone Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=uav+operations+coordinator
+HTTP Status: 200
+Detail links found: 4
+
+Fetching: https://www.simplyhired.ca/search?q=rpas+platform+engineer
+HTTP Status: 200
+Detail links found: 4
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+
+Fetching: https://www.simplyhired.ca/search?q=drone+field+engineer
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Embedded Systems Engineer - Defense UAV (Contract)
+
+Fetching: https://www.simplyhired.ca/search?q=uas+field+engineer
+HTTP Status: 200
+Detail links found: 9
+ - UAS Technician
+
+Fetching: https://ca.talent.com/jobs?k=drone+pilot&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=uav+operator&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=rpas+pilot&l=Canada
+HTTP Status: 200
+Detail links found: 19
+ - MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)
+
+Fetching: https://ca.talent.com/jobs?k=remote+pilot&l=Canada
+HTTP Status: 200
+Detail links found: 0
+
+Fetching: https://ca.talent.com/jobs?k=uas+operator&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=drone+survey&l=Canada
+HTTP Status: 200
+Detail links found: 17
+
+Fetching: https://ca.talent.com/jobs?k=photogrammetry+drone&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=lidar+drone&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=geospatial+drone&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=uav+mapping&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=drone+inspection&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=uav+inspection&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=powerline+drone+inspection&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=infrastructure+drone&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=drone+videographer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=aerial+photographer&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=drone+photographer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=uav+operations+coordinator&l=Canada
+HTTP Status: 200
+Detail links found: 0
+
+Fetching: https://ca.talent.com/jobs?k=rpas+platform+engineer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+ - MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)
+
+Fetching: https://ca.talent.com/jobs?k=drone+field+engineer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=uas+field+engineer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+pilot
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uav+operator
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=rpas+pilot
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=remote+pilot
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uas+operator
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+survey
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=photogrammetry+drone
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=lidar+drone
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=geospatial+drone
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uav+mapping
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+inspection
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uav+inspection
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=powerline+drone+inspection
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=infrastructure+drone
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+videographer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=aerial+photographer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+photographer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uav+operations+coordinator
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=rpas+platform+engineer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+field+engineer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uas+field+engineer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://boards-api.greenhouse.io/v1/boards/wing/jobs?content=true
+HTTP Status: 200
+Jobs found: 37
+ - sUAS Flight Operator (FTC)
+Request failed: 404 Client Error: Not Found for url: https://boards-api.greenhouse.io/v1/boards/zipline/jobs?content=true
+Request failed: 404 Client Error: Not Found for url: https://boards-api.greenhouse.io/v1/boards/skydio/jobs?content=true
+
+Fetching: https://api.lever.co/v0/postings/shieldai?mode=json
+HTTP Status: 200
+Jobs found: 429
+ - Drone Operator (R5145)
+
+Fetching: https://api.lever.co/v0/postings/aero?mode=json
+HTTP Status: 200
+Jobs found: 11
+
+Collected 59 matched jobs
+Deduped to 21 unique jobs
+Inserted 21 new jobs
+By source: {'simplyhired': 18, 'talent': 1, 'greenhouse': 1, 'lever': 1}
+By query family: {'operations': 16, 'mapping': 3, 'technical': 2}
+Average confidence: 0.926
+[INFO] Exporting JSON/CSV artifacts to data\...
+[OK] Job board data refreshed.
+[OK] Outputs: data\jobs.db, data\jobs.json, data\jobs_review.csv, data\jobs_review_latest.csv (fallback)
+[Wed 07/29/2026  6:29:47.38] Daily jobs refresh completed successfully
+
+==================================================
+[Thu 07/30/2026  6:15:01.12] Daily jobs refresh started
+[INFO] Updating jobs dataset...
+Cleared existing jobs table
+Selected sources: jobbank, simplyhired, talent, jobs_bear, greenhouse, lever
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=rpas+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=remote+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 1
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uas+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+survey&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=photogrammetry+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 19
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=lidar+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 19
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=geospatial+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+mapping&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=powerline+drone+inspection&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=infrastructure+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+videographer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=aerial+photographer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+photographer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+operations+coordinator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=rpas+platform+engineer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 15
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+field+engineer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 21
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uas+field+engineer&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.simplyhired.ca/search?q=drone+pilot
+HTTP Status: 200
+Detail links found: 17
+ - Agricultural Drone Pilot
+ - Drone Pilot - Aerial Photography (Contract)
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Drone/RPAS Pilot (Contract)
+ - Drone Pilot Trainee
+ - Freelance Photographer / Videographer / Drone Pilot
+ - Drone Security Operator (RPAS Pilot) - Wesleyville Wetlands - $20/hr
+ - Experienced Advanced Drone Pilot
+ - UAV Pilot
+ - Window Cleaner /Drone Pilot Assistant/General Labour
+ - Window Cleaner / General Labour/Drone Pilot Assistant
+ - UAV Operator (Flight Mission Planner)
+
+Fetching: https://www.simplyhired.ca/search?q=uav+operator
+HTTP Status: 200
+Detail links found: 17
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - UAV Operator (Flight Mission Planner)
+ - UAV Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=rpas+pilot
+HTTP Status: 200
+Detail links found: 20
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Drone Security Operator (RPAS Pilot) - Wesleyville Wetlands - $20/hr
+ - Drone/RPAS Pilot (Contract)
+ - Drone Pilot Trainee
+ - UAV Pilot
+ - MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)
+
+Fetching: https://www.simplyhired.ca/search?q=remote+pilot
+HTTP Status: 200
+Detail links found: 20
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - Drone Security Operator (RPAS Pilot) - Wesleyville Wetlands - $20/hr
+
+Fetching: https://www.simplyhired.ca/search?q=uas+operator
+HTTP Status: 200
+Detail links found: 4
+ - Drone Security Operator (RPAS Pilot) - Wesleyville Wetlands - $20/hr
+ - Drone/RPAS Pilot (Contract)
+
+Fetching: https://www.simplyhired.ca/search?q=drone+survey
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+
+Fetching: https://www.simplyhired.ca/search?q=photogrammetry+drone
+HTTP Status: 200
+Detail links found: 16
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Drone Pilot Trainee
+ - UAV Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=lidar+drone
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Drone Pilot Trainee
+ - UAV Pilot
+ - Computer Vision Engineer - UAV Systems
+
+Fetching: https://www.simplyhired.ca/search?q=geospatial+drone
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - UAV Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=uav+mapping
+HTTP Status: 200
+Detail links found: 20
+ - UAV Pilot
+ - UAV Flight Controls Engineer (ArduPilot)
+
+Fetching: https://www.simplyhired.ca/search?q=drone+inspection
+HTTP Status: 200
+Detail links found: 20
+ - Drone Pilot (RPAS) - Industrial Inspections
+
+Fetching: https://www.simplyhired.ca/search?q=uav+inspection
+HTTP Status: 200
+Detail links found: 18
+ - Drone Pilot (RPAS) - Industrial Inspections
+ - UAV Pilot
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Computer Vision Engineer - UAV Systems
+ - UAV Flight Controls Engineer (ArduPilot)
+ - UAV Field Engineer
+
+Fetching: https://www.simplyhired.ca/search?q=powerline+drone+inspection
+HTTP Status: 200
+Detail links found: 0
+
+Fetching: https://www.simplyhired.ca/search?q=infrastructure+drone
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Drone Pilot Trainee
+
+Fetching: https://www.simplyhired.ca/search?q=drone+videographer
+HTTP Status: 200
+Detail links found: 19
+ - Freelance Photographer / Videographer / Drone Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=aerial+photographer
+HTTP Status: 200
+Detail links found: 5
+ - Freelance Photographer / Videographer / Drone Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=drone+photographer
+HTTP Status: 200
+Detail links found: 16
+ - Freelance Photographer / Videographer / Drone Pilot
+
+Fetching: https://www.simplyhired.ca/search?q=uav+operations+coordinator
+HTTP Status: 200
+Detail links found: 7
+
+Fetching: https://www.simplyhired.ca/search?q=rpas+platform+engineer
+HTTP Status: 200
+Detail links found: 5
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - UAV Field Engineer
+
+Fetching: https://www.simplyhired.ca/search?q=drone+field+engineer
+HTTP Status: 200
+Detail links found: 20
+ - Senior Advanced Drone Operator (RPAS & Reality Capture)
+ - Embedded Systems Engineer - Defense UAV (Contract)
+
+Fetching: https://www.simplyhired.ca/search?q=uas+field+engineer
+HTTP Status: 200
+Detail links found: 10
+ - UAV Field Engineer
+ - UAS Technician
+
+Fetching: https://ca.talent.com/jobs?k=drone+pilot&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=uav+operator&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=rpas+pilot&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=remote+pilot&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=uas+operator&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=drone+survey&l=Canada
+HTTP Status: 200
+Detail links found: 14
+
+Fetching: https://ca.talent.com/jobs?k=photogrammetry+drone&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=lidar+drone&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=geospatial+drone&l=Canada
+HTTP Status: 200
+Detail links found: 18
+
+Fetching: https://ca.talent.com/jobs?k=uav+mapping&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=drone+inspection&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=uav+inspection&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=powerline+drone+inspection&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=infrastructure+drone&l=Canada
+HTTP Status: 200
+Detail links found: 18
+
+Fetching: https://ca.talent.com/jobs?k=drone+videographer&l=Canada
+HTTP Status: 200
+Detail links found: 19
+
+Fetching: https://ca.talent.com/jobs?k=aerial+photographer&l=Canada
+HTTP Status: 200
+Detail links found: 18
+
+Fetching: https://ca.talent.com/jobs?k=drone+photographer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=uav+operations+coordinator&l=Canada
+HTTP Status: 200
+Detail links found: 18
+
+Fetching: https://ca.talent.com/jobs?k=rpas+platform+engineer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+ - MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)
+
+Fetching: https://ca.talent.com/jobs?k=drone+field+engineer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.talent.com/jobs?k=uas+field+engineer&l=Canada
+HTTP Status: 200
+Detail links found: 20
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+pilot
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uav+operator
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=rpas+pilot
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=remote+pilot
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uas+operator
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+survey
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=photogrammetry+drone
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=lidar+drone
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=geospatial+drone
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uav+mapping
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+inspection
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uav+inspection
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=powerline+drone+inspection
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=infrastructure+drone
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+videographer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=aerial+photographer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+photographer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uav+operations+coordinator
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=rpas+platform+engineer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=drone+field+engineer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://ca.jobs-bear.co/jobs?search=uas+field+engineer
+HTTP Status: 200
+Jobs found: 37
+
+Fetching: https://boards-api.greenhouse.io/v1/boards/wing/jobs?content=true
+HTTP Status: 200
+Jobs found: 38
+ - sUAS Flight Operator (FTC)
+Request failed: 404 Client Error: Not Found for url: https://boards-api.greenhouse.io/v1/boards/zipline/jobs?content=true
+Request failed: 404 Client Error: Not Found for url: https://boards-api.greenhouse.io/v1/boards/skydio/jobs?content=true
+
+Fetching: https://api.lever.co/v0/postings/shieldai?mode=json
+HTTP Status: 200
+Jobs found: 429
+ - Drone Operator (R5145)
+
+Fetching: https://api.lever.co/v0/postings/aero?mode=json
+HTTP Status: 200
+Jobs found: 11
+
+Collected 59 matched jobs
+Deduped to 22 unique jobs
+Inserted 22 new jobs
+By source: {'simplyhired': 19, 'talent': 1, 'greenhouse': 1, 'lever': 1}
+By query family: {'operations': 16, 'mapping': 2, 'inspection': 1, 'technical': 3}
+Average confidence: 0.927
+[INFO] Exporting JSON/CSV artifacts to data\...
+[OK] Job board data refreshed.
+[OK] Outputs: data\jobs.db, data\jobs.json, data\jobs_review.csv, data\jobs_review_latest.csv (fallback)
+[Thu 07/30/2026  6:31:20.03] Daily jobs refresh completed successfully
+

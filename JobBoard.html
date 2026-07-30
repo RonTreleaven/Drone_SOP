@@ -610,8 +610,126 @@
       font-size: 12px;
       line-height: 1.25;
     }
+    .detail-snapshot {
+      margin: 0 0 9px;
+      border: 1px solid #d6e4f4;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #f9fcff 0%, #f0f7ff 100%);
+      padding: 8px;
+    }
+    .detail-snapshot-head {
+      margin: 0 0 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #1d4f7a;
+    }
+    .detail-snapshot-grid.field-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .detail-snapshot-grid .field {
+      min-height: 52px;
+      padding: 6px;
+      background: #ffffff;
+      border-color: #d4e3f2;
+    }
     .detail-summary {
       max-height: clamp(220px, 40vh, 450px);
+    }
+    .detail-content {
+      display: grid;
+      gap: 10px;
+      max-height: clamp(230px, 44vh, 500px);
+      overflow: auto;
+      padding-right: 4px;
+    }
+    .detail-section {
+      border: 1px solid #d8e5f4;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+      padding: 0;
+    }
+    .detail-accordion > summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0;
+      padding: 10px;
+      font-size: 0.9rem;
+      color: #1a456f;
+      letter-spacing: 0.01em;
+      font-weight: 700;
+      background: linear-gradient(180deg, #f7fbff 0%, #eff6ff 100%);
+      border-bottom: 1px solid #dbe8f6;
+    }
+    .detail-accordion > summary::-webkit-details-marker { display: none; }
+    .detail-accordion > summary::after {
+      content: "+";
+      color: #406792;
+      font-size: 0.95rem;
+      line-height: 1;
+      min-width: 14px;
+      text-align: center;
+    }
+    .detail-accordion[open] > summary::after { content: "-"; }
+    .detail-pill {
+      margin-left: auto;
+      font-size: 10px;
+      color: #1d4f7a;
+      background: #dfeeff;
+      border: 1px solid #c3dbf4;
+      border-radius: 999px;
+      padding: 2px 7px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .detail-keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 0 2px;
+    }
+    .detail-keyword {
+      display: inline-block;
+      font-size: 10px;
+      line-height: 1.2;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #174268;
+      background: #e7f1ff;
+      border: 1px solid #cae0fa;
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-weight: 700;
+    }
+    .detail-section-body {
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+    .detail-section p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #1d3350;
+      white-space: pre-wrap;
+    }
+    .detail-list {
+      margin: 6px 0 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 4px;
+    }
+    .detail-list li {
+      font-size: 13px;
+      line-height: 1.48;
+      color: #1d3350;
     }
 
     @media (min-width: 1080px) {
@@ -798,8 +916,8 @@
     const selectedJobKeys = new Set();
     let activeJobKey = "";
     const MIN_CONF_PRESETS = [0.25, 0.35, 0.45, 0.5, 0.6, 0.7, 0.75, 0.85, 0.95, 1.0];
-    const PROVINCE_FILTER_SESSION_KEY = "jobBoardProvinceFilterV1";
-    const DEFAULT_PROVINCE_CODES = ["ON", "QC", "BC", "AB"];
+    const PROVINCE_FILTER_STORAGE_KEY = "jobBoardProvinceFilterV2";
+    const DEFAULT_PROVINCE_CODES = ["ON"];
     const PROVINCE_LABELS = {
       AB: "Alberta",
       BC: "British Columbia",
@@ -867,67 +985,449 @@
         .replace(/'/g, "&#039;");
     }
 
-    function formatDescriptionHtml(text) {
-      const source = String(text || "");
-      const headingLabels = [
-        "Job Title",
-        "Job Type",
-        "Work Location",
-        "Location",
-        "Benefits",
-        "Qualifications",
-        "Key Responsibilities",
-        "Responsibilities",
-        "Requirements",
-        "Required skills",
-        "Pay Rate",
-        "About the Role",
-      ];
-      const frenchIndicators = [
-        "travail",
-        "temps plein",
-        "temps partiel",
-        "competences",
-        "responsabilites",
-        "exigences",
-        "salaire",
-        "francais",
-        "anglais",
-        "poste",
-        "pour",
-        "avec",
-      ];
-
-      function isFrenchLikeSegment(segment) {
-        const s = String(segment || "").toLowerCase();
-        if (/[àâäéèêëîïôöùûüçœ]/i.test(s)) {
-          return true;
-        }
-        const normalized = s
-          .normalize("NFKD")
-          .replace(/[\u0300-\u036f]/g, "");
-        let score = 0;
-        frenchIndicators.forEach((token) => {
-          if (normalized.includes(token)) score += 1;
-        });
-        return score >= 2 && normalized.length >= 30;
+    function formatDetailSectionsHtml(text) {
+      const source = normalizeText(text);
+      if (!source) {
+        return '<div class="detail-empty">No description available.</div>';
       }
 
-      const chunks = source.match(/[^.!?\n]+[.!?]?|\n+/g) || [source];
-      const escaped = chunks.map((chunk) => {
-        const plain = chunk.trim();
-        const safe = escapeHtml(chunk);
-        if (!plain) return safe;
-        return isFrenchLikeSegment(plain)
-          ? `<span class="fr-segment">${safe}</span>`
-          : safe;
-      }).join("");
+      const HEADING_CANONICAL_MAP = {
+        "job posting": "Job Overview",
+        "job overview": "Job Overview",
+        "overview": "Job Overview",
+        "full job description": "Full Job Description",
+        "about the role": "Role Overview",
+        "role overview": "Role Overview",
+        "project": "Project",
+        "platform": "Platform",
+        "what youll be doing": "Responsibilities",
+        "what you'll be doing": "Responsibilities",
+        "what youll do": "Responsibilities",
+        "what you'll do": "Responsibilities",
+        "key responsibilities": "Responsibilities",
+        "core responsibilities": "Responsibilities",
+        "primary responsibilities": "Responsibilities",
+        "major responsibilities": "Responsibilities",
+        "responsibilities": "Responsibilities",
+        "duties & responsibilities": "Responsibilities",
+        "skills/qualifications": "Required Qualifications",
+        "minimum qualifications": "Required Qualifications",
+        "required qualifications": "Required Qualifications",
+        "required skills": "Required Qualifications",
+        "qualifications": "Required Qualifications",
+        "requirements": "Required Qualifications",
+        "required": "Required Qualifications",
+        "mandatory": "Required Qualifications",
+        "core competencies": "Competencies",
+        "competencies": "Competencies",
+        "compentencies": "Competencies",
+        "preferred qualifications": "Preferred Qualifications",
+        "preferred": "Preferred Qualifications",
+        "nice to have": "Preferred Qualifications",
+        "assets": "Preferred Qualifications",
+        "compensation": "Compensation",
+        "pay rate": "Compensation",
+        "salary": "Compensation",
+        "benefits": "Benefits",
+        "what we offer": "Benefits",
+        "what we offer you": "Benefits",
+        "work environment": "Work Environment",
+        "how to apply": "Application",
+        "application process": "Application",
+        "apply now": "Application",
+        "who were looking for": "Candidate Profile",
+        "why work with": "Why Join",
+        "bonus skills": "Preferred Qualifications",
+      };
 
-      const escapedLabels = headingLabels.map(label =>
-        label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-      );
-      const headingPattern = new RegExp(`\\b(${escapedLabels.join("|")}):`, "gi");
-      return escaped.replace(headingPattern, "<strong>$1:</strong>");
+      const headingTokenPattern = [
+        "Job Posting",
+        "Job Overview",
+        "Overview",
+        "Full Job Description",
+        "Required Qualifications",
+        "Preferred Qualifications",
+        "Minimum Qualifications",
+        "Core Competencies",
+        "Competencies",
+        "Compentencies",
+        "Key Responsibilities",
+        "Primary Responsibilities",
+        "Major Responsibilities",
+        "Responsibilities",
+        "Requirements",
+        "Mandatory",
+        "Nice to Have",
+        "Assets",
+        "What We Offer",
+        "What We Offer You",
+        "How to Apply",
+        "Application Process",
+        "Project",
+        "What You'll Do",
+        "What Youll Do",
+        "Required Skills",
+        "Pay Rate",
+        "Salary",
+      ];
+
+      const knownHeadings = [
+        "Job Posting",
+        "Job Overview",
+        "Overview",
+        "Full Job Description",
+        "About the Role",
+        "Role Overview",
+        "Compensation",
+        "Bonus Skills",
+        "Work Environment",
+        "Why Work With",
+        "Who Were Looking For",
+        "Apply Now",
+        "Project",
+        "Platform",
+        "What Youll Be Doing",
+        "What You'll Be Doing",
+        "What Youll Do",
+        "What You'll Do",
+        "Key Responsibilities",
+        "Responsibilities",
+        "Core Responsibilities",
+        "Primary Responsibilities",
+        "Major Responsibilities",
+        "Skills/Qualifications",
+        "Minimum Qualifications",
+        "Required Qualifications",
+        "Preferred Qualifications",
+        "Qualifications",
+        "Core Competencies",
+        "Competencies",
+        "Compentencies",
+        "Requirements",
+        "Mandatory",
+        "Nice to Have",
+        "Assets",
+        "Required",
+        "Preferred",
+        "Benefits",
+        "What We Offer",
+        "What We Offer You",
+        "How to Apply",
+        "Application Process",
+        "Duties & responsibilities",
+        "Required Skills",
+        "Pay Rate",
+        "Salary",
+      ];
+
+      const bulletFriendlyHeadings = new Set([
+        "compensation",
+        "bonus skills",
+        "what youll be doing",
+        "what you'll be doing",
+        "what youll do",
+        "what you'll do",
+        "key responsibilities",
+        "responsibilities",
+        "core responsibilities",
+        "primary responsibilities",
+        "major responsibilities",
+        "skills/qualifications",
+        "minimum qualifications",
+        "required qualifications",
+        "preferred qualifications",
+        "qualifications",
+        "core competencies",
+        "competencies",
+        "compentencies",
+        "requirements",
+        "mandatory",
+        "nice to have",
+        "assets",
+        "required",
+        "preferred",
+        "benefits",
+        "what we offer",
+        "what we offer you",
+        "how to apply",
+        "application process",
+        "duties & responsibilities",
+        "required skills",
+        "pay rate",
+        "salary",
+      ]);
+
+      const sectionKeywordRules = {
+        "Required Qualifications": ["transport canada", "advanced", "certificate", "rpas", "uav", "pilot", "experience", "license", "drivers", "mavlink", "px4", "ardupilot"],
+        "Preferred Qualifications": ["preferred", "bonus", "asset", "nice to have", "familiarity", "field", "defence", "research"],
+        "Responsibilities": ["operate", "execute", "coordinate", "monitor", "maintain", "perform", "support", "report", "test", "validate"],
+        "Compensation": ["salary", "pay", "hour", "cad", "$", "contract", "full-time", "part-time"],
+        "Benefits": ["benefits", "flexible", "training", "health", "vacation", "bonus", "allowance"],
+        "Application": ["apply", "submit", "resume", "cover letter", "email", "deadline"],
+        "Competencies": ["communication", "problem-solving", "leadership", "team", "safety", "judgment"],
+        "Work Environment": ["field", "travel", "remote", "hybrid", "outdoor", "on-site"],
+        "Job Overview": ["company", "location", "type", "duration", "project", "role"],
+        "Full Job Description": ["description", "details", "scope", "role", "expectations"],
+      };
+
+      function cleanSectionText(value) {
+        return String(value || "")
+          .replace(/\s+/g, " ")
+          .replace(/\s*\|\s*/g, " | ")
+          .trim();
+      }
+
+      function escapeRegex(value) {
+        return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      }
+
+      function normalizeHeadingToken(value) {
+        const key = normalizeText(value)
+          .toLowerCase()
+          .replace(/[^a-z0-9\s/&']/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+        return HEADING_CANONICAL_MAP[key] || value;
+      }
+
+      function normalizeHeadingForSet(value) {
+        return normalizeText(value)
+          .toLowerCase()
+          .replace(/[^a-z0-9\s/&']/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function splitActionBullets(value) {
+        const actionVerbs = [
+          "Operate",
+          "Execute",
+          "Coordinate",
+          "Conduct",
+          "Assist",
+          "Maintain",
+          "Perform",
+          "Support",
+          "Develop",
+          "Analyze",
+          "Prepare",
+          "Manage",
+          "Monitor",
+          "Lead",
+          "Collaborate",
+          "Ensure",
+          "Build",
+          "Design",
+          "Implement",
+          "Troubleshoot",
+          "Document",
+          "Communicate",
+          "Submit",
+          "Apply",
+          "Must",
+          "Ability",
+          "Experience",
+          "Proficient",
+          "Comfortable",
+          "Valid",
+          "Active",
+          "Strong",
+          "Excellent",
+          "Knowledge",
+          "Familiarity",
+        ];
+        const verbAlternation = actionVerbs.map(escapeRegex).join("|");
+        const pattern = new RegExp(`\\s+(?=(?:${verbAlternation})\\b)`, "g");
+        return String(value || "")
+          .split(pattern)
+          .map((item) => item.trim())
+          .filter(Boolean);
+      }
+
+      function extractKeyValueBullets(value) {
+        const body = String(value || "");
+        const pattern = /([A-Z][A-Za-z0-9/&'()\-\s]{2,35}):\s*([^:]+?)(?=\s+[A-Z][A-Za-z0-9/&'()\-\s]{2,35}:|$)/g;
+        const items = [];
+        let covered = 0;
+        let match;
+        while ((match = pattern.exec(body)) !== null) {
+          const label = cleanSectionText(match[1]);
+          const detail = cleanSectionText(match[2]);
+          if (!label || !detail) continue;
+          if (detail.length < 2) continue;
+          items.push(`${label}: ${detail}`);
+          covered += match[0].length;
+        }
+
+        if (items.length < 2) return [];
+        if (covered < body.length * 0.45) return [];
+        return items;
+      }
+
+      function splitHeadingAndBody(section, sectionIndex) {
+        const raw = cleanSectionText(section);
+        if (!raw) return null;
+
+        for (const candidate of knownHeadings) {
+          const lowerRaw = raw.toLowerCase();
+          const lowerCandidate = candidate.toLowerCase();
+          if (lowerRaw.startsWith(lowerCandidate)) {
+            const rest = raw.slice(candidate.length).replace(/^[\s:.-]+/, "").trim();
+            if (!rest) return null;
+            return {
+              heading: normalizeHeadingToken(candidate),
+              body: rest,
+            };
+          }
+        }
+
+        const colonMatch = raw.match(/^([A-Za-z][A-Za-z0-9 '&()\/,.-]{2,60}):\s+(.+)$/);
+        if (colonMatch) {
+          return {
+            heading: normalizeHeadingToken(colonMatch[1].trim()),
+            body: colonMatch[2].trim(),
+          };
+        }
+
+        const dashMatch = raw.match(/^([A-Za-z][A-Za-z0-9 '&()\/,.-]{2,50})\s+-\s+(.+)$/);
+        if (dashMatch && sectionIndex > 0) {
+          return {
+            heading: normalizeHeadingToken(dashMatch[1].trim()),
+            body: dashMatch[2].trim(),
+          };
+        }
+
+        return {
+          heading: sectionIndex === 0 ? "Overview" : `Section ${sectionIndex + 1}`,
+          body: raw,
+        };
+      }
+
+      function bulletizeBody(bodyText, headingText) {
+        const body = cleanSectionText(bodyText);
+        const headingKey = normalizeHeadingForSet(String(headingText || ""));
+
+        if (headingKey === "overview") {
+          const keyValueBullets = extractKeyValueBullets(body);
+          if (keyValueBullets.length) {
+            return {
+              intro: "",
+              bullets: keyValueBullets,
+            };
+          }
+        }
+
+        const parts = body
+          .split(/\s+(?:-|\*|•|·|\|)\s+/)
+          .map(part => part.trim())
+          .filter(Boolean);
+        const separatorCount = (body.match(/\s(?:-|\*|•|·|\|)\s/g) || []).length;
+
+        if (separatorCount < 2 || parts.length < 2) {
+          return {
+            intro: body,
+            bullets: [],
+          };
+        }
+
+        if (bulletFriendlyHeadings.has(headingKey)) {
+          const actionBullets = splitActionBullets(body);
+          if (actionBullets.length >= 3) {
+            return {
+              intro: "",
+              bullets: actionBullets,
+            };
+          }
+          return {
+            intro: "",
+            bullets: parts,
+          };
+        }
+
+        const introLooksLong = parts[0].length > 110 || /[.!?]$/.test(parts[0]);
+        if (introLooksLong) {
+          return {
+            intro: parts[0],
+            bullets: parts.slice(1),
+          };
+        }
+
+        return {
+          intro: "",
+          bullets: parts,
+        };
+      }
+
+      function sectionKeywords(heading, bodyText) {
+        const h = normalizeHeadingToken(heading);
+        const text = ` ${String(bodyText || "").toLowerCase()} `;
+        const rules = sectionKeywordRules[h] || [];
+        const hits = [];
+        for (const token of rules) {
+          const needle = token.toLowerCase();
+          if (needle === "$") {
+            if (text.includes("$")) hits.push("pay");
+            continue;
+          }
+          if (text.includes(needle)) hits.push(token);
+          if (hits.length >= 5) break;
+        }
+        return hits;
+      }
+
+      const canonical = String(source)
+        .replace(/\r\n?/g, "\n")
+        .replace(/^([A-Za-z0-9][A-Za-z0-9 '&()\/.\-,]{1,80})\s+Location:\s+/i, "Company: $1 Location: ")
+        .replace(/\s+((?:Required|Preferred|Minimum) Qualifications?|Core Competencies|Competencies|Compentencies|Key Responsibilities|Primary Responsibilities|Major Responsibilities|Responsibilities|Requirements|Mandatory|Nice to Have|Assets|What We Offer(?: You)?|How to Apply|Application Process|Job Posting|Job Overview|Overview|Full Job Description|Required Skills|Pay Rate|Salary):\s+/gi, "\n---\n$1: ")
+        .replace(
+          new RegExp(`\\s+(${headingTokenPattern.map(escapeRegex).join("|")})(?:\\s*[.:])?\\s+`, "g"),
+          "\n---\n$1: "
+        )
+        .replace(
+          /\s+((?:REQUIRED|PREFERRED|MINIMUM) QUALIFICATIONS?|CORE COMPETENCIES|COMPETENCIES|COMPENTENCIES|KEY RESPONSIBILITIES|PRIMARY RESPONSIBILITIES|MAJOR RESPONSIBILITIES|RESPONSIBILITIES|REQUIREMENTS|MANDATORY|NICE TO HAVE|ASSETS|WHAT WE OFFER(?: YOU)?|HOW TO APPLY|APPLICATION PROCESS|JOB POSTING|JOB OVERVIEW|OVERVIEW|FULL JOB DESCRIPTION|PROJECT|WHAT YOU'?LL DO|REQUIRED SKILLS|PAY RATE|SALARY)(?:\s*[.:])?\s+/g,
+          "\n---\n$1: "
+        )
+        .replace(/\s+---\s+/g, "\n---\n")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+
+      const rawSections = canonical
+        .split(/\n---\n/)
+        .map(part => part.trim())
+        .filter(Boolean);
+      const sections = rawSections.length ? rawSections : [canonical];
+
+      const html = sections
+        .map((section, index) => splitHeadingAndBody(section, index))
+        .filter(Boolean)
+        .map(({ heading, body }, sectionIndex) => {
+          const canonicalHeading = normalizeHeadingToken(heading);
+          const parsed = bulletizeBody(body, heading);
+          const openByDefault = sectionIndex === 0 || parsed.bullets.length >= 4;
+          const tone = parsed.bullets.length ? `${parsed.bullets.length} items` : "notes";
+          const keywords = sectionKeywords(canonicalHeading, body);
+          const keywordHtml = keywords.length
+            ? `<div class="detail-keywords">${keywords.map((kw) => `<span class="detail-keyword">${escapeHtml(kw)}</span>`).join("")}</div>`
+            : "";
+          const introHtml = parsed.intro ? `<p>${escapeHtml(parsed.intro)}</p>` : "";
+          const bulletsHtml = parsed.bullets.length
+            ? `<ul class="detail-list">${parsed.bullets.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+            : "";
+          return `
+            <section class="detail-section">
+              <details class="detail-accordion"${openByDefault ? " open" : ""}>
+                <summary>
+                  <span>${escapeHtml(canonicalHeading)}</span>
+                  <span class="detail-pill">${escapeHtml(tone)}</span>
+                </summary>
+                <div class="detail-section-body">${keywordHtml}${introHtml}${bulletsHtml}</div>
+              </details>
+            </section>
+          `;
+        })
+        .join("");
+
+      return `<div class="detail-content">${html}</div>`;
     }
 
     function isCanadaLocation(text) {
@@ -984,11 +1484,11 @@
         mode: provinceFilter.mode,
         selected: [...provinceFilter.selected],
       };
-      sessionStorage.setItem(PROVINCE_FILTER_SESSION_KEY, JSON.stringify(payload));
+      localStorage.setItem(PROVINCE_FILTER_STORAGE_KEY, JSON.stringify(payload));
     }
 
     function loadProvinceFilterSession() {
-      const raw = sessionStorage.getItem(PROVINCE_FILTER_SESSION_KEY);
+      const raw = localStorage.getItem(PROVINCE_FILTER_STORAGE_KEY);
       if (!raw) return null;
       try {
         const parsed = JSON.parse(raw);
@@ -1104,12 +1604,10 @@
           provinceFilter.mode = "custom";
           provinceFilter.selected = new Set(keep);
         } else {
-          provinceFilter.mode = "all";
-          provinceFilter.selected = new Set(available);
+          setProvinceModeDefault(false);
         }
       } else {
-        provinceFilter.mode = "all";
-        provinceFilter.selected = new Set(available);
+        setProvinceModeDefault(false);
       }
 
       syncProvinceUi();
@@ -1238,6 +1736,75 @@
       return window.matchMedia("(min-width: 1080px)").matches;
     }
 
+    function extractDescriptionSnapshot(job, descriptionText) {
+      const text = String(descriptionText || "").replace(/\s+/g, " ").trim();
+      if (!text) return [];
+
+      const stop = "(?=\\s+(?:[A-Z][A-Za-z/&'() -]{2,28}:|PROJECT\\b|REQUIREMENTS\\b|RESPONSIBILITIES\\b|QUALIFICATIONS\\b|WHAT YOU'?LL DO\\b|HOW TO APPLY\\b)|$)";
+
+      function pull(pattern) {
+        const match = text.match(pattern);
+        return match ? String(match[1] || "").trim() : "";
+      }
+
+      function clean(value) {
+        return String(value || "")
+          .replace(/\s+/g, " ")
+          .replace(/[.;:,\-\s]+$/, "")
+          .trim();
+      }
+
+      function compact(value, limit = 92) {
+        const v = clean(value);
+        if (v.length <= limit) return v;
+        return `${v.slice(0, limit - 1).trim()}...`;
+      }
+
+      const typeFromText = pull(new RegExp(`(?:\\bJob Type\\b|\\bType\\b)\\s*:\\s*([^\\n]+?)${stop}`, "i"));
+      const duration = pull(new RegExp(`(?:\\bDuration\\b|\\bTerm\\b|\\bContract Duration\\b)\\s*:\\s*([^\\n]+?)${stop}`, "i"));
+      const compensation = pull(new RegExp(`(?:\\bCompensation\\b|\\bSalary\\b|\\bPay Rate\\b|\\bPay\\b)\\s*:\\s*([^\\n]+?)${stop}`, "i"));
+      const schedule = pull(new RegExp(`(?:\\bSchedule\\b|\\bHours\\b|\\bShift\\b)\\s*:\\s*([^\\n]+?)${stop}`, "i"));
+      const workLocation = pull(new RegExp(`(?:\\bWork Location\\b|\\bLocation\\b)\\s*:\\s*([^\\n]+?)${stop}`, "i"));
+      const deadline = pull(new RegExp(`(?:\\bApplication Deadline\\b|\\bClosing Date\\b|\\bDeadline\\b)\\s*:\\s*([^\\n]+?)${stop}`, "i"));
+
+      const typeFallback = normalizeText(job.type);
+      const normalizedType = typeFromText || (typeFallback && typeFallback !== "unknown" ? typeFallback : "");
+
+      const travelSignal = /\btravel\b/i.test(text)
+        ? (pull(new RegExp(`\\bTravel\\s*:\\s*([^\\n]+?)${stop}`, "i")) || "Required")
+        : "";
+
+      const modeSignal = (() => {
+        if (/\bhybrid\b/i.test(text)) return "Hybrid";
+        if (/\bremote\b/i.test(text)) return "Remote";
+        if (/\bon[ -]?site\b/i.test(text)) return "On-site";
+        if (/\bfield\b/i.test(text)) return "Field";
+        return "";
+      })();
+
+      const snapshot = [];
+      if (normalizedType) snapshot.push({ label: "Type", value: compact(normalizedType, 52) });
+      if (duration) snapshot.push({ label: "Duration", value: compact(duration, 62) });
+      if (compensation) snapshot.push({ label: "Compensation", value: compact(compensation, 62) });
+      if (schedule) snapshot.push({ label: "Schedule", value: compact(schedule, 62) });
+      if (modeSignal) snapshot.push({ label: "Work Mode", value: modeSignal });
+      if (workLocation) snapshot.push({ label: "Work Location", value: compact(workLocation, 62) });
+      if (travelSignal) snapshot.push({ label: "Travel", value: compact(travelSignal, 42) });
+      if (deadline) snapshot.push({ label: "Deadline", value: compact(deadline, 42) });
+
+      const unique = [];
+      const seen = new Set();
+      snapshot.forEach((item) => {
+        const key = `${item.label.toLowerCase()}::${item.value.toLowerCase()}`;
+        if (item.value && !seen.has(key)) {
+          seen.add(key);
+          unique.push(item);
+        }
+      });
+
+      return unique.slice(0, 8);
+    }
+
     function detailBodyHtml(job) {
       const company = normalizeText(job.company);
       const location = normalizeText(job.location);
@@ -1250,6 +1817,17 @@
       const summary = normalizeText(job.summary);
       const descriptionText = description || summary;
       const url = String(job.link || "").trim();
+      const snapshotItems = extractDescriptionSnapshot(job, descriptionText);
+      const snapshotHtml = snapshotItems.length
+        ? `
+          <section class="detail-snapshot">
+            <div class="detail-snapshot-head">Job Snapshot</div>
+            <div class="field-grid detail-snapshot-grid">
+              ${snapshotItems.map((item) => fieldRow(item.label, item.value)).join("")}
+            </div>
+          </section>
+        `
+        : "";
 
       return `
         <div class="field-grid detail-meta">
@@ -1261,7 +1839,8 @@
           ${fieldRow("Date Posted", posted)}
           ${fieldRow("Expired", expires)}
         </div>
-        <div class="summary detail-summary">${formatDescriptionHtml(descriptionText || "No description available")}</div>
+        ${snapshotHtml}
+        <div class="summary detail-summary">${formatDetailSectionsHtml(descriptionText || "No description available")}</div>
         <div class="link-line"><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">View Source Job URL</a></div>
       `;
     }
@@ -1579,7 +2158,7 @@
         document.getElementById("category").value = "";
         document.getElementById("minConf").value = "0.50";
         document.getElementById("canadaOnly").value = "yes";
-        setProvinceModeAll(false);
+        setProvinceModeDefault(false);
         document.getElementById("statusError").textContent = "";
         render();
       });
