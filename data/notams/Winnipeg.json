@@ -135,21 +135,21 @@
     ]
   },
   {
-    "raw": "(U1247/26 NOTAMR U0674/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2607141316 C) 2610121400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
-    "startValidity": "2026-07-14T13:16:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.959167, -91.303889"
-    ]
-  },
-  {
     "raw": "(J4720/26 NOTAMR J2465/26\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2607141316 C) 2610121400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
     "startValidity": "2026-07-14T13:16:00",
     "endValidity": null,
     "q_code": "QOBCE",
     "coordinates_dd": [
       "52.467222, -92.960833"
+    ]
+  },
+  {
+    "raw": "(U1247/26 NOTAMR U0674/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2607141316 C) 2610121400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
+    "startValidity": "2026-07-14T13:16:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.959167, -91.303889"
     ]
   },
   {
@@ -627,24 +627,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.452222, -109.591944"
-    ]
-  },
-  {
-    "raw": "(U0775/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/013/4932N09643W005\nA) CXXX B) 2605012228 C) 2607302359\nE) CJB3 STEINBACH \nOBST LGT U/S TOWER 493220N 0964251W (APRX 1.49NM WSW AD) 360FT \nAGL, 1210FT AMSL.)",
-    "startValidity": "2026-05-01T22:28:00",
-    "endValidity": "2026-07-30T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.538889, -96.714167"
-    ]
-  },
-  {
-    "raw": "(U0770/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/024/5029N10427W002\nA) CZWG B) 2604302100 C) 2607302100\nE) OBST LGT U/S TOWER 502910N 1042631W (APRX 7NM ENE REGINA GENERAL \n(HOSP) (HELI) AD (CRQ2)) 302FT AGL, 2327FT AMSL.)",
-    "startValidity": "2026-04-30T21:00:00",
-    "endValidity": "2026-07-30T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.486111, -104.441944"
     ]
   },
   {
