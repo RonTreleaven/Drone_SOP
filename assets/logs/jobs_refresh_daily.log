@@ -14478,3 +14478,109 @@ Average confidence: 0.927
 [OK] Outputs: data\jobs.db, data\jobs.json, data\jobs_review.csv, data\jobs_review_latest.csv (fallback)
 [Thu 07/30/2026  6:31:20.03] Daily jobs refresh completed successfully
 
+==================================================
+[Wed 08/05/2026 13:28:10.54] Daily jobs refresh started
+[INFO] Updating jobs dataset...
+Cleared existing jobs table
+Selected sources: jobbank, simplyhired, talent, jobs_bear, greenhouse, lever
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uav+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=rpas+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=remote+pilot&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=uas+operator&locationstring=Canada
+HTTP Status: 200
+Article cards found: 0
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=drone+survey&locationstring=Canada
+HTTP Status: 200
+Article cards found: 25
+
+Fetching: https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=photogrammetry+drone&locationstring=Canada
+HTTP Status: 200
+Article cards found: 21
+Traceback (most recent call last):
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 1025, in <module>
+    run(reset=args.reset, sources=parse_sources(args.sources), no_write=args.no_write)
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 970, in run
+    collected.extend(source_fetchers[source]())
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 699, in fetch_jobbank
+    parsed = enrich_jobbank_with_detail(parsed)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 331, in enrich_jobbank_with_detail
+    detail = fetch_url(base_job["link"])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\scraper.py", line 118, in fetch_url
+    response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=20)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\sessions.py", line 592, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\sessions.py", line 706, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\requests\adapters.py", line 645, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\.venv\Lib\site-packages\urllib3\connection.py", line 571, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
+    response.begin()
+  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\ssl.py", line 1251, in recv_into
+    return self.read(nbytes, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\ssl.py", line 1103, in read
+    return self._sslobj.read(len, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+^CTerminate batch job (Y/N)? 
+^C[INFO] Exporting JSON/CSV artifacts to data\...
+Traceback (most recent call last):
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\export.py", line 167, in <module>
+    run_exports()
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\export.py", line 162, in run_exports
+    export_json()
+  File "C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\export.py", line 78, in export_json
+    with open(JOBS_JSON_PATH, "w", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+^CTerminate batch job (Y/N)? 
+^C[OK] Job board data refreshed.
+[OK] Outputs: data\jobs.db, data\jobs.json, data\jobs_review.csv, data\jobs_review_latest.csv (fallback)
+[Wed 08/05/2026 13:29:24.92] Daily jobs refresh completed successfully
+
