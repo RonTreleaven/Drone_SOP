@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canadian Control Zones Mini Map</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <script src="assets/js/site-nav.js" defer></script>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --panel: #ffffff;
+      --line: #d2deec;
+      --ink: #1f2c3a;
+      --muted: #5c6f82;
+      --accent: #0e6ba8;
+      --accent-soft: #d9ecf8;
+      --warn: #7a4a00;
+      --ok: #1a6f3a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(165deg, #eef4fa, var(--bg));
+    }
+
+    .shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .top-nav {
+      margin-bottom: 0.9rem;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+      padding: 0.9rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 0.85rem;
+      align-items: start;
+      margin-top: 0.75rem;
+    }
+
+    .layout.filters-collapsed {
+      grid-template-columns: 1fr;
+    }
+
+    .layout.filters-collapsed .side {
+      display: none;
+    }
+
+    .side {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfcfe;
+      padding: 0.6rem;
+    }
+
+    .group {
+      margin-bottom: 0.65rem;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 0.5rem;
+    }
+
+    .group h2 {
+      margin: 0 0 0.4rem;
+      font-size: 0.82rem;
+      color: #34516b;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .header p {
+      margin: 0.35rem 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+      font-weight: 600;
+    }
+
+    .field input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0.5rem 0.55rem;
+      font-size: 0.95rem;
+    }
+
+    .row {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 0.35rem;
+    }
+
+    .row-top-gap {
+      margin-top: 0.35rem;
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+
+    .check-grid label {
+      font-size: 0.9rem;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .map-tools {
+      margin-top: 0.5rem;
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    button {
+      border: 1px solid #8ab5d4;
+      background: #ffffff;
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 0.52rem 0.72rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: #0b5d93;
+    }
+
+    button:hover {
+      filter: brightness(0.98);
+    }
+
+    .status {
+      padding: 0.55rem 0.65rem;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #f9fbfe;
+      font-size: 0.9rem;
+    }
+
+    .status.warn {
+      background: #fff7eb;
+      color: var(--warn);
+      border-color: #f0d6a8;
+    }
+
+    .status.ok {
+      background: #ecf9f1;
+      color: var(--ok);
+      border-color: #b8e4c8;
+    }
+
+    .focus-key {
+      padding: 0.65rem 0.75rem;
+      border: 1px solid #c7d8ea;
+      border-left: 5px solid #0e6ba8;
+      border-radius: 8px;
+      background: #f5faff;
+      font-size: 0.9rem;
+      color: #20445f;
+    }
+
+    .focus-key strong {
+      color: #123a58;
+    }
+
+    .map-panel {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 0.45rem;
+    }
+
+    #map {
+      height: 70vh;
+      min-height: 440px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .map-fab {
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      z-index: 900;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid #8ab5d4;
+      background: #ffffff;
+      color: #184568;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .map-fab:hover {
+      background: #f2f8ff;
+    }
+
+    @media (max-width: 720px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      #map {
+        height: 62vh;
+        min-height: 380px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="top-nav shared-site-nav" data-nav-variant="utility" data-show-back="true" data-back-fallback="tools.html"></nav>
+
+    <section class="card">
+      <div class="header">
+        <h1>Canadian Control Zones Mini Map</h1>
+        <p>Loads only control zones from Control_ca_asp.geojson and lets you place the pilot marker by lat/lon.</p>
+      </div>
+
+      <div class="layout">
+        <aside class="side">
+          <section class="group">
+            <h2>Pilot Location</h2>
+            <div class="controls">
+              <div class="field">
+                <label for="pilotLat">Latitude (DD)</label>
+                <input id="pilotLat" type="text" inputmode="decimal" placeholder="43.923000">
+              </div>
+              <div class="field">
+                <label for="pilotLon">Longitude (DD)</label>
+                <input id="pilotLon" type="text" inputmode="decimal" placeholder="-78.897000">
+              </div>
+            </div>
+            <div class="row">
+              <button id="setPilotBtn" class="primary" type="button">Set Pilot</button>
+              <button id="currentGpsBtn" type="button">My Location</button>
+              <button id="centerPilotBtn" type="button">Center on Pilot</button>
+            </div>
+          </section>
+
+          <section class="group">
+            <h2>Airspace Filter</h2>
+            <div class="check-grid">
+              <label><input type="checkbox" class="class-filter" value="D" checked> Class D Control Zones</label>
+              <label><input type="checkbox" class="class-filter" value="E" checked> Class E Surface/Low-Level</label>
+              <label><input type="checkbox" class="class-filter" value="F" checked> Class F Control/Related</label>
+              <label><input type="checkbox" class="class-filter" value="R" checked> Restricted (CYR/CYD/CYA)</label>
+            </div>
+            <div class="row row-top-gap">
+              <button id="classCheckAll" type="button">Check</button>
+              <button id="classUncheckAll" type="button">Unchk</button>
+              <button id="fitCzBtn" type="button">Fit All</button>
+            </div>
+          </section>
+
+          <section class="group">
+            <div class="focus-key" role="note" aria-label="Operational airspace key">
+              <strong>Operational Key:</strong> Primary check is 0-700 ft AGL control-zone airspace.
+              Defaults are <strong>Class D</strong> and <strong>Class F</strong> because these can begin at the surface (0 AGL).
+              Drone operating ceiling reference: <strong>120 m / 400 ft AGL</strong>.
+            </div>
+          </section>
+
+          <section class="group">
+            <h2>Status</h2>
+            <div id="status" class="status">Loading control zones...</div>
+          </section>
+        </aside>
+
+        <main class="map-panel">
+          <div class="map-tools">
+            <button id="toggleFiltersBtn" type="button">Collapse Filters</button>
+            <button id="fullscreenMapBtn" type="button">Full Screen Map</button>
+          </div>
+          <div id="map" aria-label="Control zones map">
+            <button id="centerPilotFab" class="map-fab" type="button" title="Center and focus on pilot" aria-label="Center and focus on pilot">◎</button>
+          </div>
+        </main>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const map = L.map("map", {
+      zoomControl: true,
+      preferCanvas: true
+    }).setView([56.1304, -106.3468], 4);
+
+    const base = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 18,
+      attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
+
+
+    const czLayer = L.geoJSON(null, {
+      style: {
+        color: "#b42318",
+        weight: 1.5,
+        fillColor: "#e45a5a",
+        fillOpacity: 0.12
+      },
+      onEachFeature: (feature, layer) => {
+        const p = feature && feature.properties ? feature.properties : {};
+        const name = normalizeLabel(p.name || "Control Zone");
+        const classLetter = getFeatureClassLetter(feature);
+        const icaoCode = getFeatureIcaoCode(feature);
+        const upper = p.upper || (p.upperLimit && Number.isFinite(p.upperLimit.value) ? `${p.upperLimit.value} ft` : "n/a");
+        const lower = p.lower || (p.lowerLimit && Number.isFinite(p.lowerLimit.value) ? `${p.lowerLimit.value} ft` : "n/a");
+        layer.bindPopup(`<strong>${name}</strong><br>ICAO: ${icaoCode}<br>Class: ${classLetter}<br>Lower: ${lower}<br>Upper: ${upper}`);
+      }
+    }).addTo(map);
+
+    const pilotIcon = L.divIcon({
+      className: "",
+      html: '<div style="width:14px;height:14px;border-radius:50%;background:#c62828;border:2px solid #fff;box-shadow:0 0 0 3px rgba(198,40,40,0.28);"></div>',
+      iconSize: [14, 14],
+      iconAnchor: [7, 7]
+    });
+
+    let pilotMarker = null;
+    let controlZoneData = null;
+    let filteredControlZoneData = null;
+    let airportLookupEntries = [];
+
+    const CLASS_CODE_TO_LETTER = {
+      0: "A",
+      1: "B",
+      2: "C",
+      3: "D",
+      4: "E",
+      5: "F",
+      6: "G"
+    };
+
+    function normalizeIcaoClass(value) {
+      if (typeof value === "number" && Number.isFinite(value)) {
+        return CLASS_CODE_TO_LETTER[value] || "UNK";
+      }
+
+      if (typeof value !== "string") return "UNK";
+      const text = value.trim().toUpperCase();
+      if (!text) return "UNK";
+
+      // Handle values serialized as numeric strings (for example "5").
+      if (/^\d+$/.test(text)) {
+        const n = Number(text);
+        return CLASS_CODE_TO_LETTER[n] || "UNK";
+      }
+
+      if (/^[A-G]$/.test(text)) {
+        return text;
+      }
+
+      const classMatch = text.match(/\bCLASS[ _-]*([A-G])\b/);
+      if (classMatch) {
+        return classMatch[1];
+      }
+
+      return "UNK";
+    }
+
+    function setStatus(text, tone) {
+      const el = document.getElementById("status");
+      el.textContent = text;
+      el.className = "status" + (tone ? ` ${tone}` : "");
+    }
+
+    function parseCoordinate(text) {
+      const v = Number(String(text || "").trim());
+      return Number.isFinite(v) ? v : null;
+    }
+
+    function validLatLon(lat, lon) {
+      if (!Number.isFinite(lat) || !Number.isFinite(lon)) return false;
+      if (lat < -90 || lat > 90) return false;
+      if (lon < -180 || lon > 180) return false;
+      return true;
+    }
+
+    function mojibakeScore(text) {
+      if (typeof text !== "string" || !text) return 0;
+      const markers = text.match(/Ã|Â|â€|â€™|â€œ|â€|�/g);
+      return markers ? markers.length : 0;
+    }
+
+    function tryLatin1ToUtf8Repair(text) {
+      if (typeof text !== "string" || !text) return text;
+      try {
+        const bytes = Uint8Array.from(Array.from(text, (ch) => ch.charCodeAt(0) & 0xff));
+        return new TextDecoder("utf-8", { fatal: false }).decode(bytes);
+      } catch {
+        return text;
+      }
+    }
+
+    function normalizeLabel(value) {
+      if (typeof value !== "string") return value;
+
+      let text = value;
+
+      // Attempt repair for UTF-8 text that was interpreted as Latin-1/Windows-1252.
+      if (mojibakeScore(text) > 0) {
+        const repaired = tryLatin1ToUtf8Repair(text);
+        if (mojibakeScore(repaired) < mojibakeScore(text)) {
+          text = repaired;
+        }
+      }
+
+      // Final cleanup for common replacement artifacts that can remain in source data.
+      text = text
+        .replace(/\uFFFD/g, "")
+        .replace(/\s{2,}/g, " ")
+        .trim();
+
+      return text.normalize("NFC");
+    }
+
+    function pointInRing(lat, lon, ring) {
+      let inside = false;
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const xi = ring[i][0];
+        const yi = ring[i][1];
+        const xj = ring[j][0];
+        const yj = ring[j][1];
+
+        const intersects = ((yi > lat) !== (yj > lat)) &&
+          (lon < ((xj - xi) * (lat - yi)) / ((yj - yi) || 1e-12) + xi);
+        if (intersects) inside = !inside;
+      }
+      return inside;
+    }
+
+    function pointInPolygon(lat, lon, polygonCoords) {
+      if (!Array.isArray(polygonCoords) || !polygonCoords.length) return false;
+      if (!pointInRing(lat, lon, polygonCoords[0])) return false;
+      for (let i = 1; i < polygonCoords.length; i += 1) {
+        if (pointInRing(lat, lon, polygonCoords[i])) return false;
+      }
+      return true;
+    }
+
+    function zonesContainingPoint(lat, lon, featureCollection) {
+      const hits = [];
+      if (!featureCollection || !Array.isArray(featureCollection.features)) return hits;
+
+      featureCollection.features.forEach((feature) => {
+        if (!feature || !feature.geometry) return;
+        const g = feature.geometry;
+
+        if (g.type === "Polygon" && pointInPolygon(lat, lon, g.coordinates)) {
+          hits.push(feature);
+          return;
+        }
+
+        if (g.type === "MultiPolygon" && Array.isArray(g.coordinates)) {
+          const match = g.coordinates.some((poly) => pointInPolygon(lat, lon, poly));
+          if (match) hits.push(feature);
+        }
+      });
+
+      return hits;
+    }
+
+    function getCombinedLayerBounds() {
+      if (!czLayer.getLayers().length) return null;
+      return czLayer.getBounds();
+    }
+
+    function getFeatureClassLetter(feature) {
+      const p = feature && feature.properties ? feature.properties : {};
+      const classValue = p.class != null ? p.class : p.icaoClass;
+      return normalizeIcaoClass(classValue);
+    }
+
+    function isRestrictedFeature(feature) {
+      const p = feature && feature.properties ? feature.properties : {};
+      const id = String(p.id || "").toUpperCase();
+      if (id.startsWith("CYR") || id.startsWith("CYD") || id.startsWith("CYA")) return true;
+
+      const designation = String(p.designation || "").toUpperCase();
+      if (designation === "RESTRICTED" || designation === "DANGER" || designation === "ADVISORY") return true;
+
+      const zoneType = String(p.zone_type || "").toUpperCase();
+      if (zoneType === "RESTRICTED" || zoneType === "DANGER" || zoneType === "ADVISORY") return true;
+
+      return false;
+    }
+
+    function normalizeLookupName(value) {
+      if (typeof value !== "string") return "";
+      return normalizeLabel(value)
+        .toUpperCase()
+        .replace(/[^A-Z0-9 ]+/g, " ")
+        .replace(/\b(CZ|TA|TCA|MF|CTR|CONTROL|ZONE|AIRWAY|TOP|CORRIDOR)\b/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function getTokenSet(text) {
+      if (!text) return new Set();
+      return new Set(text.split(" ").filter((t) => t.length >= 3));
+    }
+
+    function scoreNameMatch(czNameNorm, aptNameNorm) {
+      if (!czNameNorm || !aptNameNorm) return -1;
+      if (czNameNorm === aptNameNorm) return 1000;
+      if (aptNameNorm.includes(czNameNorm) || czNameNorm.includes(aptNameNorm)) {
+        return 900 - Math.abs(aptNameNorm.length - czNameNorm.length);
+      }
+
+      const czTokens = getTokenSet(czNameNorm);
+      const aptTokens = getTokenSet(aptNameNorm);
+      if (!czTokens.size || !aptTokens.size) return -1;
+
+      let overlap = 0;
+      czTokens.forEach((token) => {
+        if (aptTokens.has(token)) overlap += 1;
+      });
+      if (!overlap) return -1;
+
+      return overlap * 100 - Math.abs(aptNameNorm.length - czNameNorm.length);
+    }
+
+    function getFeatureIcaoCode(feature) {
+      const p = feature && feature.properties ? feature.properties : {};
+      const direct = [
+        p.icaoCode,
+        p.icao,
+        p.ident,
+        p.code,
+        p.designator,
+        p.airportIdent,
+        p.iataCode
+      ];
+
+      for (const value of direct) {
+        if (typeof value === "string" && /^[A-Z][A-Z0-9]{3}$/i.test(value.trim())) {
+          return value.trim().toUpperCase();
+        }
+      }
+
+      const name = normalizeLookupName(p.name || "");
+      if (!name || !airportLookupEntries.length) return "n/a";
+
+      let best = null;
+      let bestScore = -1;
+      airportLookupEntries.forEach((entry) => {
+        const score = scoreNameMatch(name, entry.nameNorm);
+        if (score > bestScore) {
+          bestScore = score;
+          best = entry;
+        }
+      });
+
+      if (best && bestScore >= 100) {
+        return best.icao;
+      }
+
+      return "n/a";
+    }
+
+    function getBasePathPrefixes() {
+      const prefixes = ["", "/"];
+      const parts = (window.location.pathname || "/").split("/").filter(Boolean);
+      if (parts.length && !parts[0].includes(".")) {
+        prefixes.push(`/${parts[0]}/`);
+      }
+      return Array.from(new Set(prefixes));
+    }
+
+    function buildSourceCandidates(sources) {
+      const prefixes = getBasePathPrefixes();
+      const candidates = [];
+
+      sources.forEach((rawSource) => {
+        const source = String(rawSource || "").trim();
+        if (!source) return;
+        if (/^https?:\/\//i.test(source)) {
+          candidates.push(source);
+          return;
+        }
+
+        const cleanSource = source.replace(/^\/+/, "");
+        prefixes.forEach((prefix) => {
+          if (!prefix) {
+            candidates.push(cleanSource);
+          } else {
+            candidates.push(`${prefix}${cleanSource}`);
+          }
+        });
+      });
+
+      return Array.from(new Set(candidates));
+    }
+
+    async function fetchFirstGeoJson(sources) {
+      const candidates = buildSourceCandidates(sources);
+      let lastError = "HTTP 404";
+
+      for (const source of candidates) {
+        try {
+          const response = await fetch(source, { cache: "no-store" });
+          if (!response.ok) {
+            lastError = `HTTP ${response.status}`;
+            continue;
+          }
+
+          const data = await response.json();
+          if (!data || data.type !== "FeatureCollection" || !Array.isArray(data.features)) {
+            lastError = "Invalid GeoJSON";
+            continue;
+          }
+
+          return { data, source };
+        } catch (err) {
+          lastError = err && err.message ? err.message : "unknown error";
+        }
+      }
+
+      throw new Error(`${lastError}. Tried: ${candidates.join(", ")}`);
+    }
+
+    async function loadAirportLookup() {
+      const sources = ["ca_apt.geojson", "data/ca_apt.geojson"];
+
+      for (const source of buildSourceCandidates(sources)) {
+        try {
+          const response = await fetch(source, { cache: "no-store" });
+          if (!response.ok) continue;
+
+          const data = await response.json();
+          if (!data || data.type !== "FeatureCollection" || !Array.isArray(data.features)) continue;
+
+          airportLookupEntries = data.features
+            .map((feature) => {
+              const p = feature && feature.properties ? feature.properties : {};
+              const icao = typeof p.icaoCode === "string" ? p.icaoCode.trim().toUpperCase() : "";
+              const nameNorm = normalizeLookupName(p.name || "");
+              if (!icao || !nameNorm) return null;
+              if (!/^[A-Z][A-Z0-9]{3}$/.test(icao)) return null;
+              return { icao, nameNorm };
+            })
+            .filter(Boolean);
+
+          if (airportLookupEntries.length) return;
+        } catch {
+          // Continue to next source if this one is not available.
+        }
+      }
+    }
+
+    function getSelectedClassSet() {
+      return new Set(
+        Array.from(document.querySelectorAll(".class-filter:checked")).map((el) => String(el.value || "").toUpperCase())
+      );
+    }
+
+    function formatSelectedClasses(selectedClassSet) {
+      if (!selectedClassSet || !selectedClassSet.size) {
+        return "no filters";
+      }
+
+      const ordered = ["D", "E", "F", "R"].filter((v) => selectedClassSet.has(v));
+      if (ordered.length === 4) {
+        return "all selected filters";
+      }
+
+      const labels = ordered.map((code) => (code === "R" ? "Restricted" : `Class ${code}`));
+      return labels.join("+");
+    }
+
+    function formatHitClasses(hits) {
+      const classOrder = ["A", "B", "C", "D", "E", "F", "G", "UNK"];
+      const classes = Array.from(new Set((hits || []).map((f) => getFeatureClassLetter(f))))
+        .filter((c) => typeof c === "string" && c.trim())
+        .sort((a, b) => classOrder.indexOf(a) - classOrder.indexOf(b));
+
+      if (!classes.length) return "matching zone(s)";
+      if (classes.length === 1) return `class ${classes[0]}`;
+      return `classes ${classes.join("+")}`;
+    }
+
+    function buildFilteredData(sourceData, selectedClassSet) {
+      if (!sourceData || !Array.isArray(sourceData.features)) {
+        return null;
+      }
+
+      const features = sourceData.features.filter((feature) => {
+        const cls = getFeatureClassLetter(feature);
+        if (selectedClassSet.has(cls)) return true;
+        if (selectedClassSet.has("R") && isRestrictedFeature(feature)) return true;
+        return false;
+      });
+      return {
+        ...sourceData,
+        features
+      };
+    }
+
+    function applyClassFilter() {
+      if (!controlZoneData) return;
+
+      const selectedClassSet = getSelectedClassSet();
+      filteredControlZoneData = buildFilteredData(controlZoneData, selectedClassSet);
+
+      czLayer.clearLayers();
+      if (filteredControlZoneData && Array.isArray(filteredControlZoneData.features)) {
+        czLayer.addData(filteredControlZoneData);
+      }
+
+      const count = filteredControlZoneData && Array.isArray(filteredControlZoneData.features)
+        ? filteredControlZoneData.features.length
+        : 0;
+      const filterText = formatSelectedClasses(selectedClassSet);
+
+      if (pilotMarker) {
+        const ll = pilotMarker.getLatLng();
+        reportLocation(ll.lat, ll.lng);
+      } else {
+        setStatus(`Showing ${count} DAH gold airspace features for ${filterText}.`, "ok");
+      }
+    }
+
+    function focusOnPilotArea() {
+      if (!pilotMarker) {
+        setStatus("Set pilot location first, then use center/focus.", "warn");
+        return;
+      }
+
+      const pilot = pilotMarker.getLatLng();
+      const activeData = filteredControlZoneData || controlZoneData;
+      const localHits = zonesContainingPoint(pilot.lat, pilot.lng, activeData);
+
+      // Force a local focus window around pilot so zoom is always tight and predictable.
+      map.setView(pilot, 12, { animate: true });
+      const localWindowBounds = L.circle(pilot, { radius: 8000 }).getBounds();
+      map.fitBounds(localWindowBounds, { padding: [24, 24], maxZoom: 12, animate: true });
+
+      if (localHits.length > 0) {
+        setStatus(`Focused on pilot area (8 km view). Pilot is inside ${localHits.length} filtered airspace feature(s).`, "ok");
+      } else {
+        setStatus("Focused on pilot area (8 km view).", "ok");
+      }
+    }
+
+    function updatePilot(lat, lon, zoomToPilot = true) {
+      if (!validLatLon(lat, lon)) {
+        setStatus("Enter valid DD lat/lon values.", "warn");
+        return;
+      }
+
+      if (!pilotMarker) {
+        pilotMarker = L.marker([lat, lon], {
+          icon: pilotIcon,
+          draggable: true,
+          keyboard: false
+        }).addTo(map);
+
+        pilotMarker.on("dragend", () => {
+          const ll = pilotMarker.getLatLng();
+          document.getElementById("pilotLat").value = ll.lat.toFixed(6);
+          document.getElementById("pilotLon").value = ll.lng.toFixed(6);
+          reportLocation(ll.lat, ll.lng);
+        });
+      } else {
+        pilotMarker.setLatLng([lat, lon]);
+      }
+
+      document.getElementById("pilotLat").value = lat.toFixed(6);
+      document.getElementById("pilotLon").value = lon.toFixed(6);
+      localStorage.setItem("pilotLocationDD", `${lat.toFixed(6)}, ${lon.toFixed(6)}`);
+
+      if (zoomToPilot) {
+        map.setView([lat, lon], Math.max(map.getZoom(), 10));
+      }
+
+      reportLocation(lat, lon);
+    }
+
+    function reportLocation(lat, lon) {
+      const activeData = filteredControlZoneData || controlZoneData;
+      const hits = zonesContainingPoint(lat, lon, activeData);
+
+      if (!hits.length) {
+        const selectedClassSet = getSelectedClassSet();
+        const filterText = formatSelectedClasses(selectedClassSet);
+        setStatus(`Pilot ${lat.toFixed(6)}, ${lon.toFixed(6)}. No airspace hit in ${filterText}.`, "ok");
+        return;
+      }
+
+      const messages = [];
+
+      if (hits.length) {
+        const hitClassText = formatHitClasses(hits);
+        const names = Array.from(new Set(hits
+          .slice(0, 4)
+          .map((f) => {
+            const rawName = (f.properties && f.properties.name) ? f.properties.name : "Unnamed CZ";
+            const classLetter = getFeatureClassLetter(f);
+            return `${normalizeLabel(rawName)} (${classLetter})`;
+          })))
+          .join(" | ");
+        const more = hits.length > 4 ? ` (+${hits.length - 4} more)` : "";
+        messages.push(`inside ${hitClassText}: ${names}${more}`);
+      }
+
+      setStatus(`Pilot ${lat.toFixed(6)}, ${lon.toFixed(6)} ${messages.join("; ")}`, "ok");
+    }
+
+    function applyStoredPilot() {
+      const stored = localStorage.getItem("pilotLocationDD");
+      if (!stored) return false;
+      const parts = stored.split(",").map((p) => Number(p.trim()));
+      if (parts.length < 2) return false;
+      const lat = parts[0];
+      const lon = parts[1];
+      if (!validLatLon(lat, lon)) return false;
+      updatePilot(lat, lon, false);
+      return true;
+    }
+
+    async function loadControlZones() {
+      try {
+        await loadAirportLookup();
+
+        const { data, source } = await fetchFirstGeoJson([
+          "data/airspace/dah_gold_airspace.geojson",
+          "dah_gold_airspace.geojson",
+          "data/airspace/Control_ca_asp.geojson",
+          "data/airspace/ca_asp_restricted.geojson",
+          "data/ca_asp.geojson",
+          "ca_asp.geojson"
+        ]);
+
+        controlZoneData = data;
+
+        // On initial load, prioritize previously saved pilot location first.
+        // This ensures the page opens around the pilot if one was already set.
+        const restored = applyStoredPilot();
+        applyClassFilter();
+
+        if (restored) {
+          const ll = pilotMarker ? pilotMarker.getLatLng() : null;
+          if (ll) {
+            map.setView(ll, 12, { animate: false });
+          }
+
+          // Delay startup focus until Leaflet is fully ready to avoid refresh-time fitBounds races.
+          map.whenReady(() => {
+            requestAnimationFrame(() => {
+              try {
+                map.invalidateSize(false);
+                focusOnPilotArea();
+              } catch {
+                // Fallback to a direct pilot center if focus window fit fails on a cold refresh.
+                const ll = pilotMarker ? pilotMarker.getLatLng() : null;
+                if (ll) {
+                  map.setView(ll, 12, { animate: false });
+                }
+              }
+            });
+          });
+        } else {
+          const allBounds = getCombinedLayerBounds();
+          if (allBounds && allBounds.isValid()) {
+            map.fitBounds(allBounds, { padding: [18, 18] });
+          }
+
+          const selectedClassSet = getSelectedClassSet();
+          const activeCount = filteredControlZoneData && Array.isArray(filteredControlZoneData.features)
+            ? filteredControlZoneData.features.length
+            : data.features.length;
+          const filterText = formatSelectedClasses(selectedClassSet);
+          setStatus(`Loaded ${activeCount} DAH gold airspace features from ${source} for ${filterText}. Set pilot lat/lon to check location.`, "ok");
+        }
+      } catch (err) {
+        setStatus(`Could not load DAH gold airspace: ${err.message}`, "warn");
+      }
+    }
+
+    document.getElementById("setPilotBtn").addEventListener("click", () => {
+      const lat = parseCoordinate(document.getElementById("pilotLat").value);
+      const lon = parseCoordinate(document.getElementById("pilotLon").value);
+      updatePilot(lat, lon);
+    });
+
+    document.getElementById("fitCzBtn").addEventListener("click", () => {
+      const allBounds = getCombinedLayerBounds();
+      if (!allBounds || !allBounds.isValid()) {
+        setStatus("Map layers are not loaded yet.", "warn");
+        return;
+      }
+      map.fitBounds(allBounds, { padding: [18, 18] });
+      setStatus("Map centered on visible DAH gold airspace features.", "ok");
+    });
+
+    document.getElementById("currentGpsBtn").addEventListener("click", () => {
+      if (!navigator.geolocation) {
+        setStatus("Geolocation is not supported in this browser.", "warn");
+        return;
+      }
+
+      setStatus("Getting current GPS location...", "");
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          updatePilot(lat, lon);
+        },
+        (err) => {
+          setStatus(`Unable to get current GPS location: ${err.message || "unknown error"}`, "warn");
+        },
+        { enableHighAccuracy: true, timeout: 12000, maximumAge: 300000 }
+      );
+    });
+
+    Array.from(document.querySelectorAll(".class-filter")).forEach((el) => el.addEventListener("change", () => {
+      applyClassFilter();
+      if (czLayer.getLayers().length) {
+        map.fitBounds(czLayer.getBounds(), { padding: [18, 18] });
+      }
+    }));
+
+    document.getElementById("classCheckAll").addEventListener("click", () => {
+      Array.from(document.querySelectorAll(".class-filter")).forEach((el) => {
+        el.checked = true;
+      });
+      applyClassFilter();
+      if (czLayer.getLayers().length) {
+        map.fitBounds(czLayer.getBounds(), { padding: [18, 18] });
+      }
+    });
+
+    document.getElementById("classUncheckAll").addEventListener("click", () => {
+      Array.from(document.querySelectorAll(".class-filter")).forEach((el) => {
+        el.checked = false;
+      });
+      applyClassFilter();
+    });
+
+    document.getElementById("centerPilotBtn").addEventListener("click", () => {
+      focusOnPilotArea();
+    });
+
+    document.getElementById("centerPilotFab").addEventListener("click", () => {
+      focusOnPilotArea();
+    });
+
+    document.getElementById("toggleFiltersBtn").addEventListener("click", () => {
+      const layout = document.querySelector(".layout");
+      const btn = document.getElementById("toggleFiltersBtn");
+      const collapsed = layout.classList.toggle("filters-collapsed");
+      btn.textContent = collapsed ? "Show Filters" : "Collapse Filters";
+      setTimeout(() => map.invalidateSize(), 150);
+    });
+
+    document.getElementById("fullscreenMapBtn").addEventListener("click", async () => {
+      const btn = document.getElementById("fullscreenMapBtn");
+      const panel = document.querySelector(".map-panel");
+      try {
+        if (!document.fullscreenElement) {
+          await panel.requestFullscreen();
+          btn.textContent = "Exit Full Screen";
+        } else {
+          await document.exitFullscreen();
+          btn.textContent = "Full Screen Map";
+        }
+      } catch {
+        setStatus("Fullscreen mode is not available in this browser context.", "warn");
+      } finally {
+        setTimeout(() => map.invalidateSize(), 200);
+      }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      const btn = document.getElementById("fullscreenMapBtn");
+      btn.textContent = document.fullscreenElement ? "Exit Full Screen" : "Full Screen Map";
+      setTimeout(() => map.invalidateSize(), 120);
+    });
+
+    function startPilotLocationTracking(centerOnFirstFix) {
+      if (!navigator.geolocation) return;
+
+      let hasCentered = false;
+      navigator.geolocation.watchPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const shouldCenter = centerOnFirstFix && !hasCentered && !pilotMarker;
+          updatePilot(lat, lon, shouldCenter);
+          hasCentered = true;
+        },
+        () => {
+          // Silent fallback: manual input and stored position still work.
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 15000 }
+      );
+    }
+
+    loadControlZones();
+    startPilotLocationTracking(false);
+  </script>
+</body>
+</html>

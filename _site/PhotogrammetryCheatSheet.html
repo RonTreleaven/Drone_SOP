@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photogrammetry Cheat Sheets</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <script src="assets/js/site-nav.js" defer></script>
+  <style>
+    :root {
+      --bg-a: #f1f8f9;
+      --bg-b: #eef3f8;
+      --ink: #111111;
+      --muted: #41505b;
+      --accent: #1f7a8c;
+      --accent-dark: #13525f;
+      --line: #cfe0e8;
+      --panel: #ffffff;
+      --warning: #af3a00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 15%, rgba(31, 122, 140, 0.12), transparent 42%),
+        radial-gradient(circle at 92% 86%, rgba(19, 82, 95, 0.11), transparent 44%),
+        linear-gradient(160deg, var(--bg-a), var(--bg-b));
+      min-height: 100vh;
+    }
+    .shell {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 1.25rem;
+    }
+    .top-nav {
+      margin-bottom: 1rem;
+    }
+    .hero,
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.07);
+    }
+    .hero {
+      border-top: 4px solid var(--accent);
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+    }
+    .sub {
+      margin: 0.65rem 0 0;
+      color: var(--muted);
+      max-width: 74ch;
+      line-height: 1.5;
+    }
+    .grid {
+      display: grid;
+      gap: 0.9rem;
+      grid-template-columns: 1fr;
+    }
+    .card {
+      padding: 1rem;
+    }
+    .card.compact {
+      padding: 0.85rem;
+    }
+    .card h2 {
+      margin: 0 0 0.65rem;
+      font-size: 1.1rem;
+      color: var(--accent-dark);
+    }
+    .section-accordion details {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfeff;
+      padding: 0.45rem 0.55rem;
+    }
+    .section-accordion summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      color: var(--accent-dark);
+      font-weight: 700;
+      font-size: 1.02rem;
+      padding: 0.1rem 0;
+    }
+    .section-accordion summary::-webkit-details-marker {
+      display: none;
+    }
+    .section-accordion summary::after {
+      content: "+";
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-dark);
+    }
+    .section-accordion details[open] summary::after {
+      content: "-";
+    }
+    .accordion-body {
+      margin-top: 0.6rem;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 8px;
+    }
+    .mapping-mini th,
+    .mapping-mini td {
+      padding: 0.35rem 0.4rem;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 0.5rem 0.55rem;
+      vertical-align: top;
+    }
+    th {
+      background: #f3fbfd;
+      text-align: left;
+    }
+    ul {
+      margin: 0.45rem 0 0;
+      padding-left: 1.15rem;
+      color: var(--muted);
+    }
+    li { margin: 0.35rem 0; }
+    .formula {
+      background: #f7fbff;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      padding: 0.75rem;
+      margin: 0.6rem 0;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 0.95rem;
+      overflow-x: auto;
+    }
+    .fields {
+      display: grid;
+      gap: 0.7rem;
+      grid-template-columns: repeat(2, minmax(160px, 1fr));
+    }
+    .field {
+      display: grid;
+      gap: 0.25rem;
+    }
+    label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    input,
+    select {
+      width: 100%;
+      border: 1px solid #bfcfd9;
+      border-radius: 8px;
+      padding: 0.55rem 0.6rem;
+      font-size: 0.95rem;
+    }
+    .field-wide {
+      grid-column: 1 / -1;
+    }
+    .auto-field {
+      background: #f2f6f9;
+      color: #51636e;
+      cursor: not-allowed;
+    }
+    .btn-row {
+      margin-top: 0.75rem;
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border: none;
+      border-radius: 8px;
+      padding: 0.58rem 0.9rem;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .btn-primary {
+      background: var(--accent-dark);
+      color: #fff;
+    }
+    .btn-secondary {
+      background: #dbe7ef;
+      color: #1d2d35;
+    }
+    .result {
+      margin-top: 0.8rem;
+      padding: 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f7fbff;
+      min-height: 2.7rem;
+      color: #243842;
+    }
+    .live-output {
+      margin-top: 0.8rem;
+      padding-top: 0.15rem;
+    }
+    .profile-notice {
+      margin-top: 0.65rem;
+      padding: 0.5rem 0.65rem;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      background: #f5fbfd;
+      color: #2b454f;
+    }
+    .small {
+      font-size: 0.83rem;
+      color: var(--muted);
+    }
+    .calc-heading {
+      margin-top: 1rem;
+    }
+    .tip-note {
+      margin-top: 0.6rem;
+    }
+    .table-note {
+      margin-top: 0.6rem;
+      margin-bottom: 0;
+    }
+    .compact-table {
+      margin-top: 0.6rem;
+      font-size: 0.84rem;
+    }
+    .compact-table th,
+    .compact-table td {
+      padding: 0.4rem 0.45rem;
+    }
+    .muted-cell {
+      color: #647782;
+      font-style: italic;
+    }
+    .warning {
+      color: var(--warning);
+      font-weight: 600;
+    }
+    .survey-guidance {
+      margin-top: 0.6rem;
+      padding: 0.65rem 0.7rem;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 9px;
+      background: #f5fbfd;
+      color: #2b454f;
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+    .survey-guidance strong {
+      color: var(--accent-dark);
+    }
+    .guidance-divider {
+      border: none;
+      border-top: 1px solid #c8dde5;
+      margin: 0.6rem 0;
+    }
+    .ggcode-block {
+      background: #edf5f9;
+      border-radius: 6px;
+      padding: 0.45rem 0.6rem;
+      margin-top: 0.4rem;
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+    .band-guide-title {
+      margin: 0.9rem 0 0.2rem;
+      font-size: 1rem;
+      color: var(--accent-dark);
+    }
+    .band-guide-note {
+      margin: 0.2rem 0 0;
+    }
+    @media (max-width: 900px) {
+      .fields { grid-template-columns: 1fr; }
+      .card { padding: 0.85rem; }
+      .card h2 { font-size: 1.02rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="top-nav shared-site-nav" data-nav-variant="utility" data-back-fallback="tools.html"></nav>
+
+    <section class="hero">
+      <h1>Photogrammetry Cheat Sheet</h1>
+      <p class="sub">Suggested camera settings and flight parameters for orthomosaic photogrammetry. Select your drone model to view optimized presets, altitude bands, and GSD calculations.</p>
+    </section>
+
+    <section class="grid">
+      <article class="card section-accordion">
+        <details id="gsdInputSection" open>
+          <summary>GSD Quick Reference + Calculator</summary>
+          <div class="accordion-body">
+            <p class="small"><strong>Ground Sampling Distance (GSD)</strong> is the real-world ground size represented by one image pixel.</p>
+            <div class="formula">GSD = (H x Sw) / (f x Iw)</div>
+            <div class="formula">Timed Interval (s) = [2 x H x tan(VFOV/2) x (1 - Front Overlap)] / Speed</div>
+            <div class="formula">Estimated Flight Time (s) = Mission Path Distance / Speed</div>
+            <p class="small"> H = height AGL(m), Sw = sensor width (mm), f = focal length (mm), Iw = image width (pixels). Convert m to mm before using formula.</p>
+            <p class="small"><strong>Lower GSD is better detail.</strong> Example: 2.4 cm/pixel resolves smaller features than 4.8 cm/pixel.</p>
+
+            <h2 class="calc-heading">GSD Calculator</h2>
+        <div class="fields">
+          <div class="field">
+            <label for="detailBand">Detail Band</label>
+            <select id="detailBand">
+              <option value="veryhigh">Very High</option>
+              <option value="high">High</option>
+              <option value="general">General</option>
+            </select>
+          </div>
+          <div class="field field-wide">
+            <label for="droneModel">Drone Selection (from Wind Resistance Guide)</label>
+            <select id="droneModel"></select>
+          </div>
+          <div class="field">
+            <label for="speed">Speed (m/s)</label>
+            <input id="speed" type="number" min="1" max="15" step="0.1" value="6" placeholder="Enter speed">
+          </div>
+          <div class="field">
+            <label for="missionDistance">Mission path distance (m)</label>
+            <input id="missionDistance" type="number" min="1" step="1" value="" placeholder="Optional: total path distance">
+          </div>
+          <div class="field">
+            <label for="photoMode">Photo Mode (Resolution)</label>
+            <select id="photoMode">
+              <option value="base">Base Width</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="imageType">Image Type</label>
+            <select id="imageType">
+              <option value="jpeg">JPEG</option>
+              <option value="jpeg-raw">JPEG + RAW</option>
+            </select>
+          </div>
+          <div class="field field-wide">
+            <label for="missionCondition">Mission Condition — Speed &amp; Overlap Guide (Optional)</label>
+            <select id="missionCondition">
+              <option value="">-- select condition --</option>
+              <option value="sunny">Sunny — 6 to 8 m/s, 80% / 75% overlap</option>
+              <option value="overcast">Overcast — 5 to 7 m/s, 80% / 75% overlap</option>
+              <option value="lateday">Late Day — 4 to 6 m/s, 82% / 78% overlap</option>
+              <option value="highdetail">High Detail — 3 to 5 m/s, 85% / 80% overlap (48 MP)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="alt">Height AGL (m)</label>
+            <input id="alt" type="number" min="1" step="0.1" value="" placeholder="Enter mission altitude">
+          </div>
+          <div class="field">
+            <label for="sensorW">Sensor width (mm)</label>
+            <input id="sensorW" class="auto-field" type="number" min="0.1" step="0.01" value="9.6" readonly>
+          </div>
+          <div class="field">
+            <label for="focal">Focal length (mm)</label>
+            <input id="focal" class="auto-field" type="number" min="0.1" step="0.01" value="6.72" readonly>
+          </div>
+          <div class="field">
+            <label for="imgW">Image width (px)</label>
+            <input id="imgW" class="auto-field" type="number" min="100" step="1" value="4000" readonly>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" type="button" onclick="calculateGsd()">Calculate</button>
+          <button class="btn btn-secondary" type="button" onclick="resetGsd()">Reset</button>
+          <button class="btn btn-secondary" type="button" onclick="saveAsDefaults()">Save As Defaults</button>
+        </div>
+        <div id="profileNotice" class="small profile-notice">Select a drone to load profile defaults.</div>
+        <p class="small tip-note">Tip for GGcode Survey integration: add a target GSD input, then solve for altitude using H = (GSD x f x Iw) / Sw.</p>
+
+            <h2 class="calc-heading">Drone Sensor/Focal/Image Defaults</h2>
+            <p class="small table-note">Source: data/drone_wind_resistance.json. Camera geometry defaults are auto-applied by selected drone and MP mode.</p>
+            <div class="table-wrap">
+              <table class="compact-table">
+          <thead>
+            <tr>
+              <th>Drone Model</th>
+              <th>Sensor Width (mm)</th>
+              <th>Focal Length (mm)</th>
+              <th>Base Width (px)</th>
+              <th>12 MP Width (px)</th>
+              <th>High MP Width (px)</th>
+            </tr>
+          </thead>
+          <tbody id="droneDefaultsBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+        <div class="live-output">
+          <div id="gsdResult" class="result">Enter values and click Calculate.</div>
+          <div id="surveyGuidance" class="survey-guidance">Select drone and photo mode to view optimal orthomosaic capture guidance.</div>
+        </div>
+      </article>
+
+      <article class="card section-accordion compact">
+        <details>
+          <summary>Altitude Bands Guide</summary>
+          <div class="accordion-body">
+            <p id="altitudeBandModel" class="small band-guide-note">Using selected drone camera defaults.</p>
+            <div class="table-wrap">
+              <table class="compact-table">
+                <thead>
+                  <tr>
+                    <th>Detail Band</th>
+                    <th>Target GSD (cm/px)</th>
+                    <th>Base Width Altitude (m)</th>
+                    <th>12 MP Altitude (m)</th>
+                    <th>High MP Altitude (m)</th>
+                  </tr>
+                </thead>
+                <tbody id="altitudeBandsBody"></tbody>
+              </table>
+            </div>
+            <p class="small table-note">Guide values are computed from sensor width, focal length, and image width defaults in data/drone_wind_resistance.json.</p>
+          </div>
+        </details>
+      </article>
+
+      <article class="card section-accordion compact">
+        <details>
+          <summary>Mapping Preset Card (Compact)</summary>
+          <div class="accordion-body">
+            <div class="table-wrap">
+              <table class="mapping-mini">
+                <thead>
+                  <tr>
+                    <th>Condition</th>
+                    <th>Resolution</th>
+                    <th>WB</th>
+                    <th>Speed</th>
+                    <th>Overlap (F/S)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Sunny</td><td>12 MP</td><td>Sunny</td><td>6 to 8</td><td>80 / 75</td></tr>
+                  <tr><td>Overcast</td><td>12 MP</td><td>Cloudy</td><td>5 to 7</td><td>80 / 75</td></tr>
+                  <tr><td>Late day</td><td>12 MP</td><td>Fixed</td><td>4 to 6</td><td>82 / 78</td></tr>
+                  <tr><td>High detail</td><td>High MP (48/50)</td><td>Fixed</td><td>3 to 5</td><td>85 / 80</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul>
+              <li>Use fixed white balance for full mission consistency.</li>
+              <li>Use 4:3 capture and low ISO with fast shutter.</li>
+              <li>Use 12 MP as default; move to High MP (48/50 MP by model) only in strong light and slower flights.</li>
+            </ul>
+          </div>
+        </details>
+      </article>
+    </section>
+  </div>
+
+  <script>
+    let droneDefaults = [];
+    const DRONE_PROFILE_STORAGE_KEY = 'photoCheatSheetProfilesV1';
+    const LAST_DRONE_STORAGE_KEY = 'photoCheatSheetLastDroneV1';
+    const DEFAULT_DRONE_MODEL = 'DJI Mini 4 Pro';
+    const ROOT_PROFILE_STATE_KEY = 'dsop.profileState.v1';
+
+    const photoModeProfiles = {
+      'DJI Mini 3': { mp12: 4000, mp48: 8064 },
+      'DJI Mini 3 Pro': { mp12: 4000, mp48: 8064 },
+      'DJI Mini 4 Pro': { mp12: 4000, mp48: 8064 },
+      'DJI Mini 5 Pro': { mp12: 4096, mp48: 8192, mpHighLabel: '50 MP' },
+      'DJI Air 3': { mp12: 4032, mp48: 8064 }
+    };
+
+    const conditionProfiles = {
+      'sunny':      { label: 'Sunny',       speedMin: 6, speedMax: 8, frontOverlap: 80, sideOverlap: 75, whiteBalance: 'Sunny (fixed)',           recommendedMp: '12', band: 'High to General' },
+      'overcast':   { label: 'Overcast',    speedMin: 5, speedMax: 7, frontOverlap: 80, sideOverlap: 75, whiteBalance: 'Cloudy (fixed)',           recommendedMp: '12', band: 'High to General' },
+      'lateday':    { label: 'Late Day',    speedMin: 4, speedMax: 6, frontOverlap: 82, sideOverlap: 78, whiteBalance: 'Sunny or Cloudy (fixed)',  recommendedMp: '12', band: 'High Detail' },
+      'highdetail': { label: 'High Detail', speedMin: 3, speedMax: 5, frontOverlap: 85, sideOverlap: 80, whiteBalance: 'Fixed preset',             recommendedMp: '48', band: 'Very High' }
+    };
+
+    function readStoredProfiles() {
+      try {
+        const raw = localStorage.getItem(DRONE_PROFILE_STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return (parsed && typeof parsed === 'object') ? parsed : {};
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function writeStoredProfiles(profiles) {
+      localStorage.setItem(DRONE_PROFILE_STORAGE_KEY, JSON.stringify(profiles));
+    }
+
+    function setProfileNotice(message) {
+      const notice = document.getElementById('profileNotice');
+      if (!notice) {
+        return;
+      }
+      notice.textContent = message || '';
+    }
+
+    function normalizeDroneNameForMatch(value) {
+      return String(value || '')
+        .toLowerCase()
+        .replace(/dji/g, '')
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim();
+    }
+
+    function getPreferredDroneFromRootProfile() {
+      try {
+        const raw = localStorage.getItem(ROOT_PROFILE_STATE_KEY);
+        if (!raw) {
+          return '';
+        }
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== 'object') {
+          return '';
+        }
+
+        const label = String(parsed.preferredDroneLabel || '').trim();
+        if (!label) {
+          return '';
+        }
+
+        // Profile can store multiple values separated by semicolon.
+        return label.split(';').map((item) => item.trim()).find(Boolean) || '';
+      } catch (error) {
+        return '';
+      }
+    }
+
+    function resolveDroneModelFromPreference(models, preferredLabel) {
+      if (!preferredLabel) {
+        return '';
+      }
+
+      const target = normalizeDroneNameForMatch(preferredLabel);
+      if (!target) {
+        return '';
+      }
+
+      const exact = models.find((item) => normalizeDroneNameForMatch(item.model) === target);
+      if (exact) {
+        return exact.model;
+      }
+
+      const contains = models.find((item) => {
+        const modelKey = normalizeDroneNameForMatch(item.model);
+        return modelKey.includes(target) || target.includes(modelKey);
+      });
+      return contains ? contains.model : '';
+    }
+
+    function getStoredProfile(modelName) {
+      if (!modelName) {
+        return null;
+      }
+      const profiles = readStoredProfiles();
+      return profiles[modelName] || null;
+    }
+
+    function hasValidStoredProfile(profile) {
+      if (!profile || typeof profile !== 'object') {
+        return false;
+      }
+
+      const validDetailBand = ['veryhigh', 'high', 'general'].includes(profile.detailBand);
+      const validPhotoMode = typeof profile.photoMode === 'string' && profile.photoMode.length > 0;
+      const validImageType = ['jpeg', 'jpeg-raw'].includes(profile.imageType);
+      const validMission = (typeof profile.missionCondition === 'string') &&
+        (profile.missionCondition === '' || Object.prototype.hasOwnProperty.call(conditionProfiles, profile.missionCondition));
+      const validSpeed = Number.isFinite(Number(profile.speed)) && Number(profile.speed) > 0;
+      const altValue = profile.alt;
+      const validAlt = altValue === '' || altValue === null || altValue === undefined || (Number.isFinite(Number(altValue)) && Number(altValue) > 0);
+
+      return validDetailBand && validPhotoMode && validImageType && validMission && validSpeed && validAlt;
+    }
+
+    function applyStoredProfileToInputs(profile) {
+      if (!hasValidStoredProfile(profile)) {
+        return;
+      }
+
+      document.getElementById('detailBand').value = profile.detailBand;
+      document.getElementById('speed').value = String(profile.speed);
+
+      const modeSelect = document.getElementById('photoMode');
+      if (Array.from(modeSelect.options).some((opt) => opt.value === profile.photoMode)) {
+        modeSelect.value = profile.photoMode;
+      }
+
+      document.getElementById('imageType').value = profile.imageType;
+      document.getElementById('missionCondition').value = profile.missionCondition;
+      document.getElementById('alt').value = (profile.alt === '' || profile.alt === null || profile.alt === undefined) ? '' : String(profile.alt);
+    }
+
+    function savePreferredDroneToRootProfile(modelName) {
+      if (!modelName) {
+        return;
+      }
+
+      let profileState = {};
+      try {
+        const raw = localStorage.getItem(ROOT_PROFILE_STATE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            profileState = parsed;
+          }
+        }
+      } catch (error) {
+        profileState = {};
+      }
+
+      profileState.preferredDroneLabel = modelName;
+      localStorage.setItem(ROOT_PROFILE_STATE_KEY, JSON.stringify(profileState));
+    }
+
+    function saveCurrentProfileForModel(modelName) {
+      if (!modelName) {
+        return;
+      }
+
+      const rawAlt = String(document.getElementById('alt').value || '').trim();
+
+      const profile = {
+        detailBand: document.getElementById('detailBand').value,
+        speed: Number(document.getElementById('speed').value),
+        photoMode: document.getElementById('photoMode').value,
+        imageType: document.getElementById('imageType').value,
+        missionCondition: document.getElementById('missionCondition').value,
+        alt: rawAlt ? Number(rawAlt) : ''
+      };
+
+      if (!hasValidStoredProfile(profile)) {
+        return;
+      }
+
+      const profiles = readStoredProfiles();
+      profiles[modelName] = profile;
+      writeStoredProfiles(profiles);
+      localStorage.setItem(LAST_DRONE_STORAGE_KEY, modelName);
+      savePreferredDroneToRootProfile(modelName);
+    }
+
+    function saveAsDefaults() {
+      const modelName = document.getElementById('droneModel').value;
+      if (!modelName) {
+        setProfileNotice('Select a drone first, then save defaults.');
+        return;
+      }
+
+      saveCurrentProfileForModel(modelName);
+      setProfileNotice('Defaults saved for ' + modelName + '. This drone is now set as Preferred Drone for your user profile.');
+    }
+
+    function formatMaybeNumber(value, decimals) {
+      if (typeof value !== 'number' || !Number.isFinite(value)) {
+        return '<span class="muted-cell">verify per payload</span>';
+      }
+      return Number(value).toFixed(decimals);
+    }
+
+    function renderDroneDefaultsTable(models, selectedModelName) {
+      const body = document.getElementById('droneDefaultsBody');
+      body.innerHTML = '';
+
+      if (!selectedModelName) {
+        body.innerHTML = '<tr><td colspan="6" class="muted-cell">Select a drone model to view camera defaults.</td></tr>';
+        return;
+      }
+
+      const filteredModels = selectedModelName
+        ? models.filter((model) => model.model === selectedModelName)
+        : models;
+
+      if (!filteredModels.length) {
+        body.innerHTML = '<tr><td colspan="6" class="muted-cell">No defaults found for the selected model.</td></tr>';
+        return;
+      }
+
+      for (const model of filteredModels) {
+        const profile = photoModeProfiles[model.model] || {};
+        const row = document.createElement('tr');
+        row.innerHTML =
+          '<td>' + model.model + '</td>' +
+          '<td>' + formatMaybeNumber(model.optimumSensorWidthMm, 2) + '</td>' +
+          '<td>' + formatMaybeNumber(model.optimumFocalLengthMm, 2) + '</td>' +
+          '<td>' + (Number.isFinite(model.optimumImageWidthPx)
+            ? String(model.optimumImageWidthPx)
+            : '<span class="muted-cell">verify mode</span>') + '</td>' +
+          '<td>' + (Number.isFinite(profile.mp12)
+            ? String(profile.mp12)
+            : '<span class="muted-cell">n/a</span>') + '</td>' +
+          '<td>' + (Number.isFinite(profile.mp48)
+            ? String(profile.mp48)
+            : '<span class="muted-cell">n/a</span>') + '</td>';
+        body.appendChild(row);
+      }
+    }
+
+    function computeAltitudeMetersForGsdRange(sensorWidthMm, focalLengthMm, imageWidthPx, minGsdCm, maxGsdCm) {
+      if (!Number.isFinite(sensorWidthMm) || !Number.isFinite(focalLengthMm) || !Number.isFinite(imageWidthPx) || sensorWidthMm <= 0 || focalLengthMm <= 0 || imageWidthPx <= 0) {
+        return null;
+      }
+
+      const minAlt = (minGsdCm * focalLengthMm * imageWidthPx) / (100 * sensorWidthMm);
+      const maxAlt = (maxGsdCm * focalLengthMm * imageWidthPx) / (100 * sensorWidthMm);
+      return {
+        minAlt,
+        maxAlt
+      };
+    }
+
+    function formatAltitudeBand(range) {
+      if (!range) {
+        return '<span class="muted-cell">n/a</span>';
+      }
+      return range.minAlt.toFixed(1) + ' - ' + range.maxAlt.toFixed(1);
+    }
+
+    function renderAltitudeBandGuide(selectedModel) {
+      const body = document.getElementById('altitudeBandsBody');
+      const title = document.getElementById('altitudeBandModel');
+      const profile = photoModeProfiles[selectedModel.model] || {};
+
+      const sensorWidthMm = Number(selectedModel.optimumSensorWidthMm);
+      const focalLengthMm = Number(selectedModel.optimumFocalLengthMm);
+      const baseWidthPx = Number(selectedModel.optimumImageWidthPx);
+      const width12Px = Number.isFinite(profile.mp12) ? Number(profile.mp12) : null;
+      const width48Px = Number.isFinite(profile.mp48) ? Number(profile.mp48) : null;
+
+      const bands = [
+        { label: 'Very High', min: 0.5, max: 1.5 },
+        { label: 'High', min: 1.5, max: 3.0 },
+        { label: 'General', min: 3.0, max: 5.0 }
+      ];
+
+      title.textContent = 'Using ' + selectedModel.model + ' defaults.';
+      body.innerHTML = '';
+
+      for (const band of bands) {
+        const row = document.createElement('tr');
+        const baseRange = computeAltitudeMetersForGsdRange(sensorWidthMm, focalLengthMm, baseWidthPx, band.min, band.max);
+        const range12 = computeAltitudeMetersForGsdRange(sensorWidthMm, focalLengthMm, width12Px, band.min, band.max);
+        const range48 = computeAltitudeMetersForGsdRange(sensorWidthMm, focalLengthMm, width48Px, band.min, band.max);
+
+        row.innerHTML =
+          '<td>' + band.label + '</td>' +
+          '<td>' + band.min.toFixed(1) + ' - ' + band.max.toFixed(1) + '</td>' +
+          '<td>' + formatAltitudeBand(baseRange) + '</td>' +
+          '<td>' + formatAltitudeBand(range12) + '</td>' +
+          '<td>' + formatAltitudeBand(range48) + '</td>';
+        body.appendChild(row);
+      }
+    }
+
+    function populateDroneSelect(models) {
+      const select = document.getElementById('droneModel');
+      select.innerHTML = '';
+
+      const noneOption = document.createElement('option');
+      noneOption.value = '';
+      noneOption.textContent = '--none--';
+      select.appendChild(noneOption);
+
+      for (const model of models) {
+        const option = document.createElement('option');
+        option.value = model.model;
+        option.textContent = model.model;
+        select.appendChild(option);
+      }
+
+      select.value = '';
+
+      select.addEventListener('change', applySelectedDroneDefaults);
+      document.getElementById('photoMode').addEventListener('change', applySelectedDroneDefaults);
+      document.getElementById('imageType').addEventListener('change', refreshSurveyGuidance);
+      document.getElementById('missionCondition').addEventListener('change', refreshSurveyGuidance);
+    }
+
+    function syncPhotoModeOptions(selectedModel) {
+      const modeSelect = document.getElementById('photoMode');
+      const profile = photoModeProfiles[selectedModel.model];
+      const highMpLabel = (profile && typeof profile.mpHighLabel === 'string' && profile.mpHighLabel.trim())
+        ? profile.mpHighLabel.trim()
+        : '48 MP';
+      const previousValue = modeSelect.value;
+      modeSelect.innerHTML = '';
+
+      const baseOption = document.createElement('option');
+      baseOption.value = 'base';
+      baseOption.textContent = 'Base Width';
+      modeSelect.appendChild(baseOption);
+
+      if (profile && Number.isFinite(profile.mp12)) {
+        const opt12 = document.createElement('option');
+        opt12.value = '12';
+        opt12.textContent = '12 MP';
+        modeSelect.appendChild(opt12);
+      }
+
+      if (profile && Number.isFinite(profile.mp48)) {
+        const opt48 = document.createElement('option');
+        opt48.value = '48';
+        opt48.textContent = highMpLabel;
+        modeSelect.appendChild(opt48);
+      }
+
+      modeSelect.value = Array.from(modeSelect.options).some((opt) => opt.value === previousValue)
+        ? previousValue
+        : 'base';
+    }
+
+    function updateSurveyGuidance(selectedModel, selectedMode, imageType, condition, timedIntervalText, frontOverlapOverride) {
+      const guidance = document.getElementById('surveyGuidance');
+      const selectedProfile = photoModeProfiles[selectedModel.model] || null;
+      const supports48 = !!(selectedProfile && Number.isFinite(selectedProfile.mp48));
+      const highMpLabel = (selectedProfile && typeof selectedProfile.mpHighLabel === 'string' && selectedProfile.mpHighLabel.trim())
+        ? selectedProfile.mpHighLabel.trim()
+        : '48 MP';
+      // Get user-selected speed and detail band
+      const speedInput = Number(document.getElementById('speed').value);
+      const detailBandValue = document.getElementById('detailBand').value;
+      let vfov = 63; // default VFOV
+      let frontOverlap = 0.8; // default front overlap
+      if (typeof frontOverlapOverride === 'number') {
+        frontOverlap = frontOverlapOverride;
+      } else if (condition && conditionProfiles[condition]) {
+        frontOverlap = conditionProfiles[condition].frontOverlap / 100;
+      }
+      const imageTypeLabel = imageType === 'jpeg-raw' ? 'JPEG + RAW' : 'JPEG';
+      const imageTypeHint = imageType === 'jpeg-raw'
+        ? 'JPEG + RAW improves post-processing flexibility but increases storage and write load.'
+        : 'JPEG is usually optimal for mission consistency and faster capture cadence.';
+
+      let modeText = '';
+      if (selectedMode === '48' && supports48) {
+        modeText = '<strong>Optimal (' + highMpLabel + ' mode):</strong> Use only in strong light with slower speed and higher overlap. Recommended setup: ' + imageTypeLabel + ', 4:3, fixed white balance, front overlap 85%, side overlap 80%, and shutter typically 1/1000 or faster.<br>' + imageTypeHint + '<br><strong>Note:</strong> Image type does not change GSD; MP mode changes image width and therefore GSD.';
+      } else if (selectedMode === '12') {
+        modeText = '<strong>Optimal (12 MP mode):</strong> Most reliable orthomosaic setting. Recommended setup: ' + imageTypeLabel + ', 4:3, fixed white balance, front overlap 80%, side overlap 75%, low ISO, and shutter typically 1/800 or faster.<br>' + imageTypeHint + '<br><strong>Note:</strong> Image type does not change GSD; MP mode changes image width and therefore GSD.';
+      } else {
+        modeText = supports48
+          ? '<strong>Model supports 12 MP and ' + highMpLabel + ':</strong> 12 MP is generally the optimal default for consistent orthomosaic stitching. Use ' + highMpLabel + ' only when light and stability are excellent and you can fly slower with higher overlap. Current image type: ' + imageTypeLabel + '.<br><strong>Note:</strong> Image type does not change GSD; MP mode changes image width and therefore GSD.'
+          : '<strong>Model guidance:</strong> Use the base camera width for this drone and prioritize consistency: ' + imageTypeLabel + ', 4:3 (where available), fixed white balance, low ISO, and steady overlap values.<br><strong>Note:</strong> Image type does not change GSD.';
+      }
+
+      let conditionText = '';
+      if (condition && conditionProfiles[condition]) {
+        const cp = conditionProfiles[condition];
+        conditionText =
+          '<hr class="guidance-divider">' +
+          '<strong>Mission Condition: ' + cp.label + '</strong> &mdash; Target Detail Band: <strong>' + cp.band + '</strong><br>' +
+          '<div class="ggcode-block">' +
+          '<strong>GGCode Survey Settings:</strong><br>' +
+          '&bull; Speed: ' + speedInput + ' m/s<br>' +
+          '&bull; Front Overlap: ' + Math.round(frontOverlap * 100) + '%<br>' +
+          '&bull; Side Overlap: ' + cp.sideOverlap + '%<br>' +
+          '&bull; White Balance: ' + cp.whiteBalance + '<br>' +
+          '&bull; Recommended MP Mode: ' + cp.recommendedMp + ' MP' +
+          (timedIntervalText || '') +
+          '</div>';
+      } else {
+        conditionText =
+          '<hr class="guidance-divider">' +
+          '<span style="color:#647782;">Select a Mission Condition above to see recommended GGCode speed, overlap, and white balance settings.</span>';
+      }
+
+      guidance.innerHTML = modeText + conditionText;
+    }
+
+    function refreshSurveyGuidance() {
+      // No-op: Only update on Calculate now
+    }
+
+    function applySelectedDroneDefaults() {
+      const select = document.getElementById('droneModel');
+      if (!select.value) {
+        document.getElementById('sensorW').value = '';
+        document.getElementById('focal').value = '';
+        document.getElementById('imgW').value = '';
+        renderDroneDefaultsTable(droneDefaults, null);
+        document.getElementById('altitudeBandModel').textContent = 'Select a drone model to compute altitude bands.';
+        document.getElementById('altitudeBandsBody').innerHTML =
+          '<tr><td colspan="5" class="muted-cell">Select a drone model to view altitude bands.</td></tr>';
+        refreshSurveyGuidance();
+        return;
+      }
+
+      const selectedModel = droneDefaults.find((item) => item.model === select.value);
+      if (!selectedModel) return;
+
+      localStorage.setItem(LAST_DRONE_STORAGE_KEY, selectedModel.model);
+
+      syncPhotoModeOptions(selectedModel);
+
+      const storedProfile = getStoredProfile(selectedModel.model);
+      if (storedProfile) {
+        applyStoredProfileToInputs(storedProfile);
+      }
+
+      const mode = document.getElementById('photoMode').value;
+
+      if (Number.isFinite(selectedModel.optimumSensorWidthMm)) {
+        document.getElementById('sensorW').value = String(selectedModel.optimumSensorWidthMm);
+      }
+      if (Number.isFinite(selectedModel.optimumFocalLengthMm)) {
+        document.getElementById('focal').value = String(selectedModel.optimumFocalLengthMm);
+      }
+
+      const profile = photoModeProfiles[selectedModel.model];
+      if (profile && mode === '12' && Number.isFinite(profile.mp12)) {
+        document.getElementById('imgW').value = String(profile.mp12);
+      } else if (profile && mode === '48' && Number.isFinite(profile.mp48)) {
+        document.getElementById('imgW').value = String(profile.mp48);
+      } else if (Number.isFinite(selectedModel.optimumImageWidthPx)) {
+        document.getElementById('imgW').value = String(selectedModel.optimumImageWidthPx);
+      }
+
+      renderDroneDefaultsTable(droneDefaults, selectedModel.model);
+      renderAltitudeBandGuide(selectedModel);
+      refreshSurveyGuidance();
+    }
+
+    async function loadDroneDefaults() {
+      const select = document.getElementById('droneModel');
+      try {
+        const response = await fetch('data/drone_wind_resistance.json', { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error('HTTP ' + response.status);
+        }
+
+        const payload = await response.json();
+        const models = Array.isArray(payload.models) ? payload.models : [];
+        if (!models.length) {
+          throw new Error('No models found in drone defaults data.');
+        }
+
+        droneDefaults = models;
+        populateDroneSelect(models);
+        renderDroneDefaultsTable(models, null);
+
+        const preferredFromProfile = getPreferredDroneFromRootProfile();
+        const preferredModel = resolveDroneModelFromPreference(models, preferredFromProfile);
+        const lastModel = localStorage.getItem(LAST_DRONE_STORAGE_KEY);
+        if (preferredModel) {
+          select.value = preferredModel;
+          localStorage.setItem(LAST_DRONE_STORAGE_KEY, preferredModel);
+          setProfileNotice('Loaded preferred drone from user profile: ' + preferredModel + '. You can change Drone Selection any time.');
+        } else if (lastModel && models.some((item) => item.model === lastModel)) {
+          select.value = lastModel;
+          setProfileNotice('Loaded last drone selection: ' + lastModel + '. You can change Drone Selection any time.');
+        } else if (models.some((item) => item.model === DEFAULT_DRONE_MODEL)) {
+          select.value = DEFAULT_DRONE_MODEL;
+          localStorage.setItem(LAST_DRONE_STORAGE_KEY, DEFAULT_DRONE_MODEL);
+          setProfileNotice('Using default drone: ' + DEFAULT_DRONE_MODEL + '. Add Preferred Drone in My Profile to override this automatically.');
+        }
+        applySelectedDroneDefaults();
+      } catch (error) {
+        select.innerHTML = '<option>Defaults unavailable</option>';
+        document.getElementById('droneDefaultsBody').innerHTML =
+          '<tr><td colspan="6" class="muted-cell">Unable to load drone defaults from data/drone_wind_resistance.json.</td></tr>';
+        document.getElementById('altitudeBandModel').textContent = 'Altitude band guide unavailable.';
+        document.getElementById('altitudeBandsBody').innerHTML =
+          '<tr><td colspan="5" class="muted-cell">Unable to compute altitude bands without camera defaults.</td></tr>';
+      }
+    }
+
+    function calculateGsd() {
+      const selectedModelValue = document.getElementById('droneModel').value;
+      if (!selectedModelValue) {
+        document.getElementById('gsdResult').innerHTML = '<span class="warning">Select a drone model first.</span>';
+        return;
+      }
+
+      const alt = Number(document.getElementById('alt').value);
+      const sensorW = Number(document.getElementById('sensorW').value);
+      const focal = Number(document.getElementById('focal').value);
+      const imgW = Number(document.getElementById('imgW').value);
+      const out = document.getElementById('gsdResult');
+      // Timed Interval calculation and GGCode Survey update
+      const speedInput = Number(document.getElementById('speed').value);
+      const missionDistanceInput = Number(document.getElementById('missionDistance').value);
+      const detailBandValue = document.getElementById('detailBand').value;
+      const bandTargets = {
+        veryhigh: { label: 'Very High', min: 0.5, max: 1.5 },
+        high: { label: 'High', min: 1.5, max: 3.0 },
+        general: { label: 'General', min: 3.0, max: 5.0 }
+      };
+      const selectedBand = bandTargets[detailBandValue] || bandTargets.general;
+      let vfov = 63;
+      let frontOverlap = 0.8;
+      if (detailBandValue === 'veryhigh') {
+        vfov = 63;
+        frontOverlap = 0.85;
+      } else if (detailBandValue === 'high') {
+        vfov = 63;
+        frontOverlap = 0.8;
+      } else if (detailBandValue === 'general') {
+        vfov = 63;
+        frontOverlap = 0.75;
+      }
+
+      if (!Number.isFinite(alt) || !Number.isFinite(sensorW) || !Number.isFinite(focal) || !Number.isFinite(imgW) || alt <= 0 || sensorW <= 0 || focal <= 0 || imgW <= 0) {
+        out.innerHTML = '<span class="warning">Please enter valid positive values.</span>';
+        return;
+      }
+
+      const gsdMmPerPx = (alt * 1000 * sensorW) / (focal * imgW);
+      const gsdCmPerPx = gsdMmPerPx / 10;
+      let detailBand = '';
+      if (gsdCmPerPx <= 1.5) {
+        detailBand = 'Very High';
+      } else if (gsdCmPerPx <= 3.0) {
+        detailBand = 'High';
+      } else if (gsdCmPerPx <= 5.0) {
+        detailBand = 'General';
+      } else {
+        detailBand = 'Lower';
+      }
+
+      const selectedRange = computeAltitudeMetersForGsdRange(sensorW, focal, imgW, selectedBand.min, selectedBand.max);
+      let bandGuidance = '<br><strong>Selected band:</strong> ' + selectedBand.label;
+      if (selectedRange) {
+        bandGuidance += ' <br><strong>Altitude for selected band:</strong> ' + selectedRange.minAlt.toFixed(1) + ' - ' + selectedRange.maxAlt.toFixed(1) + ' m';
+      }
+      if (detailBand !== selectedBand.label) {
+        bandGuidance += ' <br><span class="warning">Current altitude yields ' + detailBand + '. Adjust altitude toward the selected band range above.</span>';
+      }
+
+      // Timed Interval calculation
+      let timedIntervalText = '';
+      let timedIntervalSummaryText = '';
+      let photoCountSummaryText = '';
+      let flightTimeSummaryText = '';
+      if (Number.isFinite(alt) && alt > 0 && Number.isFinite(speedInput) && speedInput > 0 && frontOverlap > 0 && frontOverlap < 1) {
+        const VFOV_rad = vfov * Math.PI / 180;
+        const footprintHeight = 2 * alt * Math.tan(VFOV_rad / 2);
+        const photoSpacing = footprintHeight * (1 - frontOverlap);
+        const interval = photoSpacing / speedInput;
+        timedIntervalText = '<br>&bull; <strong>Timed Interval:</strong> ' + interval.toFixed(2) + ' s';
+        timedIntervalSummaryText =
+          ' <br><strong>Timed interval:</strong> ' + interval.toFixed(2) + ' s' +
+          ' <br><span class="small">Formula: [2 x H x tan(VFOV/2) x (1 - front overlap)] / speed</span>';
+
+        if (Number.isFinite(missionDistanceInput) && missionDistanceInput > 0) {
+          const estimatedPhotoCount = Math.ceil(missionDistanceInput / photoSpacing) + 1;
+          const flightSeconds = missionDistanceInput / speedInput;
+          const flightMinutes = Math.floor(flightSeconds / 60);
+          const flightRemainSeconds = flightSeconds - (flightMinutes * 60);
+
+          flightTimeSummaryText =
+            ' <br><strong>Estimated flight time:</strong> ' +
+            flightMinutes + ' min ' + flightRemainSeconds.toFixed(1) + ' s' +
+            ' (' + flightSeconds.toFixed(1) + ' s)' +
+            ' <br><span class="small">Formula: mission path distance / speed = ' +
+            missionDistanceInput.toFixed(1) + ' / ' + speedInput.toFixed(1) + '</span>';
+
+          photoCountSummaryText =
+            ' <br><strong>Estimated photos:</strong> ' + estimatedPhotoCount +
+            ' <br><span class="small">Formula: ceil(distance / along-track photo spacing) + 1</span>';
+        } else {
+          flightTimeSummaryText =
+            ' <br><span class="small">Enter Mission path distance to estimate total flight time.</span>';
+        }
+      }
+
+      out.innerHTML = '<strong>GSD:</strong> ' + gsdCmPerPx.toFixed(2) + ' cm/pixel' +
+        ' <br><strong>Pixel footprint:</strong> ' + gsdMmPerPx.toFixed(1) + ' mm/pixel' +
+        ' <br><strong>Detail class:</strong> ' + detailBand +
+        bandGuidance +
+        timedIntervalSummaryText +
+        flightTimeSummaryText +
+        photoCountSummaryText;
+
+      // Update GGCode Survey Settings guidance
+      const select = document.getElementById('droneModel');
+      if (!select.value) {
+        document.getElementById('surveyGuidance').innerHTML = '<strong>Select a drone model first.</strong> Camera defaults, MP widths, and orthomosaic guidance will update after model selection.';
+        return;
+      }
+      const selectedModel = droneDefaults.find((item) => item.model === select.value);
+      if (!selectedModel) return;
+      const mode = document.getElementById('photoMode').value;
+      const imageType = document.getElementById('imageType').value;
+      const condition = document.getElementById('missionCondition').value;
+      updateSurveyGuidance(selectedModel, mode, imageType, condition, timedIntervalText, frontOverlap);
+
+      saveCurrentProfileForModel(selectedModelValue);
+
+      const inputSection = document.getElementById('gsdInputSection');
+      if (inputSection) {
+        inputSection.open = false;
+      }
+    }
+
+    function resetGsd() {
+      document.getElementById('alt').value = '';
+      document.getElementById('missionDistance').value = '';
+      document.getElementById('droneModel').value = '';
+      document.getElementById('missionCondition').value = '';
+      applySelectedDroneDefaults();
+      document.getElementById('gsdResult').textContent = 'Enter values and click Calculate.';
+    }
+
+    loadDroneDefaults();
+  </script>
+</body>
+</html>

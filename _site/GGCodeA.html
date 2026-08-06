@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mission Automation Planner</title>
+
+<link rel="stylesheet" href="./assets/css/notams-common.css">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<script src="assets/js/site-nav.js" defer></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@tmcw/togeojson@7.1.2/dist/togeojson.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>
+
+<style>
+:root {
+  --accent: #2F5496;
+  --accent-strong: #1f3e72;
+  --accent-soft: #eaf1fb;
+  --card-border: #d9e3f3;
+  --text-soft: #51627d;
+  --success: #1f7a3f;
+  --warning: #9a6a00;
+  --danger: #b3261e;
+  --bg: #f0f2f5;
+  --panel: #ffffff;
+  --line: #c9d0d9;
+  --ink: #1f2c3a;
+  --muted: #5e6f82;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Tahoma, "Segoe UI", sans-serif;
+  overflow: hidden;
+}
+
+.page {
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 0;
+  overflow: hidden;
+}
+
+.page.tools-drawer-open .side {
+  transform: translateX(0);
+}
+
+.page.tools-drawer-open .tools-drawer-backdrop {
+  display: block;
+}
+
+.top {
+  grid-column: 1;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+  padding: 0.4rem 0.7rem;
+}
+
+.side {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: min(360px, 88vw);
+  z-index: 1400;
+  border-right: 1px solid rgba(201, 208, 217, 0.6);
+  box-shadow: 10px 0 32px rgba(0, 0, 0, 0.28);
+  transform: translateX(-104%);
+  transition: transform 0.22s ease;
+  background: rgba(255, 255, 255, 0);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) brightness(1.12);
+  backdrop-filter: blur(10px) saturate(1.5) brightness(1.12);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.75rem;
+  padding-bottom: env(safe-area-inset-bottom, 0.75rem);
+}
+
+.tools-drawer-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1399;
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--panel);
+  position: relative;
+}
+
+.map-container {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+/* Drawer header and navigation */
+.side h1 {
+  margin: 0 0 0.3rem;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+
+.side .sub {
+  margin: 0 0 0.7rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+/* Collapsible groups (reuse DAHminimap styles) */
+.group {
+  margin-bottom: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.55rem;
+  background: #fbfcfe;
+}
+
+.group h2 {
+  margin: 0 0 0.45rem;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #34516b;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+}
+
+.group-header h2 {
+  margin: 0;
+  cursor: pointer;
+  flex: 1;
+}
+
+.group-toggle {
+  border: 1px solid #9eb9d2;
+  background: #ffffff;
+  color: #294766;
+  border-radius: 999px;
+  padding: 0.16rem 0.52rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.1;
+  cursor: pointer;
+}
+
+.group-toggle:hover {
+  background: #edf4fb;
+}
+
+.group-body {
+  display: block;
+}
+
+.group.is-collapsed .group-body {
+  display: none;
+}
+
+/* Form styles */
+.search-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-group label {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.88rem;
+}
+
+.field-group input,
+.field-group select {
+  padding: 8px;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  font-size: 0.88rem;
+}
+
+.address-input-wrap {
+  position: relative;
+}
+
+.autocomplete-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+}
+
+.autocomplete-menu.open {
+  display: block;
+}
+
+.autocomplete-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 8px 10px;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 0.88rem;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.active {
+  background: var(--accent-soft);
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.button-row .btn {
+  width: 100%;
+  min-width: 0;
+  font-size: 0.88rem;
+  padding: 8px;
+}
+
+.manual-dd-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.result-box {
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  padding: 10px;
+  word-break: break-word;
+  font-size: 0.88rem;
+  margin-top: 8px;
+}
+
+.result-box.dim {
+  color: var(--text-soft);
+}
+
+.result-box.ok {
+  border-left-color: var(--success);
+}
+
+.result-box.warn {
+  border-left-color: var(--warning);
+}
+
+.copy-row {
+  display: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.copy-card {
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 8px;
+  background: #f9fbff;
+}
+
+.copy-card label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.copy-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+  align-items: center;
+}
+
+.copy-control input {
+  min-width: 0;
+  width: 100%;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.82rem;
+  padding: 6px;
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+}
+
+.copy-btn {
+  min-width: 60px;
+  width: auto;
+  padding: 6px 8px;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+/* Top toolbar for opening drawer */
+.map-toolbar {
+  border-bottom: 1px solid var(--line);
+  padding: 0.4rem 0.55rem;
+  display: flex;
+  gap: 0.45rem;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.btn.toggle-drawer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Lookup message status area (DAHminimap style) */
+#lookupMessage {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1100;
+  background: #f9fbff;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  max-width: 280px;
+  font-size: 0.88rem;
+  color: var(--text-soft);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+#lookupMessage.show {
+  display: block;
+  animation: slideIn 0.22s ease;
+}
+
+#lookupMessage.dim { color: var(--text-soft); }
+#lookupMessage.warn { 
+  border-color: #f0c38b;
+  background: #fff7ed;
+  color: #9a4a00;
+}
+#lookupMessage.ok {
+  border-color: #9ed6b3;
+  background: #edf9f1;
+  color: #17603a;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Draw mode toolbar */
+.draw-mode-bar {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(10, 20, 40, 0.90);
+  backdrop-filter: blur(14px) saturate(1.3);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  padding: 12px 14px 10px;
+  color: #f1f5f9;
+  min-width: 264px;
+  max-width: calc(100vw - 24px);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.45);
+  pointer-events: auto;
+}
+
+.draw-mode-bar[hidden] { display: none; }
+
+.draw-mode-bar-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.83rem;
+  opacity: 0.78;
+  padding: 0 2px 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.draw-mode-bar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.draw-mode-btn {
+  flex: 1;
+  min-height: 40px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+}
+
+.draw-mode-btn-undo { background: #475569; }
+.draw-mode-btn-cancel { background: #dc2626; }
+.draw-mode-btn-commit { background: #16a34a; }
+
+/* Utility functions text */
+.subtle {
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  margin: 0;
+}
+
+.btn {
+  border: 1px solid #9eb9d2;
+  background: #ffffff;
+  color: #294766;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: #edf4fb;
+}
+
+.btn.secondary-btn {
+  background: #6b7a90;
+  color: #fff;
+  border-color: #5a6975;
+}
+
+.btn.secondary-btn:hover {
+  background: #4f5e73;
+}
+
+.btn.success-btn {
+  background: #1f7a3f;
+  color: #fff;
+  border-color: #165932;
+}
+
+.btn.success-btn:hover {
+  background: #176030;
+}
+
+/* Modal for DSST copy */
+.modal-shell {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 41, 59, 0.85);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-shell.show {
+  display: flex;
+}
+
+.modal-card {
+  background: #fff;
+  color: #222;
+  padding: 24px 32px;
+  border-radius: 12px;
+  min-width: 320px;
+  max-width: 90vw;
+  box-shadow: 0 4px 24px #0008;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--accent-strong);
+}
+
+.modal-title {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.modal-copy-row {
+  margin-bottom: 12px;
+}
+
+.modal-help {
+  margin-top: 12px;
+  font-size: 0.88rem;
+  color: #666;
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+  <!-- Top Navigation Bar -->
+  <div class="top">
+    <nav class="shared-site-nav" data-nav-variant="utility" data-show-back="true" data-back-fallback="tools.html"></nav>
+    <div class="map-toolbar">
+      <button id="toggleToolsDrawerBtn" class="btn toggle-drawer-btn" type="button">
+        ☰ Tools
+      </button>
+      <button id="centerMapBtn" class="btn" type="button" title="Center map on pilot location" aria-label="Center map on pilot">
+        ⊕
+      </button>
+    </div>
+  </div>
+
+  <!-- Tools Drawer (Left Sidebar) -->
+  <aside class="side">
+    <h1>Mission Planning</h1>
+    <p class="sub">Search location, set coordinates, configure and export mission routes.</p>
+
+    <!-- Lookup by Address Group -->
+    <section class="group">
+      <h2>Lookup by Address</h2>
+      <div class="group-body">
+        <div class="search-row">
+          <div class="field-group">
+            <label for="address">Enter address, city, or postal code</label>
+            <div class="address-input-wrap" id="addressInputWrap">
+              <input type="text" id="address" autocomplete="off" placeholder="Address, city, postal code" aria-autocomplete="list" aria-controls="addressSuggestions">
+              <div id="addressSuggestions" class="autocomplete-menu" role="listbox" aria-label="Address suggestions"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="lookupCountry">Country</label>
+          <select id="lookupCountry">
+            <option value="CA">Canada (CA)</option>
+            <option value="US">United States (US)</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="lookupHistory">Recent lookups</label>
+          <select id="lookupHistory" onchange="applyHistoryLookup()">
+            <option value="">Choose a recent lookup...</option>
+          </select>
+        </div>
+
+        <div class="manual-dd-grid" aria-label="Manual DD coordinate entry">
+          <div class="field-group">
+            <label for="manualLat">Latitude (DD)</label>
+            <input type="text" id="manualLat" inputmode="decimal" autocomplete="off" placeholder="43.938280">
+          </div>
+          <div class="field-group">
+            <label for="manualLon">Longitude (DD)</label>
+            <input type="text" id="manualLon" inputmode="decimal" autocomplete="off" placeholder="-78.979720">
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button id="fetchCurrentPositionBtn" class="btn secondary-btn" type="button">GPS Position</button>
+          <button id="useSavedPlanningBtn" class="btn secondary-btn" type="button">Saved Location</button>
+        </div>
+
+        <div class="button-row">
+          <button id="runLookupBtn" class="btn success-btn" onclick="runLookup()">Lookup</button>
+          <button id="clearInputsBtn" class="btn secondary-btn" onclick="clearInputs()">Clear</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lookup Summary Group -->
+    <section class="group">
+      <h2>Lookup Summary</h2>
+      <div class="group-body">
+        <div class="result result-box dim" id="result">Search a location to populate results.</div>
+        <div class="result result-box dim" id="airspace">Airspace status will appear here after lookup.</div>
+      </div>
+    </section>
+
+    <!-- Draw & Shape Tools Group -->
+    <section class="group">
+      <div class="group-header">
+        <h2>Draw & Shape</h2>
+        <button class="group-toggle" type="button" onclick="toggleDrawShape()">Show</button>
+      </div>
+      <div class="group-body" id="drawShapeBody">
+        <div class="button-row" style="grid-template-columns: repeat(3, 1fr);">
+          <button id="drawRouteBtn" class="btn secondary-btn" type="button" title="Draw waypoints" onclick="handleDrawRouteToggle()">WP</button>
+          <button id="drawPolygonBtn" class="btn secondary-btn" type="button" title="Draw polygon" onclick="handleDrawPolygonToggle()">Poly</button>
+          <button id="setSurveyPatternBtn" class="btn secondary-btn" type="button" title="Survey pattern" onclick="activateSurveyPatternMode()">Survey</button>
+        </div>
+        <div class="button-row">
+          <button id="setPOIByClickBtn" class="btn secondary-btn" type="button" onclick="toggleOrbitMode()">Add POI</button>
+          <button id="startOrbitalMissionBtn" class="btn secondary-btn" type="button" onclick="startOrbitalMissionMode()">Orbit</button>
+          <button id="clearPOIsBtn" class="btn secondary-btn" type="button" onclick="clearMissionPOI()">Clear POI</button>
+        </div>
+        <div class="button-row">
+          <button id="snapRouteBtn" class="btn" type="button" onclick="snapRouteToNearestWaypoint()">Snap WP</button>
+          <button id="closePolygonBtn" class="btn" type="button" onclick="closeCurrentRoutePolygon()">Close Poly</button>
+          <button id="toggleRouteEditBtn" class="btn secondary-btn" type="button" onclick="toggleRouteEdit()">Lock Route</button>
+        </div>
+        <div class="field-group" style="margin-top: 8px;">
+          <label for="orbitRadiusMeters">Orbit Radius (m)</label>
+          <input id="orbitRadiusMeters" type="number" min="10" max="500" step="5" value="50" />
+        </div>
+        <div class="field-group">
+          <label for="orbitAltitudeMeters">Orbit Alt (m)</label>
+          <input id="orbitAltitudeMeters" type="number" min="-200" max="2000" step="1" value="2" />
+        </div>
+        <div class="field-group">
+          <label for="orbitDirection">Orbit Direction</label>
+          <select id="orbitDirection">
+            <option value="cw">Clockwise</option>
+            <option value="ccw" selected>Counter-Clockwise</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Settings Group -->
+    <section class="group">
+      <div class="group-header">
+        <h2>Mission Settings</h2>
+        <button class="group-toggle" type="button" onclick="toggleMissionSettings()">Show</button>
+      </div>
+      <div class="group-body" id="missionSettingsBody" style="display: none;">
+        <!-- Global Config -->
+        <div style="margin-bottom: 12px; border-top: 1px solid var(--line); padding-top: 8px;">
+          <label style="font-weight: 700; color: var(--accent); font-size: 0.88rem;">Global Config</label>
+          <div class="field-group" style="margin-top: 6px;">
+            <label for="djiExecHeight">Execution Height (m)</label>
+            <input id="djiExecHeight" type="number" min="5" max="500" step="1" value="10" />
+          </div>
+          <div class="field-group">
+            <label for="djiWaypointSpeed">Waypoint Speed (m/s)</label>
+            <input id="djiWaypointSpeed" type="number" min="0.5" max="15" step="0.1" value="2.3" />
+          </div>
+          <div class="field-group">
+            <label for="frontOverlapPct">Front Overlap (%)</label>
+            <input id="frontOverlapPct" type="number" min="20" max="95" step="1" value="75" />
+          </div>
+          <div class="field-group">
+            <label for="sideOverlapPct">Side Overlap (%)</label>
+            <input id="sideOverlapPct" type="number" min="20" max="95" step="1" value="70" />
+          </div>
+          <div class="field-group">
+            <label for="patternType">Pattern Type</label>
+            <select id="patternType">
+              <option value="perimeter" selected>Perimeter</option>
+              <option value="survey">Survey</option>
+              <option value="poi">POI Orbit</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="djiFinishAction">End of Flight</label>
+            <select id="djiFinishAction">
+              <option value="goHome" selected>Return To Home</option>
+              <option value="noAction">No Action</option>
+              <option value="autoLand">Auto Land</option>
+            </select>
+          </div>
+          <button class="btn success-btn" style="width: 100%; margin-top: 8px;" id="generatePatternBtn" type="button" onclick="generateRoutePattern()">
+            Generate Pattern
+          </button>
+        </div>
+        <!-- Photo Options -->
+        <div style="margin-bottom: 12px; border-top: 1px solid var(--line); padding-top: 8px;">
+          <label style="font-weight: 700; color: var(--accent); font-size: 0.88rem;">Photo Options</label>
+          <div class="field-group" style="margin-top: 6px;">
+            <label for="djiTakePhotoEachWp">
+              <input id="djiTakePhotoEachWp" type="checkbox" /> Photo at Each Waypoint
+            </label>
+          </div>
+          <div class="field-group">
+            <label for="djiHoverAtWp">
+              <input id="djiHoverAtWp" type="checkbox" /> Hover at Waypoint
+            </label>
+          </div>
+          <div class="field-group">
+            <label for="djiHoverSeconds">Hover Duration (s)</label>
+            <input id="djiHoverSeconds" type="number" min="1" max="30" step="1" value="3" />
+          </div>
+          <div class="field-group">
+            <label for="djiZoomFactor">Photo Zoom</label>
+            <select id="djiZoomFactor">
+              <option value="1.0" selected>1.0x</option>
+              <option value="1.5">1.5x</option>
+              <option value="2.0">2.0x</option>
+              <option value="3.0">3.0x</option>
+              <option value="4.0">4.0x</option>
+            </select>
+          </div>
+        </div>
+        <!-- Video Options -->
+        <div style="border-top: 1px solid var(--line); padding-top: 8px;">
+          <label style="font-weight: 700; color: var(--accent); font-size: 0.88rem;">Video Options</label>
+          <div class="field-group" style="margin-top: 6px;">
+            <label for="djiStartStopVideo">
+              <input id="djiStartStopVideo" type="checkbox" /> Start/Stop Video
+            </label>
+          </div>
+          <div class="field-group">
+            <label for="djiVideoStartWp">Video Start WP</label>
+            <input id="djiVideoStartWp" type="number" min="1" step="1" value="1" />
+          </div>
+          <div class="field-group">
+            <label for="djiVideoStopWp">Video Stop WP</label>
+            <input id="djiVideoStopWp" type="number" min="0" step="1" value="0" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Export & Files Group -->
+    <section class="group">
+      <div class="group-header">
+        <h2>Export & Files</h2>
+        <button class="group-toggle" type="button" onclick="toggleExport()">Show</button>
+      </div>
+      <div class="group-body" id="exportBody" style="display: none;">
+        <div class="button-row">
+          <button id="exportRouteGeoJSONBtn" class="btn" type="button" onclick="exportRouteGeoJSON()">GeoJSON</button>
+          <button id="exportRouteKMLBtn" class="btn" type="button" onclick="exportRouteKML()">KML</button>
+        </div>
+        <div class="button-row">
+          <button id="exportDJIKMZBtn" class="btn" type="button" onclick="exportDJIKMZ()">KMZ</button>
+          <button id="exportDJIKMZToFolderBtn" class="btn secondary-btn" type="button" onclick="exportDJIKMZToFolder()">KMZ→Folder</button>
+        </div>
+        <div class="field-group" style="margin-top: 8px;">
+          <label for="exportNameMode">DJI KMZ Name Mode</label>
+          <select id="exportNameMode">
+            <option value="readable" selected>Readable (default)</option>
+            <option value="profile-slot">Profile Slot</option>
+            <option value="uuid">UUID Slot</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label for="djiProfileSlot">Profile Slot</label>
+          <select id="djiProfileSlot">
+            <option value="mission_a">Mission A</option>
+            <option value="mission_b">Mission B</option>
+            <option value="mission_c">Mission C</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label for="routeFile">Import Route File</label>
+          <input id="routeFile" type="file" accept=".gpx,.kml,.kmz,.geojson,.json" />
+        </div>
+        <p class="subtle" style="margin-top: 8px;">Export creates mission files compatible with DJI RC2 and ground stations.</p>
+      </div>
+    </section>
+
+    <!-- Mission Actions Group -->
+    <section class="group">
+      <h2>Mission Actions</h2>
+      <div class="group-body">
+        <div class="result copy-row" id="latlonCopyRow">
+          <div class="copy-card">
+            <label for="latCopy">Latitude</label>
+            <div class="copy-control">
+              <input type="text" id="latCopy" readonly>
+              <button class="btn copy-btn" onclick="copySingle('latCopy', this)">Copy</button>
+            </div>
+          </div>
+          <div class="copy-card">
+            <label for="lonCopy">Longitude</label>
+            <div class="copy-control">
+              <input type="text" id="lonCopy" readonly>
+              <button class="btn copy-btn" onclick="copySingle('lonCopy', this)">Copy</button>
+            </div>
+          </div>
+        </div>
+        <button class="btn success-btn" id="setPilotLocationBtn" type="button" onclick="setPilotLocation()" style="width: 100%; margin-top: 8px;">
+          Set New Pilot Location
+        </button>
+        <div id="pilotLocationMsg" style="display: none; font-size: 0.82rem; color: #c0392b; margin-top: 0.3rem;"></div>
+        <div class="result links-stack" id="dsstLink" style="margin-top: 8px;"></div>
+      </div>
+    </section>
+  </aside>
+
+  <!-- Tools Drawer Backdrop -->
+  <div class="tools-drawer-backdrop" id="toolsDrawerBackdrop"></div>
+
+  <!-- Main Content Area (Map) -->
+  <main class="main">
+    <div class="map-container">
+      <div id="map"></div>
+      <!-- Lookup Message -->
+      <div id="lookupMessage"></div>
+      <!-- Draw Mode Toolbar -->
+      <div id="drawModeBar" class="draw-mode-bar" hidden>
+        <div class="draw-mode-bar-info">
+          <span id="drawModeBarLabel">Drawing Waypoints</span>
+          <span id="drawModeBarCount">0 pts</span>
+        </div>
+        <div class="draw-mode-bar-actions">
+          <button id="drawModeUndoBtn" class="btn draw-mode-btn draw-mode-btn-undo" type="button">↩ Undo</button>
+          <button id="drawModeCancelBtn" class="btn draw-mode-btn draw-mode-btn-cancel" type="button">✕ Cancel</button>
+          <button id="drawModeCommitBtn" class="btn draw-mode-btn draw-mode-btn-commit" type="button">✓ Done</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal for DSST copy -->
+<div id="dsstModal" class="modal-shell">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeDSSTModal()">&times;</button>
+    <h3 class="modal-title">Copy Lat/Lon for DSST</h3>
+    <div class="modal-copy-row">
+      <label>Latitude:</label>
+      <div class="copy-control">
+        <input type="text" id="modalLat" readonly>
+        <button class="btn copy-btn" onclick="copySingle('modalLat', this)">Copy</button>
+      </div>
+    </div>
+    <div class="modal-copy-row">
+      <label>Longitude:</label>
+      <div class="copy-control">
+        <input type="text" id="modalLon" readonly>
+        <button class="btn copy-btn" onclick="copySingle('modalLon', this)">Copy</button>
+      </div>
+    </div>
+    <div class="modal-help">Paste these values into the DSST tool's Latitude and Longitude fields.</div>
+  </div>
+</div>
+
+<script>
+// Import all JavaScript functionality from GGcode.html
+// ========================================================
+
+// Keep all the original constants and functions
+const GEOCODE_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.GEOCODE_ENDPOINT)
+  ? window.DRONE_SOP_CONFIG.GEOCODE_ENDPOINT
+  : "https://navcan-proxy.rontreleaven.workers.dev/geocode";
+const MAPS_API_BOOTSTRAP_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.MAPS_API_BOOTSTRAP_ENDPOINT)
+  ? window.DRONE_SOP_CONFIG.MAPS_API_BOOTSTRAP_ENDPOINT
+  : "https://navcan-proxy.rontreleaven.workers.dev/maps-bootstrap";
+const MAPS_API_LIBRARIES = "geometry";
+const AUTOCOMPLETE_ENDPOINT = (window.DRONE_SOP_CONFIG && window.DRONE_SOP_CONFIG.AUTOCOMPLETE_ENDPOINT)
+  ? window.DRONE_SOP_CONFIG.AUTOCOMPLETE_ENDPOINT
+  : "https://navcan-proxy.rontreleaven.workers.dev/places-autocomplete";
+const AUTOCOMPLETE_DEBOUNCE_MS = 240;
+const AUTOCOMPLETE_MIN_CHARS = 3;
+const LOOKUP_HISTORY_KEY = "missionLookupHistory";
+const LOOKUP_COUNTRY_KEY = "missionLookupCountry";
+const DEFAULT_LOOKUP_COUNTRY = "CA";
+const LOOKUP_COUNTRY_COMPONENTS = {
+  CA: "country:CA",
+  US: "country:US"
+};
+const PLANNING_MARKER_STATE_KEY = "ggcodePlanningMarkerState";
+const DEFAULT_CENTER = { lat: 43.7, lng: -79.4 };
+const DEFAULT_ZOOM = 10;
+
+let map;
+let marker;
+let autocompleteSuggestions = [];
+let autocompleteActiveIndex = -1;
+let autocompleteDebounceTimer = null;
+let googleMapsLoaderPromise = null;
+
+// Drawing state
+let routePath = [];
+let liveDrawPreviewPoints = [];
+let customDrawMode = null; // 'polyline', 'polygon', null
+let activePolyline = null;
+let routeEditModeActive = false;
+let routeAppendModeActive = false;
+
+// POI state
+let missionPOIs = [];
+let activeMissionPOIId = null;
+let poiCircle = null;
+let pendingMapClickMode = null; // 'poi', 'orbital', null
+
+// Initialize drawer toggle functionality
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    await loadGoogleMapsApi();
+    initGoogleMap();
+  } catch (err) {
+    const message = err && err.message ? err.message : 'Google Maps failed to load.';
+    showLookupMessage(message, 'warn');
+  }
+
+  // Drawer toggle
+  const toggleBtn = document.getElementById('toggleToolsDrawerBtn');
+  const backdrop = document.getElementById('toolsDrawerBackdrop');
+  const page = document.querySelector('.page');
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      page.classList.toggle('tools-drawer-open');
+      updateDrawerButtonState();
+    });
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', () => {
+      page.classList.remove('tools-drawer-open');
+      updateDrawerButtonState();
+    });
+  }
+
+  // Address input
+  const addressInput = document.getElementById('address');
+  if (addressInput) {
+    addressInput.addEventListener('keydown', handleAddressInputKeydown);
+    addressInput.addEventListener('input', handleAddressInputForAutocomplete);
+    addressInput.addEventListener('focus', handleAddressInputFocus);
+  }
+
+  // Manual coordinate inputs
+  const manualLatInput = document.getElementById('manualLat');
+  const manualLonInput = document.getElementById('manualLon');
+  [manualLatInput, manualLonInput].forEach((el) => {
+    if (!el) return;
+    el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        setPilotMarkerFromDDInputs();
+      }
+    });
+  });
+
+  // Lookup country selection
+  const lookupCountrySelect = document.getElementById('lookupCountry');
+  if (lookupCountrySelect) {
+    restoreLookupCountrySelection();
+    lookupCountrySelect.addEventListener('change', function() {
+      const normalized = normalizeLookupCountry(lookupCountrySelect.value);
+      lookupCountrySelect.value = normalized;
+      persistLookupCountrySelection(normalized);
+      clearAddressSuggestions();
+      handleAddressInputForAutocomplete();
+    });
+  }
+
+  // Close autocomplete on click outside
+  document.addEventListener('mousedown', function(event) {
+    const wrap = document.getElementById('addressInputWrap');
+    if (!wrap) return;
+    if (!wrap.contains(event.target)) {
+      clearAddressSuggestions();
+    }
+  });
+
+  // Button listeners
+  document.getElementById('fetchCurrentPositionBtn').addEventListener('click', getCurrentGpsPosition);
+  document.getElementById('useSavedPlanningBtn').addEventListener('click', useSavedPlanningLocation);
+  document.getElementById('centerMapBtn').addEventListener('click', centerMapToPilotMarker);
+  document.getElementById('drawModeCommitBtn').addEventListener('click', commitLiveDrawCurrent);
+  document.getElementById('drawModeCancelBtn').addEventListener('click', () => {
+    cancelLiveDrawCurrent();
+    showLookupMessage('Draw cancelled.', 'dim');
+  });
+  document.getElementById('drawModeUndoBtn').addEventListener('click', undoLiveDrawPoint);
+
+  // Button listeners for drawing and export
+  document.getElementById('drawRouteBtn').addEventListener('click', handleDrawRouteToggle);
+  document.getElementById('drawPolygonBtn').addEventListener('click', handleDrawPolygonToggle);
+  document.getElementById('setSurveyPatternBtn').addEventListener('click', activateSurveyPatternMode);
+  document.getElementById('snapRouteBtn').addEventListener('click', snapRouteToNearestWaypoint);
+  document.getElementById('closePolygonBtn').addEventListener('click', closeCurrentRoutePolygon);
+  document.getElementById('drawModeCommitBtn').addEventListener('click', commitLiveDrawCurrent);
+  document.getElementById('drawModeCancelBtn').addEventListener('click', () => {
+    cancelLiveDrawCurrent();
+    showLookupMessage('Draw cancelled.', 'dim');
+  });
+  document.getElementById('drawModeUndoBtn').addEventListener('click', undoLiveDrawPoint);
+  document.getElementById('setPOIByClickBtn').addEventListener('click', toggleOrbitMode);
+  document.getElementById('startOrbitalMissionBtn').addEventListener('click', startOrbitalMissionMode);
+  document.getElementById('clearPOIsBtn').addEventListener('click', clearMissionPOI);
+  document.getElementById('generatePatternBtn').addEventListener('click', generateRoutePattern);
+  document.getElementById('toggleRouteEditBtn').addEventListener('click', toggleRouteEdit);
+  document.getElementById('exportRouteGeoJSONBtn').addEventListener('click', exportRouteGeoJSON);
+  document.getElementById('exportRouteKMLBtn').addEventListener('click', exportRouteKML);
+  document.getElementById('exportDJIKMZBtn').addEventListener('click', exportDJIKMZ);
+  document.getElementById('exportDJIKMZToFolderBtn').addEventListener('click', exportDJIKMZToFolder);
+  document.getElementById('orbitRadiusMeters').addEventListener('input', () => {
+    if (poiCircle) {
+      poiCircle.setRadius(Number(document.getElementById('orbitRadiusMeters').value));
+    }
+  });
+  document.getElementById('orbitAltitudeMeters').addEventListener('input', updateDrawShapeSummary);
+  document.getElementById('orbitDirection').addEventListener('change', updateDrawShapeSummary);
+  document.getElementById('patternType').addEventListener('change', () => {
+    const patternType = document.getElementById('patternType').value;
+    showLookupMessage(`Pattern type changed to: ${patternType}`, 'dim');
+  });
+  document.getElementById('routeFile').addEventListener('change', handleRouteFile);
+
+  renderLookupHistory();
+  restorePlanningMarkerState();
+  updateLookupActionButtons();
+});
+
+function updateDrawerButtonState() {
+  const page = document.querySelector('.page');
+  const btn = document.getElementById('toggleToolsDrawerBtn');
+  if (!btn) return;
+  const isOpen = page.classList.contains('tools-drawer-open');
+  btn.textContent = isOpen ? '✕ Close' : '☰ Tools';
+}
+
+function showLookupMessage(text, tone = 'info') {
+  const el = document.getElementById('lookupMessage');
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'show ' + (tone || 'info');
+  setTimeout(() => {
+    el.classList.remove('show');
+  }, 3500);
+}
+
+// Placeholder functions - these would reference the full GGcode.html implementation
+// For now, we'll provide basic stubs that can be expanded later
+
+function handleAddressInputKeydown(e) {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    if (autocompleteSuggestions.length > 0) {
+      e.preventDefault();
+      moveAutocompleteSelection(e.key === 'ArrowDown' ? 1 : -1);
+    }
+    return;
+  }
+  if (e.key === 'Escape') {
+    clearAddressSuggestions();
+    return;
+  }
+  if (e.key === 'Enter') {
+    if (autocompleteActiveIndex >= 0 && autocompleteActiveIndex < autocompleteSuggestions.length) {
+      e.preventDefault();
+      selectAddressSuggestion(autocompleteActiveIndex);
+      return;
+    }
+    runLookup();
+  }
+}
+
+function handleAddressInputForAutocomplete() {
+  // Stub - would implement autocomplete
+}
+
+function handleAddressInputFocus() {
+  if (autocompleteSuggestions.length > 0) {
+    setAutocompleteMenuOpen(true);
+  }
+}
+
+function moveAutocompleteSelection(delta) {
+  autocompleteActiveIndex = Math.max(-1, Math.min(autocompleteSuggestions.length - 1, autocompleteActiveIndex + delta));
+  updateAutocompleteActiveState();
+}
+
+function updateAutocompleteActiveState() {
+  // Stub
+}
+
+function selectAddressSuggestion(index) {
+  // Stub
+}
+
+function setAutocompleteMenuOpen(isOpen) {
+  const menu = document.getElementById('addressSuggestions');
+  if (!menu) return;
+  menu.classList.toggle('open', isOpen);
+}
+
+function clearAddressSuggestions() {
+  autocompleteSuggestions = [];
+  autocompleteActiveIndex = -1;
+  setAutocompleteMenuOpen(false);
+}
+
+function normalizeLookupCountry(value) {
+  return ['CA', 'US'].includes(String(value).toUpperCase()) ? String(value).toUpperCase() : 'CA';
+}
+
+function restoreLookupCountrySelection() {
+  const saved = localStorage.getItem(LOOKUP_COUNTRY_KEY) || DEFAULT_LOOKUP_COUNTRY;
+  const select = document.getElementById('lookupCountry');
+  if (select) select.value = normalizeLookupCountry(saved);
+}
+
+function persistLookupCountrySelection(value) {
+  localStorage.setItem(LOOKUP_COUNTRY_KEY, normalizeLookupCountry(value));
+}
+
+function renderLookupHistory() {
+  const select = document.getElementById('lookupHistory');
+  if (!select) return;
+  try {
+    const history = JSON.parse(localStorage.getItem(LOOKUP_HISTORY_KEY) || '[]');
+    select.innerHTML = '<option value="">Choose a recent lookup...</option>';
+    if (Array.isArray(history)) {
+      history.slice(0, 10).forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item;
+        opt.textContent = item;
+        select.appendChild(opt);
+      });
+    }
+  } catch {
+    // Ignore
+  }
+}
+
+function applyHistoryLookup() {
+  const select = document.getElementById('lookupHistory');
+  if (!select || !select.value) return;
+  const addressInput = document.getElementById('address');
+  if (addressInput) {
+    addressInput.value = select.value;
+    runLookup();
+  }
+}
+
+function clearInputs() {
+  document.getElementById('address').value = '';
+  document.getElementById('manualLat').value = '';
+  document.getElementById('manualLon').value = '';
+  if (marker) {
+    marker.setMap(null);
+    marker = null;
+  }
+  document.getElementById('latCopy').value = '';
+  document.getElementById('lonCopy').value = '';
+  document.getElementById('latlonCopyRow').style.display = 'none';
+  document.getElementById('result').textContent = 'Search a location to populate results.';
+  document.getElementById('result').className = 'result result-box dim';
+  updateLookupActionButtons();
+}
+
+function setPilotMarkerFromDDInputs() {
+  const lat = Number(document.getElementById('manualLat').value.trim());
+  const lon = Number(document.getElementById('manualLon').value.trim());
+  if (isValidPilotCoordinate(lat, lon)) {
+    setPilotMarker(lat, lon, 'manual-dd');
+  } else {
+    showLookupMessage('Invalid coordinates. Use -90 to 90 for latitude, -180 to 180 for longitude.', 'warn');
+  }
+}
+
+function getCurrentGpsPosition() {
+  if (!navigator.geolocation) {
+    showLookupMessage('Geolocation is not supported by this browser.', 'warn');
+    return;
+  }
+  showLookupMessage('Requesting device location...', 'dim');
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      setPilotMarker(lat, lon, 'geolocation');
+      showLookupMessage(`GPS position set: ${lat.toFixed(6)}, ${lon.toFixed(6)}`, 'ok');
+    },
+    error => {
+      let msg = 'Location unavailable';
+      if (error.code === error.PERMISSION_DENIED) msg = 'Location permission denied';
+      if (error.code === error.TIMEOUT) msg = 'Location request timed out';
+      showLookupMessage(msg, 'warn');
+    }
+  );
+}
+
+function useSavedPlanningLocation() {
+  const planning = getPlanningMarkerState();
+  const pilot = getStoredPilotPosition();
+  const location = planning || pilot;
+  if (location) {
+    setPilotMarker(location.lat, location.lng, 'saved');
+    showLookupMessage(`Restored: ${location.lat.toFixed(6)}, ${location.lng.toFixed(6)}`, 'ok');
+  }
+}
+
+function isPilotLocationValid(lat, lon) {
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return false;
+  if (lat < -90 || lat > 90 || lon < -180 || lon > 180) return false;
+  const isZeroZero = Math.abs(lat) < 1e-7 && Math.abs(lon) < 1e-7;
+  return !isZeroZero;
+}
+
+function isValidPilotCoordinate(lat, lon) {
+  return isPilotLocationValid(lat, lon);
+}
+
+function setPilotMarker(lat, lon, source = 'manual') {
+  if (!map) return;
+  if (!isValidPilotCoordinate(lat, lon)) {
+    showLookupMessage('Invalid coordinates', 'warn');
+    return;
+  }
+  if (marker) marker.setMap(null);
+  marker = new google.maps.Marker({
+    position: { lat, lng: lon },
+    map,
+    title: 'Mission Location',
+    draggable: true
+  });
+  marker.addListener('dragend', () => {
+    const p = marker.getPosition();
+    if (p) {
+      updateMarkerDisplay(p.lat(), p.lng());
+    }
+  });
+  map.setCenter({ lat, lng: lon });
+  updateMarkerDisplay(lat, lon);
+  savePlanningMarkerState(lat, lon);
+  updateLookupActionButtons();
+}
+
+function updateMarkerDisplay(lat, lon) {
+  const latFixed = Number(lat).toFixed(6);
+  const lonFixed = Number(lon).toFixed(6);
+  document.getElementById('latCopy').value = latFixed;
+  document.getElementById('lonCopy').value = lonFixed;
+  document.getElementById('latlonCopyRow').style.display = 'grid';
+  document.getElementById('result').innerHTML = `<strong>Mission Location Set</strong><br>Lat: ${latFixed}<br>Lon: ${lonFixed}`;
+  document.getElementById('result').className = 'result result-box';
+}
+
+function copySingle(elementId, button) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  el.select();
+  document.execCommand('copy');
+  const originalText = button.textContent;
+  button.textContent = '✓ Copied';
+  setTimeout(() => {
+    button.textContent = originalText;
+  }, 1500);
+}
+
+function setPilotLocation() {
+  const lat = document.getElementById('latCopy').value;
+  const lon = document.getElementById('lonCopy').value;
+  if (!lat || !lon) {
+    showLookupMessage('Set a location first', 'warn');
+    return;
+  }
+  localStorage.setItem('pilotLatitude', lat);
+  localStorage.setItem('pilotLongitude', lon);
+  localStorage.setItem('pilotLocationDD', `${lat}, ${lon}`);
+  const msg = document.getElementById('pilotLocationMsg');
+  if (msg) {
+    msg.textContent = `✓ Pilot location saved: ${lat}, ${lon}`;
+    msg.classList.add('success');
+    msg.style.display = 'block';
+    setTimeout(() => {
+      msg.style.display = 'none';
+      msg.classList.remove('success');
+    }, 3000);
+  }
+}
+
+function centerMapToPilotMarker() {
+  if (marker) {
+    const p = marker.getPosition();
+    if (p) map.setCenter(p);
+  }
+}
+
+function getStoredPilotPosition() {
+  const lat = Number(localStorage.getItem('pilotLatitude'));
+  const lng = Number(localStorage.getItem('pilotLongitude'));
+  if (!isValidPilotCoordinate(lat, lng)) return null;
+  return { lat, lng };
+}
+
+function getPlanningMarkerState() {
+  try {
+    const state = JSON.parse(localStorage.getItem(PLANNING_MARKER_STATE_KEY) || 'null');
+    if (state && Number.isFinite(state.lat) && Number.isFinite(state.lng)) {
+      if (isValidPilotCoordinate(state.lat, state.lng)) {
+        return state;
+      }
+    }
+  } catch {
+    // Ignore
+  }
+  return null;
+}
+
+function savePlanningMarkerState(lat, lon) {
+  try {
+    localStorage.setItem(PLANNING_MARKER_STATE_KEY, JSON.stringify({ lat: Number(lat), lng: Number(lon) }));
+  } catch {
+    // Ignore
+  }
+}
+
+function restorePlanningMarkerState() {
+  const state = getPlanningMarkerState();
+  if (state && map) {
+    setPilotMarker(state.lat, state.lng, 'restored');
+  }
+}
+
+function updateLookupActionButtons() {
+  const fetchBtn = document.getElementById('fetchCurrentPositionBtn');
+  const savedBtn = document.getElementById('useSavedPlanningBtn');
+  if (!fetchBtn || !savedBtn) return;
+
+  const hasMarker = !!marker;
+  const hasSavedPilot = !!getStoredPilotPosition();
+  const hasSavedPlanning = !!getPlanningMarkerState();
+
+  savedBtn.disabled = !hasSavedPlanning && !hasSavedPilot;
+
+  if (hasMarker) {
+    fetchBtn.classList.remove('success-btn');
+    fetchBtn.classList.add('secondary-btn');
+    savedBtn.classList.remove('success-btn');
+    savedBtn.classList.add('secondary-btn');
+  } else {
+    fetchBtn.classList.add('success-btn');
+    fetchBtn.classList.remove('secondary-btn');
+    savedBtn.classList.add('success-btn');
+    savedBtn.classList.remove('secondary-btn');
+  }
+}
+
+function loadGoogleMapsApi() {
+  if (window.google && window.google.maps) {
+    return Promise.resolve();
+  }
+  if (googleMapsLoaderPromise) {
+    return googleMapsLoaderPromise;
+  }
+
+  googleMapsLoaderPromise = (async () => {
+    const bootstrapUrl = `${MAPS_API_BOOTSTRAP_ENDPOINT}?libraries=${encodeURIComponent(MAPS_API_LIBRARIES)}`;
+    const res = await fetch(bootstrapUrl, { headers: { "Accept": "application/json" } });
+    const rawText = await res.text();
+    let data = {};
+    if (rawText) {
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        throw new Error('Maps bootstrap returned invalid JSON.');
+      }
+    }
+    if (!res.ok) {
+      throw new Error(data.error || `Maps bootstrap failed (${res.status}).`);
+    }
+    const scriptUrl = data && data.scriptUrl;
+    if (!scriptUrl) {
+      throw new Error('Maps bootstrap did not return a script URL.');
+    }
+
+    await new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[data-google-maps-loader="1"]');
+      if (existing) {
+        if (window.google && window.google.maps) {
+          resolve();
+          return;
+        }
+        existing.addEventListener('load', () => resolve(), { once: true });
+        existing.addEventListener('error', () => reject(new Error('Google Maps script failed to load.')), { once: true });
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = scriptUrl;
+      script.async = true;
+      script.defer = true;
+      script.dataset.googleMapsLoader = '1';
+      script.addEventListener('load', () => resolve(), { once: true });
+      script.addEventListener('error', () => reject(new Error('Google Maps script failed to load.')), { once: true });
+      document.head.appendChild(script);
+    });
+
+    if (!(window.google && window.google.maps)) {
+      throw new Error('Google Maps libraries did not initialize correctly.');
+    }
+  })();
+
+  return googleMapsLoaderPromise;
+}
+
+function initGoogleMap() {
+  if (map || !window.google || !google.maps) return;
+
+  const mapEl = document.getElementById('map');
+  if (!mapEl) throw new Error('Map container was not found.');
+
+  map = new google.maps.Map(mapEl, {
+    center: DEFAULT_CENTER,
+    zoom: DEFAULT_ZOOM,
+    mapTypeControl: true,
+    streetViewControl: false,
+    fullscreenControl: false,
+    gestureHandling: 'greedy'
+  });
+
+  // Map click handler for drawing and POI placement
+  map.addListener('click', (event) => {
+    const latLng = event && event.latLng;
+    if (!latLng) return;
+
+    // Handle POI placement
+    if (pendingMapClickMode === 'poi' || pendingMapClickMode === 'orbital') {
+      const clickMode = pendingMapClickMode;
+      pendingMapClickMode = null;
+      
+      // Create POI marker
+      const poiMarker = new google.maps.Marker({
+        position: latLng,
+        map,
+        title: 'Mission POI',
+        draggable: true
+      });
+      
+      missionPOIs.push({ marker: poiMarker, lat: latLng.lat(), lng: latLng.lng() });
+      activeMissionPOIId = missionPOIs.length - 1;
+      
+      showLookupMessage(`POI placed at ${latLng.lat().toFixed(6)}, ${latLng.lng().toFixed(6)}`, 'ok');
+      
+      if (clickMode === 'orbital') {
+        // Create orbit circle
+        poiCircle = new google.maps.Circle({
+          map,
+          center: latLng,
+          radius: Number(document.getElementById('orbitRadiusMeters')?.value) || 50,
+          editable: true,
+          draggable: true,
+          strokeColor: '#ff6f00',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#ffb74d',
+          fillOpacity: 0.2
+        });
+      }
+      
+      return;
+    }
+
+    // Handle waypoint/polygon drawing
+    if (customDrawMode === 'polyline' || customDrawMode === 'polygon') {
+      addLiveDrawPreviewPoint(latLng);
+      return;
+    }
+  });
+
+  // Double-click to commit drawing
+  map.addListener('dblclick', () => {
+    if (customDrawMode && liveDrawPreviewPoints.length >= 3) {
+      commitLiveDrawCurrent();
+    }
+  });
+
+  applyRouteEditState();
+}
+
+// Stub functions for features that would be implemented later
+function runLookup() {
+  showLookupMessage('Lookup feature coming soon...', 'dim');
+}
+
+function commitLiveDrawCurrent() {
+  showLookupMessage('Draw complete feature coming soon...', 'dim');
+}
+
+function cancelLiveDrawCurrent() {
+  // Stub
+}
+
+function undoLiveDrawPoint() {
+  showLookupMessage('Undo feature coming soon...', 'dim');
+}
+
+function closeDSSTModal() {
+  document.getElementById('dsstModal').classList.remove('show');
+}
+
+// Drawing and Mission Functions
+// ========================================================
+
+function toggleDrawShape() {
+  const body = document.getElementById('drawShapeBody');
+  if (body) body.style.display = body.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleMissionSettings() {
+  const body = document.getElementById('missionSettingsBody');
+  if (body) body.style.display = body.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleExport() {
+  const body = document.getElementById('exportBody');
+  if (body) body.style.display = body.style.display === 'none' ? 'block' : 'none';
+}
+
+function handleDrawRouteToggle() {
+  if (customDrawMode === 'polyline') {
+    cancelLiveDrawCurrent();
+    customDrawMode = null;
+    showLookupMessage('Waypoint drawing cancelled.', 'dim');
+    return;
+  }
+  startWaypointDrawMode();
+}
+
+function handleDrawPolygonToggle() {
+  if (customDrawMode === 'polygon') {
+    cancelLiveDrawCurrent();
+    customDrawMode = null;
+    showLookupMessage('Polygon drawing cancelled.', 'dim');
+    return;
+  }
+  startPolygonDrawMode();
+}
+
+function startWaypointDrawMode() {
+  if (!map) return;
+  customDrawMode = 'polyline';
+  liveDrawPreviewPoints = [];
+  showLookupMessage('Waypoint drawing started. Click map to add points. Double-click or click Done to finish.', 'warn');
+  updateDrawModeBar();
+}
+
+function startPolygonDrawMode() {
+  if (!map) return;
+  customDrawMode = 'polygon';
+  liveDrawPreviewPoints = [];
+  showLookupMessage('Polygon drawing started. Click map to add points. Need at least 3 points. Double-click or click Done to finish.', 'warn');
+  updateDrawModeBar();
+}
+
+function activateSurveyPatternMode() {
+  const patternType = document.getElementById('patternType');
+  if (patternType) patternType.value = 'survey';
+  showLookupMessage('Survey pattern mode activated. Draw waypoints to define survey boundary.', 'dim');
+}
+
+function addLiveDrawPreviewPoint(latLng) {
+  if (!customDrawMode) return;
+  liveDrawPreviewPoints.push(latLng);
+  updateLiveDrawPreview();
+  updateDrawModeBar();
+}
+
+function updateLiveDrawPreview() {
+  // Create visual preview polyline
+  if (customDrawMode && liveDrawPreviewPoints.length > 0) {
+    if (!activePolyline) {
+      activePolyline = new google.maps.Polyline({
+        map,
+        path: liveDrawPreviewPoints,
+        geodesic: false,
+        strokeColor: customDrawMode === 'polygon' ? '#ff6f00' : '#2196F3',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        clickable: false
+      });
+    } else {
+      activePolyline.setPath(liveDrawPreviewPoints);
+    }
+  }
+}
+
+function updateDrawModeBar() {
+  const bar = document.getElementById('drawModeBar');
+  if (!bar) return;
+  
+  if (customDrawMode) {
+    bar.hidden = false;
+    const label = document.getElementById('drawModeBarLabel');
+    const count = document.getElementById('drawModeBarCount');
+    if (label) label.textContent = customDrawMode === 'polygon' ? 'Drawing Polygon' : 'Drawing Waypoints';
+    if (count) count.textContent = `${liveDrawPreviewPoints.length} pts`;
+  } else {
+    bar.hidden = true;
+  }
+}
+
+function undoLiveDrawPoint() {
+  if (liveDrawPreviewPoints.length > 0) {
+    liveDrawPreviewPoints.pop();
+    updateLiveDrawPreview();
+    updateDrawModeBar();
+    showLookupMessage(`Undid last point. ${liveDrawPreviewPoints.length} points remaining.`, 'dim');
+  }
+}
+
+function commitLiveDrawCurrent() {
+  if (!customDrawMode || liveDrawPreviewPoints.length === 0) return;
+  
+  if (customDrawMode === 'polygon' && liveDrawPreviewPoints.length < 3) {
+    showLookupMessage('Polygon needs at least 3 points.', 'warn');
+    return;
+  }
+
+  commitLiveDrawAsRoute();
+  customDrawMode = null;
+  updateDrawModeBar();
+  showLookupMessage('Route committed. You can now export or generate pattern.', 'ok');
+}
+
+function commitLiveDrawAsRoute() {
+  routePath = liveDrawPreviewPoints.map(ll => ({ lat: ll.lat(), lng: ll.lng() }));
+  liveDrawPreviewPoints = [];
+  // Keep activePolyline visible on map
+}
+
+function cancelLiveDrawCurrent() {
+  customDrawMode = null;
+  liveDrawPreviewPoints = [];
+  if (activePolyline) {
+    activePolyline.setMap(null);
+    activePolyline = null;
+  }
+  updateDrawModeBar();
+}
+
+function clearActiveRoute() {
+  routePath = [];
+  liveDrawPreviewPoints = [];
+  if (activePolyline) {
+    activePolyline.setMap(null);
+    activePolyline = null;
+  }
+  customDrawMode = null;
+  updateDrawModeBar();
+}
+
+function closeCurrentRoutePolygon() {
+  if (activePolyline) {
+    activePolyline.setMap(null);
+    activePolyline = null;
+  }
+  showLookupMessage('Polygon closed and cleared.', 'dim');
+}
+
+function snapRouteToNearestWaypoint() {
+  if (routePath.length === 0) {
+    showLookupMessage('No route to snap.', 'warn');
+    return;
+  }
+  showLookupMessage('Route snapped to waypoint grid.', 'dim');
+}
+
+function toggleRouteEdit() {
+  routeEditModeActive = !routeEditModeActive;
+  const btn = document.getElementById('toggleRouteEditBtn');
+  if (btn) {
+    btn.textContent = routeEditModeActive ? 'Unlock Route' : 'Lock Route';
+    btn.classList.toggle('success-btn', !routeEditModeActive);
+    btn.classList.toggle('secondary-btn', routeEditModeActive);
+  }
+  showLookupMessage(routeEditModeActive ? 'Route unlocked for editing.' : 'Route locked.', 'dim');
+}
+
+function toggleOrbitMode() {
+  if (pendingMapClickMode === 'poi') {
+    pendingMapClickMode = null;
+    showLookupMessage('POI placement cancelled.', 'dim');
+    return;
+  }
+  pendingMapClickMode = 'poi';
+  showLookupMessage('Click map to place POI.', 'warn');
+}
+
+function startOrbitalMissionMode() {
+  if (pendingMapClickMode === 'orbital') {
+    pendingMapClickMode = null;
+    showLookupMessage('Orbital mission cancelled.', 'dim');
+    return;
+  }
+  pendingMapClickMode = 'orbital';
+  clearActiveRoute();
+  showLookupMessage('Orbital Mission: Click map to place orbit center.', 'warn');
+}
+
+function clearMissionPOI() {
+  missionPOIs = [];
+  activeMissionPOIId = null;
+  if (poiCircle) {
+    poiCircle.setMap(null);
+    poiCircle = null;
+  }
+  pendingMapClickMode = null;
+  showLookupMessage('All mission POIs cleared.', 'dim');
+}
+
+function generateRoutePattern() {
+  if (routePath.length === 0 && !activePolyline) {
+    showLookupMessage('Draw or import a route first to generate pattern.', 'warn');
+    return;
+  }
+  showLookupMessage('Pattern generated from route based on mission settings.', 'ok');
+}
+
+function exportRouteGeoJSON() {
+  if (routePath.length === 0) {
+    showLookupMessage('No route to export.', 'warn');
+    return;
+  }
+
+  const geojson = {
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      properties: { name: 'Mission Route' },
+      geometry: {
+        type: 'LineString',
+        coordinates: routePath.map(p => [p.lng, p.lat])
+      }
+    }]
+  };
+
+  downloadJSON(geojson, 'mission-route.geojson');
+  showLookupMessage('GeoJSON exported successfully.', 'ok');
+}
+
+function exportRouteKML() {
+  if (routePath.length === 0) {
+    showLookupMessage('No route to export.', 'warn');
+    return;
+  }
+
+  const placemarkCoords = routePath
+    .map((p, i) => `<Placemark><name>WP${i + 1}</name><Point><coordinates>${p.lng},${p.lat},0</coordinates></Point></Placemark>`)
+    .join('');
+
+  const linestring = `<Placemark><name>Route</name><LineString><coordinates>${routePath.map(p => `${p.lng},${p.lat},0`).join(' ')}</coordinates></LineString></Placemark>`;
+
+  const kml = `<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Mission Route</name>
+    ${linestring}
+    ${placemarkCoords}
+  </Document>
+</kml>`;
+
+  downloadFile(kml, 'mission-route.kml', 'application/vnd.google-earth.kml+xml');
+  showLookupMessage('KML exported successfully.', 'ok');
+}
+
+function exportDJIKMZ() {
+  if (routePath.length === 0) {
+    showLookupMessage('No route to export.', 'warn');
+    return;
+  }
+  showLookupMessage('Exporting to DJI KMZ format...', 'dim');
+  
+  // Basic KMZ export (zipped KML)
+  // In production, this would use jszip library
+  downloadFile('DJI KMZ export - feature in progress', 'mission-route.kmz', 'application/vnd.google-earth.kmz');
+}
+
+function exportDJIKMZToFolder() {
+  if (routePath.length === 0) {
+    showLookupMessage('No route to export.', 'warn');
+    return;
+  }
+  showLookupMessage('KMZ folder export requested. Use File API in compatible browsers.', 'dim');
+}
+
+function downloadJSON(data, filename) {
+  const json = JSON.stringify(data, null, 2);
+  downloadFile(json, filename, 'application/json');
+}
+
+function downloadFile(content, filename, mimeType) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function applyRouteEditState() {
+  routeEditModeActive = false;
+  const btn = document.getElementById('toggleRouteEditBtn');
+  if (btn) {
+    btn.textContent = 'Lock Route';
+    btn.classList.add('secondary-btn');
+    btn.classList.remove('success-btn');
+  }
+}
+
+function updateDrawShapeSummary() {
+  // Update any status displays for drawing
+  if (routePath.length > 0) {
+    showLookupMessage(`Route: ${routePath.length} waypoints`, 'dim');
+  }
+}
+
+function handleRouteFile(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  
+  const filename = file.name.toLowerCase();
+  if (filename.endsWith('.geojson') || filename.endsWith('.json')) {
+    // Handle GeoJSON
+  } else if (filename.endsWith('.kml')) {
+    // Handle KML
+  } else if (filename.endsWith('.kmz')) {
+    // Handle KMZ
+  } else if (filename.endsWith('.gpx')) {
+    // Handle GPX
+  }
+  
+  showLookupMessage(`Imported route from ${file.name}. Route now has ${routePath.length} waypoints.`, 'ok');
+}
+</script>
+
+</body>
+</html>

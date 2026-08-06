@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 364 374">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="43%" r="57%">
+      <stop offset="0%"   stop-color="#f8951e"/>
+      <stop offset="60%"  stop-color="#ea7012"/>
+      <stop offset="100%" stop-color="#c35a08"/>
+    </radialGradient>
+    <linearGradient id="ribGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#faa030"/>
+      <stop offset="100%" stop-color="#d47010"/>
+    </linearGradient>
+    <clipPath id="cc">
+      <circle cx="182" cy="172" r="158"/>
+    </clipPath>
+    <pattern id="gp" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0L0 0 0 22" fill="none" stroke="rgba(255,140,18,0.40)" stroke-width="0.8"/>
+    </pattern>
+  </defs>
+
+  <!-- Badge outer rim -->
+  <circle cx="182" cy="172" r="161" fill="#a04c06"/>
+  <!-- Badge main fill -->
+  <circle cx="182" cy="172" r="158" fill="url(#bgGrad)"/>
+  <!-- Grid pattern overlay, clipped to badge circle -->
+  <rect x="0" y="0" width="364" height="374" fill="url(#gp)" clip-path="url(#cc)"/>
+  <!-- Inner accent ring -->
+  <circle cx="182" cy="172" r="153" fill="none" stroke="rgba(255,172,55,0.50)" stroke-width="2"/>
+
+  <!-- ===== DRONE SILHOUETTE (white fill) ===== -->
+  <g fill="white">
+    <!-- Diagonal arms: NW-SE and NE-SW, both centred at drone body (182, 152) -->
+    <rect x="106" y="146" width="152" height="13" rx="6" transform="rotate( 45 182 152)"/>
+    <rect x="106" y="146" width="152" height="13" rx="6" transform="rotate(-45 182 152)"/>
+
+    <!-- Motor outer housings -->
+    <circle cx="126" cy="97"  r="27"/>  <!-- TL -->
+    <circle cx="238" cy="97"  r="27"/>  <!-- TR -->
+    <circle cx="126" cy="207" r="27"/>  <!-- BL -->
+    <circle cx="238" cy="207" r="27"/>  <!-- BR -->
+
+    <!-- Propeller blades — ellipses elongated along each arm's radial direction -->
+    <!-- TL arm goes NW, blades on NW-SE axis (135°) -->
+    <ellipse cx="126" cy="97"  rx="32" ry="10" transform="rotate(135 126  97)"/>
+    <!-- TR arm goes NE, blades on NE-SW axis (45°) -->
+    <ellipse cx="238" cy="97"  rx="32" ry="10" transform="rotate( 45 238  97)"/>
+    <!-- BL arm goes SW, blades on SW-NE axis (45°) -->
+    <ellipse cx="126" cy="207" rx="32" ry="10" transform="rotate( 45 126 207)"/>
+    <!-- BR arm goes SE, blades on SE-NW axis (135°) -->
+    <ellipse cx="238" cy="207" rx="32" ry="10" transform="rotate(135 238 207)"/>
+
+    <!-- Central body -->
+    <rect x="150" y="130" width="64" height="46" rx="8"/>
+    <!-- Body top mounting slot -->
+    <rect x="164" y="126" width="36" height="7" rx="3"/>
+    <!-- Camera / gimbal pod -->
+    <ellipse cx="182" cy="175" rx="13" ry="9"/>
+  </g>
+
+  <!-- Motor inner circles (orange, creates the ring/hub detail) -->
+  <circle cx="126" cy="97"  r="17" fill="#df6e10"/>
+  <circle cx="238" cy="97"  r="17" fill="#df6e10"/>
+  <circle cx="126" cy="207" r="17" fill="#df6e10"/>
+  <circle cx="238" cy="207" r="17" fill="#df6e10"/>
+
+  <!-- ===== RIBBON BANNER ===== -->
+  <!-- Folded tail pieces behind main ribbon (darker) -->
+  <path d="M 68,292  L 30,280  L 20,316  L 30,352  L 68,340 Z" fill="#a84e06"/>
+  <path d="M 296,292 L 334,280 L 344,316 L 334,352 L 296,340 Z" fill="#a84e06"/>
+
+  <!-- Main ribbon body: hexagonal/classic banner shape -->
+  <path d="M 72,291 L 292,291 L 312,316 L 292,342 L 72,342 L 52,316 Z" fill="url(#ribGrad)"/>
+
+  <!-- Ribbon top highlight streak -->
+  <rect x="74" y="291" width="218" height="8" rx="3" fill="rgba(255,205,85,0.22)"/>
+  <!-- Ribbon bottom shadow -->
+  <rect x="74" y="335" width="218" height="7" rx="2" fill="rgba(0,0,0,0.13)"/>
+
+  <!-- "Advanced" label -->
+  <text
+    x="182" y="323"
+    font-family="'Arial Black', 'Arial Bold', Arial, Helvetica, sans-serif"
+    font-size="27" font-weight="900"
+    fill="white" text-anchor="middle"
+    letter-spacing="1.5"
+  >Advanced</text>
+</svg>

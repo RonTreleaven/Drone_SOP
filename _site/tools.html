@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drone SOP – Toolbox</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <script src="assets/js/site-nav.js" defer></script>
+  <style>
+    :root {
+      --bg-a: #f2f8fb;
+      --bg-b: #edf4f8;
+      --ink: #111111;
+      --muted: #3f4a55;
+      --accent-red: #d1122a;
+      --accent-blue: #55aabb;
+      --accent-blue-dark: #2e6f86;
+      --panel: #ffffff;
+      --line: #cfe0e8;
+      --tile: #ffffff;
+      --tile-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 10%, rgba(85, 170, 187, 0.12), transparent 42%),
+        radial-gradient(circle at 90% 85%, rgba(209, 18, 42, 0.08), transparent 45%),
+        linear-gradient(160deg, var(--bg-a), var(--bg-b));
+      min-height: 100vh;
+    }
+    .shell {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1.25rem;
+    }
+    .top-nav {
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .top-nav a {
+      color: var(--accent-blue-dark);
+      text-decoration: none;
+      margin-right: 0.55rem;
+    }
+    .top-nav a.active {
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    .top-nav .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.7rem 0.35rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid #9ec9e8;
+      background: #eaf5ff;
+      color: #0b5ea8;
+      font-weight: 700;
+      font-size: 0.98rem;
+      text-decoration: none;
+      vertical-align: middle;
+      margin-right: 0.75rem;
+    }
+    .top-nav .back-link .back-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 999px;
+      background: #0b5ea8;
+      color: #ffffff;
+      font-size: 1rem;
+      line-height: 1;
+    }
+    .top-nav .back-link:hover {
+      text-decoration: none;
+      background: #d8ecff;
+      border-color: #7db2db;
+    }
+    .site-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+
+    .site-logo {
+      height: 80px;
+      margin-right: 1rem;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .toolbox-intro {
+      margin: -0.8rem 0 1.25rem;
+      color: var(--muted);
+      max-width: 68ch;
+    }
+    .mock-block {
+      border: 2px dashed rgba(85, 170, 187, 0.5);
+      border-radius: 14px;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.6);
+      margin-bottom: 2rem;
+    }
+    .mock-title {
+      font-size: 1.05rem;
+      margin: 0 0 0.75rem;
+      color: var(--accent-blue-dark);
+      font-weight: 700;
+    }
+    .section-title {
+      font-size: 1.1rem;
+      margin: 0 0 0.35rem;
+    }
+    .section-note {
+      margin: 0 0 0.85rem;
+      padding: 0.6rem 0.75rem;
+      background: #f7fbff;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent-blue);
+      border-radius: 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.8rem;
+    }
+    .tile {
+      background: var(--tile);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.9rem;
+      box-shadow: var(--tile-shadow);
+    }
+    .tile h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+    }
+    .tile p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .linklist {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.65rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .linklist li {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.65rem 0.8rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .linklist strong {
+      color: var(--ink);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .section-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: var(--tile-shadow);
+    }
+    .section-card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.05rem;
+    }
+    .section-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0;
+      display: grid;
+      gap: 0.5rem;
+    }
+    .section-card li {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .section-summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      cursor: pointer;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      padding: 0.2rem 0;
+    }
+    .section-summary::-webkit-details-marker { display: none; }
+    .summary-title {
+      font-size: 1.05rem;
+      color: var(--accent-blue-dark);
+    }
+    .summary-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    details > summary.section-summary::after {
+      content: "▾";
+      font-size: 1.1rem;
+      color: var(--accent-blue-dark);
+      transition: transform 0.2s ease;
+    }
+    details[open] > summary.section-summary::after {
+      transform: rotate(180deg);
+    }
+    .tool-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0;
+      display: grid;
+      gap: 0.45rem;
+    }
+    .tool-list li {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.15rem 0;
+    }
+    .tool-link {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .tool-link:hover {
+      text-decoration: underline;
+    }
+    .tool-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(85, 170, 187, 0.16);
+      border: 1px solid rgba(85, 170, 187, 0.45);
+      color: var(--accent-blue-dark);
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.03em;
+    }
+    @media (max-width: 600px) {
+      .site-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .site-logo {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+      }
+      .summary-sub { display: none; }
+      .tool-list li { grid-template-columns: 40px 1fr; }
+      .tool-icon { width: 36px; height: 36px; }
+    }
+    .divider {
+      height: 1px;
+      background: rgba(31, 40, 51, 0.08);
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="top-nav shared-site-nav" data-nav-variant="workflow" data-active="tools" data-show-back="true" data-back-fallback="index.html"></nav>
+    <script>
+      function goBack(event) {
+        event.preventDefault();
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          window.location.href = 'index.html';
+        }
+      }
+
+      function buildWindyUrl(lat, lon, zoom) {
+        return `https://www.windy.com/?${lat},${lon},${zoom}`;
+      }
+
+      function parseStoredPilotLocation() {
+        const stored = localStorage.getItem('pilotLocationDD');
+        if (!stored) return null;
+
+        const parts = stored.split(',').map(part => part.trim());
+        if (parts.length < 2) return null;
+
+        const lat = Number(parts[0]);
+        const lon = Number(parts[1]);
+        if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+
+        return { lat: lat.toFixed(6), lon: lon.toFixed(6) };
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const windyLink = document.getElementById('windy-link');
+        if (!windyLink) return;
+
+        const defaultZoom = 12;
+        const storedLocation = parseStoredPilotLocation();
+        if (storedLocation) {
+          windyLink.href = buildWindyUrl(storedLocation.lat, storedLocation.lon, defaultZoom);
+          return;
+        }
+
+        windyLink.addEventListener('click', (event) => {
+          if (!navigator.geolocation) return;
+
+          event.preventDefault();
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const lat = position.coords.latitude.toFixed(6);
+              const lon = position.coords.longitude.toFixed(6);
+              localStorage.setItem('pilotLocationDD', `${lat}, ${lon}`);
+              window.open(buildWindyUrl(lat, lon, defaultZoom), '_blank', 'noopener');
+            },
+            () => {
+              window.open('https://www.windy.com/', '_blank', 'noopener');
+            }
+          );
+        });
+      });
+    </script>
+
+    <header class="site-header">
+      <img src="assets/img/logo_25.svg" alt="Logo" class="site-logo">
+      <h1 class="page-title">Drone Toolbox</h1>
+    </header>
+    <p class="toolbox-intro">Perform a Pre-Flight site survey to know your airspace, NOTAM obstacles, restrictions, hazards and local weather.</p>
+
+    <!-- Layout B (refined) -->
+    <section class="mock-block">
+      <div class="mock-title">Select Section for Pre-Flight Planning</div>
+      <div class="columns">
+        <article class="section-card">
+          <details open>
+            <summary class="section-summary">
+              <span class="summary-title">Flight Planning</span>
+              <span class="summary-sub">Check Airspace, NOTAMs, Weather Checks and location Maps</span>
+            </summary>
+            <ul class="tool-list">
+              <li><span class="tool-icon">WF</span><a class="tool-link" href="https://nrc.canada.ca/en/drone-tool-2/map.html" target="_blank" rel="noopener">Where to Fly — NAV CAN Drone Site Selection Tool</a></li>
+              <li><span class="tool-icon">NAV</span><a class="tool-link" href="FetchNotams.html">Fetch Live Notams</a></li>
+              <li><span class="tool-icon">WX</span><a class="tool-link" href="DWCheck.html">Drone Weather &amp; Risk Assessment</a></li>
+              <li><span class="tool-icon">MAP</span><a class="tool-link" href="NotamsMap.html">Canadian Airports & NOTAMs Locator</a></li>
+              <li><span class="tool-icon">ASP</span><a class="tool-link" href="DAHminimap.html">DAH Airspace Mini Map</a></li>
+              <li><span class="tool-icon">N/W</span><a class="tool-link" href="https://plan.navcanada.ca/wxrecall/" target="_blank" rel="noopener">NavCan Weather & NOTAM</a></li>
+              <li><span class="tool-icon">MET</span><a class="tool-link" href="https://spaces.navcanada.ca/workspace/flightplanning/" target="_blank" rel="noopener">NavCan Flight Planning (METAR/TAF)</a></li>
+              <li><span class="tool-icon">NAV</span><a class="tool-link" href="https://portal.navdrone.ca/" target="_blank" rel="noopener">NAV Drone Portal</a></li>
+                          
+              
+            </ul>
+          </details>
+        </article>
+
+        <article class="section-card">
+          <details open>
+            <summary class="section-summary">
+              <span class="summary-title">Utilities</span>
+              <span class="summary-sub">Reference and quick utility tools</span>
+            </summary>
+            <ul class="tool-list">
+              <li><span class="tool-icon">MAP</span><a class="tool-link" href="GGcode.html">Mission Automation Planner</a></li>
+              <li><span class="tool-icon">CZ</span><a class="tool-link" href="CZMiniMap.html">Control Zones Mini Map (D/F Focus)</a></li>
+              <li><span class="tool-icon">SOP</span><a class="tool-link" href="SOP.html">Standard Operating Procedures</a></li>
+              <li><span class="tool-icon">RC2</span><a class="tool-link" href="data/rc2/rc2-index.html">RC2 Mission Automation Documentation</a></li>
+              <li><span class="tool-icon">PG</span><a class="tool-link" href="PhotogrammetryCheatSheet.html">Photogrammetry GSD Calculator </a></li>
+              <li><span class="tool-icon">JOB</span><a class="tool-link" href="JobBoard.html">Jobs Review Console</a></li>
+              <li><span class="tool-icon">Q</span><a class="tool-link" href="QCodeLegend.html">NOTAM Q-Code Legend</a></li>
+              <li><span class="tool-icon">DMS</span><a class="tool-link" href="DMS2DD.html">NOTAM DMS to DD Convertor </a></li>
+              <li><span class="tool-icon">GPS</span><a class="tool-link" href="GeoLocateMe.html">Get GPS Location (DD/DMS/Map URL)</a></li>
+              <li><span class="tool-icon">SV</span><a class="tool-link" href="https://skyvector.com" target="_blank" rel="noopener">SkyVector Aeronautical Charts</a></li>
+              <li><span class="tool-icon">FP</span><a class="tool-link" href="https://www.fltplan.com/" target="_blank" rel="noopener">FltPlan.com Charts</a></li>
+              <li><span class="tool-icon">MAP</span><a class="tool-link" href="https://mapviewer.fltplan.com/" target="_blank" rel="noopener">FltPlan Map Builder (Canada)</a></li>
+              <li><span class="tool-icon">Q</span><a class="tool-link" id="windy-link" href="https://www.windy.com/" target="_blank" rel="noopener">Windy</a></li>
+            </ul>
+          </details>
+        </article>
+
+        <article class="section-card">
+          <details>
+            <summary class="section-summary">
+              <span class="summary-title">Regulations + Reference Guides</span>
+              <span class="summary-sub">Rules, reporting, and official manuals</span>
+            </summary>
+            <ul class="tool-list">
+              <li><span class="tool-icon">CARS</span><a class="tool-link" href="https://lois-laws.justice.gc.ca/eng/regulations/SOR-96-433/FullText.html#s-900.01" target="_blank" rel="noopener">CARS Part IX</a></li>
+              <li><span class="tool-icon">TC</span><a class="tool-link" href="https://tc.canada.ca/en/aviation/drone-safety/learn-rules-you-fly-your-drone" target="_blank" rel="noopener">Drone Rules for Canada</a></li>
+              <li><span class="tool-icon">CAC</span><a class="tool-link" href="https://www.navcanada.ca/en/cac20260319.pdf" target="_blank" rel="noopener">Canadian Airport Charts (PDF)</a></li>
+              <li><span class="tool-icon">911</span><a class="tool-link" href="https://www.navcanada.ca/en/flight-planning/drone-flight-planning/how-to-report-a-flyaway-drone.aspx" target="_blank" rel="noopener">NavCan Report Flyaway-Drone</a></li>
+              <li><span class="tool-icon">DAH</span><a class="tool-link" href="https://www.navcanada.ca/en/dah20260514.pdf" target="_blank" rel="noopener">Designated Airspace Handbook (PDF)</a></li>
+              <li><span class="tool-icon">OPS</span><a class="tool-link" href="https://www.navcanada.ca/en/aeronautical-information/operational-guides.aspx" target="_blank" rel="noopener">NavCan Operational Guides & Updates</a></li>
+              <li><span class="tool-icon">WX</span><a class="tool-link" href="https://www.navcanada.ca/en/aviation%20weather%20services%20guide.pdf" target="_blank" rel="noopener">Aviation Weather Services Guide (PDF)</a></li>
+              <li><span class="tool-icon">MAN</span><a class="tool-link" href="https://www.canada.ca/en/environment-climate-change/services/weather-manuals-documentation/manab-word-abbreviations-4th-edition/search.html" target="_blank" rel="noopener">MANAB Manual of Abbreviations</a></li>
+              <li><span class="tool-icon">LAW</span><a class="tool-link" href="https://www.navcanada.ca/en/aeronautical-information/operational-guides.aspx#LOCAL:~:text=Local%20Area%20Weather%20Manuals" target="_blank" rel="noopener">Local Area Weather Manuals by Region</a></li>
+              <li><span class="tool-icon">FACT</span><a class="tool-link" href="assets/pdf/MyFactSheet.pdf" target="_blank" rel="noopener">Facts about Drone Flying (PDF)</a></li>
+            </ul>
+          </details>
+        </article>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

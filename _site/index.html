@@ -1,0 +1,2982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Drone SOP Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <link rel="stylesheet" href="assets/css/profile-drawer.css">
+  <script src="assets/js/site-nav.js" defer></script>
+  <style>
+    :root {
+      --bg-a: #f3fbff;
+      --bg-b: #eef8ef;
+      --ink: #1f2833;
+      --muted: #506070;
+      --accent: #0f6d5a;
+      --accent-2: #0b5ea8;
+      --panel: #ffffff;
+      --line: #d6e4ef;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(11, 94, 168, 0.10), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(15, 109, 90, 0.10), transparent 45%),
+        linear-gradient(160deg, var(--bg-a), var(--bg-b));
+      min-height: 100vh;
+    }
+    .shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 1.25rem;
+    }
+    .top-nav {
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .top-nav a {
+      color: var(--accent-2);
+      text-decoration: none;
+      margin-right: 0.55rem;
+    }
+    .top-nav a.active {
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.25rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .header-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-shrink: 0;
+    }
+    .brand img {
+      width: 74px;
+      height: auto;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+    }
+    .intro-card {
+      margin: 0.9rem 0 1rem;
+      padding: 0.95rem 1rem;
+      background: #f7fbff;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent-2);
+      border-radius: 10px;
+    }
+    .intro-card h2 {
+      margin: 0 0 0.4rem;
+      font-size: 1rem;
+      color: #1f3b63;
+    }
+    .introduction-panel {
+      border: 1px solid #cfe0ef;
+      border-radius: 8px;
+      background: #f8fcff;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+    .introduction-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.6rem 0.75rem;
+      cursor: pointer;
+      list-style: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1f3b63;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .introduction-summary::-webkit-details-marker { display: none; }
+    .introduction-summary::after {
+      content: '\25B8';
+      font-size: 0.85rem;
+      transition: transform 0.2s;
+      color: #2e5a86;
+    }
+    .introduction-panel[open] .introduction-summary::after {
+      transform: rotate(90deg);
+    }
+    .intro-toggle-state {
+      margin-left: auto;
+      color: #3c5f7f;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .introduction-body {
+      padding: 0 0.75rem 0.75rem;
+    }
+    .intro-card p {
+      margin: 0 0 0.45rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .intro-card .waiver-note {
+      margin: 0;
+      font-size: 0.82rem;
+      color: #5a6a79;
+    }
+    .waiver-accept {
+      margin-top: 0.45rem;
+      border: 1px solid #0f6d5a;
+      background: #0f6d5a;
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .waiver-accept:hover {
+      background: #0c5a4b;
+    }
+    .waiver-accept.is-complete {
+      border-color: #2e7d32;
+      background: #2e7d32;
+    }
+    .sub {
+      margin: 0.55rem 0 1.1rem;
+      color: var(--muted);
+      max-width: 68ch;
+    }
+    .profile-setup-nudge {
+      margin: -0.35rem 0 0.75rem;
+      font-size: 0.82rem;
+      color: #2d5c7e;
+      background: #eef7ff;
+      border: 1px solid #c6dcf0;
+      border-radius: 9px;
+      padding: 0.42rem 0.58rem;
+      max-width: 68ch;
+    }
+    .start-flow {
+      margin-top: 0.95rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--line);
+    }
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.75rem;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.9rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: #a9c8df;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+    .card.is-highlighted {
+      border-color: #0f6d5a;
+      box-shadow: 0 0 0 4px rgba(15, 109, 90, 0.38), 0 0 18px rgba(15, 109, 90, 0.36), 0 10px 24px rgba(0, 0, 0, 0.10);
+    }
+    .card h2 {
+      margin: 0 0 0.35rem;
+      font-size: 1.05rem;
+    }
+    .card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .loc-init {
+      margin: 0.9rem 0 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .mini-btn {
+      border: 1px solid #7ba7c8;
+      background: #ffffff;
+      color: #0b5ea8;
+      border-radius: 999px;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .mini-btn:hover {
+      background: #edf6ff;
+    }
+    .mini-btn.mini-btn-danger {
+      border-color: #9f1f1f;
+      color: #9f1f1f;
+      background: #fff5f5;
+      display: none;
+    }
+    .mini-btn.mini-btn-danger:hover {
+      background: #ffe9e9;
+    }
+    .mini-btn.mini-btn-danger.is-visible {
+      display: inline-flex;
+    }
+    .mini-btn.is-highlighted {
+      border-color: #0f6d5a;
+      background: #0f6d5a;
+      color: #ffffff;
+      box-shadow: 0 0 0 4px rgba(15, 109, 90, 0.35), 0 0 14px rgba(15, 109, 90, 0.34);
+    }
+    .loc-status {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .loc-airspace-status {
+      flex-basis: 100%;
+      margin-top: 0.1rem;
+      font-size: 0.82rem;
+      color: #5b6b7a;
+    }
+    .loc-airspace-status.is-ok {
+      color: #1f7a46;
+      font-weight: 600;
+    }
+    .loc-airspace-status.is-warn {
+      color: #a84600;
+      font-weight: 600;
+    }
+    .loc-airspace-status.is-dim {
+      color: #5b6b7a;
+    }
+    .loc-status.is-armed {
+      color: #b71c1c;
+      font-weight: 700;
+    }
+    .trash-reset-btn {
+      min-width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid #7f1d1d;
+      background: linear-gradient(180deg, #f8fbff, #e8eff6);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0 0.55rem;
+      box-shadow: 0 0 0 2px rgba(95, 124, 160, 0.16);
+      flex-shrink: 0;
+      transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+    .trash-reset-btn.is-visible {
+      display: inline-flex;
+    }
+    .trash-reset-btn .wipe-label {
+      display: none;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #5a6a79;
+      white-space: nowrap;
+    }
+    .trash-reset-btn.is-armed {
+      background: linear-gradient(180deg, #ff5e4a, #b71c1c);
+      border-color: #7f1d1d;
+      box-shadow: 0 0 0 3px rgba(183, 28, 28, 0.28), 0 8px 20px rgba(127, 29, 29, 0.28);
+    }
+    .trash-reset-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 2px rgba(95, 124, 160, 0.22), 0 6px 14px rgba(95, 124, 160, 0.18);
+    }
+    .trash-reset-btn:focus-visible {
+      outline: 2px solid #5a6a79;
+      outline-offset: 2px;
+    }
+    .trash-icon {
+      position: relative;
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .trash-icon svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+    .trash-icon .can-empty {
+      fill: none;
+      stroke: #5a6a79;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .trash-icon .can-full {
+      fill: #ffffff;
+      stroke: #ffffff;
+      stroke-width: 1.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0;
+    }
+    .trash-reset-btn.is-armed .trash-icon .can-empty {
+      opacity: 0;
+    }
+    .trash-reset-btn.is-armed .trash-icon .can-full {
+      opacity: 1;
+    }
+    .profile-icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid #2c5f86;
+      background: linear-gradient(180deg, #f8fbff, #e8eff6);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 2px rgba(44, 95, 134, 0.16);
+      flex-shrink: 0;
+      transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+    .profile-icon-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 2px rgba(44, 95, 134, 0.24), 0 6px 14px rgba(44, 95, 134, 0.2);
+      background: linear-gradient(180deg, #ffffff, #e7f3ff);
+    }
+    .profile-icon-btn:focus-visible {
+      outline: 2px solid #2c5f86;
+      outline-offset: 2px;
+    }
+    .profile-icon-btn.is-highlighted {
+      border-color: #0f6d5a;
+      box-shadow: 0 0 0 3px rgba(15, 109, 90, 0.24), 0 0 9px rgba(15, 109, 90, 0.24);
+      background: linear-gradient(180deg, #f6fffb, #e8f8f0);
+    }
+    .profile-icon {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+    .profile-icon path {
+      fill: none;
+      stroke: #2c5f86;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .profile-icon-btn.is-highlighted .profile-icon path {
+      stroke: #0f6d5a;
+    }
+    body.terms-gate-active .top-nav,
+    body.terms-gate-active .start-flow,
+    body.terms-gate-active .actions,
+    body.terms-gate-active #clear-all-data,
+    body.terms-gate-active #open-profile-drawer {
+      opacity: 0.38;
+      pointer-events: none;
+      -webkit-user-select: none;
+      user-select: none;
+      filter: grayscale(0.12);
+    }
+    body.terms-gate-active .intro-card {
+      box-shadow: 0 0 0 3px rgba(15, 109, 90, 0.22);
+    }
+    body.terms-gate-active .waiver-note,
+    body.terms-gate-active .waiver-ack,
+    body.terms-gate-active .waiver-list {
+      color: #193b57;
+    }
+    .disclaimer-panel {
+      margin-top: 0.75rem;
+      border: 1px solid #f0c040;
+      border-left: 4px solid #e6a800;
+      border-radius: 8px;
+      background: #fffdf0;
+      overflow: hidden;
+    }
+    .disclaimer-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.55rem 0.75rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #7a5200;
+      list-style: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .disclaimer-summary::-webkit-details-marker { display: none; }
+    .disclaimer-summary::after {
+      content: '\25B8';
+      font-size: 0.85rem;
+      transition: transform 0.2s;
+      color: #a07030;
+    }
+    details[open] .disclaimer-summary::after {
+      transform: rotate(90deg);
+    }
+    .disclaimer-body {
+      padding: 0 0.75rem 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="top-nav shared-site-nav" data-nav-variant="workflow" data-active="home"></nav>
+
+    <main class="hero">
+      <div class="brand-row">
+        <div class="brand">
+          <img src="assets/img/logo_25.svg" alt="Drone SOP logo">
+          <h1>Drone SOP Mission Hub</h1>
+        </div>
+        <div class="header-controls" aria-label="Profile and reset controls">
+          <button
+            id="open-profile-drawer"
+            class="profile-icon-btn"
+            type="button"
+            title="Open Profile Manager"
+            aria-label="Open Profile Manager"
+          >
+            <svg class="profile-icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <path d="M12 12.2a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4Z" />
+              <path d="M4.5 20.2a7.6 7.6 0 0 1 15 0" />
+            </svg>
+          </button>
+          <button
+            id="clear-all-data"
+            class="trash-reset-btn"
+            type="button"
+            title="Clear all forms"
+            aria-label="Clear all forms"
+            aria-pressed="false"
+          >
+            <span class="trash-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path class="can-empty" d="M4 7h16M9 4h6M6 7l1 13h10l1-13M10 11v6M14 11v6" />
+                <path class="can-full" d="M4 7h16M9 4h6M7 7l1 13h8l1-13M10 11v6M14 11v6" />
+              </svg>
+            </span>
+            <span class="wipe-label">Clear all forms</span>
+          </button>
+        </div>
+      </div>
+
+      <section class="intro-card" aria-label="Site introduction and use notice">
+        <details id="introduction-panel" class="introduction-panel" open>
+          <summary class="introduction-summary">
+            <span>Introduction</span>
+            <span id="intro-toggle-state" class="intro-toggle-state">Hide</span>
+          </summary>
+          <div class="introduction-body">
+            <p>
+              <strong>Drone Mission Hub</strong> is built around a <em>Know Before You Go</em> philosophy, bringing the essential elements of pre-flight planning into a single, structured workflow.
+            </p>
+            <p>
+              Before every flight, Canadian drone pilots are responsible for gathering operational information and determining that the proposed flight can be conducted safely. This includes conducting a site survey and assessing the operational volume, taking into account applicable regulations, environmental conditions, nearby hazards, airspace restrictions, people, structures, and other factors relevant to the planned operation.
+            </p>
+            <p>
+              The Drone Mission Hub consolidates many of the resources needed to support that decision-making process. Review current <strong>NOTAMs, aviation weather, space weather, airspace information, and mission-specific considerations</strong> before working through a consistent pre-flight checklist designed to improve preparation, situational awareness, and operational safety.
+            </p>
+            <p>
+              Whether you're flying recreationally or commercially, the Hub promotes a repeatable mission-planning workflow that supports informed Go / No-Go decisions while helping reduce the chance of overlooked items. It is designed for both desktop and mobile devices, providing quick access to the information and tools needed before every mission.
+            </p>
+            <p>
+              <strong>New to drone operations?</strong> Begin by reviewing
+              <a href="https://tc.canada.ca/en/aviation/drone-safety/learn-rules-you-fly-your-drone/flying-your-drone-safely-legally?utm_campaign=tc-drone-safety-ongoing&amp;utm_medium=vurl&amp;utm_source=canada-ca-safe-legal-drones" target="_blank" rel="noopener">Transport Canada's Flying Your Drone Safely and Legally</a>
+              guide, together with the applicable requirements of <strong>Canadian Aviation Regulations (CARs) Part IX</strong>, including
+              <a href="https://laws-lois.justice.gc.ca/eng/regulations/SOR-96-433/section-901.24.html" target="_blank" rel="noopener">CAR 901.24 – Pre-flight Information</a>
+              and
+              <a href="https://laws-lois.justice.gc.ca/eng/regulations/SOR-96-433/section-901.27.html" target="_blank" rel="noopener">CAR 901.27 – Site Survey</a>.
+            </p>
+          </div>
+        </details>
+        <details id="disclaimer-panel" class="disclaimer-panel" open>
+          <summary class="disclaimer-summary">
+            <span>⚠&#xA0; Disclaimer &amp; User Acknowledgement</span>
+          </summary>
+          <div class="disclaimer-body">
+            <p class="waiver-note">
+              The <strong>Drone Mission Hub</strong> is provided as a planning and decision-support tool for remotely piloted aircraft (RPAS) operations. It is intended to assist with pre-flight planning and site survey activities but does <strong>not</strong> replace official aeronautical information, regulatory publications, or operational approvals.
+            </p>
+            <p class="waiver-note">
+              Before every flight, pilots are responsible for obtaining and verifying current information from the appropriate official sources, including NAV CANADA, Transport Canada, and any other applicable authorities.
+            </p>
+            <p class="waiver-ack">By selecting <strong>I Acknowledge &amp; Continue</strong>, you acknowledge that:</p>
+            <ul class="waiver-list">
+              <li>You understand this site is an informational planning tool and is not an official aviation information service.</li>
+              <li>You are responsible for verifying all operational information using official and current sources before commencing a flight.</li>
+              <li>You are responsible for complying with the Canadian Aviation Regulations (CARs) and any other applicable federal, provincial, municipal, or local requirements.</li>
+              <li>You are responsible for conducting an appropriate pre-flight assessment and site survey for your planned operation.</li>
+              <li>You assume full responsibility for the safe and lawful conduct of your RPAS operation.</li>
+            </ul>
+            <p class="waiver-note">
+              Your acknowledgement is stored locally in your browser so that this introduction is not displayed each time you return. No personal information is collected as part of this acknowledgement.
+            </p>
+            <button class="waiver-accept">I Acknowledge &amp; Continue</button>
+          </div>
+        </details>
+      </section>
+
+      <section class="start-flow" aria-label="Start flow guidance">
+        <p class="sub">
+          Start by setting your current Pilot Location. Then use Tools for weather, NOTAM, and survey checks, Procedures for the right SOP checklist, Flight Log to record the mission, and Flight Summary to review and save your records.
+        </p>
+        <p id="profile-setup-nudge" class="profile-setup-nudge" hidden>Tip: open My Profile first to reuse pilot details and speed up repeat mission setup.</p>
+        <div class="loc-init">
+          <button id="init-pilot-location" class="mini-btn" type="button">Set Pilot Location</button>
+          <span id="pilot-location-status" class="loc-status">No pilot location set yet.</span>
+          <span id="pilot-airspace-status" class="loc-airspace-status is-dim">Airspace status will appear after pilot location is set.</span>
+        </div>
+        <p id="profile-quick-summary" class="profile-quick-summary" hidden></p>
+      </section>
+
+      <section class="actions" aria-label="Primary links">
+        <a id="tools-card" class="card" href="tools.html">
+          <h2>Tools</h2>
+          <p>Open weather, NOTAM, and survey tools before flight.</p>
+        </a>
+        <a class="card" href="Sections.html">
+          <h2>Checklists and Procedures</h2>
+          <p>Open the SOP checklist for your Micro, Basic, or Advanced category.</p>
+        </a>
+        <a class="card" href="flight-log.html">
+          <h2>Flight Log</h2>
+          <p>Record pilot, observer, timing, and location details for the mission.</p>
+        </a>
+        <a class="card" href="summary.html">
+          <h2>Flight Summary</h2>
+          <p>Review mission details and save a summary for your records.</p>
+        </a>
+      </section>
+
+    </main>
+  </div>
+
+  <div id="profile-backdrop" class="profile-backdrop" hidden></div>
+  <aside
+    id="profile-drawer"
+    class="profile-drawer"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-labelledby="profile-drawer-title"
+  >
+    <div class="profile-drawer-header">
+      <div>
+        <h2 id="profile-drawer-title" class="profile-drawer-title">My Profile</h2>
+        <p class="profile-drawer-subtitle">Save pilot defaults so repeat visits are faster and mirror a profile JSON into the RC2 workspace.</p>
+      </div>
+      <div class="profile-drawer-header-actions">
+        <div id="mission-manager-actions" class="profile-inline-actions profile-header-actions" hidden>
+          <button
+            id="open-mission-profile-drawer"
+            class="profile-advanced-icon-btn"
+            type="button"
+            title="Open Advanced Profile Details"
+            aria-label="Open Advanced Profile Details"
+          >
+            <img class="profile-advanced-icon" src="assets/img/drone.svg" alt="" aria-hidden="true">
+          </button>
+        </div>
+        <button id="close-profile-drawer" class="profile-close-btn" type="button" aria-label="Close profile panel">Close</button>
+      </div>
+    </div>
+    <form id="profile-form" class="profile-form" autocomplete="off">
+      <div class="profile-field">
+        <label for="profile-pilot-name">Pilot Name</label>
+        <input id="profile-pilot-name" name="pilotName" type="text" autocomplete="off" placeholder="Enter pilot name">
+      </div>
+
+      <div class="profile-field">
+        <label for="profile-pilot-cell">Cell Phone</label>
+        <input id="profile-pilot-cell" name="pilotCell" type="tel" autocomplete="off" inputmode="numeric" placeholder="(###) ###-####">
+      </div>
+
+      <div class="profile-field">
+        <label for="profile-pilot-email">Email</label>
+        <input id="profile-pilot-email" name="pilotEmail" type="email" autocomplete="off" placeholder="pilot@example.com">
+      </div>
+
+      <div class="profile-field">
+        <label for="profile-mission-category">Drone Mission Category</label>
+        <select id="profile-mission-category" name="droneMissionCategory">
+          <option value="micro">Micro</option>
+          <option value="basic">Basic</option>
+          <option value="advanced">Advanced</option>
+        </select>
+      </div>
+
+      <div class="profile-field">
+        <label for="profile-drone-label">Preferred Drone (Optional)</label>
+        <input id="profile-drone-label" name="preferredDroneLabel" type="text" autocomplete="off" placeholder="Example: Mini 4 Pro; Mini 3 Pro; Mavic 2 Pro">
+      </div>
+
+      <div class="profile-field profile-mode-field">
+        <div class="profile-mode-label-row">
+          <label for="profile-mission-status">Profile Usage Mode</label>
+          <button id="profile-mode-help-btn" class="profile-help-btn" type="button" title="Usage mode help" aria-label="Usage mode help" aria-controls="profile-usage-help" aria-expanded="false">?</button>
+        </div>
+        <select id="profile-mission-status" name="lastMissionStatus">
+          <option value="draft">Mission Only (this session)</option>
+          <option value="active">Workspace Reuse (saved to browser cache)</option>
+          <option value="closed">Private Local Copy (user-managed)</option>
+        </select>
+        <p id="profile-usage-indicator" class="profile-usage-indicator"></p>
+        <p id="profile-private-save-hint" class="profile-field-note" hidden>Private Local Copy does not unlock advanced export. Save a validated Workspace Reuse profile first if you need export or Mission Manager access.</p>
+        <div id="profile-usage-help" class="profile-usage-help" hidden>
+          <div class="profile-usage-help-body">
+            <p><strong>Mission Only:</strong> temporary for current session.</p>
+            <p><strong>Workspace Reuse:</strong> saved to browser cache for return visits.</p>
+            <p><strong>Private Local Copy:</strong> load from your file each session; not kept in browser cache.</p>
+          </div>
+        </div>
+      </div>
+
+      <details id="profile-advanced-access-panel" class="profile-validation-panel" open>
+        <summary class="profile-validation-summary">
+          <span class="profile-validation-summary-title">Advanced Access</span>
+          <span id="profile-advanced-access-toggle-state" class="profile-validation-toggle-state">Hide</span>
+        </summary>
+        <div id="profile-advanced-access-content" class="profile-validation-content">
+          <p id="profile-advanced-access-status" class="profile-validation-status"></p>
+          <div id="profile-advanced-access-attest-row" class="profile-checkbox-row profile-validation-checkbox-row">
+            <input id="profile-advanced-access-attested" class="profile-checkbox-input" type="checkbox">
+            <label class="profile-validation-check-label" for="profile-advanced-access-attested">I have read the disclaimer and the export or Mission Manager instructions for KMZ, KML, GeoJSON, and JSON workflows.</label>
+          </div>
+          <p id="profile-advanced-access-note" class="profile-field-note">Confirm the above to unlock advanced exports and Mission Manager. If unchecked, exports are disabled.</p>
+        </div>
+      </details>
+
+      <details id="profile-automation-panel" class="profile-automation-panel">
+        <summary class="profile-automation-summary">Mission Automation Manager (Optional)</summary>
+        <div class="profile-automation-body">
+          <div class="profile-field">
+            <div class="profile-checkbox-row">
+              <input id="profile-mission-automation-enabled" class="profile-checkbox-input" name="missionAutomationEnabled" type="checkbox">
+              <label class="profile-checkbox-label" for="profile-mission-automation-enabled">Use Mission Automation Structure</label>
+            </div>
+            <p class="profile-field-note">Enable for RC2 mission automation and profile mirroring into RC2_Missions.</p>
+            <p id="mission-automation-state" class="profile-field-note"></p>
+          </div>
+
+          <p id="mission-automation-note" class="profile-field-note">Use only for RC2 automation with REGISTRY and Mission_A/B/C folders. Use the header profile icon to open Advanced Profile Details. Windows only: requires completed onboarding and a Windows PC; iOS/iPadOS are not compatible for RC2_Missions/MTP workflow steps.</p>
+        </div>
+      </details>
+    </form>
+    <div class="profile-drawer-footer">
+      <button id="import-profile-state" class="profile-import-btn" type="button">Import Profile</button>
+      <button id="export-profile-state" class="profile-export-btn" type="button">Export Profile</button>
+      <button id="cancel-profile-save" class="profile-cancel-btn" type="button">Cancel</button>
+      <button id="save-profile-state" class="profile-save-btn" type="submit" form="profile-form">Save Profile</button>
+    </div>
+    <input id="profile-import-file" type="file" accept="application/json,.json" hidden title="Look for DroneSOP_user.json">
+  </aside>
+
+  <aside
+    id="mission-profile-drawer"
+    class="profile-drawer"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-labelledby="mission-profile-drawer-title"
+  >
+    <div class="profile-drawer-header">
+      <div>
+        <h2 id="mission-profile-drawer-title" class="profile-drawer-title">Mission Automation Manager</h2>
+        <p class="profile-drawer-subtitle">Configure mission slot UUIDs and export folder mappings for automation testing.</p>
+      </div>
+      <button id="close-mission-profile-drawer" class="profile-close-btn" type="button" aria-label="Close mission profile panel">Close</button>
+    </div>
+    <form id="mission-profile-form" class="profile-form">
+      <div class="profile-field">
+        <label for="mission-default-export-slot">Default GGcode Export Slot</label>
+        <select id="mission-default-export-slot" name="defaultExportSlot">
+          <option value="mission_a">Mission A</option>
+          <option value="mission_b">Mission B</option>
+          <option value="mission_c">Mission C</option>
+        </select>
+        <p class="profile-field-note">Used by GGcode for UUID-based KMZ naming when Profile Slot mode is selected.</p>
+      </div>
+
+      <div class="profile-field">
+        <label for="mission-uuid-mission-a">Mission A UUID Slot</label>
+        <input id="mission-uuid-mission-a" name="rc2UuidMissionA" type="text" autocomplete="off" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+      </div>
+
+      <div class="profile-field">
+        <label for="mission-uuid-mission-b">Mission B UUID Slot</label>
+        <input id="mission-uuid-mission-b" name="rc2UuidMissionB" type="text" autocomplete="off" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+      </div>
+
+      <div class="profile-field">
+        <label for="mission-uuid-mission-c">Mission C UUID Slot</label>
+        <input id="mission-uuid-mission-c" name="rc2UuidMissionC" type="text" autocomplete="off" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+      </div>
+
+      <div class="profile-field">
+        <label for="mission-export-dir-mission-a">Export Subfolder for Mission A</label>
+        <input id="mission-export-dir-mission-a" name="rc2ExportDirMissionA" type="text" autocomplete="off" placeholder="Example: Mission_A">
+      </div>
+
+      <div class="profile-field">
+        <label for="mission-export-dir-mission-b">Export Subfolder for Mission B</label>
+        <input id="mission-export-dir-mission-b" name="rc2ExportDirMissionB" type="text" autocomplete="off" placeholder="Example: Mission_B">
+      </div>
+
+      <div class="profile-field">
+        <label for="mission-export-dir-mission-c">Export Subfolder for Mission C</label>
+        <input id="mission-export-dir-mission-c" name="rc2ExportDirMissionC" type="text" autocomplete="off" placeholder="Example: Mission_C">
+      </div>
+    </form>
+    <p id="mission-profile-status" class="profile-field-note">Use Load UUID Roles to read REGISTRY/uuid_roles.json and fill Mission A/B/C UUID slots.</p>
+    <div class="profile-drawer-footer">
+      <button id="load-mission-uuid-roles" class="profile-import-btn" type="button">Load UUID Roles</button>
+      <button id="clear-uuid-slots" class="profile-cancel-btn" type="button" title="Clear stale UUID slot assignments from browser cache">Clear UUID Slots</button>
+      <button id="import-mission-config" class="profile-import-btn" type="button">Import Config</button>
+      <button id="export-mission-config" class="profile-export-btn" type="button">Export Config</button>
+      <button id="cancel-mission-profile-save" class="profile-cancel-btn" type="button">Cancel</button>
+      <button id="save-mission-profile-state" class="profile-save-btn" type="submit" form="mission-profile-form">Save Profile</button>
+    </div>
+    <input id="mission-config-import-file" type="file" accept="application/json,.json" hidden title="Load AdvCfg.json">
+  </aside>
+
+  <script>
+    const TERMS_ACCEPTED_KEY = 'droneSopTermsAcceptedV1';
+    const TERMS_VERSION_KEY = 'droneSopTermsVersion';
+    const TERMS_VERSION_VALUE = '2026-04-05';
+    const INTRO_COLLAPSED_KEY = 'droneSopIntroCollapsedV1';
+    const PROFILE_STATE_KEY = 'dsop.profileState.v1';
+    const PROFILE_SESSION_STATE_KEY = 'dsop.profileState.session.v1';
+    const MISSION_AUTOMATION_PROFILE_KEY = 'dsop.missionAutomationProfile.v1';
+    const PROFILE_ADVANCED_ACCESS_KEY = 'dsop.profileAdvancedAccess.v1';
+    const UUID_ROLES_REGISTRY_KEY = 'dsop.uuidRolesRegistry.v1';
+    const PROFILE_ADVANCED_PANEL_COLLAPSED_KEY = 'dsop.profileAdvancedPanelCollapsed.v1';
+    const PROFILE_ADVANCED_ACCESS_ATTESTED_KEY = 'dsop.profileAdvancedAccessAttested.v1';
+    const PROFILE_ADVANCED_ACCESS_VERSION = '2026-04-09';
+    const PROFILE_EXPORT_FILENAME = 'DroneSOP_user.json';
+    const PLACEHOLDER_EMAIL_TOKENS = ['garbage', 'fake', 'invalid', 'example', 'test', 'noreply', 'no-reply'];
+    let rc2ProfileRootHandle = null;
+
+    // Detect whether this device/browser can support the RC2 Mission Automation workflow.
+    // Requires the File System Access API (Chrome/Edge desktop) and a non-mobile platform.
+    function detectRc2Capability() {
+      const hasFileSystemAccess = 'showDirectoryPicker' in window;
+      const uaDataMobile = navigator.userAgentData && navigator.userAgentData.mobile === true;
+      const uaStringMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const isMobile = uaDataMobile || uaStringMobile;
+      const supported = hasFileSystemAccess && !isMobile;
+      let reason = null;
+      if (isMobile) {
+        reason = 'RC2 Mission Automation requires a Windows PC with the DJI RC2 connected via USB. Not available on mobile devices.';
+      } else if (!hasFileSystemAccess) {
+        reason = 'RC2 Mission Automation requires Chrome or Edge on a Windows PC (File System Access API not available in this browser).';
+      }
+      return { supported, isMobile, hasFileSystemAccess, reason };
+    }
+    const RC2_CAPABILITY = detectRc2Capability();
+
+    let profileState = null;
+    let missionAutomationState = null;
+    let advancedAccessPanelCollapsedPreference = null;
+
+    function toTitleCaseCategory(value) {
+      if (value === 'micro') return 'Micro';
+      if (value === 'advanced') return 'Advanced';
+      return 'Basic';
+    }
+
+    function getDefaultProfileState() {
+      return {
+        pilotName: '',
+        pilotCell: '',
+        pilotEmail: '',
+        droneMissionCategory: 'basic',
+        preferredDroneLabel: '',
+        lastUsedMissionCategory: 'basic',
+        lastMissionStartedAt: null,
+        lastMissionStatus: 'draft',
+        termsAccepted: false,
+        termsAcceptedAt: null,
+        termsVersion: TERMS_VERSION_VALUE,
+        introCollapsed: false,
+        profileUpdatedAt: null
+      };
+    }
+
+    function getDefaultMissionAutomationState() {
+      return {
+        missionAutomationEnabled: false,
+        defaultExportSlot: 'mission_a',
+        rc2UuidMissionA: '',
+        rc2UuidMissionB: '',
+        rc2UuidMissionC: '',
+        rc2ExportDirMissionA: 'Mission_A',
+        rc2ExportDirMissionB: 'Mission_B',
+        rc2ExportDirMissionC: 'Mission_C',
+        profileUpdatedAt: null
+      };
+    }
+
+    function normalizeMissionCategory(value) {
+      return ['micro', 'basic', 'advanced'].includes(value) ? value : 'basic';
+    }
+
+    function normalizeMissionStatus(value) {
+      return ['draft', 'active', 'closed'].includes(value) ? value : 'draft';
+    }
+
+    function toUsageModeLabel(value) {
+      const mode = normalizeMissionStatus(value);
+      if (mode === 'active') return 'Workspace Reuse';
+      if (mode === 'closed') return 'Private Local Copy';
+      return 'Mission Only';
+    }
+
+    function getUsageModeIndicatorText(modeValue) {
+      const mode = normalizeMissionStatus(modeValue);
+      if (mode === 'active') {
+        return 'Stored in browser cache for return visits on this device.';
+      }
+      if (mode === 'closed') {
+        return 'Load your private saved profile each session; not kept in browser cache.';
+      }
+      return 'Temporary session profile only; clears when the browser session ends.';
+    }
+
+    function updateProfileUsageModeUi() {
+      const modeSelect = document.getElementById('profile-mission-status');
+      const indicator = document.getElementById('profile-usage-indicator');
+      const importBtn = document.getElementById('import-profile-state');
+      const saveBtn = document.getElementById('save-profile-state');
+      const privateHint = document.getElementById('profile-private-save-hint');
+      if (!modeSelect) return;
+
+      const mode = normalizeMissionStatus(modeSelect.value || 'draft');
+      if (indicator) indicator.textContent = getUsageModeIndicatorText(mode);
+
+      if (importBtn) {
+        importBtn.textContent = mode === 'closed' ? 'Load Private Profile' : 'Import Profile';
+      }
+
+      const isPrivateMode = mode === 'closed';
+      if (saveBtn) {
+        saveBtn.disabled = isPrivateMode;
+        saveBtn.setAttribute('aria-disabled', isPrivateMode ? 'true' : 'false');
+        saveBtn.title = isPrivateMode ? 'Private Local Copy uses Export Profile instead of Save Profile.' : 'Save Profile';
+      }
+      if (privateHint) {
+        privateHint.hidden = !isPrivateMode;
+      }
+    }
+
+    function setProfileUsageHelpOpen(isOpen) {
+      const profileModeHelpBtn = document.getElementById('profile-mode-help-btn');
+      const profileUsageHelp = document.getElementById('profile-usage-help');
+      if (!profileModeHelpBtn || !profileUsageHelp) return;
+
+      profileUsageHelp.hidden = !isOpen;
+      profileModeHelpBtn.classList.toggle('is-active', isOpen);
+      profileModeHelpBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    function updateMissionAutomationUi() {
+      const missionAutomationEnabledInput = document.getElementById('profile-mission-automation-enabled');
+      const missionManagerActions = document.getElementById('mission-manager-actions');
+      const missionAutomationNote = document.getElementById('mission-automation-note');
+      const missionAutomationStateNote = document.getElementById('mission-automation-state');
+      const openMissionProfileBtn = document.getElementById('open-mission-profile-drawer');
+      const saveMissionProfileBtn = document.getElementById('save-mission-profile-state');
+      const accessState = getAdvancedAccessState();
+      if (!missionAutomationEnabledInput || !missionManagerActions) return;
+
+      const mamEnabled = missionAutomationEnabledInput.checked;
+      const canOpenAdvancedProfile = accessState.validated && RC2_CAPABILITY.supported;
+      const platformBlocked = !RC2_CAPABILITY.supported;
+      const platformReason = RC2_CAPABILITY.reason || '';
+
+      missionAutomationEnabledInput.disabled = !accessState.validated || platformBlocked;
+      missionAutomationEnabledInput.title = platformBlocked
+        ? platformReason
+        : accessState.validated ? '' : 'Mission Manager is locked until advanced access is validated.';
+      if (openMissionProfileBtn) {
+        openMissionProfileBtn.disabled = !canOpenAdvancedProfile;
+        openMissionProfileBtn.title = platformBlocked
+          ? platformReason
+          : canOpenAdvancedProfile
+            ? 'Open Advanced Profile details (Mission slots, UUIDs, and export subfolders).'
+            : accessState.message;
+      }
+      if (saveMissionProfileBtn) {
+        saveMissionProfileBtn.disabled = !accessState.validated || platformBlocked;
+        saveMissionProfileBtn.setAttribute('aria-disabled', (accessState.validated && !platformBlocked) ? 'false' : 'true');
+      }
+      missionManagerActions.hidden = !canOpenAdvancedProfile;
+      missionManagerActions.style.display = canOpenAdvancedProfile ? 'flex' : 'none';
+
+      if (missionAutomationStateNote) {
+        missionAutomationStateNote.textContent = platformBlocked
+          ? `MAM status: Not available. ${platformReason}`
+          : !accessState.validated
+            ? `MAM status: Locked. ${accessState.message}`
+            : mamEnabled
+              ? 'MAM status: On. Managed in Advanced Profile Details.'
+              : 'MAM status: Off. You can still open Advanced Profile Details to prefill slot mappings.';
+      }
+
+      if (missionAutomationNote) {
+        missionAutomationNote.textContent = platformBlocked
+          ? platformReason
+          : !accessState.validated
+            ? `Mission Automation Manager is locked until advanced access is validated. Windows PC with Chrome or Edge required.`
+            : mamEnabled
+              ? `MAM is active. Advanced Profile Details are available. UUID slots load from REGISTRY/uuid_roles.json each session.`
+              : `MAM is off. Advanced Profile Details are still available for setup. UUID slots load from REGISTRY/uuid_roles.json each session.`;
+      }
+
+      updateAdvancedProfileTriggerUi(accessState, mamEnabled);
+    }
+
+    function updateProfileSetupNudge() {
+      const nudge = document.getElementById('profile-setup-nudge');
+      if (!nudge || !profileState) return;
+      const hasNamedProfile = Boolean(String(profileState.pilotName || '').trim());
+      nudge.hidden = hasNamedProfile;
+    }
+
+    function updateProfileIconCue() {
+      const profileBtn = document.getElementById('open-profile-drawer');
+      if (!profileBtn || !profileState) return;
+      const hasNamedProfile = Boolean(String(profileState.pilotName || '').trim());
+      profileBtn.classList.toggle('is-highlighted', !hasNamedProfile);
+    }
+
+    function hasMeaningfulProfileData(state) {
+      if (!state || typeof state !== 'object') return false;
+      return Boolean(
+        String(state.pilotName || '').trim() ||
+        String(state.pilotCell || '').trim() ||
+        String(state.pilotEmail || '').trim() ||
+        String(state.preferredDroneLabel || '').trim()
+      );
+    }
+
+    function normalizePreferredDrones(value) {
+      return String(value || '')
+        .split(';')
+        .map((part) => part.trim())
+        .filter(Boolean)
+        .join('; ');
+    }
+
+    function isAnonymousProfileEmail(emailRaw) {
+      return String(emailRaw || '').trim().toLowerCase() === 'anonymous@user';
+    }
+
+    function validateProfileEmail(emailRaw) {
+      const email = String(emailRaw || '').trim();
+      if (!email) return '';
+      if (isAnonymousProfileEmail(email)) return '';
+      if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email)) {
+        return 'Enter a valid email address (name@domain.tld), or use anonymous@user.';
+      }
+      const lowered = email.toLowerCase();
+      if (PLACEHOLDER_EMAIL_TOKENS.some((token) => lowered.includes(token))) {
+        return 'Use a real contact email address (placeholder/test values are blocked).';
+      }
+      return '';
+    }
+
+    function updateProfileEmailValidity(emailInput) {
+      if (!emailInput) return '';
+      const message = validateProfileEmail(emailInput.value);
+      emailInput.setCustomValidity(message);
+      return message;
+    }
+
+    function getPhoneDigits(value) {
+      return String(value || '').replace(/\D/g, '');
+    }
+
+    function formatPhoneDisplay(value) {
+      const digits = getPhoneDigits(value).slice(0, 10);
+      if (!digits) return '';
+      if (digits.length <= 3) return `(${digits}`;
+      if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+      return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+    }
+
+    function isObviousFakePhoneDigits(digits) {
+      if (!digits) return false;
+      if (/^(\d)\1{8,}$/.test(digits)) return true;
+      const disallowed = new Set(['0123456789', '1234567890', '123456789', '9876543210', '987654321']);
+      if (disallowed.has(digits)) return true;
+      if (digits.startsWith('000')) return true;
+      if (digits.length === 10 && digits.slice(3, 6) === '000') return true;
+      return false;
+    }
+
+    function validateProfilePhone(phoneRaw) {
+      const digits = getPhoneDigits(phoneRaw);
+      if (!digits) return '';
+      if (digits.length !== 10) {
+        return 'Enter a valid 10-digit phone number.';
+      }
+      if (isObviousFakePhoneDigits(digits)) {
+        return 'Enter a real phone number (sequential/repeating test numbers are blocked).';
+      }
+      return '';
+    }
+
+    function updateProfilePhoneInput(phoneInput) {
+      if (!phoneInput) return '';
+      const formatted = formatPhoneDisplay(phoneInput.value);
+      phoneInput.value = formatted;
+      const message = validateProfilePhone(formatted);
+      phoneInput.setCustomValidity(message);
+      return message;
+    }
+
+    function buildProfileIdentitySignature(state) {
+      if (!state || typeof state !== 'object') return '';
+      return [
+        String(state.pilotName || '').trim().toLowerCase(),
+        getPhoneDigits(state.pilotCell || ''),
+        String(state.pilotEmail || '').trim().toLowerCase(),
+        normalizeMissionCategory(state.droneMissionCategory)
+      ].join('|');
+    }
+
+    function getSavedWorkspaceProfileState() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(PROFILE_STATE_KEY) || 'null');
+        if (!parsed || typeof parsed !== 'object') return null;
+        if (normalizeMissionStatus(parsed.lastMissionStatus) !== 'active') return null;
+        return {
+          ...getDefaultProfileState(),
+          ...parsed,
+          pilotName: String(parsed.pilotName || '').trim(),
+          pilotCell: formatPhoneDisplay(parsed.pilotCell || ''),
+          pilotEmail: String(parsed.pilotEmail || '').trim(),
+          preferredDroneLabel: normalizePreferredDrones(parsed.preferredDroneLabel || ''),
+          droneMissionCategory: normalizeMissionCategory(parsed.droneMissionCategory),
+          lastMissionStatus: normalizeMissionStatus(parsed.lastMissionStatus)
+        };
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    function getAdvancedAccessRecord() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(PROFILE_ADVANCED_ACCESS_KEY) || 'null');
+        return parsed && typeof parsed === 'object' ? parsed : null;
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    function clearAdvancedAccessRecord() {
+      localStorage.removeItem(PROFILE_ADVANCED_ACCESS_KEY);
+      localStorage.removeItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY);
+      localStorage.removeItem(PROFILE_ADVANCED_PANEL_COLLAPSED_KEY);
+      advancedAccessPanelCollapsedPreference = null;
+    }
+
+    function loadAdvancedAccessPanelCollapsedPreference() {
+      const stored = localStorage.getItem(PROFILE_ADVANCED_PANEL_COLLAPSED_KEY);
+      if (stored === 'yes') return true;
+      if (stored === 'no') return false;
+      return null;
+    }
+
+    function persistAdvancedAccessPanelCollapsedPreference(isCollapsed) {
+      localStorage.setItem(PROFILE_ADVANCED_PANEL_COLLAPSED_KEY, isCollapsed ? 'yes' : 'no');
+    }
+
+    function updateAdvancedProfileTriggerUi(accessState = getAdvancedAccessState(), mamEnabled = normalizeBoolean(missionAutomationState && missionAutomationState.missionAutomationEnabled)) {
+      const openMissionProfileBtn = document.getElementById('open-mission-profile-drawer');
+      if (!openMissionProfileBtn) return;
+      const isReady = Boolean(accessState && accessState.validated) && normalizeBoolean(mamEnabled);
+      openMissionProfileBtn.classList.toggle('is-ready', isReady);
+    }
+
+    function getProfileEligibilityMessage(state) {
+      if (!state || typeof state !== 'object') {
+        return 'Create a valid profile before unlocking advanced access.';
+      }
+      if (!String(state.pilotName || '').trim()) {
+        return 'Enter pilot name to unlock advanced access.';
+      }
+      const phoneDigits = getPhoneDigits(state.pilotCell || '');
+      if (!phoneDigits) {
+        return 'Enter a real 10-digit phone number to unlock advanced access.';
+      }
+      const phoneMessage = validateProfilePhone(state.pilotCell || '');
+      if (phoneMessage) {
+        return phoneMessage;
+      }
+      const email = String(state.pilotEmail || '').trim();
+      if (!email || isAnonymousProfileEmail(email)) {
+        return 'Enter a real contact email address to unlock advanced access.';
+      }
+      const emailMessage = validateProfileEmail(email);
+      if (emailMessage) {
+        return emailMessage;
+      }
+      if (!hasAcceptedTerms()) {
+        return 'Accept the disclaimer terms before unlocking advanced access.';
+      }
+      if (normalizeMissionStatus(state.lastMissionStatus) !== 'active') {
+        return 'Set Profile Usage Mode to Workspace Reuse before unlocking advanced access.';
+      }
+      return '';
+    }
+
+    function getAdvancedAccessState(state = profileState) {
+      const currentState = state || getDefaultProfileState();
+      const eligibilityMessage = getProfileEligibilityMessage(currentState);
+      const savedState = getSavedWorkspaceProfileState();
+      const currentSignature = buildProfileIdentitySignature(currentState);
+      const savedSignature = buildProfileIdentitySignature(savedState);
+      const savedMatchesCurrent = Boolean(savedState && currentSignature && savedSignature === currentSignature);
+      const attested = localStorage.getItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY) === 'true';
+      const record = getAdvancedAccessRecord();
+      const hasLegacyValidatedRecord = Boolean(
+        record
+        && record.version === PROFILE_ADVANCED_ACCESS_VERSION
+        && record.signature === currentSignature
+      );
+      const validated = Boolean(
+        !eligibilityMessage
+        && savedMatchesCurrent
+        && (attested || hasLegacyValidatedRecord)
+      );
+
+      let message = 'Read the advanced export note and validate this saved profile.';
+      if (eligibilityMessage) {
+        message = eligibilityMessage;
+      } else if (!savedMatchesCurrent) {
+        message = 'Click Save Profile in Workspace Reuse mode, then check the acknowledgment to unlock advanced access.';
+      } else if (!attested && !hasLegacyValidatedRecord) {
+        message = 'Check the acknowledgment to unlock advanced exports and Mission Manager.';
+      } else if (validated) {
+        message = 'User validated for advanced exports and Mission Manager on this device.';
+      }
+
+      return {
+        validated,
+        eligibilityMessage,
+        savedMatchesCurrent,
+        currentSignature,
+        message
+      };
+    }
+
+    function updateAdvancedAccessUi() {
+      const panel = document.getElementById('profile-advanced-access-panel');
+      const panelContent = document.getElementById('profile-advanced-access-content');
+      const statusNote = document.getElementById('profile-advanced-access-status');
+      const panelToggleState = document.getElementById('profile-advanced-access-toggle-state');
+      const exportBtn = document.getElementById('export-profile-state');
+      const attestedInput = document.getElementById('profile-advanced-access-attested');
+      const accessState = getAdvancedAccessState();
+      const attested = Boolean(attestedInput && attestedInput.checked);
+      const defaultCollapsed = accessState.validated && attested;
+      const isCollapsed = advancedAccessPanelCollapsedPreference == null
+        ? defaultCollapsed
+        : advancedAccessPanelCollapsedPreference;
+
+      if (panel) {
+        panel.open = !isCollapsed;
+      }
+      if (panelContent) {
+        panelContent.hidden = isCollapsed;
+      }
+      if (panelToggleState) {
+        panelToggleState.textContent = isCollapsed ? 'Show' : 'Hide';
+      }
+
+      if (statusNote) {
+        const message = attested ? 'Acknowledged.' : 'You must check to unlock exports and Mission Manager.';
+        statusNote.textContent = message;
+        statusNote.classList.toggle('is-ok', attested);
+        statusNote.classList.toggle('is-locked', !attested);
+      }
+
+      if (exportBtn) {
+        exportBtn.disabled = !attested;
+        exportBtn.setAttribute('aria-disabled', attested ? 'false' : 'true');
+        exportBtn.title = attested ? 'Export Profile' : 'Attestation must be checked to export.';
+      }
+
+      updateAdvancedProfileTriggerUi(accessState);
+    }
+
+    function normalizeBoolean(value) {
+      if (typeof value === 'boolean') return value;
+      const lowered = String(value || '').trim().toLowerCase();
+      return lowered === 'true' || lowered === '1' || lowered === 'yes' || lowered === 'on';
+    }
+
+    function normalizeExportSlot(value) {
+      return ['mission_a', 'mission_b', 'mission_c'].includes(value) ? value : 'mission_a';
+    }
+
+    function normalizeUuidOrEmpty(value) {
+      const raw = String(value || '').trim().toUpperCase();
+      if (!raw) return '';
+      return /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/.test(raw) ? raw : '';
+    }
+
+    function normalizeExportDir(value, fallback) {
+      const cleaned = String(value || '')
+        .trim()
+        .replace(/[\\/:*?"<>|]/g, '')
+        .replace(/\.+$/g, '')
+        .replace(/^\.+/g, '');
+      return cleaned || fallback;
+    }
+
+    function loadProfileState() {
+      const defaults = getDefaultProfileState();
+      let parsed = null;
+
+      try {
+        const sessionStateRaw = sessionStorage.getItem(PROFILE_SESSION_STATE_KEY);
+        const localStateRaw = localStorage.getItem(PROFILE_STATE_KEY);
+        parsed = JSON.parse(sessionStateRaw || localStateRaw || 'null');
+      } catch (_err) {
+        parsed = null;
+      }
+
+      const state = {
+        ...defaults,
+        ...(parsed && typeof parsed === 'object' ? parsed : {})
+      };
+
+      state.pilotName = String(state.pilotName || '').trim();
+      state.pilotCell = String(state.pilotCell || localStorage.getItem('pilotCell') || '').trim();
+      state.pilotEmail = String(state.pilotEmail || localStorage.getItem('pilotEmail') || '').trim();
+      state.preferredDroneLabel = String(state.preferredDroneLabel || '').trim();
+      state.droneMissionCategory = normalizeMissionCategory(state.droneMissionCategory);
+      state.lastUsedMissionCategory = normalizeMissionCategory(state.lastUsedMissionCategory || state.droneMissionCategory);
+      state.lastMissionStatus = normalizeMissionStatus(state.lastMissionStatus);
+
+      const termsAcceptedLegacy = localStorage.getItem(TERMS_ACCEPTED_KEY) === 'yes';
+      state.termsAccepted = state.termsAccepted || termsAcceptedLegacy;
+      state.termsAcceptedAt = localStorage.getItem('termsAcceptedAt') || state.termsAcceptedAt;
+      state.termsVersion = localStorage.getItem(TERMS_VERSION_KEY) || state.termsVersion;
+
+      if (localStorage.getItem(INTRO_COLLAPSED_KEY) != null) {
+        state.introCollapsed = localStorage.getItem(INTRO_COLLAPSED_KEY) === 'yes';
+      }
+
+      return state;
+    }
+
+    function loadMissionAutomationState() {
+      const defaults = getDefaultMissionAutomationState();
+      let parsed = null;
+
+      try {
+        parsed = JSON.parse(localStorage.getItem(MISSION_AUTOMATION_PROFILE_KEY) || 'null');
+      } catch (_err) {
+        parsed = null;
+      }
+
+      if (!parsed || typeof parsed !== 'object') {
+        try {
+          const legacy = JSON.parse(localStorage.getItem(PROFILE_STATE_KEY) || 'null');
+          if (legacy && typeof legacy === 'object') {
+            parsed = {
+              missionAutomationEnabled: legacy.missionAutomationEnabled,
+              defaultExportSlot: legacy.defaultExportSlot,
+              rc2UuidMissionA: legacy.rc2UuidMissionA,
+              rc2UuidMissionB: legacy.rc2UuidMissionB,
+              rc2UuidMissionC: legacy.rc2UuidMissionC,
+              rc2ExportDirMissionA: legacy.rc2ExportDirMissionA,
+              rc2ExportDirMissionB: legacy.rc2ExportDirMissionB,
+              rc2ExportDirMissionC: legacy.rc2ExportDirMissionC
+            };
+          }
+        } catch (_err) {
+          parsed = null;
+        }
+      }
+
+      const state = {
+        ...defaults,
+        ...(parsed && typeof parsed === 'object' ? parsed : {})
+      };
+
+      state.missionAutomationEnabled = normalizeBoolean(state.missionAutomationEnabled);
+      state.defaultExportSlot = normalizeExportSlot(state.defaultExportSlot);
+      // UUIDs are intentionally NOT restored from localStorage.
+      // They must always be read live from REGISTRY/uuid_roles.json each session
+      // to prevent stale slot assignments after Step 4 is re-run.
+      state.rc2UuidMissionA = '';
+      state.rc2UuidMissionB = '';
+      state.rc2UuidMissionC = '';
+      state.rc2ExportDirMissionA = normalizeExportDir(state.rc2ExportDirMissionA, 'Mission_A');
+      state.rc2ExportDirMissionB = normalizeExportDir(state.rc2ExportDirMissionB, 'Mission_B');
+      state.rc2ExportDirMissionC = normalizeExportDir(state.rc2ExportDirMissionC, 'Mission_C');
+
+      return state;
+    }
+
+    function persistProfileState() {
+      if (!profileState) return;
+      if (!hasMeaningfulProfileData(profileState)) {
+        profileState.profileUpdatedAt = null;
+        sessionStorage.removeItem(PROFILE_SESSION_STATE_KEY);
+        localStorage.removeItem(PROFILE_STATE_KEY);
+        clearAdvancedAccessRecord();
+        localStorage.removeItem('pilotName');
+        localStorage.removeItem('pilotCell');
+        localStorage.removeItem('pilotEmail');
+        localStorage.removeItem('droneMissionCategory');
+        localStorage.removeItem('lastUsedMissionCategory');
+        return;
+      }
+
+      profileState.profileUpdatedAt = new Date().toISOString();
+      const mode = normalizeMissionStatus(profileState.lastMissionStatus);
+
+      if (mode === 'active') {
+        localStorage.setItem(PROFILE_STATE_KEY, JSON.stringify(profileState));
+        sessionStorage.removeItem(PROFILE_SESSION_STATE_KEY);
+
+        // Keep lightweight mirror keys for cross-page access and backward compatibility.
+        localStorage.setItem('pilotName', profileState.pilotName || '');
+        localStorage.setItem('pilotCell', profileState.pilotCell || '');
+        localStorage.setItem('pilotEmail', profileState.pilotEmail || '');
+        localStorage.setItem('droneMissionCategory', profileState.droneMissionCategory || 'basic');
+        localStorage.setItem('lastUsedMissionCategory', profileState.lastUsedMissionCategory || profileState.droneMissionCategory || 'basic');
+        return;
+      }
+
+      if (mode === 'draft' || mode === 'closed') {
+        sessionStorage.setItem(PROFILE_SESSION_STATE_KEY, JSON.stringify(profileState));
+      } else {
+        sessionStorage.removeItem(PROFILE_SESSION_STATE_KEY);
+      }
+
+      clearAdvancedAccessRecord();
+      localStorage.removeItem(PROFILE_STATE_KEY);
+      localStorage.removeItem('pilotName');
+      localStorage.removeItem('pilotCell');
+      localStorage.removeItem('pilotEmail');
+      localStorage.removeItem('droneMissionCategory');
+      localStorage.removeItem('lastUsedMissionCategory');
+    }
+
+    function persistMissionAutomationState() {
+      if (!missionAutomationState) return;
+      missionAutomationState.profileUpdatedAt = new Date().toISOString();
+      // Strip UUIDs before persisting — they must always come from the live uuid_roles.json.
+      const { rc2UuidMissionA, rc2UuidMissionB, rc2UuidMissionC, ...persistable } = missionAutomationState;
+      localStorage.setItem(MISSION_AUTOMATION_PROFILE_KEY, JSON.stringify(persistable));
+    }
+
+    function buildAdvancedConfigBackupPayload() {
+      const attestedInput = document.getElementById('profile-advanced-access-attested');
+      const attested = Boolean(attestedInput && attestedInput.checked);
+      return {
+        backupType: 'drone-sop-advanced-config',
+        backupVersion: 1,
+        exportedAt: new Date().toISOString(),
+        profile: {
+          missionAutomationEnabled: normalizeBoolean(missionAutomationState && missionAutomationState.missionAutomationEnabled),
+          defaultExportSlot: normalizeExportSlot(missionAutomationState && missionAutomationState.defaultExportSlot),
+          rc2UuidMissionA: normalizeUuidOrEmpty(missionAutomationState && missionAutomationState.rc2UuidMissionA),
+          rc2UuidMissionB: normalizeUuidOrEmpty(missionAutomationState && missionAutomationState.rc2UuidMissionB),
+          rc2UuidMissionC: normalizeUuidOrEmpty(missionAutomationState && missionAutomationState.rc2UuidMissionC),
+          rc2ExportDirMissionA: normalizeExportDir(missionAutomationState && missionAutomationState.rc2ExportDirMissionA, 'Mission_A'),
+          rc2ExportDirMissionB: normalizeExportDir(missionAutomationState && missionAutomationState.rc2ExportDirMissionB, 'Mission_B'),
+          rc2ExportDirMissionC: normalizeExportDir(missionAutomationState && missionAutomationState.rc2ExportDirMissionC, 'Mission_C'),
+          advancedAccessAttested: attested
+        }
+      };
+    }
+
+    function buildProfileAdvancedValidationSnapshot(state = profileState) {
+      const resolvedState = state || getDefaultProfileState();
+      const signature = buildProfileIdentitySignature(resolvedState);
+      const attested = localStorage.getItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY) === 'true';
+      const record = getAdvancedAccessRecord();
+      const hasValidLegacyRecord = Boolean(
+        record
+        && record.version === PROFILE_ADVANCED_ACCESS_VERSION
+        && record.signature === signature
+      );
+      const accessState = getAdvancedAccessState(resolvedState);
+
+      return {
+        schemaVersion: 1,
+        profileAdvancedAccessVersion: PROFILE_ADVANCED_ACCESS_VERSION,
+        signature,
+        attested,
+        validated: Boolean(accessState && accessState.validated),
+        hasLegacyValidatedRecord: hasValidLegacyRecord,
+        exportedAt: new Date().toISOString()
+      };
+    }
+
+    function restoreAdvancedValidationFromProfileImport(source, state = profileState) {
+      const resolvedState = state || getDefaultProfileState();
+      const importedValidation = source && typeof source === 'object' && source.advancedValidation && typeof source.advancedValidation === 'object'
+        ? source.advancedValidation
+        : null;
+
+      const fallbackAttested = typeof (source && source.advancedAccessAttested) === 'boolean'
+        ? source.advancedAccessAttested
+        : null;
+
+      const attested = importedValidation
+        ? importedValidation.attested === true
+        : fallbackAttested;
+
+      if (typeof attested === 'boolean') {
+        localStorage.setItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY, attested ? 'true' : 'false');
+      }
+
+      if (!importedValidation) {
+        return;
+      }
+
+      const currentSignature = buildProfileIdentitySignature(resolvedState);
+      const importedSignature = String(importedValidation.signature || '').trim();
+      const importedValidated = importedValidation.validated === true;
+      const importedAttested = importedValidation.attested === true;
+      const isSignatureMatch = Boolean(currentSignature && importedSignature && importedSignature === currentSignature);
+
+      if (importedValidated && importedAttested && isSignatureMatch) {
+        localStorage.setItem(PROFILE_ADVANCED_ACCESS_KEY, JSON.stringify({
+          version: PROFILE_ADVANCED_ACCESS_VERSION,
+          signature: currentSignature,
+          restoredFrom: 'DroneSOP_user.json',
+          restoredAt: new Date().toISOString()
+        }));
+        return;
+      }
+
+      localStorage.removeItem(PROFILE_ADVANCED_ACCESS_KEY);
+    }
+
+    function buildProfileBackupPayload() {
+      return {
+        backupType: 'drone-sop-profile',
+        backupVersion: 2,
+        exportedAt: new Date().toISOString(),
+        profile: {
+          pilotName: profileState.pilotName || '',
+          pilotCell: profileState.pilotCell || '',
+          pilotEmail: profileState.pilotEmail || '',
+          droneMissionCategory: normalizeMissionCategory(profileState.droneMissionCategory),
+          preferredDroneLabel: profileState.preferredDroneLabel || '',
+          lastMissionStatus: normalizeMissionStatus(profileState.lastMissionStatus),
+          advancedValidation: buildProfileAdvancedValidationSnapshot(profileState)
+        }
+      };
+    }
+
+    function buildMissionAutomationBackupPayload() {
+      return {
+        backupType: 'drone-sop-mission-automation-profile',
+        backupVersion: 1,
+        exportedAt: new Date().toISOString(),
+        profile: {
+          missionAutomationEnabled: normalizeBoolean(missionAutomationState && missionAutomationState.missionAutomationEnabled),
+          defaultExportSlot: normalizeExportSlot(missionAutomationState && missionAutomationState.defaultExportSlot),
+          rc2UuidMissionA: normalizeUuidOrEmpty(missionAutomationState && missionAutomationState.rc2UuidMissionA),
+          rc2UuidMissionB: normalizeUuidOrEmpty(missionAutomationState && missionAutomationState.rc2UuidMissionB),
+          rc2UuidMissionC: normalizeUuidOrEmpty(missionAutomationState && missionAutomationState.rc2UuidMissionC),
+          rc2ExportDirMissionA: normalizeExportDir(missionAutomationState && missionAutomationState.rc2ExportDirMissionA, 'Mission_A'),
+          rc2ExportDirMissionB: normalizeExportDir(missionAutomationState && missionAutomationState.rc2ExportDirMissionB, 'Mission_B'),
+          rc2ExportDirMissionC: normalizeExportDir(missionAutomationState && missionAutomationState.rc2ExportDirMissionC, 'Mission_C')
+        }
+      };
+    }
+
+    function slugifyProfileFilePart(value, fallback) {
+      const cleaned = String(value || '')
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '_')
+        .replace(/^_+|_+$/g, '');
+      return cleaned || fallback;
+    }
+
+    async function ensureRc2ProfileRootHandle() {
+      if (!('showDirectoryPicker' in window)) {
+        throw new Error('Direct profile save requires Chrome or Edge with the File System Access API.');
+      }
+      if (rc2ProfileRootHandle) return rc2ProfileRootHandle;
+      rc2ProfileRootHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+      return rc2ProfileRootHandle;
+    }
+
+    async function assertRequiredRc2MissionFolders(rootHandle) {
+      const requiredFolders = ['REGISTRY', 'Mission_A', 'Mission_B', 'Mission_C'];
+      const missingFolders = [];
+      for (const folderName of requiredFolders) {
+        try {
+          await rootHandle.getDirectoryHandle(folderName, { create: false });
+        } catch (_err) {
+          missingFolders.push(folderName);
+        }
+      }
+      if (missingFolders.length) {
+        throw new Error(`Missing RC2 mission folders: ${missingFolders.join(', ')}. Run Step 1 to create RC2_Missions first.`);
+      }
+    }
+
+    async function saveProfileIntoRc2Registry() {
+      if (!profileState || !missionAutomationState) return null;
+
+      const rootHandle = await ensureRc2ProfileRootHandle();
+      await assertRequiredRc2MissionFolders(rootHandle);
+      const registryHandle = await rootHandle.getDirectoryHandle('REGISTRY', { create: true });
+      const profileDirHandle = await registryHandle.getDirectoryHandle('profile', { create: true });
+      const pilotSlug = slugifyProfileFilePart(profileState.pilotName, 'pilot');
+      const fileHandle = await profileDirHandle.getFileHandle(`mission_automation_profile_${pilotSlug}.json`, { create: true });
+      const writable = await fileHandle.createWritable();
+      await writable.write(JSON.stringify(buildMissionAutomationBackupPayload(), null, 2));
+      await writable.close();
+      return `REGISTRY/profile/mission_automation_profile_${pilotSlug}.json`;
+    }
+
+    async function resolveRegistryHandleFromSelectedFolder(selectedHandle) {
+      try {
+        return await selectedHandle.getDirectoryHandle('REGISTRY', { create: false });
+      } catch (_err) {
+        // If REGISTRY was selected directly, use it as-is.
+        if (String(selectedHandle && selectedHandle.name || '').toUpperCase() === 'REGISTRY') {
+          return selectedHandle;
+        }
+
+        // Allow any selected folder that directly contains uuid_roles.json.
+        try {
+          await selectedHandle.getFileHandle('uuid_roles.json', { create: false });
+          return selectedHandle;
+        } catch (_innerErr) {
+          throw new Error('Select RC2_Missions root or the REGISTRY folder containing uuid_roles.json.');
+        }
+      }
+    }
+
+    async function readUuidRolesFromRegistry() {
+      const rootHandle = await ensureRc2ProfileRootHandle();
+      const registryHandle = await resolveRegistryHandleFromSelectedFolder(rootHandle);
+      const uuidRolesFileHandle = await registryHandle.getFileHandle('uuid_roles.json', { create: false });
+      const file = await uuidRolesFileHandle.getFile();
+      const rawText = await file.text();
+
+      let parsed;
+      try {
+        parsed = JSON.parse(rawText);
+      } catch (_err) {
+        throw new Error('REGISTRY/uuid_roles.json is not valid JSON.');
+      }
+
+      if (!parsed || typeof parsed !== 'object') {
+        throw new Error('REGISTRY/uuid_roles.json must contain an object.');
+      }
+
+      const missionA = normalizeUuidOrEmpty(parsed.Mission_A || parsed.mission_a || parsed.rc2UuidMissionA);
+      const missionB = normalizeUuidOrEmpty(parsed.Mission_B || parsed.mission_b || parsed.rc2UuidMissionB);
+      const missionC = normalizeUuidOrEmpty(parsed.Mission_C || parsed.mission_c || parsed.rc2UuidMissionC);
+
+      if (!missionA && !missionB && !missionC) {
+        throw new Error('No valid Mission_A, Mission_B, or Mission_C UUID values were found in REGISTRY/uuid_roles.json.');
+      }
+
+      return {
+        missionA,
+        missionB,
+        missionC,
+        updatedAt: String(parsed.updatedAt || '').trim()
+      };
+    }
+
+    async function loadUuidRolesIntoMissionSlots(status) {
+      try {
+        const roles = await readUuidRolesFromRegistry();
+        missionAutomationState = missionAutomationState || getDefaultMissionAutomationState();
+        missionAutomationState.rc2UuidMissionA = roles.missionA;
+        missionAutomationState.rc2UuidMissionB = roles.missionB;
+        missionAutomationState.rc2UuidMissionC = roles.missionC;
+        // UUIDs live in memory only — not cached to localStorage.
+        persistMissionAutomationState();
+        fillMissionAutomationForm();
+        updateMissionAutomationUi();
+
+        const stamp = roles.updatedAt ? ` (updated ${roles.updatedAt})` : '';
+        if (status) {
+          status.textContent = `Loaded Mission UUID slots from REGISTRY/uuid_roles.json${stamp}. (Session only — not saved to browser cache.)`;
+        }
+      } catch (error) {
+        if (error && error.name === 'AbortError') {
+          if (status) status.textContent = 'Load UUID Roles canceled.';
+          return;
+        }
+        const reason = error && error.message ? error.message : 'Unable to read REGISTRY/uuid_roles.json.';
+        if (status) status.textContent = `Load UUID Roles failed: ${reason}`;
+      }
+    }
+
+    function syncProfileStateWithTermsAndIntro() {
+      if (!profileState) return;
+      profileState.termsAccepted = hasAcceptedTerms();
+      profileState.termsAcceptedAt = localStorage.getItem('termsAcceptedAt');
+      profileState.termsVersion = localStorage.getItem(TERMS_VERSION_KEY) || TERMS_VERSION_VALUE;
+      profileState.introCollapsed = isIntroCollapsed();
+      persistProfileState();
+    }
+
+    function renderProfileSummary() {
+      const summary = document.getElementById('profile-quick-summary');
+      if (!summary || !profileState) return;
+
+      updateProfileSetupNudge();
+      updateProfileIconCue();
+
+      const hasProfile = hasMeaningfulProfileData(profileState);
+      if (!hasProfile) {
+        summary.hidden = true;
+        summary.textContent = '';
+        return;
+      }
+
+      const pilot = profileState.pilotName || 'Pilot';
+      const category = toTitleCaseCategory(profileState.droneMissionCategory);
+      const usageMode = toUsageModeLabel(profileState.lastMissionStatus);
+      const missionProfileState = missionAutomationState && missionAutomationState.missionAutomationEnabled ? 'Automation On' : 'Automation Off';
+      const advancedAccessState = getAdvancedAccessState();
+      const advancedAccessLabel = advancedAccessState.validated ? 'User Validated' : 'Advanced Locked';
+
+      summary.hidden = false;
+      summary.textContent = `Profile ready: ${pilot} | ${category} | ${usageMode} | ${missionProfileState} | ${advancedAccessLabel}`;
+    }
+
+    function syncProfileStateFromForm(profileForm) {
+      if (!profileForm) return;
+      profileState = profileState || getDefaultProfileState();
+
+      const formData = new FormData(profileForm);
+      profileState.pilotName = String(formData.get('pilotName') || '').trim();
+      profileState.pilotCell = formatPhoneDisplay(formData.get('pilotCell'));
+      profileState.pilotEmail = String(formData.get('pilotEmail') || '').trim();
+      profileState.droneMissionCategory = normalizeMissionCategory(String(formData.get('droneMissionCategory') || 'basic'));
+      profileState.lastUsedMissionCategory = profileState.droneMissionCategory;
+      profileState.preferredDroneLabel = normalizePreferredDrones(formData.get('preferredDroneLabel'));
+      profileState.lastMissionStatus = normalizeMissionStatus(String(formData.get('lastMissionStatus') || 'draft'));
+
+      if (missionAutomationState) {
+        const missionAutomationEnabledInput = document.getElementById('profile-mission-automation-enabled');
+        missionAutomationState.missionAutomationEnabled = normalizeBoolean(missionAutomationEnabledInput && missionAutomationEnabledInput.checked);
+      }
+    }
+
+    function fillProfileForm() {
+      if (!profileState) return;
+
+      const automationPanel = document.getElementById('profile-automation-panel');
+      const pilotInput = document.getElementById('profile-pilot-name');
+      const pilotCellInput = document.getElementById('profile-pilot-cell');
+      const pilotEmailInput = document.getElementById('profile-pilot-email');
+      const categorySelect = document.getElementById('profile-mission-category');
+      const droneInput = document.getElementById('profile-drone-label');
+      const statusSelect = document.getElementById('profile-mission-status');
+      const missionAutomationEnabledInput = document.getElementById('profile-mission-automation-enabled');
+      const advancedAccessAttestedInput = document.getElementById('profile-advanced-access-attested');
+
+      if (pilotInput) pilotInput.value = profileState.pilotName || '';
+      if (pilotCellInput) pilotCellInput.value = formatPhoneDisplay(profileState.pilotCell || '');
+      if (pilotCellInput) updateProfilePhoneInput(pilotCellInput);
+      if (pilotEmailInput) pilotEmailInput.value = profileState.pilotEmail || '';
+      if (pilotEmailInput) updateProfileEmailValidity(pilotEmailInput);
+      if (categorySelect) categorySelect.value = normalizeMissionCategory(profileState.droneMissionCategory);
+      if (droneInput) droneInput.value = profileState.preferredDroneLabel || '';
+      if (statusSelect) statusSelect.value = normalizeMissionStatus(profileState.lastMissionStatus);
+      if (missionAutomationEnabledInput) missionAutomationEnabledInput.checked = normalizeBoolean(missionAutomationState && missionAutomationState.missionAutomationEnabled);
+      if (advancedAccessAttestedInput) {
+        const savedAttestedState = localStorage.getItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY);
+        advancedAccessAttestedInput.checked = savedAttestedState === 'true';
+      }
+      updateProfileUsageModeUi();
+      updateAdvancedAccessUi();
+      updateMissionAutomationUi();
+
+      if (automationPanel) {
+        automationPanel.open = false;
+      }
+    }
+
+    function fillMissionAutomationForm() {
+      if (!missionAutomationState) return;
+
+      const defaultSlotSelect = document.getElementById('mission-default-export-slot');
+      const uuidMissionAInput = document.getElementById('mission-uuid-mission-a');
+      const uuidMissionBInput = document.getElementById('mission-uuid-mission-b');
+      const uuidMissionCInput = document.getElementById('mission-uuid-mission-c');
+      const exportDirMissionAInput = document.getElementById('mission-export-dir-mission-a');
+      const exportDirMissionBInput = document.getElementById('mission-export-dir-mission-b');
+      const exportDirMissionCInput = document.getElementById('mission-export-dir-mission-c');
+
+      if (defaultSlotSelect) defaultSlotSelect.value = normalizeExportSlot(missionAutomationState.defaultExportSlot);
+      if (uuidMissionAInput) uuidMissionAInput.value = missionAutomationState.rc2UuidMissionA || '';
+      if (uuidMissionBInput) uuidMissionBInput.value = missionAutomationState.rc2UuidMissionB || '';
+      if (uuidMissionCInput) uuidMissionCInput.value = missionAutomationState.rc2UuidMissionC || '';
+      if (exportDirMissionAInput) exportDirMissionAInput.value = missionAutomationState.rc2ExportDirMissionA || 'Mission_A';
+      if (exportDirMissionBInput) exportDirMissionBInput.value = missionAutomationState.rc2ExportDirMissionB || 'Mission_B';
+      if (exportDirMissionCInput) exportDirMissionCInput.value = missionAutomationState.rc2ExportDirMissionC || 'Mission_C';
+    }
+
+    async function exportProfileBackup(status) {
+      if (!profileState) {
+        status.textContent = 'No profile loaded to export.';
+        return;
+      }
+
+      const payload = buildProfileBackupPayload();
+
+      if ('showSaveFilePicker' in window) {
+        try {
+          const fileHandle = await window.showSaveFilePicker({
+            suggestedName: PROFILE_EXPORT_FILENAME,
+            types: [
+              {
+                description: 'Drone SOP Profile',
+                accept: {
+                  'application/json': ['.json']
+                }
+              }
+            ]
+          });
+          const writable = await fileHandle.createWritable();
+          await writable.write(JSON.stringify(payload, null, 2));
+          await writable.close();
+          status.textContent = `Profile backup exported as ${PROFILE_EXPORT_FILENAME}.`;
+          return;
+        } catch (error) {
+          if (error && error.name === 'AbortError') {
+            status.textContent = 'Export canceled.';
+            return;
+          }
+        }
+      }
+
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = PROFILE_EXPORT_FILENAME;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(link.href);
+      status.textContent = `Profile backup exported as ${PROFILE_EXPORT_FILENAME}.`;
+    }
+
+    async function importProfileBackup(file, status) {
+      if (!file) return;
+
+      let parsed;
+      try {
+        const text = await file.text();
+        parsed = JSON.parse(text);
+      } catch (_err) {
+        status.textContent = 'Profile import failed: file is not valid JSON.';
+        return;
+      }
+
+      const source = (parsed && typeof parsed === 'object' && parsed.profile && typeof parsed.profile === 'object')
+        ? parsed.profile
+        : parsed;
+
+      if (!source || typeof source !== 'object') {
+        status.textContent = 'Profile import failed: expected profile object.';
+        return;
+      }
+
+      profileState = profileState || getDefaultProfileState();
+      profileState.pilotName = String(source.pilotName || '').trim();
+      profileState.pilotCell = String(source.pilotCell || '').trim();
+      profileState.pilotEmail = String(source.pilotEmail || '').trim();
+      profileState.droneMissionCategory = normalizeMissionCategory(String(source.droneMissionCategory || profileState.droneMissionCategory || 'basic'));
+      profileState.lastUsedMissionCategory = profileState.droneMissionCategory;
+      profileState.preferredDroneLabel = String(source.preferredDroneLabel || '').trim();
+      const selectedMode = normalizeMissionStatus(String(document.getElementById('profile-mission-status')?.value || profileState.lastMissionStatus || 'draft'));
+      const importedMode = normalizeMissionStatus(String(source.lastMissionStatus || selectedMode || 'draft'));
+      profileState.lastMissionStatus = selectedMode === 'closed' ? 'closed' : importedMode;
+      if (missionAutomationState) {
+        missionAutomationState.missionAutomationEnabled = normalizeBoolean(source.missionAutomationEnabled || missionAutomationState.missionAutomationEnabled);
+        persistMissionAutomationState();
+      }
+
+      persistProfileState();
+      restoreAdvancedValidationFromProfileImport(source, profileState);
+      fillProfileForm();
+      renderProfileSummary();
+
+      const pilotName = profileState.pilotName || 'profile data';
+      status.textContent = profileState.lastMissionStatus === 'closed'
+        ? `Private profile loaded for ${pilotName}. This temporary copy is available for this session only.`
+        : `Profile imported for ${pilotName}.`;
+    }
+
+    async function exportAdvancedConfigBackup() {
+      if (!missionAutomationState) {
+        alert('No Mission Automation configuration to export.');
+        return;
+      }
+
+      const payload = buildAdvancedConfigBackupPayload();
+      const filename = 'DroneSOP_Adv.json';
+
+      if ('showSaveFilePicker' in window) {
+        try {
+          const fileHandle = await window.showSaveFilePicker({
+            suggestedName: filename,
+            types: [
+              {
+                description: 'Drone SOP Advanced Config',
+                accept: {
+                  'application/json': ['.json']
+                }
+              }
+            ]
+          });
+          const writable = await fileHandle.createWritable();
+          await writable.write(JSON.stringify(payload, null, 2));
+          await writable.close();
+          alert(`Advanced config exported as ${filename}.`);
+          return;
+        } catch (error) {
+          if (error && error.name === 'AbortError') {
+            return;
+          }
+        }
+      }
+
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(link.href);
+    }
+
+    async function importAdvancedConfigBackup(file) {
+      if (!file) return;
+
+      let parsed;
+      try {
+        const text = await file.text();
+        parsed = JSON.parse(text);
+      } catch (_err) {
+        alert('Advanced config import failed: file is not valid JSON.');
+        return;
+      }
+
+      if (parsed && parsed.backupType !== 'drone-sop-advanced-config') {
+        alert('Advanced config import failed: file is not a valid advanced config backup.');
+        return;
+      }
+
+      const source = parsed && parsed.profile ? parsed.profile : null;
+      if (!source || typeof source !== 'object') {
+        alert('Advanced config import failed: expected profile object.');
+        return;
+      }
+
+      // Import configuration
+      missionAutomationState = loadMissionAutomationState();
+      missionAutomationState.missionAutomationEnabled = normalizeBoolean(source.missionAutomationEnabled || missionAutomationState.missionAutomationEnabled);
+      missionAutomationState.defaultExportSlot = normalizeExportSlot(source.defaultExportSlot || missionAutomationState.defaultExportSlot);
+      missionAutomationState.rc2UuidMissionA = normalizeUuidOrEmpty(source.rc2UuidMissionA || missionAutomationState.rc2UuidMissionA);
+      missionAutomationState.rc2UuidMissionB = normalizeUuidOrEmpty(source.rc2UuidMissionB || missionAutomationState.rc2UuidMissionB);
+      missionAutomationState.rc2UuidMissionC = normalizeUuidOrEmpty(source.rc2UuidMissionC || missionAutomationState.rc2UuidMissionC);
+      missionAutomationState.rc2ExportDirMissionA = normalizeExportDir(source.rc2ExportDirMissionA || missionAutomationState.rc2ExportDirMissionA, 'Mission_A');
+      missionAutomationState.rc2ExportDirMissionB = normalizeExportDir(source.rc2ExportDirMissionB || missionAutomationState.rc2ExportDirMissionB, 'Mission_B');
+      missionAutomationState.rc2ExportDirMissionC = normalizeExportDir(source.rc2ExportDirMissionC || missionAutomationState.rc2ExportDirMissionC, 'Mission_C');
+
+      persistMissionAutomationState();
+
+      // Import attestation state
+      if (typeof source.advancedAccessAttested === 'boolean') {
+        const attestedInput = document.getElementById('profile-advanced-access-attested');
+        if (attestedInput) {
+          attestedInput.checked = source.advancedAccessAttested;
+        }
+      }
+
+      // Update UI
+      fillMissionAutomationForm();
+      updateAdvancedAccessUi();
+      updateMissionAutomationUi();
+
+      alert('Advanced config imported successfully. Profile state updated.');
+    }
+
+    function closeProfileDrawer() {
+      const drawer = document.getElementById('profile-drawer');
+      const backdrop = document.getElementById('profile-backdrop');
+      if (!drawer || !backdrop) return;
+
+      drawer.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      if (!document.getElementById('mission-profile-drawer')?.classList.contains('is-open')) {
+        backdrop.hidden = true;
+        document.body.classList.remove('profile-drawer-open');
+      }
+    }
+
+    function closeMissionAutomationDrawer() {
+      const drawer = document.getElementById('mission-profile-drawer');
+      const backdrop = document.getElementById('profile-backdrop');
+      if (!drawer || !backdrop) return;
+
+      drawer.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      if (!document.getElementById('profile-drawer')?.classList.contains('is-open')) {
+        backdrop.hidden = true;
+        document.body.classList.remove('profile-drawer-open');
+      }
+    }
+
+    function openMissionAutomationDrawer() {
+      const drawer = document.getElementById('mission-profile-drawer');
+      const profileDrawer = document.getElementById('profile-drawer');
+      const backdrop = document.getElementById('profile-backdrop');
+      const defaultSlotSelect = document.getElementById('mission-default-export-slot');
+      const status = document.getElementById('pilot-location-status');
+      const accessState = getAdvancedAccessState();
+      if (!drawer || !backdrop) return;
+
+      if (!RC2_CAPABILITY.supported) {
+        if (status) status.textContent = RC2_CAPABILITY.reason;
+        return;
+      }
+
+      if (!accessState.validated) {
+        if (status) status.textContent = accessState.message;
+        return;
+      }
+
+      fillMissionAutomationForm();
+
+      if (profileDrawer) {
+        profileDrawer.classList.remove('is-open');
+        profileDrawer.setAttribute('aria-hidden', 'true');
+      }
+
+      backdrop.hidden = false;
+      drawer.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('profile-drawer-open');
+
+      if (status) {
+        status.textContent = 'Advanced Profile Details opened. Configure slot UUIDs and export folder mappings here.';
+      }
+
+      if (defaultSlotSelect) {
+        requestAnimationFrame(() => defaultSlotSelect.focus());
+      }
+    }
+
+    function openProfileDrawer() {
+      const drawer = document.getElementById('profile-drawer');
+      const backdrop = document.getElementById('profile-backdrop');
+      const pilotInput = document.getElementById('profile-pilot-name');
+      if (!drawer || !backdrop) return;
+
+      fillProfileForm();
+
+      backdrop.hidden = false;
+      drawer.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('profile-drawer-open');
+
+      if (pilotInput) {
+        requestAnimationFrame(() => pilotInput.focus());
+      }
+    }
+
+    function toDMS(deg, isLat) {
+      const abs = Math.abs(deg);
+      const d = Math.floor(abs);
+      const mFloat = (abs - d) * 60;
+      const m = Math.floor(mFloat);
+      const s = ((mFloat - m) * 60).toFixed(1);
+      const dir = isLat ? (deg >= 0 ? 'N' : 'S') : (deg >= 0 ? 'E' : 'W');
+      return `${d}\u00B0${m}'${s}"${dir}`;
+    }
+
+    let airspaceData = null;
+    let airspaceLoaded = false;
+    let airspaceLoadError = '';
+    let airportData = null;
+
+    const ICAO_PROP_KEYS = ['icao', 'icaoCode', 'airport_code', 'airportCode', 'ident', 'code'];
+    const NAME_STOP_WORDS = new Set(['CZ', 'CTA', 'TCA', 'CLASS', 'CONTROL', 'CONTROLLED', 'ZONE', 'AIRPORT', 'AERODROME', 'MUNI', 'MUNICIPAL']);
+
+    function setAirspaceStatus(message, tone = 'dim') {
+      const node = document.getElementById('pilot-airspace-status');
+      if (!node) return;
+      node.textContent = message;
+      node.classList.remove('is-ok', 'is-warn', 'is-dim');
+      if (tone === 'ok') node.classList.add('is-ok');
+      else if (tone === 'warn') node.classList.add('is-warn');
+      else node.classList.add('is-dim');
+    }
+
+    function pointInRing(point, ring) {
+      const x = point[0];
+      const y = point[1];
+      let inside = false;
+
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const xi = ring[i][0];
+        const yi = ring[i][1];
+        const xj = ring[j][0];
+        const yj = ring[j][1];
+        const intersect = ((yi > y) !== (yj > y))
+          && (x < ((xj - xi) * (y - yi)) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+      }
+
+      return inside;
+    }
+
+    function isPointInsidePolygonGeometry(point, polygonCoords) {
+      if (!Array.isArray(polygonCoords) || polygonCoords.length === 0) return false;
+      const exteriorRing = polygonCoords[0];
+      if (!pointInRing(point, exteriorRing)) return false;
+      for (let i = 1; i < polygonCoords.length; i += 1) {
+        if (pointInRing(point, polygonCoords[i])) return false;
+      }
+      return true;
+    }
+
+    function isPointInsideFeature(point, feature) {
+      if (!feature || !feature.geometry) return false;
+      const geometry = feature.geometry;
+
+      if (geometry.type === 'Polygon') {
+        return isPointInsidePolygonGeometry(point, geometry.coordinates);
+      }
+
+      if (geometry.type === 'MultiPolygon') {
+        for (let i = 0; i < geometry.coordinates.length; i += 1) {
+          if (isPointInsidePolygonGeometry(point, geometry.coordinates[i])) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
+    function getIcaoFromProperties(properties) {
+      if (!properties || typeof properties !== 'object') return '';
+
+      for (let i = 0; i < ICAO_PROP_KEYS.length; i += 1) {
+        const key = ICAO_PROP_KEYS[i];
+        const raw = properties[key];
+        if (!raw) continue;
+        const value = String(raw).trim().toUpperCase();
+        if (/^[A-Z][A-Z0-9]{3}$/.test(value)) return value;
+      }
+
+      return '';
+    }
+
+    function tokenizeName(value) {
+      if (!value) return [];
+      return String(value)
+        .toUpperCase()
+        .replace(/[^A-Z0-9/ ]+/g, ' ')
+        .replace(/\//g, ' ')
+        .split(/\s+/)
+        .map((token) => token.trim())
+        .filter((token) => token && !NAME_STOP_WORDS.has(token));
+    }
+
+    function distanceKm(lat1, lon1, lat2, lon2) {
+      const toRad = (deg) => deg * (Math.PI / 180);
+      const dLat = toRad(lat2 - lat1);
+      const dLon = toRad(lon2 - lon1);
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+        + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2))
+        * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return 6371 * c;
+    }
+
+    function findAirportIcaoForZone(zoneName, lat, lon) {
+      if (!airportData || !Array.isArray(airportData.features) || airportData.features.length === 0) {
+        return '';
+      }
+
+      const zoneTokens = tokenizeName(zoneName);
+      if (zoneTokens.length === 0) return '';
+
+      let bestCode = '';
+      let bestScore = -Infinity;
+
+      airportData.features.forEach((feature) => {
+        const props = feature && feature.properties ? feature.properties : null;
+        if (!props) return;
+
+        const icao = getIcaoFromProperties(props);
+        if (!icao) return;
+
+        const coords = feature.geometry && feature.geometry.coordinates;
+        if (!Array.isArray(coords) || coords.length < 2) return;
+
+        const aptLon = Number(coords[0]);
+        const aptLat = Number(coords[1]);
+        if (!Number.isFinite(aptLat) || !Number.isFinite(aptLon)) return;
+
+        const airportTokens = tokenizeName(props.name || props.title || '');
+        if (airportTokens.length === 0) return;
+
+        let overlap = 0;
+        zoneTokens.forEach((token) => {
+          if (airportTokens.includes(token)) overlap += 1;
+        });
+        if (overlap === 0) return;
+
+        const km = distanceKm(lat, lon, aptLat, aptLon);
+        if (!Number.isFinite(km) || km > 80) return;
+
+        const score = overlap * 100 - km;
+        if (score > bestScore) {
+          bestScore = score;
+          bestCode = icao;
+        }
+      });
+
+      return bestCode;
+    }
+
+    function checkAirspace(lat, lon) {
+      if (!airspaceLoaded) {
+        setAirspaceStatus('Airspace data loading...', 'dim');
+        return;
+      }
+
+      if (!airspaceData || airspaceLoadError) {
+        setAirspaceStatus(`Airspace dataset unavailable (${airspaceLoadError || 'not loaded'}). Verify in NAV CANADA DSST.`, 'warn');
+        return;
+      }
+
+      if (!Array.isArray(airspaceData.features) || airspaceData.features.length === 0) {
+        setAirspaceStatus('Airspace dataset is installed but empty.', 'warn');
+        return;
+      }
+
+      const latNum = Number(lat);
+      const lonNum = Number(lon);
+      if (!Number.isFinite(latNum) || !Number.isFinite(lonNum)) {
+        setAirspaceStatus('Airspace check skipped due to invalid pilot coordinates.', 'warn');
+        return;
+      }
+
+      let inside = false;
+      let zoneName = '';
+      let zoneClass = '';
+      let zoneIcao = '';
+      const point = [lonNum, latNum];
+
+      airspaceData.features.forEach((feature) => {
+        if (isPointInsideFeature(point, feature)) {
+          inside = true;
+          zoneName = feature.properties?.name || 'Controlled Airspace';
+          zoneClass = feature.properties?.class || feature.properties?.airspace_class || '';
+          zoneIcao = getIcaoFromProperties(feature.properties)
+            || findAirportIcaoForZone(zoneName, latNum, lonNum)
+            || '';
+        }
+      });
+
+      if (inside) {
+        const zoneNameWithCode = zoneIcao ? `${zoneName} [${zoneIcao}]` : zoneName;
+        const zoneLabel = zoneClass ? `${zoneNameWithCode} (Class ${zoneClass})` : zoneNameWithCode;
+        setAirspaceStatus(`Inside controlled airspace: ${zoneLabel}`, 'warn');
+      } else {
+        setAirspaceStatus('No controlled airspace detected for current pilot location.', 'ok');
+      }
+    }
+
+    function getStoredPilotCoordinates() {
+      const latRaw = localStorage.getItem('pilotLatitude');
+      const lonRaw = localStorage.getItem('pilotLongitude');
+      if (latRaw && lonRaw) {
+        const latNum = Number(latRaw);
+        const lonNum = Number(lonRaw);
+        if (Number.isFinite(latNum) && Number.isFinite(lonNum)) {
+          return { lat: latNum, lon: lonNum };
+        }
+      }
+
+      const dd = localStorage.getItem('pilotLocationDD');
+      if (!dd) return null;
+      const parts = dd.split(',').map((part) => part.trim());
+      if (parts.length !== 2) return null;
+      const latNum = Number(parts[0]);
+      const lonNum = Number(parts[1]);
+      if (!Number.isFinite(latNum) || !Number.isFinite(lonNum)) return null;
+      return { lat: latNum, lon: lonNum };
+    }
+
+    fetch('./data/canadian_airspace.geojson')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        const isFeatureCollection = data && data.type === 'FeatureCollection' && Array.isArray(data.features);
+        if (!isFeatureCollection) {
+          throw new Error('Invalid GeoJSON structure');
+        }
+        airspaceData = data;
+        airspaceLoaded = true;
+
+        const coords = getStoredPilotCoordinates();
+        if (coords) {
+          checkAirspace(coords.lat, coords.lon);
+        } else {
+          setAirspaceStatus('Airspace status will appear after pilot location is set.', 'dim');
+        }
+      })
+      .catch((err) => {
+        airspaceLoadError = err && err.message ? err.message : 'Unknown airspace data error';
+        airspaceLoaded = true;
+        setAirspaceStatus(`Airspace dataset unavailable (${airspaceLoadError}).`, 'warn');
+      });
+
+    fetch('./data/airspace/_sources/ca_apt.geojson')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && data.type === 'FeatureCollection' && Array.isArray(data.features)) {
+          airportData = data;
+        }
+      })
+      .catch(() => {
+        airportData = null;
+      });
+
+    function setPilotLocation(lat, lon, source) {
+      const latNum = Number(lat);
+      const lonNum = Number(lon);
+      const latShort = latNum.toFixed(6);
+      const lonShort = lonNum.toFixed(6);
+      const latDMS = toDMS(latNum, true);
+      const lonDMS = toDMS(lonNum, false);
+
+      localStorage.setItem('pilotLocationDD', `${latShort}, ${lonShort}`);
+      localStorage.setItem('pilotLocationDMS', `${latDMS}, ${lonDMS}`);
+      localStorage.setItem('pilotLatitude', latShort);
+      localStorage.setItem('pilotLongitude', lonShort);
+      localStorage.setItem('pilotLocationSource', source);
+
+      return { latShort, lonShort };
+    }
+
+    function updateStatusFromStorage() {
+      const status = document.getElementById('pilot-location-status');
+      if (!status) return false;
+      const dd = localStorage.getItem('pilotLocationDD');
+      if (dd) {
+        status.textContent = `Pilot location ready: ${dd}`;
+        const coords = getStoredPilotCoordinates();
+        if (coords) {
+          checkAirspace(coords.lat, coords.lon);
+        }
+        return true;
+      }
+      setAirspaceStatus('Airspace status will appear after pilot location is set.', 'dim');
+      return false;
+    }
+
+    function updateHighlightState(hasPilotLocation) {
+      const btn = document.getElementById('init-pilot-location');
+      const toolsCard = document.getElementById('tools-card');
+      if (!btn || !toolsCard) return;
+
+      btn.classList.toggle('is-highlighted', !hasPilotLocation);
+      toolsCard.classList.toggle('is-highlighted', hasPilotLocation);
+    }
+
+    function snapshotTermsAcceptance() {
+      return {
+        accepted: localStorage.getItem(TERMS_ACCEPTED_KEY),
+        acceptedAt: localStorage.getItem('termsAcceptedAt'),
+        acceptedVersion: localStorage.getItem(TERMS_VERSION_KEY),
+        introCollapsed: localStorage.getItem(INTRO_COLLAPSED_KEY)
+      };
+    }
+
+    function restoreTermsAcceptance(snapshot) {
+      if (!snapshot) return;
+      if (snapshot.accepted != null) {
+        localStorage.setItem(TERMS_ACCEPTED_KEY, snapshot.accepted);
+      }
+      if (snapshot.acceptedAt != null) {
+        localStorage.setItem('termsAcceptedAt', snapshot.acceptedAt);
+      }
+      if (snapshot.acceptedVersion != null) {
+        localStorage.setItem(TERMS_VERSION_KEY, snapshot.acceptedVersion);
+      }
+      if (snapshot.introCollapsed != null) {
+        localStorage.setItem(INTRO_COLLAPSED_KEY, snapshot.introCollapsed);
+      }
+    }
+
+    async function clearAllDataAndReload(options = {}) {
+      const preserveTerms = options.preserveTerms !== false;
+      const termsSnapshot = preserveTerms ? snapshotTermsAcceptance() : null;
+
+      localStorage.clear();
+      sessionStorage.clear();
+
+      if (preserveTerms) {
+        restoreTermsAcceptance(termsSnapshot);
+      }
+
+      if (window.caches && typeof window.caches.keys === 'function') {
+        try {
+          const keys = await window.caches.keys();
+          await Promise.all(keys.map((key) => window.caches.delete(key)));
+        } catch (_err) {
+          // Continue even if cache storage is unavailable.
+        }
+      }
+
+      const freshUrl = `${window.location.pathname}?fresh=${Date.now()}`;
+      window.location.replace(freshUrl);
+    }
+
+    function hasStoredSessionData() {
+      return sessionStorage.length > 0 || localStorage.length > 0;
+    }
+
+    function hasAcceptedTerms() {
+      return localStorage.getItem(TERMS_ACCEPTED_KEY) === 'yes'
+        && localStorage.getItem(TERMS_VERSION_KEY) === TERMS_VERSION_VALUE;
+    }
+
+    function markTermsAccepted() {
+      localStorage.setItem(TERMS_ACCEPTED_KEY, 'yes');
+      localStorage.setItem('termsAcceptedAt', new Date().toISOString());
+      localStorage.setItem(TERMS_VERSION_KEY, TERMS_VERSION_VALUE);
+      if (profileState) {
+        profileState.termsAccepted = true;
+        profileState.termsAcceptedAt = localStorage.getItem('termsAcceptedAt');
+        profileState.termsVersion = TERMS_VERSION_VALUE;
+        persistProfileState();
+      }
+    }
+
+    function setIntroCollapsed(collapsed) {
+      localStorage.setItem(INTRO_COLLAPSED_KEY, collapsed ? 'yes' : 'no');
+      if (profileState) {
+        profileState.introCollapsed = collapsed;
+        persistProfileState();
+      }
+    }
+
+    function isIntroCollapsed() {
+      return localStorage.getItem(INTRO_COLLAPSED_KEY) === 'yes';
+    }
+
+    function updateIntroToggleStateLabel() {
+      const introPanel = document.getElementById('introduction-panel');
+      const stateLabel = document.getElementById('intro-toggle-state');
+      if (!introPanel || !stateLabel) return;
+      stateLabel.textContent = introPanel.open ? 'Hide' : 'Show';
+    }
+
+    function syncIntroPanelFromStorage() {
+      const introPanel = document.getElementById('introduction-panel');
+      if (!introPanel) return;
+
+      if (isIntroCollapsed()) {
+        introPanel.removeAttribute('open');
+      } else {
+        introPanel.setAttribute('open', '');
+      }
+
+      updateIntroToggleStateLabel();
+    }
+
+    function setTermsGateActive(active) {
+      document.body.classList.toggle('terms-gate-active', active);
+    }
+
+    function syncTermsGateState() {
+      const accepted = hasAcceptedTerms();
+      setTermsGateActive(!accepted);
+      const acceptBtn = document.querySelector('.waiver-accept');
+      const disclaimer = document.getElementById('disclaimer-panel');
+      if (!acceptBtn) return;
+
+      if (accepted) {
+        acceptBtn.classList.add('is-complete');
+        acceptBtn.textContent = 'Acknowledgement Saved';
+        acceptBtn.disabled = true;
+        acceptBtn.setAttribute('aria-disabled', 'true');
+        if (disclaimer) disclaimer.removeAttribute('open');
+      } else {
+        acceptBtn.classList.remove('is-complete');
+        acceptBtn.textContent = 'I Acknowledge & Continue';
+        acceptBtn.disabled = false;
+        acceptBtn.removeAttribute('aria-disabled');
+        if (disclaimer) disclaimer.setAttribute('open', '');
+      }
+    }
+
+    let wipeArmTimer = null;
+
+    function setWipeArmed(isArmed) {
+      const clearBtn = document.getElementById('clear-all-data');
+      if (!clearBtn) return;
+
+      clearBtn.classList.toggle('is-armed', isArmed);
+      clearBtn.setAttribute('aria-pressed', isArmed ? 'true' : 'false');
+      clearBtn.title = isArmed ? 'Confirm mission/session data clear...' : 'Clear forms data';
+
+      const status = document.getElementById('pilot-location-status');
+      if (status) {
+        status.classList.toggle('is-armed', isArmed);
+      }
+
+      if (!isArmed && wipeArmTimer) {
+        clearTimeout(wipeArmTimer);
+        wipeArmTimer = null;
+      }
+    }
+
+    function armWipeAction() {
+      setWipeArmed(true);
+      wipeArmTimer = setTimeout(() => {
+        setWipeArmed(false);
+      }, 4500);
+    }
+
+    function updateClearDataVisibility() {
+      const clearBtn = document.getElementById('clear-all-data');
+      const fullResetBtn = document.getElementById('full-reset-data');
+      if (!clearBtn) return;
+      const visible = hasStoredSessionData();
+      clearBtn.classList.toggle('is-visible', visible);
+      if (fullResetBtn) {
+        fullResetBtn.classList.toggle('is-visible', visible);
+      }
+      if (!visible) setWipeArmed(false);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('init-pilot-location');
+      const clearBtn = document.getElementById('clear-all-data');
+      const fullResetBtn = document.getElementById('full-reset-data');
+      const status = document.getElementById('pilot-location-status');
+      const acceptBtn = document.querySelector('.waiver-accept');
+      const introPanel = document.getElementById('introduction-panel');
+      const openProfileBtn = document.getElementById('open-profile-drawer');
+      const closeProfileBtn = document.getElementById('close-profile-drawer');
+      const openMissionProfileBtn = document.getElementById('open-mission-profile-drawer');
+      const closeMissionProfileBtn = document.getElementById('close-mission-profile-drawer');
+      const profileBackdrop = document.getElementById('profile-backdrop');
+      const profileForm = document.getElementById('profile-form');
+      const profileModeSelect = document.getElementById('profile-mission-status');
+      const profileModeHelpBtn = document.getElementById('profile-mode-help-btn');
+      const profileUsageHelp = document.getElementById('profile-usage-help');
+      const profileCellInput = document.getElementById('profile-pilot-cell');
+      const profileEmailInput = document.getElementById('profile-pilot-email');
+      const missionAutomationEnabledInput = document.getElementById('profile-mission-automation-enabled');
+      const missionProfileForm = document.getElementById('mission-profile-form');
+      const cancelProfileBtn = document.getElementById('cancel-profile-save');
+      const cancelMissionProfileBtn = document.getElementById('cancel-mission-profile-save');
+      const missionProfileStatus = document.getElementById('mission-profile-status');
+      const loadMissionUuidRolesBtn = document.getElementById('load-mission-uuid-roles');
+      const exportProfileBtn = document.getElementById('export-profile-state');
+      const importProfileBtn = document.getElementById('import-profile-state');
+      const profileImportFile = document.getElementById('profile-import-file');
+      const advancedAccessPanel = document.getElementById('profile-advanced-access-panel');
+      const advancedAccessAttestedInput = document.getElementById('profile-advanced-access-attested');
+      if (!btn || !status || !clearBtn || !acceptBtn) return;
+
+      profileState = loadProfileState();
+      missionAutomationState = loadMissionAutomationState();
+      advancedAccessPanelCollapsedPreference = loadAdvancedAccessPanelCollapsedPreference();
+      persistProfileState();
+      persistMissionAutomationState();
+      renderProfileSummary();
+      updateProfileUsageModeUi();
+      updateAdvancedAccessUi();
+      updateMissionAutomationUi();
+      setProfileUsageHelpOpen(false);
+
+      syncIntroPanelFromStorage();
+      syncTermsGateState();
+      syncProfileStateWithTermsAndIntro();
+
+      if (introPanel) {
+        introPanel.addEventListener('toggle', () => {
+          setIntroCollapsed(!introPanel.open);
+          updateIntroToggleStateLabel();
+          renderProfileSummary();
+        });
+      }
+
+      if (profileModeSelect) {
+        profileModeSelect.addEventListener('change', () => {
+          if (profileForm) {
+            syncProfileStateFromForm(profileForm);
+          }
+          updateProfileUsageModeUi();
+          updateAdvancedAccessUi();
+          updateMissionAutomationUi();
+          renderProfileSummary();
+        });
+      }
+
+      if (profileModeHelpBtn && profileUsageHelp) {
+        profileModeHelpBtn.addEventListener('click', () => {
+          setProfileUsageHelpOpen(profileUsageHelp.hidden);
+        });
+      }
+
+      if (profileEmailInput) {
+        profileEmailInput.addEventListener('input', () => {
+          updateProfileEmailValidity(profileEmailInput);
+          if (profileForm) {
+            syncProfileStateFromForm(profileForm);
+            updateAdvancedAccessUi();
+            updateMissionAutomationUi();
+            renderProfileSummary();
+          }
+        });
+        profileEmailInput.addEventListener('blur', () => {
+          const message = updateProfileEmailValidity(profileEmailInput);
+          if (message) profileEmailInput.reportValidity();
+        });
+      }
+
+      if (profileCellInput) {
+        profileCellInput.addEventListener('input', () => {
+          updateProfilePhoneInput(profileCellInput);
+          if (profileForm) {
+            syncProfileStateFromForm(profileForm);
+            updateAdvancedAccessUi();
+            updateMissionAutomationUi();
+            renderProfileSummary();
+          }
+        });
+        profileCellInput.addEventListener('blur', () => {
+          const phoneMessage = updateProfilePhoneInput(profileCellInput);
+          if (phoneMessage) profileCellInput.reportValidity();
+        });
+      }
+
+      if (profileForm) {
+        profileForm.addEventListener('input', () => {
+          syncProfileStateFromForm(profileForm);
+          updateProfileUsageModeUi();
+          updateAdvancedAccessUi();
+          updateMissionAutomationUi();
+          renderProfileSummary();
+        });
+      }
+
+      document.addEventListener('click', (event) => {
+        if (!profileModeHelpBtn || !profileUsageHelp || profileUsageHelp.hidden) return;
+        const target = event.target;
+        if (target === profileModeHelpBtn || profileModeHelpBtn.contains(target) || profileUsageHelp.contains(target)) return;
+        setProfileUsageHelpOpen(false);
+      });
+
+      if (missionAutomationEnabledInput) {
+        missionAutomationEnabledInput.addEventListener('change', () => {
+          updateMissionAutomationUi();
+        });
+      }
+
+      if (advancedAccessAttestedInput) {
+        advancedAccessAttestedInput.addEventListener('change', () => {
+          localStorage.setItem(PROFILE_ADVANCED_ACCESS_ATTESTED_KEY, advancedAccessAttestedInput.checked ? 'true' : 'false');
+          updateAdvancedAccessUi();
+        });
+      }
+
+      if (advancedAccessPanel) {
+        advancedAccessPanel.addEventListener('toggle', () => {
+          const isCollapsed = !advancedAccessPanel.open;
+          advancedAccessPanelCollapsedPreference = isCollapsed;
+          persistAdvancedAccessPanelCollapsedPreference(isCollapsed);
+          updateAdvancedAccessUi();
+        });
+      }
+
+      if (openProfileBtn) {
+        openProfileBtn.addEventListener('click', openProfileDrawer);
+      }
+
+      if (closeProfileBtn) {
+        closeProfileBtn.addEventListener('click', closeProfileDrawer);
+      }
+
+      if (openMissionProfileBtn) {
+        openMissionProfileBtn.addEventListener('click', openMissionAutomationDrawer);
+      }
+
+      if (closeMissionProfileBtn) {
+        closeMissionProfileBtn.addEventListener('click', closeMissionAutomationDrawer);
+      }
+
+      if (cancelProfileBtn) {
+        cancelProfileBtn.addEventListener('click', closeProfileDrawer);
+      }
+
+      if (cancelMissionProfileBtn) {
+        cancelMissionProfileBtn.addEventListener('click', closeMissionAutomationDrawer);
+      }
+
+      if (loadMissionUuidRolesBtn) {
+        loadMissionUuidRolesBtn.addEventListener('click', async () => {
+          const feedback = missionProfileStatus || status;
+          const accessState = getAdvancedAccessState();
+          if (!accessState.validated) {
+            feedback.textContent = accessState.message;
+            return;
+          }
+          await loadUuidRolesIntoMissionSlots(feedback);
+        });
+      }
+
+      const clearUuidSlotsBtn = document.getElementById('clear-uuid-slots');
+      if (clearUuidSlotsBtn) {
+        clearUuidSlotsBtn.addEventListener('click', () => {
+          const feedback = missionProfileStatus || status;
+          missionAutomationState = missionAutomationState || getDefaultMissionAutomationState();
+          missionAutomationState.rc2UuidMissionA = '';
+          missionAutomationState.rc2UuidMissionB = '';
+          missionAutomationState.rc2UuidMissionC = '';
+          localStorage.removeItem(UUID_ROLES_REGISTRY_KEY);
+          persistMissionAutomationState();
+          fillMissionAutomationForm();
+          if (feedback) feedback.textContent = 'UUID slots cleared. Re-run Step 4 and use Load UUID Roles to reassign.';
+        });
+      }
+
+
+
+      if (exportProfileBtn) {
+        exportProfileBtn.addEventListener('click', async () => {
+          if (profileForm) {
+            syncProfileStateFromForm(profileForm);
+            if (profileCellInput) {
+              const phoneMessage = updateProfilePhoneInput(profileCellInput);
+              if (phoneMessage) {
+                status.textContent = phoneMessage;
+                profileCellInput.reportValidity();
+                return;
+              }
+            }
+            if (profileEmailInput) {
+              const emailMessage = updateProfileEmailValidity(profileEmailInput);
+              if (emailMessage) {
+                status.textContent = emailMessage;
+                profileEmailInput.reportValidity();
+                return;
+              }
+            }
+            renderProfileSummary();
+            updateProfileUsageModeUi();
+            updateAdvancedAccessUi();
+            updateMissionAutomationUi();
+          }
+          const accessState = getAdvancedAccessState();
+          if (!accessState.validated) {
+            status.textContent = accessState.message;
+            return;
+          }
+          await exportProfileBackup(status);
+        });
+      }
+
+      if (importProfileBtn && profileImportFile) {
+        importProfileBtn.addEventListener('click', () => {
+          status.textContent = `Import tip: look for ${PROFILE_EXPORT_FILENAME}.`;
+          profileImportFile.click();
+        });
+
+        profileImportFile.addEventListener('change', async () => {
+          const file = profileImportFile.files && profileImportFile.files[0];
+          await importProfileBackup(file, status);
+          profileImportFile.value = '';
+        });
+      }
+
+      if (profileBackdrop) {
+        profileBackdrop.addEventListener('click', () => {
+          closeProfileDrawer();
+          closeMissionAutomationDrawer();
+        });
+      }
+
+      const exportMissionConfigBtn = document.getElementById('export-mission-config');
+      const importMissionConfigBtn = document.getElementById('import-mission-config');
+      const missionConfigImportFile = document.getElementById('mission-config-import-file');
+
+      if (exportMissionConfigBtn) {
+        exportMissionConfigBtn.addEventListener('click', async () => {
+          const accessState = getAdvancedAccessState();
+          if (!accessState.validated) {
+            alert(accessState.message);
+            return;
+          }
+          await exportAdvancedConfigBackup();
+        });
+      }
+
+      if (importMissionConfigBtn && missionConfigImportFile) {
+        importMissionConfigBtn.addEventListener('click', () => {
+          missionConfigImportFile.click();
+        });
+
+        missionConfigImportFile.addEventListener('change', async () => {
+          const file = missionConfigImportFile.files && missionConfigImportFile.files[0];
+          await importAdvancedConfigBackup(file);
+          missionConfigImportFile.value = '';
+        });
+      }
+
+      if (profileForm) {
+        profileForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+
+          syncProfileStateFromForm(profileForm);
+
+          if (profileCellInput) {
+            const phoneMessage = updateProfilePhoneInput(profileCellInput);
+            if (phoneMessage) {
+              status.textContent = phoneMessage;
+              profileCellInput.reportValidity();
+              return;
+            }
+          }
+
+          if (profileEmailInput) {
+            const emailMessage = updateProfileEmailValidity(profileEmailInput);
+            if (emailMessage) {
+              status.textContent = emailMessage;
+              profileEmailInput.reportValidity();
+              return;
+            }
+          }
+
+          const pilotName = profileState.pilotName;
+          const droneMissionCategory = profileState.droneMissionCategory;
+          const lastMissionStatus = normalizeMissionStatus(profileState.lastMissionStatus);
+          const missionAutomationEnabled = normalizeBoolean(missionAutomationState && missionAutomationState.missionAutomationEnabled);
+
+          if (lastMissionStatus === 'closed') {
+            status.textContent = 'Private Local Copy stays local to this session. Advanced export remains locked until a valid Workspace Reuse profile is saved and validated.';
+            updateProfileUsageModeUi();
+            return;
+          }
+
+          persistProfileState();
+          if (missionAutomationState) {
+            persistMissionAutomationState();
+          }
+          renderProfileSummary();
+          updateAdvancedAccessUi();
+          updateMissionAutomationUi();
+
+          const usageModeLabel = toUsageModeLabel(lastMissionStatus);
+          let profileSaveMessage = pilotName
+            ? `Profile saved for ${pilotName} (${toTitleCaseCategory(droneMissionCategory)} | ${usageModeLabel}).`
+            : `Profile saved (${toTitleCaseCategory(droneMissionCategory)} | ${usageModeLabel}).`;
+
+          if (lastMissionStatus === 'draft') {
+            profileSaveMessage += ' Mission Only mode stores profile data for this browser session only.';
+          } else if (lastMissionStatus === 'closed') {
+            profileSaveMessage += ' Private Local Copy mode keeps a temporary session copy only. Load your private profile again next session.';
+          } else {
+            profileSaveMessage += ' Workspace Reuse mode keeps profile data in browser cache for return visits on this device.';
+          }
+
+          profileSaveMessage += missionAutomationEnabled
+            ? ' Mission Automation Profile is enabled; use Mission Manager to save mission settings.'
+            : ' Mission Automation Profile is disabled; local profile save only.';
+
+          if (normalizeMissionStatus(lastMissionStatus) === 'active') {
+            profileSaveMessage += ' Advanced access remains locked until you check the acknowledgment box.';
+          }
+
+          closeProfileDrawer();
+          status.textContent = profileSaveMessage;
+
+          updateClearDataVisibility();
+        });
+      }
+
+      if (missionProfileForm) {
+        missionProfileForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const accessState = getAdvancedAccessState();
+          if (!accessState.validated) {
+            status.textContent = accessState.message;
+            return;
+          }
+          if (!missionAutomationState) {
+            missionAutomationState = getDefaultMissionAutomationState();
+          }
+
+          const formData = new FormData(missionProfileForm);
+          missionAutomationState.defaultExportSlot = normalizeExportSlot(String(formData.get('defaultExportSlot') || 'mission_a'));
+          missionAutomationState.rc2UuidMissionA = normalizeUuidOrEmpty(formData.get('rc2UuidMissionA'));
+          missionAutomationState.rc2UuidMissionB = normalizeUuidOrEmpty(formData.get('rc2UuidMissionB'));
+          missionAutomationState.rc2UuidMissionC = normalizeUuidOrEmpty(formData.get('rc2UuidMissionC'));
+          missionAutomationState.rc2ExportDirMissionA = normalizeExportDir(formData.get('rc2ExportDirMissionA'), 'Mission_A');
+          missionAutomationState.rc2ExportDirMissionB = normalizeExportDir(formData.get('rc2ExportDirMissionB'), 'Mission_B');
+          missionAutomationState.rc2ExportDirMissionC = normalizeExportDir(formData.get('rc2ExportDirMissionC'), 'Mission_C');
+
+          persistMissionAutomationState();
+          renderProfileSummary();
+
+          let missionMessage = 'Mission automation profile saved locally.';
+          if (normalizeBoolean(missionAutomationState.missionAutomationEnabled)) {
+            try {
+              const savedPath = await saveProfileIntoRc2Registry();
+              if (savedPath) missionMessage = `Mission automation profile saved to ${savedPath}.`;
+            } catch (error) {
+              const reason = error && error.name === 'AbortError'
+                ? 'Mission Automation Profile is enabled, but no RC2_Missions root was selected.'
+                : `Mission Automation Profile cannot be saved: ${error.message || 'unknown error'}.`;
+              status.textContent = reason;
+              return;
+            }
+          }
+
+          closeMissionAutomationDrawer();
+          status.textContent = missionMessage;
+          updateClearDataVisibility();
+        });
+      }
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeProfileDrawer();
+          closeMissionAutomationDrawer();
+        }
+      });
+
+      acceptBtn.addEventListener('click', () => {
+        markTermsAccepted();
+        syncTermsGateState();
+        syncProfileStateWithTermsAndIntro();
+        renderProfileSummary();
+      });
+
+      const hasPilotLocation = updateStatusFromStorage();
+      updateHighlightState(hasPilotLocation);
+      updateClearDataVisibility();
+
+      btn.addEventListener('click', () => {
+        if (!navigator.geolocation) {
+          status.textContent = 'Geolocation is not supported by this browser.';
+          return;
+        }
+
+        status.textContent = 'Getting location...';
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const saved = setPilotLocation(
+              position.coords.latitude,
+              position.coords.longitude,
+              'index-hub'
+            );
+            status.textContent = `Pilot location ready: ${saved.latShort}, ${saved.lonShort}`;
+            checkAirspace(position.coords.latitude, position.coords.longitude);
+            updateHighlightState(true);
+            updateClearDataVisibility();
+          },
+          () => {
+            status.textContent = 'Unable to fetch location. Check browser permissions and try again.';
+          },
+          { enableHighAccuracy: true, timeout: 12000, maximumAge: 300000 }
+        );
+      });
+
+      clearBtn.addEventListener('click', async () => {
+        if (!clearBtn.classList.contains('is-armed')) {
+          armWipeAction();
+          status.textContent = 'Click trashcan twice to clear forms data (terms acceptance and intro visibility are kept).';
+          return;
+        }
+
+        status.textContent = 'Clearing forms/session data (keeping terms acceptance)...';
+        status.classList.remove('is-armed');
+        setWipeArmed(false);
+        await clearAllDataAndReload({ preserveTerms: true });
+      });
+
+      if (fullResetBtn) {
+        fullResetBtn.addEventListener('click', async () => {
+          const confirmed = window.confirm('Full Reset will clear all saved data, including terms acceptance. Continue?');
+          if (!confirmed) {
+            return;
+          }
+          status.textContent = 'Performing full reset...';
+          setWipeArmed(false);
+          await clearAllDataAndReload({ preserveTerms: false });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+
+

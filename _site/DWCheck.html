@@ -1,0 +1,3870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drone Weather &amp; Risk Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site-nav.css">
+<script src="assets/js/site-nav.js" defer></script>
+
+<style>
+
+:root{
+--bg-a:#f3fbff;
+--bg-b:#eef8ef;
+--ink:#1f2833;
+--muted:#506070;
+--accent:#0f6d5a;
+--accent-2:#0b5ea8;
+--panel:#ffffff;
+--line:#d6e4ef;
+--line-strong:#bfd4e6;
+--shadow-soft:0 8px 24px rgba(7,28,46,0.08);
+}
+
+body{
+font-family:'Montserrat',sans-serif;
+color:var(--ink);
+background:
+radial-gradient(circle at 10% 10%,rgba(11,94,168,0.10),transparent 40%),
+radial-gradient(circle at 90% 90%,rgba(15,109,90,0.10),transparent 45%),
+linear-gradient(160deg,var(--bg-a),var(--bg-b));
+max-width:980px;
+margin:auto;
+padding:20px 18px 36px;
+}
+
+h2{
+margin-bottom:12px;
+font-size:clamp(1.25rem,2.3vw,1.7rem);
+}
+
+input{
+padding:6px;
+font-size:16px;
+text-transform:uppercase;
+}
+
+button{
+padding:7px 14px;
+font-size:15px;
+margin-left:5px;
+}
+
+button:disabled{
+opacity:0.65;
+cursor:not-allowed;
+}
+
+button.next-step-highlight{
+background:#2f9e44;
+border:1px solid #237a33;
+color:#ffffff;
+font-weight:700;
+box-shadow:0 0 0 3px rgba(47,158,68,0.25);
+}
+
+button.step-prompt{
+display:inline-flex;
+align-items:center;
+gap:8px;
+}
+
+button.step-prompt::after{
+content:attr(data-step);
+display:inline-flex;
+align-items:center;
+justify-content:center;
+min-width:1.35rem;
+height:1.35rem;
+border-radius:999px;
+background:#fff3b0;
+color:#7a4e00;
+font-size:0.78rem;
+font-weight:800;
+line-height:1;
+box-shadow:0 0 0 2px rgba(255,255,255,0.82);
+}
+
+button.next-step-highlight.step-prompt::after{
+background:#ffffff;
+color:#14532d;
+}
+
+.panel{
+background:var(--panel);
+padding:16px;
+border:1px solid var(--line);
+border-radius:12px;
+margin-top:15px;
+box-shadow:var(--shadow-soft);
+}
+
+.compact-panel{
+padding:12px;
+margin-top:12px;
+}
+
+.compact-panel h3{
+margin:0 0 8px 0;
+font-size:1rem;
+}
+
+.station-list{
+margin:6px 0 0 18px;
+padding:0;
+}
+
+.station-list li{
+margin:3px 0;
+line-height:1.25;
+}
+
+.station-list li:nth-child(n+4){
+display:none;
+}
+
+.safe{background:#c8f7c5;}
+.caution{background:#fff3b0;}
+.risky{background:#ffd6a5;}
+.nogo{background:#ffb3b3;}
+
+pre{
+background:#fafafa;
+padding:10px;
+overflow-x:auto;
+}
+
+.metric{
+margin:4px 0;
+}
+
+.controls{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+align-items:center;
+}
+
+.controls input,
+.controls button{
+margin:0;
+}
+
+.error-banner{
+display:none;
+background:#ffe3e3;
+border:1px solid #c92a2a;
+color:#7f1d1d;
+padding:10px 12px;
+border-radius:6px;
+margin-top:12px;
+}
+
+.error-banner.show{
+display:block;
+}
+
+.loading-wrap{
+display:none;
+align-items:center;
+gap:10px;
+margin-top:12px;
+padding:8px 10px;
+border-radius:6px;
+background:#e8f1ff;
+border:1px solid #9ec5fe;
+color:#084298;
+}
+
+.loading-wrap.show{
+display:flex;
+}
+
+.spinner{
+width:18px;
+height:18px;
+border:3px solid #9ec5fe;
+border-top-color:#084298;
+border-radius:50%;
+animation:spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+to{transform:rotate(360deg);}
+}
+
+.station-list{
+margin:0;
+padding-left:18px;
+}
+
+.station-list li{
+margin:5px 0;
+}
+
+.subtle{
+color:var(--muted);
+font-size:14px;
+margin-top:8px;
+}
+
+.location-not-defined{
+background:#ffe3e3;
+border:1px solid #c92a2a;
+color:#7f1d1d;
+padding:10px 12px;
+border-radius:6px;
+}
+
+.top-nav{
+margin-bottom:10px;
+font-size:14px;
+}
+
+.top-nav a{
+color:#0b57d0;
+text-decoration:none;
+}
+
+.top-nav a:hover{
+text-decoration:underline;
+}
+
+.top-nav .back-link{
+display:inline-flex;
+align-items:center;
+gap:0.4rem;
+padding:0.35rem 0.7rem 0.35rem 0.45rem;
+border-radius:999px;
+border:1px solid #9ec9e8;
+background:#eaf5ff;
+color:#0b5ea8;
+font-weight:700;
+font-size:0.98rem;
+text-decoration:none;
+vertical-align:middle;
+}
+
+.top-nav .back-link .back-icon{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:1.6rem;
+height:1.6rem;
+border-radius:999px;
+background:#0b5ea8;
+color:#ffffff;
+font-size:1rem;
+line-height:1;
+}
+
+.top-nav .back-link:hover{
+text-decoration:none;
+background:#d8ecff;
+border-color:#7db2db;
+}
+
+.status-ok{
+color:#14532d;
+font-weight:600;
+}
+
+.status-alert{
+color:#8a1f1f;
+font-weight:700;
+}
+
+.mini-action-btn{
+padding:5px 10px;
+font-size:12px;
+margin-left:0;
+margin-top:8px;
+border:1px solid #8eb9da;
+background:#ffffff;
+color:#134f85;
+border-radius:999px;
+font-weight:700;
+cursor:pointer;
+transition:background-color 0.18s ease,border-color 0.18s ease,transform 0.18s ease;
+}
+
+.mini-action-btn:hover{
+background:#eef7ff;
+border-color:#6e9fc6;
+transform:translateY(-1px);
+}
+
+.modal-overlay{
+position:fixed;
+inset:0;
+background:rgba(15,23,42,0.55);
+display:none;
+align-items:center;
+justify-content:center;
+padding:18px;
+z-index:2000;
+}
+
+.modal-overlay.show{
+display:flex;
+}
+
+.modal-card{
+background:#ffffff;
+border-radius:10px;
+max-width:520px;
+width:100%;
+box-shadow:0 18px 45px rgba(15,23,42,0.25);
+padding:16px 18px;
+}
+
+.modal-card h4{
+margin:0 0 8px 0;
+font-size:16px;
+}
+
+.modal-score-title{
+margin:0 0 8px 0;
+font-size:14px;
+font-weight:700;
+color:#223;
+}
+
+.modal-card .modal-list{
+margin:0;
+padding-left:18px;
+font-size:14px;
+color:#223;
+}
+
+.modal-card .modal-actions{
+margin-top:12px;
+text-align:right;
+}
+
+.mini-action-btn.state-fresh{
+background:#d3f9d8;
+border:1px solid #2f9e44;
+color:#14532d;
+}
+
+.mini-action-btn.state-stale{
+background:#ffd8d8;
+border:1px solid #c92a2a;
+color:#7f1d1d;
+font-weight:700;
+}
+
+.flow-next-card{
+margin-top:10px;
+padding:10px 12px;
+border:1px solid #b7dfc2;
+background:#effcf3;
+border-radius:8px;
+}
+
+.flow-next-card.is-hidden{
+display:none;
+}
+
+.record-flow{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin:8px 0 10px;
+}
+
+.record-flow-step{
+display:inline-flex;
+align-items:center;
+gap:6px;
+padding:5px 10px;
+border-radius:999px;
+background:#eef3f8;
+border:1px solid #cad8e6;
+font-size:12px;
+font-weight:700;
+color:#415466;
+}
+
+.record-flow-step::before{
+content:"";
+width:0.7rem;
+height:0.7rem;
+border-radius:999px;
+background:#9fb3c8;
+}
+
+.record-flow-step.is-complete{
+background:#e8f8ea;
+border-color:#7acb8b;
+color:#14532d;
+}
+
+.record-flow-step.is-complete::before{
+background:#2f9e44;
+}
+
+.record-flow-step.is-current{
+background:#fff3b0;
+border-color:#e0bc42;
+color:#7a4e00;
+}
+
+.record-flow-step.is-current::before{
+background:#e0bc42;
+}
+
+.record-flow-step.is-stale{
+background:#ffd8d8;
+border-color:#c92a2a;
+color:#7f1d1d;
+}
+
+.record-flow-step.is-stale::before{
+background:#c92a2a;
+}
+
+.flow-next-link{
+display:inline-block;
+margin-top:6px;
+padding:6px 10px;
+border-radius:6px;
+text-decoration:none;
+background:#2f9e44;
+color:#fff;
+font-weight:600;
+font-size:13px;
+}
+
+.flow-next-link:hover{
+background:#237a33;
+}
+
+.controls .flow-next-link{
+margin-top:0;
+}
+
+.is-hidden{
+display:none;
+}
+
+.panel-toggle-header{
+display:flex;
+align-items:center;
+gap:8px;
+cursor:pointer;
+-webkit-user-select:none;
+user-select:none;
+margin-bottom:8px;
+}
+
+.panel-toggle-header h3{
+margin:0;
+}
+
+.panel-collapse-icon{
+display:inline-block;
+width:20px;
+font-size:12px;
+line-height:1;
+text-align:center;
+transition:transform 0.2s ease;
+}
+
+.panel-collapse-icon.collapsed{
+transform:rotate(-90deg);
+}
+
+.risk-mini-table{
+width:100%;
+border-collapse:collapse;
+font-size:13px;
+margin-top:8px;
+}
+
+.risk-mini-table th,
+.risk-mini-table td{
+border:1px solid var(--line-strong);
+padding:6px;
+text-align:left;
+vertical-align:top;
+}
+
+.risk-mini-table th{
+background:#f1f7fc;
+}
+
+.compact-risk-table{
+width:auto;
+min-width:460px;
+margin:0;
+font-size:12px;
+}
+
+.compact-risk-table th,
+.compact-risk-table td{
+padding:4px 8px;
+text-align:center;
+white-space:nowrap;
+}
+
+.risk-score-card{
+background:linear-gradient(180deg,#f8fcff 0%,#ffffff 100%);
+border:1px solid var(--line);
+}
+
+.risk-score-card .risk-key-title{
+margin:0 0 10px 0;
+}
+
+.risk-score-guide{
+margin-top:12px;
+}
+
+.risk-score-guide summary,
+.pilot-location-details summary{
+cursor:pointer;
+font-weight:700;
+color:#234767;
+font-size:13px;
+}
+
+.risk-score-guide .table-wrap{
+margin-top:8px;
+}
+
+.risk-score-table{
+width:100%;
+min-width:0;
+border-collapse:collapse;
+font-size:12px;
+}
+
+.risk-score-table thead th{
+background:#edf6ff;
+border:1px solid var(--line);
+color:#234767;
+font-size:11px;
+font-weight:700;
+text-transform:uppercase;
+letter-spacing:0.04em;
+padding:6px 8px;
+}
+
+.risk-score-table tbody td{
+background:#ffffff;
+border:1px solid var(--line);
+padding:6px 8px;
+text-align:center;
+}
+
+.risk-score-table tbody td:first-child{
+font-weight:700;
+color:#173a59;
+}
+
+.risk-score-table tbody td:nth-child(2){
+text-align:center;
+}
+
+.risk-score-table tbody td:last-child{
+color:#2a4359;
+text-align:left;
+}
+
+.risk-score-table tbody tr.band-green td:first-child{
+box-shadow:inset 3px 0 0 #2f9e44;
+}
+
+.risk-score-table tbody tr.band-yellow td:first-child{
+box-shadow:inset 3px 0 0 #f59f00;
+}
+
+.risk-score-table tbody tr.band-red td:first-child{
+box-shadow:inset 3px 0 0 #e03131;
+}
+
+.risk-band-pill{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+min-width:64px;
+padding:2px 8px;
+border-radius:999px;
+font-size:11px;
+font-weight:700;
+border:1px solid transparent;
+}
+
+.risk-band-pill.green{
+background:#dbf8e4;
+color:#14532d;
+border-color:#8fd3a4;
+}
+
+.risk-band-pill.yellow{
+background:#fff5d6;
+color:#7a4e00;
+border-color:#e9cf8a;
+}
+
+.risk-band-pill.red{
+background:#ffe0e0;
+color:#8a1f1f;
+border-color:#e7a6a6;
+}
+
+.compact-wind-table{
+font-size:12px;
+}
+
+.compact-wind-table th,
+.compact-wind-table td{
+padding:4px 6px;
+}
+
+.compact-wind-table th:nth-child(2),
+.compact-wind-table th:nth-child(3),
+.compact-wind-table th:nth-child(4),
+.compact-wind-table th:nth-child(5),
+.compact-wind-table th:nth-child(6),
+.compact-wind-table th:nth-child(7),
+.compact-wind-table td:nth-child(2),
+.compact-wind-table td:nth-child(3),
+.compact-wind-table td:nth-child(4),
+.compact-wind-table td:nth-child(5),
+.compact-wind-table td:nth-child(6),
+.compact-wind-table td:nth-child(7){
+text-align:center;
+white-space:nowrap;
+}
+
+.wind-guide-panel{
+background:linear-gradient(180deg,#f8fcff 0%,#ffffff 100%);
+border:1px solid var(--line);
+}
+
+.wind-guide-header{
+display:flex;
+flex-wrap:wrap;
+align-items:baseline;
+justify-content:space-between;
+gap:8px;
+margin-bottom:10px;
+cursor:pointer;
+-webkit-user-select:none;
+user-select:none;
+}
+
+.wind-guide-title{
+margin:0;
+font-size:18px;
+color:#12324d;
+}
+
+.wind-guide-kicker{
+display:inline-block;
+font-size:11px;
+letter-spacing:0.06em;
+text-transform:uppercase;
+font-weight:700;
+color:#285f8f;
+background:#dff1ff;
+border:1px solid #b7dbf8;
+border-radius:999px;
+padding:3px 9px;
+}
+
+.wind-guide-table-wrap{
+border:1px solid #d2dfeb;
+border-radius:10px;
+overflow:hidden;
+background:#ffffff;
+box-shadow:0 6px 16px rgba(15,48,77,0.08);
+}
+
+.wind-guide-table{
+width:100%;
+margin:0;
+font-size:13px;
+}
+
+.wind-guide-table th,
+.wind-guide-table td{
+padding:8px 10px;
+}
+
+.wind-guide-collapse-icon{
+display:inline-block;
+width:20px;
+font-size:12px;
+line-height:1;
+text-align:center;
+transition:transform 0.2s ease;
+}
+
+.wind-guide-collapse-icon.collapsed{
+transform:rotate(-90deg);
+}
+
+.wind-guide-controls.hidden,
+.wind-guide-table-wrap.hidden,
+.wind-guide-note.hidden{
+display:none;
+}
+
+.wind-guide-table thead th{
+background:linear-gradient(180deg,#0f4f79 0%,#0b3f63 100%);
+color:#ffffff;
+font-weight:700;
+border-color:#0b3f63;
+}
+
+.wind-guide-table tbody tr:nth-child(even){
+background:#f6fbff;
+}
+
+.wind-guide-table tbody tr:hover{
+background:#e9f4ff;
+}
+
+.wind-guide-note{
+margin-top:10px;
+font-size:13px;
+color:#2e4a63;
+}
+
+.wind-guide-controls{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+align-items:center;
+margin-bottom:10px;
+padding:8px 10px;
+border:1px solid #d2dfeb;
+border-radius:8px;
+background:#f7fbff;
+}
+
+.wind-guide-controls label{
+font-size:12px;
+font-weight:700;
+color:#1f3f5c;
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.wind-guide-filter-input{
+width:230px;
+max-width:100%;
+font-size:13px;
+padding:6px 8px;
+text-transform:none;
+}
+
+.wind-guide-editor-card{
+max-width:980px;
+}
+
+.wind-guide-editor-table input[type="text"],
+.wind-guide-editor-table input[type="number"]{
+width:100%;
+font-size:12px;
+padding:4px 6px;
+text-transform:none;
+}
+
+.wind-guide-editor-table .editor-model{
+min-width:180px;
+}
+
+.wind-guide-editor-table .editor-number{
+min-width:90px;
+}
+
+.wind-guide-editor-table .editor-remove-btn{
+padding:4px 8px;
+font-size:12px;
+margin:0;
+background:#ffe3e3;
+border:1px solid #c92a2a;
+color:#7f1d1d;
+border-radius:4px;
+cursor:pointer;
+}
+
+.wind-guide-editor-actions{
+display:flex;
+flex-wrap:wrap;
+justify-content:flex-end;
+gap:8px;
+}
+
+.wind-guide-editor-table-wrap{
+max-height:420px;
+overflow:auto;
+}
+
+.wind-guide-verified{
+width:18px;
+height:18px;
+cursor:pointer;
+accent-color:#1f7a34;
+}
+
+.wind-guide-source-missing{
+color:#8a1f1f;
+font-size:12px;
+font-weight:600;
+}
+
+#riskPanel{
+min-height:130px;
+}
+
+.risk-survey-body{
+display:grid;
+grid-template-columns:minmax(0,1fr) clamp(140px,36%,205px);
+gap:12px;
+align-items:start;
+}
+
+.risk-survey-details{
+min-width:0;
+}
+
+.risk-compass-wrap{
+display:flex;
+justify-content:center;
+align-items:flex-start;
+padding-top:10px;
+}
+
+.risk-compass{
+display:block;
+width:100%;
+max-width:205px;
+height:auto;
+object-fit:contain;
+}
+
+@media (max-width:480px){
+.risk-survey-body{
+grid-template-columns:minmax(0,1fr) clamp(120px,36%,170px);
+gap:8px;
+}
+
+.risk-compass{
+max-width:170px;
+}
+}
+
+.risk-placeholder{
+color:#445;
+font-size:14px;
+}
+
+.prompt-step-badge{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+min-width:1.35rem;
+height:1.35rem;
+margin-right:8px;
+border-radius:999px;
+background:#fff3b0;
+color:#7a4e00;
+font-size:0.78rem;
+font-weight:800;
+line-height:1;
+vertical-align:middle;
+box-shadow:0 0 0 2px rgba(255,255,255,0.8);
+}
+
+.kp-badge{
+display:inline-block;
+padding:4px 8px;
+border-radius:999px;
+font-weight:600;
+font-size:12px;
+margin-bottom:6px;
+}
+
+.kp-nominal{
+background:#d3f9d8;
+color:#14532d;
+}
+
+.kp-elevated{
+background:#fff3bf;
+color:#7a4e00;
+}
+
+.kp-storm{
+background:#ffe8cc;
+color:#9a3412;
+}
+
+.kp-severe{
+background:#ffd8d8;
+color:#8a1f1f;
+}
+
+.kp-scale{
+margin-top:8px;
+font-size:13px;
+color:#334;
+}
+
+.kp-key-line{
+margin-top:8px;
+font-size:13px;
+color:#334;
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+align-items:center;
+}
+
+.kp-key-item{
+display:inline-flex;
+align-items:center;
+gap:6px;
+white-space:nowrap;
+}
+
+.kp-key-spacer{
+height:8px;
+}
+
+.kp-dot{
+display:inline-block;
+width:10px;
+height:10px;
+border-radius:50%;
+border:1px solid rgba(0,0,0,0.2);
+}
+
+.kp-dot-green{ background:#2f9e44; }
+.kp-dot-yellow{ background:#f59f00; }
+.kp-dot-red{ background:#e03131; }
+.kp-dot-orange{ background:#f76707; }
+
+.risk-key-title{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.risk-key-dot{
+display:inline-block;
+width:12px;
+height:12px;
+border-radius:50%;
+border:1px solid rgba(0,0,0,0.25);
+}
+
+.risk-key-unknown{ background:#adb5bd; }
+.risk-key-green{ background:#2f9e44; }
+.risk-key-yellow{ background:#f59f00; }
+.risk-key-red{ background:#e03131; }
+
+.kp-scale-table{
+width:100%;
+border-collapse:collapse;
+max-width:560px;
+margin:8px auto 0;
+font-size:12px;
+text-align:center;
+}
+
+.kp-scale-table th,
+.kp-scale-table td{
+border:1px solid #d7dde4;
+padding:6px;
+}
+
+.kp-scale-table th{
+background:#f7f9fc;
+}
+
+.table-wrap{
+overflow-x:auto;
+}
+
+.ref-table{
+width:100%;
+border-collapse:collapse;
+font-size:14px;
+}
+
+.ref-table th,
+.ref-table td{
+border:1px solid #d7dde4;
+padding:8px;
+vertical-align:top;
+text-align:left;
+}
+
+.ref-table th{
+background:#f4f7fb;
+}
+
+.weather-summary-panel{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:10px;
+margin-top:12px;
+}
+
+.weather-summary-item{
+background:linear-gradient(180deg,#f9fcff 0%,#f4f9ff 100%);
+border:1px solid var(--line);
+border-radius:10px;
+padding:11px;
+box-shadow:0 2px 8px rgba(18,50,77,0.06);
+}
+
+.weather-summary-item b{
+display:block;
+font-size:12px;
+letter-spacing:0.03em;
+text-transform:uppercase;
+color:#445;
+margin-bottom:4px;
+}
+
+.weather-summary-item span{
+display:block;
+font-size:14px;
+color:#1f2833;
+}
+
+.weather-summary-item.full-width{
+grid-column:1 / -1;
+}
+
+.weather-summary-empty{
+color:#445;
+font-size:14px;
+margin-top:10px;
+}
+
+@media (max-width:560px){
+body{
+padding:16px 14px 28px;
+}
+
+h2{
+margin-top:10px;
+}
+
+.panel{
+padding:12px;
+margin-top:12px;
+border-radius:10px;
+}
+
+.compact-panel{
+padding:10px 12px;
+}
+
+.compact-panel .subtle,
+.compact-panel #nearestStations{
+font-size:13px;
+line-height:1.3;
+}
+
+.weather-summary-panel{
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:8px;
+}
+
+.weather-summary-item{
+padding:9px;
+border-radius:8px;
+}
+
+.weather-summary-item b{
+font-size:10px;
+}
+
+.weather-summary-item span{
+font-size:13px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="top-nav shared-site-nav" data-nav-variant="utility" data-back-fallback="tools.html"></nav>
+
+<h2>Drone Weather &amp; Risk Assessment</h2>
+
+<div class="controls">
+<input id="icao" placeholder="ICAO (CYOO)">
+<button id="locBtn" onclick="useCurrentLocation()">Get Pilot Location</button>
+<button id="checkBtn" onclick="runCheck()">Fetch Weather/Risk Assessment</button>
+<button id="completeBtn" type="button" onclick="markWeatherCheckComplete()">Save Weather Check</button>
+</div>
+
+<div id="errorBanner" class="error-banner"></div>
+
+<div id="loadingWrap" class="loading-wrap" aria-live="polite">
+<div class="spinner" aria-hidden="true"></div>
+<div id="loadingText">Searching weather sources...</div>
+</div>
+
+<div id="riskPanel" class="panel">
+<h3 id="riskScoreKeyTitle" class="risk-key-title">
+<span id="riskScoreKeyDot" class="risk-key-dot risk-key-unknown" aria-hidden="true"></span>
+<span id="riskScoreKeyText">Drone Weather &amp; Risk Assessment</span>
+</h3>
+<div class="risk-survey-body">
+<div class="risk-placeholder">Fetch Weather/Risk Assessment, based on your current Pilot location, to load current survey details.</div>
+<div class="risk-compass-wrap">
+<img class="risk-compass" src="assets/img/Compass_360.svg" alt="Compass rose for reviewing wind direction" onerror="if(this.src.endsWith('Compass_360.svg')){this.src='assets/img/Compass_360.png';return;}this.onerror=null;this.src='assets/img/Compass_360%20v1.png';">
+</div>
+</div>
+<details class="risk-score-guide">
+<summary>Risk Score Guide</summary>
+<div class="table-wrap">
+<table class="risk-mini-table compact-risk-table risk-score-table">
+<thead>
+<tr>
+<th>Score</th>
+<th>Band</th>
+<th>Operational Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="band-green">
+<td data-label="Score">0-2</td>
+<td data-label="Band"><span class="risk-band-pill green">Green</span></td>
+<td data-label="Operational Meaning">Low Risk</td>
+</tr>
+<tr class="band-yellow">
+<td data-label="Score">3-4</td>
+<td data-label="Band"><span class="risk-band-pill yellow">Yellow</span></td>
+<td data-label="Operational Meaning">Caution</td>
+</tr>
+<tr class="band-red">
+<td data-label="Score">5-6</td>
+<td data-label="Band"><span class="risk-band-pill red">Red</span></td>
+<td data-label="Operational Meaning">Risky Conditions</td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+
+<div class="panel compact-panel">
+<h3>Weather Check Record</h3>
+<div id="dwCheckStatus" class="subtle">No weather check saved yet.</div>
+<button id="rerunAssessmentBtn" type="button" class="mini-action-btn is-hidden" onclick="runNewAssessment()">Run New Assessment</button>
+</div>
+
+<div class="panel compact-panel">
+<h3>Closest METAR Stations</h3>
+<div id="nearestStations">Closest stations will appear here.</div>
+<details class="pilot-location-details">
+<summary>Pilot Location</summary>
+<div id="currentLocationDetails" class="subtle"><em>Current Pilot Location unknown. Refresh after setting location, or click Use Current Location.</em></div>
+</details>
+</div>
+
+<div class="panel">
+<h3>NOAA Geomagnetic Planetary Kp Index</h3>
+<div id="kpData"></div>
+</div>
+
+<div id="scoringIndexModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="scoringIndexTitle">
+<div class="modal-card">
+<h4 id="scoringIndexTitle">Scoring Index</h4>
+<h5 class="modal-score-title">Maximum Score 7</h5>
+<ul class="modal-list">
+<li><b>Wind (higher of sustained or gust):</b> 0-9 KT = 1, 10-15 KT = 2, 16-20 KT = 3, 21+ KT = 4</li>
+<li><b>Gust spread:</b> &gt; 8 KT = +1</li>
+<li><b>Visibility:</b> &lt; 3 SM = +1</li>
+<li><b>Ceiling:</b> &lt; 1000 ft = +1</li>
+</ul>
+<div class="modal-actions">
+<button type="button" class="mini-action-btn" onclick="closeScoringIndex()">Close</button>
+</div>
+</div>
+</div>
+
+<div class="panel">
+<div class="panel-toggle-header" onclick="toggleWeatherReportCollapse()">
+<span id="weatherReportCollapseIcon" class="panel-collapse-icon collapsed">▼</span>
+<h3>Current METAR Report</h3>
+</div>
+<div id="weatherReportContent" class="is-hidden">
+<pre id="metarText"></pre>
+<div id="weatherSummaryPanel" class="weather-summary-empty">Fetch Weather/Risk Assessment, based on your current Pilot location, to load structured observation details.</div>
+</div>
+</div>
+
+<div id="windGuidePanel" class="panel wind-guide-panel">
+<div class="wind-guide-header" onclick="toggleWindGuideCollapse()">
+<span class="wind-guide-collapse-icon" id="windGuideCollapseIcon">▼</span>
+<h3 class="wind-guide-title">Drone Wind Resistance Guide</h3>
+<span class="wind-guide-kicker">Reference Table</span>
+</div>
+<div class="wind-guide-controls" id="windGuideControls">
+<label for="windGuideModelFilter">Filter by Drone Model
+<input id="windGuideModelFilter" class="wind-guide-filter-input" type="text" placeholder="Search model (ex: Mini, Mavic, Autel)" oninput="handleWindGuideFilterChange()">
+</label>
+<button id="windGuideFilterToggleBtn" type="button" class="mini-action-btn" onclick="toggleWindGuideModelFilter()" title="Clear filter">Clear Filter</button>
+<button type="button" class="mini-action-btn" onclick="tryOpenWindGuideEditor()">Edit Wind Guide JSON</button>
+</div>
+<div class="table-wrap wind-guide-table-wrap" id="windGuideTableWrap">
+<table class="risk-mini-table compact-wind-table wind-guide-table">
+<thead>
+<tr>
+<th>Drone Model</th>
+<th>OEM m/s</th>
+<th>OEM km/h</th>
+<th>OEM kt</th>
+<th>Conv mph</th>
+<th>Validated OEM</th>
+</tr>
+</thead>
+<tbody id="windGuideTableBody">
+<tr>
+<td colspan="6">Loading wind guide models...</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="subtle wind-guide-note" id="windGuideNote1">Reference charts only. Always follow your manufacturer's limits and any site-specific conditions.</div>
+<div class="subtle wind-guide-note" id="windGuideNote2">Data source: <b>data/drone_wind_resistance.json</b> (edit this file to add/remove models). Optional fields: <b>oemWindMs</b>, <b>oemWindKmh</b>, <b>oemWindKt</b>, <b>verified</b>.</div>
+</div>
+
+<div id="windGuideEditorModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="windGuideEditorTitle">
+<div class="modal-card wind-guide-editor-card">
+<h4 id="windGuideEditorTitle">Wind Guide JSON Editor (Admin Only)</h4>
+<div class="subtle">Edit values and save to update the Wind Guide table display. For persistent changes, commit the source JSON file to GitHub.</div>
+<div class="table-wrap wind-guide-editor-table-wrap">
+<table class="risk-mini-table wind-guide-editor-table">
+<thead>
+<tr>
+<th>Drone Model</th>
+<th>OEM m/s</th>
+<th>OEM km/h</th>
+<th>OEM kt</th>
+<th>Verified</th>
+<th>Remove</th>
+</tr>
+</thead>
+<tbody id="windGuideEditorBody"></tbody>
+</table>
+</div>
+<div class="modal-actions wind-guide-editor-actions">
+<button type="button" class="mini-action-btn" onclick="addWindGuideEditorRow()">Add Row</button>
+<button type="button" class="mini-action-btn" onclick="resetWindGuideEditorToSource()">Reset to Source</button>
+<button type="button" class="mini-action-btn" onclick="exportWindGuideEditorJson()">Export JSON</button>
+<button type="button" class="mini-action-btn" onclick="saveWindGuideEditor()">Save Changes</button>
+<button type="button" class="mini-action-btn" onclick="closeWindGuideEditor()">Close</button>
+</div>
+</div>
+</div>
+
+<script>
+
+/* -------------------------
+   MAIN CONTROL FUNCTION
+------------------------- */
+
+let latestNearestStations = []
+let latestLocation = null
+let latestWeatherArtifact = null
+let committedWeatherArtifact = null
+let latestWindGuideModels = []
+let windGuideEditorRows = []
+let windGuideCollapsed = true
+let stationsCachePromise = null
+let lastMetarFetchInfo = {
+winnerLabel: "",
+winnerUrl: "",
+errors: []
+}
+
+const WIND_GUIDE_VALIDATION_MAP_KEY = "dwWindGuideValidationMap"
+const PROFILE_STATE_KEY = "dsop.profileState.v1"
+const PROFILE_SESSION_STATE_KEY = "dsop.profileState.session.v1"
+
+let preferredWindGuideFilterValue = ""
+let preferredWindGuideFilterApplied = false
+
+function isValidIcaoCode(value){
+return /^[A-Z]{4}$/.test(String(value || "").trim().toUpperCase())
+}
+
+function isMetarCapableStation(station){
+if(!station || !Array.isArray(station.siteType)) return false
+return station.siteType.some(type => String(type || "").trim().toUpperCase() === "METAR")
+}
+
+const WEATHER_PROXY_PROVIDERS = [
+{ name: "cloudflare", buildUrl: url => `https://navcan-proxy.rontreleaven.workers.dev/?url=${encodeURIComponent(url)}` },
+{ name: "allorigins", buildUrl: url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}` },
+{ name: "codetabs", buildUrl: url => `https://api.codetabs.com/v1/proxy?quest=${url}` }
+]
+
+const WEATHER_INTENSITY_MAP = {
+"-": "Light",
+"+": "Heavy",
+"VC": "In the vicinity"
+}
+
+const WEATHER_DESCRIPTOR_MAP = {
+MI: "Shallow",
+PR: "Partial",
+BC: "Patches",
+DR: "Low drifting",
+BL: "Blowing",
+SH: "Showers",
+TS: "Thunderstorm",
+FZ: "Freezing"
+}
+
+const WEATHER_PHENOMENA_MAP = {
+DZ: "Drizzle",
+RA: "Rain",
+SN: "Snow",
+SG: "Snow grains",
+IC: "Ice crystals",
+PL: "Ice pellets",
+GR: "Hail",
+GS: "Small hail",
+UP: "Unknown precipitation",
+BR: "Mist",
+FG: "Fog",
+FU: "Smoke",
+VA: "Volcanic ash",
+DU: "Dust",
+SA: "Sand",
+HZ: "Haze",
+PY: "Spray",
+PO: "Dust whirls",
+SQ: "Squalls",
+FC: "Funnel cloud",
+SS: "Sandstorm",
+DS: "Duststorm"
+}
+
+const CLOUD_COVERAGE_MAP = {
+SKC: "Sky clear",
+CLR: "Clear",
+NCD: "No clouds detected",
+NSC: "No significant cloud",
+FEW: "Few",
+SCT: "Scattered",
+BKN: "Broken",
+OVC: "Overcast",
+VV: "Vertical visibility"
+}
+
+const BEAUFORT_SCALE = [
+{ level: 0, min: 0, max: 1 },
+{ level: 1, min: 1, max: 3 },
+{ level: 2, min: 4, max: 6 },
+{ level: 3, min: 7, max: 10 },
+{ level: 4, min: 11, max: 16 },
+{ level: 5, min: 17, max: 21 },
+{ level: 6, min: 22, max: 27 },
+{ level: 7, min: 28, max: 33 },
+{ level: 8, min: 34, max: 40 },
+{ level: 9, min: 41, max: 47 },
+{ level: 10, min: 48, max: 55 },
+{ level: 11, min: 56, max: 63 },
+{ level: 12, min: 64, max: 999 }
+]
+
+function getBeaufortLevel(kts){
+if(!Number.isFinite(kts)) return null
+const entry = BEAUFORT_SCALE.find(b => kts >= b.min && kts <= b.max)
+return entry ? entry.level : null
+}
+
+function knotsToKmh(knots){
+const n = Number(knots)
+if(!Number.isFinite(n)) return null
+return n * 1.852
+}
+
+function formatWindWithDualUnits(knots){
+const n = Number(knots)
+if(!Number.isFinite(n)) return "Unavailable"
+const kmh = knotsToKmh(n)
+if(!Number.isFinite(kmh)) return `${n} kt`
+return `${n} kt (${kmh.toFixed(1)} km/h)`
+}
+
+function getDroneRisk(beaufort){
+if(beaufort == null) return "Unavailable"
+if(beaufort <= 4) return "LOW"
+if(beaufort <= 6) return "CAUTION"
+if(beaufort <= 7) return "HIGH"
+return "DANGER"
+}
+
+function getScoreRiskLabel(score){
+const n = Number(score)
+if(!Number.isFinite(n)) return "Unavailable"
+if(n <= 2) return "LOW"
+if(n <= 4) return "CAUTION"
+if(n <= 6) return "HIGH"
+return "DANGER"
+}
+
+function toFiniteNumber(value){
+const n = Number(value)
+return Number.isFinite(n) ? n : null
+}
+
+function toWindGuideModelId(model){
+return String(model || "")
+.toLowerCase()
+.replace(/[^a-z0-9]+/g,"-")
+.replace(/^-+|-+$/g,"")
+}
+
+function formatWindGuideNumber(value,decimals=1){
+if(!Number.isFinite(value)) return "-"
+return Number(value).toFixed(decimals)
+}
+
+function getWindGuideModelFilterText(){
+const input = document.getElementById("windGuideModelFilter")
+return String(input?.value || "").trim().toLowerCase()
+}
+
+function getWindGuideModelFilterValue(){
+const input = document.getElementById("windGuideModelFilter")
+return String(input?.value || "").trim()
+}
+
+function setWindGuideModelFilterValue(value){
+const input = document.getElementById("windGuideModelFilter")
+if(!input) return
+input.value = String(value || "").trim()
+}
+
+function parsePreferredDroneCandidate(rawValue){
+const tokens = String(rawValue || "")
+.split(/[;,]/)
+.map(token => token.trim())
+.filter(Boolean)
+if(!tokens.length) return ""
+return tokens[0]
+}
+
+function readPreferredDroneFromProfileStorage(){
+const tryRead = (storage, key) => {
+try{
+const raw = storage.getItem(key)
+if(!raw) return ""
+const parsed = JSON.parse(raw)
+if(!parsed || typeof parsed !== "object") return ""
+return parsePreferredDroneCandidate(parsed.preferredDroneLabel)
+}
+catch{
+return ""
+}
+}
+
+return (
+tryRead(localStorage,PROFILE_STATE_KEY)
+|| tryRead(sessionStorage,PROFILE_SESSION_STATE_KEY)
+|| parsePreferredDroneCandidate(localStorage.getItem("preferredDroneLabel"))
+)
+}
+
+function updateWindGuideFilterToggleButton(){
+const btn = document.getElementById("windGuideFilterToggleBtn")
+if(!btn) return
+
+const currentFilter = getWindGuideModelFilterValue()
+const hasFilter = !!currentFilter
+const hasPreferred = !!preferredWindGuideFilterValue
+
+if(hasFilter){
+btn.textContent = "Clear Filter"
+btn.title = "Clear model filter"
+btn.disabled = false
+return
+}
+
+if(hasPreferred){
+btn.textContent = "Use Preferred Drone"
+btn.title = `Use preferred drone (${preferredWindGuideFilterValue})`
+btn.disabled = false
+return
+}
+
+btn.textContent = "Clear Filter"
+btn.title = "No filter applied"
+btn.disabled = true
+}
+
+function applyPreferredDroneFilterIfAvailable(){
+const preferred = readPreferredDroneFromProfileStorage()
+preferredWindGuideFilterValue = preferred
+if(!preferred) {
+preferredWindGuideFilterApplied = false
+updateWindGuideFilterToggleButton()
+return false
+}
+
+setWindGuideModelFilterValue(preferred)
+preferredWindGuideFilterApplied = true
+applyWindGuideFiltersAndSort()
+return true
+}
+
+function clearWindGuideModelFilter(){
+setWindGuideModelFilterValue("")
+preferredWindGuideFilterApplied = false
+applyWindGuideFiltersAndSort()
+}
+
+function toggleWindGuideModelFilter(){
+const currentFilter = getWindGuideModelFilterValue()
+if(currentFilter){
+clearWindGuideModelFilter()
+return
+}
+
+if(preferredWindGuideFilterValue){
+setWindGuideModelFilterValue(preferredWindGuideFilterValue)
+preferredWindGuideFilterApplied = true
+applyWindGuideFiltersAndSort()
+}
+}
+
+function getFilteredSortedWindGuideModels(models){
+const modelFilter = getWindGuideModelFilterText()
+
+return (Array.isArray(models) ? [...models] : [])
+.filter(model => {
+if(!modelFilter) return true
+return String(model.model || "").toLowerCase().includes(modelFilter)
+})
+.sort((a,b) => {
+const aMs = Number.isFinite(a.oemWindMs) ? a.oemWindMs : Number.POSITIVE_INFINITY
+const bMs = Number.isFinite(b.oemWindMs) ? b.oemWindMs : Number.POSITIVE_INFINITY
+if(aMs !== bMs) return aMs - bMs
+return String(a.model || "").localeCompare(String(b.model || ""))
+})
+}
+
+function toggleWindGuideCollapse(){
+windGuideCollapsed = !windGuideCollapsed
+const icon = document.getElementById("windGuideCollapseIcon")
+const controls = document.getElementById("windGuideControls")
+const tableWrap = document.getElementById("windGuideTableWrap")
+const note1 = document.getElementById("windGuideNote1")
+const note2 = document.getElementById("windGuideNote2")
+
+if(windGuideCollapsed){
+icon.classList.add("collapsed")
+controls.classList.add("hidden")
+tableWrap.classList.add("hidden")
+note1.classList.add("hidden")
+note2.classList.add("hidden")
+}else{
+icon.classList.remove("collapsed")
+controls.classList.remove("hidden")
+tableWrap.classList.remove("hidden")
+note1.classList.remove("hidden")
+note2.classList.remove("hidden")
+}
+}
+
+function toggleWeatherReportCollapse(){
+const content = document.getElementById("weatherReportContent")
+const icon = document.getElementById("weatherReportCollapseIcon")
+if(!content || !icon) return
+
+const isNowHidden = content.classList.toggle("is-hidden")
+icon.classList.toggle("collapsed",isNowHidden)
+}
+
+function applyWindGuideFiltersAndSort(){
+renderWindGuideTable(getFilteredSortedWindGuideModels(latestWindGuideModels))
+updateWindGuideFilterToggleButton()
+}
+
+function handleWindGuideFilterChange(){
+preferredWindGuideFilterApplied = false
+applyWindGuideFiltersAndSort()
+}
+
+function readWindGuideValidationMap(){
+const raw = localStorage.getItem(WIND_GUIDE_VALIDATION_MAP_KEY)
+if(!raw) return {}
+try{
+const parsed = JSON.parse(raw)
+return parsed && typeof parsed === "object" ? parsed : {}
+}
+catch{
+return {}
+}
+}
+
+function writeWindGuideValidationMap(map){
+localStorage.setItem(WIND_GUIDE_VALIDATION_MAP_KEY,JSON.stringify(map || {}))
+}
+
+function buildWindGuideSourceHtml(url){
+const clean = String(url || "").trim()
+if(!/^https?:\/\//i.test(clean)) return '<span class="wind-guide-source-missing">Add source</span>'
+return `<a href="${escapeHtml(clean)}" target="_blank" rel="noopener noreferrer">OEM Source</a>`
+}
+
+function toWindGuideEditorRow(model){
+return {
+model: String(model?.model || "").trim(),
+oemWindMs: Number.isFinite(Number(model?.oemWindMs)) ? Number(model.oemWindMs) : null,
+oemWindKmh: Number.isFinite(Number(model?.oemWindKmh)) ? Number(model.oemWindKmh) : null,
+oemWindKt: Number.isFinite(Number(model?.oemWindKt)) ? Number(model.oemWindKt) : null,
+verified: !!model?.validated,
+notes: String(model?.notes || "").trim(),
+sourceUrl: String(model?.sourceUrl || "").trim()
+}
+}
+
+function renderWindGuideEditorRows(){
+const tbody = document.getElementById("windGuideEditorBody")
+if(!tbody) return
+
+if(!windGuideEditorRows.length){
+tbody.innerHTML = '<tr><td colspan="6">No rows in editor. Click Add Row.</td></tr>'
+return
+}
+
+tbody.innerHTML = windGuideEditorRows.map((row,index) => `
+<tr>
+<td><input type="text" class="editor-model" value="${escapeHtml(row.model)}" onchange="updateWindGuideEditorRow(${index},'model',this.value)"></td>
+<td><input type="number" class="editor-number" step="0.1" value="${row.oemWindMs == null ? "" : escapeHtml(String(row.oemWindMs))}" onchange="updateWindGuideEditorRow(${index},'oemWindMs',this.value)"></td>
+<td><input type="number" class="editor-number" step="0.1" value="${row.oemWindKmh == null ? "" : escapeHtml(String(row.oemWindKmh))}" onchange="updateWindGuideEditorRow(${index},'oemWindKmh',this.value)"></td>
+<td><input type="number" class="editor-number" step="0.1" value="${row.oemWindKt == null ? "" : escapeHtml(String(row.oemWindKt))}" onchange="updateWindGuideEditorRow(${index},'oemWindKt',this.value)"></td>
+<td style="text-align:center;"><input type="checkbox" ${row.verified ? "checked" : ""} onchange="updateWindGuideEditorRow(${index},'verified',this.checked,true)"></td>
+<td style="text-align:center;"><button type="button" class="editor-remove-btn" onclick="removeWindGuideEditorRow(${index})">Remove</button></td>
+</tr>`).join("")
+}
+
+function updateWindGuideEditorRow(index,field,value,isCheckbox=false){
+if(index < 0 || index >= windGuideEditorRows.length) return
+if(isCheckbox){
+windGuideEditorRows[index][field] = !!value
+return
+}
+
+if(field === "model"){
+windGuideEditorRows[index][field] = String(value || "")
+return
+}
+
+if(value === "" || value == null){
+windGuideEditorRows[index][field] = null
+return
+}
+
+const n = Number(value)
+windGuideEditorRows[index][field] = Number.isFinite(n) ? n : null
+}
+
+function addWindGuideEditorRow(){
+windGuideEditorRows.push({ model:"", oemWindMs:null, oemWindKmh:null, oemWindKt:null, verified:false, notes:"", sourceUrl:"" })
+renderWindGuideEditorRows()
+}
+
+function removeWindGuideEditorRow(index){
+if(index < 0 || index >= windGuideEditorRows.length) return
+windGuideEditorRows.splice(index,1)
+renderWindGuideEditorRows()
+}
+
+function isAdminMode(){
+const host = window.location.hostname
+return host === 'localhost' || host === '127.0.0.1'
+}
+
+function tryOpenWindGuideEditor(){
+if(!isAdminMode()){
+alert('Edit Wind Guide JSON is restricted to admin mode (localhost only).')
+return
+}
+openWindGuideEditor()
+}
+
+function openWindGuideEditor(){
+const modal = document.getElementById("windGuideEditorModal")
+if(!modal) return
+
+windGuideEditorRows = latestWindGuideModels.map(toWindGuideEditorRow)
+if(!windGuideEditorRows.length){
+windGuideEditorRows = DEFAULT_DRONE_WIND_GUIDE_MODELS.map(toWindGuideEditorRow)
+}
+
+renderWindGuideEditorRows()
+modal.classList.add("show")
+}
+
+function closeWindGuideEditor(){
+const modal = document.getElementById("windGuideEditorModal")
+if(!modal) return
+modal.classList.remove("show")
+}
+
+async function saveWindGuideEditor(){
+const cleaned = windGuideEditorRows
+.map(row => {
+const model = String(row.model || "").trim()
+if(!model) return null
+return {
+model,
+oemWindMs: toFiniteNumber(row.oemWindMs),
+oemWindKmh: toFiniteNumber(row.oemWindKmh),
+oemWindKt: toFiniteNumber(row.oemWindKt),
+verified: !!row.verified,
+notes: String(row.notes || "").trim() || "",
+sourceUrl: String(row.sourceUrl || "").trim()
+}
+})
+.filter(Boolean)
+
+if(!cleaned.length){
+showError("Wind Guide editor has no valid rows. Add at least one model before saving.")
+return
+}
+
+latestWindGuideModels = cleaned.map(normalizeWindGuideModel).filter(Boolean)
+await applyWindGuideFiltersAndSort()
+closeWindGuideEditor()
+}
+
+async function resetWindGuideEditorToSource(){
+const sourceModels = await loadWindGuideModels()
+windGuideEditorRows = sourceModels.map(toWindGuideEditorRow)
+renderWindGuideEditorRows()
+await initWindGuideTable()
+}
+
+function exportWindGuideEditorJson(){
+const cleaned = windGuideEditorRows
+.map(row => {
+const model = String(row.model || "").trim()
+if(!model) return null
+const payload = { model, verified: !!row.verified }
+const ms = toFiniteNumber(row.oemWindMs)
+const kmh = toFiniteNumber(row.oemWindKmh)
+const kt = toFiniteNumber(row.oemWindKt)
+if(ms != null) payload.oemWindMs = ms
+if(kmh != null) payload.oemWindKmh = kmh
+if(kt != null) payload.oemWindKt = kt
+return payload
+})
+.filter(Boolean)
+
+const payload = JSON.stringify({ models: cleaned },null,2)
+const blob = new Blob([payload],{ type:"application/json" })
+const url = URL.createObjectURL(blob)
+const anchor = document.createElement("a")
+anchor.href = url
+anchor.download = "drone_wind_resistance.edited.json"
+document.body.appendChild(anchor)
+anchor.click()
+anchor.remove()
+URL.revokeObjectURL(url)
+}
+
+const DEFAULT_DRONE_WIND_GUIDE_MODELS = [
+{
+model: "DJI Mini 3 Pro",
+oemWindMs: 10.7,
+sourceUrl: "",
+verified: false,
+notes: "Provisional from published specs. Verify OEM manual before operational use."
+},
+{
+model: "DJI Mini 4 Pro",
+oemWindMs: 10.7,
+sourceUrl: "",
+verified: false,
+notes: "Provisional from published specs. Verify OEM manual before operational use."
+},
+{
+model: "DJI Mavic 3",
+oemWindMs: 12.0,
+sourceUrl: "",
+verified: false,
+notes: "Provisional from published specs. Verify OEM manual before operational use."
+}
+]
+
+function normalizeWindGuideModel(entry){
+if(!entry || typeof entry !== "object") return null
+
+const model = String(entry.model || "").trim()
+if(!model) return null
+
+const oemMsRaw = toFiniteNumber(entry.oemWindMs)
+const oemKmhRaw = toFiniteNumber(entry.oemWindKmh ?? entry.maxWindKmh)
+const oemKtRaw = toFiniteNumber(entry.oemWindKt ?? entry.maxWindKt)
+
+const oemWindMs = oemMsRaw ?? (oemKmhRaw != null ? Number((oemKmhRaw / 3.6).toFixed(2)) : (oemKtRaw != null ? Number((oemKtRaw / 1.943844).toFixed(2)) : null))
+const oemWindKmh = oemKmhRaw ?? (oemWindMs != null ? Number((oemWindMs * 3.6).toFixed(1)) : (oemKtRaw != null ? Number((oemKtRaw * 1.852).toFixed(1)) : null))
+const oemWindKt = oemKtRaw ?? (oemWindMs != null ? Number((oemWindMs * 1.943844).toFixed(1)) : (oemKmhRaw != null ? Number((oemKmhRaw / 1.852).toFixed(1)) : null))
+
+const convertedMph = oemWindMs != null ? Number((oemWindMs * 2.236936).toFixed(1)) : null
+const convertedKt = oemWindMs != null ? Number((oemWindMs * 1.943844).toFixed(1)) : null
+
+const notes = String(entry.notes || "").trim() || "-"
+const sourceUrl = String(entry.sourceUrl || "").trim()
+const verified = entry.verified === true
+const modelId = toWindGuideModelId(model)
+
+return {
+modelId,
+model,
+oemWindMs,
+oemWindKmh,
+oemWindKt,
+convertedMph,
+convertedKt,
+sourceUrl,
+verified,
+validated: verified,
+notes
+}
+}
+
+function renderWindGuideTable(models){
+const tbody = document.getElementById("windGuideTableBody")
+if(!tbody) return
+
+if(!Array.isArray(models) || !models.length){
+tbody.innerHTML = "<tr><td colspan=\"6\">No models match the current filter.</td></tr>"
+return
+}
+
+tbody.innerHTML = models.map(model => {
+const oemMsText = formatWindGuideNumber(model.oemWindMs,2)
+const oemKmhText = formatWindGuideNumber(model.oemWindKmh,1)
+const oemKtText = formatWindGuideNumber(model.oemWindKt,1)
+const convMphText = formatWindGuideNumber(model.convertedMph,1)
+const checked = model.validated ? "checked" : ""
+return `<tr>
+<td>${escapeHtml(model.model)}</td>
+<td>${escapeHtml(oemMsText)}</td>
+<td>${escapeHtml(oemKmhText)}</td>
+<td>${escapeHtml(oemKtText)}</td>
+<td>${escapeHtml(convMphText)}</td>
+<td><input type="checkbox" class="wind-guide-verified" data-model-id="${escapeHtml(model.modelId)}" ${checked} disabled></td>
+</tr>`
+}).join("")
+}
+
+function toggleWindGuideValidated(checkbox){
+if(!checkbox) return
+const modelId = String(checkbox.getAttribute("data-model-id") || "").trim()
+if(!modelId) return
+
+const validationMap = readWindGuideValidationMap()
+validationMap[modelId] = !!checkbox.checked
+writeWindGuideValidationMap(validationMap)
+
+latestWindGuideModels = latestWindGuideModels.map(model => {
+if(model.modelId !== modelId) return model
+return { ...model, validated: !!checkbox.checked }
+})
+
+applyWindGuideFiltersAndSort()
+}
+
+async function loadWindGuideModels(){
+const sources = [
+"./data/drone_wind_resistance.json",
+"data/drone_wind_resistance.json"
+]
+
+for(const source of sources){
+try{
+const response = await fetchWithTimeout(source,4000,{ cache:"no-cache" })
+if(!response.ok) continue
+
+const payload = await response.json()
+const rawModels = Array.isArray(payload)
+? payload
+: (Array.isArray(payload?.models) ? payload.models : [])
+
+const models = rawModels
+.map(normalizeWindGuideModel)
+.filter(Boolean)
+
+if(models.length) return models
+}
+catch{
+// Try next source.
+}
+}
+
+return DEFAULT_DRONE_WIND_GUIDE_MODELS
+.map(normalizeWindGuideModel)
+.filter(Boolean)
+}
+
+async function initWindGuideTable(){
+const models = await loadWindGuideModels()
+const validationMap = readWindGuideValidationMap()
+
+latestWindGuideModels = models.map(model => ({
+...model,
+validated: Object.prototype.hasOwnProperty.call(validationMap,model.modelId)
+? !!validationMap[model.modelId]
+: !!model.verified
+}))
+
+const preferredApplied = applyPreferredDroneFilterIfAvailable()
+if(!preferredApplied){
+applyWindGuideFiltersAndSort()
+}
+
+const icon = document.getElementById("windGuideCollapseIcon")
+const controls = document.getElementById("windGuideControls")
+const tableWrap = document.getElementById("windGuideTableWrap")
+const note1 = document.getElementById("windGuideNote1")
+const note2 = document.getElementById("windGuideNote2")
+
+icon.classList.add("collapsed")
+controls.classList.add("hidden")
+tableWrap.classList.add("hidden")
+note1.classList.add("hidden")
+note2.classList.add("hidden")
+}
+
+function goBack(event){
+event.preventDefault()
+if(document.referrer) window.location.href = document.referrer
+else window.location.href = "index.html"
+}
+
+function openPilotLocationPopup(event,lat,lon){
+if(event) event.preventDefault()
+const latNum = Number(lat)
+const lonNum = Number(lon)
+if(!Number.isFinite(latNum) || !Number.isFinite(lonNum)) return
+
+const mapUrl = `https://maps.google.com/?q=${latNum.toFixed(6)},${lonNum.toFixed(6)}`
+const popup = window.open("","pilotLocationMap","width=820,height=780")
+if(!popup){
+window.open(mapUrl,"_blank","noopener,noreferrer")
+return
+}
+
+const title = `Pilot Location ${latNum.toFixed(6)}, ${lonNum.toFixed(6)}`
+const escapedTitle = escapeHtml(title)
+
+popup.document.open()
+popup.document.write(`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escapedTitle}</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+<style>
+html,body{margin:0;height:100%;font-family:Arial,sans-serif;background:#eef2f5;color:#223;}
+body{display:flex;flex-direction:column;}
+.header{flex-shrink:0;padding:10px 12px;background:#ffffff;border-bottom:1px solid #d7dde4;font-size:14px;}
+.header a{color:#0b57d0;text-decoration:none;}
+#pilotPopupMap{flex:1;min-height:0;width:100%;}
+.footer{flex-shrink:0;padding:10px 12px;background:#ffffff;border-top:1px solid #d7dde4;font-size:12px;color:#445;display:flex;align-items:center;justify-content:space-between;}
+.close-btn{padding:10px 22px;font-size:15px;font-weight:600;background:#e03131;color:#fff;border:none;border-radius:6px;cursor:pointer;touch-action:manipulation;}
+.close-btn:hover{background:#c92a2a;}
+.center-btn{width:34px;height:34px;background:#fff;border:2px solid rgba(0,0,0,0.2);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;box-shadow:none;}
+.center-btn:hover{background:#f4f4f4;}
+</style>
+</head>
+<body>
+<div class="header"><b>Pilot Location:</b> ${latNum.toFixed(6)}, ${lonNum.toFixed(6)} | <a href="${mapUrl}" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></div>
+<div id="pilotPopupMap"></div>
+<div class="footer"><button class="close-btn" onclick="window.close()">Close</button><span>Current Pilot Location preview.</span></div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"><\/script>
+<script>
+const lat = ${latNum.toFixed(6)};
+const lon = ${lonNum.toFixed(6)};
+const map = L.map('pilotPopupMap').setView([lat, lon], 13);
+
+const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  maxZoom: 19,
+  attribution: '&copy; Esri &mdash; Esri, Maxar, Earthstar Geographics'
+});
+
+const topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+  maxZoom: 17,
+  attribution: 'Map data: &copy; OpenStreetMap | Style: &copy; OpenTopoMap'
+});
+
+streets.addTo(map);
+
+L.control.layers({ 'Streets': streets, 'Satellite': satellite, 'Topo': topo }, {}, { position: 'topright' }).addTo(map);
+
+const marker = L.marker([lat, lon]).addTo(map).bindPopup('<b>Pilot Location</b><br>' + lat.toFixed(6) + ', ' + lon.toFixed(6)).openPopup();
+
+const CenterControl = L.Control.extend({
+  options: { position: 'topleft' },
+  onAdd: function() {
+    const btn = L.DomUtil.create('button', 'center-btn');
+    btn.title = 'Re-center on Pilot Location';
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="7.5" fill="none" stroke="#333" stroke-width="1.8"/><circle cx="11" cy="11" r="2.2" fill="#333"/><line x1="11" y1="1" x2="11" y2="5.5" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="16.5" x2="11" y2="21" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="11" x2="5.5" y2="11" stroke="#333" stroke-width="2" stroke-linecap="round"/><line x1="16.5" y1="11" x2="21" y2="11" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg>';
+    L.DomEvent.disableClickPropagation(btn);
+    L.DomEvent.on(btn, 'click', function() {
+      map.invalidateSize();
+      map.setView([lat, lon], 13);
+      marker.openPopup();
+    });
+    return btn;
+  }
+});
+new CenterControl().addTo(map);
+setTimeout(function(){ map.invalidateSize(); map.setView([lat, lon], 13); }, 100);
+<\/script>
+</body>
+</html>`)
+popup.document.close()
+popup.focus()
+}
+
+function buildPilotLocationMapLink(lat,lon,label){
+const latNum = Number(lat)
+const lonNum = Number(lon)
+if(!Number.isFinite(latNum) || !Number.isFinite(lonNum)) return escapeHtml(label)
+const mapUrl = `https://maps.google.com/?q=${latNum.toFixed(6)},${lonNum.toFixed(6)}`
+const safeLabel = escapeHtml(label)
+return `<a href="${escapeHtml(mapUrl)}" target="pilotLocationMap" rel="noopener noreferrer" onclick="openPilotLocationPopup(event, ${latNum.toFixed(6)}, ${lonNum.toFixed(6)})">${safeLabel}</a>`
+}
+
+function openScoringIndex(){
+const modal = document.getElementById("scoringIndexModal")
+if(!modal) return
+modal.classList.add("show")
+}
+
+function closeScoringIndex(){
+const modal = document.getElementById("scoringIndexModal")
+if(!modal) return
+modal.classList.remove("show")
+}
+
+document.addEventListener("click",event => {
+const modal = document.getElementById("scoringIndexModal")
+if(!modal || !modal.classList.contains("show")) return
+if(event.target === modal) closeScoringIndex()
+
+const windGuideModal = document.getElementById("windGuideEditorModal")
+if(windGuideModal && windGuideModal.classList.contains("show") && event.target === windGuideModal){
+closeWindGuideEditor()
+}
+})
+
+async function runCheck(){
+
+clearError()
+setLoading(true,"Checking METAR and geomagnetic conditions...")
+try{
+
+const knownPilot = getKnownPilotLocation()
+if(!knownPilot || isPilotLocationUndefined(knownPilot.lat,knownPilot.lon)){
+renderCurrentLocationDetails("0.000000, 0.000000","0\u00B00'0.0\"N, 0\u00B00'0.0\"E")
+showError("Pilot location not defined. Click Get/Update Pilot Location first, then run Fetch Weather/Risk Assessment.")
+return
+}
+
+const icaoInput = document.getElementById("icao")
+const icao = String(icaoInput?.value || "").trim().toUpperCase()
+
+if(icaoInput) icaoInput.value = icao
+
+if(!icao){
+showError("Enter ICAO code before checking conditions.")
+return
+}
+
+if(!isValidIcaoCode(icao)){
+showError("Enter a valid 4-letter ICAO code (example: CYOO) before checking conditions.")
+return
+}
+
+const kpPromise = fetchKpIndex()
+
+const metar = await fetchMETAR(icao)
+
+const kp = await kpPromise
+displayKp(kp)
+
+if(!metar){
+return
+}
+
+displayMETAR(metar)
+displayStructuredWeather(metar)
+
+const windRisk = calculateWindRisk(metar)
+
+displayRisk(windRisk,metar)
+
+saveWeatherArtifact({
+icao,
+metar,
+risk: windRisk,
+kp,
+nearestStations: latestNearestStations,
+location: latestLocation
+})
+
+renderWeatherCheckStatus()
+}
+finally{
+setLoading(false)
+}
+
+}
+
+
+async function useCurrentLocation(){
+
+clearError()
+setLoading(true,"Getting location and nearest stations...")
+
+try{
+
+if(!navigator.geolocation){
+showError("Geolocation is not supported by this browser.")
+return
+}
+
+const position = await getCurrentPosition()
+const lat = position.coords.latitude
+const lon = position.coords.longitude
+
+latestLocation = { lat, lon, source: "dwcheck-geolocation" }
+
+const savedLoc = saveKnownPilotLocation(lat,lon,"dwcheck-geolocation")
+updatePilotLocationButtonLabel()
+
+renderCurrentLocationDetails(`${savedLoc.latShort}, ${savedLoc.lonShort}`, savedLoc.dms)
+
+const nearest = await findNearestStations(lat,lon,3)
+
+if(!nearest.length){
+showError("No nearby METAR stations found from station cache.")
+return
+}
+
+displayNearestStations(nearest)
+latestNearestStations = nearest
+
+// Auto-fill the closest station for fast METAR lookup.
+document.getElementById("icao").value = nearest[0].icaoId
+
+}
+catch(err){
+if(err && err.code === 1) showError("Location permission denied.")
+else if(err && err.code === 2) showError("Unable to determine your location.")
+else if(err && err.code === 3) showError("Location request timed out.")
+else showError("Unable to get current location.")
+}
+finally{
+setLoading(false)
+}
+
+}
+
+
+function getCurrentPosition(){
+return new Promise((resolve,reject) => {
+navigator.geolocation.getCurrentPosition(
+resolve,
+reject,
+{ enableHighAccuracy:true, timeout:12000, maximumAge:300000 }
+)
+})
+}
+
+
+async function findNearestStations(lat,lon,count=3){
+const stations = await fetchStationsCache()
+
+if(!Array.isArray(stations)) return []
+
+const candidates = stations
+.filter(s => s && isValidIcaoCode(s.icaoId) && isMetarCapableStation(s) && Number.isFinite(Number(s.lat)) && Number.isFinite(Number(s.lon)))
+.map(s => ({
+icaoId: String(s.icaoId).trim().toUpperCase(),
+site: s.site || "Unknown",
+lat: Number(s.lat),
+lon: Number(s.lon),
+distanceKm: distance(lat,lon,Number(s.lat),Number(s.lon))
+}))
+.sort((a,b) => a.distanceKm - b.distanceKm)
+
+return candidates.slice(0,count)
+}
+
+
+async function fetchWithTimeout(url,timeoutMs=7000,options={}){
+const controller = new AbortController()
+const timeout = setTimeout(() => controller.abort(), timeoutMs)
+try{
+return await fetch(url,{ ...options, signal:controller.signal })
+}
+finally{
+clearTimeout(timeout)
+}
+}
+
+
+async function fetchStationsCache(){
+if(stationsCachePromise) return stationsCachePromise
+
+stationsCachePromise = (async () => {
+
+const remoteUrl = "https://aviationweather.gov/data/cache/stations.cache.json"
+const workerProxyUrl = buildProxyUrl("cloudflare",remoteUrl)
+const directUrl = remoteUrl
+const alloriginsProxyUrl = buildProxyUrl("allorigins",remoteUrl)
+
+// Network-first strategy: try remote sources first for fresh data, local fallback for offline/speed.
+// 1. Try Cloudflare Worker (preferred: our allowlist + CORS control)
+try{
+const worker = await fetchWithTimeout(workerProxyUrl,7000)
+if(worker.ok){
+const data = await worker.json()
+if(Array.isArray(data) && data.length) return data
+}
+}
+catch{
+// Try next source.
+}
+
+// 2. Try direct remote (may fail CORS in-browser, but worth attempting)
+try{
+const direct = await fetchWithTimeout(directUrl,5000)
+if(direct.ok){
+const data = await direct.json()
+if(Array.isArray(data) && data.length) return data
+}
+}
+catch{
+// Try next source.
+}
+
+// 3. Fall back to local repo cache for offline/speed
+const localUrls = [
+"./data/notams/stations.cache.json",
+"data/notams/stations.cache.json"
+]
+
+for(const localUrl of localUrls){
+try{
+const local = await fetchWithTimeout(localUrl,4000,{ cache:"force-cache" })
+if(local.ok){
+const data = await local.json()
+if(Array.isArray(data) && data.length) return data
+}
+}
+catch{
+// Try next source.
+}
+}
+
+// 4. Final fallback: AllOrigins proxy
+try{
+const proxied = await fetchWithTimeout(alloriginsProxyUrl,7000)
+if(!proxied.ok){
+showError(`Stations cache request failed (${proxied.status}).`)
+return []
+}
+const data = await proxied.json()
+if(Array.isArray(data) && data.length) return data
+}
+catch{
+showError("Unable to load station cache for nearest-airport lookup.")
+return []
+}
+
+})()
+
+return stationsCachePromise.then(data => {
+if(!Array.isArray(data) || !data.length) stationsCachePromise = null
+return data
+})
+}
+
+
+function displayNearestStations(stations){
+const el = document.getElementById("nearestStations")
+
+const items = stations.map(s =>
+`<li><b>${s.icaoId}</b> - ${s.site} (${s.distanceKm.toFixed(1)} km)</li>`
+).join("")
+
+el.innerHTML = `<ol class="station-list">${items}</ol>`
+}
+
+
+function distance(lat1, lon1, lat2, lon2){
+
+const R = 6371
+const dLat = (lat2-lat1) * Math.PI/180
+const dLon = (lon2-lon1) * Math.PI/180
+
+const a =
+Math.sin(dLat/2)**2 +
+Math.cos(lat1*Math.PI/180) *
+Math.cos(lat2*Math.PI/180) *
+Math.sin(dLon/2)**2
+
+const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+
+return R*c
+}
+
+
+function parseLatLonText(value){
+if(!value || typeof value !== "string") return null
+const m = value.trim().match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/)
+if(!m) return null
+const lat = Number(m[1])
+const lon = Number(m[2])
+if(!Number.isFinite(lat) || !Number.isFinite(lon)) return null
+if(lat < -90 || lat > 90 || lon < -180 || lon > 180) return null
+return { lat, lon }
+}
+
+
+function isPilotLocationUndefined(lat,lon){
+return Math.abs(Number(lat)) < 0.000001 && Math.abs(Number(lon)) < 0.000001
+}
+
+
+function getKnownPilotLocation(){
+const fromDD = parseLatLonText(localStorage.getItem("pilotLocationDD") || "")
+
+const latStored = Number(localStorage.getItem("pilotLatitude"))
+const lonStored = Number(localStorage.getItem("pilotLongitude"))
+const fromLatLon = Number.isFinite(latStored) && Number.isFinite(lonStored)
+? { lat:latStored, lon:lonStored }
+: null
+
+return fromDD || fromLatLon
+}
+
+
+function saveKnownPilotLocation(lat,lon,source="dwcheck"){
+const latShort = Number(lat).toFixed(6)
+const lonShort = Number(lon).toFixed(6)
+const latDMS = toDMS(Number(lat),true)
+const lonDMS = toDMS(Number(lon),false)
+localStorage.setItem("pilotLocationDD",`${latShort}, ${lonShort}`)
+localStorage.setItem("pilotLocationDMS",`${latDMS}, ${lonDMS}`)
+localStorage.setItem("pilotLatitude",latShort)
+localStorage.setItem("pilotLongitude",lonShort)
+localStorage.setItem("pilotLocationSource",source)
+return { latShort, lonShort, dms:`${latDMS}, ${lonDMS}` }
+}
+
+
+function updatePilotLocationButtonLabel(){
+const locButton = document.getElementById("locBtn")
+if(!locButton) return
+const known = getKnownPilotLocation()
+if(known && !isPilotLocationUndefined(known.lat,known.lon)){
+locButton.textContent = "Update Pilot Location"
+}
+else{
+locButton.textContent = "Get Pilot Location"
+}
+updateActionButtonHighlights()
+}
+
+
+function setStepPrompt(button,step,titleText){
+if(!button) return
+if(step){
+button.dataset.step = String(step)
+button.classList.add("step-prompt")
+if(titleText) button.title = titleText
+}
+else{
+delete button.dataset.step
+button.classList.remove("step-prompt")
+button.removeAttribute("title")
+}
+}
+
+
+function updateWeatherPromptCopy(){
+const placeholder = document.querySelector(".risk-placeholder")
+const summaryPrompt = document.getElementById("weatherSummaryPanel")
+const known = getKnownPilotLocation()
+const hasPilotLocation = !!(known && !isPilotLocationUndefined(known.lat,known.lon))
+
+if(placeholder){
+placeholder.innerHTML = hasPilotLocation
+? `<span class="prompt-step-badge" aria-hidden="true">2</span>Fetch Weather/Risk Assessment, based on your current Pilot location, to load current survey details.`
+: `<span class="prompt-step-badge" aria-hidden="true">1</span>Get Pilot Location first, then Fetch Weather/Risk Assessment.`
+}
+
+if(summaryPrompt && summaryPrompt.classList.contains("weather-summary-empty")){
+summaryPrompt.innerHTML = hasPilotLocation
+? `<span class="prompt-step-badge" aria-hidden="true">2</span>Fetch Weather/Risk Assessment, based on your current Pilot location, to load structured observation details.`
+: `<span class="prompt-step-badge" aria-hidden="true">1</span>Get Pilot Location first, then Fetch Weather/Risk Assessment.`
+}
+}
+
+
+function updateActionButtonHighlights(){
+const locButton = document.getElementById("locBtn")
+const checkButton = document.getElementById("checkBtn")
+const saveButton = document.getElementById("completeBtn")
+if(!locButton || !checkButton) return
+
+const hasPendingDraft = localStorage.getItem("dwCheckDraftPending") === "true"
+const draftArtifact = latestWeatherArtifact || parseStoredArtifact("dwCheckDraft")
+const shouldHighlightSave = !!(hasPendingDraft && draftArtifact)
+
+if(saveButton){
+saveButton.classList.toggle("next-step-highlight", shouldHighlightSave)
+}
+
+if(shouldHighlightSave){
+locButton.classList.remove("next-step-highlight")
+checkButton.classList.remove("next-step-highlight")
+setStepPrompt(locButton,null)
+setStepPrompt(checkButton,null)
+setStepPrompt(saveButton,3,"Step 3: Save Weather Check")
+updateWeatherPromptCopy()
+return
+}
+
+const known = getKnownPilotLocation()
+const hasPilotLocation = !!(known && !isPilotLocationUndefined(known.lat,known.lon))
+
+locButton.classList.toggle("next-step-highlight", !hasPilotLocation)
+checkButton.classList.toggle("next-step-highlight", hasPilotLocation)
+setStepPrompt(saveButton,null)
+
+if(hasPilotLocation){
+setStepPrompt(locButton,null)
+setStepPrompt(checkButton,2,"Step 2: Fetch Weather/Risk Assessment")
+}
+else{
+setStepPrompt(locButton,1,"Step 1: Get Pilot Location")
+setStepPrompt(checkButton,null)
+}
+
+updateWeatherPromptCopy()
+}
+
+
+function toDMS(deg,isLat){
+const abs = Math.abs(deg)
+const d = Math.floor(abs)
+const mFloat = (abs-d) * 60
+const m = Math.floor(mFloat)
+const s = ((mFloat-m) * 60).toFixed(1)
+const dir = isLat
+? (deg >= 0 ? "N" : "S")
+: (deg >= 0 ? "E" : "W")
+return `${d}\u00B0${m}'${s}"${dir}`
+}
+
+
+function normalizePilotDms(dmsText,lat,lon){
+if(!dmsText) return ""
+
+let normalized = dmsText.replace(/\u00C2/g,"")
+
+const dmsPattern = /^\d+°\d+'\d+(?:\.\d+)?"[NS], \d+°\d+'\d+(?:\.\d+)?"[EW]$/
+if(dmsPattern.test(normalized)) return normalized
+
+const computed = `${toDMS(lat,true)}, ${toDMS(lon,false)}`
+localStorage.setItem("pilotLocationDMS",computed)
+return computed
+}
+
+
+function renderCurrentLocationDetails(ddText,dmsText){
+const el = document.getElementById("currentLocationDetails")
+if(!el) return
+
+const parsed = parseLatLonText(ddText || "")
+const locationNotDefined = parsed && isPilotLocationUndefined(parsed.lat,parsed.lon)
+const ddDisplay = parsed && !locationNotDefined
+? buildPilotLocationMapLink(parsed.lat,parsed.lon,ddText)
+: escapeHtml(ddText || "")
+const dmsDisplay = parsed && !locationNotDefined
+? buildPilotLocationMapLink(parsed.lat,parsed.lon,dmsText || "Unavailable")
+: escapeHtml(dmsText || "Unavailable")
+
+if(!ddText){
+el.classList.remove("location-not-defined")
+el.innerHTML = "<em>Pilot Location unknown. Refresh after setting location, or click Use Current Location.</em>"
+return
+}
+
+if(locationNotDefined){
+el.classList.add("location-not-defined")
+el.innerHTML = `
+<b>Pilot Location Not Yet Defined</b><br>
+Pilot Location: DD: [ ${escapeHtml(ddText)} ] | DMS: [ ${escapeHtml(dmsText || "0\u00B00'0.0\"N, 0\u00B00'0.0\"E")} ]<br>
+Use <b>Get/Update Pilot Location</b> to set your pilot location before running Weather/Risk Assessment.
+`
+return
+}
+
+el.classList.remove("location-not-defined")
+el.innerHTML = `
+<b>Pilot Location:</b> DD: [ ${ddDisplay} ] | DMS: [ ${dmsDisplay} ]
+<br><span class="subtle">Select DD or DMS links to &ldquo;Preview Current Pilot Location&rdquo;.</span>
+`
+}
+
+
+async function restoreKnownPilotLocation(){
+
+const dmsStored = localStorage.getItem("pilotLocationDMS") || ""
+const known = getKnownPilotLocation()
+if(!known){
+renderCurrentLocationDetails("","")
+return
+}
+
+const ddText = `${known.lat.toFixed(6)}, ${known.lon.toFixed(6)}`
+const dmsComputed = `${toDMS(known.lat,true)}, ${toDMS(known.lon,false)}`
+const dmsDisplay = normalizePilotDms(dmsStored,known.lat,known.lon) || dmsComputed
+
+if(isPilotLocationUndefined(known.lat,known.lon)){
+latestLocation = null
+latestNearestStations = []
+renderCurrentLocationDetails(ddText,dmsDisplay)
+document.getElementById("nearestStations").innerHTML = "<em>Pilot location not defined yet. Click Get/Update Pilot Location to load nearby METAR stations.</em>"
+updatePilotLocationButtonLabel()
+return
+}
+
+latestLocation = { lat: known.lat, lon: known.lon, source: "stored" }
+renderCurrentLocationDetails(ddText,dmsDisplay)
+
+const nearest = await findNearestStations(known.lat,known.lon,3)
+if(!nearest.length) return
+
+displayNearestStations(nearest)
+latestNearestStations = nearest
+
+if(!document.getElementById("icao").value){
+document.getElementById("icao").value = nearest[0].icaoId
+}
+
+updatePilotLocationButtonLabel()
+
+}
+
+
+function saveWeatherArtifact(payload){
+const now = new Date().toISOString()
+const parsedKp = parseKpReading(payload.kp?.kp ?? payload.kp?.kpRaw ?? payload.kp?.kpNumeric ?? null)
+
+latestWeatherArtifact = {
+timestamp: now,
+icao: payload.icao,
+metarRaw: payload.metar?.rawOb || "",
+normalizedObservation: payload.metar?.normalized || null,
+metarSource: payload.metar?.source || payload.metar?.normalized?.source || lastMetarFetchInfo.winnerLabel || "",
+metarSourceUrl: payload.metar?.sourceUrl || payload.metar?.normalized?.sourceUrl || lastMetarFetchInfo.winnerUrl || "",
+windDir: payload.risk?.windDir ?? "N/A",
+windKt: payload.risk?.wind ?? 0,
+gustKt: payload.risk?.gust ?? 0,
+beaufortGust: payload.risk?.beaufortGust ?? null,
+beaufortRisk: payload.risk?.beaufortRisk ?? null,
+visibilitySm: payload.risk?.visibility ?? null,
+ceilingFt: payload.risk?.ceiling ?? null,
+riskScore: payload.risk?.score ?? 0,
+riskLabel: getRiskLabel(payload.risk?.score ?? 0),
+kpIndex: parsedKp.raw || (payload.kp?.kp ?? null),
+kpNumeric: parsedKp.numeric,
+kpCondition: getKpCondition(parsedKp.raw || parsedKp.numeric),
+location: payload.location || null,
+nearestStations: Array.isArray(payload.nearestStations) ? payload.nearestStations : []
+}
+
+localStorage.setItem("dwCheckDraft",JSON.stringify(latestWeatherArtifact))
+localStorage.setItem("dwCheckDraftPending","true")
+}
+
+
+function getRiskLabel(score){
+if(score <= 2) return "SAFE"
+if(score <= 4) return "CAUTION"
+return "RISKY"
+}
+
+
+function parseKpReading(kpValue){
+if(kpValue == null) return { raw:"", numeric:null, qualifier:"", qualifierLabel:"" }
+
+const raw = String(kpValue).trim()
+if(!raw) return { raw:"", numeric:null, qualifier:"", qualifierLabel:"" }
+
+const suffixMatch = raw.match(/^(-?\d+(?:\.\d+)?)([A-Za-z]+)$/)
+if(suffixMatch){
+const qualifier = suffixMatch[2].toUpperCase()
+return {
+raw,
+numeric: Number(suffixMatch[1]),
+qualifier,
+qualifierLabel: getKpQualifierLabel(qualifier)
+}
+}
+
+const numeric = Number(raw)
+return {
+raw,
+numeric: Number.isFinite(numeric) ? numeric : null,
+qualifier:"",
+qualifierLabel:""
+}
+}
+
+
+function getKpQualifierLabel(code){
+if(code === "M") return "Magnetic"
+if(code === "P") return "Predicted"
+if(code === "Z") return "Stable"
+if(code === "E") return "Estimated"
+return ""
+}
+
+
+function getKpCondition(kpValue){
+const parsed = parseKpReading(kpValue)
+if(!Number.isFinite(parsed.numeric)) return "Unavailable"
+if(parsed.numeric >= 7) return "Severe Storm"
+if(parsed.numeric >= 5) return "Storm"
+if(parsed.numeric >= 4) return "Elevated"
+return "Nominal"
+}
+
+
+function parseStoredArtifact(key){
+const raw = localStorage.getItem(key)
+if(!raw) return null
+try{ return JSON.parse(raw) }
+catch{ return null }
+}
+
+
+function markWeatherCheckComplete(){
+clearError()
+
+if(!latestWeatherArtifact){
+latestWeatherArtifact = parseStoredArtifact("dwCheckDraft")
+}
+
+if(!committedWeatherArtifact){
+committedWeatherArtifact = parseStoredArtifact("dwCheckLatest")
+}
+
+if(!latestWeatherArtifact){
+if(committedWeatherArtifact){
+showError("No new weather check to save. Run Fetch Weather/Risk Assessment to create an updated draft.")
+}
+else{
+showError("Run Fetch Weather/Risk Assessment first to create a weather record.")
+}
+renderWeatherCheckStatus()
+return
+}
+
+const hasPendingDraft = localStorage.getItem("dwCheckDraftPending") === "true"
+if(!hasPendingDraft){
+showError("Latest weather check is already saved. Run Fetch Weather/Risk Assessment to create a new draft.")
+renderWeatherCheckStatus()
+return
+}
+
+const completedAt = new Date().toISOString()
+committedWeatherArtifact = {
+...latestWeatherArtifact,
+committedAt: completedAt
+}
+
+localStorage.setItem("dwCheckLatest",JSON.stringify(committedWeatherArtifact))
+localStorage.setItem("dwCheckCompleted","true")
+localStorage.setItem("dwCheckCompletedAt",completedAt)
+localStorage.removeItem("dwCheckDraft")
+localStorage.setItem("dwCheckDraftPending","false")
+latestWeatherArtifact = committedWeatherArtifact
+renderWeatherCheckStatus()
+}
+
+
+function runNewAssessment(){
+if(committedWeatherArtifact && committedWeatherArtifact.icao && !document.getElementById("icao").value){
+document.getElementById("icao").value = committedWeatherArtifact.icao
+}
+runCheck()
+}
+
+
+function formatHoursSince(timestampIso){
+if(!timestampIso) return null
+const t = new Date(timestampIso).getTime()
+if(!Number.isFinite(t)) return null
+const hours = (Date.now() - t) / 3600000
+if(!Number.isFinite(hours) || hours < 0) return null
+if(hours < 1) return `${Math.round(hours * 60)} min`
+return `${hours.toFixed(1)} hr`
+}
+
+
+function renderWeatherCheckStatus(){
+const el = document.getElementById("dwCheckStatus")
+const saveBtn = document.getElementById("completeBtn")
+const rerunBtn = document.getElementById("rerunAssessmentBtn")
+const completed = localStorage.getItem("dwCheckCompleted") === "true"
+const completedAt = localStorage.getItem("dwCheckCompletedAt")
+const hasPendingDraft = localStorage.getItem("dwCheckDraftPending") === "true"
+
+if(!committedWeatherArtifact){
+const saved = localStorage.getItem("dwCheckLatest")
+if(saved){
+try{ committedWeatherArtifact = JSON.parse(saved) }
+catch{ committedWeatherArtifact = null }
+}
+}
+
+if(!latestWeatherArtifact){
+const draft = localStorage.getItem("dwCheckDraft")
+if(draft){
+try{ latestWeatherArtifact = JSON.parse(draft) }
+catch{ latestWeatherArtifact = null }
+}
+}
+
+if(!committedWeatherArtifact){
+if(latestWeatherArtifact){
+el.innerHTML = `
+<div class="record-flow" aria-label="Weather check progress">
+<span class="record-flow-step is-complete">1 Pilot Location</span>
+<span class="record-flow-step is-complete">2 Weather/Risk</span>
+<span class="record-flow-step is-current">3 Save</span>
+</div>
+<div>Draft check ready. Click <b>Save Weather Check</b> to commit.</div>
+`
+if(saveBtn) saveBtn.disabled = false
+if(rerunBtn) rerunBtn.classList.add("is-hidden")
+}
+else{
+el.textContent = "No weather check saved yet."
+if(saveBtn) saveBtn.disabled = true
+if(rerunBtn) rerunBtn.classList.add("is-hidden")
+}
+updateActionButtonHighlights()
+return
+}
+
+const ageMs = Date.now() - new Date(committedWeatherArtifact.timestamp).getTime()
+const isStale = Number.isFinite(ageMs) && ageMs > 3600000
+const hoursSince = formatHoursSince(committedWeatherArtifact.timestamp)
+const savedLabel = completedAt ? `Saved ${formatHoursSince(completedAt)} ago` : "Saved"
+const kpDisplayValue = committedWeatherArtifact.kpIndex ?? committedWeatherArtifact.kpNumeric ?? "-"
+const kpCondition = getKpCondition(kpDisplayValue)
+
+const completeLine = completed
+? `<div class="record-flow" aria-label="Weather check progress">
+<span class="record-flow-step is-complete">1 Pilot Location</span>
+<span class="record-flow-step is-complete">2 Weather/Risk</span>
+<span class="record-flow-step ${isStale ? "is-stale" : "is-complete"}">3 Saved</span>
+</div>
+<div class="${isStale ? "status-alert" : "status-ok"}">Record State: ${hoursSince ? `${hoursSince} since last saved weather assessment${isStale ? ". Re-poll recommended." : ""}` : savedLabel}</div>`
+: `<div class="status-alert">Record State: Not saved</div>`
+
+if(hasPendingDraft && latestWeatherArtifact && latestWeatherArtifact.timestamp){
+if(saveBtn) saveBtn.disabled = false
+}
+else{
+if(saveBtn) saveBtn.disabled = true
+}
+
+el.innerHTML = `
+${completeLine}
+${completed ? `<div class="subtle">Completed at ${completedAt ? new Date(completedAt).toLocaleString() : "unknown"}</div>` : ""}
+<div>ICAO: ${committedWeatherArtifact.icao || "-"}</div>
+<div>Risk: ${committedWeatherArtifact.riskLabel} (score ${committedWeatherArtifact.riskScore})</div>
+<div>Kp: ${kpDisplayValue} (${kpCondition})</div>
+`
+
+if(rerunBtn){
+rerunBtn.classList.remove("is-hidden","state-fresh","state-stale")
+if(isStale){
+rerunBtn.textContent = "Refresh Weather Assessment"
+rerunBtn.classList.add("state-stale")
+rerunBtn.disabled = false
+}
+else{
+rerunBtn.textContent = "Recently Saved"
+rerunBtn.classList.add("state-fresh")
+rerunBtn.disabled = true
+}
+}
+
+updateActionButtonHighlights()
+}
+
+
+function renderSavedWeatherArtifactDetails(){
+const artifact = committedWeatherArtifact || latestWeatherArtifact
+if(!artifact) return
+
+if(artifact.metarRaw){
+document.getElementById("metarText").textContent = artifact.metarRaw
+}
+
+displayStructuredWeather({
+rawOb: artifact.metarRaw || "",
+normalized: artifact.normalizedObservation || null,
+source: artifact.metarSource || "",
+sourceUrl: artifact.metarSourceUrl || ""
+})
+
+const savedKpReading = artifact.kpIndex ?? artifact.kpNumeric ?? null
+if(parseKpReading(savedKpReading).raw || Number.isFinite(parseKpReading(savedKpReading).numeric)){
+displayKp({ kp: savedKpReading })
+}
+
+const fallbackRisk = {
+score: Number(artifact.riskScore || 0),
+windDir: artifact.windDir || "N/A",
+wind: Number(artifact.windKt || 0),
+gust: Number(artifact.gustKt || 0),
+beaufortGust: artifact.beaufortGust ?? getBeaufortLevel(Number(artifact.gustKt || 0)),
+beaufortRisk: artifact.beaufortRisk ?? getDroneRisk(Math.max(getBeaufortLevel(Number(artifact.windKt || 0)), getBeaufortLevel(Number(artifact.gustKt || 0)))),
+visibility: artifact.visibilitySm == null ? 10 : Number(artifact.visibilitySm),
+ceiling: artifact.ceilingFt == null ? 5000 : Number(artifact.ceilingFt)
+}
+displayRisk(fallbackRisk, { rawOb: artifact.metarRaw || "" })
+
+if(Array.isArray(artifact.nearestStations) && artifact.nearestStations.length){
+displayNearestStations(artifact.nearestStations)
+latestNearestStations = artifact.nearestStations
+if(!document.getElementById("icao").value && artifact.nearestStations[0] && artifact.nearestStations[0].icaoId){
+document.getElementById("icao").value = artifact.nearestStations[0].icaoId
+}
+}
+
+if(artifact.location && Number.isFinite(Number(artifact.location.lat)) && Number.isFinite(Number(artifact.location.lon))){
+latestLocation = {
+lat: Number(artifact.location.lat),
+lon: Number(artifact.location.lon),
+source: artifact.location.source || "dwcheck-saved"
+}
+const savedLoc = saveKnownPilotLocation(latestLocation.lat,latestLocation.lon,"dwcheck-saved")
+renderCurrentLocationDetails(`${savedLoc.latShort}, ${savedLoc.lonShort}`, savedLoc.dms)
+}
+}
+
+function setLoading(isLoading,message="Searching weather sources..."){
+const wrap = document.getElementById("loadingWrap")
+const button = document.getElementById("checkBtn")
+const locButton = document.getElementById("locBtn")
+const input = document.getElementById("icao")
+const loadingText = document.getElementById("loadingText")
+
+if(isLoading){
+loadingText.textContent = message
+wrap.classList.add("show")
+button.disabled = true
+locButton.disabled = true
+input.disabled = true
+return
+}
+
+wrap.classList.remove("show")
+button.disabled = false
+locButton.disabled = false
+input.disabled = false
+}
+
+
+function showError(message){
+const banner = document.getElementById("errorBanner")
+banner.textContent = message
+banner.classList.add("show")
+}
+
+function clearError(){
+const banner = document.getElementById("errorBanner")
+banner.textContent = ""
+banner.classList.remove("show")
+}
+
+
+function buildProxyUrl(providerName,targetUrl){
+const provider = WEATHER_PROXY_PROVIDERS.find(p => p.name === providerName)
+return provider ? provider.buildUrl(targetUrl) : ""
+}
+
+
+function buildMetarSourceConfig(cleanIcao){
+const aviationWeatherUrl =
+`https://aviationweather.gov/api/data/metar?ids=${cleanIcao}&format=json`
+
+const noaaTxtUrl =
+`https://tgftp.nws.noaa.gov/data/observations/metar/stations/${cleanIcao}.TXT`
+
+return {
+aviationWeatherUrl,
+noaaTxtUrl,
+attempts: [
+// DIRECT SOURCES (CORS-blocked in browser - commented out)
+// { run: () => fetchMetarFromAviation(aviationWeatherUrl, 4000), label: "AviationWeather JSON", url: aviationWeatherUrl, mode: "json" },
+// { run: () => fetchMetarFromTextSource(noaaTxtUrl,"NOAA direct"), label: "NOAA direct", url: noaaTxtUrl, mode: "text" },
+
+// CLOUDFLARE WORKER (PRIMARY - preferred)
+{ run: () => fetchMetarFromAviation(buildProxyUrl("cloudflare",aviationWeatherUrl), 5500), label: "AviationWeather JSON via Cloudflare Worker", url: buildProxyUrl("cloudflare",aviationWeatherUrl), mode: "json" },
+{ run: () => fetchMetarFromTextSource(buildProxyUrl("cloudflare",noaaTxtUrl),"NOAA via Cloudflare Worker"), label: "NOAA via Cloudflare Worker", url: buildProxyUrl("cloudflare",noaaTxtUrl), mode: "text" },
+
+// ALLORIGINS (abort signal - commented out)
+// { run: () => fetchMetarFromAviation(buildProxyUrl("allorigins",aviationWeatherUrl), 3500), label: "AviationWeather JSON via AllOrigins", url: buildProxyUrl("allorigins",aviationWeatherUrl), mode: "json" },
+// { run: () => fetchMetarFromTextSource(buildProxyUrl("allorigins",noaaTxtUrl),"NOAA via AllOrigins"), label: "NOAA via AllOrigins", url: buildProxyUrl("allorigins",noaaTxtUrl), mode: "text" },
+
+// CODETABS (SECONDARY - reliable fallback)
+{ run: () => fetchMetarFromTextSource(buildProxyUrl("codetabs",noaaTxtUrl),"NOAA via CodeTabs"), label: "NOAA via CodeTabs", url: buildProxyUrl("codetabs",noaaTxtUrl), mode: "text" }
+]
+}
+}
+
+
+/* -------------------------
+   METAR FETCH
+------------------------- */
+
+async function fetchMETAR(icao){
+
+const cleanIcao = String(icao || "").trim().toUpperCase()
+if(!isValidIcaoCode(cleanIcao)){
+showError("Invalid ICAO format. Use a 4-letter ICAO code (example: CYOO).")
+return null
+}
+const attempts = buildMetarSourceConfig(cleanIcao).attempts
+
+const errors = []
+for(const attempt of attempts){
+try{
+const metar = await attempt.run()
+if(metar){
+if(!metar.normalized){
+metar.normalized = normalizeWeatherObservation(metar.rawOb || "", { source: attempt.label, sourceUrl: attempt.url })
+}
+if(!metar.normalized.source) metar.normalized.source = attempt.label
+if(!metar.normalized.sourceUrl) metar.normalized.sourceUrl = attempt.url
+metar.source = metar.normalized.source
+metar.sourceUrl = metar.normalized.sourceUrl
+}
+
+lastMetarFetchInfo = {
+winnerLabel: attempt.label,
+winnerUrl: attempt.url,
+errors
+}
+
+return metar
+}
+catch(err){
+errors.push(`${attempt.label}: ${err?.message || "unknown error"}`)
+}
+}
+
+lastMetarFetchInfo = {
+winnerLabel: "",
+winnerUrl: "",
+errors
+}
+
+console.warn("METAR fetch failed across all sources",errors)
+showError(`Unable to retrieve METAR for ${cleanIcao}. Tried AviationWeather JSON, Cloudflare Worker and AllOrigins proxies, then NOAA fallbacks.`)
+return null
+
+}
+
+
+async function fetchMetarFromAviation(url,timeoutMs=5500){
+
+try{
+
+const response = await fetchWithTimeout(url,timeoutMs)
+
+if(!response.ok){
+throw new Error(`AviationWeather HTTP ${response.status}`)
+}
+
+const data = await response.json()
+
+if(Array.isArray(data) && data.length){
+return mapMetarFields(data[0],"AviationWeather JSON",url)
+}
+
+throw new Error("AviationWeather empty response")
+
+}
+catch(err){
+throw new Error(`AviationWeather failed: ${err?.message || "unknown"}`)
+}
+
+}
+
+
+async function fetchMetarFromTextSource(url,label){
+
+try{
+
+const response = await fetchWithTimeout(url,6500)
+
+if(!response.ok){
+throw new Error(`${label} HTTP ${response.status}`)
+}
+
+const txt = await response.text()
+const rawLine = extractRawMetarLine(txt)
+
+if(!rawLine){
+throw new Error(`${label} returned no METAR line`)
+}
+
+return parseRawMetar(rawLine,label,url)
+
+}
+catch(err){
+throw new Error(`${label} failed: ${err?.message || "unknown"}`)
+}
+
+}
+
+// function extractRawMetarLine(txt) {
+    // const lines = String(txt || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+
+    // return (
+        // lines.find(s => /\b(SPECI|METAR)\s[A-Z]{4}\s\d{6}Z\b/.test(s)) || // Handles SPECI and METAR
+        //null // Return null if nothing is found
+    // );
+// }
+
+function extractRawMetarLine(txt){
+
+const lines = String(txt || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean)
+
+return (
+lines.find(s => /^SPECI\s+[A-Z]{4}\s\d{6}Z\b/.test(s)) ||
+lines.find(s => /^METAR\s+[A-Z]{4}\s\d{6}Z\b/.test(s)) ||
+lines.find(s => /\b[A-Z]{4}\s\d{6}Z\b/.test(s)) ||
+lines.find(s => s.startsWith("METAR ")) ||
+lines.find(s => s.startsWith("SPECI ")) ||
+null
+)
+
+}
+
+
+function mapMetarFields(m,sourceLabel="AviationWeather",sourceUrl=""){
+const rawText = String(m.rawOb ?? m.raw_text ?? "").trim()
+const normalized = normalizeWeatherObservation(rawText, {
+source: sourceLabel,
+sourceUrl,
+api: m
+})
+
+return {
+// Support both legacy and current field names.
+wdir: normalized.wind.directionDegrees ?? (parseInt(m.wdir ?? m.wind_dir_degrees) || null),
+wspd: normalized.wind.speedKt ?? (parseInt(m.wspd ?? m.wind_speed_kt) || 0),
+wgst: normalized.wind.gustKt ?? (parseInt(m.wgst ?? m.wind_gust_kt) || 0),
+visib: normalized.visibility.valueSm ?? (parseFloat(m.visib ?? m.visibility_statute_mi) || 10),
+ceil: normalized.ceilingFt ?? (parseInt(m.ceil ?? m.sky_condition?.[0]?.cloud_base_ft_agl) || 5000),
+rawOb: rawText,
+normalized
+}
+}
+
+
+function parseRawMetar(raw,source="raw-text",sourceUrl=""){
+
+const normalized = normalizeWeatherObservation(raw,{ source, sourceUrl })
+
+return {
+wdir: normalized.wind.directionText === "VRB" ? "VRB" : normalized.wind.directionDegrees,
+wspd: normalized.wind.speedKt ?? 0,
+wgst: normalized.wind.gustKt ?? normalized.wind.speedKt ?? 0,
+visib: normalized.visibility.valueSm ?? 10,
+ceil: normalized.ceilingFt ?? 5000,
+rawOb: normalized.rawText,
+normalized
+}
+
+}
+
+
+function normalizeWeatherObservation(raw,options={}){
+const text = String(raw || "").trim().replace(/\s+/g," ")
+const api = options.api || {}
+const reportType = detectReportType(text,api)
+const station = detectStationId(text,api)
+const observed = parseObservationTime(text,api)
+const wind = parseWindDetails(text)
+const visibility = parseVisibilityDetails(text)
+const clouds = parseCloudLayers(text,api)
+const weather = parseWeatherDetails(text,api)
+const temps = parseTemperatureDewpoint(text,api)
+const altimeter = parseAltimeter(text,api)
+
+const ceilingCandidates = clouds
+.filter(layer => ["BKN","OVC","VV"].includes(layer.coverageCode) && Number.isFinite(layer.heightFt))
+.map(layer => layer.heightFt)
+
+return {
+reportType,
+station,
+observed,
+rawText: text,
+source: options.source || "derived",
+sourceUrl: options.sourceUrl || "",
+wind,
+visibility,
+ceilingFt: ceilingCandidates.length ? Math.min(...ceilingCandidates) : null,
+clouds,
+temperature: temps.temperatureC,
+dewpoint: temps.dewpointC,
+altimeter,
+weather,
+notableWeatherText: weather.length
+? weather.map(item => item.text).join(", ")
+: "No notable weather reported"
+}
+}
+
+
+function detectReportType(raw,api={}){
+const apiType = String(api.metar_type ?? api.metarType ?? api.report_type ?? api.reportType ?? "").trim().toUpperCase()
+if(apiType === "SPECI" || apiType === "METAR") return apiType
+if(/^SPECI\b/.test(raw)) return "SPECI"
+if(/^METAR\b/.test(raw)) return "METAR"
+// Bare format (no METAR/SPECI prefix) from NOAA text — assume routine METAR
+if(/^[A-Z]{4}\s\d{6}Z\b/.test(raw)) return "METAR"
+return "Unknown"
+}
+
+
+function detectStationId(raw,api={}){
+const apiStation = String(api.icaoId ?? api.icao_id ?? api.station_id ?? api.station ?? "").trim().toUpperCase()
+if(/^[A-Z]{4}$/.test(apiStation)) return apiStation
+const prefixed = raw.match(/^(?:METAR|SPECI)\s+([A-Z]{4})\b/)
+if(prefixed) return prefixed[1]
+const bare = raw.match(/^([A-Z]{4})\s\d{6}Z\b/)
+return bare ? bare[1] : ""
+}
+
+
+function parseObservationTime(raw,api={}){
+const tokenMatch = raw.match(/\b(\d{6})Z\b/)
+const token = tokenMatch ? `${tokenMatch[1]}Z` : ""
+const obsTimeValue = api.reportTime ?? api.observation_time ?? api.observed ?? api.observationTime ?? api.obsTime ?? ""
+
+let when = null
+
+if(obsTimeValue !== "" && obsTimeValue != null){
+const candidate = parseApiObservationDate(obsTimeValue)
+if(Number.isFinite(candidate.getTime())) when = candidate
+}
+
+// Build approximate UTC Date from the day/time token when no API timestamp is available
+if(!when && tokenMatch){
+const day  = parseInt(tokenMatch[1].slice(0,2),10)
+const hour = parseInt(tokenMatch[1].slice(2,4),10)
+const min  = parseInt(tokenMatch[1].slice(4,6),10)
+const now = new Date()
+let candidate = new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),day,hour,min))
+// If the result is more than 12 h in the future it belongs to the previous month
+if(candidate.getTime() - now.getTime() > 12 * 3600000){
+candidate = new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth()-1,day,hour,min))
+}
+if(Number.isFinite(candidate.getTime())) when = candidate
+}
+
+let display
+if(when && Number.isFinite(when.getTime())){
+const localStr = formatLocalTime(when)
+display = token
+? (localStr ? `${token} / ${localStr}` : token)
+: when.toUTCString()
+}
+else{
+display = token || "Unavailable"
+}
+
+return { token, iso: String(obsTimeValue || ""), display, when }
+}
+
+
+function parseApiObservationDate(value){
+if(value instanceof Date) return value
+if(typeof value === "number"){
+// AviationWeather can return Unix seconds for obsTime.
+const ms = value > 1000000000000 ? value : value * 1000
+return new Date(ms)
+}
+
+const text = String(value || "").trim()
+if(/^\d+$/.test(text)){
+const n = Number(text)
+const ms = n > 1000000000000 ? n : n * 1000
+return new Date(ms)
+}
+
+return new Date(text)
+}
+
+
+function formatLocalTime(date){
+try{
+return date.toLocaleTimeString([],{
+hour: "2-digit",
+minute: "2-digit",
+hour12: false,
+timeZoneName: "short"
+})
+}
+catch{
+return ""
+}
+}
+
+
+function parseWindDetails(raw){
+const windMatch = raw.match(/\b(\d{3}|VRB)(\d{2,3})(?:G(\d{2,3}))?KT\b/)
+const variableMatch = raw.match(/\b(\d{3})V(\d{3})\b/)
+
+if(!windMatch){
+return {
+raw: "",
+directionText: "N/A",
+directionDegrees: null,
+speedKt: 0,
+gustKt: 0,
+variableFrom: variableMatch ? Number(variableMatch[1]) : null,
+variableTo: variableMatch ? Number(variableMatch[2]) : null,
+display: "Unavailable"
+}
+}
+
+const directionToken = windMatch[1]
+const speedKt = Number(windMatch[2])
+const gustKt = windMatch[3] ? Number(windMatch[3]) : speedKt
+const directionDegrees = directionToken === "VRB" ? null : Number(directionToken)
+const directionText = directionToken === "VRB" ? "VRB" : `${String(directionDegrees).padStart(3,"0")}°`
+const variableText = variableMatch ? `, variable ${variableMatch[1]}°-${variableMatch[2]}°` : ""
+
+return {
+raw: windMatch[0],
+directionText,
+directionDegrees,
+speedKt,
+gustKt,
+variableFrom: variableMatch ? Number(variableMatch[1]) : null,
+variableTo: variableMatch ? Number(variableMatch[2]) : null,
+display: `${directionText} at ${formatWindWithDualUnits(speedKt)}${gustKt > speedKt ? ` gust ${formatWindWithDualUnits(gustKt)}` : ""}${variableText}`
+}
+}
+
+
+function parseVisibilityDetails(raw){
+const valueSm = parseVisibilitySm(raw)
+const rawMatch = raw.match(/\b(?:P6SM|M?\d+\s+\d\/\dSM|M?\d\/\dSM|M?\d+SM)\b/)
+return {
+raw: rawMatch ? rawMatch[0] : "",
+valueSm,
+display: valueSm == null ? "Unavailable" : `${valueSm} SM`
+}
+}
+
+
+function parseCloudLayers(raw,api={}){
+const rawLayers = [...raw.matchAll(/\b(FEW|SCT|BKN|OVC|VV|SKC|CLR|NSC|NCD)(\d{3})?(CB|TCU)?\b/g)]
+.map(match => ({
+coverageCode: match[1],
+coverageText: CLOUD_COVERAGE_MAP[match[1]] || match[1],
+heightFt: match[2] ? Number(match[2]) * 100 : null,
+modifier: match[3] || "",
+raw: match[0],
+display: `${CLOUD_COVERAGE_MAP[match[1]] || match[1]}${match[2] ? ` ${Number(match[2]) * 100} ft` : ""}${match[3] ? ` ${match[3]}` : ""}`.trim()
+}))
+
+if(rawLayers.length) return rawLayers
+
+const apiLayers = Array.isArray(api.sky_condition) ? api.sky_condition : []
+return apiLayers.map(layer => {
+const coverageCode = String(layer.sky_cover ?? layer.cover ?? "").toUpperCase()
+const heightValue = Number(layer.cloud_base_ft_agl ?? layer.base_ft_agl ?? layer.base)
+return {
+coverageCode,
+coverageText: CLOUD_COVERAGE_MAP[coverageCode] || coverageCode || "Unknown",
+heightFt: Number.isFinite(heightValue) ? heightValue : null,
+modifier: String(layer.cloud_type ?? "").toUpperCase(),
+raw: "",
+display: `${CLOUD_COVERAGE_MAP[coverageCode] || coverageCode || "Unknown"}${Number.isFinite(heightValue) ? ` ${heightValue} ft` : ""}`.trim()
+}
+})
+}
+
+
+function parseWeatherDetails(raw,api={}){
+const tokens = String(raw || "").split(/\s+/).filter(Boolean)
+const matches = []
+
+for(const token of tokens){
+if(isWeatherToken(token)){
+matches.push({
+code: token,
+text: decodeWeatherToken(token)
+})
+}
+}
+
+if(matches.length) return matches
+
+const apiWx = String(api.wxString ?? api.wx_string ?? "").trim()
+if(apiWx){
+return apiWx.split(/\s+/).filter(Boolean).map(code => ({
+code,
+text: decodeWeatherToken(code)
+}))
+}
+
+return []
+}
+
+
+function isWeatherToken(token){
+return /^(?:\+|-|VC)?(?:MI|PR|BC|DR|BL|SH|TS|FZ)?(?:DZ|RA|SN|SG|IC|PL|GR|GS|UP|BR|FG|FU|VA|DU|SA|HZ|PY|PO|SQ|FC|SS|DS)+$/.test(token)
+}
+
+
+function decodeWeatherToken(token){
+let rest = String(token || "")
+const parts = []
+
+const intensityMatch = rest.match(/^(\+|-|VC)/)
+if(intensityMatch){
+parts.push(WEATHER_INTENSITY_MAP[intensityMatch[1]] || intensityMatch[1])
+rest = rest.slice(intensityMatch[1].length)
+}
+
+const descriptorMatch = rest.match(/^(MI|PR|BC|DR|BL|SH|TS|FZ)/)
+if(descriptorMatch){
+parts.push(WEATHER_DESCRIPTOR_MAP[descriptorMatch[1]] || descriptorMatch[1])
+rest = rest.slice(descriptorMatch[1].length)
+}
+
+const phenomena = []
+while(rest.length >= 2){
+const code = rest.slice(0,2)
+phenomena.push(WEATHER_PHENOMENA_MAP[code] || code)
+rest = rest.slice(2)
+}
+
+if(phenomena.length) parts.push(phenomena.join(" and "))
+
+return parts.length ? parts.join(" ") : token
+}
+
+
+function parseTemperatureDewpoint(raw,api={}){
+const match = raw.match(/\b(M?\d{2})\/(M?\d{2})\b/)
+if(match){
+return {
+temperatureC: decodeSignedMetarNumber(match[1]),
+dewpointC: decodeSignedMetarNumber(match[2])
+}
+}
+
+const temperatureC = Number(api.temp ?? api.temp_c)
+const dewpointC = Number(api.dewp ?? api.dewpoint_c)
+return {
+temperatureC: Number.isFinite(temperatureC) ? temperatureC : null,
+dewpointC: Number.isFinite(dewpointC) ? dewpointC : null
+}
+}
+
+
+function decodeSignedMetarNumber(token){
+if(!token) return null
+return token.startsWith("M") ? -Number(token.slice(1)) : Number(token)
+}
+
+
+function parseAltimeter(raw,api={}){
+const inchesMatch = raw.match(/\bA(\d{4})\b/)
+if(inchesMatch){
+const inHg = Number((Number(inchesMatch[1]) / 100).toFixed(2))
+return {
+raw: inchesMatch[0],
+inHg,
+hPa: Number((inHg * 33.8639).toFixed(1)),
+display: `${inHg.toFixed(2)} inHg`
+}
+}
+
+const hpaMatch = raw.match(/\bQ(\d{4})\b/)
+if(hpaMatch){
+const hPa = Number(hpaMatch[1])
+return {
+raw: hpaMatch[0],
+inHg: Number((hPa / 33.8639).toFixed(2)),
+hPa,
+display: `${hPa} hPa`
+}
+}
+
+const altim = Number(api.altim ?? api.altimeter ?? api.altim_in_hg)
+if(Number.isFinite(altim)){
+// AviationWeather altim is often hPa (e.g., 1016), while some feeds use inHg.
+if(altim > 200){
+return {
+raw: "",
+inHg: Number((altim / 33.8639).toFixed(2)),
+hPa: Number(altim.toFixed(1)),
+display: `${altim.toFixed(1)} hPa`
+}
+}
+
+return {
+raw: "",
+inHg: altim,
+hPa: Number((altim * 33.8639).toFixed(1)),
+display: `${altim.toFixed(2)} inHg`
+}
+}
+
+return {
+raw: "",
+inHg: null,
+hPa: null,
+display: "Unavailable"
+}
+}
+
+
+function parseVisibilitySm(raw){
+
+const p6 = raw.match(/\bP6SM\b/)
+if(p6) return 6
+
+const lessThan = raw.match(/\bM(\d)\/(\d)SM\b/)
+if(lessThan){
+return Number((parseInt(lessThan[1],10) / parseInt(lessThan[2],10)).toFixed(2))
+}
+
+const lessThanWhole = raw.match(/\bM(\d+)SM\b/)
+if(lessThanWhole){
+return parseInt(lessThanWhole[1],10)
+}
+
+const wholeFraction = raw.match(/\b(\d+)\s(\d)\/(\d)SM\b/)
+if(wholeFraction){
+return parseInt(wholeFraction[1],10) + (parseInt(wholeFraction[2],10) / parseInt(wholeFraction[3],10))
+}
+
+const fraction = raw.match(/\b(\d)\/(\d)SM\b/)
+if(fraction){
+return parseInt(fraction[1],10) / parseInt(fraction[2],10)
+}
+
+const whole = raw.match(/\b(\d+)SM\b/)
+if(whole) return parseInt(whole[1],10)
+
+return 10
+
+}
+
+/* -------------------------
+   WIND RISK LOGIC
+------------------------- */
+
+function calculateWindRisk(metar){
+
+const wind = metar.wspd || 0
+const gust = metar.wgst || wind
+const effectiveWind = Math.max(wind,gust)
+const dirRaw = metar.wdir
+const windDir = dirRaw === "VRB" ? "VRB" : (Number.isFinite(Number(dirRaw)) ? `${String(Number(dirRaw)).padStart(3,"0")}°` : "N/A")
+const vis = parseFloat(metar.visib) || 10
+const ceiling = metar.ceil || 5000
+
+let score = 0
+
+if(effectiveWind >= 21) score += 4
+else if(effectiveWind >= 16) score += 3
+else if(effectiveWind >= 10) score += 2
+else score += 1
+if(gust - wind > 7) score += 1
+
+if(vis < 3) score += 1           // add 1 to risk score if <3 SM visibility
+if(ceiling < 1000) score += 1    // add 1 to risk score if ceiling < 1000 ft  
+
+return {
+score:score,
+windDir:windDir,
+wind:wind,
+gust:gust,
+beaufortWind: getBeaufortLevel(wind),
+beaufortGust: getBeaufortLevel(gust),
+beaufortRisk: getDroneRisk(Math.max(getBeaufortLevel(wind), getBeaufortLevel(gust))),
+visibility:vis,
+ceiling:ceiling
+}
+
+}
+
+
+/* -------------------------
+   DISPLAY FUNCTIONS
+------------------------- */
+
+function displayMETAR(metar){
+
+document.getElementById("metarText").textContent =
+metar.rawOb
+
+}
+
+
+function displayStructuredWeather(metar){
+const panel = document.getElementById("weatherSummaryPanel")
+if(!panel) return
+
+let normalized = metar?.normalized || null
+if(!normalized || !normalized.rawText){
+normalized = normalizeWeatherObservation(metar?.rawOb || "", { source:"display" })
+}
+else if((!normalized.reportType || normalized.reportType === "Unknown") && metar?.rawOb){
+// Recompute on display so older cached artifacts can pick up newer report-type parsing.
+normalized = normalizeWeatherObservation(metar.rawOb, {
+source: metar?.source || normalized.source || "display-refresh",
+sourceUrl: metar?.sourceUrl || normalized.sourceUrl || ""
+})
+}
+
+if(!normalized.source && metar?.source){
+normalized.source = metar.source
+}
+if(!normalized.sourceUrl && metar?.sourceUrl){
+normalized.sourceUrl = metar.sourceUrl
+}
+if(!normalized.source && lastMetarFetchInfo.winnerLabel){
+normalized.source = lastMetarFetchInfo.winnerLabel
+}
+if(!normalized.sourceUrl && lastMetarFetchInfo.winnerUrl){
+normalized.sourceUrl = lastMetarFetchInfo.winnerUrl
+}
+
+if(!normalized || !normalized.rawText){
+panel.className = "weather-summary-empty"
+panel.textContent = "Fetch Weather/Risk Assessment, based on your current Pilot location, to load structured observation details."
+return
+}
+
+const cloudText = normalized.clouds.length
+? normalized.clouds.map(layer => layer.display).join(", ")
+: "No cloud layers reported"
+
+const weatherText = normalized.weather.length
+? normalized.weather.map(item => `${item.code} (${item.text})`).join(", ")
+: normalized.notableWeatherText
+
+const tempText = normalized.temperature == null
+? "Unavailable"
+: `${normalized.temperature} C / ${normalized.dewpoint == null ? "--" : normalized.dewpoint} C`
+
+const ceilingText = normalized.ceilingFt == null ? "No ceiling reported" : `${normalized.ceilingFt} ft`
+const reportTypeText = (!normalized.reportType || normalized.reportType === "Unknown") ? "null" : normalized.reportType
+const sourceText = normalized.source || "unknown"
+const sourceCallText = normalized.sourceUrl || "Unavailable"
+
+panel.className = "weather-summary-panel"
+	panel.innerHTML = `
+	<div class="weather-summary-item"><b>Report Type (METAR/SPECI)</b><span>${escapeHtml(reportTypeText)}</span></div>
+	<div class="weather-summary-item"><b>Report Source</b><span>${escapeHtml(sourceText)}</span></div>
+	<div class="weather-summary-item"><b>Observed</b><span>${escapeHtml(normalized.observed.display || "Unavailable")}</span></div>
+	<div class="weather-summary-item"><b>Wind</b><span>${escapeHtml(normalized.wind.display || "Unavailable")}</span></div>
+	<div class="weather-summary-item"><b>Visibility</b><span>${escapeHtml(normalized.visibility.display || "Unavailable")}</span></div>
+<div class="weather-summary-item"><b>Ceiling</b><span>${escapeHtml(ceilingText)}</span></div>
+<div class="weather-summary-item"><b>Temperature / Dew Point</b><span>${escapeHtml(tempText)}</span></div>
+<div class="weather-summary-item"><b>Altimeter</b><span>${escapeHtml(normalized.altimeter.display || "Unavailable")}</span></div>
+<div class="weather-summary-item full-width"><b>Clouds</b><span>${escapeHtml(cloudText)}</span></div>
+<div class="weather-summary-item full-width"><b>Notable Weather</b><span>${escapeHtml(weatherText)}</span></div>
+`
+}
+
+
+function escapeHtml(value){
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/\"/g,"&quot;")
+}
+
+
+function renderSourceCallHtml(url){
+if(!url || url === "Unavailable") return escapeHtml(url || "Unavailable")
+if(!/^https:\/\//i.test(url)) return escapeHtml(url)
+let display
+try{ display = decodeURIComponent(url) }
+catch{ display = url }
+return `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="word-break:break-all;font-size:13px;">${escapeHtml(display)}</a>`
+}
+
+
+function displayRisk(risk,metar){
+
+let label=""
+let css=""
+
+if(risk.score<=2){
+label="SAFE"
+css="safe"
+}
+else if(risk.score<=4){
+label="CAUTION"
+css="caution"
+}
+else{
+label="RISKY"
+css="nogo"
+}
+
+const panel = document.getElementById("riskPanel")
+
+panel.className = "panel "+css
+
+panel.innerHTML = `
+
+		<h3 id="riskScoreKeyTitle" class="risk-key-title">
+		<span id="riskScoreKeyDot" class="risk-key-dot risk-key-unknown" aria-hidden="true"></span>
+		<span id="riskScoreKeyText">Drone Weather &amp; Risk Assessment</span>
+		</h3>
+
+	<div class="risk-survey-body">
+	<div class="risk-survey-details">
+		<div class="metric"><b>Status:</b> ${label}</div>
+		<div class="metric"><b>Risk Score:</b> ${risk.score}</div>
+		<div class="metric"><b>Wind Risk Level:</b> ${getScoreRiskLabel(risk.score)}</div>
+		<div class="subtle">
+		<button type="button" class="mini-action-btn" onclick="openScoringIndex()">Scoring Index</button>
+	<span class="subtle">Maximum Score 7</span>
+	</div>
+	
+	<hr>
+
+	<div class="metric">Wind Direction: ${risk.windDir}</div>
+	<div class="metric">Wind: ${formatWindWithDualUnits(risk.wind)}</div>
+	<div class="metric">Gust: ${formatWindWithDualUnits(risk.gust)}</div>
+	<div class="metric">Beaufort Scale (Gusts): ${risk.beaufortGust == null ? "Unavailable" : `Level ${risk.beaufortGust}`}</div>
+		<div class="metric">Beaufort Risk Level: ${risk.beaufortRisk || "Unavailable"}</div>
+		<div class="metric">Visibility: ${risk.visibility} SM</div>
+		<div class="metric">Ceiling: ${risk.ceiling} ft</div>
+	</div>
+	<div class="risk-compass-wrap">
+	<img class="risk-compass" src="assets/img/Compass_360.svg" alt="Compass rose for reviewing wind direction" onerror="if(this.src.endsWith('Compass_360.svg')){this.src='assets/img/Compass_360.png';return;}this.onerror=null;this.src='assets/img/Compass_360%20v1.png';">
+	</div>
+	</div>
+
+	<details class="risk-score-guide">
+	<summary>Risk Score Guide</summary>
+	<div class="table-wrap">
+	<table class="risk-mini-table compact-risk-table risk-score-table">
+	<thead>
+	<tr>
+	<th>Score</th>
+	<th>Band</th>
+	<th>Operational Meaning</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr class="band-green">
+	<td data-label="Score">0-2</td>
+	<td data-label="Band"><span class="risk-band-pill green">Green</span></td>
+	<td data-label="Operational Meaning">Low Risk</td>
+	</tr>
+	<tr class="band-yellow">
+	<td data-label="Score">3-4</td>
+	<td data-label="Band"><span class="risk-band-pill yellow">Yellow</span></td>
+	<td data-label="Operational Meaning">Caution</td>
+	</tr>
+	<tr class="band-red">
+	<td data-label="Score">5-6</td>
+	<td data-label="Band"><span class="risk-band-pill red">Red</span></td>
+	<td data-label="Operational Meaning">Risky Conditions</td>
+	</tr>
+	</tbody>
+	</table>
+	</div>
+	</details>
+
+	`
+
+updateRiskScoreKey(risk.score)
+
+}
+
+
+function updateRiskScoreKey(score){
+const textEl = document.getElementById("riskScoreKeyText")
+const dotEl = document.getElementById("riskScoreKeyDot")
+if(!textEl || !dotEl) return
+
+const n = Number(score)
+if(!Number.isFinite(n)){
+textEl.textContent = "Drone Weather & Risk Assessment"
+dotEl.className = "risk-key-dot risk-key-unknown"
+return
+}
+
+textEl.textContent = `Drone Weather & Risk Assessment: Risk Score ${n}`
+
+if(n <= 2){
+dotEl.className = "risk-key-dot risk-key-green"
+}
+else if(n <= 4){
+dotEl.className = "risk-key-dot risk-key-yellow"
+}
+else{
+dotEl.className = "risk-key-dot risk-key-red"
+}
+}
+
+
+/* -------------------------
+/   NOAA SPACE WEATHER
+------------------------- */
+
+async function fetchKpIndex(){
+
+const url =
+"https://services.swpc.noaa.gov/json/planetary_k_index_1m.json"
+
+try{
+
+const r = await fetchWithTimeout(url,5000)
+
+if(!r.ok){
+return null
+}
+
+const data = await r.json()
+
+const latest = data[data.length-1]
+const parsed = parseKpReading(latest?.kp)
+
+return {
+...latest,
+kpRaw: parsed.raw || latest?.kp || null,
+kpNumeric: parsed.numeric
+}
+
+}
+catch{
+return null
+}
+
+}
+
+
+function displayKp(kp){
+
+const el = document.getElementById("kpData")
+
+if(!kp){
+el.innerHTML="Unavailable"
+return
+}
+
+const parsedKp = parseKpReading(kp.kpRaw ?? kp.kpNumeric ?? kp.kp)
+const kpValue = parsedKp.raw || (Number.isFinite(parsedKp.numeric) ? String(parsedKp.numeric) : "Unavailable")
+const note = getKpCondition(parsedKp.raw || parsedKp.numeric)
+let badgeClass = "kp-nominal"
+const qualifierLine = parsedKp.qualifier
+? `<b>Feed Qualifier:</b> ${parsedKp.qualifier} (${parsedKp.qualifierLabel || "Qualifier"})<br>`
+: ""
+
+if(note === "Severe Storm") badgeClass = "kp-severe"
+else if(note === "Storm") badgeClass = "kp-storm"
+else if(note === "Elevated") badgeClass = "kp-elevated"
+
+el.innerHTML = `
+<div class="kp-badge ${badgeClass}">${note}</div><br>
+<b>Kp Index:</b> ${kpValue}<br>
+<b>Condition:</b> ${note}
+${qualifierLine}
+<div class="subtle">Source: NOAA SWPC Planetary K-index (1-minute feed)</div>
+<div class="kp-key-spacer" aria-hidden="true"></div>
+<div class="kp-key-line" aria-label="Kp condition key">
+<span class="kp-key-item"><span class="kp-dot kp-dot-green" aria-hidden="true"></span>Nominal (0-3)</span>
+<span class="kp-key-item"><span class="kp-dot kp-dot-yellow" aria-hidden="true"></span>Elevated (4)</span>
+<span class="kp-key-item"><span class="kp-dot kp-dot-orange" aria-hidden="true"></span>Storm (5-6)</span>
+<span class="kp-key-item"><span class="kp-dot kp-dot-red" aria-hidden="true"></span>Severe Storm (7-9)</span>
+</div>
+<div class="subtle">M=Magnetic | P=Predicted | Z=Stable | E=Estimated</div>
+`
+
+}
+
+const icaoInputField = document.getElementById("icao")
+if(icaoInputField){
+icaoInputField.addEventListener("keydown",event => {
+if(event.key !== "Enter" || event.isComposing) return
+event.preventDefault()
+runCheck()
+})
+}
+
+restoreKnownPilotLocation()
+renderWeatherCheckStatus()
+updatePilotLocationButtonLabel()
+updateActionButtonHighlights()
+renderSavedWeatherArtifactDetails()
+initWindGuideTable()
+
+</script>
+
+</body>
+</html>

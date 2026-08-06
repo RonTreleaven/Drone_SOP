@@ -1,0 +1,28 @@
+﻿{
+    "manifestVersion":  "1.0.0",
+    "packageType":  "rc2-new-user",
+    "packageVersion":  "1.0.0",
+    "fileName":  "rc2-new-user-scripts-v1.0.0.zip",
+    "relativePath":  "/data/rc2/_private/packages/rc2-new-user-scripts-v1.0.0.zip",
+    "sha256":  "7A0D684FDE66FC887F717D90E52EB42257579ECD1D33B57AB9B5AD6D11A5B6CB",
+    "generatedAt":  "2026-04-13T13:45:54",
+    "includes":  {
+                     "scripts":  [
+                                     "Step1.ps1",
+                                     "Step2.ps1",
+                                     "Step3.ps1",
+                                     "Step4.ps1",
+                                     "Step5.ps1",
+                                     "Step5B_StageFromIncoming.ps1",
+                                     "Step6.ps1",
+                                     "Step9_HealthCheck.ps1"
+                                 ],
+                     "docs":  [
+                                  "Saving Missions to RC2.md",
+                                  "RC2 UUID Mission Integration - New User Onboarding.md"
+                              ],
+                     "schema":  [
+                                    "Step9_HealthCheck.report.schema.json"
+                                ]
+                 }
+}

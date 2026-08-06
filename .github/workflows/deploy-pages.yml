@@ -11,9 +11,24 @@ on:
       - "*.png"
       - "*.ico"
       - "*.svg"
-      - "assets/**"
+      - "assets/css/**"
+      - "assets/js/**"
+      - "assets/img/**"
+      - "assets/CFS/**"
+      - "assets/Emergency/*.md"
+      - "assets/pdf/MyFactSheet.pdf"
       - "sections/**"
-      - "data/**"
+      - "data/*.json"
+      - "data/*.geojson"
+      - "data/notams/**"
+      - "data/airspace/*.geojson"
+      - "data/airspace/*.geoJson"
+      - "data/airspace/_sources/*.geojson"
+      - "data/airspace/_sources/*.geoJson"
+      - "data/airspace/_sources/*.csv"
+      - "data/airspace/_sources/*.json"
+      - "data/schema/*.schema.json"
+      - "data/rc2/**"
       - ".github/workflows/deploy-pages.yml"
       - "_config.yml"
 
@@ -47,8 +62,12 @@ jobs:
                    _site/data/notams _site/data/airspace/_sources \
                    _site/data/schema _site/sections
 
-          # Root-level HTML pages
-          cp *.html _site/
+          # Root-level HTML pages (exclude local backups/drafts)
+          find . -maxdepth 1 -type f -name "*.html" \
+            ! -name "NotamsMap.safe_backup.*.html" \
+            ! -name "_bu_index.html" \
+            ! -name "GGcode-backup.html" \
+            -exec cp {} _site/ \;
 
           # Root-level JS (e.g. cords.js)
           cp *.js _site/ 2>/dev/null || true
@@ -56,29 +75,35 @@ jobs:
           # Root-level images and favicons
           cp *.png *.ico *.svg _site/ 2>/dev/null || true
 
-          # Assets — explicit subfolders only (excludes logs/ and MD/)
+          # Assets - explicit subfolders only (excludes logs/ and MD/)
           cp assets/css/*.css   _site/assets/css/   2>/dev/null || true
           cp assets/js/*.js     _site/assets/js/    2>/dev/null || true
           cp assets/js/*.css    _site/assets/js/    2>/dev/null || true
           cp -r assets/img      _site/assets/
-          cp -r assets/Emergency _site/assets/      2>/dev/null || true
+          cp assets/Emergency/*.md _site/assets/Emergency/ 2>/dev/null || true
           cp -r assets/CFS      _site/assets/       2>/dev/null || true
-          cp -r assets/pdf      _site/assets/       2>/dev/null || true
+          # Publish only PDFs referenced by live pages
+          cp assets/pdf/MyFactSheet.pdf _site/assets/pdf/ 2>/dev/null || true
 
           # Sections (SOP procedure pages)
           cp sections/*.html _site/sections/
 
-          # Data — reference JSON/GeoJSON files (root of data/)
-          cp data/*.json data/*.geojson _site/data/ 2>/dev/null || true
+          # Data - reference JSON/GeoJSON files (root of data/)
+          find data -maxdepth 1 -type f \( -name "*.json" -o -name "*.geojson" \) \
+            ! -name "May11_2026ca_asp.geojson" \
+            -exec cp {} _site/data/ \;
 
-          # Data — airspace files used by CZMiniMap and related tools
+          # Data - airspace files used by CZMiniMap and related tools
           cp data/airspace/*.geojson _site/data/airspace/ 2>/dev/null || true
           cp data/airspace/*.geoJson _site/data/airspace/ 2>/dev/null || true
 
           # Refreshed source data used by DAHminimap and the home page
-          cp -r data/airspace/_sources/. _site/data/airspace/_sources/
+          cp data/airspace/_sources/*.geojson _site/data/airspace/_sources/ 2>/dev/null || true
+          cp data/airspace/_sources/*.geoJson _site/data/airspace/_sources/ 2>/dev/null || true
+          cp data/airspace/_sources/*.csv _site/data/airspace/_sources/ 2>/dev/null || true
+          cp data/airspace/_sources/*.json _site/data/airspace/_sources/ 2>/dev/null || true
 
-          # Data — live NOTAM JSON files (auto-updated by fetch-notams CRON)
+          # Data - live NOTAM JSON files (auto-updated by fetch-notams CRON)
           cp data/notams/*.json _site/data/notams/  2>/dev/null || true
 
           # JSON schemas referenced by RC2 documentation and manifests

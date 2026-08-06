@@ -1,0 +1,62 @@
+{
+  "manifestVersion": "1.0.0",
+  "generatedFor": "github-pages",
+  "portal": {
+    "path": "/data/rc2/rc2-index.html",
+    "note": "Static download/discovery page. PowerShell scripts execute on local Windows only."
+  },
+  "artifacts": {
+    "schemas": [
+      {
+        "name": "step9-healthcheck-report",
+        "path": "/data/schema/step9_healthcheck_report.schema.json",
+        "draft": "2019-09"
+      }
+    ],
+    "scripts": [
+      {
+        "name": "Step5",
+        "step": "5",
+        "path": "/data/rc2/scripts/Step5.ps1"
+      },
+      {
+        "name": "Step5B_StageFromIncoming",
+        "step": "5B",
+        "path": "/data/rc2/scripts/Step5B_StageFromIncoming.ps1"
+      },
+      {
+        "name": "Step6",
+        "step": "6",
+        "path": "/data/rc2/scripts/Step6.ps1"
+      },
+      {
+        "name": "Step9_HealthCheck",
+        "step": "9",
+        "path": "/data/rc2/scripts/Step9_HealthCheck.ps1"
+      }
+    ],
+    "docs": [
+      {
+        "name": "MAM RC2 PS1 Wiki",
+        "path": "/data/rc2/docs/MAM_RC2_PS1_Wiki.md"
+      },
+      {
+        "name": "Saving Missions to RC2",
+        "path": "/data/rc2/docs/Saving_Missions_to_RC2.md"
+      },
+      {
+        "name": "RC2 UUID Mission Integration - New User Onboarding",
+        "path": "/data/rc2/docs/RC2_UUID_Mission_Integration_New_User_Onboarding.md"
+      }
+    ]
+  },
+  "recommendedFlow": [
+    "Step5B_StageFromIncoming",
+    "Step9_HealthCheck",
+    "Step6"
+  ],
+  "controlledDistributions": {
+    "newUserPackageManifest": "/data/rc2/_private/manifests/new-user-package.manifest.json",
+    "note": "Hidden web surface for controlled onboarding zip packages."
+  }
+}

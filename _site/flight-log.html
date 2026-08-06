@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Log</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <script src="assets/js/site-nav.js" defer></script>
+</head>
+<body>
+  <nav class="top-nav shared-site-nav" data-nav-variant="workflow" data-active="flight-log" data-show-back="true" data-back-fallback="tools.html"></nav>
+
+  <script>
+    function goBack(event) {
+      event.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = 'tools.html';
+      }
+    }
+  </script>
+
+  <header class="site-header">
+    <img src="assets/img/logo_25.svg" alt="Logo" class="site-logo">
+    <h1 class="page-title">Flight Log Information</h1>
+  </header>
+
+  <div class="location-tool">
+    <button type="button" id="getLocation">Get DD Lat/Long co-ords</button>
+    <p id="output"></p>
+    <p id="flight-weather-status" class="subtle">Last Weather Check: not saved yet.</p>
+    <button type="button" id="flight-weather-refresh">Refresh Weather Assessment</button>
+  </div>
+
+  <form id="flight-log-form">
+    <table class="flight-log-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Pilot Name(s)</th>
+          <th>Observer Name(s)</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Pilot Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <label for="flight-date" class="visually-hidden">Flight Date</label>
+            <input type="date" id="flight-date" title="Flight Date" placeholder="YYYY-MM-DD" required>
+          </td>
+          <td>
+            <label for="flight-pilot" class="visually-hidden">Pilot Name(s)</label>
+            <input type="text" id="flight-pilot" title="Pilot Name(s)" placeholder="e.g. J. Smith" required>
+          </td>
+          <td>
+            <label for="flight-observers" class="visually-hidden">Observer Name(s)</label>
+            <input type="text" id="flight-observers" title="Observer Name(s)" placeholder="n/a">
+          </td>
+          <td>
+            <label for="flight-start" class="visually-hidden">Start Time</label>
+            <input type="time" id="flight-start" title="Start Time" required>
+          </td>
+          <td>
+            <label for="flight-end" class="visually-hidden">End Time</label>
+            <input type="time" id="flight-end" title="End Time" required>
+          </td>
+          <td>
+            <label for="flight-location" class="visually-hidden">Pilot Location</label>
+            <input type="text" id="flight-location" title="Pilot Location" placeholder="e.g. Field A (Lat,Long)" required>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="submit">Save Flight Log</button>
+  </form>
+
+  <h2>Additional Emergency Contacts</h2>
+  <ul class="tools-list">
+    <li>
+      <a href="FIR_FIC_911.html" target="_blank" rel="noopener">Emergency Contacts List</a>
+      - FIR and Emergency Contacts
+    </li>
+    <li>
+      <a href="https://tc.canada.ca/en/aviation/aviation-accidents-investigations/emergencies-incident-reporting" target="_blank" rel="noopener">Transport Canada Emergency Contacts</a>
+      - Official emergency contacts for aviation.
+    </li>
+  </ul>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+

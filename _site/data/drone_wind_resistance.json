@@ -1,0 +1,184 @@
+{
+  "models": [
+    {
+      "model": "DJI Mini 2",
+      "verified": true,
+      "oemWindMs": 8.5,
+      "oemWindKmh": 30.6,
+      "oemWindKt": 16.5,
+      "optimumSensorWidthMm": 6.3,
+      "optimumFocalLengthMm": 4.49,
+      "optimumImageWidthPx": 4000
+    },
+    {
+      "model": "DJI Mini 3",
+      "verified": true,
+      "oemWindMs": 8.5,
+      "oemWindKmh": 30.6,
+      "oemWindKt": 16.5,
+      "optimumSensorWidthMm": 9.6,
+      "optimumFocalLengthMm": 6.7,
+      "optimumImageWidthPx": 4000
+    },
+    {
+      "model": "DJI Mini 3 Pro",
+      "verified": true,
+      "oemWindMs": 10.69,
+      "oemWindKmh": 38.5,
+      "oemWindKt": 21,
+      "optimumSensorWidthMm": 9.6,
+      "optimumFocalLengthMm": 6.7,
+      "optimumImageWidthPx": 4000
+    },
+    {
+      "model": "DJI Mini 4 Pro",
+      "verified": true,
+      "oemWindMs": 10.69,
+      "oemWindKmh": 38.5,
+      "oemWindKt": 21,
+      "optimumSensorWidthMm": 9.6,
+      "optimumFocalLengthMm": 6.72,
+      "optimumImageWidthPx": 4000
+    },
+    {
+      "model": "DJI Mini 5 Pro",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3,
+      "optimumSensorWidthMm": 13.2,
+      "optimumFocalLengthMm": 8.8,
+      "optimumImageWidthPx": 4096
+    },
+    {
+      "model": "DJI Air 2S",
+      "verified": true,
+      "oemWindMs": 10.7,
+      "oemWindKmh": 37.8,
+      "oemWindKt": 20.8,
+      "optimumSensorWidthMm": 13.2,
+      "optimumFocalLengthMm": 8.38,
+      "optimumImageWidthPx": 5472
+    },
+    {
+      "model": "DJI Air 3",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3,
+      "optimumSensorWidthMm": 9.6,
+      "optimumFocalLengthMm": 6.72,
+      "optimumImageWidthPx": 4032
+    },
+    {
+      "model": "DJI Mavic 2 Pro",
+      "verified": true,
+      "oemWindMs": 10.6,
+      "oemWindKmh": 38,
+      "oemWindKt": 20.5,
+      "optimumSensorWidthMm": 13.2,
+      "optimumFocalLengthMm": 10.26,
+      "optimumImageWidthPx": 5472
+    },
+    {
+      "model": "DJI Mavic 3 Classic",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3,
+      "optimumSensorWidthMm": 17.3,
+      "optimumFocalLengthMm": 12.29,
+      "optimumImageWidthPx": 5280
+    },
+    {
+      "model": "DJI Mavic 3",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3,
+      "optimumSensorWidthMm": 17.3,
+      "optimumFocalLengthMm": 12.29,
+      "optimumImageWidthPx": 5280
+    },
+    {
+      "model": "DJI Mavic 3 Pro",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3,
+      "optimumSensorWidthMm": 17.3,
+      "optimumFocalLengthMm": 12.29,
+      "optimumImageWidthPx": 5280
+    },
+    {
+      "model": "DJI Mavic 4 Pro",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3,
+      "optimumSensorWidthMm": 17.3,
+      "optimumFocalLengthMm": 14.34,
+      "optimumImageWidthPx": 12288
+    },
+    {
+      "model": "DJI Phantom 4 Pro V2.0",
+      "verified": true,
+      "oemWindMs": 10,
+      "oemWindKmh": 36,
+      "oemWindKt": 19.4,
+      "optimumSensorWidthMm": 13.2,
+      "optimumFocalLengthMm": 8.8,
+      "optimumImageWidthPx": 5472
+    },
+    {
+      "model": "DJI Inspire 2",
+      "verified": true,
+      "oemWindMs": 10,
+      "oemWindKmh": 36,
+      "oemWindKt": 19.4,
+      "optimumSensorWidthMm": 17.3,
+      "optimumFocalLengthMm": null,
+      "optimumImageWidthPx": 5280
+    },
+    {
+      "model": "Autel EVO Lite+",
+      "verified": true,
+      "oemWindMs": 10.7,
+      "oemWindKmh": 38.5,
+      "oemWindKt": 20.8,
+      "optimumSensorWidthMm": 13.2,
+      "optimumFocalLengthMm": 10.26,
+      "optimumImageWidthPx": 5472
+    },
+    {
+      "model": "Autel EVO II Pro V3",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3,
+      "optimumSensorWidthMm": 13.2,
+      "optimumFocalLengthMm": 10.26,
+      "optimumImageWidthPx": 5472
+    },
+    {
+      "model": "Skydio 2+",
+      "verified": true,
+      "oemWindMs": 12,
+      "oemWindKmh": 43.2,
+      "oemWindKt": 23.3,
+      "optimumSensorWidthMm": 6.3,
+      "optimumFocalLengthMm": 4.5,
+      "optimumImageWidthPx": 4056
+    },
+    {
+      "model": "Parrot Anafi USA",
+      "verified": true,
+      "oemWindMs": 10,
+      "oemWindKmh": 36,
+      "oemWindKt": 19.4,
+      "optimumSensorWidthMm": 6.4,
+      "optimumFocalLengthMm": 4.75,
+      "optimumImageWidthPx": 5344
+    }
+  ]
+}

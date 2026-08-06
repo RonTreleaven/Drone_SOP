@@ -1,0 +1,406 @@
+{
+  "source": {
+    "document": "Canadian NOTAM Operating Procedures (CNOP) v11",
+    "appendix": "F",
+    "pdf": "Markdown Docs\\canadian-notam-operating-procedures-cnop-v11.pdf",
+    "extracted_at": "2026-03-20T13:22:13.570059Z"
+  },
+  "subject_codes": [
+    {
+      "code": "LA",
+      "meaning": "Approach lighting system? (specify runway and type)",
+      "scope": "A",
+      "raw_line": "LA Traffic Purpose"
+    },
+    {
+      "code": "LC",
+      "meaning": "Runway centre line lights (specify runway)",
+      "scope": "A",
+      "raw_line": "CFS light code: CL LC Traffic Purpose"
+    },
+    {
+      "code": "LF",
+      "meaning": "Sequence flashing lights (specify runway)",
+      "scope": "A",
+      "raw_line": "CFS light codes: SF, AO, AK, AL LF Traffic Purpose"
+    },
+    {
+      "code": "LI",
+      "meaning": "Runway end identifier lights (RWY ID LGT)",
+      "scope": "A",
+      "raw_line": "(specify runway). CFS light Code: AS, AZ LI Traffic Purpose"
+    },
+    {
+      "code": "LJ",
+      "meaning": "Runway alignment indicator lights (specify runway)",
+      "scope": "A",
+      "raw_line": "CFS codes: AM, AN, AL, AK LJ Traffic Purpose"
+    },
+    {
+      "code": "LT",
+      "meaning": "Threshold lights (specify runway)",
+      "scope": "A",
+      "raw_line": "CFS light code T green lights and E (in \"TE\") red lights LT Traffic Purpose"
+    },
+    {
+      "code": "LU",
+      "meaning": "Helicopter approach path indicator",
+      "scope": "A",
+      "raw_line": "CFS light Code: DR LU Traffic Purpose"
+    },
+    {
+      "code": "LV",
+      "meaning": "Visual approach slope indicator system (VASIS)",
+      "scope": "A",
+      "raw_line": "(specify type and runway) LV Traffic Purpose"
+    },
+    {
+      "code": "LW",
+      "meaning": "Heliport lighting",
+      "scope": "A",
+      "raw_line": "CFS light codes: RY, RF, RW, RR, LED LW Traffic Purpose"
+    },
+    {
+      "code": "LX",
+      "meaning": "Taxiway centreline lights (specify taxiway), rapid exit",
+      "scope": "A",
+      "raw_line": "taxiway centreline lights and RETIL LX Traffic Purpose"
+    },
+    {
+      "code": "LZ",
+      "meaning": "Runway touchdown zone lights (specify runway) or",
+      "scope": "A",
+      "raw_line": "simple touchdown zone light LZ Traffic Purpose"
+    },
+    {
+      "code": "MD",
+      "meaning": "Declared distances (specify runway);",
+      "scope": "A",
+      "raw_line": "MD Traffic Purpose"
+    },
+    {
+      "code": "MU",
+      "meaning": "Runway turning bay (specify runway)",
+      "scope": "A",
+      "raw_line": "Holding bay MU Traffic Purpose"
+    },
+    {
+      "code": "FH",
+      "meaning": "Helicopter alighting area/platform",
+      "scope": "A",
+      "raw_line": "FH Traffic Purpose"
+    },
+    {
+      "code": "FM",
+      "meaning": "Meteorological service (specify type)",
+      "scope": "A",
+      "raw_line": "METAR, TAF, AWOS or LWIS and their component. FM Traffic Purpose"
+    },
+    {
+      "code": "FT",
+      "meaning": "RVR reading or RVR Sensor (specify runway and,",
+      "scope": "A",
+      "raw_line": "where applicable, designator(s) FT Traffic Purpose"
+    },
+    {
+      "code": "CC",
+      "meaning": "Automatic dependent surveillance - contract (ADS-C)",
+      "scope": "E",
+      "raw_line": "(details) CC Traffic Purpose"
+    },
+    {
+      "code": "CD",
+      "meaning": "Scope: E - not located at AD",
+      "scope": "AE",
+      "raw_line": "(details) CD Traffic Purpose"
+    },
+    {
+      "code": "IC",
+      "meaning": "Instrument landing system (ILS) (specify runway)",
+      "scope": "A",
+      "raw_line": "Equipment- entire system IC Traffic Purpose"
+    },
+    {
+      "code": "IN",
+      "meaning": "Localizer (LOC) (not associated with ILS) (specify",
+      "scope": "A",
+      "raw_line": "runway) IN Traffic Purpose"
+    },
+    {
+      "code": "GW",
+      "meaning": "Scope: AE - WAAS-based at",
+      "scope": "",
+      "raw_line": "GNSS area-wide operations (specify operation) GW Traffic Purpose"
+    },
+    {
+      "code": "NB",
+      "meaning": "Scope: E - not located at AD",
+      "scope": "AE",
+      "raw_line": "Non-directional radio beacon (NDB) NB Traffic Purpose"
+    },
+    {
+      "code": "ND",
+      "meaning": "Scope: E - not located at AD",
+      "scope": "AE",
+      "raw_line": "DME or DME portion of a VOR/DME* ND Traffic Purpose"
+    },
+    {
+      "code": "NN",
+      "meaning": "Scope: E not located at AD",
+      "scope": "AE",
+      "raw_line": "TACAN NN Traffic Purpose"
+    },
+    {
+      "code": "NT",
+      "meaning": "Scope: E not located at AD",
+      "scope": "AE",
+      "raw_line": "VORTAC* NT Traffic Purpose"
+    },
+    {
+      "code": "NV",
+      "meaning": "Scope: E - not located at AD",
+      "scope": "AE",
+      "raw_line": "VOR or VOR portion of a VOR/DME or VORTAC NV Traffic Purpose"
+    },
+    {
+      "code": "AA",
+      "meaning": "Scope: E - enroute only",
+      "scope": "AE",
+      "raw_line": "MEA AA Traffic Purpose"
+    },
+    {
+      "code": "AC",
+      "meaning": "Scope: AE - only one AD",
+      "scope": "",
+      "raw_line": "Control zone (CZ) AC Traffic Purpose"
+    },
+    {
+      "code": "AN",
+      "meaning": "Area navigation route (specify) RNAV and GNSS routes",
+      "scope": "E",
+      "raw_line": "Q, T, L AN Traffic Purpose"
+    },
+    {
+      "code": "AP",
+      "meaning": "Reporting point (specify name or coded designator)",
+      "scope": "E",
+      "raw_line": "VFR reporting points, changeover point AP Traffic Purpose"
+    },
+    {
+      "code": "AT",
+      "meaning": "Scope: AE",
+      "scope": "",
+      "raw_line": "Terminal control area (TCA) AT Traffic Purpose"
+    },
+    {
+      "code": "AX",
+      "meaning": "Significant point*",
+      "scope": "E",
+      "raw_line": "Waypoint or intersection AX Traffic Purpose"
+    },
+    {
+      "code": "SF",
+      "meaning": "Aerodrome flight information service",
+      "scope": "A",
+      "raw_line": "CARS, UNICOM, alert service, etc. SF Traffic Purpose"
+    },
+    {
+      "code": "SS",
+      "meaning": "Scope: AE - serving one specific",
+      "scope": "",
+      "raw_line": "Flight information service (FSS) SS Traffic Purpose"
+    }
+  ],
+  "condition_codes": [
+    {
+      "code": "AH",
+      "meaning": "Hours of service are now\u2026. (specify)",
+      "raw_line": "Hours of service are now\u2026. (specify) AH x x x x"
+    },
+    {
+      "code": "AR",
+      "meaning": "Available on request",
+      "raw_line": "Available on request AR x x x x"
+    },
+    {
+      "code": "AS",
+      "meaning": "Unserviceable",
+      "raw_line": "Unserviceable AS x x x x x"
+    },
+    {
+      "code": "AW",
+      "meaning": "Completely withdrawn",
+      "raw_line": "Completely withdrawn AW x x x x"
+    },
+    {
+      "code": "CG",
+      "meaning": "Downgraded to \u2026 (specify)",
+      "raw_line": "Downgraded to \u2026 (specify) CG x x x x x"
+    },
+    {
+      "code": "CS",
+      "meaning": "Installed",
+      "raw_line": "Installed CS x x x x"
+    },
+    {
+      "code": "CT",
+      "meaning": "On test, do not use",
+      "raw_line": "On test, do not use CT x x x x x"
+    },
+    {
+      "code": "TT",
+      "meaning": "Trigger",
+      "raw_line": "Trigger TT x x x x"
+    },
+    {
+      "code": "XX",
+      "meaning": "Plain language",
+      "raw_line": "Plain language XX"
+    },
+    {
+      "code": "CH",
+      "meaning": "Changed",
+      "raw_line": "Changed CH x x x x"
+    },
+    {
+      "code": "LT",
+      "meaning": "Limited to \u2026 (specify)",
+      "raw_line": "Limited to \u2026 (specify) LT x x x x"
+    },
+    {
+      "code": "HW",
+      "meaning": "Work in progress",
+      "raw_line": "Work in progress HW x x"
+    },
+    {
+      "code": "LC",
+      "meaning": "Closed",
+      "raw_line": "Closed LC x x x x x"
+    },
+    {
+      "code": "LH",
+      "meaning": "Unserviceable for aircraft heavier than \u2026 (specify)",
+      "raw_line": "Unserviceable for aircraft heavier than \u2026 (specify) LH x x x x x"
+    },
+    {
+      "code": "AD",
+      "meaning": "Available for daylight operation",
+      "raw_line": "Available for daylight operation AD x x x x"
+    },
+    {
+      "code": "AM",
+      "meaning": "Military operations only",
+      "raw_line": "Military operations only AM x x x x x"
+    },
+    {
+      "code": "AN",
+      "meaning": "Available for night operation",
+      "raw_line": "Available for night operation AN x x x x"
+    },
+    {
+      "code": "AP",
+      "meaning": "Available, prior permission required",
+      "raw_line": "Available, prior permission required AP x x x x x"
+    },
+    {
+      "code": "CL",
+      "meaning": "Realigned",
+      "raw_line": "Realigned CL x x x x x"
+    },
+    {
+      "code": "CM",
+      "meaning": "Displaced",
+      "raw_line": "Displaced CM x x x x x"
+    },
+    {
+      "code": "LB",
+      "meaning": "Reserved for aircraft based therein",
+      "raw_line": "Reserved for aircraft based therein LB x x x x x"
+    },
+    {
+      "code": "LI",
+      "meaning": "Closed to IFR operations",
+      "raw_line": "Closed to IFR operations LI x x x x"
+    },
+    {
+      "code": "LL",
+      "meaning": "runway width reduction",
+      "raw_line": "runway width reduction LL x x x x x"
+    },
+    {
+      "code": "LN",
+      "meaning": "Closed to all night operations",
+      "raw_line": "Closed to all night operations LN x x x x x"
+    },
+    {
+      "code": "LV",
+      "meaning": "Closed to VFR operations",
+      "raw_line": "Closed to VFR operations LV x x x x"
+    },
+    {
+      "code": "CI",
+      "meaning": "Identification or radio call sign changed to \u2026 (specify)",
+      "raw_line": "Identification or radio call sign changed to \u2026 (specify) CI x x x x"
+    },
+    {
+      "code": "HG",
+      "meaning": "Grass cutting",
+      "raw_line": "Grass cutting HG x x x"
+    },
+    {
+      "code": "HX",
+      "meaning": "Concentration of birds",
+      "raw_line": "Concentration of birds HX x x x x x"
+    },
+    {
+      "code": "AU",
+      "meaning": "Not available (specify reason if appropriate)",
+      "raw_line": "Not available (specify reason if appropriate) AU x x x x"
+    },
+    {
+      "code": "CF",
+      "meaning": "Operating frequency(ies) changed to \u2026 (specify)",
+      "raw_line": "Operating frequency(ies) changed to \u2026 (specify) CF x x x x"
+    },
+    {
+      "code": "LF",
+      "meaning": "Interference from \u2026 (specify)",
+      "raw_line": "Interference from \u2026 (specify) LF x x x x"
+    },
+    {
+      "code": "LS",
+      "meaning": "Subject to interruption",
+      "raw_line": "Subject to interruption LS x x x x"
+    },
+    {
+      "code": "AG",
+      "meaning": "Operating but ground check only, awaiting flight check",
+      "raw_line": "Operating but ground check only, awaiting flight check AG x x x"
+    },
+    {
+      "code": "LG",
+      "meaning": "Operating without identification",
+      "raw_line": "Operating without identification LG x x x x"
+    },
+    {
+      "code": "CR",
+      "meaning": "Temporarily replaced by \u2026 (specify)",
+      "raw_line": "Temporarily replaced by \u2026 (specify) CR x x x x"
+    },
+    {
+      "code": "CA",
+      "meaning": "Activated",
+      "raw_line": "Activated CA x x x x x"
+    },
+    {
+      "code": "CD",
+      "meaning": "Deactivated",
+      "raw_line": "Deactivated CD x x x x x"
+    },
+    {
+      "code": "LP",
+      "meaning": "Prohibited to \u2026 (specify)",
+      "raw_line": "Prohibited to \u2026 (specify) LP x x x x x"
+    }
+  ]
+}

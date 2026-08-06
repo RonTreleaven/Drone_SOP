@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flight Summary</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <script src="assets/js/site-nav.js" defer></script>
+</head>
+<body>
+
+  <nav class="top-nav shared-site-nav" data-nav-variant="workflow" data-active="summary" data-show-back="true" data-back-fallback="tools.html"></nav>
+  <script>
+    function goBack(event) {
+      event.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = "tools.html"; // fallback page
+      }
+    }
+  </script>
+
+  <header class="site-header">
+  <img src="assets/img/logo_25.svg" alt="Logo" class="site-logo">
+  <h1 class="page-title">Flight Summary</h1>
+  </header>
+  <p>Review all your selected completed checklists below.</p>
+
+  <div id="summary-container"></div>
+<!--   <form id="flight-log-form">
+    <table class="flight-log-table">   
+    </table>
+  </form> -->
+  <div id="pilot-location-summary"></div>
+
+  <!-- Export & navigation controls -->
+  <button id="return-home">Return Home</button>
+  <button id="save-summary">Future Magic</button>
+  <button id="export-csv">Download CSV</button>
+  <button id="export-pdf">Download PDF</button>
+  <button id="clear-data">Clear Previous Inputs Data</button>
+
+  <script src="assets/js/app.js"></script>
+
+  
+</body>
+</html>
+

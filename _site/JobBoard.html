@@ -1,0 +1,2170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Drone Jobs Review</title>
+  <link rel="stylesheet" href="assets/css/site-nav.css" />
+  <script src="assets/js/site-nav.js" defer></script>
+  <style>
+    :root {
+      --bg: #edf2f8;
+      --ink: #142740;
+      --muted: #4d607b;
+      --card: #ffffff;
+      --line: #cfdae8;
+      --accent: #0f766e;
+      --accent-2: #056fae;
+      --focus: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Bahnschrift", "Segoe UI Variable Text", "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 88% -8%, #d7f3ef 0%, rgba(215, 243, 239, 0) 65%),
+        radial-gradient(800px 600px at -10% 40%, #e5eefc 0%, rgba(229, 238, 252, 0) 70%),
+        var(--bg);
+    }
+    .wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 14px 12px 20px;
+    }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 8px 24px rgba(9, 30, 66, 0.08);
+      margin-bottom: 10px;
+    }
+    .top-nav {
+      margin-bottom: 10px;
+    }
+    h1 {
+      margin: 0 0 4px;
+      font-size: clamp(1.3rem, 2.2vw, 1.75rem);
+      letter-spacing: 0.01em;
+    }
+    .refresh-stamp {
+      margin-left: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    details.filter-drawer {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f7fbff;
+      padding: 8px;
+    }
+    details.filter-drawer > summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: #1f3557;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid #cfdcee;
+      border-radius: 10px;
+      background: linear-gradient(130deg, #ecf4ff 0%, #e4f3ff 55%, #eaf8f4 100%);
+      min-height: 44px;
+    }
+    details.filter-drawer > summary::after {
+      content: "Tap to open";
+      font-size: 11px;
+      color: #4c6483;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    details.filter-drawer[open] > summary::after {
+      content: "Tap to close";
+    }
+    details.filter-drawer[open] > summary {
+      margin-bottom: 8px;
+    }
+    details.filter-drawer > summary::-webkit-details-marker { display: none; }
+    .filters {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .filter-item {
+      min-width: 0;
+    }
+    .filter-item.search {
+      grid-column: 1 / -1;
+    }
+    .filter-item.full {
+      grid-column: 1 / -1;
+    }
+    .province-filter-group {
+      border: 1px solid #d8e4f1;
+      border-radius: 9px;
+      background: #fbfdff;
+      padding: 8px;
+    }
+    .province-filter-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .province-filter-btn {
+      width: auto;
+      min-height: 30px;
+      padding: 5px 10px;
+      border: 1px solid #b9cde3;
+      border-radius: 999px;
+      background: #eef5ff;
+      color: #234264;
+      font-size: 0.76rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .province-filter-btn.active {
+      background: linear-gradient(130deg, var(--accent), var(--accent-2));
+      color: #ffffff;
+      border-color: #0d6f87;
+    }
+    .province-checkboxes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px 10px;
+    }
+    .province-option {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0;
+      font-size: 12px;
+      color: #2a4768;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .province-option input {
+      width: 15px;
+      height: 15px;
+      margin: 0;
+      accent-color: #0f766e;
+      flex: 0 0 auto;
+    }
+    .province-empty {
+      font-size: 12px;
+      color: #5a6e87;
+      font-style: italic;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    input, select, button {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px;
+      font: inherit;
+      background: #fff;
+      color: var(--ink);
+    }
+    input:focus-visible,
+    select:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .actions {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      position: sticky;
+      bottom: 0;
+      z-index: 3;
+      padding-top: 8px;
+      background: linear-gradient(180deg, rgba(249, 252, 255, 0), rgba(249, 252, 255, 0.96) 24%, rgba(249, 252, 255, 1) 100%);
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      background: linear-gradient(130deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-weight: 700;
+      text-align: center;
+      font-size: 0.84rem;
+      min-height: 42px;
+      white-space: nowrap;
+      padding: 8px 6px;
+    }
+    button.secondary {
+      background: #607891;
+    }
+    button.export {
+      background: #1f4b77;
+    }
+    .status-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-top: 10px;
+    }
+    .status-pill {
+      border: 1px solid #2f4c69;
+      background: linear-gradient(135deg, #112b49 0%, #133e67 52%, #0f5f7e 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 20px rgba(10, 27, 45, 0.26);
+      border-radius: 12px;
+      padding: 8px;
+    }
+    .status-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .status-metric {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      border: 1px solid rgba(166, 200, 232, 0.3);
+      border-radius: 9px;
+      background: rgba(10, 22, 39, 0.36);
+      padding: 5px 7px;
+    }
+    .status-pill .k {
+      display: inline-block;
+      color: #bad0e5;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      line-height: 1;
+      margin-bottom: 4px;
+      font-weight: 800;
+    }
+    .status-pill .v {
+      color: #ffe57a;
+      font-size: 1rem;
+      line-height: 1.2;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      word-break: break-word;
+      text-align: center;
+    }
+    .status-sep {
+      display: none;
+    }
+    .status-sources {
+      margin-top: 8px;
+      border-top: 1px solid rgba(178, 211, 239, 0.28);
+      padding-top: 6px;
+      color: #d6e8f8;
+      font-size: 0.73rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .status-sources .src-label {
+      color: #d6e8f8;
+      margin-right: 4px;
+    }
+    .status-sources .src-item {
+      color: #98d5ff;
+      margin-right: 10px;
+    }
+    .status-sources .src-count {
+      display: inline-block;
+      min-width: 1.35em;
+      padding: 1px 5px;
+      margin-left: 3px;
+      border-radius: 4px;
+      background: #000000;
+      color: #ffd24a;
+      font-size: 0.72rem;
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+    .status-toggle-row {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .status-toggle-btn {
+      width: auto;
+      min-width: 138px;
+      max-width: 100%;
+      min-height: 34px;
+      padding: 6px 12px;
+      border: 1px solid rgba(166, 200, 232, 0.32);
+      border-radius: 8px;
+      background: rgba(10, 22, 39, 0.45);
+      color: #d9ecff;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .status-toggle-btn:hover {
+      background: rgba(20, 43, 69, 0.62);
+    }
+    .status-toggle-btn.export-all {
+      border-color: rgba(255, 210, 74, 0.45);
+      color: #ffe59b;
+      background: rgba(39, 28, 9, 0.52);
+    }
+    .status-toggle-btn.export-all:hover {
+      background: rgba(60, 42, 13, 0.68);
+    }
+    #statusError {
+      margin-top: 8px;
+    }
+    .review-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+    .list-column {
+      min-width: 0;
+    }
+    .list-wrap {
+      max-height: calc(100vh - 252px);
+      overflow: auto;
+      padding-right: 4px;
+      border-radius: 12px;
+    }
+    .job-list {
+      display: grid;
+      gap: 8px;
+    }
+    .job {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+    .job:hover {
+      border-color: #aac3dc;
+      box-shadow: 0 8px 18px rgba(17, 42, 66, 0.08);
+      transform: translateY(-1px);
+    }
+    .job.active {
+      border-color: #0a8a7c;
+      box-shadow:
+        0 0 0 3px rgba(10, 138, 124, 0.26),
+        0 0 22px rgba(10, 138, 124, 0.22),
+        0 14px 24px rgba(10, 39, 63, 0.16);
+      background: linear-gradient(180deg, #ffffff 0%, #f3fcf9 100%);
+    }
+    .job-title {
+      margin: 0;
+      font-size: clamp(1rem, 1.8vw, 1.08rem);
+      color: #17325a;
+    }
+    .job-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      align-items: start;
+      gap: 8px;
+      margin-bottom: 7px;
+    }
+    .job-head .job-title {
+      margin: 0;
+      flex: 1;
+      min-width: 0;
+    }
+    .job-title-toggle {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      color: inherit;
+      padding: 0;
+      font: inherit;
+      line-height: 1.2;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 32px;
+    }
+    .job-title-toggle::before {
+      content: "•";
+      color: #3e5978;
+      font-size: 1.05rem;
+      flex: 0 0 auto;
+    }
+    .job-title-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .job-quick {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 7px;
+    }
+    .quick-chip {
+      border: 1px solid #d5e4f3;
+      background: #f4f9ff;
+      border-radius: 999px;
+      font-size: 11px;
+      padding: 3px 8px;
+      font-weight: 700;
+      color: #2f4d70;
+      max-width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .quick-chip.conf {
+      background: #e9f7ef;
+      border-color: #bce4ca;
+      color: #1f5d43;
+    }
+    .quick-chip.source {
+      background: #eef4ff;
+      border-color: #c9daf5;
+      color: #2f4f80;
+    }
+    .job-excerpt {
+      font-size: 13px;
+      line-height: 1.36;
+      color: #375068;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .job-inline-detail {
+      display: none;
+      border-top: 1px dashed #d9e5f2;
+      margin-top: 8px;
+      padding-top: 8px;
+    }
+    .job.active .job-inline-detail {
+      display: block;
+    }
+    .job-select {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      justify-self: end;
+      align-self: start;
+    }
+    .job-open {
+      width: auto;
+      min-height: 34px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: #e9f1fb;
+      color: #204569;
+      border: 1px solid #c8dbee;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .job-select input {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      accent-color: #0f766e;
+    }
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      margin-bottom: 8px;
+    }
+    .field {
+      border: 1px solid #e4ebf4;
+      border-radius: 8px;
+      padding: 7px;
+      background: #fcfeff;
+    }
+    .field .k {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 2px;
+      font-weight: 700;
+    }
+    .field .v {
+      font-size: 14px;
+      font-weight: 600;
+      word-break: break-word;
+    }
+    .summary {
+      border: 1px solid #e4ebf4;
+      border-radius: 8px;
+      padding: 9px;
+      font-size: 14px;
+      line-height: 1.45;
+      background: #fafdff;
+      margin-bottom: 8px;
+      max-height: 158px;
+      overflow: auto;
+    }
+    .summary .fr-segment {
+      color: #355c86;
+      font-style: italic;
+    }
+    .link-line a {
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .link-line a:hover { text-decoration: underline; }
+    .detail-panel {
+      margin-bottom: 0;
+      position: sticky;
+      top: 12px;
+      min-height: 460px;
+    }
+    .detail-empty {
+      border: 1px dashed #c6d6e7;
+      border-radius: 10px;
+      background: #f8fbff;
+      padding: 20px 14px;
+      text-align: center;
+      color: #46617e;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .detail-head {
+      margin-bottom: 8px;
+    }
+    .detail-head h2 {
+      margin: 0 0 6px;
+      font-size: clamp(1.08rem, 1.6vw, 1.32rem);
+      color: #17325a;
+      line-height: 1.25;
+    }
+    .detail-sub {
+      color: #45617f;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .detail-meta {
+      margin-bottom: 9px;
+    }
+    .detail-meta.field-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .detail-meta .field {
+      padding: 6px;
+      min-height: 62px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(180deg, #fbfdff 0%, #f3f8ff 100%);
+      border-color: #d7e4f3;
+    }
+    .detail-meta .field .k {
+      font-size: 10px;
+      margin-bottom: 3px;
+      letter-spacing: 0.04em;
+    }
+    .detail-meta .field .v {
+      font-size: 12px;
+      line-height: 1.25;
+    }
+    .detail-snapshot {
+      margin: 0 0 9px;
+      border: 1px solid #d6e4f4;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #f9fcff 0%, #f0f7ff 100%);
+      padding: 8px;
+    }
+    .detail-snapshot-head {
+      margin: 0 0 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #1d4f7a;
+    }
+    .detail-snapshot-grid.field-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .detail-snapshot-grid .field {
+      min-height: 52px;
+      padding: 6px;
+      background: #ffffff;
+      border-color: #d4e3f2;
+    }
+    .detail-summary {
+      max-height: clamp(220px, 40vh, 450px);
+    }
+    .detail-content {
+      display: grid;
+      gap: 10px;
+      max-height: clamp(230px, 44vh, 500px);
+      overflow: auto;
+      padding-right: 4px;
+    }
+    .detail-section {
+      border: 1px solid #d8e5f4;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+      padding: 0;
+    }
+    .detail-accordion > summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0;
+      padding: 10px;
+      font-size: 0.9rem;
+      color: #1a456f;
+      letter-spacing: 0.01em;
+      font-weight: 700;
+      background: linear-gradient(180deg, #f7fbff 0%, #eff6ff 100%);
+      border-bottom: 1px solid #dbe8f6;
+    }
+    .detail-accordion > summary::-webkit-details-marker { display: none; }
+    .detail-accordion > summary::after {
+      content: "+";
+      color: #406792;
+      font-size: 0.95rem;
+      line-height: 1;
+      min-width: 14px;
+      text-align: center;
+    }
+    .detail-accordion[open] > summary::after { content: "-"; }
+    .detail-pill {
+      margin-left: auto;
+      font-size: 10px;
+      color: #1d4f7a;
+      background: #dfeeff;
+      border: 1px solid #c3dbf4;
+      border-radius: 999px;
+      padding: 2px 7px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .detail-keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 0 2px;
+    }
+    .detail-keyword {
+      display: inline-block;
+      font-size: 10px;
+      line-height: 1.2;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #174268;
+      background: #e7f1ff;
+      border: 1px solid #cae0fa;
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-weight: 700;
+    }
+    .detail-section-body {
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+    .detail-section p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #1d3350;
+      white-space: pre-wrap;
+    }
+    .detail-list {
+      margin: 6px 0 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 4px;
+    }
+    .detail-list li {
+      font-size: 13px;
+      line-height: 1.48;
+      color: #1d3350;
+    }
+
+    @media (min-width: 1080px) {
+      .review-layout {
+        grid-template-columns: minmax(0, 0.98fr) minmax(350px, 0.86fr);
+      }
+      .job-inline-detail {
+        display: none !important;
+      }
+      .list-wrap {
+        max-height: calc(100vh - 222px);
+      }
+    }
+
+    @media (max-width: 1079px) {
+      .detail-panel {
+        display: none;
+      }
+      .list-wrap {
+        max-height: none;
+      }
+      .job.active .job-inline-detail {
+        display: block;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .status-metrics {
+        grid-template-columns: 1fr;
+      }
+      .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .actions {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .list-wrap { max-height: none; }
+      .summary { max-height: 176px; }
+      .status-sources {
+        font-size: 0.72rem;
+      }
+      .detail-meta.field-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 640px) {
+      .filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .actions {
+        gap: 6px;
+      }
+      button {
+        font-size: 0.78rem;
+        min-height: 44px;
+      }
+      .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .job-title {
+        font-size: 0.98rem;
+      }
+      .job-select {
+        font-size: 11px;
+      }
+      .job-head {
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+      .job-open {
+        grid-column: 1 / -1;
+        justify-self: start;
+      }
+      .quick-chip {
+        font-size: 10px;
+      }
+      .job-excerpt {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="top-nav shared-site-nav" data-nav-variant="utility" data-back-fallback="tools.html"></nav>
+
+    <section class="panel">
+      <h1>Drone Jobs Review <span id="refreshStamp" class="refresh-stamp"></span></h1>
+      <div class="muted">Focus view of unique jobs from data/jobs.json. Open Filters panel to refine the list.</div>
+
+      <details class="filter-drawer" id="filterDrawer">
+        <summary>Filters</summary>
+        <div class="filters">
+          <div class="filter-item search">
+            <label for="q">Search</label>
+            <input id="q" type="text" placeholder="Company, title, location, category, summary" title="Search filter" />
+          </div>
+          <div class="filter-item">
+            <label for="source">Source</label>
+            <select id="source" title="Source filter"></select>
+          </div>
+          <div class="filter-item">
+            <label for="category">Category</label>
+            <select id="category" title="Category filter"></select>
+          </div>
+          <div class="filter-item">
+            <label for="minConf">Min confidence</label>
+            <input id="minConf" type="number" min="0" max="1" step="0.05" value="0.50" placeholder="0.50" title="Minimum confidence" list="minConfHints" />
+            <datalist id="minConfHints">
+              <option value="0.25"></option>
+              <option value="0.35"></option>
+              <option value="0.45"></option>
+              <option value="0.50"></option>
+              <option value="0.60"></option>
+              <option value="0.70"></option>
+              <option value="0.75"></option>
+              <option value="0.85"></option>
+              <option value="0.95"></option>
+              <option value="1.00"></option>
+            </datalist>
+          </div>
+          <div class="filter-item">
+            <label for="canadaOnly">Canada only</label>
+            <select id="canadaOnly" title="Canada-only filter">
+              <option value="yes" selected>Yes</option>
+              <option value="no">No</option>
+              <option value="intl">International</option>
+            </select>
+          </div>
+          <div class="filter-item full">
+            <label for="provinceFilterGroup">Province</label>
+            <div id="provinceFilterGroup" class="province-filter-group">
+              <div class="province-filter-actions">
+                <button id="provinceAllBtn" class="province-filter-btn active" type="button" title="Show all provinces">All Provinces</button>
+                <button id="provinceDefaultBtn" class="province-filter-btn" type="button" title="Use default provinces of interest">Default Provinces</button>
+              </div>
+              <div id="provinceCheckboxes" class="province-checkboxes"></div>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button id="applyBtn" type="button">Apply Filters</button>
+          <button id="resetBtn" class="secondary" type="button">Reset Filters</button>
+          <button id="exportBtn" class="export" type="button" title="Export checked jobs to CSV">Export Selected (0)</button>
+        </div>
+      </details>
+
+      <div class="status-row" id="statusRow" aria-live="polite">
+        <div class="status-pill">
+          <div class="status-metrics">
+            <div class="status-metric">
+              <span class="k">Showing</span>
+              <span class="v" id="statusCount">0 of 0 jobs</span>
+            </div>
+            <span class="status-sep" aria-hidden="true">|</span>
+            <div class="status-metric">
+              <span class="k">Last Run</span>
+              <span class="v" id="statusRun">-</span>
+            </div>
+          </div>
+          <div class="status-toggle-row">
+            <button id="toggleAllBtn" class="status-toggle-btn" type="button">Select Visible</button>
+            <button id="exportSelectedTopBtn" class="status-toggle-btn export-all" type="button">Export Selected (0)</button>
+            <button id="clearExportsBtn" class="status-toggle-btn" type="button">Clear Exports</button>
+          </div>
+          <div class="status-sources" id="statusSources">Sources: -</div>
+        </div>
+      </div>
+      <div id="statusError" class="muted"></div>
+    </section>
+
+    <div class="review-layout">
+      <section class="list-column">
+        <div class="list-wrap">
+          <section id="jobList" class="job-list"></section>
+        </div>
+      </section>
+
+      <aside id="detailPanel" class="panel detail-panel" aria-live="polite">
+        <div class="detail-empty">Select a job card to review full details. On mobile, tap Open Details to expand inline.</div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    let jobs = [];
+    let lastRunLabel = "-";
+    const selectedJobKeys = new Set();
+    let activeJobKey = "";
+    const MIN_CONF_PRESETS = [0.25, 0.35, 0.45, 0.5, 0.6, 0.7, 0.75, 0.85, 0.95, 1.0];
+    const PROVINCE_FILTER_STORAGE_KEY = "jobBoardProvinceFilterV2";
+    const DEFAULT_PROVINCE_CODES = ["ON"];
+    const PROVINCE_LABELS = {
+      AB: "Alberta",
+      BC: "British Columbia",
+      MB: "Manitoba",
+      NB: "New Brunswick",
+      NL: "Newfoundland and Labrador",
+      NS: "Nova Scotia",
+      NT: "Northwest Territories",
+      NU: "Nunavut",
+      ON: "Ontario",
+      PE: "Prince Edward Island",
+      QC: "Quebec",
+      SK: "Saskatchewan",
+      YT: "Yukon",
+    };
+    const PROVINCE_MATCHERS = [
+      { code: "NL", pattern: /(^|,|\s)(nl|newfoundland and labrador|newfoundland|labrador)(\b|,|$)/i },
+      { code: "PE", pattern: /(^|,|\s)(pe|prince edward island)(\b|,|$)/i },
+      { code: "NS", pattern: /(^|,|\s)(ns|nova scotia)(\b|,|$)/i },
+      { code: "NB", pattern: /(^|,|\s)(nb|new brunswick)(\b|,|$)/i },
+      { code: "QC", pattern: /(^|,|\s)(qc|quebec)(\b|,|$)/i },
+      { code: "ON", pattern: /(^|,|\s)(on|ontario)(\b|,|$)/i },
+      { code: "MB", pattern: /(^|,|\s)(mb|manitoba)(\b|,|$)/i },
+      { code: "SK", pattern: /(^|,|\s)(sk|saskatchewan)(\b|,|$)/i },
+      { code: "AB", pattern: /(^|,|\s)(ab|alberta)(\b|,|$)/i },
+      { code: "BC", pattern: /(^|,|\s)(bc|british columbia)(\b|,|$)/i },
+      { code: "YT", pattern: /(^|,|\s)(yt|yukon)(\b|,|$)/i },
+      { code: "NT", pattern: /(^|,|\s)(nt|northwest territories)(\b|,|$)/i },
+      { code: "NU", pattern: /(^|,|\s)(nu|nunavut)(\b|,|$)/i },
+    ];
+    let provinceFilter = {
+      mode: "all",
+      selected: new Set(),
+      available: [],
+    };
+
+    function normalizeText(value) {
+      if (value === null || value === undefined) return "";
+      return String(value)
+        .replace(/\u2013|\u2014/g, "-")
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+    }
+
+    function normalizeDate(value) {
+      if (!value) return "";
+      const s = String(value).trim();
+      const mmdd = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+      if (mmdd.test(s)) return s;
+      const d = new Date(s);
+      if (Number.isNaN(d.getTime())) return "";
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      const yy = d.getFullYear();
+      return `${mm}/${dd}/${yy}`;
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function formatDetailSectionsHtml(text) {
+      const source = normalizeText(text);
+      if (!source) {
+        return '<div class="detail-empty">No description available.</div>';
+      }
+
+      const HEADING_CANONICAL_MAP = {
+        "job posting": "Job Overview",
+        "job overview": "Job Overview",
+        "overview": "Job Overview",
+        "full job description": "Full Job Description",
+        "about the role": "Role Overview",
+        "role overview": "Role Overview",
+        "project": "Project",
+        "platform": "Platform",
+        "what youll be doing": "Responsibilities",
+        "what you'll be doing": "Responsibilities",
+        "what youll do": "Responsibilities",
+        "what you'll do": "Responsibilities",
+        "key responsibilities": "Responsibilities",
+        "core responsibilities": "Responsibilities",
+        "primary responsibilities": "Responsibilities",
+        "major responsibilities": "Responsibilities",
+        "responsibilities": "Responsibilities",
+        "duties & responsibilities": "Responsibilities",
+        "skills/qualifications": "Required Qualifications",
+        "minimum qualifications": "Required Qualifications",
+        "required qualifications": "Required Qualifications",
+        "required skills": "Required Qualifications",
+        "qualifications": "Required Qualifications",
+        "requirements": "Required Qualifications",
+        "required": "Required Qualifications",
+        "mandatory": "Required Qualifications",
+        "core competencies": "Competencies",
+        "competencies": "Competencies",
+        "compentencies": "Competencies",
+        "preferred qualifications": "Preferred Qualifications",
+        "preferred": "Preferred Qualifications",
+        "nice to have": "Preferred Qualifications",
+        "assets": "Preferred Qualifications",
+        "compensation": "Compensation",
+        "pay rate": "Compensation",
+        "salary": "Compensation",
+        "benefits": "Benefits",
+        "what we offer": "Benefits",
+        "what we offer you": "Benefits",
+        "work environment": "Work Environment",
+        "how to apply": "Application",
+        "application process": "Application",
+        "apply now": "Application",
+        "who were looking for": "Candidate Profile",
+        "why work with": "Why Join",
+        "bonus skills": "Preferred Qualifications",
+      };
+
+      const headingTokenPattern = [
+        "Job Posting",
+        "Job Overview",
+        "Overview",
+        "Full Job Description",
+        "Required Qualifications",
+        "Preferred Qualifications",
+        "Minimum Qualifications",
+        "Core Competencies",
+        "Competencies",
+        "Compentencies",
+        "Key Responsibilities",
+        "Primary Responsibilities",
+        "Major Responsibilities",
+        "Responsibilities",
+        "Requirements",
+        "Mandatory",
+        "Nice to Have",
+        "Assets",
+        "What We Offer",
+        "What We Offer You",
+        "How to Apply",
+        "Application Process",
+        "Project",
+        "What You'll Do",
+        "What Youll Do",
+        "Required Skills",
+        "Pay Rate",
+        "Salary",
+      ];
+
+      const knownHeadings = [
+        "Job Posting",
+        "Job Overview",
+        "Overview",
+        "Full Job Description",
+        "About the Role",
+        "Role Overview",
+        "Compensation",
+        "Bonus Skills",
+        "Work Environment",
+        "Why Work With",
+        "Who Were Looking For",
+        "Apply Now",
+        "Project",
+        "Platform",
+        "What Youll Be Doing",
+        "What You'll Be Doing",
+        "What Youll Do",
+        "What You'll Do",
+        "Key Responsibilities",
+        "Responsibilities",
+        "Core Responsibilities",
+        "Primary Responsibilities",
+        "Major Responsibilities",
+        "Skills/Qualifications",
+        "Minimum Qualifications",
+        "Required Qualifications",
+        "Preferred Qualifications",
+        "Qualifications",
+        "Core Competencies",
+        "Competencies",
+        "Compentencies",
+        "Requirements",
+        "Mandatory",
+        "Nice to Have",
+        "Assets",
+        "Required",
+        "Preferred",
+        "Benefits",
+        "What We Offer",
+        "What We Offer You",
+        "How to Apply",
+        "Application Process",
+        "Duties & responsibilities",
+        "Required Skills",
+        "Pay Rate",
+        "Salary",
+      ];
+
+      const bulletFriendlyHeadings = new Set([
+        "compensation",
+        "bonus skills",
+        "what youll be doing",
+        "what you'll be doing",
+        "what youll do",
+        "what you'll do",
+        "key responsibilities",
+        "responsibilities",
+        "core responsibilities",
+        "primary responsibilities",
+        "major responsibilities",
+        "skills/qualifications",
+        "minimum qualifications",
+        "required qualifications",
+        "preferred qualifications",
+        "qualifications",
+        "core competencies",
+        "competencies",
+        "compentencies",
+        "requirements",
+        "mandatory",
+        "nice to have",
+        "assets",
+        "required",
+        "preferred",
+        "benefits",
+        "what we offer",
+        "what we offer you",
+        "how to apply",
+        "application process",
+        "duties & responsibilities",
+        "required skills",
+        "pay rate",
+        "salary",
+      ]);
+
+      const sectionKeywordRules = {
+        "Required Qualifications": ["transport canada", "advanced", "certificate", "rpas", "uav", "pilot", "experience", "license", "drivers", "mavlink", "px4", "ardupilot"],
+        "Preferred Qualifications": ["preferred", "bonus", "asset", "nice to have", "familiarity", "field", "defence", "research"],
+        "Responsibilities": ["operate", "execute", "coordinate", "monitor", "maintain", "perform", "support", "report", "test", "validate"],
+        "Compensation": ["salary", "pay", "hour", "cad", "$", "contract", "full-time", "part-time"],
+        "Benefits": ["benefits", "flexible", "training", "health", "vacation", "bonus", "allowance"],
+        "Application": ["apply", "submit", "resume", "cover letter", "email", "deadline"],
+        "Competencies": ["communication", "problem-solving", "leadership", "team", "safety", "judgment"],
+        "Work Environment": ["field", "travel", "remote", "hybrid", "outdoor", "on-site"],
+        "Job Overview": ["company", "location", "type", "duration", "project", "role"],
+        "Full Job Description": ["description", "details", "scope", "role", "expectations"],
+      };
+
+      function cleanSectionText(value) {
+        return String(value || "")
+          .replace(/\s+/g, " ")
+          .replace(/\s*\|\s*/g, " | ")
+          .trim();
+      }
+
+      function escapeRegex(value) {
+        return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      }
+
+      function normalizeHeadingToken(value) {
+        const key = normalizeText(value)
+          .toLowerCase()
+          .replace(/[^a-z0-9\s/&']/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+        return HEADING_CANONICAL_MAP[key] || value;
+      }
+
+      function normalizeHeadingForSet(value) {
+        return normalizeText(value)
+          .toLowerCase()
+          .replace(/[^a-z0-9\s/&']/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function splitActionBullets(value) {
+        const actionVerbs = [
+          "Operate",
+          "Execute",
+          "Coordinate",
+          "Conduct",
+          "Assist",
+          "Maintain",
+          "Perform",
+          "Support",
+          "Develop",
+          "Analyze",
+          "Prepare",
+          "Manage",
+          "Monitor",
+          "Lead",
+          "Collaborate",
+          "Ensure",
+          "Build",
+          "Design",
+          "Implement",
+          "Troubleshoot",
+          "Document",
+          "Communicate",
+          "Submit",
+          "Apply",
+          "Must",
+          "Ability",
+          "Experience",
+          "Proficient",
+          "Comfortable",
+          "Valid",
+          "Active",
+          "Strong",
+          "Excellent",
+          "Knowledge",
+          "Familiarity",
+        ];
+        const verbAlternation = actionVerbs.map(escapeRegex).join("|");
+        const pattern = new RegExp(`\\s+(?=(?:${verbAlternation})\\b)`, "g");
+        return String(value || "")
+          .split(pattern)
+          .map((item) => item.trim())
+          .filter(Boolean);
+      }
+
+      function extractKeyValueBullets(value) {
+        const body = String(value || "");
+        const pattern = /([A-Z][A-Za-z0-9/&'()\-\s]{2,35}):\s*([^:]+?)(?=\s+[A-Z][A-Za-z0-9/&'()\-\s]{2,35}:|$)/g;
+        const items = [];
+        let covered = 0;
+        let match;
+        while ((match = pattern.exec(body)) !== null) {
+          const label = cleanSectionText(match[1]);
+          const detail = cleanSectionText(match[2]);
+          if (!label || !detail) continue;
+          if (detail.length < 2) continue;
+          items.push(`${label}: ${detail}`);
+          covered += match[0].length;
+        }
+
+        if (items.length < 2) return [];
+        if (covered < body.length * 0.45) return [];
+        return items;
+      }
+
+      function splitHeadingAndBody(section, sectionIndex) {
+        const raw = cleanSectionText(section);
+        if (!raw) return null;
+
+        for (const candidate of knownHeadings) {
+          const lowerRaw = raw.toLowerCase();
+          const lowerCandidate = candidate.toLowerCase();
+          if (lowerRaw.startsWith(lowerCandidate)) {
+            const rest = raw.slice(candidate.length).replace(/^[\s:.-]+/, "").trim();
+            if (!rest) return null;
+            return {
+              heading: normalizeHeadingToken(candidate),
+              body: rest,
+            };
+          }
+        }
+
+        const colonMatch = raw.match(/^([A-Za-z][A-Za-z0-9 '&()\/,.-]{2,60}):\s+(.+)$/);
+        if (colonMatch) {
+          return {
+            heading: normalizeHeadingToken(colonMatch[1].trim()),
+            body: colonMatch[2].trim(),
+          };
+        }
+
+        const dashMatch = raw.match(/^([A-Za-z][A-Za-z0-9 '&()\/,.-]{2,50})\s+-\s+(.+)$/);
+        if (dashMatch && sectionIndex > 0) {
+          return {
+            heading: normalizeHeadingToken(dashMatch[1].trim()),
+            body: dashMatch[2].trim(),
+          };
+        }
+
+        return {
+          heading: sectionIndex === 0 ? "Overview" : `Section ${sectionIndex + 1}`,
+          body: raw,
+        };
+      }
+
+      function bulletizeBody(bodyText, headingText) {
+        const body = cleanSectionText(bodyText);
+        const headingKey = normalizeHeadingForSet(String(headingText || ""));
+
+        if (headingKey === "overview") {
+          const keyValueBullets = extractKeyValueBullets(body);
+          if (keyValueBullets.length) {
+            return {
+              intro: "",
+              bullets: keyValueBullets,
+            };
+          }
+        }
+
+        const parts = body
+          .split(/\s+(?:-|\*|•|·|\|)\s+/)
+          .map(part => part.trim())
+          .filter(Boolean);
+        const separatorCount = (body.match(/\s(?:-|\*|•|·|\|)\s/g) || []).length;
+
+        if (separatorCount < 2 || parts.length < 2) {
+          return {
+            intro: body,
+            bullets: [],
+          };
+        }
+
+        if (bulletFriendlyHeadings.has(headingKey)) {
+          const actionBullets = splitActionBullets(body);
+          if (actionBullets.length >= 3) {
+            return {
+              intro: "",
+              bullets: actionBullets,
+            };
+          }
+          return {
+            intro: "",
+            bullets: parts,
+          };
+        }
+
+        const introLooksLong = parts[0].length > 110 || /[.!?]$/.test(parts[0]);
+        if (introLooksLong) {
+          return {
+            intro: parts[0],
+            bullets: parts.slice(1),
+          };
+        }
+
+        return {
+          intro: "",
+          bullets: parts,
+        };
+      }
+
+      function sectionKeywords(heading, bodyText) {
+        const h = normalizeHeadingToken(heading);
+        const text = ` ${String(bodyText || "").toLowerCase()} `;
+        const rules = sectionKeywordRules[h] || [];
+        const hits = [];
+        for (const token of rules) {
+          const needle = token.toLowerCase();
+          if (needle === "$") {
+            if (text.includes("$")) hits.push("pay");
+            continue;
+          }
+          if (text.includes(needle)) hits.push(token);
+          if (hits.length >= 5) break;
+        }
+        return hits;
+      }
+
+      const canonical = String(source)
+        .replace(/\r\n?/g, "\n")
+        .replace(/^([A-Za-z0-9][A-Za-z0-9 '&()\/.\-,]{1,80})\s+Location:\s+/i, "Company: $1 Location: ")
+        .replace(/\s+((?:Required|Preferred|Minimum) Qualifications?|Core Competencies|Competencies|Compentencies|Key Responsibilities|Primary Responsibilities|Major Responsibilities|Responsibilities|Requirements|Mandatory|Nice to Have|Assets|What We Offer(?: You)?|How to Apply|Application Process|Job Posting|Job Overview|Overview|Full Job Description|Required Skills|Pay Rate|Salary):\s+/gi, "\n---\n$1: ")
+        .replace(
+          new RegExp(`\\s+(${headingTokenPattern.map(escapeRegex).join("|")})(?:\\s*[.:])?\\s+`, "g"),
+          "\n---\n$1: "
+        )
+        .replace(
+          /\s+((?:REQUIRED|PREFERRED|MINIMUM) QUALIFICATIONS?|CORE COMPETENCIES|COMPETENCIES|COMPENTENCIES|KEY RESPONSIBILITIES|PRIMARY RESPONSIBILITIES|MAJOR RESPONSIBILITIES|RESPONSIBILITIES|REQUIREMENTS|MANDATORY|NICE TO HAVE|ASSETS|WHAT WE OFFER(?: YOU)?|HOW TO APPLY|APPLICATION PROCESS|JOB POSTING|JOB OVERVIEW|OVERVIEW|FULL JOB DESCRIPTION|PROJECT|WHAT YOU'?LL DO|REQUIRED SKILLS|PAY RATE|SALARY)(?:\s*[.:])?\s+/g,
+          "\n---\n$1: "
+        )
+        .replace(/\s+---\s+/g, "\n---\n")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+
+      const rawSections = canonical
+        .split(/\n---\n/)
+        .map(part => part.trim())
+        .filter(Boolean);
+      const sections = rawSections.length ? rawSections : [canonical];
+
+      const html = sections
+        .map((section, index) => splitHeadingAndBody(section, index))
+        .filter(Boolean)
+        .map(({ heading, body }, sectionIndex) => {
+          const canonicalHeading = normalizeHeadingToken(heading);
+          const parsed = bulletizeBody(body, heading);
+          const openByDefault = sectionIndex === 0 || parsed.bullets.length >= 4;
+          const tone = parsed.bullets.length ? `${parsed.bullets.length} items` : "notes";
+          const keywords = sectionKeywords(canonicalHeading, body);
+          const keywordHtml = keywords.length
+            ? `<div class="detail-keywords">${keywords.map((kw) => `<span class="detail-keyword">${escapeHtml(kw)}</span>`).join("")}</div>`
+            : "";
+          const introHtml = parsed.intro ? `<p>${escapeHtml(parsed.intro)}</p>` : "";
+          const bulletsHtml = parsed.bullets.length
+            ? `<ul class="detail-list">${parsed.bullets.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+            : "";
+          return `
+            <section class="detail-section">
+              <details class="detail-accordion"${openByDefault ? " open" : ""}>
+                <summary>
+                  <span>${escapeHtml(canonicalHeading)}</span>
+                  <span class="detail-pill">${escapeHtml(tone)}</span>
+                </summary>
+                <div class="detail-section-body">${keywordHtml}${introHtml}${bulletsHtml}</div>
+              </details>
+            </section>
+          `;
+        })
+        .join("");
+
+      return `<div class="detail-content">${html}</div>`;
+    }
+
+    function isCanadaLocation(text) {
+      const t = (text || "").toLowerCase();
+      const provinceCodes = [", on", ", qc", ", bc", ", ab", ", mb", ", sk", ", ns", ", nb", ", nl", ", pe", ", yt", ", nt", ", nu"];
+      const provinceNames = [
+        "ontario",
+        "quebec",
+        "british columbia",
+        "alberta",
+        "manitoba",
+        "saskatchewan",
+        "nova scotia",
+        "new brunswick",
+        "newfoundland and labrador",
+        "prince edward island",
+        "yukon",
+        "northwest territories",
+        "nunavut",
+      ];
+
+      if (t.includes("canada")) return true;
+      if (provinceCodes.some(token => t.includes(token))) return true;
+      if (provinceNames.some(name => t.includes(name))) return true;
+
+      // Treat trailing ", ca" as country code only when format is city, region, country.
+      const commaSegments = t.split(",").map(s => s.trim()).filter(Boolean);
+      if (/,\s*ca\s*$/.test(t) && commaSegments.length >= 3) return true;
+
+      return false;
+    }
+
+    function optionMarkup(values, allLabel = "All") {
+      const options = [`<option value="">${allLabel}</option>`];
+      values.forEach(v => {
+        options.push(`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`);
+      });
+      return options.join("");
+    }
+
+    function detectProvinceCode(locationText) {
+      const raw = normalizeText(locationText).toLowerCase();
+      if (!raw) return "";
+      if (!isCanadaLocation(raw)) return "";
+
+      for (const matcher of PROVINCE_MATCHERS) {
+        if (matcher.pattern.test(raw)) return matcher.code;
+      }
+      return "";
+    }
+
+    function saveProvinceFilterSession() {
+      const payload = {
+        mode: provinceFilter.mode,
+        selected: [...provinceFilter.selected],
+      };
+      localStorage.setItem(PROVINCE_FILTER_STORAGE_KEY, JSON.stringify(payload));
+    }
+
+    function loadProvinceFilterSession() {
+      const raw = localStorage.getItem(PROVINCE_FILTER_STORAGE_KEY);
+      if (!raw) return null;
+      try {
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== "object") return null;
+        const mode = parsed.mode === "custom" ? "custom" : "all";
+        const selected = Array.isArray(parsed.selected)
+          ? parsed.selected.map(v => String(v || "").toUpperCase()).filter(Boolean)
+          : [];
+        return { mode, selected };
+      } catch {
+        return null;
+      }
+    }
+
+    function syncProvinceUi() {
+      const allBtn = document.getElementById("provinceAllBtn");
+      const defaultBtn = document.getElementById("provinceDefaultBtn");
+      const checkboxes = document.querySelectorAll("#provinceCheckboxes input[data-province-code]");
+      const isAll = provinceFilter.mode === "all";
+
+      if (allBtn) allBtn.classList.toggle("active", isAll);
+      if (defaultBtn) {
+        const isDefault = !isAll
+          && provinceFilter.selected.size > 0
+          && DEFAULT_PROVINCE_CODES.every(code => {
+            if (!provinceFilter.available.includes(code)) return true;
+            return provinceFilter.selected.has(code);
+          })
+          && [...provinceFilter.selected].every(code => !provinceFilter.available.includes(code) || DEFAULT_PROVINCE_CODES.includes(code));
+        defaultBtn.classList.toggle("active", isDefault);
+      }
+
+      checkboxes.forEach((checkbox) => {
+        const code = checkbox.getAttribute("data-province-code") || "";
+        checkbox.checked = isAll || provinceFilter.selected.has(code);
+      });
+    }
+
+    function setProvinceModeAll(shouldRender = true) {
+      provinceFilter.mode = "all";
+      provinceFilter.selected = new Set(provinceFilter.available);
+      syncProvinceUi();
+      saveProvinceFilterSession();
+      if (shouldRender) render();
+    }
+
+    function setProvinceModeDefault(shouldRender = true) {
+      const defaults = DEFAULT_PROVINCE_CODES.filter(code => provinceFilter.available.includes(code));
+      if (!defaults.length) {
+        setProvinceModeAll(shouldRender);
+        return;
+      }
+      provinceFilter.mode = "custom";
+      provinceFilter.selected = new Set(defaults);
+      syncProvinceUi();
+      saveProvinceFilterSession();
+      if (shouldRender) render();
+    }
+
+    function setProvinceCustomFromUi(shouldRender = true) {
+      const selected = new Set();
+      document.querySelectorAll("#provinceCheckboxes input[data-province-code]").forEach((checkbox) => {
+        if (checkbox.checked) {
+          selected.add(checkbox.getAttribute("data-province-code") || "");
+        }
+      });
+
+      const allSelected = provinceFilter.available.length > 0
+        && provinceFilter.available.every(code => selected.has(code));
+
+      if (allSelected || selected.size === 0) {
+        provinceFilter.mode = "all";
+        provinceFilter.selected = new Set(provinceFilter.available);
+      } else {
+        provinceFilter.mode = "custom";
+        provinceFilter.selected = selected;
+      }
+
+      syncProvinceUi();
+      saveProvinceFilterSession();
+      if (shouldRender) render();
+    }
+
+    function buildProvinceFilter() {
+      const container = document.getElementById("provinceCheckboxes");
+      if (!container) return;
+
+      const available = [...new Set(jobs.map(j => j._provinceCode).filter(Boolean))]
+        .sort((a, b) => (PROVINCE_LABELS[a] || a).localeCompare(PROVINCE_LABELS[b] || b));
+      provinceFilter.available = available;
+
+      if (!available.length) {
+        container.innerHTML = '<div class="province-empty">No Canadian province tags found in this dataset.</div>';
+        provinceFilter.mode = "all";
+        provinceFilter.selected = new Set();
+        return;
+      }
+
+      container.innerHTML = available.map((code) => {
+        const label = PROVINCE_LABELS[code] || code;
+        return `
+          <label class="province-option">
+            <input type="checkbox" data-province-code="${escapeHtml(code)}" />
+            <span>${escapeHtml(code)} - ${escapeHtml(label)}</span>
+          </label>
+        `;
+      }).join("");
+
+      const persisted = loadProvinceFilterSession();
+      if (persisted && persisted.mode === "custom") {
+        const keep = persisted.selected.filter(code => available.includes(code));
+        if (keep.length) {
+          provinceFilter.mode = "custom";
+          provinceFilter.selected = new Set(keep);
+        } else {
+          setProvinceModeDefault(false);
+        }
+      } else {
+        setProvinceModeDefault(false);
+      }
+
+      syncProvinceUi();
+
+      container.addEventListener("change", (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLInputElement)) return;
+        if (!target.matches("input[data-province-code]")) return;
+        setProvinceCustomFromUi();
+      });
+    }
+
+    function jobKey(job) {
+      if (job && job._jobKey) return job._jobKey;
+      const linkKey = String(job && job.link ? job.link : "").trim();
+      if (linkKey) return linkKey;
+      return `${normalizeText(job && job.title)}|${normalizeText(job && job.company)}|${normalizeText(job && job.location)}`;
+    }
+
+    function buildFilters() {
+      const sources = [...new Set(jobs.map(j => normalizeText(j.source)).filter(Boolean))].sort();
+      const categories = [...new Set(jobs.map(j => normalizeText(j.category)).filter(Boolean))].sort();
+      document.getElementById("source").innerHTML = optionMarkup(sources);
+      document.getElementById("category").innerHTML = optionMarkup(categories);
+    }
+
+    function currentFilters() {
+      return {
+        q: document.getElementById("q").value.trim().toLowerCase(),
+        source: document.getElementById("source").value,
+        category: document.getElementById("category").value,
+        minConf: parseFloat(document.getElementById("minConf").value || "0"),
+        canadaOnly: document.getElementById("canadaOnly").value,
+        provinceMode: provinceFilter.mode,
+        provinces: new Set(provinceFilter.selected),
+      };
+    }
+
+    function formatConfidence(value) {
+      const safe = Number.isFinite(value) ? value : 0;
+      const clamped = Math.min(1, Math.max(0, safe));
+      return clamped.toFixed(2);
+    }
+
+    function snapConfidence(value) {
+      const numeric = Number(value);
+      if (!Number.isFinite(numeric)) return MIN_CONF_PRESETS[0];
+      return Math.min(1, Math.max(0, numeric));
+    }
+
+    function findPresetIndex(current, direction) {
+      const tolerance = 0.0001;
+      const exactIndex = MIN_CONF_PRESETS.findIndex(v => Math.abs(v - current) < tolerance);
+      if (exactIndex !== -1) {
+        return Math.min(MIN_CONF_PRESETS.length - 1, Math.max(0, exactIndex + direction));
+      }
+
+      if (direction > 0) {
+        const nextIndex = MIN_CONF_PRESETS.findIndex(v => v > current);
+        return nextIndex === -1 ? MIN_CONF_PRESETS.length - 1 : nextIndex;
+      }
+
+      for (let i = MIN_CONF_PRESETS.length - 1; i >= 0; i -= 1) {
+        if (MIN_CONF_PRESETS[i] < current) return i;
+      }
+      return 0;
+    }
+
+    function setupMinConfidenceHelper() {
+      const minConfInput = document.getElementById("minConf");
+      if (!minConfInput) return;
+
+      minConfInput.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
+        event.preventDefault();
+        const direction = event.key === "ArrowUp" ? 1 : -1;
+        const current = snapConfidence(minConfInput.value);
+        const nextIndex = findPresetIndex(current, direction);
+        minConfInput.value = formatConfidence(MIN_CONF_PRESETS[nextIndex]);
+        render();
+      });
+
+      minConfInput.addEventListener("change", () => {
+        minConfInput.value = formatConfidence(snapConfidence(minConfInput.value));
+        render();
+      });
+    }
+
+    function filterJobs() {
+      const f = currentFilters();
+      return jobs.filter(job => {
+        const title = normalizeText(job.title);
+        const company = normalizeText(job.company);
+        const location = normalizeText(job.location);
+        const description = normalizeText(job.description);
+        const summary = normalizeText(job.summary);
+        const source = normalizeText(job.source);
+        const category = normalizeText(job.category);
+        const confidence = Number(job.confidence || 0);
+        const inCanada = isCanadaLocation(location);
+        const provinceCode = normalizeText(job._provinceCode).toUpperCase();
+
+        if (f.source && source !== f.source) return false;
+        if (f.category && category !== f.category) return false;
+        if (confidence < f.minConf) return false;
+        if (f.canadaOnly === "yes" && !inCanada) return false;
+        if (f.canadaOnly === "intl" && inCanada) return false;
+        if (f.provinceMode !== "all") {
+          if (!provinceCode) return false;
+          if (!f.provinces.has(provinceCode)) return false;
+        }
+
+        if (f.q) {
+          const hay = `${company} ${title} ${location} ${source} ${category} ${description} ${summary}`.toLowerCase();
+          if (!hay.includes(f.q)) return false;
+        }
+        return true;
+      });
+    }
+
+    function fieldRow(label, value) {
+      return `<div class="field"><div class="k">${label}</div><div class="v">${escapeHtml(value || "N/A")}</div></div>`;
+    }
+
+    function isDesktopViewport() {
+      return window.matchMedia("(min-width: 1080px)").matches;
+    }
+
+    function extractDescriptionSnapshot(job, descriptionText) {
+      const text = String(descriptionText || "").replace(/\s+/g, " ").trim();
+      if (!text) return [];
+
+      const stop = "(?=\\s+(?:[A-Z][A-Za-z/&'() -]{2,28}:|PROJECT\\b|REQUIREMENTS\\b|RESPONSIBILITIES\\b|QUALIFICATIONS\\b|WHAT YOU'?LL DO\\b|HOW TO APPLY\\b)|$)";
+
+      function pull(pattern) {
+        const match = text.match(pattern);
+        return match ? String(match[1] || "").trim() : "";
+      }
+
+      function clean(value) {
+        return String(value || "")
+          .replace(/\s+/g, " ")
+          .replace(/[.;:,\-\s]+$/, "")
+          .trim();
+      }
+
+      function compact(value, limit = 92) {
+        const v = clean(value);
+        if (v.length <= limit) return v;
+        return `${v.slice(0, limit - 1).trim()}...`;
+      }
+
+      const typeFromText = pull(new RegExp(`(?:\\bJob Type\\b|\\bType\\b)\\s*:\\s*([^\\n]+?)${stop}`, "i"));
+      const duration = pull(new RegExp(`(?:\\bDuration\\b|\\bTerm\\b|\\bContract Duration\\b)\\s*:\\s*([^\\n]+?)${stop}`, "i"));
+      const compensation = pull(new RegExp(`(?:\\bCompensation\\b|\\bSalary\\b|\\bPay Rate\\b|\\bPay\\b)\\s*:\\s*([^\\n]+?)${stop}`, "i"));
+      const schedule = pull(new RegExp(`(?:\\bSchedule\\b|\\bHours\\b|\\bShift\\b)\\s*:\\s*([^\\n]+?)${stop}`, "i"));
+      const workLocation = pull(new RegExp(`(?:\\bWork Location\\b|\\bLocation\\b)\\s*:\\s*([^\\n]+?)${stop}`, "i"));
+      const deadline = pull(new RegExp(`(?:\\bApplication Deadline\\b|\\bClosing Date\\b|\\bDeadline\\b)\\s*:\\s*([^\\n]+?)${stop}`, "i"));
+
+      const typeFallback = normalizeText(job.type);
+      const normalizedType = typeFromText || (typeFallback && typeFallback !== "unknown" ? typeFallback : "");
+
+      const travelSignal = /\btravel\b/i.test(text)
+        ? (pull(new RegExp(`\\bTravel\\s*:\\s*([^\\n]+?)${stop}`, "i")) || "Required")
+        : "";
+
+      const modeSignal = (() => {
+        if (/\bhybrid\b/i.test(text)) return "Hybrid";
+        if (/\bremote\b/i.test(text)) return "Remote";
+        if (/\bon[ -]?site\b/i.test(text)) return "On-site";
+        if (/\bfield\b/i.test(text)) return "Field";
+        return "";
+      })();
+
+      const snapshot = [];
+      if (normalizedType) snapshot.push({ label: "Type", value: compact(normalizedType, 52) });
+      if (duration) snapshot.push({ label: "Duration", value: compact(duration, 62) });
+      if (compensation) snapshot.push({ label: "Compensation", value: compact(compensation, 62) });
+      if (schedule) snapshot.push({ label: "Schedule", value: compact(schedule, 62) });
+      if (modeSignal) snapshot.push({ label: "Work Mode", value: modeSignal });
+      if (workLocation) snapshot.push({ label: "Work Location", value: compact(workLocation, 62) });
+      if (travelSignal) snapshot.push({ label: "Travel", value: compact(travelSignal, 42) });
+      if (deadline) snapshot.push({ label: "Deadline", value: compact(deadline, 42) });
+
+      const unique = [];
+      const seen = new Set();
+      snapshot.forEach((item) => {
+        const key = `${item.label.toLowerCase()}::${item.value.toLowerCase()}`;
+        if (item.value && !seen.has(key)) {
+          seen.add(key);
+          unique.push(item);
+        }
+      });
+
+      return unique.slice(0, 8);
+    }
+
+    function detailBodyHtml(job) {
+      const company = normalizeText(job.company);
+      const location = normalizeText(job.location);
+      const source = normalizeText(job.source);
+      const posted = normalizeDate(job.date_posted);
+      const expires = normalizeDate(job.date_expires);
+      const category = normalizeText(job.category);
+      const confidence = formatConfidence(Number(job.confidence || 0));
+      const description = normalizeText(job.description);
+      const summary = normalizeText(job.summary);
+      const descriptionText = description || summary;
+      const url = String(job.link || "").trim();
+      const snapshotItems = extractDescriptionSnapshot(job, descriptionText);
+      const snapshotHtml = snapshotItems.length
+        ? `
+          <section class="detail-snapshot">
+            <div class="detail-snapshot-head">Job Snapshot</div>
+            <div class="field-grid detail-snapshot-grid">
+              ${snapshotItems.map((item) => fieldRow(item.label, item.value)).join("")}
+            </div>
+          </section>
+        `
+        : "";
+
+      return `
+        <div class="field-grid detail-meta">
+          ${fieldRow("Company", company)}
+          ${fieldRow("Location", location)}
+          ${fieldRow("Source", source)}
+          ${fieldRow("Category", category)}
+          ${fieldRow("Confidence", confidence)}
+          ${fieldRow("Date Posted", posted)}
+          ${fieldRow("Expired", expires)}
+        </div>
+        ${snapshotHtml}
+        <div class="summary detail-summary">${formatDetailSectionsHtml(descriptionText || "No description available")}</div>
+        <div class="link-line"><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">View Source Job URL</a></div>
+      `;
+    }
+
+    function detailPanelHtml(job) {
+      if (!job) {
+        return '<div class="detail-empty">Select a job card to review full details. On mobile, tap Open Details to expand inline.</div>';
+      }
+
+      const title = normalizeText(job.title);
+      const company = normalizeText(job.company);
+      const location = normalizeText(job.location);
+      return `
+        <div class="detail-head">
+          <h2>${escapeHtml(title || "Untitled Job")}</h2>
+          <div class="detail-sub">${escapeHtml(company || "Unknown company")} - ${escapeHtml(location || "Unknown location")}</div>
+        </div>
+        ${detailBodyHtml(job)}
+      `;
+    }
+
+    function getJobByKey(key) {
+      return jobs.find((job) => jobKey(job) === key) || null;
+    }
+
+    function rowHtml(job) {
+      const company = normalizeText(job.company);
+      const title = normalizeText(job.title);
+      const location = normalizeText(job.location);
+      const source = normalizeText(job.source);
+      const category = normalizeText(job.category);
+      const confidence = formatConfidence(Number(job.confidence || 0));
+      const descriptionText = normalizeText(job.summary) || normalizeText(job.description);
+      const key = jobKey(job);
+      const checked = selectedJobKeys.has(key) ? " checked" : "";
+      const isActive = key === activeJobKey;
+      const cardClass = isActive ? "job active" : "job";
+      const openLabel = isActive ? "Hide Details" : "Open Details";
+
+      return `
+      <article class="${cardClass}" data-job-key="${escapeHtml(key)}" aria-selected="${isActive ? "true" : "false"}">
+        <div class="job-head">
+          <h2 class="job-title">
+            <button class="job-title-toggle" type="button" data-job-key="${escapeHtml(key)}" aria-expanded="${isActive ? "true" : "false"}" title="Open job details">
+              <span class="job-title-text">${escapeHtml(title || "Untitled Job")}</span>
+            </button>
+          </h2>
+          <button class="job-open" type="button" data-job-key="${escapeHtml(key)}" aria-expanded="${isActive ? "true" : "false"}">${openLabel}</button>
+          <label class="job-select">
+            <input type="checkbox" class="job-select-input" data-job-key="${escapeHtml(key)}"${checked} />
+            Export
+          </label>
+        </div>
+        <div class="job-quick">
+          <span class="quick-chip">${escapeHtml(company || "Unknown Company")}</span>
+          <span class="quick-chip">${escapeHtml(location || "Unknown Location")}</span>
+          <span class="quick-chip source">${escapeHtml(source || "Unknown Source")}</span>
+          <span class="quick-chip">${escapeHtml(category || "Uncategorized")}</span>
+          <span class="quick-chip conf">Confidence ${escapeHtml(confidence)}</span>
+        </div>
+        <div class="job-excerpt">${escapeHtml(descriptionText || "No summary available")}</div>
+        <div class="job-inline-detail">${detailBodyHtml(job)}</div>
+      </article>`;
+    }
+
+    function csvEscape(value) {
+      const text = String(value === null || value === undefined ? "" : value);
+      const escaped = text.replace(/"/g, '""');
+      return `"${escaped}"`;
+    }
+
+    function exportSelectedJobs() {
+      const selected = jobs.filter(job => selectedJobKeys.has(jobKey(job)));
+      if (!selected.length) {
+        document.getElementById("statusError").textContent = "Select at least one job to export.";
+        return;
+      }
+
+      const headers = [
+        "title",
+        "company",
+        "location",
+        "source",
+        "category",
+        "type",
+        "date_posted",
+        "date_expires",
+        "query_family",
+        "matched_query",
+        "confidence",
+        "link",
+        "description",
+        "summary",
+      ];
+
+      const lines = [headers.map(csvEscape).join(",")];
+      selected.forEach(job => {
+        lines.push(headers.map(field => csvEscape(job[field] || "")).join(","));
+      });
+
+      const blob = new Blob([lines.join("\r\n")], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const datePart = new Date().toISOString().slice(0, 10);
+      const download = document.createElement("a");
+      download.href = url;
+      download.download = `drone_jobs_selected_${datePart}.csv`;
+      document.body.appendChild(download);
+      download.click();
+      download.remove();
+      URL.revokeObjectURL(url);
+
+      document.getElementById("statusError").textContent = `Exported ${selected.length} selected jobs to CSV.`;
+    }
+
+    function updateExportButton() {
+      const selectedCount = jobs.filter(job => selectedJobKeys.has(jobKey(job))).length;
+      const btn = document.getElementById("exportBtn");
+      const topBtn = document.getElementById("exportSelectedTopBtn");
+      btn.textContent = `Export Selected (${selectedCount})`;
+      btn.disabled = selectedCount === 0;
+      btn.classList.toggle("secondary", selectedCount === 0);
+      if (topBtn) {
+        topBtn.textContent = `Export Selected (${selectedCount})`;
+        topBtn.disabled = selectedCount === 0;
+      }
+    }
+
+    function formatSourceTally(list) {
+      const counts = new Map();
+      list.forEach((job) => {
+        const src = normalizeText(job.source || "unknown").toLowerCase() || "unknown";
+        counts.set(src, (counts.get(src) || 0) + 1);
+      });
+
+      if (!counts.size) {
+        return '<span class="src-label">Sources:</span><span class="src-item">none</span>';
+      }
+
+      const compact = [...counts.entries()]
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .map(([name, count]) => `<span class="src-item">${escapeHtml(name)}<span class="src-count">${count}</span></span>`)
+        .join("");
+      return `<span class="src-label">Sources:</span>${compact}`;
+    }
+
+    function updateToggleAllButton(filtered) {
+      const btn = document.getElementById("toggleAllBtn");
+      if (!btn) return;
+
+      if (!filtered.length) {
+        btn.textContent = "Select Visible";
+        btn.disabled = true;
+        return;
+      }
+
+      const allSelected = filtered.every(job => selectedJobKeys.has(jobKey(job)));
+      btn.textContent = allSelected ? "Clear Visible" : "Select Visible";
+      btn.disabled = false;
+    }
+
+    function toggleAllFilteredCards() {
+      const filtered = filterJobs();
+      if (!filtered.length) return;
+
+      const allSelected = filtered.every(job => selectedJobKeys.has(jobKey(job)));
+      filtered.forEach((job) => {
+        const key = jobKey(job);
+        if (allSelected) selectedJobKeys.delete(key);
+        else selectedJobKeys.add(key);
+      });
+      document.getElementById("statusError").textContent = allSelected
+        ? "Cleared export selection for all visible jobs."
+        : `Selected ${filtered.length} visible jobs for export.`;
+      render();
+    }
+
+    function clearAllExports() {
+      selectedJobKeys.clear();
+      document.getElementById("statusError").textContent = "Cleared all export selections.";
+      render();
+    }
+
+    function renderDetailPanel(filtered) {
+      const panel = document.getElementById("detailPanel");
+      if (!panel) return;
+
+      let activeJob = activeJobKey ? getJobByKey(activeJobKey) : null;
+      const inFiltered = activeJob && filtered.some((job) => jobKey(job) === activeJobKey);
+
+      if (!inFiltered) {
+        activeJob = null;
+        if (isDesktopViewport() && filtered.length) {
+          activeJob = filtered[0];
+          activeJobKey = jobKey(activeJob);
+        } else {
+          activeJobKey = "";
+        }
+      }
+
+      panel.innerHTML = detailPanelHtml(activeJob);
+    }
+
+    function render() {
+      const filtered = filterJobs();
+      document.getElementById("statusCount").textContent = `${filtered.length} of ${jobs.length} jobs`;
+      document.getElementById("statusRun").textContent = lastRunLabel;
+      document.getElementById("statusSources").innerHTML = formatSourceTally(filtered);
+      renderDetailPanel(filtered);
+      updateToggleAllButton(filtered);
+      document.getElementById("jobList").innerHTML = filtered.map(rowHtml).join("");
+      updateExportButton();
+    }
+
+    function formatRefreshStamp(dateValue) {
+      const d = new Date(dateValue);
+      if (Number.isNaN(d.getTime())) return "";
+
+      const localDateLabel = d.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      });
+
+      const startOfToday = new Date();
+      startOfToday.setHours(0, 0, 0, 0);
+      const startOfRefreshDay = new Date(d);
+      startOfRefreshDay.setHours(0, 0, 0, 0);
+
+      const daysSince = Math.max(0, Math.floor((startOfToday - startOfRefreshDay) / 86400000));
+      const plural = daysSince === 1 ? "day" : "days";
+      return `${localDateLabel} (${daysSince} ${plural})`;
+    }
+
+    function setRefreshStamp(lastModified) {
+      const stampEl = document.getElementById("refreshStamp");
+      const label = formatRefreshStamp(lastModified);
+      lastRunLabel = label || "Unknown";
+      if (stampEl) {
+        stampEl.textContent = label ? `- ${label}` : "";
+      }
+    }
+
+    async function init() {
+      try {
+        const res = await fetch("data/jobs.json", { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        setRefreshStamp(res.headers.get("last-modified"));
+        jobs = await res.json();
+      } catch (err) {
+        document.getElementById("statusError").textContent = `Failed to load data/jobs.json: ${err.message}`;
+        return;
+      }
+
+      jobs = jobs.map(j => ({
+        ...j,
+        _jobKey: jobKey(j),
+        _provinceCode: detectProvinceCode(j.location),
+        company: normalizeText(j.company),
+        title: normalizeText(j.title),
+        location: normalizeText(j.location),
+        source: normalizeText(j.source),
+        category: normalizeText(j.category),
+        date_posted: normalizeDate(j.date_posted),
+        date_expires: normalizeDate(j.date_expires),
+        description: normalizeText(j.description),
+        summary: normalizeText(j.summary),
+      }));
+
+      buildFilters();
+      buildProvinceFilter();
+      setupMinConfidenceHelper();
+      render();
+
+      document.getElementById("applyBtn").addEventListener("click", render);
+      document.getElementById("q").addEventListener("input", render);
+      document.getElementById("source").addEventListener("change", render);
+      document.getElementById("category").addEventListener("change", render);
+      document.getElementById("minConf").addEventListener("input", render);
+      document.getElementById("canadaOnly").addEventListener("change", render);
+      document.getElementById("provinceAllBtn").addEventListener("click", () => setProvinceModeAll());
+      document.getElementById("provinceDefaultBtn").addEventListener("click", () => setProvinceModeDefault());
+      document.getElementById("toggleAllBtn").addEventListener("click", toggleAllFilteredCards);
+      document.getElementById("exportSelectedTopBtn").addEventListener("click", exportSelectedJobs);
+      document.getElementById("clearExportsBtn").addEventListener("click", clearAllExports);
+      document.getElementById("exportBtn").addEventListener("click", exportSelectedJobs);
+      document.getElementById("jobList").addEventListener("change", (event) => {
+        const input = event.target.closest(".job-select-input");
+        if (!input) return;
+        const key = input.getAttribute("data-job-key") || "";
+        if (!key) return;
+        if (input.checked) selectedJobKeys.add(key);
+        else selectedJobKeys.delete(key);
+        updateExportButton();
+        updateToggleAllButton(filterJobs());
+      });
+      document.getElementById("jobList").addEventListener("click", (event) => {
+        const btn = event.target.closest(".job-title-toggle, .job-open");
+        if (!btn) return;
+        const key = btn.getAttribute("data-job-key") || "";
+        if (!key) return;
+        if (!isDesktopViewport() && activeJobKey === key) activeJobKey = "";
+        else activeJobKey = key;
+        render();
+      });
+      window.addEventListener("resize", render);
+      document.getElementById("q").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          render();
+        }
+      });
+      document.getElementById("resetBtn").addEventListener("click", () => {
+        document.getElementById("q").value = "";
+        document.getElementById("source").value = "";
+        document.getElementById("category").value = "";
+        document.getElementById("minConf").value = "0.50";
+        document.getElementById("canadaOnly").value = "yes";
+        setProvinceModeDefault(false);
+        document.getElementById("statusError").textContent = "";
+        render();
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>

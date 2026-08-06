@@ -1,0 +1,4431 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Fetch NOTAMS by FIR and ICAO codes</title>
+  <link rel="stylesheet" href="./assets/css/notams-common.css">
+  <link rel="stylesheet" href="assets/css/site-nav.css">
+  <script src="assets/js/site-nav.js" defer></script>
+  <style>
+    :root {
+      --accent: #0b5ea8;
+      --accent-2: #1f3e72;
+      --bg-soft: #f3f8ff;
+      --ok: #1f7a3f;
+      --warn: #9a6a00;
+      --err: #b3261e;
+    }
+
+    .selection-block {
+      margin: 4px 0 10px;
+    }
+
+    .selection-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px 18px;
+      margin-bottom: 8px;
+    }
+
+    .selection-stats {
+      color: #1f3e72;
+      font-size: 0.92rem;
+      font-weight: 700;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .selection-stats .k {
+      color: #2a4d7f;
+      font-weight: 700;
+      margin-right: 4px;
+    }
+    .selection-stats .v {
+      color: #123f76;
+      font-weight: 800;
+      margin-right: 10px;
+    }
+
+    .search-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 8px;
+    }
+
+    .search-container .field-group {
+      flex: 1 1 180px;
+      min-width: 160px;
+    }
+
+    .search-container .field-group.compact {
+      flex: 0 0 120px;
+      min-width: 120px;
+      max-width: 140px;
+    }
+
+    .search-container .field-group.compact select {
+      width: 100%;
+    }
+
+    .search-container .field-group.mode-inline {
+      flex: 0 1 180px;
+      min-width: 160px;
+    }
+
+    .search-container .field-group.mode-inline .mode-toggle {
+      white-space: nowrap;
+    }
+
+    .icao-picker {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .icao-picker select {
+      min-width: 120px;
+    }
+
+    .search-container .btn {
+      min-width: 140px;
+    }
+
+    .search-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .search-actions .action-btn {
+      font-size: 0.9rem;
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+
+    .search-actions #refreshFromCacheBtn {
+      grid-column: 1 / -1;
+    }
+
+    .action-btn.btn-attn {
+      box-shadow: 0 0 0 1px rgba(31, 122, 63, 0.4), 0 0 14px rgba(31, 122, 63, 0.35);
+    }
+
+    .search-row-end {
+      flex: 1 1 100%;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .search-row-end .selection-stats {
+      width: 100%;
+    }
+
+    #scopeSummaryLine {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid #29425f;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #102033 0%, #152a42 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 8px 18px rgba(8, 20, 34, 0.18);
+      overflow: hidden;
+    }
+
+    #scopeSummaryLine .scope-stat {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      padding: 9px 12px 10px;
+      position: relative;
+      text-align: center;
+    }
+
+    #scopeSummaryLine .scope-stat + .scope-stat {
+      border-left: 1px solid rgba(154, 180, 209, 0.18);
+    }
+
+    #scopeSummaryLine .k {
+      color: #9fb4cd;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-right: 0;
+      line-height: 1;
+    }
+
+    #scopeSummaryLine .v {
+      color: #ffffff;
+      font-weight: 800;
+      margin-right: 0;
+      font-size: 1rem;
+      line-height: 1.05;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.22);
+    }
+
+    #scopeSummaryLine .v.scope-count {
+      color: #ffd24a;
+    }
+
+    #scopeSummaryLine .v.scope-code {
+      color: #ffffff;
+    }
+
+    .selection-cache-row {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .selection-cache-row .btn {
+      min-width: 162px;
+    }
+
+    .subtle {
+      color: #4c5b73;
+      font-size: 0.9rem;
+      margin: 0 0 12px;
+    }
+
+    #lastFetchBanner.fresh {
+      color: var(--ok);
+      font-weight: 700;
+    }
+
+    #lastFetchBanner.stale {
+      color: #4c5b73;
+      font-weight: 600;
+    }
+
+    .view-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #9ec9e8;
+      background: #eaf5ff;
+      color: #0b5ea8;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+
+    .view-toggle .icon {
+      display: inline-block;
+      position: relative;
+    }
+
+    .view-toggle .icon-phone {
+      width: 10px;
+      height: 16px;
+      border: 2px solid currentColor;
+      border-radius: 3px;
+    }
+
+    .view-toggle .icon-phone::after {
+      content: "";
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      width: 4px;
+      height: 2px;
+      transform: translateX(-50%);
+      background: currentColor;
+      border-radius: 2px;
+    }
+
+    .view-toggle .icon-desktop {
+      width: 16px;
+      height: 12px;
+      border: 2px solid currentColor;
+      border-radius: 2px;
+    }
+
+    .view-toggle .icon-desktop::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      width: 8px;
+      height: 2px;
+      transform: translateX(-50%);
+      background: currentColor;
+      border-radius: 2px;
+    }
+
+    .view-toggle .icon-phone,
+    .view-toggle .icon-desktop {
+      display: none;
+    }
+
+    .mobile-pane-toggle {
+      display: none;
+      position: fixed;
+      right: 12px;
+      bottom: 14px;
+      right: calc(12px + env(safe-area-inset-right));
+      bottom: calc(14px + env(safe-area-inset-bottom));
+      z-index: 920;
+      border: 1px solid #6f8fbf;
+      background: #1f4f84;
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      min-height: 44px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 20px rgba(8, 30, 56, 0.35);
+      touch-action: manipulation;
+      transition: transform 140ms ease, opacity 140ms ease, left 140ms ease, right 140ms ease;
+    }
+
+    .view-mobile .mobile-pane-toggle {
+      display: inline-flex;
+    }
+
+    .view-mobile .mobile-pane-toggle.dock-left {
+      right: auto;
+      left: 12px;
+      left: calc(12px + env(safe-area-inset-left));
+    }
+
+    .view-mobile .mobile-pane-toggle.hidden-for-input {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+    }
+
+    .mobile-pane-toggle .toggle-icon {
+      position: relative;
+      display: none;
+      width: 14px;
+      height: 14px;
+      flex: 0 0 14px;
+    }
+
+    .mobile-pane-toggle .icon-details {
+      border: 2px solid currentColor;
+      border-radius: 2px;
+    }
+
+    .mobile-pane-toggle .icon-details::before,
+    .mobile-pane-toggle .icon-details::after {
+      content: "";
+      position: absolute;
+      left: 2px;
+      right: 2px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 2px;
+    }
+
+    .mobile-pane-toggle .icon-details::before {
+      top: 3px;
+    }
+
+    .mobile-pane-toggle .icon-details::after {
+      bottom: 3px;
+    }
+
+    .mobile-pane-toggle .icon-inputs {
+      border: 2px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .mobile-pane-toggle .icon-inputs::before,
+    .mobile-pane-toggle .icon-inputs::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      background: currentColor;
+      transform: translate(-50%, -50%);
+      border-radius: 2px;
+    }
+
+    .mobile-pane-toggle .icon-inputs::before {
+      width: 8px;
+      height: 2px;
+    }
+
+    .mobile-pane-toggle .icon-inputs::after {
+      width: 2px;
+      height: 8px;
+    }
+
+    .view-mobile:not(.mobile-detail-focus) .mobile-pane-toggle .icon-details {
+      display: inline-block;
+    }
+
+    .view-mobile.mobile-detail-focus .mobile-pane-toggle .icon-inputs {
+      display: inline-block;
+    }
+
+    .view-mobile .view-toggle .icon-phone {
+      display: inline-block;
+    }
+
+    .view-desktop .view-toggle .icon-desktop {
+      display: inline-block;
+    }
+
+    .fetch-notams-page .shared-site-nav[data-nav-variant="utility"] .nav-primary {
+      min-width: 0;
+    }
+
+    .fetch-notams-page .shared-site-nav[data-nav-variant="utility"] .nav-extras {
+      width: auto;
+      margin-left: auto;
+    }
+
+    .status-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin: 10px 0 14px;
+    }
+
+    #scoreboardSection .status-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      margin: 8px 0 12px;
+    }
+
+    .status-pill {
+      border: 1px solid #d3deef;
+      background: #f9fbff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      min-height: 52px;
+      text-align: center;
+    }
+
+    #scoreboardSection .status-pill {
+      border: 1px solid #314963;
+      background: linear-gradient(180deg, #172637 0%, #1b3045 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 10px rgba(8,20,34,0.12);
+      min-height: 56px;
+      padding: 8px 8px 9px;
+    }
+
+    .status-pill .k {
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: #1f3e72;
+      margin-bottom: 4px;
+      font-weight: 800;
+    }
+
+    #scoreboardSection .status-pill .k {
+      color: #97aec8;
+      font-size: 0.66rem;
+      margin-bottom: 4px;
+      letter-spacing: 0.08em;
+      line-height: 1;
+    }
+
+    .status-pill .v {
+      color: #00a85a;
+      font-weight: 800;
+      word-break: break-word;
+      font-size: 1.1rem;
+    }
+
+    #scoreboardSection .status-pill .v {
+      color: #ffd24a;
+      font-size: 0.96rem;
+      line-height: 1.08;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.18);
+      font-variant-numeric: tabular-nums;
+    }
+
+    #scoreboardSection .section-head {
+      font-size: 0.92rem;
+      padding: 8px 12px;
+    }
+
+    .status-ok { color: var(--ok); }
+    .status-warn { color: var(--warn); }
+    .status-err { color: var(--err); }
+
+    .results-wrap {
+      overflow: hidden;
+    }
+
+    /* results-header repurposed as the info bar inside section-body */
+    .results-header {
+      padding: 8px 12px 10px;
+    }
+
+    .results-info-bar {
+      padding: 0;
+      border: 1px solid #314963;
+      border-radius: 11px;
+      background: linear-gradient(180deg, #172637 0%, #1b3045 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 10px rgba(8,20,34,0.12);
+      overflow: hidden;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .results-info-bar .k {
+      color: #97aec8;
+      font-size: 0.64rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-right: 0;
+      line-height: 1;
+    }
+
+    .results-info-bar .v {
+      color: #ffd24a;
+      font-weight: 800;
+      margin-right: 0;
+      font-size: 0.94rem;
+      line-height: 1.08;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.18);
+    }
+
+    .results-info-bar .v.results-count {
+      color: #ffd24a;
+    }
+
+    #notamResultsSection .section-body {
+      padding: 10px 12px 8px;
+    }
+
+    #resultsHeaderText {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      color: #d9e5f2;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    #resultsHeaderText .results-stat {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 10px 9px;
+      text-align: center;
+    }
+
+    #resultsHeaderText .results-stat + .results-stat {
+      border-left: 1px solid rgba(154, 180, 209, 0.15);
+    }
+
+    #notamResultsSection .results-header-actions {
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    #notamResultsSection #viewAllOnMapBtn {
+      margin-left: auto;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-weight: 700;
+      font-size: 0.76rem;
+      white-space: nowrap;
+      transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
+    }
+
+    #notamResultsSection #viewAllOnMapBtn:disabled {
+      background: #e9eef6;
+      border-color: #c7d3e6;
+      color: #7a8ca7;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    #notamResultsSection #viewAllOnMapBtn:not(:disabled) {
+      background: linear-gradient(180deg, #e8f8ea 0%, #c8efcf 100%);
+      border-color: #76b986;
+      color: #1d5f2f;
+      box-shadow: 0 0 0 1px rgba(36, 112, 56, 0.18), 0 2px 5px rgba(29, 95, 47, 0.2);
+    }
+
+    .results-header-actions {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .results-list {
+      max-height: 62vh;
+      overflow: auto;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .notam-item {
+      border-bottom: 1px solid #edf2fa;
+      padding: 10px 12px;
+    }
+
+    .notam-item:last-child {
+      border-bottom: none;
+    }
+
+    .notam-line1 {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: baseline;
+      margin-bottom: 5px;
+    }
+
+    .notam-line2 {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin: 0 0 6px;
+      font-size: 0.82rem;
+      color: #34465f;
+    }
+
+    .qcode-pill,
+    .priority-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      font-size: 0.74rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .qcode-pill {
+      background: #f1f6ff;
+      border-color: #c7d7f2;
+      color: #1f3e72;
+    }
+
+    .qcode-pill.missing {
+      background: #ffecec;
+      border-color: #e0a08e;
+      color: #8a2e17;
+    }
+
+    .priority-pill {
+      background: #eff8ef;
+      border-color: #9fc9a6;
+      color: #1d5f2f;
+    }
+
+    .priority-pill.high {
+      background: #fff0e8;
+      border-color: #e0a08e;
+      color: #8a2e17;
+    }
+
+    .priority-pill.medium {
+      background: #fff7e8;
+      border-color: #e4b45d;
+      color: #7a4b00;
+    }
+
+    .priority-pill.low {
+      background: #eef2f9;
+      border-color: #c7d0e0;
+      color: #3b4a63;
+    }
+
+    .qcode-meaning {
+      font-weight: 600;
+      color: #36465c;
+    }
+
+    .qcode-missing-note {
+      font-weight: 700;
+      color: #8a2e17;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .notam-distance {
+      font-weight: 600;
+      color: #0b5ea8;
+      background: #f0f7ff;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-left: 12px;
+      display: inline-block;
+      border: 1px solid #c9e0ff;
+    }
+
+    .notam-id {
+      font-weight: 700;
+      color: var(--accent-2);
+    }
+
+    .notam-loc {
+      background: #e6f0ff;
+      color: #0f3f84;
+      border: 1px solid #c9ddff;
+      border-radius: 999px;
+      padding: 1px 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .notam-time {
+      color: #5d6b83;
+      font-size: 0.82rem;
+    }
+
+    .notam-preview {
+      margin: 0;
+      color: #17253e;
+      font-size: 0.9rem;
+      line-height: 1.35;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .coord-link {
+      color: #0b3f74;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid #85b8e6;
+      background: #dff1ff;
+      border-radius: 6px;
+      padding: 1px 5px;
+      display: inline-block;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .e-highlight .coord-link {
+      color: #072f57;
+      border-color: #5d9ed6;
+      background: #cae7ff;
+    }
+
+    .coord-link:hover,
+    .coord-link:focus-visible {
+      background: #c3e3ff;
+      border-color: #4f90ca;
+      outline: none;
+    }
+
+    #firInput,
+    #icaoInput {
+      text-transform: uppercase;
+    }
+
+    input::placeholder {
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .loading {
+      display: none;
+      margin: 8px 0 12px;
+      padding: 8px 10px;
+      border: 1px solid #d3deef;
+      border-radius: 8px;
+      background: #f8fbff;
+      color: #33527f;
+      font-weight: 600;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .loading.active {
+      display: flex;
+      width: 100%;
+    }
+
+    .loading-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #c9d8ef;
+      border-top-color: #0b5ea8;
+      border-radius: 50%;
+      animation: loading-spin 0.8s linear infinite;
+      flex: 0 0 16px;
+    }
+
+    @keyframes loading-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #4c5b73;
+      border-left: 3px solid #c7d8f1;
+      padding-left: 8px;
+    }
+
+    .q-filter-box {
+      border: 1px solid #d3deef;
+      border-radius: 8px;
+      background: #f9fbff;
+      padding: 10px;
+      margin: 2px 0 12px;
+    }
+
+    .q-filter-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .q-filter-title {
+      font-weight: 700;
+      color: #1f3e72;
+      margin-right: 8px;
+    }
+
+    .q-help-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .q-help-btn .legend-text {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .section-head-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-head-actions .q-help-btn {
+      margin-left: 0;
+    }
+
+    #openQLegend {
+      pointer-events: auto;
+    }
+
+    .q-help-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #1f4f7f;
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1;
+      border: 1px solid #153756;
+    }
+
+    #qFilterSection .q-help-btn {
+      padding: 3px 7px;
+    }
+
+    #qFilterSection .q-help-icon {
+      width: 22px;
+      height: 22px;
+      font-size: 0.82rem;
+    }
+
+    #qFilterSection .q-help-btn .legend-text {
+      font-size: 0.8rem;
+    }
+
+    .q-filter-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .icao-controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .icao-controls select {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .q-filter-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      background: #ffffff;
+      border: 1px solid #d6e2f5;
+      border-radius: 6px;
+      padding: 5px 6px;
+      color: #27466f;
+    }
+
+    .qcat-toggle {
+      width: 100%;
+      border: 1px solid #b7cae7;
+      background: #ffffff;
+      color: #1c3f6b;
+      border-radius: 6px;
+      padding: 3px 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+      position: relative;
+    }
+
+    #qcatFloatTooltip {
+      position: fixed;
+      z-index: 200;
+      background: #1f3652;
+      color: #ffffff;
+      padding: 5px 10px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      line-height: 1.35;
+      max-width: 220px;
+      white-space: normal;
+      text-align: center;
+      pointer-events: none;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.28);
+      opacity: 0;
+      transition: opacity 130ms ease;
+    }
+
+    #qcatFloatTooltip.is-visible {
+      opacity: 1;
+    }
+
+    .qcat-toggle.exclude {
+      background: #fff1ef;
+      border-color: #d9a6a0;
+      color: #7f2116;
+    }
+
+    .qcat-toggle.include {
+      background: #eff8ef;
+      border-color: #9fc9a6;
+      color: #1d5f2f;
+    }
+
+    .q-filter-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .q-filter-actions .btn {
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-weight: 700;
+    }
+
+    .sort-toggle-btn.is-on {
+      border-color: #9fc9a6;
+      background: #eff8ef;
+      color: #1d5f2f;
+    }
+
+    .q-filter-summary {
+      margin: 8px 0 0;
+      color: #4c5b73;
+      font-size: 0.84rem;
+    }
+
+    .section-collapsible {
+      border: 1px solid #d3deef;
+      border-radius: 10px;
+      background: #ffffff;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .section-collapsible .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      background: #f6f8fb;
+      border-bottom: 1px solid #e1e6ee;
+      font-weight: 700;
+      color: #1f3652;
+    }
+
+    .section-collapsible .section-body {
+      padding: 10px 12px;
+    }
+
+    .section-collapsible.collapsed .section-body {
+      display: none;
+    }
+
+    .section-toggle {
+      border: 1px solid #9bb6da;
+      background: #ffffff;
+      color: #1c3f6b;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    [data-section-head-target] {
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+      border-radius: 4px;
+    }
+
+    [data-section-head-target]:hover,
+    [data-section-head-target]:focus-visible {
+      color: #2b5cab;
+      text-decoration: underline dotted 2px;
+      outline: none;
+    }
+
+    .fir-reference-note {
+      margin: 0 0 8px;
+      color: #4f5f74;
+      font-size: 0.88rem;
+    }
+
+    .fir-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      background: #fff;
+    }
+
+    .fir-table th,
+    .fir-table td {
+      border: 1px solid #d7e2f3;
+      padding: 7px 8px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .fir-table th {
+      background: #f3f8ff;
+      color: #1f3652;
+      font-weight: 700;
+    }
+
+    .fir-table tbody tr {
+      cursor: pointer;
+    }
+
+    .fir-table tbody tr:hover {
+      background: #eef5ff;
+    }
+
+    .fir-table tbody tr.active {
+      background: #dff0e6;
+    }
+
+    .fir-source-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      border: 1px solid #c7d2e3;
+      background: #f3f6fb;
+      color: #2f4a70;
+    }
+
+    .fir-source-pill.current {
+      border-color: #9fc9a6;
+      background: #eff8ef;
+      color: #1d5f2f;
+    }
+
+    .fir-source-pill.cached {
+      border-color: #a7c6ee;
+      background: #eaf3ff;
+      color: #1f4f84;
+    }
+
+    .fir-source-pill.none {
+      border-color: #d9dfe8;
+      background: #f5f7fa;
+      color: #5f6f83;
+    }
+
+    .filter-toggle-btn {
+      border: 1px solid #9fc9a6;
+      background: #eff8ef;
+      color: #1d5f2f;
+      border-radius: 7px;
+      padding: 5px 10px;
+      font-weight: 700;
+      cursor: pointer;
+      min-width: 110px;
+      text-align: center;
+    }
+
+    .filter-toggle-btn.is-on {
+      border-color: #d9a6a0;
+      background: #fff1ef;
+      color: #7f2116;
+    }
+
+    .btn-attn {
+      background: #1f7a3f;
+      border-color: #16612f;
+      color: #ffffff;
+    }
+
+    .btn-attn:hover,
+    .btn-attn:focus-visible {
+      background: #1a6a35;
+      border-color: #145529;
+    }
+
+    .label-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .label-hint .hint-icon {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border: 2px solid #6a7a93;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+      margin-top: -2px;
+    }
+
+    .label-hint .hint-text {
+      font-size: 0.72rem;
+      color: #6a7a93;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+    }
+
+    /* Always-visible dropdown affordance for datalist text inputs */
+    .list-input-wrap {
+      position: relative;
+      flex: 1 1 auto;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .list-input-wrap > input {
+      width: 100%;
+      box-sizing: border-box;
+      padding-right: 34px;
+    }
+
+    .list-input-wrap::after {
+      content: "";
+      position: absolute;
+      right: 11px;
+      top: 50%;
+      transform: translateY(-65%) rotate(45deg);
+      width: 8px;
+      height: 8px;
+      border: 2.5px solid #4a6a93;
+      border-top: none;
+      border-left: none;
+      pointer-events: none;
+    }
+
+    /* NOTAM queryable badge in label */
+    .notam-query-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #4a6a93;
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 800;
+      line-height: 1;
+      vertical-align: middle;
+      margin-left: 3px;
+    }
+
+    .btn-muted {
+      background: #e6ebf2;
+      border-color: #c7d2e3;
+      color: #1f3652;
+    }
+
+    .q-legend-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 1000;
+    }
+
+    .q-legend-modal.open {
+      display: block;
+    }
+
+    .q-legend-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .q-legend-dialog {
+      position: relative;
+      width: min(920px, calc(100vw - 32px));
+      max-height: calc(100vh - 32px);
+      margin: 16px auto;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #d7dce3;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .q-legend-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e6ebf2;
+    }
+
+    .q-legend-header-actions {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .q-legend-title {
+      margin: 0;
+      font-size: 1.05rem;
+      color: #1f3652;
+    }
+
+    .q-legend-body {
+      padding: 12px 16px 16px;
+      overflow: auto;
+    }
+
+    .q-legend-context {
+      padding: 10px 12px;
+      border: 1px solid #d7e2f3;
+      border-radius: 8px;
+      background: #f8fbff;
+      margin-bottom: 10px;
+    }
+
+    .q-legend-context-title {
+      margin: 0 0 6px;
+      font-size: 0.92rem;
+      color: #1f3652;
+    }
+
+    .q-legend-context-line {
+      margin: 0 0 8px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #0f1b2d;
+      color: #f0f5fb;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.94rem;
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+
+    .q-legend-context-list {
+      margin: 0;
+      padding-left: 16px;
+      font-size: 0.82rem;
+      color: #344860;
+      line-height: 1.4;
+    }
+
+    .seg-fir,
+    .seg-qcode,
+    .seg-traffic,
+    .seg-purpose,
+    .seg-scope,
+    .seg-limits,
+    .seg-coord {
+      font-weight: 700;
+    }
+
+    .q-legend-context-line .seg-fir { color: #86d7ff; }
+    .q-legend-context-line .seg-qcode { color: #ffd37a; }
+    .q-legend-context-line .seg-traffic { color: #86f0a6; }
+    .q-legend-context-line .seg-purpose { color: #ffb7d8; }
+    .q-legend-context-line .seg-scope { color: #d0c3ff; }
+    .q-legend-context-line .seg-limits { color: #fff08d; }
+    .q-legend-context-line .seg-coord { color: #8aeff3; }
+
+    .q-legend-tools {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .q-legend-actions {
+      display: flex;
+      gap: 8px;
+      margin: 0 0 12px;
+      flex-wrap: wrap;
+    }
+
+    .q-legend-actions .btn {
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-weight: 700;
+    }
+
+    .q-legend-tools input {
+      flex: 1;
+      min-width: 220px;
+      padding: 8px 10px;
+      border: 1px solid #c7ced8;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .q-legend-note {
+      margin: 0 0 10px;
+      color: #4f5f74;
+      font-size: 0.88rem;
+    }
+
+    .q-legend-info {
+      margin: 0 0 10px;
+      color: #b3261e;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .q-legend-popout-status {
+      display: none;
+      margin: 0 0 10px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      border: 1px solid #d7e2f3;
+      background: #f8fbff;
+      color: #1f3652;
+    }
+
+    .q-legend-popout-status.show {
+      display: block;
+    }
+
+    .q-legend-popout-status.warn {
+      border-color: #e4b45d;
+      background: #fff7e8;
+      color: #7a4b00;
+    }
+
+    .q-legend-popout-status.ok {
+      border-color: #9fc9a6;
+      background: #eff8ef;
+      color: #1d5f2f;
+    }
+
+    .q-legend-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      background: #fff;
+    }
+
+    .q-legend-table th,
+    .q-legend-table td {
+      border: 1px solid #e1e6ee;
+      padding: 7px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .q-legend-table th {
+      background: #f6f8fb;
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .q-legend-col-code {
+      font-weight: 700;
+      color: #163e70;
+      white-space: nowrap;
+    }
+
+    .q-legend-section {
+      margin-bottom: 14px;
+    }
+
+    .q-legend-section h3 {
+      margin: 0;
+      font-size: 0.96rem;
+      color: #1f3652;
+    }
+
+    .q-legend-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 8px;
+      background: #f6f8fb;
+      border: 1px solid #e1e6ee;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .q-legend-toggle {
+      border: 1px solid #9bb6da;
+      background: #ffffff;
+      color: #1c3f6b;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .q-legend-section.collapsed .q-legend-table {
+      display: none;
+    }
+
+    .q-legend-hit td {
+      background: #e6f6ea;
+    }
+
+    .mode-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      font-weight: 600;
+      color: #2d4670;
+    }
+
+    @media (max-width: 920px) {
+      .search-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .q-filter-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .status-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* Desktop: compact 2-row form — overrides the 920px column breakpoint */
+    .view-desktop .search-container {
+      display: grid;
+      grid-template-columns: 132px 132px 132px auto;
+      gap: 8px 12px;
+      align-items: end;
+    }
+
+    .view-desktop .search-container .field-group.code-field {
+      min-width: 0;
+      max-width: 132px;
+    }
+
+    .view-desktop .search-container .field-group.code-field input {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .view-desktop .search-container .search-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      align-items: stretch;
+    }
+
+    .view-desktop .search-container .search-row-end {
+      grid-column: 1 / -1;
+      justify-content: flex-start;
+      padding-top: 2px;
+    }
+
+    .view-desktop .search-container .btn {
+      min-width: 0;
+    }
+
+    .view-desktop .search-actions .action-btn {
+      padding: 7px 12px;
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+
+    .view-desktop .search-actions #refreshFromCacheBtn {
+      grid-column: 1 / -1;
+      margin-bottom: 6px;
+    }
+
+    .view-mobile .card {
+      width: min(100% - 20px, 560px);
+      margin: 16px auto;
+      padding: 16px;
+    }
+
+    .view-mobile .search-container {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px 8px;
+    }
+
+    .view-mobile .selection-top {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .view-mobile .selection-stats {
+      grid-template-columns: auto 1fr;
+    }
+
+    .view-mobile .search-container .field-group {
+      width: auto;
+      max-width: none;
+    }
+
+    .view-mobile .search-container .field-group.code-field {
+      flex: 1 1 100%;
+      min-width: 0;
+      max-width: none;
+    }
+
+    .view-mobile .search-container .field-group.code-field input {
+      width: 100%;
+      min-width: 6ch;
+    }
+
+    .view-mobile .search-container .field-group.code-field #notamInput {
+      width: 100%;
+      min-width: 10ch;
+    }
+
+    .view-mobile .search-container .field-group.notam-field {
+      flex: 1 1 100%;
+      max-width: none;
+    }
+
+    .view-mobile .q-filter-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 4px;
+    }
+
+    .view-mobile .q-filter-chip {
+      padding: 2px;
+      font-size: 0.75rem;
+      gap: 2px;
+    }
+
+    .view-mobile .qcat-toggle {
+      padding: 3px 2px;
+      font-size: 0.72rem;
+      text-align: center;
+      min-height: 28px;
+      line-height: 1.15;
+    }
+
+
+
+    .view-mobile .q-filter-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .view-mobile .q-filter-actions .btn {
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 0.78rem;
+    }
+
+    .view-mobile .q-filter-summary {
+      font-size: 0.78rem;
+      line-height: 1.25;
+    }
+
+    .view-mobile .icao-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .view-mobile .icao-picker {
+      flex-wrap: wrap;
+    }
+
+    .view-mobile .icao-picker input {
+      flex: 1 1 120px;
+      min-width: 6ch;
+    }
+
+    .view-mobile .icao-picker select {
+      flex: 0 0 110px;
+      min-width: 0;
+      width: auto;
+    }
+
+      .view-mobile .status-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .view-mobile #scoreboardSection .status-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 5px;
+      }
+
+      .view-mobile #scoreboardSection .status-pill {
+        min-height: 52px;
+        padding: 7px 6px 8px;
+      }
+
+      .view-mobile #scoreboardSection .status-pill .k {
+        font-size: 0.59rem;
+        margin-bottom: 3px;
+      }
+
+      .view-mobile #scoreboardSection .status-pill .v {
+        font-size: 0.86rem;
+      }
+
+      .view-mobile .search-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* fixed 2-column layout avoids collapse on narrow mobile widths */
+        gap: 8px;
+        width: 100%;
+      }
+
+      .view-mobile .search-actions #refreshFromCacheBtn {
+        grid-column: 1 / -1;
+        margin-bottom: 8px;
+      }
+
+      .view-mobile .search-actions .btn {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .view-mobile .btn {
+        width: 100%;
+      }
+
+      .view-mobile .selection-cache-row .btn {
+        min-width: 0;
+      }
+
+      .view-mobile .search-row-end {
+        justify-content: flex-start;
+      }
+
+      .view-mobile .search-row-end .selection-stats {
+        padding: 0;
+      }
+
+    @media (orientation: landscape) {
+      .view-mobile .notam-preview {
+        font-size: 0.86rem;
+        line-height: 1.3;
+      }
+
+      .view-mobile .notam-line2,
+      .view-mobile .notam-time {
+        font-size: 0.78rem;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .fetch-notams-page .top-nav {
+        padding: 8px 10px;
+        font-size: 0.92rem;
+        line-height: 1.65;
+      }
+
+      .fetch-notams-page .top-nav a {
+        display: inline-block;
+        margin: 2px 6px;
+      }
+
+      .fetch-notams-page .top-nav .back-link {
+        margin-bottom: 0;
+      }
+
+      .fetch-notams-page .shared-site-nav[data-nav-variant="utility"] .nav-extras {
+        justify-content: flex-end;
+      }
+
+      .fetch-notams-page .top-nav .view-toggle {
+        margin-top: 0;
+      }
+
+      .view-mobile .card {
+        width: auto;
+        margin: 10px;
+        padding: 12px;
+      }
+
+      .view-mobile .results-list {
+        max-height: 56vh;
+      }
+
+      .view-mobile .notam-distance {
+        display: block;
+        flex-basis: 100%;
+        margin-left: 0;
+        margin-top: 4px;
+      }
+
+      .view-mobile .results-header-actions {
+        gap: 6px;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        min-width: 0;
+        flex: 1 1 auto;
+        overflow: hidden;
+      }
+
+      .view-mobile #notamResultsSection .section-head {
+        gap: 8px;
+        align-items: center;
+      }
+
+      .view-mobile #notamResultsSection .section-toggle {
+        flex: 0 0 auto;
+      }
+
+      .view-mobile #notamResultsSection #viewAllOnMapBtn {
+        margin-left: 0;
+      }
+
+      .view-mobile .results-header-actions .btn {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 0.74rem;
+        padding: 4px 8px;
+      }
+
+      .view-mobile #resultsHeaderText .results-stat {
+        padding: 8px 7px 9px;
+      }
+
+      .view-mobile .results-info-bar .k {
+        font-size: 0.6rem;
+      }
+
+      .view-mobile .results-info-bar .v {
+        font-size: 0.88rem;
+      }
+
+      .view-mobile .status-row {
+        grid-template-columns: 1fr;
+      }
+
+      .view-mobile .section-body {
+        overflow-x: auto;
+      }
+
+      .view-mobile .fir-table {
+        min-width: 560px;
+      }
+
+      .view-mobile #qFilterSection .section-head {
+        align-items: center;
+      }
+
+      .view-mobile #qFilterSection .section-head-actions {
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .view-mobile #qFilterSection .q-help-btn {
+        padding: 2px 6px;
+        gap: 4px;
+      }
+
+      .view-mobile #qFilterSection .q-help-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 0.75rem;
+      }
+
+      .view-mobile #qFilterSection .q-help-btn .legend-text {
+        font-size: 0.74rem;
+      }
+
+      .view-mobile #qFilterSection .filter-toggle-btn {
+        min-width: 0;
+        padding: 3px 6px;
+        font-size: 0.7rem;
+        line-height: 1;
+        border-radius: 6px;
+      }
+
+      .view-mobile .section-head-actions .btn,
+      .view-mobile .section-head-actions .filter-toggle-btn,
+      .view-mobile .section-head-actions .section-toggle {
+        width: auto;
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .view-mobile .q-filter-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .view-mobile .q-filter-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .view-mobile .q-filter-chip,
+      .view-mobile .qcat-toggle {
+        font-size: 0.72rem;
+      }
+
+      .view-mobile .selection-stats {
+        gap: 6px;
+        font-size: 0.86rem;
+      }
+
+      #scopeSummaryLine {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      #scopeSummaryLine .scope-stat {
+        padding: 8px 8px 9px;
+      }
+
+      #scopeSummaryLine .k {
+        font-size: 0.62rem;
+      }
+
+      #scopeSummaryLine .v {
+        font-size: 0.92rem;
+      }
+    }
+
+    .view-mobile.mobile-detail-focus .selection-block,
+    .view-mobile.mobile-detail-focus #inputSelectionsSection,
+    .view-mobile.mobile-detail-focus #firReferenceSection,
+    .view-mobile.mobile-detail-focus #qFilterSection,
+    .view-mobile.mobile-detail-focus #scoreboardSection {
+      display: none;
+    }
+
+    .view-mobile.mobile-detail-focus #notamResultsSection {
+      margin-top: 4px;
+    }
+
+    .view-mobile.mobile-detail-focus .card {
+      padding-bottom: 70px;
+    }
+  </style>
+</head>
+<body class="fetch-notams-page">
+  <nav class="top-nav shared-site-nav" data-nav-variant="utility" data-back-fallback="tools.html">
+    <button class="view-toggle" type="button" id="viewToggleBtn" data-nav-extra aria-pressed="false" title="Switch to desktop view">
+      <span class="icon icon-phone" aria-hidden="true"></span>
+      <span class="icon icon-desktop" aria-hidden="true"></span>
+      <span class="toggle-label">Mobile</span>
+    </button>
+  </nav>
+
+  <div class="card">
+    <h1>Fetch NOTAMS</h1>
+    <p class="subtle" id="lastFetchBanner">Last Fetch: - EDT | - UTC</p>
+
+    <section class="section-collapsible collapsed" id="firReferenceSection">
+      <div class="section-head">
+        <span data-section-head-target="#firReferenceSection">Canadian FIR Reference</span>
+        <button class="section-toggle" type="button" data-collapse-target="#firReferenceSection">Show</button>
+      </div>
+      <div class="section-body">
+        <p class="fir-reference-note">Double tap/click Region or FIR to fetch NOTAMs and airport list.<br>Airport choices appear after that FIR is loaded as Current.</p>
+        <table class="fir-table" aria-label="Canadian FIR reference and NOTAM counts">
+          <thead>
+            <tr>
+              <th>Region</th>
+              <th>FIR</th>
+              <th>NOTAM Count</th>
+              <th>Data Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-fir-row="CZVR"><td>Vancouver</td><td>CZVR</td><td data-fir-count="CZVR">0</td><td><span class="fir-source-pill none" data-fir-source="CZVR">None</span></td></tr>
+            <tr data-fir-row="CZEG"><td>Edmonton</td><td>CZEG</td><td data-fir-count="CZEG">0</td><td><span class="fir-source-pill none" data-fir-source="CZEG">None</span></td></tr>
+            <tr data-fir-row="CZWG"><td>Winnipeg</td><td>CZWG</td><td data-fir-count="CZWG">0</td><td><span class="fir-source-pill none" data-fir-source="CZWG">None</span></td></tr>
+            <tr data-fir-row="CZYZ"><td>Toronto</td><td>CZYZ</td><td data-fir-count="CZYZ">0</td><td><span class="fir-source-pill none" data-fir-source="CZYZ">None</span></td></tr>
+            <tr data-fir-row="CZUL"><td>Montreal</td><td>CZUL</td><td data-fir-count="CZUL">0</td><td><span class="fir-source-pill none" data-fir-source="CZUL">None</span></td></tr>
+            <tr data-fir-row="CZQM"><td>Moncton</td><td>CZQM</td><td data-fir-count="CZQM">0</td><td><span class="fir-source-pill none" data-fir-source="CZQM">None</span></td></tr>
+            <tr data-fir-row="CZQX"><td>Gander</td><td>CZQX</td><td data-fir-count="CZQX">0</td><td><span class="fir-source-pill none" data-fir-source="CZQX">None</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section-collapsible" id="inputSelectionsSection">
+      <div class="section-head">
+        <span data-section-head-target="#inputSelectionsSection">Input Selections</span>
+        <button class="section-toggle" type="button" data-collapse-target="#inputSelectionsSection">Hide</button>
+      </div>
+      <div class="section-body">
+        <form id="fetchForm" class="search-container">
+          <div class="field-group code-field">
+            <label for="firInput" class="label-hint">FIR</label>
+            <div class="list-input-wrap">
+              <input id="firInput" type="text" placeholder="FIR" maxlength="4" list="firList">
+            </div>
+            <datalist id="firList">
+              <option value="CZVR">CZVR -Vancouver</option>
+              <option value="CZEG">CZEG - Edmonton</option>
+              <option value="CZWG">CZWG - Winnipeg</option>
+              <option value="CZYZ">CZYZ - Toronto</option>
+              <option value="CZUL">CZUL - Montreal</option>
+              <option value="CZQM">CZQM - Moncton</option>
+              <option value="CZQX">CZQX - Gander</option>
+            </datalist>
+          </div>
+
+          <div class="field-group code-field">
+            <label for="icaoInput" class="label-hint">ICAO</label>
+            <div class="icao-picker">
+              <div class="list-input-wrap">
+                <input id="icaoInput" type="text" placeholder="ICAO code" maxlength="4" list="icaoList">
+              </div>
+            </div>
+            <datalist id="icaoList"></datalist>
+          </div>
+
+          <div class="field-group code-field notam-field">
+            <label for="notamInput" class="label-hint">NOTAM No. <span class="notam-query-badge" aria-hidden="true">?</span></label>
+            <input id="notamInput" type="text" placeholder="G0000/YY">
+          </div>
+
+          <div class="search-actions">
+            <button class="btn action-btn btn-attn" type="submit" id="fetchNotamsBtn">Fetch NOTAMS</button>
+            <button class="btn action-btn" type="button" id="clearEntriesBtn">Clear Entries</button>
+            <button class="btn action-btn" type="button" id="refreshFromCacheBtn">Use FIR in Cache</button>
+          </div>
+          <div class="search-row-end">
+            <div class="selection-stats" id="scopeSummaryLine">
+              <div class="scope-stat">
+                <span class="k">FIR</span>
+                <span class="v scope-code" id="currentFirValue">-</span>
+              </div>
+              <div class="scope-stat">
+                <span class="k">ICAO</span>
+                <span class="v scope-code" id="currentIcaoValue">-</span>
+              </div>
+              <div class="scope-stat">
+                <span class="k">NOTAMs</span>
+                <span class="v scope-count" id="notamsInScopeInline">0</span>
+              </div>
+              <div class="scope-stat">
+                <span class="k">Airports</span>
+                <span class="v scope-count" id="airportsFoundInline">0</span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="selection-block" aria-label="Scope Summary">
+      <div id="loadingState" class="loading" role="status" aria-live="polite" aria-busy="false">
+        <span class="loading-spinner" aria-hidden="true"></span>
+        <span class="loading-text">Loading NOTAMs (cache first, live refresh in progress)...</span>
+      </div>
+    </section>
+
+    <section class="section-collapsible collapsed" id="qFilterSection">
+      <div class="section-head">
+        <span data-section-head-target="#qFilterSection">Q-Code Filters</span>
+        <div class="section-head-actions">
+          <button class="btn btn-small q-help-btn" type="button" id="openQLegend" title="Open legend">
+            <span class="q-help-icon" aria-hidden="true">?</span>
+            <span class="legend-text">Legend</span>
+          </button>
+          <button class="filter-toggle-btn" type="button" id="toggleQFilterBtn" data-state="off">Filters OFF</button>
+          <button class="section-toggle" type="button" data-collapse-target="#qFilterSection">Show</button>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="q-filter-grid">
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="A" data-state="exclude">A*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="C" data-state="exclude">C*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="F" data-state="exclude">F*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="G" data-state="exclude">G*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="I" data-state="exclude">I*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="L" data-state="exclude">L*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="M" data-state="exclude">M*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="N" data-state="exclude">N*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle include" type="button" data-qcat="O" data-state="include">O*: Include</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="P" data-state="exclude">P*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle include" type="button" data-qcat="R" data-state="include">R*: Include</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="S" data-state="exclude">S*: Exclude</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle include" type="button" data-qcat="W" data-state="include">W*: Include</button></div>
+          <div class="q-filter-chip"><button class="qcat-toggle exclude" type="button" data-qcat="X" data-state="exclude">X*: Exclude</button></div>
+        </div>
+        <div class="q-filter-actions">
+          <button class="btn btn-small" type="button" id="qSetAllExcludeBtn">Set All Exclude</button>
+          <button class="btn btn-small" type="button" id="qSetAllIncludeBtn">Set All Include</button>
+          <button class="btn btn-small" type="button" id="qResetDefaultsBtn">Reset Defaults</button>
+          <button class="btn btn-small sort-toggle-btn is-on" type="button" id="sortByPriorityBtn" data-state="on">Sort by priority: ON</button>
+        </div>
+        <p class="q-filter-summary" id="qFilterSummary">Q filter is off. Live results are unchanged.</p>
+      </div>
+    </section>
+
+    <div id="qLegendModal" class="q-legend-modal" aria-hidden="true">
+      <div class="q-legend-backdrop" data-close-qlegend></div>
+      <div class="q-legend-dialog" role="dialog" aria-modal="true" aria-labelledby="qLegendTitle">
+        <div class="q-legend-header">
+          <h2 class="q-legend-title" id="qLegendTitle">NOTAM Q-Code Legend</h2>
+          <div class="q-legend-header-actions">
+            <button class="btn btn-small" type="button" id="popoutQLegend">Pop out</button>
+            <button class="btn btn-small" type="button" id="closeQLegend">Close</button>
+          </div>
+        </div>
+        <div class="q-legend-body">
+          <div class="q-legend-context" aria-label="Q-line quick reference">
+            <p class="q-legend-context-title"><strong>Q Line Anatomy Example</strong></p>
+            <p class="q-legend-context-line">
+              Q)
+              <span class="seg-fir">CZYZ</span> /
+              <span class="seg-qcode">QOLAS</span> /
+              <span class="seg-traffic">IV</span> /
+              <span class="seg-purpose">M</span> /
+              <span class="seg-scope">AE</span> /
+              <span class="seg-limits">000 / 014</span> /
+              <span class="seg-coord">4447N07822W005</span>
+            </p>
+            <ul class="q-legend-context-list">
+              <li><strong class="seg-fir">CZYZ</strong>: FIR</li>
+              <li><strong class="seg-qcode">QOLAS</strong>: Q + subject OL + condition AS</li>
+              <li><strong class="seg-traffic">IV</strong>: IFR + VFR</li>
+              <li><strong class="seg-purpose">M</strong>: Miscellaneous purpose</li>
+              <li><strong class="seg-scope">AE</strong>: Aerodrome + En-route</li>
+              <li><strong class="seg-limits">000 / 014</strong>: Surface to 1,400 ft</li>
+              <li><strong class="seg-coord">4447N07822W005</strong>: Center and radius</li>
+            </ul>
+          </div>
+
+          <p class="q-legend-note">Enter a 2-letter Subject code and 2-letter Condition code to look up a combined meaning. Category toggles on this page are based on the first letter of the subject (F, L, M, P, O, X).</p>
+          <p class="q-legend-popout-status" id="qLegendPopoutStatus" role="status" aria-live="polite"></p>
+          <div class="q-legend-tools">
+            <input id="qLegendSearch" type="text" placeholder="Subject (2 letters, example: LI)">
+            <input id="qLegendConditionSearch" type="text" placeholder="Condition (2 letters, example: AS)">
+            <button class="btn btn-small" type="button" id="qLegendClearSearch">Clear</button>
+          </div>
+          <div class="q-legend-actions">
+            <button class="btn btn-small" type="button" id="qLegendShowAll">Show all</button>
+          </div>
+          <p class="q-legend-info" id="qLegendInfo">Enter both subject and condition codes to see a combined meaning.</p>
+          <div id="qLegendBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="section-collapsible collapsed" id="scoreboardSection">
+      <div class="section-head">
+        <span data-section-head-target="#scoreboardSection">Data source/timestamp record</span>
+        <button class="section-toggle" type="button" data-collapse-target="#scoreboardSection">Show</button>
+      </div>
+      <div class="section-body">
+        <div class="status-row">
+          <div class="status-pill"><span class="k">Time Stamp</span><span class="v" id="updatedValue">-</span></div>
+          <div class="status-pill"><span class="k">Source</span><span class="v" id="sourceValue">-</span></div>
+          <div class="status-pill"><span class="k">Total NOTAMs</span><span class="v" id="totalValue">0</span></div>
+          <div class="status-pill"><span class="k">Displayed</span><span class="v" id="shownValue">0</span></div>
+          <div class="status-pill"><span class="k">Unknown Q-Codes</span><span class="v" id="unknownQCodesValue">0</span></div>
+          <div class="status-pill"><span class="k">Fetch Time</span><span class="v" id="fetchTimeValue">-</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-collapsible" id="notamResultsSection">
+      <div class="section-head">
+        <span data-section-head-target="#notamResultsSection">NOTAMS</span>
+        <div class="results-header-actions">
+          <button class="btn" type="button" id="viewAllOnMapBtn" disabled>View all on map</button>
+        </div>
+        <button class="section-toggle" type="button" data-collapse-target="#notamResultsSection">Hide</button>
+      </div>
+      <div class="section-body">
+        <div class="results-header">
+          <div class="results-info-bar" id="resultsInfoBar">
+            <span id="resultsHeaderText">No data loaded yet.</span>
+          </div>
+        </div>
+        <ul class="results-list" id="resultsList"></ul>
+      </div>
+    </section>
+
+  </div>
+
+  <button class="mobile-pane-toggle" type="button" id="mobilePaneToggle" aria-pressed="false" title="Switch to detail view">
+    <span class="toggle-icon icon-inputs" aria-hidden="true"></span>
+    <span class="toggle-icon icon-details" aria-hidden="true"></span>
+    <span class="toggle-label">Detail</span>
+  </button>
+
+  <script src="assets/js/qcode-legend.js"></script>
+  <script>
+    const API_BASE = "https://plan.navcanada.ca/weather/api/alpha/";
+    const DIRECT_TIMEOUT_MS = 5000;
+    const PROXY_TIMEOUT_MS = 14000;
+    const PROXY_PROVIDERS = [
+      {
+        name: "cloudflare",
+        label: "Cloudflare API",
+        buildUrl: targetUrl => `https://navcan-proxy.rontreleaven.workers.dev/?url=${encodeURIComponent(targetUrl)}`
+      },
+      {
+        name: "corsproxy",
+        label: "CorsProxy",
+        buildUrl: targetUrl => `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`
+      }
+    ];
+    const CACHE_TTL_MS = 5 * 60 * 1000;
+    const LIVE_FETCH_COOLDOWN_MS = 30 * 60 * 1000;
+    const FRESH_BANNER_WINDOW_MS = 60 * 60 * 1000;
+    const LAST_FIR_STORAGE_KEY = "fetchnotams:lastFir";
+    const LAST_ICAO_STORAGE_KEY = "fetchnotams:lastIcao";
+    const VIEW_MODE_KEY = "fetchnotams:viewMode";
+    const MOBILE_PANE_MODE_KEY = "fetchnotams:mobilePaneMode";
+    const MAP_PAYLOAD_STORAGE_PREFIX = "fetchnotams:map:payload:";
+    const MAP_LIVE_UNFILTERED_STORAGE_KEY = "fetchnotams:map:live:latest";
+    const MAP_PAYLOAD_TTL_MS = 2 * 60 * 60 * 1000;
+    const FIR_CODES = ["CZVR", "CZEG", "CZWG", "CZYZ", "CZUL", "CZQM", "CZQX"];
+    const FIR_CODE_SET = new Set(FIR_CODES);
+    const DISPLAY_TIME_ZONE = "America/Toronto";
+
+    const el = {
+      form: document.getElementById("fetchForm"),
+      fetchNotamsBtn: document.getElementById("fetchNotamsBtn"),
+      firInput: document.getElementById("firInput"),
+      icaoInput: document.getElementById("icaoInput"),
+      notamInput: document.getElementById("notamInput"),
+      icaoList: document.getElementById("icaoList"),
+      currentFirValue: document.getElementById("currentFirValue"),
+      currentIcaoValue: document.getElementById("currentIcaoValue"),
+      clearEntriesBtn: document.getElementById("clearEntriesBtn"),
+      airportsFoundInline: document.getElementById("airportsFoundInline"),
+      notamsInScopeInline: document.getElementById("notamsInScopeInline"),
+      toggleQFilterBtn: document.getElementById("toggleQFilterBtn"),
+      qSetAllExcludeBtn: document.getElementById("qSetAllExcludeBtn"),
+      qSetAllIncludeBtn: document.getElementById("qSetAllIncludeBtn"),
+      sortByPriorityBtn: document.getElementById("sortByPriorityBtn"),
+      qResetDefaultsBtn: document.getElementById("qResetDefaultsBtn"),
+      qFilterSummary: document.getElementById("qFilterSummary"),
+      openQLegend:
+        document.getElementById("openQLegend") ||
+        document.getElementById("openQCodeLegend") ||
+        document.getElementById("openQCodeLegendBtn") ||
+        document.querySelector(".q-help-btn"),
+      qLegendModal: document.getElementById("qLegendModal"),
+      closeQLegend: document.getElementById("closeQLegend"),
+      popoutQLegend: document.getElementById("popoutQLegend"),
+      qLegendSearch: document.getElementById("qLegendSearch"),
+      qLegendConditionSearch: document.getElementById("qLegendConditionSearch"),
+      qLegendClearSearch: document.getElementById("qLegendClearSearch"),
+      qLegendShowAll: document.getElementById("qLegendShowAll"),
+      qLegendInfo: document.getElementById("qLegendInfo"),
+      qLegendBody: document.getElementById("qLegendBody"),
+      qLegendPopoutStatus: document.getElementById("qLegendPopoutStatus"),
+      lastFetchBanner: document.getElementById("lastFetchBanner"),
+      loadingState: document.getElementById("loadingState"),
+      loadingText: document.querySelector("#loadingState .loading-text"),
+      sourceValue: document.getElementById("sourceValue"),
+      fetchTimeValue: document.getElementById("fetchTimeValue"),
+      totalValue: document.getElementById("totalValue"),
+      shownValue: document.getElementById("shownValue"),
+      updatedValue: document.getElementById("updatedValue"),
+      unknownQCodesValue: document.getElementById("unknownQCodesValue"),
+      resultsHeaderText: document.getElementById("resultsHeaderText"),
+      resultsList: document.getElementById("resultsList"),
+      viewAllOnMapBtn: document.getElementById("viewAllOnMapBtn"),
+      refreshFromCacheBtn: document.getElementById("refreshFromCacheBtn")
+      ,
+      viewToggleBtn: document.getElementById("viewToggleBtn"),
+      mobilePaneToggle: document.getElementById("mobilePaneToggle")
+    };
+
+    function getAutoViewMode() {
+      return window.matchMedia("(max-width: 900px)").matches ? "mobile" : "desktop";
+    }
+
+    function detectDeviceType() {
+      const ua = navigator.userAgent || "";
+      const touchPoints = navigator.maxTouchPoints || 0;
+      const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+      const viewportWidth = Math.min(window.innerWidth || 0, window.screen.width || Number.MAX_SAFE_INTEGER);
+
+      const isiPadOS = /Macintosh/i.test(ua) && touchPoints > 1;
+      const isTabletUA = /iPad|Tablet|PlayBook|Silk|(Android(?!.*Mobile))/i.test(ua);
+      const isPhoneUA = /iPhone|iPod|Android.*Mobile|Windows Phone|Mobile/i.test(ua);
+
+      if (isiPadOS || isTabletUA || (coarsePointer && viewportWidth >= 768 && viewportWidth <= 1100)) {
+        return "tablet";
+      }
+
+      if (isPhoneUA || (coarsePointer && viewportWidth < 768)) {
+        return "phone";
+      }
+
+      return "desktop";
+    }
+
+    function applyDeviceType(type) {
+      document.body.classList.remove("device-phone", "device-tablet", "device-desktop");
+      document.body.classList.add(`device-${type}`);
+      document.body.dataset.deviceType = type;
+    }
+
+    function initDeviceType() {
+      const update = () => applyDeviceType(detectDeviceType());
+      update();
+      window.addEventListener("resize", update);
+      window.addEventListener("orientationchange", update);
+    }
+
+    function applyViewMode(mode) {
+      const isMobile = mode === "mobile";
+      document.body.classList.toggle("view-mobile", isMobile);
+      document.body.classList.toggle("view-desktop", !isMobile);
+      if (!el.viewToggleBtn) return;
+      el.viewToggleBtn.setAttribute("aria-pressed", isMobile ? "true" : "false");
+      el.viewToggleBtn.title = isMobile ? "Switch to desktop view" : "Switch to mobile view";
+      const label = el.viewToggleBtn.querySelector(".toggle-label");
+      if (label) label.textContent = isMobile ? "Mobile" : "Desktop";
+      syncMobilePaneMode();
+    }
+
+    function applyMobilePaneMode(mode) {
+      const detailMode = mode === "details";
+      const canApply = document.body.classList.contains("view-mobile");
+      document.body.classList.toggle("mobile-detail-focus", canApply && detailMode);
+      if (!el.mobilePaneToggle) return;
+      el.mobilePaneToggle.setAttribute("aria-pressed", detailMode ? "true" : "false");
+      el.mobilePaneToggle.title = detailMode ? "Switch to input view" : "Switch to detail view";
+      const label = el.mobilePaneToggle.querySelector(".toggle-label");
+      if (label) label.textContent = detailMode ? "Inputs" : "Detail";
+      scheduleMobileDockUpdate();
+    }
+
+    function syncMobilePaneMode() {
+      const isMobileView = document.body.classList.contains("view-mobile");
+      if (!el.mobilePaneToggle) return;
+      el.mobilePaneToggle.hidden = !isMobileView;
+      if (!isMobileView) {
+        document.body.classList.remove("mobile-detail-focus");
+        el.mobilePaneToggle.classList.remove("dock-left", "hidden-for-input");
+        return;
+      }
+      const storedMode = localStorage.getItem(MOBILE_PANE_MODE_KEY);
+      const mode = storedMode === "details" ? "details" : "inputs";
+      applyMobilePaneMode(mode);
+      scheduleMobileDockUpdate();
+    }
+
+    function rectsIntersect(a, b, pad = 8) {
+      if (!a || !b) return false;
+      const ax1 = a.left - pad;
+      const ay1 = a.top - pad;
+      const ax2 = a.right + pad;
+      const ay2 = a.bottom + pad;
+      return !(ax2 < b.left || ax1 > b.right || ay2 < b.top || ay1 > b.bottom);
+    }
+
+    function scheduleMobileDockUpdate() {
+      if (mobileDockRafId) {
+        cancelAnimationFrame(mobileDockRafId);
+      }
+      mobileDockRafId = requestAnimationFrame(() => {
+        mobileDockRafId = 0;
+        updateMobilePaneDockPosition();
+      });
+    }
+
+    function updateMobilePaneDockPosition() {
+      const toggle = el.mobilePaneToggle;
+      if (!toggle) return;
+
+      const isMobileView = document.body.classList.contains("view-mobile");
+      if (!isMobileView || toggle.hidden) {
+        toggle.classList.remove("dock-left");
+        return;
+      }
+
+      toggle.classList.remove("dock-left");
+      const toggleRect = toggle.getBoundingClientRect();
+      const targetNodes = [
+        el.viewAllOnMapBtn,
+        document.querySelector("#qFilterSection .section-head-actions"),
+        document.querySelector("#notamResultsSection .section-head")
+      ];
+
+      const shouldDockLeft = targetNodes.some(node => {
+        if (!(node instanceof Element)) return false;
+        const style = window.getComputedStyle(node);
+        if (style.display === "none" || style.visibility === "hidden") return false;
+        const rect = node.getBoundingClientRect();
+        if (rect.width < 1 || rect.height < 1) return false;
+        return rectsIntersect(toggleRect, rect, 10);
+      });
+
+      toggle.classList.toggle("dock-left", shouldDockLeft);
+    }
+
+    function initViewMode() {
+      const stored = localStorage.getItem(VIEW_MODE_KEY);
+      if (stored === "mobile" || stored === "desktop") {
+        applyViewMode(stored);
+      } else {
+        applyViewMode(getAutoViewMode());
+      }
+
+      window.addEventListener("resize", () => {
+        const pref = localStorage.getItem(VIEW_MODE_KEY);
+        if (pref === "mobile" || pref === "desktop") return;
+        applyViewMode(getAutoViewMode());
+      });
+
+      if (el.viewToggleBtn) {
+        el.viewToggleBtn.addEventListener("click", () => {
+          const isMobile = document.body.classList.contains("view-mobile");
+          const next = isMobile ? "desktop" : "mobile";
+          localStorage.setItem(VIEW_MODE_KEY, next);
+          applyViewMode(next);
+        });
+      }
+
+      if (el.mobilePaneToggle) {
+        el.mobilePaneToggle.addEventListener("click", () => {
+          const inDetail = document.body.classList.contains("mobile-detail-focus");
+          const nextMode = inDetail ? "inputs" : "details";
+          localStorage.setItem(MOBILE_PANE_MODE_KEY, nextMode);
+          applyMobilePaneMode(nextMode);
+        });
+      }
+
+      window.addEventListener("scroll", scheduleMobileDockUpdate, { passive: true });
+      window.addEventListener("resize", scheduleMobileDockUpdate);
+
+      document.addEventListener("focusin", event => {
+        if (!el.mobilePaneToggle) return;
+        if (!document.body.classList.contains("view-mobile")) return;
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        if (!target.closest("input, select, textarea")) return;
+        el.mobilePaneToggle.classList.add("hidden-for-input");
+      });
+
+      document.addEventListener("focusout", () => {
+        if (!el.mobilePaneToggle) return;
+        el.mobilePaneToggle.classList.remove("hidden-for-input");
+        scheduleMobileDockUpdate();
+      });
+    }
+
+    let currentItems = [];
+    let currentDataSite = "";
+    let currentFilteredItems = [];
+    let pendingMapPayloadInfo = null;
+    let qLegendPopupWindow = null;
+    let qLegendOpenedAtMs = 0;
+    let qLegendLastLaunchAtMs = 0;
+    let lastSelectedIcao = normalizeCode(localStorage.getItem(LAST_ICAO_STORAGE_KEY) || "", 4);
+    let hasAutoFocusedIcao = false;
+    let lastFetchActionSite = "";
+    let mobileDockRafId = 0;
+    let lastFirRowTap = { code: "", at: 0 };
+    let lastFirRowFetchAt = 0;
+
+    const TRACKED_Q_CATEGORIES = ["A", "C", "F", "G", "I", "L", "M", "N", "O", "P", "R", "S", "W", "X"];
+    let Q_SUBJECT_CODES = [
+      // Airspace organization (A)
+      { code: "AA", meaning: "Minimum altitude (specify en route/crossing/safe)" },
+      { code: "AC", meaning: "Class B/C/D/E surface area" },
+      { code: "AD", meaning: "Air defense identification zone" },
+      { code: "AE", meaning: "Control area" },
+      { code: "AF", meaning: "Flight information region" },
+      { code: "AH", meaning: "Upper control area" },
+      { code: "AL", meaning: "Minimum usable flight level" },
+      { code: "AN", meaning: "Area navigation route" },
+      { code: "AO", meaning: "Oceanic control area" },
+      { code: "AP", meaning: "Reporting point (specify)" },
+      { code: "AR", meaning: "ATS route (specify)" },
+      { code: "AT", meaning: "Terminal control area" },
+      { code: "AU", meaning: "Upper flight information region" },
+      { code: "AV", meaning: "Upper advisory area" },
+      { code: "AX", meaning: "Significant point" },
+      { code: "AZ", meaning: "Aerodrome traffic zone" },
+      // Communications and surveillance (C)
+      { code: "CA", meaning: "Air/ground facility (specify service/frequency)" },
+      { code: "CB", meaning: "ADS-B (specify)" },
+      { code: "CC", meaning: "ADS-C (specify)" },
+      { code: "CD", meaning: "CPDLC (specify)" },
+      { code: "CE", meaning: "En-route surveillance radar" },
+      { code: "CG", meaning: "Ground controlled approach system" },
+      { code: "CL", meaning: "SELCAL" },
+      { code: "CM", meaning: "Surface movement radar" },
+      { code: "CP", meaning: "Precision approach radar (specify runway)" },
+      { code: "CR", meaning: "Surveillance radar element of PAR (specify wavelength)" },
+      { code: "CS", meaning: "Secondary surveillance radar" },
+      { code: "CT", meaning: "Terminal area surveillance radar" },
+      // Facilities and services (F)
+      { code: "FA", meaning: "Aerodrome" },
+      { code: "FB", meaning: "Friction measuring device (specify type)" },
+      { code: "FC", meaning: "Ceiling measurement equipment" },
+      { code: "FD", meaning: "Docking system (AGNIS, BOLDS, etc.)" },
+      { code: "FE", meaning: "Oxygen (specify type)" },
+      { code: "FF", meaning: "Fire fighting and rescue" },
+      { code: "FG", meaning: "Ground movement control" },
+      { code: "FH", meaning: "Helicopter alighting area/platform" },
+      { code: "FI", meaning: "Aircraft de-icing (specify)" },
+      { code: "FJ", meaning: "Oils (specify type)" },
+      { code: "FL", meaning: "Landing direction indicator" },
+      { code: "FM", meaning: "Meteorological service (specify type)" },
+      { code: "FO", meaning: "Fog dispersal system" },
+      { code: "FP", meaning: "Heliport" },
+      { code: "FS", meaning: "Snow removal equipment" },
+      { code: "FT", meaning: "Transmissometer (specify runway)" },
+      { code: "FU", meaning: "Fuel availability" },
+      { code: "FW", meaning: "Wind direction indicator" },
+      { code: "FZ", meaning: "Customs/immigration" },
+      // GNSS services (G)
+      { code: "GA", meaning: "GNSS airfield-specific operations (specify)" },
+      { code: "GW", meaning: "GNSS area-wide operations (specify)" },
+      // Instrument and microwave landing systems (I)
+      { code: "IC", meaning: "Instrument landing system (specify runway)" },
+      { code: "ID", meaning: "DME associated with ILS" },
+      { code: "IG", meaning: "Glide path (ILS) (specify runway)" },
+      { code: "II", meaning: "Inner marker (ILS) (specify runway)" },
+      { code: "IL", meaning: "Localizer (ILS) (specify runway)" },
+      { code: "IM", meaning: "Middle marker (ILS) (specify runway)" },
+      { code: "IN", meaning: "Localizer (not associated with ILS)" },
+      { code: "IO", meaning: "Outer marker (ILS) (specify runway)" },
+      { code: "IS", meaning: "ILS Category I (specify runway)" },
+      { code: "IT", meaning: "ILS Category II (specify runway)" },
+      { code: "IU", meaning: "ILS Category III (specify runway)" },
+      { code: "IW", meaning: "Microwave landing system (specify runway)" },
+      { code: "IX", meaning: "Locator, outer (ILS) (specify runway)" },
+      { code: "IY", meaning: "Locator, middle (ILS) (specify runway)" },
+      // Lighting facilities (L)
+      { code: "LA", meaning: "Approach lighting system (specify runway/type)" },
+      { code: "LB", meaning: "Aerodrome beacon" },
+      { code: "LC", meaning: "Runway centre line lights (specify runway)" },
+      { code: "LD", meaning: "Landing direction indicator lights" },
+      { code: "LE", meaning: "Runway edge lights (specify runway)" },
+      { code: "LF", meaning: "Sequenced flashing lights (specify runway)" },
+      { code: "LG", meaning: "Pilot-controlled lighting" },
+      { code: "LH", meaning: "High intensity runway lights (specify runway)" },
+      { code: "LI", meaning: "Runway end identifier lights (specify runway)" },
+      { code: "LJ", meaning: "Runway alignment indicator lights (specify runway)" },
+      { code: "LK", meaning: "Category II components of approach lighting (specify runway)" },
+      { code: "LL", meaning: "Low intensity runway lights (specify runway)" },
+      { code: "LM", meaning: "Medium intensity runway lights (specify runway)" },
+      { code: "LP", meaning: "Precision approach path indicator (specify runway)" },
+      { code: "LR", meaning: "All landing area lighting facilities" },
+      { code: "LS", meaning: "Stopway lights (specify runway)" },
+      { code: "LT", meaning: "Threshold lights (specify runway)" },
+      { code: "LU", meaning: "Helicopter approach path indicator" },
+      { code: "LV", meaning: "Visual approach slope indicator system (specify type/runway)" },
+      { code: "LW", meaning: "Heliport lighting" },
+      { code: "LX", meaning: "Taxiway centre line lights (specify taxiway)" },
+      { code: "LY", meaning: "Taxiway edge lights (specify taxiway)" },
+      { code: "LZ", meaning: "Runway touchdown zone lights (specify runway)" },
+      // Movement and landing area (M)
+      { code: "MA", meaning: "Movement area" },
+      { code: "MB", meaning: "Bearing strength (specify part of landing/movement area)" },
+      { code: "MC", meaning: "Clearway (specify runway)" },
+      { code: "MD", meaning: "Declared distances (specify runway)" },
+      { code: "MG", meaning: "Taxiing guidance system" },
+      { code: "MH", meaning: "Runway arresting gear (specify runway)" },
+      { code: "MK", meaning: "Parking area" },
+      { code: "MM", meaning: "Daylight markings (specify threshold/centre line/etc.)" },
+      { code: "MN", meaning: "Apron" },
+      { code: "MO", meaning: "Stopbar (specify runway)" },
+      { code: "MP", meaning: "Aircraft stands (specify)" },
+      { code: "MR", meaning: "Runway (specify runway)" },
+      { code: "MS", meaning: "Stopway (specify runway)" },
+      { code: "MT", meaning: "Threshold (specify runway)" },
+      { code: "MU", meaning: "Runway turning bay (specify runway)" },
+      { code: "MW", meaning: "Strip/shoulder (specify runway)" },
+      { code: "MX", meaning: "Taxiway(s) (specify)" },
+      { code: "MY", meaning: "Rapid exit taxiway (specify)" },
+      // Terminal and en route navigation facilities (N)
+      { code: "NA", meaning: "All radio navigation facilities (except...)" },
+      { code: "NB", meaning: "Nondirectional radio beacon" },
+      { code: "NC", meaning: "DECCA" },
+      { code: "ND", meaning: "Distance measuring equipment" },
+      { code: "NF", meaning: "Fan marker" },
+      { code: "NL", meaning: "Locator (specify identification)" },
+      { code: "NM", meaning: "VOR/DME" },
+      { code: "NN", meaning: "TACAN" },
+      { code: "NO", meaning: "OMEGA" },
+      { code: "NT", meaning: "VORTAC" },
+      { code: "NV", meaning: "VOR" },
+      // Other information (O)
+      { code: "OA", meaning: "Aeronautical information service" },
+      { code: "OB", meaning: "Obstacle (specify details)" },
+      { code: "OE", meaning: "Aircraft entry requirements" },
+      { code: "OL", meaning: "Obstacle lights (specify)" },
+      { code: "OR", meaning: "Rescue coordination centre" },
+      // Air traffic procedures (P)
+      { code: "PA", meaning: "Standard instrument arrival (specify route designator)" },
+      { code: "PB", meaning: "Standard VFR arrival" },
+      { code: "PC", meaning: "Contingency procedures" },
+      { code: "PD", meaning: "Standard instrument departure (specify route designator)" },
+      { code: "PE", meaning: "Standard VFR departure" },
+      { code: "PF", meaning: "Flow control procedure" },
+      { code: "PH", meaning: "Holding procedure" },
+      { code: "PI", meaning: "Instrument approach procedure (specify type/runway)" },
+      { code: "PK", meaning: "VFR approach procedure" },
+      { code: "PL", meaning: "Flight plan processing" },
+      { code: "PM", meaning: "Aerodrome operating minima (specify)" },
+      { code: "PN", meaning: "Noise operating restriction" },
+      { code: "PO", meaning: "Obstacle clearance altitude/height (specify procedure)" },
+      { code: "PR", meaning: "Radio failure procedure" },
+      { code: "PT", meaning: "Transition altitude/level (specify)" },
+      { code: "PU", meaning: "Missed approach procedure (specify runway)" },
+      { code: "PX", meaning: "Minimum holding altitude (specify fix)" },
+      { code: "PZ", meaning: "ADIZ procedure" },
+      // Navigation warnings: airspace restrictions (R)
+      { code: "RA", meaning: "Airspace reservation (specify)" },
+      { code: "RD", meaning: "Danger area (specify)" },
+      { code: "RM", meaning: "Military operating area" },
+      { code: "RO", meaning: "Overflying restriction (specify)" },
+      { code: "RP", meaning: "Prohibited area (specify)" },
+      { code: "RR", meaning: "Restricted area (specify)" },
+      { code: "RT", meaning: "Temporary restricted area (specify area)" },
+      // Air traffic and VOLMET services (S)
+      { code: "SA", meaning: "Automatic terminal information service" },
+      { code: "SB", meaning: "ATS reporting office" },
+      { code: "SC", meaning: "Area control centre" },
+      { code: "SE", meaning: "Flight information service" },
+      { code: "SF", meaning: "Aerodrome flight information service" },
+      { code: "SL", meaning: "Flow control centre" },
+      { code: "SO", meaning: "Oceanic area control centre" },
+      { code: "SP", meaning: "Approach control service" },
+      { code: "SS", meaning: "Flight service station" },
+      { code: "ST", meaning: "Aerodrome control tower" },
+      { code: "SU", meaning: "Upper area control centre" },
+      { code: "SV", meaning: "VOLMET broadcast" },
+      { code: "SY", meaning: "Upper advisory service (specify)" },
+      // Navigation warnings: warnings (W)
+      { code: "WA", meaning: "Air display" },
+      { code: "WB", meaning: "Aerobatics" },
+      { code: "WC", meaning: "Captive balloon or kite" },
+      { code: "WD", meaning: "Demolition of explosives" },
+      { code: "WE", meaning: "Exercises (specify)" },
+      { code: "WF", meaning: "Air refueling" },
+      { code: "WG", meaning: "Glider flying" },
+      { code: "WH", meaning: "Blasting" },
+      { code: "WJ", meaning: "Banner/target towing" },
+      { code: "WL", meaning: "Ascent of free balloon" },
+      { code: "WM", meaning: "Missile, gun or rocket firing" },
+      { code: "WP", meaning: "Parachute/paragliding/hang gliding" },
+      { code: "WR", meaning: "Radioactive materials or toxic chemicals" },
+      { code: "WS", meaning: "Burning or blowing gas" },
+      { code: "WT", meaning: "Mass movement of aircraft" },
+      { code: "WU", meaning: "Unmanned aircraft" },
+      { code: "WV", meaning: "Formation flight" },
+      { code: "WW", meaning: "Significant volcanic activity" },
+      { code: "WY", meaning: "Aerial survey" },
+      { code: "WZ", meaning: "Model flying" },
+      // Other / unspecified
+      { code: "XX", meaning: "Other / unspecified" }
+    ];
+    let Q_CONDITION_CODES = [
+      // Availability (A)
+      { code: "AC", meaning: "Withdrawn for maintenance" },
+      { code: "AD", meaning: "Available for daylight operation" },
+      { code: "AF", meaning: "Flight checked and found reliable" },
+      { code: "AG", meaning: "Operating but ground checked only (awaiting flight check)" },
+      { code: "AH", meaning: "Hours of service are now (specify)" },
+      { code: "AK", meaning: "Resumed normal operations" },
+      { code: "AL", meaning: "Operative subject to previous limitations/conditions" },
+      { code: "AM", meaning: "Military operations only" },
+      { code: "AN", meaning: "Available for night operation" },
+      { code: "AO", meaning: "Operational" },
+      { code: "AP", meaning: "Available, prior permission required" },
+      { code: "AR", meaning: "Available on request" },
+      { code: "AS", meaning: "Unserviceable" },
+      { code: "AU", meaning: "Not available (specify reason if needed)" },
+      { code: "AW", meaning: "Completely withdrawn" },
+      { code: "AX", meaning: "Previously promulgated shutdown canceled" },
+      // Changes (C)
+      { code: "CA", meaning: "Activated" },
+      { code: "CC", meaning: "Completed" },
+      { code: "CD", meaning: "Deactivated" },
+      { code: "CE", meaning: "Erected" },
+      { code: "CF", meaning: "Operating frequency changed to" },
+      { code: "CG", meaning: "Downgraded to" },
+      { code: "CH", meaning: "Changed" },
+      { code: "CI", meaning: "Identification/call sign changed to" },
+      { code: "CL", meaning: "Realigned" },
+      { code: "CM", meaning: "Displaced" },
+      { code: "CN", meaning: "Canceled" },
+      { code: "CO", meaning: "Operating" },
+      { code: "CP", meaning: "Operating on reduced power" },
+      { code: "CR", meaning: "Temporarily replaced by" },
+      { code: "CS", meaning: "Installed" },
+      { code: "CT", meaning: "On test, do not use" },
+      // Hazard conditions (H)
+      { code: "HA", meaning: "Braking action (poor/medium/good)" },
+      { code: "HB", meaning: "Friction coefficient is ..." },
+      { code: "HC", meaning: "Covered by compacted snow to depth of" },
+      { code: "HD", meaning: "Covered by dry snow to a depth of" },
+      { code: "HE", meaning: "Covered by water to a depth of" },
+      { code: "HF", meaning: "Totally free of snow and ice" },
+      { code: "HG", meaning: "Grass cutting in progress" },
+      { code: "HH", meaning: "Hazard due to (specify)" },
+      { code: "HI", meaning: "Covered by ice" },
+      { code: "HJ", meaning: "Launch planned (balloon/space)" },
+      { code: "HK", meaning: "Bird migration in progress" },
+      { code: "HL", meaning: "Snow clearance completed" },
+      { code: "HM", meaning: "Marked by (specify)" },
+      { code: "HN", meaning: "Covered by wet snow or slush" },
+      { code: "HO", meaning: "Obscured by snow" },
+      { code: "HP", meaning: "Snow clearance in progress" },
+      { code: "HQ", meaning: "Operation canceled (balloon/space)" },
+      { code: "HR", meaning: "Standing water" },
+      { code: "HS", meaning: "Sanding in progress" },
+      { code: "HT", meaning: "Approach according to signal area only" },
+      { code: "HU", meaning: "Launch in progress (balloon/space)" },
+      { code: "HV", meaning: "Work completed" },
+      { code: "HW", meaning: "Work in progress" },
+      { code: "HX", meaning: "Concentration of birds" },
+      { code: "HY", meaning: "Snow banks exist (specify height)" },
+      { code: "HZ", meaning: "Covered by frozen ruts and ridges" },
+      // Limitations (L)
+      { code: "LA", meaning: "Operating on auxiliary power supply" },
+      { code: "LB", meaning: "Reserved for aircraft based therein" },
+      { code: "LC", meaning: "Closed" },
+      { code: "LD", meaning: "Unsafe" },
+      { code: "LE", meaning: "Operating without auxiliary power supply" },
+      { code: "LF", meaning: "Interference from" },
+      { code: "LG", meaning: "Operating without identification" },
+      { code: "LH", meaning: "Unserviceable for aircraft heavier than" },
+      { code: "LI", meaning: "Closed to IFR operations" },
+      { code: "LK", meaning: "Operating as a fixed light" },
+      { code: "LL", meaning: "Usable for length/width of..." },
+      { code: "LN", meaning: "Closed to all night operations" },
+      { code: "LP", meaning: "Prohibited to" },
+      { code: "LR", meaning: "Aircraft restricted to runways/taxiways" },
+      { code: "LS", meaning: "Subject to interruption" },
+      { code: "LT", meaning: "Limited to" },
+      { code: "LV", meaning: "Closed to VFR operations" },
+      { code: "LW", meaning: "Will take place" },
+      { code: "LX", meaning: "Operating but caution advised due to" },
+      // Other / unspecified
+      { code: "TT", meaning: "Trigger (AIP/AIRAC notification)" },
+      { code: "XX", meaning: "Other / unspecified" }
+    ];
+    const Q_TRAFFIC_CODES = [
+      { code: "I", meaning: "IFR" },
+      { code: "V", meaning: "VFR" },
+      { code: "IV", meaning: "IFR + VFR" }
+    ];
+    const Q_SCOPE_CODES = [
+      { code: "A", meaning: "Aerodrome" },
+      { code: "E", meaning: "Enroute" },
+      { code: "W", meaning: "Warnings" },
+      { code: "AE", meaning: "Aerodrome + Enroute" },
+      { code: "AW", meaning: "Aerodrome + Warnings" },
+      { code: "EW", meaning: "Enroute + Warnings" },
+      { code: "AEW", meaning: "Aerodrome + Enroute + Warnings" }
+    ];
+    let Q_SUBJECT_CODE_MAP = new Map(Q_SUBJECT_CODES.map(entry => [entry.code, entry.meaning]));
+    let Q_CONDITION_CODE_MAP = new Map(Q_CONDITION_CODES.map(entry => [entry.code, entry.meaning]));
+    const Q_LEGEND_DATA_SOURCES = {
+      subjects: "data/Subjects.json",
+      conditions: "data/Conditions.json"
+    };
+    const qLegendController = window.QCodeLegend
+      ? window.QCodeLegend.createController({
+          subjectCodes: Q_SUBJECT_CODES,
+          conditionCodes: Q_CONDITION_CODES,
+          trafficCodes: Q_TRAFFIC_CODES,
+          scopeCodes: Q_SCOPE_CODES,
+          dataSources: Q_LEGEND_DATA_SOURCES
+        })
+      : null;
+    const Q_PRIORITY_BY_CATEGORY = {
+      O: 90,
+      W: 85,
+      R: 82,
+      A: 55,
+      S: 52,
+      N: 48,
+      C: 45,
+      P: 38,
+      G: 36,
+      I: 28,
+      F: 16,
+      L: 12,
+      M: 12,
+      X: 10,
+      K: 10
+    };
+    const Q_PRIORITY_BY_CONDITION = {
+      CL: 22,
+      CA: 20,
+      CN: 18,
+      AS: 18,
+      AU: 16,
+      CH: 12,
+      CT: 10,
+      CR: 10,
+      HW: 10,
+      LW: 8,
+      TT: 6,
+      XX: 0
+    };
+    const Q_PRIORITY_OVERRIDES = [
+      { subject: "OB", score: 95, label: "Critical", reason: "Obstacle" },
+      { subject: "OL", score: 92, label: "High", reason: "Obstacle lighting" },
+      { subject: "WU", score: 92, label: "High", reason: "Unmanned aircraft activity" },
+      { subject: "WP", score: 88, label: "High", reason: "Parachute/paragliding" },
+      { subject: "WH", score: 88, label: "High", reason: "Blasting" },
+      { subject: "WM", score: 88, label: "High", reason: "Firing activity" },
+      { subject: "WA", score: 86, label: "High", reason: "Air display" },
+      { subject: "WB", score: 86, label: "High", reason: "Aerobatics" },
+      { subject: "WC", score: 86, label: "High", reason: "Captive balloon/kite" },
+      { subject: "WR", score: 86, label: "High", reason: "Radioactive/toxic materials" },
+      { subject: "RT", score: 90, label: "High", reason: "Temporary restricted area" },
+      { subject: "RR", score: 90, label: "High", reason: "Restricted area" },
+      { subject: "RP", score: 90, label: "High", reason: "Prohibited area" },
+      { subject: "RD", score: 86, label: "High", reason: "Danger area" },
+      { subject: "RA", score: 84, label: "High", reason: "Airspace reservation" }
+    ];
+
+    function goBack(event) {
+      event.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+        return;
+      }
+      window.location.href = "tools.html";
+    }
+
+    function normalizeCode(value, maxLen) {
+      return String(value || "")
+        .trim()
+        .toUpperCase()
+        .replace(/[^A-Z0-9]/g, "")
+        .slice(0, maxLen);
+    }
+
+    function persistLastIcao(code) {
+      const normalized = normalizeCode(code, 4);
+      lastSelectedIcao = normalized;
+      if (!normalized) {
+        return;
+      }
+      localStorage.setItem(LAST_ICAO_STORAGE_KEY, normalized);
+    }
+
+    function persistLastFir(code) {
+      const normalized = normalizeCode(code, 4);
+      if (!normalized) return;
+      localStorage.setItem(LAST_FIR_STORAGE_KEY, normalized);
+    }
+
+    function updateSelectionSummary() {
+      const selectedFir = normalizeCode(el.firInput.value, 4);
+      const selectedIcao = normalizeCode(el.icaoInput.value, 4);
+      el.currentFirValue.textContent = selectedFir || "-";
+      el.currentIcaoValue.textContent = selectedIcao || "-";
+      updateFirReferenceCounts();
+    }
+
+    function updateFirReferenceCounts() {
+      const selectedFir = normalizeCode(el.firInput?.value, 4);
+      const hasCurrentSiteData = !!currentDataSite && Array.isArray(currentItems);
+
+      FIR_CODES.forEach(firCode => {
+        const row = document.querySelector(`[data-fir-row="${firCode}"]`);
+        const countCell = document.querySelector(`[data-fir-count="${firCode}"]`);
+        const sourceEl = document.querySelector(`[data-fir-source="${firCode}"]`);
+        if (!row || !countCell || !sourceEl) return;
+
+        let count = 0;
+        let sourceText = "None";
+        let sourceClass = "none";
+
+        if (hasCurrentSiteData && currentDataSite === firCode) {
+          count = currentItems.length;
+          sourceText = "Current";
+          sourceClass = "current";
+        } else {
+          const cache = loadCache(firCode);
+          const cacheItems = Array.isArray(cache?.items) ? cache.items : [];
+          if (cacheItems.length > 0) {
+            count = cacheItems.length;
+            sourceText = "Cached";
+            sourceClass = "cached";
+          }
+        }
+
+        countCell.textContent = String(count);
+        sourceEl.textContent = sourceText;
+        sourceEl.classList.remove("current", "cached", "none");
+        sourceEl.classList.add(sourceClass);
+        row.classList.toggle("active", !!selectedFir && selectedFir === firCode);
+      });
+    }
+
+    function setupFirReferenceTable() {
+      function triggerFetchFromFirRow(firCode) {
+        const normalized = normalizeCode(firCode, 4);
+        if (!normalized || !el.form) return;
+
+        const now = Date.now();
+        // Guard against duplicate trigger paths (touch double-tap + dblclick).
+        if (now - lastFirRowFetchAt < 450) return;
+        lastFirRowFetchAt = now;
+
+        el.firInput.value = normalized;
+        persistLastFir(normalized);
+        updateSelectionSummary();
+        applyFirButtonStates(normalized);
+        el.form.requestSubmit();
+      }
+
+      document.querySelectorAll("[data-fir-row]").forEach(row => {
+        row.addEventListener("click", () => {
+          const firCode = normalizeCode(row.getAttribute("data-fir-row") || "", 4);
+          if (!firCode || !el.firInput) return;
+          el.firInput.value = firCode;
+          persistLastFir(firCode);
+          updateSelectionSummary();
+          applyFirButtonStates(firCode);
+          if (el.firInput) el.firInput.focus();
+        });
+
+        row.addEventListener("dblclick", event => {
+          const targetCell = event.target instanceof Element ? event.target.closest("td") : null;
+          if (!(targetCell instanceof HTMLTableCellElement)) return;
+          if (targetCell.cellIndex > 1) return;
+
+          const firCode = normalizeCode(row.getAttribute("data-fir-row") || "", 4);
+          triggerFetchFromFirRow(firCode);
+        });
+
+        row.addEventListener("pointerup", event => {
+          if (!event.isPrimary) return;
+          if (event.pointerType !== "touch" && event.pointerType !== "pen") return;
+
+          const targetCell = event.target instanceof Element ? event.target.closest("td") : null;
+          if (!(targetCell instanceof HTMLTableCellElement)) return;
+          if (targetCell.cellIndex > 1) return;
+
+          const firCode = normalizeCode(row.getAttribute("data-fir-row") || "", 4);
+          if (!firCode) return;
+
+          const now = Date.now();
+          const isDoubleTap = lastFirRowTap.code === firCode && (now - lastFirRowTap.at) <= 420;
+          lastFirRowTap = { code: firCode, at: now };
+          if (!isDoubleTap) return;
+
+          triggerFetchFromFirRow(firCode);
+        });
+      });
+    }
+
+    function setSectionCollapsed(targetSelector, collapsed) {
+      if (!targetSelector) return;
+      const section = document.querySelector(targetSelector);
+      if (!section) return;
+      section.classList.toggle("collapsed", !!collapsed);
+      const toggleBtn = section.querySelector(`.section-toggle[data-collapse-target='${targetSelector}']`);
+      if (toggleBtn) {
+        toggleBtn.textContent = section.classList.contains("collapsed") ? "Show" : "Hide";
+      }
+    }
+
+    function ensureNotamResultsSectionVisible(items) {
+      if (!Array.isArray(items) || items.length < 1) return;
+      setSectionCollapsed("#notamResultsSection", false);
+    }
+
+    function hasAnyFirCacheData() {
+      return FIR_CODES.some(code => {
+        const cache = loadCache(code);
+        return Array.isArray(cache?.items) && cache.items.length > 0;
+      });
+    }
+
+    function initializeFirReferencePanel() {
+      const selectedFir = normalizeCode(el.firInput?.value || "", 4);
+      const hasAnyCache = hasAnyFirCacheData();
+
+      // Input Selections stays open by default.
+      setSectionCollapsed("#inputSelectionsSection", false);
+
+      if (hasAnyCache) {
+        // With cache available, keep all sections collapsed by default except Input Selections.
+        // FIR Reference remains open only when no FIR is selected.
+        setSectionCollapsed("#firReferenceSection", !!selectedFir);
+        setSectionCollapsed("#qFilterSection", true);
+        setSectionCollapsed("#scoreboardSection", true);
+        setSectionCollapsed("#notamResultsSection", true);
+      } else {
+        // No cache: keep FIR reference open as guidance.
+        setSectionCollapsed("#firReferenceSection", false);
+      }
+
+      updateFirReferenceCounts();
+    }
+
+    function setIcaoSelection(code) {
+      const normalized = normalizeCode(code, 4);
+      if (!normalized) {
+        el.icaoInput.value = "";
+        updateSelectionSummary();
+        return;
+      }
+      el.icaoInput.value = normalized;
+      updateSelectionSummary();
+      persistLastIcao(normalized);
+    }
+
+    function refreshIcaoOptionsFromItems(items) {
+      const airports = buildAirportUniverseFromItems(items || []);
+      const selectedBefore = normalizeCode(el.icaoInput.value, 4);
+      const preferredIcao = selectedBefore || lastSelectedIcao;
+      const optionsHtml = airports
+        .map(code => `<option value="${escapeHtml(code)}"></option>`)
+        .join("");
+      if (el.icaoList) {
+        el.icaoList.innerHTML = optionsHtml;
+      }
+
+      if (preferredIcao) {
+        setIcaoSelection(preferredIcao);
+      } else {
+        setIcaoSelection("");
+      }
+    }
+
+    function extractAirportCodeFromRaw(rawText) {
+      if (!rawText || typeof rawText !== "string") return "";
+      const m = rawText.match(/A\)\s*([A-Z0-9]{3,4})/i);
+      if (!m) return "";
+      return normalizeCode(m[1], 4);
+    }
+
+    function isLikelyIcaoAirport(code) {
+      if (!code) return false;
+      const normalized = normalizeCode(code, 4);
+      if (!/^C[A-Z0-9]{3}$/.test(normalized)) return false;
+      if (normalized === "CXXX") return false;
+      if (FIR_CODE_SET.has(normalized)) return false;
+      return true;
+    }
+
+    function buildAirportUniverseFromItems(items) {
+      const set = new Set();
+
+      for (const item of items) {
+        const locCode = normalizeCode(item?.location || "", 4);
+        if (isLikelyIcaoAirport(locCode)) {
+          set.add(locCode);
+        }
+
+        const rawCode = extractAirportCodeFromRaw(item?.raw || "");
+        const rawCode4 = normalizeCode(rawCode, 4);
+        if (isLikelyIcaoAirport(rawCode4)) {
+          set.add(rawCode4);
+        }
+      }
+
+      return Array.from(set).sort();
+    }
+
+    function updateAirportUniverseInfo(items) {
+      const airports = buildAirportUniverseFromItems(items || []);
+      const countText = String(airports.length);
+      el.airportsFoundInline.textContent = countText;
+    }
+
+    function toPrettyDate(iso) {
+      if (!iso) return "-";
+      const d = new Date(iso);
+      if (Number.isNaN(d.getTime())) return "-";
+      const dateText = d.toLocaleString("en-CA", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        timeZone: DISPLAY_TIME_ZONE
+      });
+      const tzText = new Intl.DateTimeFormat("en-CA", {
+        timeZone: DISPLAY_TIME_ZONE,
+        timeZoneName: "short"
+      })
+        .formatToParts(d)
+        .find(part => part.type === "timeZoneName")?.value || "ET";
+      return `${dateText} ${tzText}`;
+    }
+
+    function toUtcDateTime(iso) {
+      if (!iso) return "-";
+      const d = new Date(iso);
+      if (Number.isNaN(d.getTime())) return "-";
+      const utcText = d.toLocaleString("en-CA", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        timeZone: "UTC"
+      });
+      return `${utcText} UTC`;
+    }
+
+    function updateLastFetchBanner(iso, sourceLabel = "Fetch") {
+      if (!iso) {
+        el.lastFetchBanner.textContent = "Last Fetch: - EDT | - UTC";
+        el.lastFetchBanner.classList.remove("fresh", "stale");
+        return;
+      }
+
+      const edtText = toPrettyDate(iso);
+      const utcText = toUtcDateTime(iso);
+      const d = new Date(iso);
+      const ageMs = Number.isNaN(d.getTime()) ? Infinity : (Date.now() - d.getTime());
+      const ageMins = Number.isFinite(ageMs) ? Math.max(0, Math.floor(ageMs / 60000)) : null;
+      const ageText = ageMins == null ? "age n/a" : `age ${ageMins}m`;
+
+      el.lastFetchBanner.textContent = `Last ${sourceLabel}: ${edtText} | ${utcText} | ${ageText}`;
+      const isFresh = ageMs >= 0 && ageMs < FRESH_BANNER_WINDOW_MS;
+      el.lastFetchBanner.classList.toggle("fresh", isFresh);
+      el.lastFetchBanner.classList.toggle("stale", !isFresh);
+    }
+
+    function getCacheAgeMs(site) {
+      const cached = loadCache(site);
+      const fetchedAt = cached?.fetchedAt;
+      if (!fetchedAt) return Infinity;
+      const d = new Date(fetchedAt);
+      if (Number.isNaN(d.getTime())) return Infinity;
+      return Date.now() - d.getTime();
+    }
+
+    function buildApiUrl(site) {
+      const params = new URLSearchParams();
+      params.append("site", site);
+
+      params.append("alpha", "notam");
+
+      params.append("notam_choice", "default");
+      params.append("_", String(Date.now()));
+      return `${API_BASE}?${params.toString()}`;
+    }
+
+    function cacheKeyForSite(site) {
+      return `fetchnotams:site:${site}`;
+    }
+
+    function getLastFir() {
+      return normalizeCode(localStorage.getItem(LAST_FIR_STORAGE_KEY) || "", 4);
+    }
+
+    function loadCache(site) {
+      const raw = localStorage.getItem(cacheKeyForSite(site));
+      if (!raw) return null;
+      try {
+        return JSON.parse(raw);
+      } catch {
+        return null;
+      }
+    }
+
+    function saveCache(site, payload) {
+      localStorage.setItem(cacheKeyForSite(site), JSON.stringify(payload));
+    }
+
+    async function fetchWithTimeout(url, timeoutMs, options = {}) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const res = await fetch(url, {
+          method: "GET",
+          signal: controller.signal,
+          cache: "no-store",
+          credentials: "omit",
+          headers: options.headers || undefined
+        });
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        return await res.json();
+      } finally {
+        clearTimeout(timeoutId);
+      }
+    }
+
+    function parseTextBlock(value) {
+      if (typeof value !== "string") return "";
+      try {
+        const parsed = JSON.parse(value);
+        if (parsed && typeof parsed === "object") {
+          return parsed.raw || parsed.english || parsed.french || "";
+        }
+      } catch {
+        return value;
+      }
+      return "";
+    }
+
+    function parseQLine(rawText) {
+      const m = (rawText || "").match(/Q\)\s*([^\n\r]+)/i);
+      if (!m) return null;
+      const line = String(m[1] || "").trim();
+      if (!line) return null;
+      const parts = line.split("/").map(part => String(part || "").trim());
+      const fir = normalizeCode(parts[0], 4);
+      const qcode = normalizeCode(parts[1], 5);
+      if (!qcode || qcode.length !== 5 || qcode[0] !== "Q") return null;
+      const subject = qcode.slice(1, 3);
+      const category = subject.slice(0, 1);
+      const condition = qcode.slice(3, 5);
+      const traffic = String(parts[2] || "").toUpperCase().replace(/[^A-Z]/g, "");
+      const purpose = String(parts[3] || "").toUpperCase().replace(/[^A-Z]/g, "");
+      const scope = String(parts[4] || "").toUpperCase().replace(/[^A-Z]/g, "");
+      return { fir, qcode, subject, category, condition, traffic, purpose, scope };
+    }
+
+    function extractNotamNumber(rawText) {
+      const value = String(rawText || "");
+      if (!value) return "";
+      const m = value.match(/\(([A-Z]\d{4}\/\d{2})\s+NOTAM/i);
+      if (m) return m[1];
+      const m2 = value.match(/\b([A-Z]\d{4}\/\d{2})\b/);
+      return m2 ? m2[1] : "";
+    }
+
+    function rebuildQCodeMaps() {
+      Q_SUBJECT_CODE_MAP = new Map(Q_SUBJECT_CODES.map(entry => [entry.code, entry.meaning]));
+      Q_CONDITION_CODE_MAP = new Map(Q_CONDITION_CODES.map(entry => [entry.code, entry.meaning]));
+    }
+
+    async function loadQCodeLegendData() {
+      if (!qLegendController) return false;
+      const loaded = await qLegendController.loadData();
+      Q_SUBJECT_CODES = qLegendController.getSubjectCodes();
+      Q_CONDITION_CODES = qLegendController.getConditionCodes();
+      rebuildQCodeMaps();
+      return loaded;
+    }
+
+    function getQSubjectMeaning(code) {
+      if (!code) return "";
+      return Q_SUBJECT_CODE_MAP.get(code) || "";
+    }
+
+    function getQConditionMeaning(code) {
+      if (!code) return "";
+      return Q_CONDITION_CODE_MAP.get(code) || "";
+    }
+
+    function scoreQCode(qInfo) {
+      if (!qInfo) return { score: 0, label: "Unknown", reason: "" };
+      const override = Q_PRIORITY_OVERRIDES.find(entry => entry.subject === qInfo.subject);
+      if (override) {
+        return { score: override.score, label: override.label, reason: override.reason };
+      }
+      const base = Q_PRIORITY_BY_CATEGORY[qInfo.category] || 0;
+      const conditionBoost = Q_PRIORITY_BY_CONDITION[qInfo.condition] || 0;
+      const score = base + conditionBoost;
+      let label = "Low";
+      if (score >= 85) label = "High";
+      else if (score >= 60) label = "Medium";
+      return { score, label, reason: "" };
+    }
+
+    function isPrioritySortEnabled() {
+      return String(el.sortByPriorityBtn?.dataset.state || "on") === "on";
+    }
+
+    function dmsTokenToDecimal(token, isLat) {
+      const clean = (token || "").toUpperCase().trim();
+      const dir = clean.slice(-1);
+      let body = clean.slice(0, -1);
+
+      if (isLat && !/[NS]/.test(dir)) return null;
+      if (!isLat && !/[EW]/.test(dir)) return null;
+
+      const degDigits = isLat ? 2 : 3;
+      if (!/^\d+$/.test(body)) return null;
+
+      // Tolerate malformed DMS that omits one leading zero.
+      // Examples: 795219W -> 0795219W, 9530N -> 09530N.
+      if (isLat && body.length === 5) {
+        body = `0${body}`;
+      }
+      if (!isLat && body.length === 6) {
+        body = `0${body}`;
+      }
+
+      if (body.length !== degDigits + 2 && body.length !== degDigits + 4) return null;
+
+      const deg = Number(body.slice(0, degDigits));
+      const min = Number(body.slice(degDigits, degDigits + 2));
+      const sec = body.length === degDigits + 4 ? Number(body.slice(degDigits + 2, degDigits + 4)) : 0;
+
+      if (min >= 60 || sec >= 60) return null;
+
+      let dd = deg + (min / 60) + (sec / 3600);
+      if (dir === "S" || dir === "W") dd = -dd;
+      return dd;
+    }
+
+    function linkifyDmsCoordinatePairs(text) {
+      const value = text || "";
+      const pairRegex = /(\d{4,6}[NS])(?:\s*[,;/]?\s*)(\d{5,7}[EW])/gi;
+      let lastIndex = 0;
+      let match;
+      const out = [];
+
+      while ((match = pairRegex.exec(value)) !== null) {
+        out.push(escapeHtml(value.slice(lastIndex, match.index)));
+
+        const latToken = (match[1] || "").toUpperCase();
+        const lonToken = (match[2] || "").toUpperCase();
+        const lat = dmsTokenToDecimal(latToken, true);
+        const lon = dmsTokenToDecimal(lonToken, false);
+
+        if (lat == null || lon == null) {
+          out.push(escapeHtml(match[0]));
+        } else {
+          const href = `NotamsMap.html?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}&focus=1&src=fetchnotams`;
+          out.push(`<a class="coord-link" href="${href}" onclick="return openMapTab(event, this);" title="Lookup on Map?" aria-label="Lookup on Map?">${escapeHtml(latToken)}&nbsp;${escapeHtml(lonToken)}</a>`);
+        }
+
+        lastIndex = pairRegex.lastIndex;
+      }
+
+      out.push(escapeHtml(value.slice(lastIndex)));
+      return out.join("");
+    }
+
+    function extractDmsCoordinatePairsFromText(text) {
+      const value = String(text || "");
+      const pairRegex = /(\d{4,6}[NS])(?:\s*[,;/]?\s*)(\d{5,7}[EW])/gi;
+      const found = [];
+      let match;
+
+      while ((match = pairRegex.exec(value)) !== null) {
+        const latToken = (match[1] || "").toUpperCase();
+        const lonToken = (match[2] || "").toUpperCase();
+        const lat = dmsTokenToDecimal(latToken, true);
+        const lon = dmsTokenToDecimal(lonToken, false);
+        if (lat == null || lon == null) continue;
+        if (lat < -90 || lat > 90 || lon < -180 || lon > 180) continue;
+        found.push({ lat, lon });
+      }
+
+      return found;
+    }
+
+    function extractPrimaryCoordinateFromNotam(rawText) {
+      const value = String(rawText || "");
+      if (!value) return null;
+
+      const eMatch = value.match(/E\)\s*([\s\S]*?)(?=(?:\n|\r\n?)[A-Z]\)|$)/);
+      const eSection = eMatch ? String(eMatch[0] || "") : "";
+      const eCoords = extractDmsCoordinatePairsFromText(eSection);
+      if (eCoords.length > 0) {
+        return eCoords[0];
+      }
+
+      const anyCoords = extractDmsCoordinatePairsFromText(value);
+      return anyCoords.length > 0 ? anyCoords[0] : null;
+    }
+
+    function getPilotLocation() {
+      const lat = localStorage.getItem('pilotLatitude');
+      const lon = localStorage.getItem('pilotLongitude');
+      if (!lat || !lon) return null;
+      const latNum = parseFloat(lat);
+      const lonNum = parseFloat(lon);
+      if (isNaN(latNum) || isNaN(lonNum)) return null;
+      return { lat: latNum, lon: lonNum };
+    }
+
+    function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Earth's radius in km
+      const toRad = Math.PI / 180;
+      const dLat = (lat2 - lat1) * toRad;
+      const dLon = (lon2 - lon1) * toRad;
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * toRad) * Math.cos(lat2 * toRad) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+
+    function calculateDistanceFromPilot(notamLat, notamLon) {
+      const pilot = getPilotLocation();
+      if (!pilot) return null;
+      const distKm = calculateHaversineDistance(pilot.lat, pilot.lon, notamLat, notamLon);
+      const distNm = distKm / 1.852; // Convert km to nautical miles
+      return { km: distKm, nm: distNm };
+    }
+
+    function formatDistanceDisplay(distance) {
+      if (!distance) return "";
+      const km = distance.km.toFixed(1);
+      const nm = distance.nm.toFixed(1);
+      return `${km}km (${nm}nm)`;
+    }
+
+    function pruneOldMapPayloads() {
+      const now = Date.now();
+      const staleKeys = [];
+      for (let i = 0; i < localStorage.length; i += 1) {
+        const key = localStorage.key(i);
+        if (!key || !key.startsWith(MAP_PAYLOAD_STORAGE_PREFIX)) continue;
+        try {
+          const raw = localStorage.getItem(key);
+          const parsed = raw ? JSON.parse(raw) : null;
+          const createdAt = Number(parsed?.createdAt || 0);
+          if (!createdAt || (now - createdAt) > MAP_PAYLOAD_TTL_MS) {
+            staleKeys.push(key);
+          }
+        } catch {
+          staleKeys.push(key);
+        }
+      }
+      for (const key of staleKeys) {
+        localStorage.removeItem(key);
+      }
+    }
+
+    function buildMapPayloadFromItems(items, maxMarkers = 120) {
+      const records = [];
+      const seen = new Set();
+      let rawCoordinateCount = 0;
+
+      for (const item of items || []) {
+        const coord = extractPrimaryCoordinateFromNotam(item?.raw || "");
+        if (!coord) continue;
+
+        rawCoordinateCount += 1;
+        const key = `${coord.lat.toFixed(6)},${coord.lon.toFixed(6)}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+
+        if (records.length < maxMarkers) {
+          records.push({
+            lat: Number(coord.lat.toFixed(6)),
+            lon: Number(coord.lon.toFixed(6)),
+            start: item?.startValidity || null,
+            end: item?.endValidity || null,
+            raw: String(item?.raw || "")
+          });
+        }
+      }
+
+      return {
+        records,
+        uniqueMarkerCount: seen.size,
+        rawCoordinateCount,
+        truncated: seen.size > records.length
+      };
+    }
+
+    function storeMapPayload(records) {
+      pruneOldMapPayloads();
+      const key = `${MAP_PAYLOAD_STORAGE_PREFIX}${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+      const payload = {
+        createdAt: Date.now(),
+        records
+      };
+      localStorage.setItem(key, JSON.stringify(payload));
+      return key;
+    }
+
+    function storeLatestLivePayloadFromItems(items, maxMarkers = 1200, firCode = "") {
+      const payloadInfo = buildMapPayloadFromItems(items, maxMarkers);
+      const records = payloadInfo?.records || [];
+      if (!records.length) return 0;
+
+      const payload = {
+        createdAt: Date.now(),
+        records,
+        scope: "live-unfiltered",
+        fir: normalizeCode(firCode, 4)
+      };
+      localStorage.setItem(MAP_LIVE_UNFILTERED_STORAGE_KEY, JSON.stringify(payload));
+      return records.length;
+    }
+
+    function buildBatchMapUrlFromPayloadKey(payloadKey, payloadInfo) {
+      const records = payloadInfo?.records || [];
+      if (!records.length || !payloadKey) return "";
+
+      const first = records[0];
+      const params = new URLSearchParams();
+      params.set("src", "fetchnotams");
+      params.set("focus", "1");
+      params.set("airports", "off");
+      params.set("payload_key", payloadKey);
+      params.set("lat", String(first.lat));
+      params.set("lon", String(first.lon));
+      if (payloadInfo.truncated) {
+        params.set("marker_truncated", "1");
+      }
+
+      return `NotamsMap.html?${params.toString()}`;
+    }
+
+    function updateViewAllOnMapButton(displayItems) {
+      const payloadInfo = buildMapPayloadFromItems(displayItems, 120);
+      const hasPayload = payloadInfo.records.length > 0;
+      const notamCount = Array.isArray(displayItems) ? displayItems.length : 0;
+      const markerCount = payloadInfo.records.length;
+
+      pendingMapPayloadInfo = hasPayload ? payloadInfo : null;
+      el.viewAllOnMapBtn.disabled = !hasPayload;
+
+      if (!hasPayload) {
+        el.viewAllOnMapBtn.textContent = "View all on map";
+        el.viewAllOnMapBtn.title = "No coordinates found in displayed results";
+        return;
+      }
+
+      if (markerCount === notamCount) {
+        el.viewAllOnMapBtn.textContent = `View all on map (${markerCount})`;
+      } else {
+        el.viewAllOnMapBtn.textContent = `View all on map (${notamCount} NOTAMs, ${markerCount} markers)`;
+      }
+
+      if (payloadInfo.truncated) {
+        el.viewAllOnMapBtn.title = `Showing first ${markerCount} unique markers (more available)`;
+      } else {
+        el.viewAllOnMapBtn.title = `Open ${notamCount} displayed NOTAM(s) as ${markerCount} marker(s)`;
+      }
+    }
+
+    function openMapTab(event, anchorEl) {
+      if (event) event.preventDefault();
+      const href = anchorEl && anchorEl.href ? anchorEl.href : null;
+      if (!href) return false;
+
+      const popup = window.open(href, "_blank");
+      if (popup) {
+        popup.focus();
+      } else {
+        window.location.href = href;
+      }
+      return false;
+    }
+
+    function buildNotamDescriptionHtml(rawText) {
+      const value = String(rawText || "");
+      const eMatch = value.match(/E\)\s*([\s\S]*?)(?=(?:\n|\r\n?)[A-Z]\)|$)/);
+      if (!eMatch || typeof eMatch.index !== "number") {
+        return escapeHtml(value);
+      }
+
+      const start = eMatch.index;
+      const end = start + eMatch[0].length;
+      const before = value.slice(0, start);
+      const eSection = eMatch[0];
+      const after = value.slice(end);
+      return `${escapeHtml(before)}<span class="e-highlight">${linkifyDmsCoordinatePairs(eSection)}</span>${escapeHtml(after)}`;
+    }
+
+    function getQCategoryModeMap() {
+      const map = new Map();
+      document.querySelectorAll(".qcat-toggle").forEach(node => {
+        const category = normalizeCode(node.dataset.qcat || "", 1);
+        const state = String(node.dataset.state || "include").toLowerCase() === "exclude" ? "exclude" : "include";
+        if (category) {
+          map.set(category, state);
+        }
+      });
+      return map;
+    }
+
+    function setQCategoryButtonState(button, state) {
+      const category = normalizeCode(button.dataset.qcat || "", 1);
+      const normalizedState = state === "exclude" ? "exclude" : "include";
+      button.dataset.state = normalizedState;
+      button.classList.remove("include", "exclude");
+      button.classList.add(normalizedState);
+      button.textContent = `${category}*: ${normalizedState === "exclude" ? "Exclude" : "Include"}`;
+    }
+
+    function updateQCategoryTooltips() {
+      document.querySelectorAll(".qcat-toggle").forEach(node => {
+        const category = normalizeCode(node.dataset.qcat || "", 1);
+        if (!category) return;
+        const label = getSubjectCategoryTooltip(category);
+        const shortLabel = label.includes(":") ? label.split(":")[0].trim() : label;
+        const text = `${category} = ${shortLabel}`;
+        node.dataset.tooltip = text;
+        node.removeAttribute("title");
+      });
+    }
+
+    function initQCatTooltips() {
+      const tooltip = document.createElement("div");
+      tooltip.id = "qcatFloatTooltip";
+      tooltip.setAttribute("role", "tooltip");
+      tooltip.setAttribute("aria-hidden", "true");
+      document.body.appendChild(tooltip);
+
+      let hideTimer = null;
+
+      function showTooltip(btn, isTouchTrigger) {
+        const text = btn.getAttribute("data-tooltip");
+        if (!text) return;
+        clearTimeout(hideTimer);
+        tooltip.textContent = text;
+        // Position off-screen first to measure dimensions
+        tooltip.style.top = "-9999px";
+        tooltip.style.left = "-9999px";
+        tooltip.classList.add("is-visible");
+        tooltip.setAttribute("aria-hidden", "false");
+        // Reposition after browser has painted dimensions
+        requestAnimationFrame(() => positionTooltip(btn));
+        if (isTouchTrigger) {
+          hideTimer = setTimeout(hideTooltip, 2000);
+        }
+      }
+
+      function positionTooltip(btn) {
+        const btnRect = btn.getBoundingClientRect();
+        const ttRect = tooltip.getBoundingClientRect();
+        const margin = 8;
+        const gap = 6;
+
+        // Prefer above, fall back to below if it would clip the top
+        let top = btnRect.top - ttRect.height - gap;
+        if (top < margin) {
+          top = btnRect.bottom + gap;
+        }
+        // Clamp to bottom of viewport
+        top = Math.min(top, window.innerHeight - ttRect.height - margin);
+
+        // Center on button, then clamp horizontally
+        let left = btnRect.left + btnRect.width / 2 - ttRect.width / 2;
+        left = Math.max(margin, Math.min(left, window.innerWidth - ttRect.width - margin));
+
+        tooltip.style.top = `${top}px`;
+        tooltip.style.left = `${left}px`;
+      }
+
+      function hideTooltip() {
+        clearTimeout(hideTimer);
+        tooltip.classList.remove("is-visible");
+        tooltip.setAttribute("aria-hidden", "true");
+      }
+
+      let wasTouch = false;
+
+      document.querySelectorAll(".qcat-toggle").forEach(btn => {
+        btn.addEventListener("pointerdown", (e) => {
+          wasTouch = e.pointerType === "touch" || e.pointerType === "pen";
+          if (wasTouch) {
+            showTooltip(btn, true);
+          }
+        });
+        btn.addEventListener("mouseenter", () => {
+          if (!wasTouch) showTooltip(btn, false);
+        });
+        btn.addEventListener("mouseleave", () => {
+          if (!wasTouch) hideTooltip();
+        });
+        btn.addEventListener("focus", () => {
+          if (!wasTouch) showTooltip(btn, false);
+        });
+        btn.addEventListener("blur", () => {
+          if (!wasTouch) hideTooltip();
+        });
+      });
+
+      // Reset touch flag on pointer up so hover still works if user picks up mouse
+      document.addEventListener("pointerup", () => {
+        if (wasTouch) {
+          setTimeout(() => { wasTouch = false; }, 300);
+        }
+      });
+    }
+
+    function resetQFilterDefaults() {
+      document.querySelectorAll(".qcat-toggle").forEach(node => {
+        const category = normalizeCode(node.dataset.qcat || "", 1);
+        const defaultState = ["O", "R", "W"].includes(category) ? "include" : "exclude";
+        setQCategoryButtonState(node, defaultState);
+      });
+      updateQFilterSummary();
+    }
+
+    function setSortPriorityState(isOn) {
+      const on = !!isOn;
+      if (!el.sortByPriorityBtn) return;
+      el.sortByPriorityBtn.dataset.state = on ? "on" : "off";
+      el.sortByPriorityBtn.classList.toggle("is-on", on);
+      el.sortByPriorityBtn.textContent = `Sort by priority: ${on ? "ON" : "OFF"}`;
+    }
+
+    function isQFilterEnabled() {
+      return String(el.toggleQFilterBtn?.dataset.state || "off").toLowerCase() === "on";
+    }
+
+    function setQFilterToggleState(enabled) {
+      const isOn = !!enabled;
+      el.toggleQFilterBtn.dataset.state = isOn ? "on" : "off";
+      el.toggleQFilterBtn.classList.toggle("is-on", isOn);
+      el.toggleQFilterBtn.textContent = isOn ? "Filters ON" : "Filters OFF";
+    }
+
+    function updateQFilterSummary() {
+      const enabled = isQFilterEnabled();
+      const modeMap = getQCategoryModeMap();
+      const excluded = TRACKED_Q_CATEGORIES.filter(category => modeMap.get(category) === "exclude");
+      const included = TRACKED_Q_CATEGORIES.filter(category => modeMap.get(category) !== "exclude");
+      const excludedText = excluded.length > 0 ? excluded.join(",") : "none";
+      const includedText = included.length > 0 ? included.join(",") : "none";
+      const sortText = isPrioritySortEnabled() ? "Priority sort on." : "Priority sort off.";
+      if (!enabled) {
+        el.qFilterSummary.textContent = `Q filter is off. Live results are unchanged. ${sortText}`;
+        return;
+      }
+      el.qFilterSummary.textContent = `Q filter on: include ${includedText} | exclude ${excludedText}. ${sortText}`;
+    }
+
+    function getSubjectCategoryTooltip(letter) {
+      return qLegendController ? qLegendController.getSubjectCategoryTooltip(letter) : "Other";
+    }
+
+    function renderQSubjectLegendTable() {
+      if (qLegendController) {
+        qLegendController.render();
+      }
+    }
+
+    function openQCodeLegend() {
+      el.qLegendModal.classList.add("open");
+      el.qLegendModal.setAttribute("aria-hidden", "false");
+      qLegendOpenedAtMs = Date.now();
+      setQCodeLegendPopoutStatus("", "");
+      if (el.qLegendSearch) {
+        requestAnimationFrame(() => el.qLegendSearch.focus());
+      }
+    }
+
+    function setQCodeLegendPopoutStatus(message, tone = "") {
+      if (!el.qLegendPopoutStatus) return;
+      const msg = String(message || "").trim();
+      el.qLegendPopoutStatus.textContent = msg;
+      el.qLegendPopoutStatus.classList.remove("show", "warn", "ok");
+      if (!msg) return;
+      el.qLegendPopoutStatus.classList.add("show");
+      if (tone === "warn" || tone === "ok") {
+        el.qLegendPopoutStatus.classList.add(tone);
+      }
+    }
+
+    function openQCodeLegendPopup() {
+      try {
+        const popupWidth = 860;
+        const popupHeight = 900;
+        const left = Math.max(20, window.screenX + window.outerWidth - popupWidth - 30);
+        const top = Math.max(20, window.screenY + 70);
+        const features = [
+          `width=${popupWidth}`,
+          `height=${popupHeight}`,
+          `left=${left}`,
+          `top=${top}`,
+          "resizable=yes",
+          "scrollbars=yes",
+          "menubar=no",
+          "toolbar=no",
+          "location=no",
+          "status=no"
+        ].join(",");
+
+        qLegendPopupWindow = window.open("QCodeLegend.html", "NotamQCodeLegendWindow", features);
+
+        if (!qLegendPopupWindow || qLegendPopupWindow.closed) {
+          setQCodeLegendPopoutStatus("Pop-out blocked by browser settings. Allow pop-ups for this page, then click Pop out again.", "warn");
+          return false;
+        }
+        qLegendPopupWindow.focus();
+        setQCodeLegendPopoutStatus("Standalone Q-Code Legend opened in a separate window.", "ok");
+        return true;
+      } catch (error) {
+        console.warn("[FetchNotams] Q legend popup failed, using modal fallback.", error);
+        setQCodeLegendPopoutStatus("Pop-out failed to open due to a browser/runtime error. Keep using the in-page legend.", "warn");
+        return false;
+      }
+    }
+
+    function launchQCodeLegend(event) {
+      if (event) {
+        event.preventDefault();
+      }
+      const now = Date.now();
+      if (now - qLegendLastLaunchAtMs < 200) {
+        return;
+      }
+      qLegendLastLaunchAtMs = now;
+      renderQSubjectLegendTable();
+      // Keep trigger behavior deterministic: open in-page modal first.
+      openQCodeLegend();
+    }
+
+    function closeQCodeLegend() {
+      el.qLegendModal.classList.remove("open");
+      el.qLegendModal.setAttribute("aria-hidden", "true");
+      if (el.qLegendSearch) el.qLegendSearch.value = "";
+      if (el.qLegendConditionSearch) el.qLegendConditionSearch.value = "";
+      renderQSubjectLegendTable();
+    }
+
+    function parseNotamItems(payload) {
+      const arr = Array.isArray(payload?.data) ? payload.data : [];
+      const mapped = arr
+        .filter(item => item && item.type === "notam")
+        .map(item => ({
+          pk: String(item.pk || ""),
+          location: String(item.location || "CXXX"),
+          startValidity: item.startValidity || null,
+          endValidity: item.endValidity || null,
+          raw: parseTextBlock(item.text)
+        }))
+        .filter(item => item.raw);
+
+      mapped.sort((a, b) => {
+        const ta = a.startValidity ? new Date(a.startValidity).getTime() : 0;
+        const tb = b.startValidity ? new Date(b.startValidity).getTime() : 0;
+        return tb - ta;
+      });
+
+      return mapped;
+    }
+
+    function setStatusClass(target, state) {
+      target.classList.remove("status-ok", "status-warn", "status-err");
+      if (state) target.classList.add(state);
+    }
+
+    function setLoading(active, message) {
+      if (typeof message === "string" && el.loadingText) {
+        el.loadingText.textContent = message;
+      }
+      el.loadingState.classList.toggle("active", active);
+      el.loadingState.setAttribute("aria-busy", active ? "true" : "false");
+    }
+
+    function setFetchButtonState(state) {
+      if (!el.fetchNotamsBtn) return;
+      el.fetchNotamsBtn.classList.remove("btn-attn", "btn-muted");
+      if (state === "attention") {
+        el.fetchNotamsBtn.classList.add("btn-attn");
+      } else if (state === "muted") {
+        el.fetchNotamsBtn.classList.add("btn-muted");
+      }
+    }
+
+    function setUseCacheButtonState(isFresh) {
+      if (!el.refreshFromCacheBtn) return;
+      el.refreshFromCacheBtn.classList.toggle("btn-attn", !!isFresh);
+    }
+
+    function applyFirButtonStates(firCode) {
+      const ageMs = getCacheAgeMs(firCode);
+      const hasFreshCache = Number.isFinite(ageMs) && ageMs < FRESH_BANNER_WINDOW_MS;
+      if (hasFreshCache) {
+        setUseCacheButtonState(true);
+        setFetchButtonState("muted");
+      } else {
+        setUseCacheButtonState(false);
+        setFetchButtonState("attention");
+      }
+    }
+
+    function resetToNoData(message = "No data loaded yet.", buttonState = "attention") {
+      currentItems = [];
+      currentDataSite = "";
+      refreshIcaoOptionsFromItems([]);
+      updateAirportUniverseInfo([]);
+      render([], normalizeCode(el.firInput.value, 4) || "-", message);
+      el.fetchTimeValue.textContent = "-";
+      el.updatedValue.textContent = "-";
+      setStatusClass(el.sourceValue, "");
+      setFetchButtonState(buttonState);
+      updateFirReferenceCounts();
+    }
+
+    function render(items, site, sourceLabel) {
+      const maxCount = 0;
+      const qFilterEnabled = isQFilterEnabled();
+      const qCategoryModes = getQCategoryModeMap();
+      const icaoFilter = normalizeCode(el.icaoInput.value, 4);
+      const notamFilterRaw = String(el.notamInput?.value || "").toUpperCase().replace(/\s+/g, "");
+
+      ensureNotamResultsSectionVisible(items);
+
+      const icaoFiltered = icaoFilter
+        ? items.filter(item => item.location.includes(icaoFilter) || item.raw.includes(icaoFilter))
+        : items;
+
+      const inputFiltered = notamFilterRaw
+        ? icaoFiltered.filter(item => {
+            const notamNumber = extractNotamNumber(item.raw || "").toUpperCase().replace(/\s+/g, "");
+            return notamNumber.includes(notamFilterRaw);
+          })
+        : icaoFiltered;
+
+      const filtered = qFilterEnabled
+        ? inputFiltered.filter(item => {
+            const qInfo = parseQLine(item.raw || "");
+            if (!qInfo) return true;
+            const mode = qCategoryModes.get(qInfo.category) || "include";
+            return mode !== "exclude";
+          })
+        : inputFiltered;
+
+      currentFilteredItems = filtered;
+
+      const missingQCodes = new Set();
+      const decorated = filtered.map(item => {
+        const qInfo = parseQLine(item.raw || "");
+        const priority = scoreQCode(qInfo);
+        let missingSubject = false;
+        let missingCondition = false;
+        let missingQCode = false;
+        const notamCoord = extractPrimaryCoordinateFromNotam(item.raw || "");
+        const distance = notamCoord
+          ? calculateDistanceFromPilot(notamCoord.lat, notamCoord.lon)
+          : null;
+
+        if (qInfo?.subject) {
+          missingSubject = !Q_SUBJECT_CODE_MAP.has(qInfo.subject);
+        }
+        if (qInfo?.condition) {
+          missingCondition = !Q_CONDITION_CODE_MAP.has(qInfo.condition);
+        }
+        if (!qInfo || missingSubject || missingCondition) {
+          missingQCode = true;
+          if (qInfo?.qcode) {
+            missingQCodes.add(qInfo.qcode);
+          } else {
+            missingQCodes.add("Q????");
+          }
+        }
+
+        return { item, qInfo, priority, missingSubject, missingCondition, missingQCode, distance };
+      });
+
+      decorated.sort((a, b) => {
+        const aHasDistance = !!a.distance;
+        const bHasDistance = !!b.distance;
+
+        if (aHasDistance && bHasDistance && a.distance.km !== b.distance.km) {
+          return a.distance.km - b.distance.km;
+        }
+
+        if (aHasDistance !== bHasDistance) {
+          return aHasDistance ? -1 : 1;
+        }
+
+        if (isPrioritySortEnabled() && b.priority.score !== a.priority.score) {
+          return b.priority.score - a.priority.score;
+        }
+
+        const ta = a.item.startValidity ? new Date(a.item.startValidity).getTime() : 0;
+        const tb = b.item.startValidity ? new Date(b.item.startValidity).getTime() : 0;
+        return tb - ta;
+      });
+
+      const displayItems = maxCount === 0 ? decorated : decorated.slice(0, maxCount);
+      updateViewAllOnMapButton(displayItems.map(entry => entry.item));
+      scheduleMobileDockUpdate();
+      const html = displayItems
+        .map(entry => {
+          const item = entry.item;
+          const qInfo = entry.qInfo;
+          const priority = entry.priority;
+          const notamNumber = extractNotamNumber(item.raw || "");
+          const title = notamNumber || (item.pk ? item.pk : "NO-ID");
+          const start = toPrettyDate(item.startValidity);
+          const end = toPrettyDate(item.endValidity);
+          const subjectMeaning = qInfo ? getQSubjectMeaning(qInfo.subject) : "";
+          const conditionMeaning = qInfo ? getQConditionMeaning(qInfo.condition) : "";
+          const qLine = qInfo
+            ? `${qInfo.qcode}${subjectMeaning ? ` (${qInfo.subject}: ${subjectMeaning})` : ""}${conditionMeaning ? ` - ${qInfo.condition}: ${conditionMeaning}` : ""}`
+            : "Q-code not found";
+          const labelKey = String(priority.label || "").toLowerCase();
+          const priorityTone = (labelKey === "high" || labelKey === "critical")
+            ? "high"
+            : (labelKey === "medium" ? "medium" : "low");
+          const missingNote = entry.missingQCode ? "Unknown Q-code" : "";
+          const qcodeClass = entry.missingQCode ? "missing" : "";
+          
+          let distanceHtml = "";
+          if (entry.distance) {
+            distanceHtml = `<span class="notam-distance">Distance from current Pilot Location: ${formatDistanceDisplay(entry.distance)}</span>`;
+          }
+          
+          return `
+            <li class="notam-item">
+              <div class="notam-line1">
+                <span class="notam-id">${escapeHtml(title)}</span>
+                <span class="notam-loc">${escapeHtml(item.location)}</span>
+                <span class="notam-time">Start: ${escapeHtml(start)} | End: ${escapeHtml(end)}</span>
+              </div>
+              <div class="notam-line2">
+                <span class="qcode-pill ${qcodeClass}">${escapeHtml(qInfo ? qInfo.qcode : "Q----")}</span>
+                <span class="priority-pill ${priorityTone}">${escapeHtml(priority.label)}</span>
+                ${missingNote ? `<span class="qcode-missing-note">${escapeHtml(missingNote)}</span>` : ""}
+                <span class="qcode-meaning">${escapeHtml(qLine)}</span>
+                ${distanceHtml}
+              </div>
+              <pre class="notam-preview">${buildNotamDescriptionHtml(item.raw)}</pre>
+            </li>
+          `;
+        })
+        .join("");
+
+      el.resultsList.innerHTML = html;
+      el.totalValue.textContent = String(items.length);
+      el.shownValue.textContent = String(displayItems.length);
+      el.notamsInScopeInline.textContent = String(inputFiltered.length);
+      updateAirportUniverseInfo(inputFiltered);
+      const icaoLabel = normalizeCode(el.icaoInput.value, 4) || "-";
+      el.resultsHeaderText.innerHTML = `
+        <div class="results-stat">
+          <span class="k">FIR / ICAO</span>
+          <span class="v">${site}/${icaoLabel}</span>
+        </div>
+        <div class="results-stat">
+          <span class="k">Filtered</span>
+          <span class="v results-count">${filtered.length}</span>
+        </div>
+        <div class="results-stat">
+          <span class="k">Showing</span>
+          <span class="v results-count">${displayItems.length}</span>
+        </div>
+      `;
+      if (el.unknownQCodesValue) {
+        el.unknownQCodesValue.textContent = String(missingQCodes.size);
+      }
+      const hasFirInput = !!normalizeCode(el.firInput.value, 4);
+      if (!hasFirInput) {
+        setFetchButtonState("default");
+      } else {
+        setFetchButtonState(items.length > 0 ? "muted" : "attention");
+      }
+      el.sourceValue.textContent = sourceLabel;
+      updateQFilterSummary();
+      updateFirReferenceCounts();
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    async function fetchLive(site) {
+      const url = buildApiUrl(site);
+      const t0 = performance.now();
+
+      try {
+        const proxyErrors = [];
+
+        for (const proxy of PROXY_PROVIDERS) {
+          try {
+            const proxiedUrl = proxy.buildUrl(url);
+            const payload = await fetchWithTimeout(proxiedUrl, PROXY_TIMEOUT_MS, { headers: proxy.headers });
+            const elapsed = Math.round(performance.now() - t0);
+            return {
+              payload,
+              source: `API > ${proxy.label}`,
+              elapsedMs: elapsed
+            };
+          } catch (proxyError) {
+            proxyErrors.push(`${proxy.name}: ${proxyError.message || "unknown"}`);
+          }
+        }
+
+        const payload = await fetchWithTimeout(url, DIRECT_TIMEOUT_MS);
+        const elapsed = Math.round(performance.now() - t0);
+        return {
+          payload,
+          source: "Live (direct)",
+          elapsedMs: elapsed,
+          warning: `Proxy fetch failed: ${proxyErrors.join(" | ")}`
+        };
+      } catch (fetchError) {
+        throw new Error(
+          `Proxy and direct fetch failed. ${fetchError.message || "unknown"}`
+        );
+      }
+    }
+
+    async function loadAndRender({ fromCacheOnly = false } = {}) {
+      let site = normalizeCode(el.firInput.value, 4);
+      if (!site || site.length < 3) {
+        if (fromCacheOnly) {
+          const fallbackFir = getLastFir();
+          if (!fallbackFir) {
+            alert("No cached FIR available. Enter a FIR code first.");
+            return;
+          }
+          site = fallbackFir;
+          el.firInput.value = site;
+        } else {
+          alert("Select a valid FIR (4 chars). Example: CZYZ");
+          return;
+        }
+      }
+
+      const cached = loadCache(site);
+      const hasCache = !!(cached && Array.isArray(cached.items));
+
+      el.firInput.value = site;
+      persistLastFir(site);
+      updateSelectionSummary();
+      setLoading(
+        true,
+        fromCacheOnly
+          ? "Loading NOTAMs from cache..."
+          : (hasCache
+              ? "Refreshing NOTAMs in background..."
+              : "Loading NOTAMs (cache first, live refresh in progress)...")
+      );
+
+      const now = Date.now();
+
+      if (cached && Array.isArray(cached.items)) {
+        currentItems = cached.items;
+        currentDataSite = site;
+        storeLatestLivePayloadFromItems(currentItems, 1200, site);
+        refreshIcaoOptionsFromItems(currentItems);
+        updateAirportUniverseInfo(currentItems);
+        render(currentItems, site, "Cache");
+        el.updatedValue.textContent = toPrettyDate(cached.fetchedAt || cached.savedAt);
+        updateLastFetchBanner(cached.fetchedAt || cached.savedAt, "Cache");
+        el.fetchTimeValue.textContent = "0 ms";
+        setStatusClass(el.sourceValue, "status-ok");
+      }
+
+      if (fromCacheOnly) {
+        el.notamsInScopeInline.textContent = String(currentItems.length);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const fresh = await fetchLive(site);
+        const parsedItems = parseNotamItems(fresh.payload);
+
+        currentItems = parsedItems;
+        currentDataSite = site;
+        storeLatestLivePayloadFromItems(currentItems, 1200, site);
+        refreshIcaoOptionsFromItems(currentItems);
+        updateAirportUniverseInfo(currentItems);
+        render(currentItems, site, fresh.source);
+
+        el.fetchTimeValue.textContent = `${fresh.elapsedMs} ms`;
+        const nowIso = new Date().toISOString();
+        el.updatedValue.textContent = toPrettyDate(nowIso);
+        updateLastFetchBanner(nowIso, "Fetch");
+
+        if (fresh.source.includes("proxy")) {
+          setStatusClass(el.sourceValue, "status-warn");
+        } else {
+          setStatusClass(el.sourceValue, "status-ok");
+        }
+
+        saveCache(site, {
+          site,
+          fetchedAt: nowIso,
+          savedAt: now,
+          items: parsedItems
+        });
+        persistLastFir(site);
+      } catch (error) {
+        const hasFreshCache = cached && Array.isArray(cached.items) && (now - Number(cached.savedAt || 0) <= CACHE_TTL_MS);
+        if (hasFreshCache) {
+          refreshIcaoOptionsFromItems(cached.items);
+          updateAirportUniverseInfo(cached.items);
+          render(cached.items, site, "Cache (live failed)");
+          el.fetchTimeValue.textContent = "timeout/fail";
+          el.updatedValue.textContent = `${toPrettyDate(cached.fetchedAt)} (cached)`;
+          setStatusClass(el.sourceValue, "status-warn");
+          el.resultsHeaderText.textContent = `${site}: Live fetch failed, showing recent cache.`;
+        } else {
+          currentItems = [];
+          currentDataSite = "";
+          refreshIcaoOptionsFromItems([]);
+          updateAirportUniverseInfo([]);
+          el.notamsInScopeInline.textContent = "0";
+          render([], site, "No data");
+          el.fetchTimeValue.textContent = "failed";
+          el.updatedValue.textContent = "-";
+          setStatusClass(el.sourceValue, "status-err");
+          el.resultsHeaderText.textContent = `${site}: ${error.message}`;
+        }
+      } finally {
+        setLoading(false);
+        if (!hasAutoFocusedIcao && el.icaoInput) {
+          hasAutoFocusedIcao = true;
+          requestAnimationFrame(() => el.icaoInput.focus());
+        }
+      }
+    }
+
+    el.form.addEventListener("submit", async event => {
+      event.preventDefault();
+      const site = normalizeCode(el.firInput.value, 4);
+      if (!site) {
+        alert("Enter a FIR code (4 chars). Example: CZYZ");
+        return;
+      }
+
+      // After a valid FIR fetch is initiated, collapse the FIR Reference to free vertical space.
+      setSectionCollapsed("#firReferenceSection", true);
+
+      const cacheAgeMs = getCacheAgeMs(site);
+      const firChanged = site !== lastFetchActionSite;
+
+      if (!firChanged && cacheAgeMs >= 0 && cacheAgeMs < LIVE_FETCH_COOLDOWN_MS) {
+        const mins = Math.floor(cacheAgeMs / 60000);
+        const wantsLiveRefresh = window.confirm(
+          `Last fetch for ${site} was ${mins} minute(s) ago. Do you really want to refresh live now?\n\n` +
+          "Select Cancel to use cache instead."
+        );
+
+        if (!wantsLiveRefresh) {
+          await loadAndRender({ fromCacheOnly: true });
+          render(currentItems, site, el.sourceValue.textContent || "-");
+          return;
+        }
+      }
+
+      lastFetchActionSite = site;
+      loadAndRender();
+    });
+
+    el.firInput.addEventListener("input", () => {
+      const firCode = normalizeCode(el.firInput.value, 4);
+      el.firInput.value = firCode;
+      updateSelectionSummary();
+      applyFirButtonStates(firCode);
+    });
+
+    el.icaoInput.addEventListener("input", () => {
+      el.icaoInput.value = normalizeCode(el.icaoInput.value, 4);
+      persistLastIcao(el.icaoInput.value);
+      updateSelectionSummary();
+      const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+      render(currentItems, site, el.sourceValue.textContent || "-");
+    });
+
+    if (el.notamInput) {
+      el.notamInput.addEventListener("input", () => {
+        const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+        render(currentItems, site, el.sourceValue.textContent || "-");
+      });
+    }
+
+    if (el.clearEntriesBtn) {
+      el.clearEntriesBtn.addEventListener("click", () => {
+        el.firInput.value = "";
+        el.icaoInput.value = "";
+        if (el.notamInput) el.notamInput.value = "";
+        updateSelectionSummary();
+        lastFetchActionSite = "";
+        lastSelectedIcao = "";
+        localStorage.removeItem(LAST_ICAO_STORAGE_KEY);
+        resetToNoData("No data loaded yet.", "default");
+        const lastFir = getLastFir();
+        const cache = lastFir ? loadCache(lastFir) : null;
+        const cacheAgeMs = cache?.fetchedAt ? (Date.now() - new Date(cache.fetchedAt).getTime()) : Infinity;
+        setUseCacheButtonState(cacheAgeMs >= 0 && cacheAgeMs <= FRESH_BANNER_WINDOW_MS);
+        el.icaoInput.value = "";
+        el.icaoInput.dispatchEvent(new Event("input"));
+      });
+    }
+
+    el.toggleQFilterBtn.addEventListener("click", () => {
+      setQFilterToggleState(!isQFilterEnabled());
+      const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+      render(currentItems, site, el.sourceValue.textContent || "-");
+    });
+
+    document.querySelectorAll(".qcat-toggle").forEach(node => {
+      node.addEventListener("click", () => {
+        const nextState = String(node.dataset.state || "include").toLowerCase() === "exclude" ? "include" : "exclude";
+        setQCategoryButtonState(node, nextState);
+        const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+        render(currentItems, site, el.sourceValue.textContent || "-");
+      });
+    });
+
+    el.qSetAllExcludeBtn.addEventListener("click", () => {
+      document.querySelectorAll(".qcat-toggle").forEach(node => {
+        setQCategoryButtonState(node, "exclude");
+      });
+      const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+      render(currentItems, site, el.sourceValue.textContent || "-");
+    });
+
+    el.qSetAllIncludeBtn.addEventListener("click", () => {
+      document.querySelectorAll(".qcat-toggle").forEach(node => {
+        setQCategoryButtonState(node, "include");
+      });
+      const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+      render(currentItems, site, el.sourceValue.textContent || "-");
+    });
+
+    if (el.qResetDefaultsBtn) {
+      el.qResetDefaultsBtn.addEventListener("click", () => {
+        resetQFilterDefaults();
+        const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+        render(currentItems, site, el.sourceValue.textContent || "-");
+      });
+    }
+
+    if (el.sortByPriorityBtn) {
+      el.sortByPriorityBtn.addEventListener("click", () => {
+        const isOn = String(el.sortByPriorityBtn.dataset.state || "on") === "on";
+        setSortPriorityState(!isOn);
+        const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+        render(currentItems, site, el.sourceValue.textContent || "-");
+      });
+    }
+
+    if (el.openQLegend) {
+      el.openQLegend.addEventListener("click", launchQCodeLegend);
+    }
+
+    setupFirReferenceTable();
+
+    if (qLegendController) {
+      qLegendController.bindUi({
+        bodyEl: el.qLegendBody,
+        infoEl: el.qLegendInfo,
+        subjectInput: el.qLegendSearch,
+        conditionInput: el.qLegendConditionSearch,
+        clearBtn: el.qLegendClearSearch,
+        showAllBtn: el.qLegendShowAll
+      });
+    }
+
+    // Overlay-safe fallback: if another element steals click target, hit-test button bounds.
+    document.addEventListener("pointerup", event => {
+      if (!el.openQLegend || !event.isPrimary) return;
+      if (el.qLegendModal.classList.contains("open")) return;
+
+      const target = event.target;
+      if (target instanceof Element && (target === el.openQLegend || el.openQLegend.contains(target))) {
+        return;
+      }
+
+      const rect = el.openQLegend.getBoundingClientRect();
+      const x = event.clientX;
+      const y = event.clientY;
+      const inside = x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+      if (!inside) return;
+
+      launchQCodeLegend(event);
+    }, true);
+
+    el.closeQLegend.addEventListener("click", () => {
+      closeQCodeLegend();
+    });
+
+    el.popoutQLegend.addEventListener("click", () => {
+      renderQSubjectLegendTable();
+      openQCodeLegendPopup();
+    });
+
+    el.qLegendModal.addEventListener("click", event => {
+      const target = event.target;
+      if (target instanceof Element && target.hasAttribute("data-close-qlegend")) {
+        if (Date.now() - qLegendOpenedAtMs < 300) {
+          return;
+        }
+        closeQCodeLegend();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && el.qLegendModal.classList.contains("open")) {
+        closeQCodeLegend();
+      }
+    });
+
+    if (el.refreshFromCacheBtn) {
+      el.refreshFromCacheBtn.addEventListener("click", async () => {
+        await loadAndRender({ fromCacheOnly: true });
+        const site = normalizeCode(el.firInput.value, 4) || "CZYZ";
+        render(currentItems, site, el.sourceValue.textContent || "-");
+        setUseCacheButtonState(false);
+        
+        // Hide Input Selections and Show Q-Code Filters if NOTAMs were returned
+        if (currentItems.length > 0) {
+          setSectionCollapsed("#inputSelectionsSection", true);
+          setSectionCollapsed("#qFilterSection", false);
+        }
+      });
+    }
+
+    document.querySelectorAll("[data-collapse-target]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const targetSelector = btn.getAttribute("data-collapse-target");
+        if (!targetSelector) return;
+        const section = document.querySelector(targetSelector);
+        if (!section) return;
+        section.classList.toggle("collapsed");
+        btn.textContent = section.classList.contains("collapsed") ? "Show" : "Hide";
+      });
+    });
+
+    document.querySelectorAll("[data-section-head-target]").forEach(headSpan => {
+      headSpan.addEventListener("click", () => {
+        const targetSelector = headSpan.getAttribute("data-section-head-target");
+        if (!targetSelector) return;
+        const section = document.querySelector(targetSelector);
+        if (!section) return;
+        section.classList.toggle("collapsed");
+        const isCollapsed = section.classList.contains("collapsed");
+        const toggleBtn = section.querySelector(".section-toggle[data-collapse-target]");
+        if (toggleBtn) toggleBtn.textContent = isCollapsed ? "Show" : "Hide";
+      });
+    });
+
+    el.viewAllOnMapBtn.addEventListener("click", () => {
+      const payloadInfo = pendingMapPayloadInfo;
+      const records = payloadInfo?.records || [];
+      if (!records.length) {
+        alert("No obstacle coordinates found in the current displayed results.");
+        return;
+      }
+
+      const payloadKey = storeMapPayload(records);
+      const url = buildBatchMapUrlFromPayloadKey(payloadKey, payloadInfo);
+      if (!url) {
+        alert("No obstacle coordinates found in the current displayed results.");
+        return;
+      }
+
+      const popup = window.open(url, "_blank");
+      if (popup) {
+        popup.focus();
+      } else {
+        window.location.href = url;
+      }
+    });
+
+    initDeviceType();
+    initViewMode();
+    refreshIcaoOptionsFromItems([]);
+    setQFilterToggleState(false);
+    setSortPriorityState(true);
+    loadQCodeLegendData().finally(() => {
+      renderQSubjectLegendTable();
+      updateQFilterSummary();
+    });
+    resetQFilterDefaults();
+    updateQCategoryTooltips();
+    initQCatTooltips();
+
+    const initialFir = getLastFir();
+    if (initialFir) {
+      el.firInput.value = initialFir;
+      updateSelectionSummary();
+      loadAndRender({ fromCacheOnly: true });
+    } else {
+      resetToNoData("No data loaded yet.", "attention");
+      updateSelectionSummary();
+    }
+
+    // Apply startup section behavior after initial FIR is populated.
+    initializeFirReferencePanel();
+  </script>
+</body>
+</html>
+
