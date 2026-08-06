@@ -129,6 +129,6 @@ It runs daily at 10:15 UTC and can be started manually from the Actions tab. The
 1. Installs `drone_jobs/requirements.txt`.
 2. Runs `python drone_jobs/scraper.py --reset`.
 3. Runs `python drone_jobs/export.py`.
-4. Commits and pushes `data/jobs.json`, `data/jobs_review.csv`, and `data/jobs_review_latest.csv` when they change.
+4. Commits and pushes `data/jobs.db`, `data/jobs.json`, `data/jobs_review.csv`, and `data/jobs_review_latest.csv` when they change.
 
 Those commits trigger the Pages deploy workflow because `deploy-pages.yml` watches `data/*.json` and `data/*.csv`.

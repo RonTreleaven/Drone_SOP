@@ -45,6 +45,7 @@ jobs:
       - name: Verify generated files
         run: |
           set -Eeuo pipefail
+          test -f data/jobs.db
           test -f data/jobs.json
           test -f data/jobs_review.csv
           python -m json.tool data/jobs.json >/dev/null
@@ -54,7 +55,7 @@ jobs:
           set -Eeuo pipefail
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add data/jobs.json data/jobs_review.csv data/jobs_review_latest.csv
+          git add data/jobs.db data/jobs.json data/jobs_review.csv data/jobs_review_latest.csv
           if git diff --staged --quiet; then
             echo "No job data changes to commit."
             exit 0
