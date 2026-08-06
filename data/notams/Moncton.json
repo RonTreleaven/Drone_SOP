@@ -1,11 +1,20 @@
 [
   {
-    "raw": "(V0944/26 NOTAMR V0509/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4525N06333W005\nA) CXXX B) 2608031802 C) 2608052359EST\nE) CCQ3 DEBERT \nOBST LGT U/S ANTENNA 452522N 0633317W (APRX 3.9NM WNW AD) 246FT \nAGL, 377FT AMSL.)",
-    "startValidity": "2026-08-03T18:02:00",
+    "raw": "(V0957/26 NOTAMR V0944/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4525N06333W005\nA) CXXX B) 2608052339 C) 2608072359EST\nE) CCQ3 DEBERT \nOBST LGT U/S ANTENNA 452522N 0633317W (APRX 3.9NM WNW AD) 246FT \nAGL, 377FT AMSL.)",
+    "startValidity": "2026-08-05T23:39:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.422778, -63.554722"
+    ]
+  },
+  {
+    "raw": "(V0955/26 NOTAMN\nQ) CZQM/QOLAS/IV/M/AE/000/011/4503N06433W005\nA) CXXX B) 2608052108 C) 2611052100EST\nE) CKV8 KENTVILLE (VALLEY REGIONAL HOSPITAL) (HELI)\nOBST LGT U/S TOWER 450232N 0643243W (APRX 3.1NM SW AD) 398FT AGL, \n1061FT AMSL.)",
+    "startValidity": "2026-08-05T21:08:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.042222, -64.545278"
     ]
   },
   {
@@ -63,15 +72,6 @@
     ]
   },
   {
-    "raw": "(V0883/26 NOTAMR V0482/26\nQ) CZQM/QOLAS/IV/M/AE/000/002/4437N06325W005\nA) CYAW B) 2607232052 C) 2610222359EST\nE) OBST LGT U/S ANTENNA 443655N 0632508W (APRX 3.8NM SE AD) 121FT \nAGL, 171FT AMSL.)",
-    "startValidity": "2026-07-23T20:52:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.615278, -63.418889"
-    ]
-  },
-  {
     "raw": "(V0884/26 NOTAMR V0481/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4439N06331W005\nA) CYAW B) 2607232052 C) 2610222359EST\nE) OBST LGT U/S TOWER 443833N 0633103W (APRX 4418FT NW AD) 174FT \nAGL, 319FT AMSL.)",
     "startValidity": "2026-07-23T20:52:00",
     "endValidity": null,
@@ -81,12 +81,12 @@
     ]
   },
   {
-    "raw": "(V0882/26 NOTAMR V0471/26\nQ) CZQM/QOLAS/IV/M/E/000/017/4529N06614W002\nA) CZQM B) 2607231621 C) 2608231700EST\nE) OBST LGT U/S TOWER 452841N 0661404W (APRX 12NM NNW SAINT JOHN \n(SAINT JOHN REGIONAL HOSPITAL) (HELI) AD (CSN6)) 180FT AGL, \n1640FT AMSL.)",
-    "startValidity": "2026-07-23T16:21:00",
+    "raw": "(V0883/26 NOTAMR V0482/26\nQ) CZQM/QOLAS/IV/M/AE/000/002/4437N06325W005\nA) CYAW B) 2607232052 C) 2610222359EST\nE) OBST LGT U/S ANTENNA 443655N 0632508W (APRX 3.8NM SE AD) 121FT \nAGL, 171FT AMSL.)",
+    "startValidity": "2026-07-23T20:52:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
-      "45.478056, -66.234444"
+      "44.615278, -63.418889"
     ]
   },
   {
@@ -96,6 +96,15 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.573889, -66.378889"
+    ]
+  },
+  {
+    "raw": "(V0882/26 NOTAMR V0471/26\nQ) CZQM/QOLAS/IV/M/E/000/017/4529N06614W002\nA) CZQM B) 2607231621 C) 2608231700EST\nE) OBST LGT U/S TOWER 452841N 0661404W (APRX 12NM NNW SAINT JOHN \n(SAINT JOHN REGIONAL HOSPITAL) (HELI) AD (CSN6)) 180FT AGL, \n1640FT AMSL.)",
+    "startValidity": "2026-07-23T16:21:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.478056, -66.234444"
     ]
   },
   {
@@ -252,21 +261,21 @@
     ]
   },
   {
-    "raw": "(V0597/26 NOTAMR V0591/26\nQ) CZQM/QOLAS/IV/M/AE/000/005/4540N06125W005\nA) CYPD B) 2605261352 C) 2608251400EST\nE) OBST LGT U/S TOWER 453935N 0612515W (APRX 2.2NM WNW AD) 391FT \nAGL, 426FT AMSL.)",
-    "startValidity": "2026-05-26T13:52:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.659722, -61.420833"
-    ]
-  },
-  {
     "raw": "(V0598/26 NOTAMR V0590/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2605261352 C) 2608251400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
     "startValidity": "2026-05-26T13:52:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.647222, -61.455000"
+    ]
+  },
+  {
+    "raw": "(V0597/26 NOTAMR V0591/26\nQ) CZQM/QOLAS/IV/M/AE/000/005/4540N06125W005\nA) CYPD B) 2605261352 C) 2608251400EST\nE) OBST LGT U/S TOWER 453935N 0612515W (APRX 2.2NM WNW AD) 391FT \nAGL, 426FT AMSL.)",
+    "startValidity": "2026-05-26T13:52:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.659722, -61.420833"
     ]
   },
   {
