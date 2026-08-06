@@ -1,0 +1,64 @@
+name: Fetch Drone Jobs
+
+on:
+  schedule:
+    - cron: '15 10 * * *'  # runs daily at 10:15 UTC, 6:15 AM EDT / 5:15 AM EST
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  PYTHON_VERSION: '3.12'
+
+concurrency:
+  group: fetch-drone-jobs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: drone_jobs/requirements.txt
+
+      - name: Install scraper dependencies
+        run: python -m pip install -r drone_jobs/requirements.txt
+
+      - name: Run jobs scraper
+        run: python drone_jobs/scraper.py --reset
+
+      - name: Export jobs artifacts
+        run: python drone_jobs/export.py
+
+      - name: Verify generated files
+        run: |
+          set -Eeuo pipefail
+          test -f data/jobs.json
+          test -f data/jobs_review.csv
+          python -m json.tool data/jobs.json >/dev/null
+
+      - name: Commit and push job data
+        run: |
+          set -Eeuo pipefail
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/jobs.json data/jobs_review.csv data/jobs_review_latest.csv
+          if git diff --staged --quiet; then
+            echo "No job data changes to commit."
+            exit 0
+          fi
+          git commit -m "Auto-update drone jobs $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push

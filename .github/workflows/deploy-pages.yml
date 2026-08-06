@@ -19,6 +19,7 @@ on:
       - "assets/pdf/MyFactSheet.pdf"
       - "sections/**"
       - "data/*.json"
+      - "data/*.csv"
       - "data/*.geojson"
       - "data/notams/**"
       - "data/airspace/*.geojson"
@@ -37,28 +38,31 @@ env:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v7
 
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
       - name: Build site artifact
         run: |
-          mkdir -p _site/assets/js _site/assets/css _site/assets/img \
-                   _site/assets/Emergency _site/assets/CFS _site/assets/pdf \
+          set -Eeuo pipefail
+
+          rm -rf _site
+          mkdir -p _site/assets/js _site/assets/css \
+                   _site/assets/Emergency _site/assets/pdf \
                    _site/data/notams _site/data/airspace/_sources \
                    _site/data/schema _site/sections
 
@@ -70,26 +74,27 @@ jobs:
             -exec cp {} _site/ \;
 
           # Root-level JS (e.g. cords.js)
-          cp *.js _site/ 2>/dev/null || true
+          find . -maxdepth 1 -type f -name "*.js" -exec cp {} _site/ \;
 
           # Root-level images and favicons
-          cp *.png *.ico *.svg _site/ 2>/dev/null || true
+          find . -maxdepth 1 -type f \( -name "*.png" -o -name "*.ico" -o -name "*.svg" \) \
+            -exec cp {} _site/ \;
 
           # Assets - explicit subfolders only (excludes logs/ and MD/)
-          cp assets/css/*.css   _site/assets/css/   2>/dev/null || true
-          cp assets/js/*.js     _site/assets/js/    2>/dev/null || true
-          cp assets/js/*.css    _site/assets/js/    2>/dev/null || true
-          cp -r assets/img      _site/assets/
-          cp assets/Emergency/*.md _site/assets/Emergency/ 2>/dev/null || true
-          cp -r assets/CFS      _site/assets/       2>/dev/null || true
+          find assets/css -maxdepth 1 -type f -name "*.css" -exec cp {} _site/assets/css/ \;
+          find assets/js -maxdepth 1 -type f \( -name "*.js" -o -name "*.css" \) \
+            -exec cp {} _site/assets/js/ \;
+          cp -a assets/img _site/assets/
+          find assets/Emergency -maxdepth 1 -type f -name "*.md" -exec cp {} _site/assets/Emergency/ \;
+          if [ -d assets/CFS ]; then cp -a assets/CFS _site/assets/; fi
           # Publish only PDFs referenced by live pages
-          cp assets/pdf/MyFactSheet.pdf _site/assets/pdf/ 2>/dev/null || true
+          if [ -f assets/pdf/MyFactSheet.pdf ]; then cp assets/pdf/MyFactSheet.pdf _site/assets/pdf/; fi
 
           # Sections (SOP procedure pages)
           cp sections/*.html _site/sections/
 
-          # Data - reference JSON/GeoJSON files (root of data/)
-          find data -maxdepth 1 -type f \( -name "*.json" -o -name "*.geojson" \) \
+          # Data - reference JSON/GeoJSON/CSV files (root of data/)
+          find data -maxdepth 1 -type f \( -name "*.json" -o -name "*.geojson" -o -name "*.csv" \) \
             ! -name "May11_2026ca_asp.geojson" \
             -exec cp {} _site/data/ \;
 
@@ -115,16 +120,33 @@ jobs:
           # Disable Jekyll processing
           touch _site/.nojekyll
 
+          test -f _site/index.html
+          test -f _site/JobBoard.html
+          test -f _site/data/jobs.json
+
       - name: Summarize site artifact
         run: |
+          set -Eeuo pipefail
           du -sh _site
           find _site -type f | wc -l
+          find _site -type l -print -quit | awk '{ print "Symlink found in Pages artifact: " $0; exit 1 }'
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
