@@ -14584,3 +14584,9 @@ KeyboardInterrupt
 [OK] Outputs: data\jobs.db, data\jobs.json, data\jobs_review.csv, data\jobs_review_latest.csv (fallback)
 [Wed 08/05/2026 13:29:24.92] Daily jobs refresh completed successfully
 
+==================================================
+[Wed 08/05/2026 13:32:30.99] Daily jobs refresh started
+[INFO] Updating jobs dataset...
+==================================================
+[Thu 08/06/2026  9:00:44.91] Daily jobs refresh started
+[INFO] Updating jobs dataset...
