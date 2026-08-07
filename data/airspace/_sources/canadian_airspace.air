@@ -1,6 +1,6 @@
 *                              Canadian Airspace                               *
 *                                                                              *
-*                       Created Sat Jul 25 16:54:57 2026                       *
+*                       Created Wed Aug  5 10:56:29 2026                       *
 *           Extracted from the Canadian Designated Airspace Handbook           *
 *                   In Open Air Special Use Airspace Format                    *
 *                      Using the parsing program cdah.py                       *
@@ -25,7 +25,7 @@
 * Source: Canadian Designated Airspace Handbook
 * Issue: 322
 * Valid: 09 JULY 2026 to 03 SEPTEMBER 2026
-* Created: Sat Jul 25 16:54:56 2026
+* Created: Wed Aug  5 10:56:27 2026
 
 
 AC E
@@ -117,10 +117,11 @@ DP 49:03:17.0N 122:07:24.0W
 
 
 AC E
-AN 3.1.1-9 [TA]
+AN Abbotsford, BC [TA]
 AL 700AGL
 AH 18000MSL
 * CDAH section: 3.1.1-9
+* Transponder required (3.1.5-17)
 * Canadian airspace type: Transition Area [TA]
 * CLASS=B above 12500ft
 * Altitudes: 700ft AGL to overlying airspace
@@ -202,7 +203,7 @@ DC 22
 
 
 AC E
-AN 3.1.1-18 [TA]
+AN Kamloops, BC [TA]
 AL 1600AGL
 AH 18000MSL
 * CDAH section: 3.1.1-18
@@ -228,7 +229,7 @@ DB 50:25:38.9N 119:43:25.6W, 50:16:52.2N 119:57:58.6W
 
 
 AC E
-AN 3.1.1-19 [TA]
+AN Kamloops, BC [TA]
 AL 2200AGL
 AH 18000MSL
 * CDAH section: 3.1.1-19
@@ -1051,7 +1052,7 @@ DB 54:44:26.3N 128:55:15.7W, 54:26:15.9N 129:17:15.6W
 
 
 AC E
-AN 3.1.2-39 [CAE]
+AN Terrace, BC [CAE]
 AL 8000MSL
 AH 18000MSL
 * CDAH section: 3.1.2-39
@@ -1091,7 +1092,7 @@ DC 25
 
 
 AC E
-AN 3.1.2-44 [CAE]
+AN Williams Lake, BC [CAE]
 AL 2200AGL
 AH 18000MSL
 * CDAH section: 3.1.2-44
@@ -1112,7 +1113,7 @@ DB 53:59:12.4N 127:58:23.4W, 54:07:02.5N 129:22:10.0W
 
 
 AC E
-AN 3.1.2-45 [CAE]
+AN Williams Lake, BC [CAE]
 AL 6000MSL
 AH 18000MSL
 * CDAH section: 3.1.2-45
@@ -1148,7 +1149,7 @@ DP 48:29:36.0N 124:43:38.0W
 
 
 AC E
-AN 3.1.2-46 [CAE]
+AN Williams Lake, BC [CAE]
 AL 7000MSL
 AH 18000MSL
 * CDAH section: 3.1.2-46
@@ -1173,7 +1174,7 @@ DP 54:36:40.1N 125:59:37.4W
 
 
 AC E
-AN 3.1.2-47 [CAE]
+AN Williams Lake, BC [CAE]
 AL 8000MSL
 AH 18000MSL
 * CDAH section: 3.1.2-47
@@ -1202,7 +1203,7 @@ DP 50:00:00.0N 121:23:05.0W
 
 
 AC E
-AN 3.1.2-48 [CAE]
+AN Williams Lake, BC [CAE]
 AL 9000MSL
 AH 18000MSL
 * CDAH section: 3.1.2-48
@@ -1321,7 +1322,7 @@ DP 49:00:01.0N 121:23:05.0W
 
 
 AC B
-AN 3.1.2-49 [CAE]
+AN Williams Lake, BC [CAE]
 AL 12500MSL
 AH 18000MSL
 * CDAH section: 3.1.2-49
@@ -1410,7 +1411,7 @@ DP 51:00:03.0N 118:27:20.0W
 
 
 AC B
-AN 3.1.2-50 [CAE]
+AN Williams Lake, BC [CAE]
 AL 12500MSL
 AH 18000MSL
 * CDAH section: 3.1.2-50
@@ -1438,7 +1439,7 @@ DP 54:11:51.0N 125:08:52.4W
 
 
 AC D
-AN 3.1.2-52 [CAE]
+AN Williams Lake, BC [CAE]
 AL 6000MSL
 AH 18000MSL
 * CDAH section: 3.1.2-52
@@ -5183,10 +5184,11 @@ DP 48:22:19.0N 89:19:26.0W
 
 
 AC E
-AN 3.3.1-49 [TA]
+AN Thunder Bay, ON [TA]
 AL 3000MSL
 AH 12500MSL
 * CDAH section: 3.3.1-49
+* Transponder required (3.3.5-20)
 * Canadian airspace type: Transition Area [TA]
 * Altitudes: 3000ft to 12500ft
 DP 48:22:19.0N 89:19:26.0W
@@ -5874,11 +5876,11 @@ DB 49:51:33.0N 104:30:00.0W, 50:43:14.0N 105:27:40.0W
 
 
 AC B
-AN 3.3.2-48 [CAE]
+AN Regina, SK [CAE]
 AL 12500MSL
 AH 18000MSL
 * CDAH section: 3.3.2-48
-* Transponder required
+* Transponder required (3.3.5-13)
 * Canadian airspace type: Control Area Extensions [CAE]
 * Altitudes: 12500ft to overlying airspace
 V X= 50:22:11.0N 104:34:23.0W
@@ -5900,11 +5902,11 @@ DC 35
 
 
 AC B
-AN 3.3.2-51 [CAE]
+AN Saskatoon, SK [CAE]
 AL 12500MSL
 AH 18000MSL
 * CDAH section: 3.3.2-51
-* Transponder required
+* Transponder required (3.3.5-16)
 * Canadian airspace type: Control Area Extensions [CAE]
 * Altitudes: 12500ft to overlying airspace
 V X= 52:10:52.0N 106:43:11.0W
@@ -6401,7 +6403,29 @@ DB 50:10:44.6N 98:36:25.0W, 50:12:51.9N 98:01:37.5W
 
 
 AC C
-AN The airspace to 5000ft (3300ft AAE) within the area bounded by a line beginning at: N52°16'43.85" W106°37'44.94" thence clockwise along the arc of a circle of 7 miles radius centred on N52°10'15.00" W106°41'59.00" (Saskatoon/John G. Diefenbaker Intl, SK - AD) to N52°17'08.75" W106°43'47.45" to N52°15'12.88" W106°42'41.64" thence clockwise along the arc of a circle of 5 miles radius centred on N52°10'15.00" W106°41'59.00" (Saskatoon/John G. Diefenbaker Intl, SK - AD) to N52°14'52.11" W106°38'55.32" to N52°16'43.85" W106°37'44.94" point of beginning Winnipeg/James Armstrong Richardson Intl, MB [CZ]
+AN Saskatoon/John G. Diefenbaker Intl, SK [CZ]
+AL SFC
+AH 5000MSL
+* CDAH section: 3.3.4-3
+* Transponder required
+* Canadian airspace type: Control Zone [CZ]
+* (3300ft AAE)
+* Altitudes: SFC to 5000ft (3300ft AAE)
+V D=+
+V X= 52:10:15.0N 106:41:59.0W
+DB 52:16:43.8N 106:37:44.9W, 52:17:08.8N 106:43:47.5W
+* Radius = 7
+*  (Saskatoon/John G. Diefenbaker Intl, SK - AD)
+V D=+
+V X= 52:10:15.0N 106:41:59.0W
+DB 52:15:12.9N 106:42:41.6W, 52:14:52.1N 106:38:55.3W
+* Radius = 5
+*  (Saskatoon/John G. Diefenbaker Intl, SK - AD)
+DP 52:16:43.8N 106:37:44.9W
+
+
+AC C
+AN Winnipeg/James Armstrong Richardson Intl, MB [CZ]
 AL SFC
 AH 3000MSL
 * CDAH section: 3.3.4-4
@@ -7165,7 +7189,7 @@ DP 42:36:26.0N 82:31:24.0W
 
 
 AC E
-AN 3.4.1-43 [TA]
+AN Windsor, ON [TA]
 AL 700AGL
 AH 18000MSL
 * CDAH section: 3.4.1-43
