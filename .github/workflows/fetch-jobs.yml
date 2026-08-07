@@ -55,11 +55,17 @@ jobs:
           set -Eeuo pipefail
           git config user.name "github-actions"
           git config user.email "actions@github.com"
+          if [ -n "$(git status --porcelain)" ]; then
+            git stash push --include-untracked -m "generated job data before rebase"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git stash pop
+          else
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+          fi
           git add data/jobs.db data/jobs.json data/jobs_review.csv data/jobs_review_latest.csv
           if git diff --staged --quiet; then
             echo "No job data changes to commit."
             exit 0
           fi
           git commit -m "Auto-update drone jobs $(date -u '+%Y-%m-%d %H:%M UTC')"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
           git push
