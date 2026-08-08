@@ -9,24 +9,44 @@ from urllib.parse import urljoin
 import feedparser
 import requests
 
-from classifier import classify_job, detect_type
-from config import (
-    DEFAULT_SOURCES,
-    EXCLUDED_TITLE_PHRASES,
-    GREENHOUSE_BOARDS,
-    GREENHOUSE_JOBS_API,
-    INDEED_RSS,
-    JOBBANK_SEARCH,
-    JOBS_BEAR_SEARCH,
-    LEVER_POSTINGS_API,
-    LEVER_SITES,
-    QUERY_FAMILIES,
-    REQUIRED_ROLE_TERMS_IN_TITLE,
-    SIMPLYHIRED_SEARCH,
-    TALENT_SEARCH,
-)
-from database import clear_jobs, init_db, insert_job
-from normalization import normalize_date, normalize_text
+try:
+    from .classifier import classify_job, detect_type
+    from .config import (
+        DEFAULT_SOURCES,
+        EXCLUDED_TITLE_PHRASES,
+        GREENHOUSE_BOARDS,
+        GREENHOUSE_JOBS_API,
+        INDEED_RSS,
+        JOBBANK_SEARCH,
+        JOBS_BEAR_SEARCH,
+        LEVER_POSTINGS_API,
+        LEVER_SITES,
+        QUERY_FAMILIES,
+        REQUIRED_ROLE_TERMS_IN_TITLE,
+        SIMPLYHIRED_SEARCH,
+        TALENT_SEARCH,
+    )
+    from .database import clear_jobs, init_db, insert_job
+    from .normalization import normalize_date, normalize_text
+except ImportError:  # pragma: no cover - script execution fallback
+    from classifier import classify_job, detect_type
+    from config import (
+        DEFAULT_SOURCES,
+        EXCLUDED_TITLE_PHRASES,
+        GREENHOUSE_BOARDS,
+        GREENHOUSE_JOBS_API,
+        INDEED_RSS,
+        JOBBANK_SEARCH,
+        JOBS_BEAR_SEARCH,
+        LEVER_POSTINGS_API,
+        LEVER_SITES,
+        QUERY_FAMILIES,
+        REQUIRED_ROLE_TERMS_IN_TITLE,
+        SIMPLYHIRED_SEARCH,
+        TALENT_SEARCH,
+    )
+    from database import clear_jobs, init_db, insert_job
+    from normalization import normalize_date, normalize_text
 
 DRONE_WEIGHTS = {
     "drone": 0.30,
@@ -939,6 +959,39 @@ def append_run_summary_log(selected_sources, collected_count, deduped_count, ins
         print(f"Warning: failed to write run summary log: {exc}")
 
 
+def write_daily_summary_report(summary, output_path=None):
+    report_path = output_path or Path(__file__).resolve().parent.parent / "assets" / "logs" / "jobs_daily_summary.json"
+    log_path = report_path.with_suffix('.log')
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+
+    report = {
+        "timestamp": summary.get("timestamp") or datetime.now(timezone.utc).astimezone().isoformat(),
+        "mode": summary.get("mode", "write"),
+        "selected_sources": summary.get("selected_sources", []),
+        "total_jobs": summary.get("total_jobs", 0),
+        "collected_count": summary.get("collected_count", 0),
+        "deduped_count": summary.get("deduped_count", 0),
+        "inserted_count": summary.get("inserted_count", 0),
+        "by_source": summary.get("by_source", {}),
+        "by_query_family": summary.get("by_query_family", {}),
+        "average_confidence": summary.get("average_confidence", 0),
+        "confidence_min": summary.get("confidence_min", 0),
+        "confidence_max": summary.get("confidence_max", 0),
+    }
+
+    with report_path.open("w", encoding="utf-8") as handle:
+        json.dump(report, handle, indent=2, sort_keys=True)
+        handle.write("\n")
+
+    try:
+        with log_path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(report, sort_keys=True) + "\n")
+    except OSError as exc:
+        print(f"Warning: failed to write daily summary log: {exc}")
+
+    return report
+
+
 def run(reset=False, sources=None, no_write=False):
     init_db()
     if reset and not no_write:
@@ -987,6 +1040,21 @@ def run(reset=False, sources=None, no_write=False):
         by_family[family] = by_family.get(family, 0) + 1
 
     avg_conf = round(sum(job.get("confidence", 0) for job in jobs) / len(jobs), 3) if jobs else 0
+    confidence_values = [job.get("confidence", 0) for job in jobs]
+    summary_report = write_daily_summary_report({
+        "timestamp": datetime.now(timezone.utc).astimezone().isoformat(),
+        "mode": "preview" if no_write else "write",
+        "selected_sources": selected_sources,
+        "total_jobs": len(jobs),
+        "collected_count": len(collected),
+        "deduped_count": len(jobs),
+        "inserted_count": inserted,
+        "by_source": by_source,
+        "by_query_family": by_family,
+        "average_confidence": avg_conf,
+        "confidence_min": min(confidence_values) if confidence_values else 0,
+        "confidence_max": max(confidence_values) if confidence_values else 0,
+    })
 
     print(f"\nCollected {len(collected)} matched jobs")
     print(f"Deduped to {len(jobs)} unique jobs")
@@ -994,6 +1062,7 @@ def run(reset=False, sources=None, no_write=False):
     print("By source:", by_source)
     print("By query family:", by_family)
     print(f"Average confidence: {avg_conf}")
+    print("Daily summary report:", summary_report["total_jobs"], "jobs")
 
     append_run_summary_log(
         selected_sources=selected_sources,

@@ -1,7 +1,10 @@
 
 import sqlite3
 
-from config import DATA_DIR, JOBS_DB_PATH
+try:
+    from .config import DATA_DIR, JOBS_DB_PATH
+except ImportError:  # pragma: no cover - script execution fallback
+    from config import DATA_DIR, JOBS_DB_PATH
 
 
 def _connect():
