@@ -7,8 +7,12 @@ Objective: refresh the drone jobs dataset consumed by JobBoard.html.
 The refresh flow is:
 
 1. drone_jobs/scraper.py collects and classifies jobs into data/jobs.db.
+
 2. drone_jobs/export.py exports data/jobs.json and review CSV files.
+
 3. JobBoard.html fetches data/jobs.json and displays the most recent listing set.
+
+   
 
 Primary run command already available at repository root:
 

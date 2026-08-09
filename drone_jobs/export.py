@@ -85,7 +85,7 @@ def load_existing_reviews(path):
         with open(path, "r", encoding="utf-8", newline="") as f:
             reader = csv.DictReader(f)
             for row in reader:
-                link = row.get("link", "").strip()
+                link = (row.get("link") or "").strip()
                 if link:
                     existing[link] = row
     except FileNotFoundError:
