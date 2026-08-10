@@ -1100,6 +1100,60 @@ font-size:13px;
 }
 }
 
+
+/* --- Open-Meteo Local Surface Forecast --- */
+.local-forecast-empty{color:var(--muted);font-style:italic;padding:8px 0;}
+.om-current-strip{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+gap:10px;
+margin-bottom:16px;
+}
+.om-current-item{
+background:var(--bg-a);
+border:1px solid var(--line);
+border-radius:6px;
+padding:10px 12px;
+display:flex;
+flex-direction:column;
+gap:3px;
+}
+.om-current-label{
+font-size:0.72rem;
+font-weight:600;
+color:var(--muted);
+text-transform:uppercase;
+letter-spacing:0.04em;
+}
+.om-current-value{
+font-size:1.0rem;
+font-weight:700;
+color:var(--ink);
+}
+.om-hourly-table{
+width:100%;
+border-collapse:collapse;
+font-size:0.82rem;
+}
+.om-hourly-table th,
+.om-hourly-table td{
+padding:5px 7px;
+text-align:center;
+border-bottom:1px solid var(--line);
+}
+.om-hourly-table th{
+font-size:0.74rem;
+font-weight:700;
+color:var(--muted);
+text-transform:uppercase;
+letter-spacing:0.03em;
+background:var(--bg-a);
+}
+.om-hourly-table td:first-child{text-align:left;font-weight:600;}
+.om-precip-high{color:#1971c2;font-weight:700;}
+.om-uv-high{color:#e67700;font-weight:700;}
+.om-source-note{font-size:0.74rem;color:var(--muted);margin-top:10px;}
+
 </style>
 </head>
 
@@ -1211,6 +1265,16 @@ font-size:13px;
 <div id="weatherReportContent" class="is-hidden">
 <pre id="metarText"></pre>
 <div id="weatherSummaryPanel" class="weather-summary-empty">Fetch Weather/Risk Assessment, based on your current Pilot location, to load structured observation details.</div>
+</div>
+</div>
+
+<div class="panel">
+<div class="panel-toggle-header" onclick="toggleLocalForecastCollapse()">
+<span id="localForecastCollapseIcon" class="panel-collapse-icon collapsed">▼</span>
+<h3>Local Surface Forecast</h3>
+</div>
+<div id="localForecastContent" class="is-hidden">
+<div id="localForecastPanel" class="local-forecast-empty">Run Fetch Weather/Risk Assessment to load local surface conditions at your pilot coordinates.</div>
 </div>
 </div>
 
@@ -2089,6 +2153,7 @@ closeWindGuideEditor()
 async function runCheck(){
 
 clearError()
+clearOpenMeteo()
 setLoading(true,"Checking METAR and geomagnetic conditions...")
 try{
 
@@ -2115,6 +2180,7 @@ return
 }
 
 const kpPromise = fetchKpIndex()
+const omPromise = fetchOpenMeteo(knownPilot.lat, knownPilot.lon)
 
 const metar = await fetchMETAR(icao)
 
@@ -2142,6 +2208,9 @@ location: latestLocation
 })
 
 renderWeatherCheckStatus()
+
+const omData = await omPromise
+if(omData) renderOpenMeteo(omData)
 }
 finally{
 setLoading(false)
@@ -3864,6 +3933,136 @@ updateActionButtonHighlights()
 renderSavedWeatherArtifactDetails()
 initWindGuideTable()
 
+</script>
+
+<script>
+/* -------------------------
+   OPEN-METEO LOCAL FORECAST
+------------------------- */
+
+const WMO_LABELS = {
+  0:"Clear sky",1:"Mainly clear",2:"Partly cloudy",3:"Overcast",
+  45:"Fog",48:"Icy fog",
+  51:"Light drizzle",53:"Moderate drizzle",55:"Dense drizzle",
+  61:"Slight rain",63:"Moderate rain",65:"Heavy rain",
+  71:"Slight snow",73:"Moderate snow",75:"Heavy snow",77:"Snow grains",
+  80:"Slight showers",81:"Moderate showers",82:"Violent showers",
+  85:"Slight snow showers",86:"Heavy snow showers",
+  95:"Thunderstorm",96:"Thunderstorm w/ hail",99:"Thunderstorm w/ heavy hail"
+}
+
+function wmoLabel(code){ return WMO_LABELS[code] || `Code ${code}` }
+
+function degToCompass(deg){
+  const dirs=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"]
+  return dirs[Math.round(Number(deg)/22.5)%16]
+}
+
+function toggleLocalForecastCollapse(){
+  const content=document.getElementById("localForecastContent")
+  const icon=document.getElementById("localForecastCollapseIcon")
+  if(!content||!icon) return
+  const hidden=content.classList.toggle("is-hidden")
+  icon.classList.toggle("collapsed",hidden)
+}
+
+async function fetchOpenMeteo(lat,lon){
+  const url=[
+    "https://api.open-meteo.com/v1/forecast",
+    `?latitude=${Number(lat).toFixed(4)}`,
+    `&longitude=${Number(lon).toFixed(4)}`,
+    "&current=temperature_2m,apparent_temperature,precipitation,wind_speed_10m,wind_direction_10m,wind_gusts_10m,cloud_cover,uv_index,weather_code",
+    "&hourly=temperature_2m,precipitation_probability,wind_speed_10m,wind_direction_10m,wind_gusts_10m,cloud_cover,uv_index,weather_code",
+    "&wind_speed_unit=kmh",
+    "&forecast_hours=12",
+    "&timezone=auto"
+  ].join("")
+  const controller=new AbortController()
+  const timer=setTimeout(()=>controller.abort(),8000)
+  try{
+    const resp=await fetch(url,{signal:controller.signal})
+    clearTimeout(timer)
+    if(!resp.ok) throw new Error(`Open-Meteo HTTP ${resp.status}`)
+    return await resp.json()
+  }catch(err){
+    clearTimeout(timer)
+    console.warn("Open-Meteo fetch failed:",err?.message)
+    return null
+  }
+}
+
+function renderOpenMeteo(data){
+  const panel=document.getElementById("localForecastPanel")
+  const content=document.getElementById("localForecastContent")
+  const icon=document.getElementById("localForecastCollapseIcon")
+  if(!panel) return
+
+  const c=data?.current||{}
+  const h=data?.hourly||{}
+
+  const tempC=Number.isFinite(c.temperature_2m)?`${c.temperature_2m.toFixed(1)}°C`:"—"
+  const feelsC=Number.isFinite(c.apparent_temperature)?`${c.apparent_temperature.toFixed(1)}°C`:"—"
+  const windKmh=Number.isFinite(c.wind_speed_10m)?`${c.wind_speed_10m.toFixed(0)} km/h`:"—"
+  const windDir=Number.isFinite(c.wind_direction_10m)?degToCompass(c.wind_direction_10m):"—"
+  const gustKmh=Number.isFinite(c.wind_gusts_10m)?`${c.wind_gusts_10m.toFixed(0)} km/h`:"—"
+  const cloudPct=Number.isFinite(c.cloud_cover)?`${c.cloud_cover}%`:"—"
+  const uvIdx=Number.isFinite(c.uv_index)?c.uv_index.toFixed(1):"—"
+  const precip=Number.isFinite(c.precipitation)?`${c.precipitation.toFixed(1)} mm`:"—"
+  const wmoDesc=wmoLabel(c.weather_code)
+
+  const times=h.time||[]
+  const hourRows=times.map((t,i)=>{
+    const localTime=t.slice(11,16)
+    const temp=Number.isFinite(h.temperature_2m?.[i])?`${h.temperature_2m[i].toFixed(0)}°`:"—"
+    const pp=Number.isFinite(h.precipitation_probability?.[i])?h.precipitation_probability[i]:null
+    const ws=Number.isFinite(h.wind_speed_10m?.[i])?`${h.wind_speed_10m[i].toFixed(0)}`:"—"
+    const wd=Number.isFinite(h.wind_direction_10m?.[i])?degToCompass(h.wind_direction_10m[i]):"—"
+    const gs=Number.isFinite(h.wind_gusts_10m?.[i])?`${h.wind_gusts_10m[i].toFixed(0)}`:"—"
+    const cl=Number.isFinite(h.cloud_cover?.[i])?`${h.cloud_cover[i]}%`:"—"
+    const uv=Number.isFinite(h.uv_index?.[i])?h.uv_index[i].toFixed(1):"—"
+    const cond=wmoLabel(h.weather_code?.[i])
+    const ppClass=pp!==null&&pp>=50?" class=\"om-precip-high\"":""
+    const uvClass=h.uv_index?.[i]>=6?" class=\"om-uv-high\"":""
+    return `<tr><td>${escapeHtml(localTime)}</td><td>${escapeHtml(cond)}</td><td>${escapeHtml(temp)}</td><td${ppClass}>${pp!==null?pp+"%":"—"}</td><td>${escapeHtml(ws)} ${escapeHtml(wd)}</td><td>${escapeHtml(gs)}</td><td>${escapeHtml(cl)}</td><td${uvClass}>${escapeHtml(uv)}</td></tr>`
+  }).join("")
+
+  const omLat=Number(data.latitude).toFixed(4)
+  const omLon=Number(data.longitude).toFixed(4)
+
+  panel.className=""
+  panel.innerHTML=`
+    <div class="om-current-strip">
+      <div class="om-current-item"><span class="om-current-label">Condition</span><span class="om-current-value">${escapeHtml(wmoDesc)}</span></div>
+      <div class="om-current-item"><span class="om-current-label">Temperature</span><span class="om-current-value">${escapeHtml(tempC)} / Feels ${escapeHtml(feelsC)}</span></div>
+      <div class="om-current-item"><span class="om-current-label">Wind (10m)</span><span class="om-current-value">${escapeHtml(windKmh)} ${escapeHtml(windDir)}</span></div>
+      <div class="om-current-item"><span class="om-current-label">Gusts</span><span class="om-current-value">${escapeHtml(gustKmh)}</span></div>
+      <div class="om-current-item"><span class="om-current-label">Cloud Cover</span><span class="om-current-value">${escapeHtml(cloudPct)}</span></div>
+      <div class="om-current-item"><span class="om-current-label">UV Index</span><span class="om-current-value">${escapeHtml(uvIdx)}</span></div>
+      <div class="om-current-item"><span class="om-current-label">Precip Now</span><span class="om-current-value">${escapeHtml(precip)}</span></div>
+    </div>
+    <div class="table-wrap"><table class="om-hourly-table">
+      <thead><tr><th>Time</th><th>Condition</th><th>Temp</th><th>Precip%</th><th>Wind km/h</th><th>Gusts</th><th>Clouds</th><th>UV</th></tr></thead>
+      <tbody>${hourRows}</tbody>
+    </table></div>
+    <div class="om-source-note">Source: <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a> — Pilot coordinates ${omLat}, ${omLon}. Forecast model data; not an official aviation observation.</div>
+  `
+
+  if(content&&content.classList.contains("is-hidden")){
+    content.classList.remove("is-hidden")
+    if(icon) icon.classList.remove("collapsed")
+  }
+}
+
+function clearOpenMeteo(){
+  const panel=document.getElementById("localForecastPanel")
+  if(!panel) return
+  panel.className="local-forecast-empty"
+  panel.textContent="Run Fetch Weather/Risk Assessment to load local surface conditions at your pilot coordinates."
+  const content=document.getElementById("localForecastContent")
+  const icon=document.getElementById("localForecastCollapseIcon")
+  if(content) content.classList.add("is-hidden")
+  if(icon) icon.classList.add("collapsed")
+}
 </script>
 
 </body>
