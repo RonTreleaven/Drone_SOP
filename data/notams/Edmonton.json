@@ -1,5 +1,32 @@
 [
   {
+    "raw": "(R0750/26 NOTAMR R0614/26\nQ) CZEG/QOLAS/IV/M/AE/000/025/5446N11320W005\nA) CYWM B) 2608100855 C) 2609242359\nE) OBST LGT U/S TOWER 544541N 1131954W (APRX 4.5NM W AD) 522FT AGL, \n2448FT AMSL.)",
+    "startValidity": "2026-08-10T08:55:00",
+    "endValidity": "2026-09-24T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "54.761389, -113.331667"
+    ]
+  },
+  {
+    "raw": "(R0749/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/012/5830N11509W005\nA) CXXX B) 2608100618 C) 2608122100\nE) CFG5 JOHN D'OR PRAIRIE \nOBST LGT U/S TOWER 582940N 1150900W (APRX 2490FT WNW AD) 215FT \nAGL, 1165FT AMSL.)",
+    "startValidity": "2026-08-10T06:18:00",
+    "endValidity": "2026-08-12T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "58.494444, -115.150000"
+    ]
+  },
+  {
+    "raw": "(R0748/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/021/5609N11719W002\nA) CZEG B) 2608100554 C) 2608122000\nE) OBST LGT U/S TOWER 560926N 1171846W (APRX 6NM ESE PEACE RIVER AD \n(CYPE)) 226FT AGL, 2050FT AMSL.)",
+    "startValidity": "2026-08-10T05:54:00",
+    "endValidity": "2026-08-12T20:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "56.157222, -117.312778"
+    ]
+  },
+  {
     "raw": "(R0746/26 NOTAMR R0544/26\nQ) CZEG/QOLAS/IV/M/E/000/026/5351N11322W002\nA) CZEG B) 2608090459 C) 2610092359\nE) OBST LGT U/S TOWER 535054N 1132215W (APRX 7NM ENE \nEDMONTON/MORINVILLE (MIKE'S FIELD) AD (CMN6)) 350FT AGL, 2600FT \nAMSL.)",
     "startValidity": "2026-08-09T04:59:00",
     "endValidity": "2026-10-09T23:59:00",
@@ -15,15 +42,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "53.299722, -113.563611"
-    ]
-  },
-  {
-    "raw": "(R0745/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/003/6726N13452W005\nA) CZFM B) 2608080508 C) 2608102100\nE) OBST LGT U/S TOWER 672542N 1345145W (APRX 1.29NM NNW AD) 200FT \nAGL, 279FT AMSL.)",
-    "startValidity": "2026-08-08T05:08:00",
-    "endValidity": "2026-08-10T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "67.428333, -134.862500"
     ]
   },
   {
@@ -51,15 +69,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "51.131944, -114.010278"
-    ]
-  },
-  {
-    "raw": "(I4095/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/025/5545N12012W005\nA) CYDQ B) 2608041821 C) 2608092359\nE) FERRIS WHEEL ERECTED AT 554438N 1201228W APRX 5089FT W AD (CYDQ). \n150FT AGL 2297FT AMSL. LGTD, PAINTED)",
-    "startValidity": "2026-08-04T18:21:00",
-    "endValidity": "2026-08-09T23:59:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "55.743889, -120.207778"
     ]
   },
   {
@@ -234,21 +243,21 @@
     ]
   },
   {
-    "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
-    "startValidity": "2026-07-20T17:14:00",
-    "endValidity": "2026-10-20T17:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.099167, -110.165278"
-    ]
-  },
-  {
     "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
     "startValidity": "2026-07-20T17:14:00",
     "endValidity": "2026-10-20T17:00:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.480833, -109.194167"
+    ]
+  },
+  {
+    "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
+    "startValidity": "2026-07-20T17:14:00",
+    "endValidity": "2026-10-20T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.099167, -110.165278"
     ]
   },
   {
@@ -510,15 +519,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "57.450556, -117.517778"
-    ]
-  },
-  {
-    "raw": "(R0614/26 NOTAMR R0443/26\nQ) CZEG/QOLAS/IV/M/AE/000/025/5446N11320W005\nA) CYWM B) 2606280953 C) 2608122359\nE) OBST LGT U/S TOWER 544541N 1131954W (APRX 4.5NM W AD) 522FT AGL, \n2448FT AMSL.)",
-    "startValidity": "2026-06-28T09:53:00",
-    "endValidity": "2026-08-12T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "54.761389, -113.331667"
     ]
   },
   {
