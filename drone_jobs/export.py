@@ -38,7 +38,7 @@ def fetch_jobs():
     c.execute(
         """
          SELECT title, company, location, link, description, summary, date_posted, date_expires,
-             category, type, source, query_family, matched_query, confidence, match_reason
+             category, type, source, query_family, matched_query, confidence, match_reason, last_seen
         FROM jobs
         ORDER BY confidence DESC, created_at DESC
         """
@@ -67,6 +67,7 @@ def fetch_jobs():
             "matched_query": normalize_text(r[12]),
             "confidence": r[13],
             "match_reason": normalize_text(r[14]),
+            "last_seen": normalize_date(r[15]),
         })
 
     return jobs

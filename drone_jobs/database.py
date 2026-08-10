@@ -40,7 +40,8 @@ def init_db():
         matched_query TEXT DEFAULT '',
         confidence REAL DEFAULT 0,
         match_reason TEXT DEFAULT '',
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
 
@@ -52,6 +53,9 @@ def init_db():
     _ensure_column(c, "jobs", "matched_query", "matched_query TEXT DEFAULT ''")
     _ensure_column(c, "jobs", "confidence", "confidence REAL DEFAULT 0")
     _ensure_column(c, "jobs", "match_reason", "match_reason TEXT DEFAULT ''")
+    _ensure_column(c, "jobs", "last_seen", "last_seen TIMESTAMP")
+    # Backfill so existing rows aren't immediately eligible for expiry.
+    c.execute("UPDATE jobs SET last_seen = CURRENT_TIMESTAMP WHERE last_seen IS NULL")
 
     conn.commit()
     conn.close()
@@ -65,37 +69,55 @@ def clear_jobs():
     conn.close()
 
 
+def expire_stale_jobs(days: int) -> int:
+    conn = _connect()
+    c = conn.cursor()
+    c.execute("DELETE FROM jobs WHERE last_seen < datetime('now', ?)", (f"-{days} days",))
+    count = c.rowcount
+    conn.commit()
+    conn.close()
+    return count
+
+
 def insert_job(job):
     conn = _connect()
     c = conn.cursor()
 
-    try:
-        c.execute("""
-        INSERT INTO jobs (title, company, location, link, description, summary, date_posted, date_expires, category, type, source, query_family, matched_query, confidence, match_reason)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (
-            job["title"],
-            job["company"],
-            job["location"],
-            job["link"],
-            job.get("description", ""),
-            job.get("summary", ""),
-            job.get("date_posted", ""),
-            job.get("date_expires", ""),
-            job["category"],
-            job["type"],
-            job["source"],
-            job.get("query_family", ""),
-            job.get("matched_query", ""),
-            job.get("confidence", 0),
-            job.get("match_reason", "")
-        ))
-        conn.commit()
-        return 1
-    except sqlite3.IntegrityError:
-        # Duplicate link, skip without failing the run.
-        return 0
-    finally:
-        conn.close()
+    c.execute("""
+    INSERT OR IGNORE INTO jobs
+    (title, company, location, link, description, summary, date_posted, date_expires,
+     category, type, source, query_family, matched_query, confidence, match_reason)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        job["title"],
+        job["company"],
+        job["location"],
+        job["link"],
+        job.get("description", ""),
+        job.get("summary", ""),
+        job.get("date_posted", ""),
+        job.get("date_expires", ""),
+        job["category"],
+        job["type"],
+        job["source"],
+        job.get("query_family", ""),
+        job.get("matched_query", ""),
+        job.get("confidence", 0),
+        job.get("match_reason", ""),
+    ))
+    was_inserted = c.rowcount
 
-    return 0
+    # Refresh last_seen on re-encounter; promote score/summary if confidence improved.
+    new_conf = job.get("confidence", 0)
+    c.execute("""
+    UPDATE jobs SET
+        last_seen = CURRENT_TIMESTAMP,
+        confidence = CASE WHEN ? > confidence THEN ? ELSE confidence END,
+        summary = CASE WHEN ? > confidence THEN ? ELSE summary END,
+        match_reason = CASE WHEN ? > confidence THEN ? ELSE match_reason END
+    WHERE link = ?
+    """, (new_conf, new_conf, new_conf, job.get("summary", ""), new_conf, job.get("match_reason", ""), job["link"]))
+
+    conn.commit()
+    conn.close()
+    return was_inserted

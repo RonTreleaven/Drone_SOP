@@ -10,6 +10,9 @@ JOBS_JSON_PATH = DATA_DIR / "jobs.json"
 JOBS_REVIEW_CSV_PATH = DATA_DIR / "jobs_review.csv"
 JOBS_REVIEW_LATEST_CSV_PATH = DATA_DIR / "jobs_review_latest.csv"
 
+# Jobs not seen within this window (days) are pruned after each run.
+STALE_JOB_DAYS = 14
+
 QUERY_FAMILIES = {
     "operations": [
         "drone pilot",

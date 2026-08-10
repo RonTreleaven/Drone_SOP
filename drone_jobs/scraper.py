@@ -24,9 +24,10 @@ try:
         QUERY_FAMILIES,
         REQUIRED_ROLE_TERMS_IN_TITLE,
         SIMPLYHIRED_SEARCH,
+        STALE_JOB_DAYS,
         TALENT_SEARCH,
     )
-    from .database import clear_jobs, init_db, insert_job
+    from .database import clear_jobs, expire_stale_jobs, init_db, insert_job
     from .normalization import normalize_date, normalize_text
 except ImportError:  # pragma: no cover - script execution fallback
     from classifier import classify_job, detect_type
@@ -43,9 +44,10 @@ except ImportError:  # pragma: no cover - script execution fallback
         QUERY_FAMILIES,
         REQUIRED_ROLE_TERMS_IN_TITLE,
         SIMPLYHIRED_SEARCH,
+        STALE_JOB_DAYS,
         TALENT_SEARCH,
     )
-    from database import clear_jobs, init_db, insert_job
+    from database import clear_jobs, expire_stale_jobs, init_db, insert_job
     from normalization import normalize_date, normalize_text
 
 DRONE_WEIGHTS = {
@@ -1030,6 +1032,12 @@ def run(reset=False, sources=None, no_write=False):
         for job in jobs:
             inserted += insert_job(job)
 
+    expired = 0
+    if not no_write:
+        expired = expire_stale_jobs(STALE_JOB_DAYS)
+        if expired:
+            print(f"Expired {expired} stale jobs (not seen in {STALE_JOB_DAYS} days)")
+
     by_source = {}
     for job in jobs:
         by_source[job["source"]] = by_source.get(job["source"], 0) + 1
@@ -1049,6 +1057,7 @@ def run(reset=False, sources=None, no_write=False):
         "collected_count": len(collected),
         "deduped_count": len(jobs),
         "inserted_count": inserted,
+        "expired_count": expired,
         "by_source": by_source,
         "by_query_family": by_family,
         "average_confidence": avg_conf,
@@ -1059,6 +1068,7 @@ def run(reset=False, sources=None, no_write=False):
     print(f"\nCollected {len(collected)} matched jobs")
     print(f"Deduped to {len(jobs)} unique jobs")
     print(f"Inserted {inserted} new jobs")
+    print(f"Expired {expired} stale jobs")
     print("By source:", by_source)
     print("By query family:", by_family)
     print(f"Average confidence: {avg_conf}")

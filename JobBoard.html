@@ -1811,6 +1811,7 @@
       const source = normalizeText(job.source);
       const posted = normalizeDate(job.date_posted);
       const expires = normalizeDate(job.date_expires);
+      const lastSeen = normalizeDate(job.last_seen);
       const category = normalizeText(job.category);
       const confidence = formatConfidence(Number(job.confidence || 0));
       const description = normalizeText(job.description);
@@ -1838,6 +1839,7 @@
           ${fieldRow("Confidence", confidence)}
           ${fieldRow("Date Posted", posted)}
           ${fieldRow("Expired", expires)}
+          ${fieldRow("Last Seen", lastSeen)}
         </div>
         ${snapshotHtml}
         <div class="summary detail-summary">${formatDetailSectionsHtml(descriptionText || "No description available")}</div>
