@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U1394/26 NOTAMR U0827/26\nQ) CZWG/QOLAS/IV/M/AE/000/011/4953N09739W005\nA) CXXX B) 2608101353 C) 2611092359\nE) CKA8 ST. FRANCOIS XAVIER \nOBST LGT U/S TOWER 495302N 0973832W (APRX 4.4NM SW AD) 230FT AGL, \n1019FT AMSL.)",
+    "startValidity": "2026-08-10T13:53:00",
+    "endValidity": "2026-11-09T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.883889, -97.642222"
+    ]
+  },
+  {
     "raw": "(U1391/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/026/5023N10302W005\nA) CXXX B) 2608100508 C) 2611071800\nE) CKU6 GRENFELL \nOBST LGT U/S TOWER 502326N 1030226W (APRX 4.4NM WSW AD) 350FT \nAGL, 2550FT AMSL.)",
     "startValidity": "2026-08-10T05:08:00",
     "endValidity": "2026-11-07T18:00:00",
@@ -225,21 +234,21 @@
     ]
   },
   {
-    "raw": "(U1247/26 NOTAMR U0674/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2607141316 C) 2610121400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
-    "startValidity": "2026-07-14T13:16:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.959167, -91.303889"
-    ]
-  },
-  {
     "raw": "(J4720/26 NOTAMR J2465/26\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2607141316 C) 2610121400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
     "startValidity": "2026-07-14T13:16:00",
     "endValidity": null,
     "q_code": "QOBCE",
     "coordinates_dd": [
       "52.467222, -92.960833"
+    ]
+  },
+  {
+    "raw": "(U1247/26 NOTAMR U0674/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2607141316 C) 2610121400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
+    "startValidity": "2026-07-14T13:16:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.959167, -91.303889"
     ]
   },
   {
@@ -423,21 +432,21 @@
     ]
   },
   {
-    "raw": "(U1071/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
-    "startValidity": "2026-06-19T01:02:00",
-    "endValidity": "2026-09-11T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925556, -97.261111"
-    ]
-  },
-  {
     "raw": "(U1070/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495533N 0971541W (APRX 1.27NM NW AD) 62FT AGL, \n846FT AMSL.)",
     "startValidity": "2026-06-19T01:02:00",
     "endValidity": "2026-09-11T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.925833, -97.261389"
+    ]
+  },
+  {
+    "raw": "(U1071/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2606190102 C) 2609112359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
+    "startValidity": "2026-06-19T01:02:00",
+    "endValidity": "2026-09-11T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.925556, -97.261111"
     ]
   },
   {
@@ -627,15 +636,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.363889, -108.958889"
-    ]
-  },
-  {
-    "raw": "(U0827/26 NOTAMR U0242/26\nQ) CZWG/QOLAS/IV/M/AE/000/011/4953N09739W005\nA) CXXX B) 2605111734 C) 2608102359\nE) CKA8 ST. FRANCOIS XAVIER \nOBST LGT U/S TOWER 495302N 0973832W (APRX 4.4NM SW AD) 230FT AGL, \n1019FT AMSL.)",
-    "startValidity": "2026-05-11T17:34:00",
-    "endValidity": "2026-08-10T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.883889, -97.642222"
     ]
   },
   {
