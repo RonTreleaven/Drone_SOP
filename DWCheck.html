@@ -1153,6 +1153,50 @@ background:var(--bg-a);
 .om-precip-high{color:#1971c2;font-weight:700;}
 .om-uv-high{color:#e67700;font-weight:700;}
 .om-source-note{font-size:0.74rem;color:var(--muted);margin-top:10px;}
+.om-compare-box{
+margin:10px 0 6px;
+padding:10px 12px;
+border:1px solid var(--line);
+border-radius:8px;
+background:#f8fcff;
+}
+.om-compare-title{
+font-size:0.78rem;
+font-weight:700;
+text-transform:uppercase;
+letter-spacing:0.04em;
+color:#36536b;
+margin-bottom:6px;
+}
+.om-compare-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+gap:8px;
+}
+.om-compare-item{
+padding:7px 8px;
+border:1px solid #dceaf5;
+border-radius:6px;
+background:#ffffff;
+}
+.om-compare-item b{
+display:block;
+font-size:0.72rem;
+letter-spacing:0.03em;
+text-transform:uppercase;
+color:#4b6175;
+margin-bottom:2px;
+}
+.om-compare-item span{
+font-size:0.87rem;
+font-weight:600;
+color:#1f2833;
+}
+.om-compare-note{
+font-size:0.72rem;
+color:var(--muted);
+margin-top:7px;
+}
 
 </style>
 </head>
@@ -2210,7 +2254,7 @@ location: latestLocation
 renderWeatherCheckStatus()
 
 const omData = await omPromise
-if(omData) renderOpenMeteo(omData)
+if(omData) renderOpenMeteo(omData,metar,latestNearestStations)
 }
 finally{
 setLoading(false)
@@ -3958,6 +4002,66 @@ function degToCompass(deg){
   return dirs[Math.round(Number(deg)/22.5)%16]
 }
 
+function angleDifferenceDeg(a,b){
+  if(!Number.isFinite(a) || !Number.isFinite(b)) return null
+  const delta=Math.abs(a-b)%360
+  return delta>180 ? 360-delta : delta
+}
+
+function formatSignedDelta(value,decimals=1,unit=""){
+  if(!Number.isFinite(value)) return "Unavailable"
+  const sign=value>0?"+":""
+  return `${sign}${value.toFixed(decimals)}${unit}`
+}
+
+function buildOpenMeteoComparisonHtml(data,metar,nearestStations=[]){
+  const c=data?.current||{}
+  const omWindKmh=Number(c.wind_speed_10m)
+  const omWindDirDeg=Number(c.wind_direction_10m)
+  const omTempC=Number(c.temperature_2m)
+
+  const normalized = metar?.normalized || normalizeWeatherObservation(metar?.rawOb || "", { source:"open-meteo-compare" })
+  const metarWindKt=Number(normalized?.wind?.speedKt ?? metar?.wspd)
+  const metarWindDirDeg=Number(normalized?.wind?.directionDegrees ?? metar?.wdir)
+  const metarTempC=Number(normalized?.temperature)
+
+  if(!Number.isFinite(omWindKmh) || !Number.isFinite(metarWindKt)) return ""
+
+  const metarWindKmh=metarWindKt * 1.852
+  const windDelta=omWindKmh - metarWindKmh
+  const dirDelta=angleDifferenceDeg(omWindDirDeg,metarWindDirDeg)
+  const tempDelta=(Number.isFinite(omTempC) && Number.isFinite(metarTempC)) ? (omTempC - metarTempC) : null
+
+  const omWindLabel = Number.isFinite(omWindDirDeg)
+    ? `${omWindKmh.toFixed(1)} km/h ${degToCompass(omWindDirDeg)}`
+    : `${omWindKmh.toFixed(1)} km/h`
+  const metarWindLabel = Number.isFinite(metarWindDirDeg)
+    ? `${metarWindKmh.toFixed(1)} km/h ${degToCompass(metarWindDirDeg)}`
+    : `${metarWindKmh.toFixed(1)} km/h`
+
+  const nearest = Array.isArray(nearestStations) && nearestStations.length ? nearestStations[0] : null
+  const nearestText = nearest
+    ? `${nearest.icaoId} (${Number(nearest.distanceKm).toFixed(1)} km)`
+    : "Unavailable"
+  const metarObserved = normalized?.observed?.display || "Unavailable"
+  const omCurrentTime = String(c.time || "Unavailable")
+
+  return `
+    <div class="om-compare-box">
+      <div class="om-compare-title">Open-Meteo Alignment Snapshot</div>
+      <div class="om-compare-grid">
+        <div class="om-compare-item"><b>Wind Speed Delta</b><span>${escapeHtml(formatSignedDelta(windDelta,1," km/h"))}</span></div>
+        <div class="om-compare-item"><b>Direction Delta</b><span>${escapeHtml(dirDelta == null ? "Unavailable" : `${dirDelta.toFixed(0)}°`)}</span></div>
+        <div class="om-compare-item"><b>Temperature Delta</b><span>${escapeHtml(tempDelta == null ? "Unavailable" : formatSignedDelta(tempDelta,1,"°C"))}</span></div>
+        <div class="om-compare-item"><b>Open-Meteo Wind</b><span>${escapeHtml(omWindLabel)}</span></div>
+        <div class="om-compare-item"><b>METAR Wind</b><span>${escapeHtml(metarWindLabel)}</span></div>
+        <div class="om-compare-item"><b>Nearest METAR Ref</b><span>${escapeHtml(nearestText)}</span></div>
+      </div>
+      <div class="om-compare-note">METAR observed: ${escapeHtml(metarObserved)} | Open-Meteo current time: ${escapeHtml(omCurrentTime)}. Differences are expected because this compares observation vs model forecast.</div>
+    </div>
+  `
+}
+
 function toggleLocalForecastCollapse(){
   const content=document.getElementById("localForecastContent")
   const icon=document.getElementById("localForecastCollapseIcon")
@@ -3991,7 +4095,7 @@ async function fetchOpenMeteo(lat,lon){
   }
 }
 
-function renderOpenMeteo(data){
+function renderOpenMeteo(data,metar=null,nearestStations=[]){
   const panel=document.getElementById("localForecastPanel")
   const content=document.getElementById("localForecastContent")
   const icon=document.getElementById("localForecastCollapseIcon")
@@ -4028,6 +4132,7 @@ function renderOpenMeteo(data){
 
   const omLat=Number(data.latitude).toFixed(4)
   const omLon=Number(data.longitude).toFixed(4)
+  const compareHtml = buildOpenMeteoComparisonHtml(data,metar,nearestStations)
 
   panel.className=""
   panel.innerHTML=`
@@ -4044,6 +4149,7 @@ function renderOpenMeteo(data){
       <thead><tr><th>Time</th><th>Condition</th><th>Temp</th><th>Precip%</th><th>Wind km/h</th><th>Gusts</th><th>Clouds</th><th>UV</th></tr></thead>
       <tbody>${hourRows}</tbody>
     </table></div>
+    ${compareHtml}
     <div class="om-source-note">Source: <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a> — Pilot coordinates ${omLat}, ${omLon}. Forecast model data; not an official aviation observation.</div>
   `
 
