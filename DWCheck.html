@@ -23,6 +23,7 @@
 --line:#d6e4ef;
 --line-strong:#bfd4e6;
 --shadow-soft:0 8px 24px rgba(7,28,46,0.08);
+--section-heading-size:1.08rem;
 }
 
 body{
@@ -110,7 +111,7 @@ margin-top:12px;
 
 .compact-panel h3{
 margin:0 0 8px 0;
-font-size:1rem;
+font-size:var(--section-heading-size);
 }
 
 .station-list{
@@ -465,6 +466,21 @@ margin-bottom:8px;
 
 .panel-toggle-header h3{
 margin:0;
+font-size:var(--section-heading-size);
+line-height:1.2;
+}
+
+.panel-toggle-hint{
+margin-left:auto;
+font-size:0.72rem;
+font-weight:700;
+letter-spacing:0.04em;
+text-transform:uppercase;
+color:#4e6880;
+padding:2px 7px;
+border:1px solid #c8ddef;
+border-radius:999px;
+background:#f3f9ff;
 }
 
 .panel-collapse-icon{
@@ -652,8 +668,8 @@ border:1px solid var(--line);
 .wind-guide-header{
 display:flex;
 flex-wrap:wrap;
-align-items:baseline;
-justify-content:space-between;
+align-items:center;
+justify-content:flex-start;
 gap:8px;
 margin-bottom:10px;
 cursor:pointer;
@@ -663,7 +679,7 @@ user-select:none;
 
 .wind-guide-title{
 margin:0;
-font-size:18px;
+font-size:var(--section-heading-size);
 color:#12324d;
 }
 
@@ -678,6 +694,7 @@ background:#dff1ff;
 border:1px solid #b7dbf8;
 border-radius:999px;
 padding:3px 9px;
+margin-left:auto;
 }
 
 .wind-guide-table-wrap{
@@ -856,12 +873,17 @@ object-fit:contain;
 
 @media (max-width:480px){
 .risk-survey-body{
-grid-template-columns:minmax(0,1fr) clamp(120px,36%,170px);
-gap:8px;
+grid-template-columns:1fr;
+gap:10px;
 }
 
 .risk-compass{
-max-width:170px;
+max-width:235px;
+}
+
+.risk-compass-wrap{
+justify-content:center;
+padding-top:4px;
 }
 }
 
@@ -960,6 +982,8 @@ border:1px solid rgba(0,0,0,0.2);
 display:flex;
 align-items:center;
 gap:8px;
+font-size:var(--section-heading-size);
+line-height:1.2;
 }
 
 .risk-key-dot{
@@ -1057,22 +1081,38 @@ margin-top:10px;
 }
 
 @media (max-width:560px){
+:root{
+--section-heading-size:1.02rem;
+}
+
 body{
-padding:16px 14px 28px;
+padding:14px 12px 22px;
 }
 
 h2{
-margin-top:10px;
+margin-top:8px;
+margin-bottom:10px;
 }
 
 .panel{
-padding:12px;
-margin-top:12px;
-border-radius:10px;
+padding:10px;
+margin-top:10px;
+border-radius:9px;
 }
 
 .compact-panel{
-padding:10px 12px;
+padding:9px 10px;
+}
+
+.panel-toggle-header,
+.wind-guide-header{
+gap:6px;
+margin-bottom:4px;
+}
+
+.panel-collapse-icon{
+width:16px;
+font-size:11px;
 }
 
 .compact-panel .subtle,
@@ -1097,6 +1137,33 @@ font-size:10px;
 
 .weather-summary-item span{
 font-size:13px;
+}
+
+.panel-toggle-hint{
+font-size:0.68rem;
+padding:2px 6px;
+}
+
+.wind-guide-header{
+row-gap:6px;
+}
+
+.wind-guide-kicker{
+margin-left:22px;
+}
+
+.risk-survey-body{
+grid-template-columns:1fr;
+gap:10px;
+}
+
+.risk-compass-wrap{
+justify-content:center;
+padding-top:4px;
+}
+
+.risk-compass{
+max-width:240px;
 }
 }
 
@@ -1272,17 +1339,29 @@ margin-top:7px;
 </div>
 
 <div class="panel compact-panel">
+<div class="panel-toggle-header" onclick="toggleNearestStationsCollapse()">
+<span id="nearestStationsCollapseIcon" class="panel-collapse-icon collapsed">▼</span>
 <h3>Closest METAR Stations</h3>
+<span id="nearestStationsToggleHint" class="panel-toggle-hint">View</span>
+</div>
+<div id="nearestStationsContent" class="is-hidden">
 <div id="nearestStations">Closest stations will appear here.</div>
 <details class="pilot-location-details">
 <summary>Pilot Location</summary>
 <div id="currentLocationDetails" class="subtle"><em>Current Pilot Location unknown. Refresh after setting location, or click Use Current Location.</em></div>
 </details>
 </div>
+</div>
 
 <div class="panel">
+<div class="panel-toggle-header" onclick="toggleKpCollapse()">
+<span id="kpCollapseIcon" class="panel-collapse-icon collapsed">▼</span>
 <h3>NOAA Geomagnetic Planetary Kp Index</h3>
+<span id="kpToggleHint" class="panel-toggle-hint">View</span>
+</div>
+<div id="kpContent" class="is-hidden">
 <div id="kpData"></div>
+</div>
 </div>
 
 <div id="scoringIndexModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="scoringIndexTitle">
@@ -1305,6 +1384,7 @@ margin-top:7px;
 <div class="panel-toggle-header" onclick="toggleWeatherReportCollapse()">
 <span id="weatherReportCollapseIcon" class="panel-collapse-icon collapsed">▼</span>
 <h3>Current METAR Report</h3>
+<span id="weatherReportToggleHint" class="panel-toggle-hint">View</span>
 </div>
 <div id="weatherReportContent" class="is-hidden">
 <pre id="metarText"></pre>
@@ -1316,6 +1396,7 @@ margin-top:7px;
 <div class="panel-toggle-header" onclick="toggleLocalForecastCollapse()">
 <span id="localForecastCollapseIcon" class="panel-collapse-icon collapsed">▼</span>
 <h3>Local Surface Forecast</h3>
+<span id="localForecastToggleHint" class="panel-toggle-hint">View</span>
 </div>
 <div id="localForecastContent" class="is-hidden">
 <div id="localForecastPanel" class="local-forecast-empty">Run Fetch Weather/Risk Assessment to load local surface conditions at your pilot coordinates.</div>
@@ -1324,18 +1405,19 @@ margin-top:7px;
 
 <div id="windGuidePanel" class="panel wind-guide-panel">
 <div class="wind-guide-header" onclick="toggleWindGuideCollapse()">
-<span class="wind-guide-collapse-icon" id="windGuideCollapseIcon">▼</span>
+<span class="panel-collapse-icon collapsed" id="windGuideCollapseIcon">▼</span>
 <h3 class="wind-guide-title">Drone Wind Resistance Guide</h3>
 <span class="wind-guide-kicker">Reference Table</span>
+<span id="windGuideToggleHint" class="panel-toggle-hint">View</span>
 </div>
-<div class="wind-guide-controls" id="windGuideControls">
+<div class="wind-guide-controls hidden" id="windGuideControls">
 <label for="windGuideModelFilter">Filter by Drone Model
 <input id="windGuideModelFilter" class="wind-guide-filter-input" type="text" placeholder="Search model (ex: Mini, Mavic, Autel)" oninput="handleWindGuideFilterChange()">
 </label>
 <button id="windGuideFilterToggleBtn" type="button" class="mini-action-btn" onclick="toggleWindGuideModelFilter()" title="Clear filter">Clear Filter</button>
 <button type="button" class="mini-action-btn" onclick="tryOpenWindGuideEditor()">Edit Wind Guide JSON</button>
 </div>
-<div class="table-wrap wind-guide-table-wrap" id="windGuideTableWrap">
+<div class="table-wrap wind-guide-table-wrap hidden" id="windGuideTableWrap">
 <table class="risk-mini-table compact-wind-table wind-guide-table">
 <thead>
 <tr>
@@ -1354,8 +1436,8 @@ margin-top:7px;
 </tbody>
 </table>
 </div>
-<div class="subtle wind-guide-note" id="windGuideNote1">Reference charts only. Always follow your manufacturer's limits and any site-specific conditions.</div>
-<div class="subtle wind-guide-note" id="windGuideNote2">Data source: <b>data/drone_wind_resistance.json</b> (edit this file to add/remove models). Optional fields: <b>oemWindMs</b>, <b>oemWindKmh</b>, <b>oemWindKt</b>, <b>verified</b>.</div>
+<div class="subtle wind-guide-note hidden" id="windGuideNote1">Reference charts only. Always follow your manufacturer's limits and any site-specific conditions.</div>
+<div class="subtle wind-guide-note hidden" id="windGuideNote2">Data source: <b>data/drone_wind_resistance.json</b> (edit this file to add/remove models). Optional fields: <b>oemWindMs</b>, <b>oemWindKmh</b>, <b>oemWindKt</b>, <b>verified</b>.</div>
 </div>
 
 <div id="windGuideEditorModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="windGuideEditorTitle">
@@ -1698,6 +1780,8 @@ tableWrap.classList.remove("hidden")
 note1.classList.remove("hidden")
 note2.classList.remove("hidden")
 }
+
+updateCollapseHint("windGuideCollapseIcon","windGuideToggleHint")
 }
 
 function toggleWeatherReportCollapse(){
@@ -1707,6 +1791,34 @@ if(!content || !icon) return
 
 const isNowHidden = content.classList.toggle("is-hidden")
 icon.classList.toggle("collapsed",isNowHidden)
+updateCollapseHint("weatherReportCollapseIcon","weatherReportToggleHint")
+}
+
+function toggleNearestStationsCollapse(){
+const content = document.getElementById("nearestStationsContent")
+const icon = document.getElementById("nearestStationsCollapseIcon")
+if(!content || !icon) return
+
+const isNowHidden = content.classList.toggle("is-hidden")
+icon.classList.toggle("collapsed",isNowHidden)
+updateCollapseHint("nearestStationsCollapseIcon","nearestStationsToggleHint")
+}
+
+function toggleKpCollapse(){
+const content = document.getElementById("kpContent")
+const icon = document.getElementById("kpCollapseIcon")
+if(!content || !icon) return
+
+const isNowHidden = content.classList.toggle("is-hidden")
+icon.classList.toggle("collapsed",isNowHidden)
+updateCollapseHint("kpCollapseIcon","kpToggleHint")
+}
+
+function updateCollapseHint(iconId,hintId){
+const icon = document.getElementById(iconId)
+const hint = document.getElementById(hintId)
+if(!icon || !hint) return
+hint.textContent = icon.classList.contains("collapsed") ? "View" : "Hide"
 }
 
 function applyWindGuideFiltersAndSort(){
@@ -3976,6 +4088,11 @@ updatePilotLocationButtonLabel()
 updateActionButtonHighlights()
 renderSavedWeatherArtifactDetails()
 initWindGuideTable()
+updateCollapseHint("nearestStationsCollapseIcon","nearestStationsToggleHint")
+updateCollapseHint("kpCollapseIcon","kpToggleHint")
+updateCollapseHint("weatherReportCollapseIcon","weatherReportToggleHint")
+updateCollapseHint("localForecastCollapseIcon","localForecastToggleHint")
+updateCollapseHint("windGuideCollapseIcon","windGuideToggleHint")
 
 </script>
 
@@ -4068,6 +4185,7 @@ function toggleLocalForecastCollapse(){
   if(!content||!icon) return
   const hidden=content.classList.toggle("is-hidden")
   icon.classList.toggle("collapsed",hidden)
+  updateCollapseHint("localForecastCollapseIcon","localForecastToggleHint")
 }
 
 async function fetchOpenMeteo(lat,lon){
