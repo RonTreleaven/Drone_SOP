@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(D3112/26 NOTAMN\nQ) CZWG/QOBCE/IV/M/AE/000/009/4953N09713W005\nA) CYWG B) 2608111200 C) 2608132359\nD) DAILY 1200-2359\nE) CRANE 495328N 0971311W APRX 2380FT BFR DTHR 31 AND 460FT NE \nEXTENDED RCL. 100FT AGL 869FT AMSL. NOT LGTD, NOT PAINTED.)",
+    "startValidity": "2026-08-11T01:34:43.415",
+    "endValidity": "2026-08-13T23:59:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "49.891111, -97.219722"
+    ]
+  },
+  {
     "raw": "(U1394/26 NOTAMR U0827/26\nQ) CZWG/QOLAS/IV/M/AE/000/011/4953N09739W005\nA) CXXX B) 2608101353 C) 2611092359\nE) CKA8 ST. FRANCOIS XAVIER \nOBST LGT U/S TOWER 495302N 0973832W (APRX 4.4NM SW AD) 230FT AGL, \n1019FT AMSL.)",
     "startValidity": "2026-08-10T13:53:00",
     "endValidity": "2026-11-09T23:59:00",
@@ -15,15 +24,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.390556, -103.040556"
-    ]
-  },
-  {
-    "raw": "(U1389/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/023/4931N10135W002\nA) CZWG B) 2608100212 C) 2608112100\nE) OBST LGT U/S TOWER 493055N 1013451W (APRX 20NM S MARYFIELD AD \n(CJQ8)) 432FT AGL, 2282FT AMSL.)",
-    "startValidity": "2026-08-10T02:12:00",
-    "endValidity": "2026-08-11T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.515278, -101.580833"
     ]
   },
   {
@@ -234,21 +234,21 @@
     ]
   },
   {
-    "raw": "(U1247/26 NOTAMR U0674/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2607141316 C) 2610121400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
-    "startValidity": "2026-07-14T13:16:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.959167, -91.303889"
-    ]
-  },
-  {
     "raw": "(J4720/26 NOTAMR J2465/26\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2607141316 C) 2610121400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
     "startValidity": "2026-07-14T13:16:00",
     "endValidity": null,
     "q_code": "QOBCE",
     "coordinates_dd": [
       "52.467222, -92.960833"
+    ]
+  },
+  {
+    "raw": "(U1247/26 NOTAMR U0674/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2607141316 C) 2610121400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
+    "startValidity": "2026-07-14T13:16:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.959167, -91.303889"
     ]
   },
   {
@@ -627,15 +627,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.679444, -108.690833"
-    ]
-  },
-  {
-    "raw": "(U0838/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/023/5322N10858W002\nA) CZWG B) 2605130553 C) 2608102359\nE) OBST LGT U/S TOWER 532150N 1085732W (APRX 12NM NW EDAM AD (CJU7)) \n250FT AGL, 2260FT AMSL.)",
-    "startValidity": "2026-05-13T05:53:00",
-    "endValidity": "2026-08-10T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.363889, -108.958889"
     ]
   },
   {
