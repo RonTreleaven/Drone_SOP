@@ -141,7 +141,7 @@
     "matched_query": "remote pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, pilot, uas; drone terms: drone, uas; job terms: apply, career, hiring, operator, pilot; source=greenhouse; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "08/11/2026"
+    "last_seen": "08/12/2026"
   },
   {
     "title": "Drone Operator (R5145)",
@@ -159,7 +159,7 @@
     "matched_query": "uas operator",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: operator, uas; drone terms: drone, uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "08/11/2026"
+    "last_seen": "08/12/2026"
   },
   {
     "title": "UAS Operator & Flight Operations Technician (R5438)",
@@ -177,7 +177,7 @@
     "matched_query": "uas operator",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, uas; drone terms: uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "08/11/2026"
+    "last_seen": "08/12/2026"
   },
   {
     "title": "Drone Pilot (RPAS) - Industrial Inspections",
@@ -357,6 +357,6 @@
     "matched_query": "rpas pilot",
     "confidence": 0.8,
     "match_reason": "family terms: flight, pilot, rpas; drone terms: rpas; job terms: career, job, pilot; source=talent; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "08/11/2026"
+    "last_seen": "08/12/2026"
   }
 ]
