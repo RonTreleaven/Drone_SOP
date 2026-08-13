@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0761/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/049/5518N12124W013\nA) CZEG B) 2608131929 C) 2608201920EST\nE) OBST LGT U/S WIND TURBINE GROUP WITHIN 13NM RADIUS CENTRED ON \n551745N 1212428W (APRX 23NM WNW TUMBLER RIDGE AD (CBX7)). 558FT \nAGL 4809FT AMSL.)",
+    "startValidity": "2026-08-13T19:29:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "55.295833, -121.407778"
+    ]
+  },
+  {
     "raw": "(C3629/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/019/5423N11020W005\nA) CYOD B) 2608121800 C) 2608150100\nE) DRILL RIG 542327N 1102026W APRX 3850FT BEYOND THR 13R AND 1.8NM \nSW RCL. 85FT AGL 1840FT AMSL. NOT LGTD, PAINTED.)",
     "startValidity": "2026-08-12T16:19:15.993",
     "endValidity": "2026-08-15T01:00:00",
@@ -15,15 +24,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "53.292222, -113.564722"
-    ]
-  },
-  {
-    "raw": "(R0754/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/041/5334N11712W002\nA) CZEG B) 2608131600 C) 2608132000\nE) OBST LGT U/S TOWER 533358N 1171216W (APRX 21NM NE HINTON/ENTRANCE \nAD (CEE4)) 360FT AGL, 4067FT AMSL.)",
-    "startValidity": "2026-08-11T17:04:31.801",
-    "endValidity": "2026-08-13T20:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.566111, -117.204444"
     ]
   },
   {
@@ -261,15 +261,6 @@
     ]
   },
   {
-    "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
-    "startValidity": "2026-07-20T17:14:00",
-    "endValidity": "2026-10-20T17:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.480833, -109.194167"
-    ]
-  },
-  {
     "raw": "(R0695/26 NOTAMR R0383/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
     "startValidity": "2026-07-20T17:14:00",
     "endValidity": "2026-10-20T17:00:00",
@@ -285,6 +276,15 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.099167, -110.165278"
+    ]
+  },
+  {
+    "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
+    "startValidity": "2026-07-20T17:14:00",
+    "endValidity": "2026-10-20T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.480833, -109.194167"
     ]
   },
   {
