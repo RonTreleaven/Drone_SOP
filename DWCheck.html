@@ -697,6 +697,28 @@ padding:3px 9px;
 margin-left:auto;
 }
 
+.wind-guide-preferred-note{
+margin:-4px 0 10px;
+font-size:0.8rem;
+}
+
+.wind-guide-preferred-note.is-hidden{
+display:none;
+}
+
+.wind-guide-my-drone-btn{
+font-size:11px;
+padding:3px 8px;
+white-space:nowrap;
+}
+
+.wind-guide-my-drone-btn.is-current{
+background:#2f9e44;
+border-color:#237a33;
+color:#ffffff;
+cursor:default;
+}
+
 .wind-guide-table-wrap{
 border:1px solid #d2dfeb;
 border-radius:10px;
@@ -1288,6 +1310,12 @@ margin-top:7px;
 <div id="loadingText">Searching weather sources...</div>
 </div>
 
+<div class="panel compact-panel">
+<h3>Weather Check Record</h3>
+<div id="dwCheckStatus" class="subtle">No weather check saved yet.</div>
+<button id="rerunAssessmentBtn" type="button" class="mini-action-btn is-hidden" onclick="runNewAssessment()">Run New Assessment</button>
+</div>
+
 <div id="riskPanel" class="panel">
 <h3 id="riskScoreKeyTitle" class="risk-key-title">
 <span id="riskScoreKeyDot" class="risk-key-dot risk-key-unknown" aria-hidden="true"></span>
@@ -1330,12 +1358,6 @@ margin-top:7px;
 </table>
 </div>
 </details>
-</div>
-
-<div class="panel compact-panel">
-<h3>Weather Check Record</h3>
-<div id="dwCheckStatus" class="subtle">No weather check saved yet.</div>
-<button id="rerunAssessmentBtn" type="button" class="mini-action-btn is-hidden" onclick="runNewAssessment()">Run New Assessment</button>
 </div>
 
 <div class="panel compact-panel">
@@ -1412,11 +1434,13 @@ margin-top:7px;
 </div>
 <div class="wind-guide-controls hidden" id="windGuideControls">
 <label for="windGuideModelFilter">Filter by Drone Model
-<input id="windGuideModelFilter" class="wind-guide-filter-input" type="text" placeholder="Search model (ex: Mini, Mavic, Autel)" oninput="handleWindGuideFilterChange()">
+<input id="windGuideModelFilter" class="wind-guide-filter-input" list="windGuideModelList" type="text" placeholder="Search model (ex: Mini, Mavic, Autel)" oninput="handleWindGuideFilterChange()">
+<datalist id="windGuideModelList"></datalist>
 </label>
 <button id="windGuideFilterToggleBtn" type="button" class="mini-action-btn" onclick="toggleWindGuideModelFilter()" title="Clear filter">Clear Filter</button>
 <button type="button" class="mini-action-btn" onclick="tryOpenWindGuideEditor()">Edit Wind Guide JSON</button>
 </div>
+<div id="windGuidePreferredNote" class="subtle wind-guide-preferred-note is-hidden"></div>
 <div class="table-wrap wind-guide-table-wrap hidden" id="windGuideTableWrap">
 <table class="risk-mini-table compact-wind-table wind-guide-table">
 <thead>
@@ -1427,11 +1451,12 @@ margin-top:7px;
 <th>OEM kt</th>
 <th>Conv mph</th>
 <th>Validated OEM</th>
+<th>My Drone</th>
 </tr>
 </thead>
 <tbody id="windGuideTableBody">
 <tr>
-<td colspan="6">Loading wind guide models...</td>
+<td colspan="7">Loading wind guide models...</td>
 </tr>
 </tbody>
 </table>
@@ -1681,6 +1706,61 @@ tryRead(localStorage,PROFILE_STATE_KEY)
 )
 }
 
+function normalizeDroneNameForFilterMatch(value){
+return String(value || "")
+.toLowerCase()
+.replace(/[^a-z0-9]+/g," ")
+.trim()
+}
+
+function populateWindGuideDatalist(models){
+const list = document.getElementById("windGuideModelList")
+if(!list) return
+const names = (Array.isArray(models) ? models : [])
+.map(model => String(model.model || "").trim())
+.filter(Boolean)
+list.innerHTML = names.map(name => `<option value="${escapeHtml(name)}"></option>`).join("")
+}
+
+function renderWindGuidePreferredNote(){
+const note = document.getElementById("windGuidePreferredNote")
+if(!note) return
+if(!preferredWindGuideFilterValue){
+note.classList.add("is-hidden")
+note.textContent = ""
+return
+}
+note.classList.remove("is-hidden")
+note.textContent = `Preferred Drone: ${preferredWindGuideFilterValue} (saved to your profile)`
+}
+
+function writePreferredDroneToProfileStorage(modelName){
+let profileState = {}
+try{
+const raw = localStorage.getItem(PROFILE_STATE_KEY)
+if(raw){
+const parsed = JSON.parse(raw)
+if(parsed && typeof parsed === "object") profileState = parsed
+}
+}
+catch{
+profileState = {}
+}
+profileState.preferredDroneLabel = modelName
+localStorage.setItem(PROFILE_STATE_KEY,JSON.stringify(profileState))
+}
+
+function saveModelAsMyDrone(modelId){
+const model = latestWindGuideModels.find(item => item.modelId === modelId)
+if(!model) return
+
+writePreferredDroneToProfileStorage(model.model)
+preferredWindGuideFilterValue = model.model
+preferredWindGuideFilterApplied = false
+renderWindGuidePreferredNote()
+applyWindGuideFiltersAndSort()
+}
+
 function updateWindGuideFilterToggleButton(){
 const btn = document.getElementById("windGuideFilterToggleBtn")
 if(!btn) return
@@ -1714,6 +1794,7 @@ preferredWindGuideFilterValue = preferred
 if(!preferred) {
 preferredWindGuideFilterApplied = false
 updateWindGuideFilterToggleButton()
+renderWindGuidePreferredNote()
 return false
 }
 
@@ -1824,6 +1905,7 @@ hint.textContent = icon.classList.contains("collapsed") ? "View" : "Hide"
 function applyWindGuideFiltersAndSort(){
 renderWindGuideTable(getFilteredSortedWindGuideModels(latestWindGuideModels))
 updateWindGuideFilterToggleButton()
+renderWindGuidePreferredNote()
 }
 
 function handleWindGuideFilterChange(){
@@ -2077,7 +2159,7 @@ const tbody = document.getElementById("windGuideTableBody")
 if(!tbody) return
 
 if(!Array.isArray(models) || !models.length){
-tbody.innerHTML = "<tr><td colspan=\"6\">No models match the current filter.</td></tr>"
+tbody.innerHTML = "<tr><td colspan=\"7\">No models match the current filter.</td></tr>"
 return
 }
 
@@ -2087,6 +2169,10 @@ const oemKmhText = formatWindGuideNumber(model.oemWindKmh,1)
 const oemKtText = formatWindGuideNumber(model.oemWindKt,1)
 const convMphText = formatWindGuideNumber(model.convertedMph,1)
 const checked = model.validated ? "checked" : ""
+const isPreferred = !!preferredWindGuideFilterValue && normalizeDroneNameForFilterMatch(model.model) === normalizeDroneNameForFilterMatch(preferredWindGuideFilterValue)
+const myDroneBtn = isPreferred
+? `<button type="button" class="mini-action-btn wind-guide-my-drone-btn is-current" disabled>My Drone</button>`
+: `<button type="button" class="mini-action-btn wind-guide-my-drone-btn" onclick="saveModelAsMyDrone('${escapeHtml(model.modelId)}')">Set My Drone</button>`
 return `<tr>
 <td>${escapeHtml(model.model)}</td>
 <td>${escapeHtml(oemMsText)}</td>
@@ -2094,6 +2180,7 @@ return `<tr>
 <td>${escapeHtml(oemKtText)}</td>
 <td>${escapeHtml(convMphText)}</td>
 <td><input type="checkbox" class="wind-guide-verified" data-model-id="${escapeHtml(model.modelId)}" ${checked} disabled></td>
+<td>${myDroneBtn}</td>
 </tr>`
 }).join("")
 }
@@ -2157,6 +2244,8 @@ validated: Object.prototype.hasOwnProperty.call(validationMap,model.modelId)
 ? !!validationMap[model.modelId]
 : !!model.verified
 }))
+
+populateWindGuideDatalist(latestWindGuideModels)
 
 const preferredApplied = applyPreferredDroneFilterIfAvailable()
 if(!preferredApplied){
@@ -4215,8 +4304,6 @@ async function fetchOpenMeteo(lat,lon){
 
 function renderOpenMeteo(data,metar=null,nearestStations=[]){
   const panel=document.getElementById("localForecastPanel")
-  const content=document.getElementById("localForecastContent")
-  const icon=document.getElementById("localForecastCollapseIcon")
   if(!panel) return
 
   const c=data?.current||{}
@@ -4270,11 +4357,6 @@ function renderOpenMeteo(data,metar=null,nearestStations=[]){
     ${compareHtml}
     <div class="om-source-note">Source: <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a> — Pilot coordinates ${omLat}, ${omLon}. Forecast model data; not an official aviation observation.</div>
   `
-
-  if(content&&content.classList.contains("is-hidden")){
-    content.classList.remove("is-hidden")
-    if(icon) icon.classList.remove("collapsed")
-  }
 }
 
 function clearOpenMeteo(){
