@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from normalization import normalize_date, normalize_text, parse_date_value
 from classifier import classify_job
 from database import init_db
-from config import DATA_DIR, JOBS_DB_PATH, JOBS_JSON_PATH, JOBS_REVIEW_CSV_PATH, JOBS_REVIEW_LATEST_CSV_PATH
+from config import DATA_DIR, JOBS_DB_PATH, JOBS_JSON_PATH, JOBS_REVIEW_CSV_PATH
 
 
 def parse_iso_date(value):
@@ -145,18 +145,14 @@ def export_review_csv():
             row[field] = prior.get(field, defaults[field])
         rows.append(row)
 
-    try:
-        with open(output, "w", encoding="utf-8", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=headers)
-            writer.writeheader()
-            writer.writerows(rows)
-    except PermissionError:
-        fallback_output = JOBS_REVIEW_LATEST_CSV_PATH
-        with open(fallback_output, "w", encoding="utf-8", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=headers)
-            writer.writeheader()
-            writer.writerows(rows)
-        print(f"Could not write {output} (file may be open). Wrote {fallback_output} instead.")
+    # Legacy fallback writes to jobs_review_latest.csv were used when the primary CSV
+    # was locked by Excel or another process. GitHub Actions is the authoritative job
+    # refresh path now, so keep the main export strict and fail loudly if the file
+    # cannot be written instead of silently creating a stale shadow copy.
+    with open(output, "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=headers)
+        writer.writeheader()
+        writer.writerows(rows)
 
 
 def run_exports():
