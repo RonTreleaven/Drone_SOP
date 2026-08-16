@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U1430/26 NOTAMR U1171/26\nQ) CZWG/QOLAS/IV/M/E/000/031/4952N10623W002\nA) CZWG B) 2608161045 C) 2609302359\nE) OBST LGT U/S TOWER 495202N 1062305W (APRX 7NM E GRAVELBOURG AD \n(CJM4)) 690FT AGL, 3090FT AMSL.)",
+    "startValidity": "2026-08-16T10:45:00",
+    "endValidity": "2026-09-30T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.867222, -106.384722"
+    ]
+  },
+  {
     "raw": "(U1427/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/027/5029N10430W005\nA) CXXX B) 2608151722 C) 2611122100\nE) CRQ2 REGINA GENERAL (HOSP) (HELI)\nOBST LGT U/S TOWER 502858N 1043020W (APRX 4.3NM NE AD) 687FT AGL, \n2646FT AMSL.)",
     "startValidity": "2026-08-15T17:22:00",
     "endValidity": "2026-11-12T21:00:00",
@@ -366,15 +375,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "52.864722, -105.536667"
-    ]
-  },
-  {
-    "raw": "(U1171/26 NOTAMR U0905/26\nQ) CZWG/QOLAS/IV/M/E/000/031/4952N10623W002\nA) CZWG B) 2607040806 C) 2608182359\nE) OBST LGT U/S TOWER 495202N 1062305W (APRX 7NM E GRAVELBOURG AD \n(CJM4)) 690FT AGL, 3090FT AMSL.)",
-    "startValidity": "2026-07-04T08:06:00",
-    "endValidity": "2026-08-18T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.867222, -106.384722"
     ]
   },
   {
