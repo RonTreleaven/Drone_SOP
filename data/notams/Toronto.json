@@ -1,5 +1,41 @@
 [
   {
+    "raw": "(U1439/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4247N08110W005\nA) CYQS B) 2608171453 C) 2610011500\nE) OBST LGT U/S TOWER 424724N 0811003W (APRX 2.8NM NW AD) 162FT AGL, \n929FT AMSL.)",
+    "startValidity": "2026-08-17T14:53:00",
+    "endValidity": "2026-10-01T15:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "42.790000, -81.167500"
+    ]
+  },
+  {
+    "raw": "(U1438/26 NOTAMR U0880/26\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4435N07926W005\nA) CXXX B) 2608171404 C) 2608181400EST\nE) COP2 ORILLIA (ONTARIO PROVINCIAL POLICE) (HELI)\nOBST LGT U/S TOWER 443459N 0792547W (APRX 551FT SW AD) 131FT AGL, \n948FT AMSL.)",
+    "startValidity": "2026-08-17T14:04:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.583056, -79.429722"
+    ]
+  },
+  {
+    "raw": "(U1437/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/009/4528N07640W005\nA) CXXX B) 2608171344 C) 2611131700\nE) CPG9 RENFREW (VICTORIA HOSPITAL) (HELI)\nOBST LGT U/S TOWER 452744N 0763939W (APRX 1.92NM SE AD) 318FT \nAGL, 872FT AMSL.)",
+    "startValidity": "2026-08-17T13:44:00",
+    "endValidity": "2026-11-13T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.462222, -76.660833"
+    ]
+  },
+  {
+    "raw": "(U1436/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/012/4226N08148W005\nA) CZYZ B) 2608171235 C) 2608182359\nE) OBST LGT U/S WIND FARM WITHIN 5NM RADIUS CENTRED ON 422552N \n0814809W (APRX 7NM S HIGHGATE AD (CNA2)). 428FT AGL 1183FT AMSL.)",
+    "startValidity": "2026-08-17T12:35:00",
+    "endValidity": "2026-08-18T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "42.431111, -81.802500"
+    ]
+  },
+  {
     "raw": "(U1434/26 NOTAMR U1087/26\nQ) CZYZ/QOLAS/IV/M/AE/000/014/4335N08013W005\nA) CXXX B) 2608170757 C) 2610171300EST\nE) CNC4 GUELPH \nOBST LGT U/S TOWER 433507N 0801243W (APRX 1.48NM NNW AD) 164FT \nAGL, 1348FT AMSL.)",
     "startValidity": "2026-08-17T07:57:00",
     "endValidity": null,
@@ -450,21 +486,21 @@
     ]
   },
   {
-    "raw": "(U1356/26 NOTAMR U0788/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
-    "startValidity": "2026-08-03T13:32:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.907222, -79.371389"
-    ]
-  },
-  {
     "raw": "(U1355/26 NOTAMR U0790/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
     "startValidity": "2026-08-03T13:32:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.906667, -78.731389"
+    ]
+  },
+  {
+    "raw": "(U1356/26 NOTAMR U0788/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
+    "startValidity": "2026-08-03T13:32:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.907222, -79.371389"
     ]
   },
   {
@@ -810,21 +846,21 @@
     ]
   },
   {
-    "raw": "(U1261/26 NOTAMR U1177/26\nQ) CZYZ/QOLAS/IV/M/E/000/020/4327N08036W002\nA) CZYZ B) 2607182229 C) 2609012359\nE) OBST LGT U/S TOWER 432700N 0803608W (APRX 8NM S ELMIRA AD (CNT6)) \n600FT AGL, 1902FT AMSL.)",
-    "startValidity": "2026-07-18T22:29:00",
-    "endValidity": "2026-09-01T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.450000, -80.602222"
-    ]
-  },
-  {
     "raw": "(U1260/26 NOTAMR U1176/26\nQ) CZYZ/QOLAS/IV/M/E/000/012/4603N07728W002\nA) CZYZ B) 2607182229 C) 2609012359\nE) OBST LGT U/S TOWER 460240N 0772804W (APRX 5NM SSE DEEP \nRIVER/ROLPH AD (CPH2)) 651FT AGL, 1188FT AMSL.)",
     "startValidity": "2026-07-18T22:29:00",
     "endValidity": "2026-09-01T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "46.044444, -77.467778"
+    ]
+  },
+  {
+    "raw": "(U1261/26 NOTAMR U1177/26\nQ) CZYZ/QOLAS/IV/M/E/000/020/4327N08036W002\nA) CZYZ B) 2607182229 C) 2609012359\nE) OBST LGT U/S TOWER 432700N 0803608W (APRX 8NM S ELMIRA AD (CNT6)) \n600FT AGL, 1902FT AMSL.)",
+    "startValidity": "2026-07-18T22:29:00",
+    "endValidity": "2026-09-01T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.450000, -80.602222"
     ]
   },
   {
@@ -1779,15 +1815,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "43.835278, -79.018611"
-    ]
-  },
-  {
-    "raw": "(U0880/26 NOTAMR U0310/26\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4435N07926W005\nA) CXXX B) 2605181216 C) 2608171400EST\nE) COP2 ORILLIA (ONTARIO PROVINCIAL POLICE) (HELI)\nOBST LGT U/S TOWER 443459N 0792547W (APRX 551FT SW AD) 131FT AGL, \n948FT AMSL.)",
-    "startValidity": "2026-05-18T12:16:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.583056, -79.429722"
     ]
   },
   {
