@@ -360,21 +360,21 @@
     ]
   },
   {
-    "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
-    "startValidity": "2026-07-20T17:14:00",
-    "endValidity": "2026-10-20T17:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.099167, -110.165278"
-    ]
-  },
-  {
     "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
     "startValidity": "2026-07-20T17:14:00",
     "endValidity": "2026-10-20T17:00:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.480833, -109.194167"
+    ]
+  },
+  {
+    "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
+    "startValidity": "2026-07-20T17:14:00",
+    "endValidity": "2026-10-20T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.099167, -110.165278"
     ]
   },
   {
