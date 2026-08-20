@@ -36,15 +36,6 @@
     ]
   },
   {
-    "raw": "(R0775/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/054/5001N11409W002\nA) CZEG B) 2608201500 C) 2608202000\nE) OBST LGT U/S TOWER 500108N 1140907W (APRX 20NM W CLARESHOLM \nINDUSTRIAL AD (CEJ4)) 348FT AGL, 5309FT AMSL.)",
-    "startValidity": "2026-08-19T16:19:26.103",
-    "endValidity": "2026-08-20T20:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.018889, -114.151944"
-    ]
-  },
-  {
     "raw": "(R0774/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/033/5425N11746W002\nA) CZEG B) 2608191410 C) 2611181800EST\nE) OBST LGT U/S SMOKE STACK 542516N 1174532W (APRX 35NM W FOX CREEK \nAD (CED4)) 380FT AGL, 3280FT AMSL.)",
     "startValidity": "2026-08-19T14:10:00",
     "endValidity": null,
@@ -150,15 +141,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "51.099722, -114.036944"
-    ]
-  },
-  {
-    "raw": "(R0761/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/049/5518N12124W013\nA) CZEG B) 2608131929 C) 2608201920EST\nE) OBST LGT U/S WIND TURBINE GROUP WITHIN 13NM RADIUS CENTRED ON \n551745N 1212428W (APRX 23NM WNW TUMBLER RIDGE AD (CBX7)). 558FT \nAGL 4809FT AMSL.)",
-    "startValidity": "2026-08-13T19:29:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.295833, -121.407778"
     ]
   },
   {
@@ -420,15 +402,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "52.396111, -114.928889"
-    ]
-  },
-  {
-    "raw": "(R0688/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/027/5312N11116W002\nA) CZEG B) 2607190813 C) 2610172359\nE) OBST LGT U/S TOWER 531142N 1111617W (APRX 17NM SW VERMILION \nHEALTH CENTRE (HELI) AD (CVH2)) 230FT AGL, 2691FT AMSL.)",
-    "startValidity": "2026-07-19T08:13:00",
-    "endValidity": "2026-10-17T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.195000, -111.271389"
     ]
   },
   {
