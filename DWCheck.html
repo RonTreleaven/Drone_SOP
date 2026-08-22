@@ -3062,6 +3062,23 @@ return `${hours.toFixed(1)} hr`
 }
 
 
+function isSamePilotLocation(first,second){
+if(!first || !second) return false
+const firstLat = Number(first.lat)
+const firstLon = Number(first.lon)
+const secondLat = Number(second.lat)
+const secondLon = Number(second.lon)
+if(![firstLat,firstLon,secondLat,secondLon].every(Number.isFinite)) return false
+return Math.abs(firstLat-secondLat) < 0.000001 && Math.abs(firstLon-secondLon) < 0.000001
+}
+
+
+function hasPilotLocationChangedSinceArtifact(artifact){
+const known = getKnownPilotLocation()
+return !!(known && !isPilotLocationUndefined(known.lat,known.lon) && artifact?.location && !isSamePilotLocation(known,artifact.location))
+}
+
+
 function renderWeatherCheckStatus(){
 const el = document.getElementById("dwCheckStatus")
 const saveBtn = document.getElementById("completeBtn")
@@ -3110,12 +3127,20 @@ return
 
 const ageMs = Date.now() - new Date(committedWeatherArtifact.timestamp).getTime()
 const isStale = Number.isFinite(ageMs) && ageMs > 3600000
+const isLocationChanged = hasPilotLocationChangedSinceArtifact(committedWeatherArtifact)
 const hoursSince = formatHoursSince(committedWeatherArtifact.timestamp)
 const savedLabel = completedAt ? `Saved ${formatHoursSince(completedAt)} ago` : "Saved"
 const kpDisplayValue = committedWeatherArtifact.kpIndex ?? committedWeatherArtifact.kpNumeric ?? "-"
 const kpCondition = getKpCondition(kpDisplayValue)
 
-const completeLine = completed
+const completeLine = isLocationChanged
+? `<div class="record-flow" aria-label="Weather check progress">
+<span class="record-flow-step is-complete">1 Pilot Location</span>
+<span class="record-flow-step is-current">2 Weather/Risk</span>
+<span class="record-flow-step">3 Save</span>
+</div>
+<div class="status-alert">New Pilot Location detected. The saved weather assessment is for a different location.</div>`
+: completed
 ? `<div class="record-flow" aria-label="Weather check progress">
 <span class="record-flow-step is-complete">1 Pilot Location</span>
 <span class="record-flow-step is-complete">2 Weather/Risk</span>
@@ -3133,6 +3158,7 @@ if(saveBtn) saveBtn.disabled = true
 
 el.innerHTML = `
 ${completeLine}
+${isLocationChanged ? `<div class="subtle">Current Pilot Location: ${getKnownPilotLocation().lat.toFixed(6)}, ${getKnownPilotLocation().lon.toFixed(6)}</div>` : ""}
 ${completed ? `<div class="subtle">Completed at ${completedAt ? new Date(completedAt).toLocaleString() : "unknown"}</div>` : ""}
 <div>ICAO: ${committedWeatherArtifact.icao || "-"}</div>
 <div>Risk: ${committedWeatherArtifact.riskLabel} (score ${committedWeatherArtifact.riskScore})</div>
@@ -3141,7 +3167,12 @@ ${completed ? `<div class="subtle">Completed at ${completedAt ? new Date(complet
 
 if(rerunBtn){
 rerunBtn.classList.remove("is-hidden","state-fresh","state-stale")
-if(isStale){
+if(isLocationChanged){
+rerunBtn.textContent = "Use New Pilot Location and Refresh"
+rerunBtn.classList.add("state-stale")
+rerunBtn.disabled = false
+}
+else if(isStale){
 rerunBtn.textContent = "Refresh Weather Assessment"
 rerunBtn.classList.add("state-stale")
 rerunBtn.disabled = false
