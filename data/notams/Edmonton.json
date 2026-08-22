@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(R0789/26 NOTAMR R0611/26\nQ) CZEG/QOLAS/IV/M/E/000/033/5625N12110W002\nA) CZEG B) 2608220941 C) 2610222359\nE) OBST LGT U/S TOWER 562430N 1211017W (APRX 18NM WNW FORT ST. JOHN \nAD (CYXJ)) 292FT AGL, 3245FT AMSL.)",
+    "startValidity": "2026-08-22T09:41:00",
+    "endValidity": "2026-10-22T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "56.408333, -121.171389"
+    ]
+  },
+  {
+    "raw": "(C3874/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/024/6045N13506W005\nA) CYXY B) 2608221500 C) 2608222359\nE) MOBILE CRANE WITHIN 65FT RADIUS CENTRED ON 604457N 1350557W APRX \n1.8NM BFR THR 14R AND 220FT SW EXTENDED RCL. 70FT AGL 2346FT \nAMSL. NOT LGTD.)",
+    "startValidity": "2026-08-21T21:52:48.369",
+    "endValidity": "2026-08-22T23:59:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "60.749167, -135.099167"
+    ]
+  },
+  {
     "raw": "(R0788/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/003/6726N13452W005\nA) CZFM B) 2608211839 C) 2611192100\nE) OBST LGT U/S TOWER 672542N 1345145W (APRX 1.29NM NNW AD) 205FT \nAGL, 246FT AMSL.)",
     "startValidity": "2026-08-21T18:39:00",
     "endValidity": "2026-11-19T21:00:00",
@@ -51,15 +69,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "54.407500, -110.281389"
-    ]
-  },
-  {
-    "raw": "(R0777/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/019/5849N12243W005\nA) CXXX B) 2608191835 C) 2608212100\nE) CBL3 FORT NELSON/GORDON FIELD \nOBST LGT U/S TOWER 584840N 1224302W (APRX 2.1NM E AD) 310FT AGL, \n1829FT AMSL.)",
-    "startValidity": "2026-08-19T18:35:00",
-    "endValidity": "2026-08-21T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "58.811111, -122.717222"
     ]
   },
   {
@@ -396,6 +405,15 @@
     ]
   },
   {
+    "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
+    "startValidity": "2026-07-20T17:14:00",
+    "endValidity": "2026-10-20T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.099167, -110.165278"
+    ]
+  },
+  {
     "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
     "startValidity": "2026-07-20T17:14:00",
     "endValidity": "2026-10-20T17:00:00",
@@ -411,15 +429,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "56.386111, -111.272778"
-    ]
-  },
-  {
-    "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
-    "startValidity": "2026-07-20T17:14:00",
-    "endValidity": "2026-10-20T17:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.099167, -110.165278"
     ]
   },
   {
@@ -645,15 +654,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "57.450556, -117.517778"
-    ]
-  },
-  {
-    "raw": "(R0611/26 NOTAMR R0413/26\nQ) CZEG/QOLAS/IV/M/E/000/033/5625N12110W002\nA) CZEG B) 2606270615 C) 2608272359\nE) OBST LGT U/S TOWER 562430N 1211017W (APRX 18NM WNW FORT ST. JOHN \nAD (CYXJ)) 292FT AGL, 3245FT AMSL.)",
-    "startValidity": "2026-06-27T06:15:00",
-    "endValidity": "2026-08-27T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "56.408333, -121.171389"
     ]
   },
   {
