@@ -1299,6 +1299,7 @@ margin-top:7px;
 <div class="controls">
 <input id="icao" placeholder="ICAO (CYOO)">
 <button id="locBtn" onclick="useCurrentLocation()">Get Pilot Location</button>
+<button id="manualLocBtn" type="button" onclick="useManualLocation()">Manual Lat/Lon</button>
 <button id="checkBtn" onclick="runCheck()">Fetch Weather/Risk Assessment</button>
 <button id="completeBtn" type="button" onclick="markWeatherCheckComplete()">Save Weather Check</button>
 </div>
@@ -1307,12 +1308,14 @@ margin-top:7px;
 
 <div id="loadingWrap" class="loading-wrap" aria-live="polite">
 <div class="spinner" aria-hidden="true"></div>
-<div id="loadingText">Searching weather sources...</div>
+<div id="loadingText">Searching  er sources...</div>
 </div>
 
 <div class="panel compact-panel">
 <h3>Weather Check Record</h3>
 <div id="dwCheckStatus" class="subtle">No weather check saved yet.</div>
+<div id="dwCheckStationStatus" class="subtle">Closest METAR: Not selected.</div>
+<div id="dwCheckLocationStatus" class="subtle">Pilot Lat/Lon: Not defined.</div>
 <button id="rerunAssessmentBtn" type="button" class="mini-action-btn is-hidden" onclick="runNewAssessment()">Run New Assessment</button>
 </div>
 
@@ -1517,6 +1520,7 @@ errors: []
 const WIND_GUIDE_VALIDATION_MAP_KEY = "dwWindGuideValidationMap"
 const PROFILE_STATE_KEY = "dsop.profileState.v1"
 const PROFILE_SESSION_STATE_KEY = "dsop.profileState.session.v1"
+const MANUAL_LOCATION_SESSION_KEY = "dwCheckManualLocationThisSession"
 
 let preferredWindGuideFilterValue = ""
 let preferredWindGuideFilterApplied = false
@@ -2372,6 +2376,21 @@ const safeLabel = escapeHtml(label)
 return `<a href="${escapeHtml(mapUrl)}" target="pilotLocationMap" rel="noopener noreferrer" onclick="openPilotLocationPopup(event, ${latNum.toFixed(6)}, ${lonNum.toFixed(6)})">${safeLabel}</a>`
 }
 
+
+function buildNotamsMapPilotLink(lat,lon,label){
+const latNum = Number(lat)
+const lonNum = Number(lon)
+if(!Number.isFinite(latNum) || !Number.isFinite(lonNum)) return escapeHtml(label)
+
+const mapUrl = new URL("NotamsMap.html",window.location.href)
+mapUrl.searchParams.set("pilotLat",latNum.toFixed(6))
+mapUrl.searchParams.set("pilotLon",lonNum.toFixed(6))
+mapUrl.searchParams.set("focus","1")
+mapUrl.searchParams.set("src","dwcheck")
+
+return `<a href="${escapeHtml(mapUrl.toString())}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`
+}
+
 function openScoringIndex(){
 const modal = document.getElementById("scoringIndexModal")
 if(!modal) return
@@ -2455,7 +2474,7 @@ location: latestLocation
 renderWeatherCheckStatus()
 
 const omData = await omPromise
-if(omData) renderOpenMeteo(omData,metar,latestNearestStations)
+if(omData) renderOpenMeteo(omData,metar,latestNearestStations,icao,knownPilot)
 }
 finally{
 setLoading(false)
@@ -2481,11 +2500,13 @@ const lat = position.coords.latitude
 const lon = position.coords.longitude
 
 latestLocation = { lat, lon, source: "dwcheck-geolocation" }
+sessionStorage.removeItem(MANUAL_LOCATION_SESSION_KEY)
 
 const savedLoc = saveKnownPilotLocation(lat,lon,"dwcheck-geolocation")
 updatePilotLocationButtonLabel()
 
 renderCurrentLocationDetails(`${savedLoc.latShort}, ${savedLoc.lonShort}`, savedLoc.dms)
+renderWeatherCheckContext()
 
 const nearest = await findNearestStations(lat,lon,3)
 
@@ -2496,6 +2517,7 @@ return
 
 displayNearestStations(nearest)
 latestNearestStations = nearest
+renderWeatherCheckContext()
 
 // Auto-fill the closest station for fast METAR lookup.
 document.getElementById("icao").value = nearest[0].icaoId
@@ -2506,6 +2528,62 @@ if(err && err.code === 1) showError("Location permission denied.")
 else if(err && err.code === 2) showError("Unable to determine your location.")
 else if(err && err.code === 3) showError("Location request timed out.")
 else showError("Unable to get current location.")
+}
+finally{
+setLoading(false)
+}
+
+}
+
+
+async function useManualLocation(){
+
+clearError()
+
+const known = getKnownPilotLocation()
+const defaultValue = known && !isPilotLocationUndefined(known.lat,known.lon)
+? `${known.lat.toFixed(6)}, ${known.lon.toFixed(6)}`
+: ""
+
+const raw = window.prompt("Enter planned mission location as lat, lon (example: 43.123456, -79.123456)", defaultValue)
+if(raw == null) return
+
+const parsed = parseLatLonText(raw)
+if(!parsed){
+showError("Invalid coordinates. Enter latitude, longitude in decimal degrees (example: 43.123456, -79.123456).")
+return
+}
+
+if(isPilotLocationUndefined(parsed.lat,parsed.lon)){
+showError("0,0 is not a valid pilot location for this workflow. Enter your planned mission latitude and longitude.")
+return
+}
+
+setLoading(true,"Applying manual location and nearest stations...")
+
+try{
+latestLocation = { lat: parsed.lat, lon: parsed.lon, source: "dwcheck-manual" }
+sessionStorage.setItem(MANUAL_LOCATION_SESSION_KEY,"true")
+
+const savedLoc = saveKnownPilotLocation(parsed.lat,parsed.lon,"dwcheck-manual")
+updatePilotLocationButtonLabel()
+
+renderCurrentLocationDetails(`${savedLoc.latShort}, ${savedLoc.lonShort}`, savedLoc.dms)
+renderWeatherCheckContext()
+
+const nearest = await findNearestStations(parsed.lat,parsed.lon,3)
+
+if(!nearest.length){
+showError("No nearby METAR stations found from station cache.")
+return
+}
+
+displayNearestStations(nearest)
+latestNearestStations = nearest
+renderWeatherCheckContext()
+
+// Auto-fill the closest station for fast METAR lookup.
+document.getElementById("icao").value = nearest[0].icaoId
 }
 finally{
 setLoading(false)
@@ -2708,6 +2786,38 @@ return { latShort, lonShort, dms:`${latDMS}, ${lonDMS}` }
 }
 
 
+function renderWeatherCheckContext(){
+const stationEl = document.getElementById("dwCheckStationStatus")
+const locationEl = document.getElementById("dwCheckLocationStatus")
+if(!stationEl || !locationEl) return
+
+const station = Array.isArray(latestNearestStations) && latestNearestStations.length
+? latestNearestStations[0]
+: null
+stationEl.textContent = station
+? `Closest METAR: ${station.icaoId} - ${station.site} (${Number(station.distanceKm).toFixed(1)} km)`
+: "Closest METAR: Not selected."
+
+const known = getKnownPilotLocation()
+if(!known || isPilotLocationUndefined(known.lat,known.lon)){
+locationEl.textContent = "Pilot Lat/Lon: Not defined."
+return
+}
+
+const source = localStorage.getItem("pilotLocationSource") || "stored"
+const manuallyEnteredThisSession = sessionStorage.getItem(MANUAL_LOCATION_SESSION_KEY) === "true"
+const sourceLabel = source === "dwcheck-manual" && manuallyEnteredThisSession
+? "Manually entered this session"
+: source === "dwcheck-manual"
+? "Manually set"
+: source === "dwcheck-geolocation"
+? "Device location"
+: "Stored location"
+const locationLabel = `${Number(known.lat).toFixed(6)}, ${Number(known.lon).toFixed(6)} (${sourceLabel})`
+locationEl.innerHTML = `Pilot Lat/Lon: ${buildNotamsMapPilotLink(known.lat,known.lon,locationLabel)}`
+}
+
+
 function updatePilotLocationButtonLabel(){
 const locButton = document.getElementById("locBtn")
 if(!locButton) return
@@ -2746,19 +2856,20 @@ const hasPilotLocation = !!(known && !isPilotLocationUndefined(known.lat,known.l
 if(placeholder){
 placeholder.innerHTML = hasPilotLocation
 ? `<span class="prompt-step-badge" aria-hidden="true">2</span>Fetch Weather/Risk Assessment, based on your current Pilot location, to load current survey details.`
-: `<span class="prompt-step-badge" aria-hidden="true">1</span>Get Pilot Location first, then Fetch Weather/Risk Assessment.`
+: `<span class="prompt-step-badge" aria-hidden="true">1</span>Choose Get Pilot Location or Manual Lat/Lon, then Fetch Weather/Risk Assessment.`
 }
 
 if(summaryPrompt && summaryPrompt.classList.contains("weather-summary-empty")){
 summaryPrompt.innerHTML = hasPilotLocation
 ? `<span class="prompt-step-badge" aria-hidden="true">2</span>Fetch Weather/Risk Assessment, based on your current Pilot location, to load structured observation details.`
-: `<span class="prompt-step-badge" aria-hidden="true">1</span>Get Pilot Location first, then Fetch Weather/Risk Assessment.`
+: `<span class="prompt-step-badge" aria-hidden="true">1</span>Choose Get Pilot Location or Manual Lat/Lon, then Fetch Weather/Risk Assessment.`
 }
 }
 
 
 function updateActionButtonHighlights(){
 const locButton = document.getElementById("locBtn")
+const manualLocButton = document.getElementById("manualLocBtn")
 const checkButton = document.getElementById("checkBtn")
 const saveButton = document.getElementById("completeBtn")
 if(!locButton || !checkButton) return
@@ -2773,6 +2884,7 @@ saveButton.classList.toggle("next-step-highlight", shouldHighlightSave)
 
 if(shouldHighlightSave){
 locButton.classList.remove("next-step-highlight")
+manualLocButton?.classList.remove("next-step-highlight")
 checkButton.classList.remove("next-step-highlight")
 setStepPrompt(locButton,null)
 setStepPrompt(checkButton,null)
@@ -2785,15 +2897,18 @@ const known = getKnownPilotLocation()
 const hasPilotLocation = !!(known && !isPilotLocationUndefined(known.lat,known.lon))
 
 locButton.classList.toggle("next-step-highlight", !hasPilotLocation)
+manualLocButton?.classList.toggle("next-step-highlight", !hasPilotLocation)
 checkButton.classList.toggle("next-step-highlight", hasPilotLocation)
 setStepPrompt(saveButton,null)
 
 if(hasPilotLocation){
 setStepPrompt(locButton,null)
+setStepPrompt(manualLocButton,null)
 setStepPrompt(checkButton,2,"Step 2: Fetch Weather/Risk Assessment")
 }
 else{
 setStepPrompt(locButton,1,"Step 1: Get Pilot Location")
+setStepPrompt(manualLocButton,1,"Step 1: Set Manual Lat/Lon for a planned mission")
 setStepPrompt(checkButton,null)
 }
 
@@ -2883,18 +2998,21 @@ latestLocation = null
 latestNearestStations = []
 renderCurrentLocationDetails(ddText,dmsDisplay)
 document.getElementById("nearestStations").innerHTML = "<em>Pilot location not defined yet. Click Get/Update Pilot Location to load nearby METAR stations.</em>"
+renderWeatherCheckContext()
 updatePilotLocationButtonLabel()
 return
 }
 
 latestLocation = { lat: known.lat, lon: known.lon, source: "stored" }
 renderCurrentLocationDetails(ddText,dmsDisplay)
+renderWeatherCheckContext()
 
 const nearest = await findNearestStations(known.lat,known.lon,3)
 if(!nearest.length) return
 
 displayNearestStations(nearest)
 latestNearestStations = nearest
+renderWeatherCheckContext()
 
 if(!document.getElementById("icao").value){
 document.getElementById("icao").value = nearest[0].icaoId
@@ -3223,6 +3341,7 @@ displayRisk(fallbackRisk, { rawOb: artifact.metarRaw || "" })
 if(Array.isArray(artifact.nearestStations) && artifact.nearestStations.length){
 displayNearestStations(artifact.nearestStations)
 latestNearestStations = artifact.nearestStations
+renderWeatherCheckContext()
 if(!document.getElementById("icao").value && artifact.nearestStations[0] && artifact.nearestStations[0].icaoId){
 document.getElementById("icao").value = artifact.nearestStations[0].icaoId
 }
@@ -3236,6 +3355,7 @@ source: artifact.location.source || "dwcheck-saved"
 }
 const savedLoc = saveKnownPilotLocation(latestLocation.lat,latestLocation.lon,"dwcheck-saved")
 renderCurrentLocationDetails(`${savedLoc.latShort}, ${savedLoc.lonShort}`, savedLoc.dms)
+renderWeatherCheckContext()
 }
 }
 
@@ -3243,6 +3363,7 @@ function setLoading(isLoading,message="Searching weather sources..."){
 const wrap = document.getElementById("loadingWrap")
 const button = document.getElementById("checkBtn")
 const locButton = document.getElementById("locBtn")
+const manualLocButton = document.getElementById("manualLocBtn")
 const input = document.getElementById("icao")
 const loadingText = document.getElementById("loadingText")
 
@@ -3251,6 +3372,7 @@ loadingText.textContent = message
 wrap.classList.add("show")
 button.disabled = true
 locButton.disabled = true
+if(manualLocButton) manualLocButton.disabled = true
 input.disabled = true
 return
 }
@@ -3258,6 +3380,7 @@ return
 wrap.classList.remove("show")
 button.disabled = false
 locButton.disabled = false
+if(manualLocButton) manualLocButton.disabled = false
 input.disabled = false
 }
 
@@ -4204,6 +4327,7 @@ runCheck()
 
 restoreKnownPilotLocation()
 renderWeatherCheckStatus()
+renderWeatherCheckContext()
 updatePilotLocationButtonLabel()
 updateActionButtonHighlights()
 renderSavedWeatherArtifactDetails()
@@ -4251,7 +4375,7 @@ function formatSignedDelta(value,decimals=1,unit=""){
   return `${sign}${value.toFixed(decimals)}${unit}`
 }
 
-function buildOpenMeteoComparisonHtml(data,metar,nearestStations=[]){
+function buildOpenMeteoComparisonHtml(data,metar,nearestStations=[],metarIcao=""){
   const c=data?.current||{}
   const omWindKmh=Number(c.wind_speed_10m)
   const omWindDirDeg=Number(c.wind_direction_10m)
@@ -4280,6 +4404,14 @@ function buildOpenMeteoComparisonHtml(data,metar,nearestStations=[]){
   const nearestText = nearest
     ? `${nearest.icaoId} (${Number(nearest.distanceKm).toFixed(1)} km)`
     : "Unavailable"
+  const normalizedStation = String(normalized?.station || "").trim().toUpperCase()
+  const requestedIcao = String(metarIcao || normalizedStation || "").trim().toUpperCase()
+  const stationMatch = requestedIcao && nearest?.icaoId
+    ? requestedIcao === String(nearest.icaoId).trim().toUpperCase()
+    : null
+  const metarReferenceText = requestedIcao
+    ? `${requestedIcao}${stationMatch == null ? "" : stationMatch ? " (nearest station)" : " (selected METAR)"}`
+    : "Unavailable"
   const metarObserved = normalized?.observed?.display || "Unavailable"
   const omCurrentTime = String(c.time || "Unavailable")
 
@@ -4292,6 +4424,7 @@ function buildOpenMeteoComparisonHtml(data,metar,nearestStations=[]){
         <div class="om-compare-item"><b>Temperature Delta</b><span>${escapeHtml(tempDelta == null ? "Unavailable" : formatSignedDelta(tempDelta,1,"°C"))}</span></div>
         <div class="om-compare-item"><b>Open-Meteo Wind</b><span>${escapeHtml(omWindLabel)}</span></div>
         <div class="om-compare-item"><b>METAR Wind</b><span>${escapeHtml(metarWindLabel)}</span></div>
+        <div class="om-compare-item"><b>METAR ICAO Used</b><span>${escapeHtml(metarReferenceText)}</span></div>
         <div class="om-compare-item"><b>Nearest METAR Ref</b><span>${escapeHtml(nearestText)}</span></div>
       </div>
       <div class="om-compare-note">METAR observed: ${escapeHtml(metarObserved)} | Open-Meteo current time: ${escapeHtml(omCurrentTime)}. Differences are expected because this compares observation vs model forecast.</div>
@@ -4333,7 +4466,7 @@ async function fetchOpenMeteo(lat,lon){
   }
 }
 
-function renderOpenMeteo(data,metar=null,nearestStations=[]){
+function renderOpenMeteo(data,metar=null,nearestStations=[],metarIcao="",pilotLocation=null){
   const panel=document.getElementById("localForecastPanel")
   if(!panel) return
 
@@ -4368,7 +4501,18 @@ function renderOpenMeteo(data,metar=null,nearestStations=[]){
 
   const omLat=Number(data.latitude).toFixed(4)
   const omLon=Number(data.longitude).toFixed(4)
-  const compareHtml = buildOpenMeteoComparisonHtml(data,metar,nearestStations)
+  const requestedLat=Number(pilotLocation?.lat)
+  const requestedLon=Number(pilotLocation?.lon)
+  const requestedCoordinates=Number.isFinite(requestedLat) && Number.isFinite(requestedLon)
+    ? `${requestedLat.toFixed(6)}, ${requestedLon.toFixed(6)}`
+    : "Unavailable"
+  const normalizedStation=String(metar?.normalized?.station || "").trim().toUpperCase()
+  const requestedIcao=String(metarIcao || normalizedStation || "").trim().toUpperCase()
+  const nearest=Array.isArray(nearestStations) && nearestStations.length ? nearestStations[0] : null
+  const metarReference=requestedIcao
+    ? `${requestedIcao}${nearest && requestedIcao === String(nearest.icaoId).trim().toUpperCase() ? " (nearest station)" : " (selected METAR)"}`
+    : "Unavailable"
+  const compareHtml = buildOpenMeteoComparisonHtml(data,metar,nearestStations,metarIcao)
 
   panel.className=""
   panel.innerHTML=`
@@ -4386,7 +4530,7 @@ function renderOpenMeteo(data,metar=null,nearestStations=[]){
       <tbody>${hourRows}</tbody>
     </table></div>
     ${compareHtml}
-    <div class="om-source-note">Source: <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a> — Pilot coordinates ${omLat}, ${omLon}. Forecast model data; not an official aviation observation.</div>
+    <div class="om-source-note">Source: <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a> — Requested Pilot coordinates: ${escapeHtml(requestedCoordinates)}. Open-Meteo grid point: ${omLat}, ${omLon}. METAR ICAO used: ${escapeHtml(metarReference)}. Forecast model data; not an official aviation observation.</div>
   `
 }
 
