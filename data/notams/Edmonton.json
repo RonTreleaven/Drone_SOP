@@ -9,15 +9,6 @@
     ]
   },
   {
-    "raw": "(C3874/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/024/6045N13506W005\nA) CYXY B) 2608221500 C) 2608222359\nE) MOBILE CRANE WITHIN 65FT RADIUS CENTRED ON 604457N 1350557W APRX \n1.8NM BFR THR 14R AND 220FT SW EXTENDED RCL. 70FT AGL 2346FT \nAMSL. NOT LGTD.)",
-    "startValidity": "2026-08-21T21:52:48.369",
-    "endValidity": "2026-08-22T23:59:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "60.749167, -135.099167"
-    ]
-  },
-  {
     "raw": "(R0788/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/003/6726N13452W005\nA) CZFM B) 2608211839 C) 2611192100\nE) OBST LGT U/S TOWER 672542N 1345145W (APRX 1.29NM NNW AD) 205FT \nAGL, 246FT AMSL.)",
     "startValidity": "2026-08-21T18:39:00",
     "endValidity": "2026-11-19T21:00:00",
@@ -51,15 +42,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "55.068889, -117.262778"
-    ]
-  },
-  {
-    "raw": "(C3846/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/037/5105N11401W005\nA) CYYC B) 2608221300 C) 2608230100\nE) MOBILE CRANE WITHIN 80FT RADIUS CENTRED ON 510443N 1140103W APRX \n1.1NM BFR THR 35L AND 890FT EAST EXTENDED RCL. 120FT AGL 3675FT \nAMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-08-20T13:10:14.229",
-    "endValidity": "2026-08-23T01:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "51.078611, -114.017500"
     ]
   },
   {
@@ -414,21 +396,21 @@
     ]
   },
   {
-    "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
-    "startValidity": "2026-07-20T17:14:00",
-    "endValidity": "2026-10-20T17:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.480833, -109.194167"
-    ]
-  },
-  {
     "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
     "startValidity": "2026-07-20T17:14:00",
     "endValidity": "2026-10-20T17:00:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.099167, -110.165278"
+    ]
+  },
+  {
+    "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
+    "startValidity": "2026-07-20T17:14:00",
+    "endValidity": "2026-10-20T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.480833, -109.194167"
     ]
   },
   {
@@ -708,15 +690,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "66.516667, -86.216667"
-    ]
-  },
-  {
-    "raw": "(R0592/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/030/5334N11409W005\nA) CXXX B) 2606220958 C) 2608222359\nE) CSP3 STONY PLAIN (STONY FIELD) \nOBST LGT U/S TOWER 533338N 1140837W (APRX 3NM WNW AD) 380FT AGL, \n2913FT AMSL.)",
-    "startValidity": "2026-06-22T09:58:00",
-    "endValidity": "2026-08-22T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.560556, -114.143611"
     ]
   },
   {
