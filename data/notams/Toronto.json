@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U1465/26 NOTAMR U1370/26\nQ) CZYZ/QOLAS/IV/M/AE/000/009/4308N07905W005\nA) CXXX B) 2608231825 C) 2608281900EST\nE) CPQ3 NIAGARA FALLS (HELI)\nOBST LGT U/S TOWER 430747N 0790506W (APRX 4668FT NNW AD) 278FT \nAGL, 875FT AMSL.)",
+    "startValidity": "2026-08-23T18:25:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.129722, -79.085000"
+    ]
+  },
+  {
     "raw": "(U1464/26 NOTAMR U1121/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4321N08011W005\nA) CXXX B) 2608230413 C) 2610230400\nE) CPT3 ROCKTON \nOBST LGT U/S TOWER 432045N 0801107W (APRX 1.47NM N AD) 185FT AGL, \n1052FT AMSL.)",
     "startValidity": "2026-08-23T04:13:00",
     "endValidity": "2026-10-23T04:00:00",
@@ -483,15 +492,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.028056, -82.185833"
-    ]
-  },
-  {
-    "raw": "(U1370/26 NOTAMR U1333/26\nQ) CZYZ/QOLAS/IV/M/AE/000/009/4308N07905W005\nA) CXXX B) 2608051816 C) 2608231900EST\nE) CPQ3 NIAGARA FALLS (HELI)\nOBST LGT U/S TOWER 430747N 0790506W (APRX 4668FT NNW AD) 278FT \nAGL, 875FT AMSL.)",
-    "startValidity": "2026-08-05T18:16:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.129722, -79.085000"
     ]
   },
   {
