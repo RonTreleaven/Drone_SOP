@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U1466/26 NOTAMR U0930/26\nQ) CZWG/QOLAS/IV/M/AE/000/011/4951N09651W005\nA) CXXX B) 2608232331 C) 2611212359\nE) CJL5 WINNIPEG/LYNCREST \nOBST LGT U/S TOWER 495050N 0965044W (APRX 5NM E AD) 230FT AGL, \n1027FT AMSL.)",
+    "startValidity": "2026-08-23T23:31:00",
+    "endValidity": "2026-11-21T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.847222, -96.845556"
+    ]
+  },
+  {
     "raw": "(U1454/26 NOTAMR U0917/26\nQ) CZWG/QOLAS/IV/M/E/000/029/5228N10833W002\nA) CZWG B) 2608202218 C) 2611182359\nE) OBST LGT U/S TOWER 522802N 1083239W (APRX 21NM SSW NORTH \nBATTLEFORD AD (CYQW)) 407FT AGL, 2897FT AMSL.)",
     "startValidity": "2026-08-20T22:18:00",
     "endValidity": "2026-11-18T23:59:00",
@@ -609,15 +618,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.923611, -97.248611"
-    ]
-  },
-  {
-    "raw": "(U0930/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/011/4951N09651W005\nA) CXXX B) 2605251714 C) 2608232359EST\nE) CJL5 WINNIPEG/LYNCREST \nOBST LGT U/S TOWER 495050N 0965044W (APRX 5NM E AD) 230FT AGL, \n1027FT AMSL.)",
-    "startValidity": "2026-05-25T17:14:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.847222, -96.845556"
     ]
   },
   {
