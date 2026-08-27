@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U1483/26 NOTAMR U1250/26\nQ) CZWG/QOLAS/IV/M/E/000/020/4848N09353W002\nA) CZWG B) 2608271501 C) 2610111452EST\nE) OBST LGT U/S TOWER 484829N 0935309W (APRX 7NM SSW BURDITT LAKE \n(WATER) AD (CJC7)) 609FT AGL, 1925FT AMSL.)",
+    "startValidity": "2026-08-27T15:01:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "48.808056, -93.885833"
+    ]
+  },
+  {
     "raw": "(U1481/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/023/5322N10858W002\nA) CZWG B) 2608262128 C) 2609262359\nE) OBST LGT U/S TOWER 532150N 1085732W (APRX 12NM NW EDAM AD (CJU7)) \n250FT AGL, 2260FT AMSL.)",
     "startValidity": "2026-08-26T21:28:00",
     "endValidity": "2026-09-26T23:59:00",
@@ -294,15 +303,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.480833, -109.194167"
-    ]
-  },
-  {
-    "raw": "(U1250/26 NOTAMR U0963/26\nQ) CZWG/QOLAS/IV/M/E/000/020/4848N09353W002\nA) CZWG B) 2607150222 C) 2608282359EST\nE) OBST LGT U/S TOWER 484829N 0935309W (APRX 7NM SSW BURDITT LAKE \n(WATER) AD (CJC7)) 609FT AGL, 1925FT AMSL.)",
-    "startValidity": "2026-07-15T02:22:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "48.808056, -93.885833"
     ]
   },
   {
