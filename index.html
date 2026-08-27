@@ -639,8 +639,17 @@
       </div>
 
       <div class="profile-field">
-        <label for="profile-drone-label">Preferred Drone (Optional)</label>
-        <input id="profile-drone-label" name="preferredDroneLabel" type="text" autocomplete="off" placeholder="Example: Mini 4 Pro; Mini 3 Pro; Mavic 2 Pro">
+        <label for="profile-drone-select">Preferred Drone (Optional)</label>
+        <div class="profile-drone-picker">
+          <select id="profile-drone-select" aria-label="Select a drone model to add">
+            <option value="">Select drone model…</option>
+          </select>
+          <button id="profile-drone-add-btn" class="profile-drone-add-btn" type="button">Add</button>
+        </div>
+        <input id="profile-drone-custom" class="profile-drone-custom-input" type="text" autocomplete="off" placeholder="Custom drone name" hidden>
+        <div id="profile-drone-chips" class="profile-drone-chips"></div>
+        <p class="profile-field-note">Standardized model names come from the Drone Wind Resistance Guide. Choose "Other / Custom…" if your drone isn't listed.</p>
+        <input id="profile-drone-label" name="preferredDroneLabel" type="hidden">
       </div>
 
       <div class="profile-field profile-mode-field">
@@ -998,6 +1007,126 @@
         .map((part) => part.trim())
         .filter(Boolean)
         .join('; ');
+    }
+
+    const DRONE_WIND_GUIDE_URLS = ['./data/drone_wind_resistance.json', 'data/drone_wind_resistance.json'];
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+    const DEFAULT_DRONE_WIND_GUIDE_MODEL_NAMES = [
+      'DJI Mini 2', 'DJI Mini 3', 'DJI Mini 3 Pro', 'DJI Mini 4 Pro', 'DJI Mini 5 Pro',
+      'DJI Air 2S', 'DJI Air 3', 'DJI Mavic 2 Pro', 'DJI Mavic 3 Classic', 'DJI Mavic 3',
+      'DJI Mavic 3 Pro', 'DJI Mavic 4 Pro', 'DJI Phantom 4 Pro V2.0', 'DJI Inspire 2',
+      'Autel EVO Lite+', 'Autel EVO II Pro V3', 'Skydio 2+', 'Parrot Anafi USA'
+    ];
+    const OTHER_DRONE_OPTION_VALUE = '__other__';
+    let droneWindGuideModelNames = [];
+
+    async function loadDroneWindGuideModelNames() {
+      for (const url of DRONE_WIND_GUIDE_URLS) {
+        try {
+          const res = await fetch(url, { cache: 'no-store' });
+          if (!res.ok) continue;
+          const payload = await res.json();
+          const models = Array.isArray(payload) ? payload : (Array.isArray(payload?.models) ? payload.models : []);
+          const names = models
+            .map((m) => String(m?.model || '').trim())
+            .filter(Boolean);
+          if (names.length) return names;
+        } catch (_err) {
+          // try next url
+        }
+      }
+      return DEFAULT_DRONE_WIND_GUIDE_MODEL_NAMES.slice();
+    }
+
+    function populateDroneSelect(names) {
+      const select = document.getElementById('profile-drone-select');
+      if (!select) return;
+      const options = ['<option value="">Select drone model…</option>']
+        .concat(names.map((name) => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`))
+        .concat([`<option value="${OTHER_DRONE_OPTION_VALUE}">Other / Custom…</option>`]);
+      select.innerHTML = options.join('');
+    }
+
+    function getPreferredDroneList() {
+      const hiddenInput = document.getElementById('profile-drone-label');
+      const value = hiddenInput ? hiddenInput.value : '';
+      return String(value || '')
+        .split(';')
+        .map((part) => part.trim())
+        .filter(Boolean);
+    }
+
+    function setPreferredDroneList(list) {
+      const hiddenInput = document.getElementById('profile-drone-label');
+      if (!hiddenInput) return;
+      hiddenInput.value = list.join('; ');
+      renderDroneChips();
+    }
+
+    function renderDroneChips() {
+      const container = document.getElementById('profile-drone-chips');
+      if (!container) return;
+      const list = getPreferredDroneList();
+      container.innerHTML = list.map((name, idx) => (
+        `<span class="profile-drone-chip">${escapeHtml(name)}<button type="button" class="profile-drone-chip-remove" data-drone-chip-index="${idx}" aria-label="Remove ${escapeHtml(name)}">×</button></span>`
+      )).join('');
+      container.querySelectorAll('[data-drone-chip-index]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const idx = Number(btn.getAttribute('data-drone-chip-index'));
+          const current = getPreferredDroneList();
+          current.splice(idx, 1);
+          setPreferredDroneList(current);
+        });
+      });
+    }
+
+    function addPreferredDroneFromPicker() {
+      const select = document.getElementById('profile-drone-select');
+      const customInput = document.getElementById('profile-drone-custom');
+      if (!select) return;
+      const selectedValue = select.value;
+      let nameToAdd = '';
+      if (selectedValue === OTHER_DRONE_OPTION_VALUE) {
+        nameToAdd = String(customInput ? customInput.value : '').trim();
+      } else {
+        nameToAdd = String(selectedValue || '').trim();
+      }
+      if (!nameToAdd) return;
+      const current = getPreferredDroneList();
+      if (!current.some((name) => name.toLowerCase() === nameToAdd.toLowerCase())) {
+        current.push(nameToAdd);
+        setPreferredDroneList(current);
+      }
+      select.value = '';
+      if (customInput) {
+        customInput.value = '';
+        customInput.hidden = true;
+      }
+    }
+
+    function initDronePicker() {
+      const select = document.getElementById('profile-drone-select');
+      const addBtn = document.getElementById('profile-drone-add-btn');
+      const customInput = document.getElementById('profile-drone-custom');
+      if (select) {
+        select.addEventListener('change', () => {
+          if (customInput) customInput.hidden = select.value !== OTHER_DRONE_OPTION_VALUE;
+        });
+      }
+      if (addBtn) {
+        addBtn.addEventListener('click', addPreferredDroneFromPicker);
+      }
+      loadDroneWindGuideModelNames().then((names) => {
+        droneWindGuideModelNames = names;
+        populateDroneSelect(names);
+      });
     }
 
     function isAnonymousProfileEmail(emailRaw) {
@@ -1730,6 +1859,7 @@
       if (pilotEmailInput) updateProfileEmailValidity(pilotEmailInput);
       if (categorySelect) categorySelect.value = normalizeMissionCategory(profileState.droneMissionCategory);
       if (droneInput) droneInput.value = profileState.preferredDroneLabel || '';
+      renderDroneChips();
       if (statusSelect) statusSelect.value = normalizeMissionStatus(profileState.lastMissionStatus);
       if (missionAutomationEnabledInput) missionAutomationEnabledInput.checked = normalizeBoolean(missionAutomationState && missionAutomationState.missionAutomationEnabled);
       if (advancedAccessAttestedInput) {
@@ -1837,7 +1967,7 @@
       profileState.pilotEmail = String(source.pilotEmail || '').trim();
       profileState.droneMissionCategory = normalizeMissionCategory(String(source.droneMissionCategory || profileState.droneMissionCategory || 'basic'));
       profileState.lastUsedMissionCategory = profileState.droneMissionCategory;
-      profileState.preferredDroneLabel = String(source.preferredDroneLabel || '').trim();
+      profileState.preferredDroneLabel = normalizePreferredDrones(source.preferredDroneLabel || '');
       const selectedMode = normalizeMissionStatus(String(document.getElementById('profile-mission-status')?.value || profileState.lastMissionStatus || 'draft'));
       const importedMode = normalizeMissionStatus(String(source.lastMissionStatus || selectedMode || 'draft'));
       profileState.lastMissionStatus = selectedMode === 'closed' ? 'closed' : importedMode;
@@ -2555,6 +2685,7 @@
       updateAdvancedAccessUi();
       updateMissionAutomationUi();
       setProfileUsageHelpOpen(false);
+      initDronePicker();
 
       syncIntroPanelFromStorage();
       syncTermsGateState();

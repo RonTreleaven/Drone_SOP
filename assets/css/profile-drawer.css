@@ -179,6 +179,76 @@
   overflow-wrap: anywhere;
 }
 
+.profile-drone-picker {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.profile-drone-picker select {
+  flex: 1 1 auto;
+}
+
+.profile-drone-add-btn {
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 0 0.9rem;
+  border-radius: 10px;
+  border: 1px solid #6ea7d3;
+  background: #eaf3fb;
+  color: #1a4a72;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.profile-drone-add-btn:hover {
+  background: #d9ebf9;
+}
+
+.profile-drone-custom-input {
+  width: 100%;
+  min-height: 38px;
+  border-radius: 10px;
+  border: 1px solid #b9ccdd;
+  padding: 0.42rem 0.6rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #1f2833;
+  background: #ffffff;
+}
+
+.profile-drone-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.profile-drone-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.24rem 0.5rem;
+  border-radius: 999px;
+  background: #eef4f9;
+  border: 1px solid #b9ccdd;
+  color: #1f2833;
+  font-size: 0.8rem;
+}
+
+.profile-drone-chip-remove {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #6b4b4b;
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0;
+}
+
+.profile-drone-chip-remove:hover {
+  color: #b12b2b;
+}
+
 .profile-checkbox-row {
   display: flex;
   align-items: center;
