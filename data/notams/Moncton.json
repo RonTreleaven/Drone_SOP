@@ -36,21 +36,21 @@
     ]
   },
   {
-    "raw": "(V1047/26 NOTAMR V0597/26\nQ) CZQM/QOLAS/IV/M/AE/000/005/4540N06125W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453935N 0612515W (APRX 2.2NM WNW AD) 391FT \nAGL, 426FT AMSL.)",
-    "startValidity": "2026-08-25T13:25:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.659722, -61.420833"
-    ]
-  },
-  {
     "raw": "(V1048/26 NOTAMR V0596/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4539N06126W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453914N 0612614W (APRX 2.9NM WNW AD) 391FT \nAGL, 398FT AMSL.)",
     "startValidity": "2026-08-25T13:25:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.653889, -61.437222"
+    ]
+  },
+  {
+    "raw": "(V1047/26 NOTAMR V0597/26\nQ) CZQM/QOLAS/IV/M/AE/000/005/4540N06125W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453935N 0612515W (APRX 2.2NM WNW AD) 391FT \nAGL, 426FT AMSL.)",
+    "startValidity": "2026-08-25T13:25:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.659722, -61.420833"
     ]
   },
   {
@@ -78,15 +78,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.573889, -66.378889"
-    ]
-  },
-  {
-    "raw": "(E5438/26 NOTAMN\nQ) CZQM/QOBCE/IV/M/AE/000/002/4350N06606W005\nA) CYQI B) 2608251600 C) 2608272000\nD) DAILY 1600-2000\nE) CONCRETE PUMP TRUCK WITHIN 99FT RADIUS CENTRED ON 435021N \n0660543W APRX 950FT BFR THR 15 AND 130FT NE EXTENDED RCL. 65FT \nAGL 167FT AMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-08-24T12:21:19.411",
-    "endValidity": "2026-08-27T20:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "43.839167, -66.095278"
     ]
   },
   {
