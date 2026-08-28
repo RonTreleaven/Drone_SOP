@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R0807/26 NOTAMR R0625/26\nQ) CZEG/QOLAS/IV/M/E/000/056/5358N11839W002\nA) CZEG B) 2608280714 C) 2610282359\nE) OBST LGT U/S TOWER 535817N 1183901W (APRX 17NM ENE GRANDE CACHE \n(COMMUNITY HEALTH COMPLEX) (HELI) AD (CGC3)) 280FT AGL, 5600FT \nAMSL.)",
+    "startValidity": "2026-08-28T07:14:00",
+    "endValidity": "2026-10-28T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.971389, -118.650278"
+    ]
+  },
+  {
     "raw": "(C4051/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/019/5424N11017W005\nA) CYOD B) 2608280100 C) 2610070100\nE) CRANE 542330N 1101635W APRX 930FT BEYOND THR 31R AND 1070FT SW \nRCL. 100FT AGL 1880FT AMSL. NOT LGTD, NOT PAINTED.)",
     "startValidity": "2026-08-27T20:39:08.006",
     "endValidity": "2026-10-07T01:00:00",
@@ -495,21 +504,21 @@
     ]
   },
   {
-    "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
-    "startValidity": "2026-07-20T17:14:00",
-    "endValidity": "2026-10-20T17:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.480833, -109.194167"
-    ]
-  },
-  {
     "raw": "(R0695/26 NOTAMR R0383/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
     "startValidity": "2026-07-20T17:14:00",
     "endValidity": "2026-10-20T17:00:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "56.386111, -111.272778"
+    ]
+  },
+  {
+    "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
+    "startValidity": "2026-07-20T17:14:00",
+    "endValidity": "2026-10-20T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.480833, -109.194167"
     ]
   },
   {
@@ -690,15 +699,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "61.358889, -121.648889"
-    ]
-  },
-  {
-    "raw": "(R0625/26 NOTAMR R0432/26\nQ) CZEG/QOLAS/IV/M/E/000/056/5358N11839W002\nA) CZEG B) 2607030620 C) 2609032359\nE) OBST LGT U/S TOWER 535817N 1183901W (APRX 17NM ENE GRANDE CACHE \n(COMMUNITY HEALTH COMPLEX) (HELI) AD (CGC3)) 280FT AGL, 5600FT \nAMSL.)",
-    "startValidity": "2026-07-03T06:20:00",
-    "endValidity": "2026-09-03T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.971389, -118.650278"
     ]
   },
   {
@@ -1059,15 +1059,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "64.030556, -139.147778"
-    ]
-  },
-  {
-    "raw": "(R0482/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/025/5608N11313W002\nA) CZEG B) 2605282016 C) 2608272359\nE) OBST LGT U/S TOWER 560805N 1131241W (APRX 9NM E PELICAN AD \n(CFT8)) 350FT AGL, 2416FT AMSL.)",
-    "startValidity": "2026-05-28T20:16:00",
-    "endValidity": "2026-08-27T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "56.134722, -113.211389"
     ]
   },
   {
