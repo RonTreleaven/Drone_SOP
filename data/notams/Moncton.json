@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(K2980/26 NOTAMN\nQ) CZQM/QOBCE/IV/M/AE/000/007/4626N06738W005\nA) CXXX B) 2608301000 C) 2611271600EST\nE) CCR3 FLORENCEVILLE \nMOBILE CRANE WITHIN 70FT RADIUS CENTRED ON 462601N 0673746W ABEAM \nTHR 18 AND 630FT EAST RCL. 128FT AGL 620FT AMSL. NOT LGTD, \nPAINTED.)",
+    "startValidity": "2026-08-28T14:06:09.112",
+    "endValidity": null,
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "46.433611, -67.629444"
+    ]
+  },
+  {
     "raw": "(V1055/26 NOTAMN\nQ) CZQM/QOLAS/IV/M/AE/000/007/4451N06336W005\nA) CYHZ B) 2608261645 C) 2611251600\nE) OBST LGT U/S TOWER 445040N 0633533W (APRX 4.1NM WSW AD) 247FT \nAGL, 658FT AMSL.)",
     "startValidity": "2026-08-26T16:45:00",
     "endValidity": "2026-11-25T16:00:00",
@@ -18,6 +27,15 @@
     ]
   },
   {
+    "raw": "(V1049/26 NOTAMR V0598/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
+    "startValidity": "2026-08-25T13:25:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.647222, -61.455000"
+    ]
+  },
+  {
     "raw": "(V1048/26 NOTAMR V0596/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4539N06126W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453914N 0612614W (APRX 2.9NM WNW AD) 391FT \nAGL, 398FT AMSL.)",
     "startValidity": "2026-08-25T13:25:00",
     "endValidity": null,
@@ -33,15 +51,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.659722, -61.420833"
-    ]
-  },
-  {
-    "raw": "(V1049/26 NOTAMR V0598/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
-    "startValidity": "2026-08-25T13:25:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.647222, -61.455000"
     ]
   },
   {
