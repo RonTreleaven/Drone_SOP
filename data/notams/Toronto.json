@@ -1,5 +1,32 @@
 [
   {
+    "raw": "(V1074/26 NOTAMR V0803/26\nQ) CZUL/QOLAS/IV/M/AE/000/008/4435N07543W005\nA) CXXX B) 2608290549 C) 2610292359EST\nE) CNL3 BROCKVILLE REGIONAL TACKABERRY APRT \nOBST LGT U/S TOWER 443525N 0754329W (APRX 3.1NM S AD) 340FT AGL, \n701FT AMSL.)",
+    "startValidity": "2026-08-29T05:49:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.590278, -75.724722"
+    ]
+  },
+  {
+    "raw": "(U1493/26 NOTAMR U1172/26\nQ) CZYZ/QOLAS/IV/M/E/000/011/4457N07641W002\nA) CZYZ B) 2608290520 C) 2610292100EST\nE) OBST LGT U/S TOWER 445642N 0764054W (APRX 11NM E PLEVNA/TOMVALE \nAD (CNA9)) 335FT AGL, 1060FT AMSL.)",
+    "startValidity": "2026-08-29T05:20:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.945000, -76.681667"
+    ]
+  },
+  {
+    "raw": "(U1492/26 NOTAMR U1170/26\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4400N07841W005\nA) CXXX B) 2608290438 C) 2610292100EST\nE) CHF4 ORONO/HAWKEFIELD \nOBST LGT U/S TOWER 435943N 0784129W (APRX 1.87NM W AD) 254FT AGL, \n959FT AMSL.)",
+    "startValidity": "2026-08-29T04:38:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.995278, -78.691389"
+    ]
+  },
+  {
     "raw": "(J5914/26 NOTAMR J5908/26\nQ) CZYZ/QOBCE/IV/M/AE/000/011/4350N07905W005\nA) CXXX B) 2608282017 C) PERM\nE) CPE2 AJAX (PICKERING GEN HOSPITAL) (HELI)\nAMEND PUBLICATIONS: MULTIPLE CRANES WITHIN 220FT RADIUS CENTRED \nON 434953N 0790526W (APRX 3.2NM W AD (CPE2)). 798FT AGL 1086FT \nAMSL. LGTD, PAINTED.)",
     "startValidity": "2026-08-28T20:17:00",
     "endValidity": null,
@@ -603,21 +630,21 @@
     ]
   },
   {
-    "raw": "(U1355/26 NOTAMR U0790/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
-    "startValidity": "2026-08-03T13:32:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.906667, -78.731389"
-    ]
-  },
-  {
     "raw": "(U1356/26 NOTAMR U0788/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
     "startValidity": "2026-08-03T13:32:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.907222, -79.371389"
+    ]
+  },
+  {
+    "raw": "(U1355/26 NOTAMR U0790/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
+    "startValidity": "2026-08-03T13:32:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.906667, -78.731389"
     ]
   },
   {
@@ -945,21 +972,21 @@
     ]
   },
   {
-    "raw": "(U1261/26 NOTAMR U1177/26\nQ) CZYZ/QOLAS/IV/M/E/000/020/4327N08036W002\nA) CZYZ B) 2607182229 C) 2609012359\nE) OBST LGT U/S TOWER 432700N 0803608W (APRX 8NM S ELMIRA AD (CNT6)) \n600FT AGL, 1902FT AMSL.)",
-    "startValidity": "2026-07-18T22:29:00",
-    "endValidity": "2026-09-01T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.450000, -80.602222"
-    ]
-  },
-  {
     "raw": "(U1260/26 NOTAMR U1176/26\nQ) CZYZ/QOLAS/IV/M/E/000/012/4603N07728W002\nA) CZYZ B) 2607182229 C) 2609012359\nE) OBST LGT U/S TOWER 460240N 0772804W (APRX 5NM SSE DEEP \nRIVER/ROLPH AD (CPH2)) 651FT AGL, 1188FT AMSL.)",
     "startValidity": "2026-07-18T22:29:00",
     "endValidity": "2026-09-01T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "46.044444, -77.467778"
+    ]
+  },
+  {
+    "raw": "(U1261/26 NOTAMR U1177/26\nQ) CZYZ/QOLAS/IV/M/E/000/020/4327N08036W002\nA) CZYZ B) 2607182229 C) 2609012359\nE) OBST LGT U/S TOWER 432700N 0803608W (APRX 8NM S ELMIRA AD (CNT6)) \n600FT AGL, 1902FT AMSL.)",
+    "startValidity": "2026-07-18T22:29:00",
+    "endValidity": "2026-09-01T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.450000, -80.602222"
     ]
   },
   {
@@ -1230,33 +1257,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.499444, -80.203333"
-    ]
-  },
-  {
-    "raw": "(V0803/26 NOTAMN\nQ) CZUL/QOLAS/IV/M/AE/000/008/4435N07543W005\nA) CXXX B) 2607041004 C) 2609042359EST\nE) CNL3 BROCKVILLE REGIONAL TACKABERRY APRT \nOBST LGT U/S TOWER 443525N 0754329W (APRX 3.1NM S AD) 340FT AGL, \n701FT AMSL.)",
-    "startValidity": "2026-07-04T10:04:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.590278, -75.724722"
-    ]
-  },
-  {
-    "raw": "(U1172/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/011/4457N07641W002\nA) CZYZ B) 2607040814 C) 2609042100EST\nE) OBST LGT U/S TOWER 445642N 0764054W (APRX 11NM E PLEVNA/TOMVALE \nAD (CNA9)) 335FT AGL, 1060FT AMSL.)",
-    "startValidity": "2026-07-04T08:14:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.945000, -76.681667"
-    ]
-  },
-  {
-    "raw": "(U1170/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4400N07841W005\nA) CXXX B) 2607040709 C) 2609042100EST\nE) CHF4 ORONO/HAWKEFIELD \nOBST LGT U/S TOWER 435943N 0784129W (APRX 1.87NM W AD) 254FT AGL, \n959FT AMSL.)",
-    "startValidity": "2026-07-04T07:09:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.995278, -78.691389"
     ]
   },
   {
