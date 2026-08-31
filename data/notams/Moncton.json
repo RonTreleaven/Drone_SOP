@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(V1084/26 NOTAMR V0894/26\nQ) CZQM/QOLAS/IV/M/E/000/009/4650N06047W002\nA) CZQM B) 2608311413 C) 2610301700EST\nE) OBST LGT U/S TOWER 464934N 0604707W (APRX 40NM NNE BADDECK \n(GUNEDEN) AD (CDW2)) 361FT AGL, 806FT AMSL.)",
+    "startValidity": "2026-08-31T14:13:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "46.826111, -60.785278"
+    ]
+  },
+  {
     "raw": "(V1078/26 NOTAMR V0642/26\nQ) CZQM/QOLAS/IV/M/AE/000/011/4439N06339W005\nA) CHQE B) 2608300522 C) 2611292100\nE) OBST LGT U/S TOWER 443903N 0633928W (APRX 3.1NM WNW AD) 629FT \nAGL, 1073FT AMSL.)",
     "startValidity": "2026-08-30T05:22:00",
     "endValidity": "2026-11-29T21:00:00",
@@ -63,21 +72,21 @@
     ]
   },
   {
-    "raw": "(V1047/26 NOTAMR V0597/26\nQ) CZQM/QOLAS/IV/M/AE/000/005/4540N06125W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453935N 0612515W (APRX 2.2NM WNW AD) 391FT \nAGL, 426FT AMSL.)",
-    "startValidity": "2026-08-25T13:25:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.659722, -61.420833"
-    ]
-  },
-  {
     "raw": "(V1048/26 NOTAMR V0596/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4539N06126W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453914N 0612614W (APRX 2.9NM WNW AD) 391FT \nAGL, 398FT AMSL.)",
     "startValidity": "2026-08-25T13:25:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.653889, -61.437222"
+    ]
+  },
+  {
+    "raw": "(V1047/26 NOTAMR V0597/26\nQ) CZQM/QOLAS/IV/M/AE/000/005/4540N06125W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453935N 0612515W (APRX 2.2NM WNW AD) 391FT \nAGL, 426FT AMSL.)",
+    "startValidity": "2026-08-25T13:25:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.659722, -61.420833"
     ]
   },
   {
@@ -195,15 +204,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "46.297778, -63.119722"
-    ]
-  },
-  {
-    "raw": "(V0894/26 NOTAMR V0746/26\nQ) CZQM/QOLAS/IV/M/E/000/009/4650N06047W002\nA) CZQM B) 2607271445 C) 2609071700EST\nE) OBST LGT U/S TOWER 464934N 0604707W (APRX 40NM NNE BADDECK \n(GUNEDEN) AD (CDW2)) 361FT AGL, 806FT AMSL.)",
-    "startValidity": "2026-07-27T14:45:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "46.826111, -60.785278"
     ]
   },
   {
