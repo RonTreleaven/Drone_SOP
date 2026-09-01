@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U1505/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/018/4749N08136W002\nA) CZYZ B) 2609011644 C) 2611031700EST\nE) OBST LGT U/S TOWER 474847N 0813543W (APRX 31NM NNE BREBEUF \nLAKE/THE BEUF (WATER) AD (CBR4)) 305FT AGL, 1784FT AMSL.)",
+    "startValidity": "2026-09-01T16:44:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "47.813056, -81.595278"
+    ]
+  },
+  {
     "raw": "(U1503/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/018/4749N08136W002\nA) CZYZ B) 2609010545 C) 2609032100\nE) OBST LGT U/S TOWER 474846N 0813540W (APRX 31NM NNE BREBEUF \nLAKE/THE BEUF (WATER) AD (CBR4)) 400FT AGL, 1800FT AMSL.)",
     "startValidity": "2026-09-01T05:45:00",
     "endValidity": "2026-09-03T21:00:00",
@@ -15,15 +24,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.646389, -83.508889"
-    ]
-  },
-  {
-    "raw": "(P2884/26 NOTAMN\nQ) CZYZ/QOBCE/IV/M/AE/000/007/4549N07706W005\nA) CXXX B) 2609011200 C) 2609011900\nE) CNG5 PEMBROKE (REGIONAL HOSPITAL) (HELI)\nMOBILE CRANE WITHIN 220FT RADIUS CENTRED ON 454853N 0770617W \n(APRX 804FT ESE AD (CNG5)). 135FT AGL 631FT AMSL. NOT LGTD.)",
-    "startValidity": "2026-08-31T19:03:16.244",
-    "endValidity": "2026-09-01T19:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "45.814722, -77.104722"
     ]
   },
   {
@@ -54,21 +54,21 @@
     ]
   },
   {
-    "raw": "(U1494/26 NOTAMR U1260/26\nQ) CZYZ/QOLAS/IV/M/E/000/012/4603N07728W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 460240N 0772804W (APRX 5NM SSE DEEP \nRIVER/ROLPH AD (CPH2)) 651FT AGL, 1188FT AMSL.)",
-    "startValidity": "2026-08-30T10:18:00",
-    "endValidity": "2026-10-14T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "46.044444, -77.467778"
-    ]
-  },
-  {
     "raw": "(U1495/26 NOTAMR U1261/26\nQ) CZYZ/QOLAS/IV/M/E/000/020/4327N08036W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 432700N 0803608W (APRX 8NM S ELMIRA AD (CNT6)) \n600FT AGL, 1902FT AMSL.)",
     "startValidity": "2026-08-30T10:18:00",
     "endValidity": "2026-10-14T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.450000, -80.602222"
+    ]
+  },
+  {
+    "raw": "(U1494/26 NOTAMR U1260/26\nQ) CZYZ/QOLAS/IV/M/E/000/012/4603N07728W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 460240N 0772804W (APRX 5NM SSE DEEP \nRIVER/ROLPH AD (CPH2)) 651FT AGL, 1188FT AMSL.)",
+    "startValidity": "2026-08-30T10:18:00",
+    "endValidity": "2026-10-14T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "46.044444, -77.467778"
     ]
   },
   {
@@ -456,15 +456,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "42.846944, -81.148333"
-    ]
-  },
-  {
-    "raw": "(J5552/26 NOTAMN\nQ) CZYZ/QOBCE/IV/M/AE/000/012/4326N08022W005\nA) CYKF B) 2608151200 C) 2609012000\nD) DAILY 1200-2000\nE) CRANE 432541N 0802213W APRX 1.3NM BFR THR 32 AND 1NM SW EXTENDED \nRCL. 145FT AGL 1166FT AMSL. LGTD, NOT PAINTED.)",
-    "startValidity": "2026-08-13T11:28:39.464",
-    "endValidity": "2026-09-01T20:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "43.428056, -80.370278"
     ]
   },
   {
