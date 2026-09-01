@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(R0822/26 NOTAMR R0505/26\nQ) CZEG/QOLAS/IV/M/AE/000/018/6402N13909W005\nA) CYDA B) 2609011542 C) 2612011500EST\nE) OBST LGT U/S TOWER 640150N 1390852W (APRX 5097FT SSW AD) 35FT \nAGL, 1741FT AMSL.)",
+    "startValidity": "2026-09-01T15:42:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "64.030556, -139.147778"
+    ]
+  },
+  {
+    "raw": "(R0821/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/032/5216N11203W005\nA) CZEG B) 2609011337 C) 2609020100\nE) OBST LGT U/S WIND FARM WITHIN 4NM RADIUS CENTRED ON 521616N \n1120311W (APRX 5NM WNW CASTOR AD (CER2)). 397FT AGL 3153FT AMSL.)",
+    "startValidity": "2026-09-01T13:37:00",
+    "endValidity": "2026-09-02T01:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.271111, -112.053056"
+    ]
+  },
+  {
     "raw": "(R0820/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/036/4956N11249W002\nA) CZEG B) 2609010850 C) 2611292359\nE) OBST LGT U/S TOWER 495556N 1124927W (APRX 12NM NNW LETHBRIDGE (J3 \nAIRFIELD) AD (CLJ3)) 300FT AGL, 3510FT AMSL.)",
     "startValidity": "2026-09-01T08:50:00",
     "endValidity": "2026-11-29T23:59:00",
@@ -1032,15 +1050,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.310833, -110.198056"
-    ]
-  },
-  {
-    "raw": "(R0505/26 NOTAMR R0418/26\nQ) CZEG/QOLAS/IV/M/AE/000/018/6402N13909W005\nA) CYDA B) 2606011616 C) 2609011600EST\nE) OBST LGT U/S TOWER 640150N 1390852W (APRX 5097FT SSW AD) 35FT \nAGL, 1741FT AMSL.)",
-    "startValidity": "2026-06-01T16:16:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "64.030556, -139.147778"
     ]
   },
   {
