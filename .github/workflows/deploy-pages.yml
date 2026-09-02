@@ -37,6 +37,18 @@ on:
       - "data/airspace/_sources/*.json"
       - "data/schema/*.schema.json"
       - "data/rc2/**"
+      - "Advanced_RPAS_Study/quiz.html"
+      - "Advanced_RPAS_Study/index.html"
+      - "Advanced_RPAS_Study/data/questions.json"
+      - "Advanced_RPAS_Study/data/references.json"
+      - "Advanced_RPAS_Study/data/~tmp40_categories.json"
+      - "Advanced_RPAS_Study/docs/Aeronautics Act R.S.C._A-2.pdf"
+      - "Advanced_RPAS_Study/docs/CARs_SOR-96-433_FullText.pdf"
+      - "Advanced_RPAS_Study/docs/aim-2026-1_rpa_en_March 19_2026 .pdf"
+      - "Advanced_RPAS_Study/docs/NAVCANADA_DAH_current_20260709.pdf"
+      - "Advanced_RPAS_Study/docs/NAVCANADA_VFR-Phraseology.pdf"
+      - "Advanced_RPAS_Study/docs/TP15263_E_Knowledge-Requirements-Basic-Advanced.pdf"
+      - "Advanced_RPAS_Study/docs/TP15530E_Knowledge-Requirements-Level1-Complex.pdf"
       - ".github/workflows/deploy-pages.yml"
       - "_config.yml"
 
@@ -74,7 +86,8 @@ jobs:
           mkdir -p _site/assets/js _site/assets/css \
                    _site/assets/Emergency _site/assets/pdf \
                    _site/data/notams _site/data/airspace/_sources \
-                   _site/data/schema _site/sections
+                   _site/data/schema _site/sections \
+                   _site/Advanced_RPAS_Study/data _site/Advanced_RPAS_Study/docs
 
           # Root-level HTML pages (exclude local backups/drafts)
           find . -maxdepth 1 -type f -name "*.html" \
@@ -127,12 +140,30 @@ jobs:
           # Data - RC2 automation bundle (scripts, docs, index)
           cp -r data/rc2 _site/data/
 
+           # Advanced RPAS quiz: deploy only browser runtime files and linked source PDFs.
+           cp Advanced_RPAS_Study/quiz.html Advanced_RPAS_Study/index.html _site/Advanced_RPAS_Study/
+           cp Advanced_RPAS_Study/data/questions.json \
+             Advanced_RPAS_Study/data/references.json \
+             Advanced_RPAS_Study/data/~tmp40_categories.json \
+             _site/Advanced_RPAS_Study/data/
+           cp "Advanced_RPAS_Study/docs/Aeronautics Act R.S.C._A-2.pdf" \
+             "Advanced_RPAS_Study/docs/CARs_SOR-96-433_FullText.pdf" \
+             "Advanced_RPAS_Study/docs/aim-2026-1_rpa_en_March 19_2026 .pdf" \
+             "Advanced_RPAS_Study/docs/NAVCANADA_DAH_current_20260709.pdf" \
+             "Advanced_RPAS_Study/docs/NAVCANADA_VFR-Phraseology.pdf" \
+             "Advanced_RPAS_Study/docs/TP15263_E_Knowledge-Requirements-Basic-Advanced.pdf" \
+             "Advanced_RPAS_Study/docs/TP15530E_Knowledge-Requirements-Level1-Complex.pdf" \
+             _site/Advanced_RPAS_Study/docs/
+
           # Disable Jekyll processing
           touch _site/.nojekyll
 
           test -f _site/index.html
           test -f _site/JobBoard.html
           test -f _site/data/jobs.json
+          test -f _site/Advanced_RPAS_Study/quiz.html
+          test -f _site/Advanced_RPAS_Study/data/questions.json
+          test -f _site/Advanced_RPAS_Study/data/references.json
 
       - name: Summarize site artifact
         run: |
