@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-08-24",
+  "sessions": [
+    {
+      "round": 3,
+      "score": 4,
+      "outOf": 5,
+      "notes": "Missed NOTAM Q-line SFC/005 interpretation."
+    },
+    {
+      "round": 4,
+      "score": 3,
+      "outOf": 5,
+      "notes": "Missed ATC-instruction compliance and heliport proximity procedure."
+    },
+    {
+      "round": 5,
+      "score": 5,
+      "outOf": 5
+    },
+    {
+      "round": 6,
+      "score": 5,
+      "outOf": 5
+    },
+    {
+      "round": 7,
+      "score": 4,
+      "outOf": 5,
+      "notes": "Missed Q-line 010/025 vertical-band interpretation."
+    },
+    {
+      "round": 8,
+      "score": 5,
+      "outOf": 5
+    },
+    {
+      "round": 9,
+      "score": 5,
+      "outOf": 5
+    },
+    {
+      "round": 10,
+      "score": 4,
+      "outOf": 5,
+      "notes": "Missed CAR 901.14 Division V vs SFOC-RPAS controlled-airspace pathway."
+    }
+  ],
+  "priorityReinforcement": [
+    {
+      "category": "notams",
+      "concept": "NOTAM Q-line vertical limits / flight-level interpretation",
+      "status": "reinforce"
+    },
+    {
+      "category": "airspace",
+      "concept": "Division V controlled-airspace authorization vs SFOC-RPAS pathway",
+      "status": "reinforce"
+    }
+  ],
+  "masteryPolicy": {
+    "description": "Reinforce weak concepts sooner, reduce repetition after consistent success, and periodically recheck retention.",
+    "target": "Build exam-like coverage across all Advanced RPAS knowledge areas."
+  }
+}

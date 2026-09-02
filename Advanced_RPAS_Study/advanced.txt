@@ -1,0 +1,918 @@
+===== PAGE 1 =====
+RPA pilot knowledge requirements
+Knowledge requirements for RPA pilots operating in basic or advanced operations are shown in the
+following tables. The applicable type of operation (basic and advanced) is shown to the left of the topics.
+Sample learning objectives are shown to the right of the topics. The list of sample objectives is not all-
+inclusive, its purpose is to illustrate the depth of knowledge required to operate RPAS in Canadian
+airspace.
+Types of operation (basic operations, advanced operations) are set out in the Canadian Aviation
+Regulations, Part IX. There are minimum knowledge requirements for RPA pilots operating in each of
+those groups.
+Applicants for the pilot certificate – small remotely piloted aircraft (VLOS) – basic operations shall
+demonstrate their knowledge by writing the Transport Canada multiple choice examination based on
+the indicated applicable subjects contained in this guide.
+Applicants for the pilot certificate – remotely piloted aircraft – advanced operations shall demonstrate
+their knowledge by writing the Transport Canada multiple choice examination based on the indicated
+applicable subjects contained in this guide.
+Applicants for the flight reviewer rating attached to the pilot certificate – remotely piloted aircraft –
+advanced operations shall demonstrate their knowledge by writing the Transport Canada multiple
+choice examination on the indicated applicable subjects contained in the “Knowledge areas” section of
+this guide related to advanced operations and the content of “TP15395 Flight Reviewer’s Guide for Pilots
+of Remotely Piloted Aircraft 250 g up to and including 150 kg, Operating within Visual Line-of-Sight
+(VLOS), Extended Visual Line-of-Sight (EVLOS), Sheltered VLOS, or Level 1 Complex BVLOS” related to
+conducting a flight review covering the subjects set out in Standard 921.03.
+vii
+===== PAGE 2 =====
+Knowledge areas
+Section 1: air law, air traffic rules and procedures
+RPAS Knowledge areas (topics) Sample learning objectives
+type of operation The RPA pilot operating within Canada must be
+Basic Advanced
+able to:
+Aeronautics Act
+  Section 3 - Definitions  Define aerodrome, airport, and pilot-in-
+command.
+ Demonstrate a basic understanding of the
+Act.
+Canadian Aviation Regulations (CARs)
+Part IGeneral provisions
+101Interpretation
+  101.01 Interpretation (definitions)  Define common terms used in the Canadian
+Aviation Regulations, such as day, night, VFR.
+ State the definition of remotely piloted
+aircraft.
+ Define Remotely Piloted Aircraft System
+(RPAS).
+ Define Command and Control (C2) link.
+ Define control station.
+102Application
+  102.01 Application  State that the regulations do not apply to
+indoor or underground operations.
+103Administration and compliance
+  103.02 Inspection of aircraft, requests for production of  State who may demand to inspect aviation
+documents and prohibitions documents.
+ 103.03 Return of Canadian Aviation Documents
+8
+===== PAGE 3 =====
+ 103.04 Record keeping  State that computer-stored records may be
+used in place of paper records if measures
+are taken to protect them.
+Part IIIAerodromes and airports
+301Aerodromes  Explain that persons, vehicles, obstacles, and
+ 301.01 Application operations at aerodromes are subject to the
+ 301.08 Prohibitions approval of the aerodrome operator and the
+ 301.09 Fire prevention appropriate air traffic control unit.
+302Airports  State the restrictions/rules for activities on
+ 302.10 Prohibitions an aerodrome, or airport.
+ 302.11 Fire prevention
+Part VIGeneral operating and flight rules
+601Airspace
+Airspace structure, classification and use
+ 601.01 Airspace structure  Describe the horizontal and vertical limits of
+ 601.02 Airspace classification the various classifications of airspace, control
+ 601.03 Transponder airspace areas, special use airspace.
+ 601.04 IFR or VFR flight in class F special use restricted  Identify the altimeter setting region and the
+airspace or class F special use advisory airspace standard pressure region.
+ 601.08 VFR flight in class C airspace  Recall that operations in Class F restricted
+ 601.09 VFR flight in class D airspace airspace require the authorisation of the
+person specified in the Designated Airspace
+Handbook.
+ Describe the communications required with
+air traffic control (ATC) for operating a RPA
+VLOS within controlled airspace.
+Aircraft operating restrictions and hazards to aviation safety
+9
+===== PAGE 4 =====
+  601.14 Interpretation  Recall the restrictions to aircraft (and all RPA)
+  601.15 Forest fire aircraft operating restrictions operations in the vicinity of forest fire areas.
+ 601.16 Issuance of NOTAM for forest fire  Describe the circumstances when an RPA is
+  601.17 Exceptions permitted to be operated in the vicinity of a
+  601.20 Projection of directed bright light source at an aircraft forest fire area.
+  601.21 Requirement for notification
+  601.22 Requirement for Pilot-In-Command (PIC)
+602 – Operating and flight rules - general
+Operation at or in the vicinity of an aerodrome
+ 602.96 General  Recall the minimum operating conditions for
+ 602.97 VFR and IFR aircraft operations at uncontrolled traditional aircraft VFR flight in uncontrolled
+aerodromes within a Mandatory Frequency (MF) Area airspace.
+ 602.98 General MF reporting requirements
+ 602.99 MF reporting procedures before entering maneuvering
+area
+ 602.100 MF reporting procedures on departure
+ 602.101 MF reporting procedures on arrival
+ 602.102 MF reporting procedures when flying continuous
+circuits
+ 602.103 Reporting procedures when flying through an MF
+area
+Radio communications
+ 602.136 Continuous listening watch  Describe the actions to be taken by
+ 602.138 Two-way radio communication failure in VFR flight traditional aircraft in the event of a two-way
+ 602.146 The Emergency Security Control of Air Traffic radio communication failure when flying in
+(ESCAT)Plan class C or D airspace.
+10
+===== PAGE 5 =====
+606Miscellaneous
+  606.01 Munitions of war  Recall that weapons may not be carried on
+RPA unless authorized.
+Part IX Remotely piloted aircraft systems
+Division I General provisions
+  900.01 Interpretation  Define common terms used in RPAS
+operations such as: payload, visual observer,
+visual line of sight (VLOS) operations,
+sheltered operation, extended visual line of
+sight (EVLOS) operations, operating weight,
+small remotely piloted aircraft, medium
+remotely piloted aircraft, etc.
+  900.02 Application
+900.03 Reserved
+900.04 Reserved
+900.05 Reserved
+Division II General operating and flight rules for all RPAS
+  900.06 Reckless or negligent operation  Recall that these provisions apply to RPA of
+  900.07 Inadvertent Entry into Restricted Airspace any size, including those with operating
+  900.08 Prohibition — Emergency Security Perimeter weight of less than 250 g.
+  900.09 Prohibition — Commercial Air Service  Recall the prohibition against endangering
+aviation safety or the safety of any person.
+ Recall notification requirements when a loss
+of control of an RPA has occurred or is likely
+to occur.
+ Recall prohibitions related to operations
+over or within emergency security
+perimeters.
+ Recall prohibitions related to commercial air
+11
+===== PAGE 6 =====
+services.
+900.10 Reserved
+900.11 Reserved
+900.12 Reserved
+Division III Registration of remotely piloted aircraft
+  900.13 Registration  Recall that all RPA are required to display the
+  900.14 Registration number registration number.
+  900.15 Qualifications to be registered owner of a remotely  Recall that the RPA pilot must have easy
+piloted aircraft access to the certificate of registration when
+  900.16 Registration requirements operating a registered RPA.
+  900.17 Register of remotely piloted aircraft
+  900.18 Cancellation of certificate of registration
+  900.19 Change of name or address
+  900.20 Access to certificate of registration
+Subpart 1 Small remotely piloted aircraft and medium
+remotely piloted aircraft
+Division I General provisions
+  901.01 Application  State that RPA having an operating weight
+less than 250 g are not subject to the rules in
+Part IX Subpart 1 of the Canadian Aviation
+Regulations.
+901.02 Reserved
+901.03 Reserved
+901.04 Reserved
+901.05 Reserved
+901.06 Reserved
+12
+===== PAGE 7 =====
+901.07 Reserved
+901.08 Reserved
+901.09 Reserved
+901.10 Reserved
+In VLOS
+  901.11 Visual line-of-sight  Recall that RPA shall give way to traditional
+  901.12 Reserved aircraft at all times.
+  901.13 Prohibition—Canadian domestic airspace  Recall the rules regarding the use of visual
+  901.14 Controlled airspace observers.
+  901.15 Inadvertent entry into controlled airspace  State what aeronautical information must be
+  901.16 Flight safety consulted before flight.
+  901.17 Right of way  State that an RPA must remain in Canadian
+  901.18 Avoidance of collision domestic airspace unless the operation is
+  901.19 Fitness of crew members conducted in accordance with an SFOC —
+  901.20 Visual observers RPAS.
+  901.21 Compliance with instructions  Recall the requirement to notify air traffic
+  901.22 Carriage of persons control if a flyaway is likely to enter
+  901.23 Procedures controlled airspace.
+  901.24 Pre-flight information  State which procedures must be established
+  901.25 Maximum altitude for normal and emergency operations for all
+  901.26 Horizontal distance RPA operations.
+  901.27 Site survey  State the minimum distance that an RPA
+  901.28 Other pre-flight requirements must remain from another person not
+involved in the operation.
+  901.29 Serviceability of the remotely piloted aircraft system
+ State the minimum visibility required for the
+  901.30 Availability of manuals
+operation of an RPA.
+  901.31 Instructions and manuals
+ Recall that an RPA may not be operated at or
+  901.32 Control of remotely piloted aircraft systems
+near an aerodrome in a manner that could
+  901.33 Take-offs, launches, approaches, landings and recovery
+interfere with aircraft operating in the
+  901.34 Minimum weather conditions
+13
+===== PAGE 8 =====
+  901.35 Icing established traffic pattern.
+  901.36 Formation flight  State the minimum distance that an RPA
+  901.37 Prohibition—operation of moving vehicles, vessels and must remain from an airport and from a
+traditional aircraft heliport when operating under the basic
+  901.38 Use of first-person view devices operations rules.
+  901.39 Night flight requirements  Describe the factors that must be included in
+  901.40 Multiple remotely piloted aircraft a “site survey” for all RPA operations.
+  901.41 Special aviation events and advertised events  State the requirements for position lights
+  901.42 Handovers when operating an RPA at night.
+  901.43 Payloads
+  901.44 Flight termination system
+  901.45 ELT
+  901.46 Transponder and automatic pressure-altitude
+reporting equipment
+  901.47 Operations at or in the vicinity of an aerodrome,
+airport or heliport
+  901.48 Records
+  901.49 Incidents and accidents—associated measures
+  901.50 Dropping of Objects
+901.51 Reserved
+901.52 Reserved
+Division IV Basic operations
+  901.53 Application  State the requirements to apply for a pilot
+  901.54 Pilot requirements certificate – small remotely piloted aircraft
+  901.55 Issuance of pilot certificate—small remotely piloted (VLOS) – basic operations.
+aircraft (VLOS)—basic operations  State what is required to operate a small RPA
+  901.56 Recency requirements in basic operations.
+  901.57 Access to certificate and proof of recency  Recall the 24-month recency requirements
+  901.58 Examination rules for holders of pilot certificates - RPA (VLOS).
+14
+===== PAGE 9 =====
+  901.59 Retaking of an examination or a flight review
+901.60 Reserved
+901.61 Reserved
+Division V Advanced operations
+ 901.62 Application  State the requirements to apply for a pilot
+ 901.63 Pilot requirements certificate – RPA – advanced operations.
+ 901.64 Issuance of pilot certificate—remotely piloted  State what is required to operate an RPA in
+aircraft—advanced operations advanced operations.
+ 901.65 Recency requirements  Recall the 24-month recency requirements
+ 901.66 Access to certificate and proof of recency for holders of pilot certificate – RPA –
+ 901.67 Examination rules advanced operations.
+ 901.68 Retaking of an examination or a flight review  State the conditions under which it is
+ 901.69 Declaration—permitted operations permissible to operate an RPA at a lateral
+ 901.70 Operation of a modified remotely piloted aircraft distance of less than 100 feet from another
+system person not involved in the operation.
+ 901.71 Operations in controlled airspace  State the information that must be given to
+ 901.72 Compliance with air traffic control instructions air traffic services when requesting flight in
+ 901.73 Operations at or in the vicinity of an airport or a controlled airspace.
+heliport–established procedure  State requirements to conduct operations
+ 901.74 Extended VLOS Operations and Sheltered Operations within an airport or heliport environment.
+ 901.75 Visual Observers  State the conditions under which it is
+permissible to conduct extended VLOS
+operations or sheltered operations.
+ State visual observer (VO) requirements for
+extended VLOS operations.
+901.76 Reserved
+901.77 Reserved
+901.78 Reserved
+15
+===== PAGE 10 =====
+901.79 Reserved
+901.80 Reserved
+901.81 Reserved
+901.82 Reserved
+901.83 Reserved
+901.84 Reserved
+901.85 Reserved
+901.86 Reserved
+Division X Training and Flight Review
+ 901.175 Prohibition—flight reviewer  State that a flight reviewer rating is
+required in order to conduct a flight review
+for a pilot certificate – RPA – advanced
+operations.
+ 901.176 Flight reviewer rating
+ 901.177 Examination rules
+ 901.178 Retaking of an examination
+ 901.179 Eligibility to Make Declaration
+ 901.180 Training provider requirements – Flight Reviews
+ 901.181 Conduct of flight reviews
+Subpart 2 Reserved
+Subpart 3 Special flight operations—remotely piloted aircraft
+systems
+ 903.01 Prohibition  Give examples of types of RPAS operations
+that would require a special flight operations
+certificate (SFOC) — RPAS.
+ 903.02 Application for special flight operations certificate—
+RPAS
+ 903.03 Issuance [or Amendment] of special flight operations
+16
+===== PAGE 11 =====
+certificate—RPAS
+  Transportation Safety Board of Canada (TSB)(refer to TC  State that the purpose of aircraft accident
+AIM-GEN 3.0) investigation is to prevent recurrence.
+ State the types of RPA accidents that must
+be reported to the Transportation Safety
+Board of Canada.
+Air traffic services and procedures
+ Air traffic and advisory services  Determine who provides coordination or air
+traffic control service for the airspace being
+used (if applicable).
+ Determine the Mandatory Frequency
+(MF)/Aerodrome Traffic Frequency (ATF) and
+enroute frequencies (if applicable) for the
+operating area.
+ Explain any traffic patterns of passing
+traditional aircraft.
+ Anticipate patterns of traditional aircraft
+sharing the airspace.
+ Determine the aeronautical radio
+frequencies in use for this airspace.
+ Use appropriate phraseology in radio
+communication.
+ Recognize clearances and instructions
+directed to traditional aircraft.
+ Interpret the Canada Flight Supplement (CFS)
+with respect to aerodrome airspace and
+location procedures.
+ Communicate/interface with NAV CANADA
+according to their “Best Practices”
+17
+===== PAGE 12 =====
+documents.
+ Determine how to conduct RPA operations at
+controlled and uncontrolled aerodromes.
+  Flight service stations, flight information centres
+ Communication procedures
+ ATC clearances/instructions/mandatory read back procedures
+ Aerodrome operations  controlled
+ Aerodrome operations  uncontrolled
+ Mandatory frequency (MF) and aerodrome traffic frequency
+(ATF)
+18
+===== PAGE 13 =====
+Section 2: RPA airframes, power plants, propulsion and systems
+RPAS Knowledge areas (topics) Sample learning objectives
+type of operation The RPA pilot operating within Canada must be
+Basic Advanced
+able to:
+Airframes
+  1. Handling/care/securing  Indicate how RPAS manufacturers identify the
+repairs and work that can be undertaken by
+the owner vs. what must be addressed by an
+authorized repair facility (e.g., how to find
+your applicable original equipment
+manufacturer guidelines).
+ Describe the importance of identifying
+propeller/rotor damage, surface
+contamination, wiring damage, structural
+damage.
+ Identify the parts of an airframe.
+Electrical systems
+  1. Typical electrical system components (motors, electronic  Describe typical electrical system
+speed controllers, batteries, etc.) components.
+  2. Servo motors  Describe the actions of a servo.
+  3. Importance of component integrity/maintenance  Describe the indications of a failed servo.
+ Explain the importance of keeping
+components dry.
+Redundancies & critical items
+  1. Risks of flying with inoperative systems  State the value of redundancy in operating
+scenarios.
+Control station
+  1. Orientation  State the importance of pilot and antenna
+19
+===== PAGE 14 =====
+  2. Software version control orientations in reference to the RPA.
+  3. Flight simulation
+Data links
+  1. Frequency bands (licensed and unlicensed)  Describe how to assess the Radio Frequency
+  2. Line-of-sight (RF) environment or conduct and RF sweep.
+  3. Antenna and tracking systems  Discuss the importance of radio line-of-sight.
+  4. Interference  Discuss the importance of Ground Control
+  5. Gain, signal to noise ratio Station (GCS) antenna placement.
+ Discuss the causes of lost link and methods of
+recovery.
+Batteries
+  1. Types and hazards  Interpret maintenance log history.
+  2. Battery parameters such as Energy Capacity (measured in  Describe the variables affecting batteries
+Ah and Wh), Voltage(V), charge and discharge rates (C-Rating) (capacity e.g., due to age, history, charge
+  3. Battery configurations (parallel, series) status).
+  4. Charge cycles, storage, and maintenance  Assess battery voltages (understand discharge
+  5. Discharge curves curves).
+  6. Transportation of batteries in accordance with the  Describe the regulations applicable to taking
+Transportation of Dangerous Goods Regulations (TDG) lithium-ion batteries on board a commercial
+Regulations flight.
+ Describe the dangers of using water on
+lithium battery fires.
+Fuel systems
+  1. Fuel system types and hazards.  Describe different fuel systems in RPA.
+  2. Fuel quantity measurement.  Describes hazards of different fuels.
+  3. Fueling and storage techniques.  Describe methods to assess fuel quantity and
+consumption under different flight conditions.
+ Describe safe fuel storage, handling and
+20
+===== PAGE 15 =====
+grounding/bonding techniques.
+Autopilots
+  1. The role of an autopilot  Describe the types of pilot intervention
+  2. Different levels of control (e.g., stabilization vs. waypoint) possible during flight.
+  3. Flight termination systems (internal and remote)  Describe the pre-flight preparation related to
+  4. Software version control (control station and RPA) flight termination systems.
+ Discuss the possible consequences of
+improper software version control.
+ Describe the importance of updating verified
+firmware only from trusted sources.
+Payloads
+  1. Sensor types (electro-optical, infra-red, radio frequency,  Define what comprises the payload vs. the
+atmospheric, etc.) rest of the system.
+Propulsion
+  1. Types of electric motors (brush, brushless, inrunner, and  Describe the characteristics of different motor
+outrunner) types.
+  2. Speed controllers  Describe 2-stroke and 4-stroke engines.
+  3. Types of internal combustion engines  Explain aircraft behavior following a
+propulsion system failure.
+Launch and recovery systems
+  1. Types of launchers  Identify the different danger areas of a safety
+  2. Types of recovery systems–parachute, deep stall, arresting template.
+system/hook, normal landing  Describe different methods of recovering an
+  3. Safety areas and templates for launch and recovery RPA.
+Maintenance and record keeping
+21
+===== PAGE 16 =====
+  1. Technical log requirements  List the requirements for record-keeping.
+ Give examples of tasks that should be
+independently verified.
+  2. Servicing, elementary tasks, critical tasks
+  3. 2-person perform/verify practice
+Magnetic compass
+  1. Principles of operation  Explain the difference between magnetic and
+  2. Variation true north.
+  3. Factors adversely affecting compass operation  Explain what can affect compass operation
+  4. Importance of calibration and reliability.
+Altimeter
+  1. Principles of operation  Explain the purpose of a barometric altimeter
+  2. Errors and malfunctions setting.
+ Describe the effect of a blocked static system.
+ Describe the difference between GPS altitude
+and barometric altitude.
+ Describe how to convert GPS altitude to above
+sea level (ASL).
+Airspeed indicator
+  1. Principles of operation  Describe the difference between indicated
+  2. Errors and malfunctions and true airspeeds.
+ Describe the effect of a blocked pitot system.
+Inertial measurement unit (IMU)
+  1. Components  Describe what the IMU responsible for.
+  2. Errors & malfunctions  Give examples of what can cause the IMU to
+misbehave.
+22
+===== PAGE 17 =====
+Section 3: Human factors
+RPAS Knowledge areas (topics) Sample learning objectives
+type of operation The RPA pilot operating within Canada must be able to:
+Basic Advanced
+Aviation physiology
+  1. Vision/visual scanning techniques  Describe good scanning techniques (visual, audio)
+  2. Hearing for visual observers (conflicting aircraft).
+  3. Orientation/disorientation (including  Describe “perspective illusion” when looking at
+visual/perspective/parallax illusions) distant aircraft.
+  4. Body rhythms/jet lag  Describe factors that affect alertness.
+  5. Sleep/fatigue
+  6. Anaesthetics
+The pilot and the operating environment
+  1. Medications (prescribed and over-the-counter)  Describe the effects of medications and other
+  2. Substance abuse (alcohol/drugs) substances on pilot performance, including lasting
+  3. Heat/cold effects beyond initial impairment.
+  4. Noise  Describe the effects of exposure to cold and
+  5. Toxic hazards (including carbon monoxide – GCS excessive heat on pilot performance.
+vehicle)  Describe the symptoms of carbon monoxide
+poisoning.
+Aviation psychology
+  1. Factors that influence  List factors that interfere with effective decision-
+decision-making making.
+  2. Situational awareness  List the factors that affect situational awareness.
+  3. Stress  Describe how a given operational risk might be
+  4. Managing risk managed.
+  5. Attitudes
+  6. Workloadattention and information processing
+23
+===== PAGE 18 =====
+Pilotequipment/materials relationship
+  1. Controls and displayserrors in interpretation and  Explain the benefits of standard operating
+control procedures and considering lessons learned from
+  2. Standard operating proceduresrationale/benefits operating experience.
+  3. Correct use of checklists and manuals  Explain how to manage an interruption to a
+  4. Automation and complacency checklist.
+Interpersonal relations
+  1. Communications with flight crew/air traffic  Resolve differences peacefully.
+services/customers/public/authorities  Promote open communications.
+  2. Operating pressuresfamily relationships/peer  Place safety requirements over hierarchy/position in
+group organization/politics.
+  3. Operating pressuresemployer
+24
+===== PAGE 19 =====
+Section 4: Meteorology
+RPAS Knowledge areas (topics) Sample learning objectives
+type of operation The RPA pilot operating within Canada must be able to:
+Basic Advanced
+The earth’s atmosphere
+ 1. Composition and physical properties  Describe the chemical composition of the
+  2. Density and pressure atmosphere.
+Atmospheric pressure
+ 1. Pressure measurements  Define atmospheric pressure, station pressure, sea
+ 2. Station pressure level pressure.
+ 3. Sea level pressure  Explain how atmospheric pressure varies with
+ 4. Pressure system and their variations height.
+ 5. Effects of temperature  Explain the movement of air resulting from high- and
+low-pressure systems, convergence, and divergence.
+ Relate weather characteristics to pressure systems.
+Meteorological aspects of altimetry
+ 1. Pressure altitude  Recall the factors that affect density altitude.
+ 2. Density altitude  Assess weather and density altitude for anticipated
+ 3. Altimeter settings performance (take-off and launch) and flight
+envelope limitations.
+Moisture
+ 1. Temperature variations with altitude  Explain the relationship between lapse rate,
+ 2. Relative humidity/dewpoint temperature-dewpoint spread and cloud base.
+ 3. Cloud formation  Explain the effect of moisture and temperature on
+ 4. Precipitation the formation of clouds, height of cloud base.
+ Discuss the significance of cloud base height on
+potential air traffic.
+25
+===== PAGE 20 =====
+Stability and instability
+ 1. Characteristics of stable/unstable air  Characterize the effects of stable and unstable air
+ 2. Surface heating/cooling masses (visibility, turbulence, and smog layers).
+ 3. Lifting processes
+Clouds
+  1. Types applicable to low level flying and recognition  Identify cloud types and their impact on flying
+  2. Associated precipitation and turbulence operations.
+ Discuss the significance of observed vertical cloud
+development.
+Surface based layers
+  1. Fog formation  Explain how fog is formed.
+  2. Haze/smoke  Identify the elements that can dissipate fog.
+  3. Blowing obstruction to vision  Identify different obstructions to vision.
+Turbulence
+  1. Convection  Explain the sources of mechanical turbulence.
+  2. Mechanical  Describe the formation of turbulence around large
+  3. Orographic objects and mountain tops.
+  4. Wind shear  Identify sources of micro-climate turbulence and
+wind shear.
+Wind
+  1. Pressure gradient  Explain the effect of pressure gradient on the
+  2. Low level windsvariation in surface wind horizontal movement of air.
+  3. Friction  Explain how wind changes in the friction layer due to
+  4. Diurnal effects surface heating.
+  5. Land/sea breezes  Define wind shear and its effect on turbulence.
+  6. Katabatic/anabatic effects  Explain the formation of land/sea breezes.
+  7. Topographical effects  Use a picture to explain anabatic and katabatic
+26
+===== PAGE 21 =====
+winds.
+ Explain the effects of urban airflow.
+Fronts and frontal weather
+ 1. Structure/frontal wave  Discuss the relationship between air masses and
+ 2. Cold front creation of weather fronts.
+ 3. Warm front  Describe the changes in weather as a front
+approaches and passes over your location.
+Aircraft icing
+  1. Formation  Explain how icing is formed and the conditions that
+  2. In-flightfreezing rain cause it.
+  3. Hoar frost  Recognize weather conditions that can cause surface
+  4. Effect of frost and ice on launch and recovery contamination.
+systems  Describe the components of an RPA that are
+susceptible to icing.
+Thunderstorms
+ 1. Requirements for development  Describe the three stages of thunderstorm
+ 2. Typesair mass/frontal development.
+ 3. Hazardsupdrafts/downdrafts/gust  Describe the surface weather characteristics of an
+fronts/downbursts/microbursts/hail/lightning/antennas approaching thunderstorm.
+ 4. Squall lines  Identify hazards likely to occur with thunderstorm
+activity.
+Meteorological services available to pilots
+ 1. Flight Information Centres (FIC) – telephone service  Identify the sources for local weather information.
+  2. Aviation weather web site  Describe the differences in cloud base and wind
+ 3. Automatic Terminal Information Service (ATIS) forecasts between aviation and non-aviation
+  4. Non-aviation sources sources.
+27
+===== PAGE 22 =====
+Aviation weather reports
+ 1. Aviation Routine Weather Report (METAR),  Compare reported weather with the regulatory
+Automated Weather Observation Station (AWOS), Basic requirements.
+Weather Information System (LWIS)  Demonstrate awareness of coded weather
+information and identify methods of decoding.
+ Identify sources of weather reports (websites etc.).
+Aviation forecasts
+ 1. Times issued and validity periods  Compare forecast weather with the regulatory
+ 2. Aerodrome Forecasts (TAF) requirements.
+ Assess forecast ceiling, wind, turbulence,
+precipitation, and visibility against operational
+objectives.
+ Assess forecast vs. control station requirements
+(e.g., lightning).
+28
+===== PAGE 23 =====
+Section 5: Navigation
+RPAS Knowledge areas (topics) Sample learning objectives
+type of operation The RPA pilot operating within Canada must be able to:
+Basic Advanced
+Definitions
+  1. Longitude  Demonstrate operational understanding of these
+  2. Latitude definitions.
+ 3. Variation
+ 4. Track
+ 5. Heading
+ 6. Airspeed
+ 7. Bearing
+ 8. Wind velocity
+ 9. Drift
+Maps and charts
+  1. Aeronautical charts: VNC, VTA  Locate your position on an aeronautical chart.
+  2. Topographical symbols  Interpret topographical information from charts.
+  3. Elevation and contours (relief)  Determine your distance from the nearest
+  4. Aeronautical information aerodrome.
+  5. Scale and units of measurement  Identify a control zone on an aeronautical chart.
+  6. Locating position by latitude and longitude  Determine the validity/currency of aeronautical
+  7. Canada Flight Supplement (CFS) charts.
+ Use the CFS or other approved publication to
+identify airport operators and air traffic control
+agencies.
+Time and longitude
+  1. 24 Hour system  Convert UTC to local time & vice versa.
+  2. Conversion of Universal Coordinated Time (UTC) to  Determine local time of sunrise/sunset.
+local and vice versa
+29
+===== PAGE 24 =====
+  3. Sunrise and sunset
+Pilot navigation
+  1. Use of aeronautical charts  Describe location and activities referring to
+ 2. Measurement of bearing and distance appropriate aeronautical charts and aeronautical
+ 3. Variation reference points.
+ 4. True track/magnetic track  Identify the class of airspace and proximity of
+ 5. True/magnetic/headings aerodromes to the operating location using
+ 6. Airspeed vs groundspeed aeronautical charts.
+ Explain the difference between true and magnetic
+heading.
+Flight planning
+  1. Factors affecting choice of flying area  Describe the factors that will influence your choice
+  2. NOTAM of flying area (restricted airspace, property lines,
+  3. Use of Canada Flight Supplement (CFS) requirement for an SFOC — RPAS, etc.).
+  4. Fuel/energy requirements  State where to obtain NOTAMs.
+  5. Weight and balance  Obtain NOTAMs, including GPS NOTAMs, and
+  6. Documents to be available to crew members interpret them.
+  7. Aircraft serviceability, configuration  Demonstrate how to use the CFS to determine type
+  8. Effect of wind on range and endurance and radius of airspace, frequencies, aerodrome
+operator contact information, nearest Flight
+Information Centre (FIC)/Air Traffic Service (ATS) unit
+for emergency contact, etc.
+ Determine the contact information for Emergency
+Services and local authorities.
+ List the documents that must be available to crew
+members.
+ Determine the serviceability of
+o Aircraft
+o Control station
+30
+===== PAGE 25 =====
+o Radio frequency (RF) equipment
+o Launch and recovery equipment
+o Software loads and versions
+o Correct databases (e.g., maps) loaded
+o Batteries (capacity (i.e., due to age) history,
+charge status, demand due to weight)
+ Demonstrate how to verify the flight plan data file is
+correct and complete in the autopilot.
+Radio theory
+  1. Characteristics of low/high and very & ultra-high  Explain the characteristics of radio wave
+frequency radio waves propagation.
+  2. Frequency bands used in navigation and  Describe the factors that affect radio reception
+communication range.
+  3. Operational limitations, propagation, causes of  Identify sources of RF interference.
+interference  Describe how to assess an RF environment.
+ Explain the function of RF spectrum analyzer.
+Global navigation satellite system (GNSS/GPS)
+ 1. Principles of operation  Describe how GNSS systems may be enhanced by
+ 2. Causes of signal loss and interference augmentation systems.
+ Provide an example of how Differential Global
+Positioning Service (DGPS) might be used for landing.
+ Discuss the significance of GPS loss in flight.
+ Describe what can affect GPS performance (number
+of satellites, weather).
+Other radio and radar aidsbasic principles and use
+ 1. Air traffic control (ATC) transponder  Describe the function of an ATC radar transponder.
+ 2. Locator devices
+31
+===== PAGE 26 =====
+Section 6: Flight operations
+RPAS Knowledge areas (topics) Sample learning objectives
+type of operation The RPA pilot operating within Canada must be able to:
+Basic Advanced
+General
+  1. Pilot-in-command responsibilities  Describe the hazards that can occur in different
+  2. Aircraft defects geographic or topographical areas.
+  3. Winter operations  Describe the normal flow of traditional aircraft
+  4. Thunderstorm avoidance traffic at an aerodrome (circuit, taxiing, etc.).
+  5. Wildlife hazards  Explain how local and portable devices might be
+  6. Wildlife conservation controlled to reduce interference.
+  7. Collision avoidanceuse of lights
+ 8. Runway numbering
+ 9. Aerodrome operations (Procedures for the
+prevention of runway incursions and conflicts)
+  10. Radio/electronic interference, portable electronic
+devices
+Aircraft performance
+  1. Effects of density altitude and humidity  Describe the effect of density altitude on launch and
+  2. Bank/speed vs rate/radius of turn climb performance.
+  3. Use of aircraft flight manual  Describe the effect of airspeed on radius of turn.
+ Determine operating limitations from the aircraft
+flight manual.
+Performance charts/data
+  1. Factors affecting launcher performance (e.g., ice,  Describe the effect of temperature on elasticized
+temperature) cord launchers, pneumatic launchers or hydraulic
+  2. Crosswind limits launchers.
+  3. Factors affecting performance (battery, wind,  Identify crosswind limits.
+speeds, climb power, etc.)
+32
+===== PAGE 27 =====
+  4. Hover ceiling, maximum altitude  Using aircraft performance data, determine the
+maximum altitude at which an RPA can hover.
+Weight and balance
+  1. Locating centre of gravity (C of G)  Describe methods of determining C of G.
+  2. Weightse.g., empty/gross  Describe how to return a C of G to within limits.
+  3. External loads–effect on performance and stability
+Aircraft critical surface contamination
+  1. Effects of aircraft critical surface contamination on  Describe the effects of surface contamination on
+performance airfoils.
+  2. Types of contaminants (e.g., water, frost, snow,
+condensation, tape, etc.)
+RPAS operations (VLOS)
+  1. Landowner authorizations  Identify typical functional areas in a VLOS site (e.g.,
+  2. Coordination with public safety (municipality) launch, observer).
+  3. Charging areas  Identify desirable characteristics of alternate
+  4. Site control, safety perimeter recovery areas.
+  5. Launch points, recovery points  Identify the requirements of visual observer
+  6. Obstacles locations.
+  7. Emergency procedures  Identify and evaluate access routes for both normal
+  8. Defining roles and responsibilities and emergency operations.
+  9. Communications  Assess public access and determine crowd control
+  10. Post flight actions (download data, safety actions, requirements.
+etc.)  List typical emergency contacts appropriate to flying
+site (flyaways, EMS etc.).
+ List the safety equipment necessary for the
+operation (fire extinguisher, first aid, etc.).
+ List the typical items in a crew briefing.
+ Describe emergency procedures (e.g., airspace
+33
+===== PAGE 28 =====
+conflicts, system faults, lost link, and public
+interference).
+ List the typical items in a crew briefing (roles,
+objective & plan, timeline, performance limitations,
+emergency procedures, airspace conflicts and
+escape manoeuvres, flyaways, public interference,
+recovery area, interface with the client and public,
+site manager, safe areas, expectations of what they
+will observe, electro-magnetic interference, sterile
+flight deck (no interference or distractions).
+ Communicate vital actions (countdown and launch
+command, emergency abort, transfer of control, air
+traffic contacts, progress and expected
+manoeuvres).
+ List recommended post-flight actions (download
+data, check for damage, clean and dry as needed,
+remove batteries, record information into logs,
+disassemble and pack per system manual, etc.).
+RPAS Operations (Extended VLOS - EVLOS)
+ 1. Where EVLOS is permitted  Identify that EVLOS is permitted in uncontrolled
+ 2. Maximum range from pilot and visual observer (VO) airspace away from aerodromes.
+ 3. Proximity to people  Identify that EVLOS operations must be conducted more
+ 4. Types of RPA appropriate for EVLOS than 100 feet from people not involved in the operation.
+ Identify that EVLOS operations must remain within 2
+nautical miles of the pilot and visual observer.
+ Identify that the VO should be positioned in a quiet area
+with an unobstructed view of the sky.
+ Identify that the pilot and VO must have a means of
+communication.
+ Identify that EVLOS is only permitted with small RPA.
+ Identify that EVLOS operations puts additional stress on
+34
+===== PAGE 29 =====
+C2 Links.
+ Identify that aircraft endurance is a key consideration
+when performing EVLOS operations.
+RPAS Operations (Sheltered Operations)
+ 1. Where sheltered operations are permitted  Identify that sheltered operations can take place in
+ 2. Maximum range from pilot controlled and uncontrolled airspace.
+ 3. Proximity to people  Identify what constitutes an obstacle.
+ 4. Concerns related to C2 links during sheltered  Identify that sheltered operations in controlled airspace
+need airspace authorization.
+operations
+ Identify that RPA performing sheltered operations in
+ 5. Concerns related to lost-link behavior when
+controlled airspace needs a Safety Assurance Declaration
+performing sheltered operations.
+against CAR Standard 922.04
+ Identify that structures like buildings will have an impact
+on C2 link performance.
+ Identify the importance of correctly programming lost
+link behaviour and return to home (RTH) altitude when
+performing Sheltered operations.
+ Identify that people not involved with the operation
+must be more than 100 feet from the RPA at all times
+during a sheltered operation.
+Occupational safety & health
+  1. Charging areas  List the safety equipment necessary for the
+  2. Launch points, recovery points operation (fire extinguishers, first aid kit, etc.).
+  3. Obstacles  Assess weather threats in relation to ground control
+  4. Emergency procedures station (GCS) operations.
+  5. Responsibilities  Identify and evaluate access routes.
+  6. Communications  List typical emergency contacts appropriate to flying
+  7. Post-flight actions site (flyaways, EMS etc.)
+ Identify legal site access issues (trespass, insurance,
+35
+===== PAGE 30 =====
+permissions, safety training).
+ List typical personal safety equipment.
+ Describe the hazards of launchers and recovery
+systems.
+36
+===== PAGE 31 =====
+Section 7: Theory of flight
+RPAS Knowledge areas (topics) Sample learning objectives
+type of operation The RPA pilot operating within Canada must be able to:
+Basic Advanced
+Principles of flight
+  1. Bernoulli's principle  Describe how lift is produced.
+  2. Newton's laws
+Aircraft parts and components
+  1. Fixed wing  Explain the function of the vertical fin.
+  2. Multi-rotor aircraft  Identify basic components including lifting and
+  3. Helicopter components stabilizing components.
+Forces acting on an aircraft
+  1. Lift  Identify the 4 forces acting on an aircraft in flight.
+  2. Draginduced/parasite  Describe how the 4 forces are balanced during
+  3. Thrust manoeuvres and steady flight.
+  4. Weight
+  5. Equilibrium
+Stability
+  1. Longitudinal, lateral, directional stability  Explain how the centre of gravity affects longitudinal
+  2. Inherent stability stability.
+  3. Methods of achieving stability, effect of C of G
+position
+Aerofoils
+  1. Relative airflow and angle of attack  Explain how lift is controlled.
+  2. Relationship of lift and drag to angle of attack
+  3. Aerodynamic stall
+37
+===== PAGE 32 =====
+Propellers & rotors
+  1. Handling and care  Describe how the condition of the propeller/rotor
+affects performance.
+Design of the wing
+  1. Wing planform  Describe how the design of the wing affects
+  2. Spoilers performance.
+  3. Flaps
+Aeroplane flight controls
+  1. Aeroplane axes and planes of movement  Describe the function of different control surfaces.
+  2. Control surfaces  Explain the function of trim.
+  3. Trim
+Helicopter flight controls
+  1. Cyclic  Describe how lift is created with a rotary wing
+  2. Collective (powered and autorotation).
+  3. Tail rotor  Describe how lift is controlled.
+ Describe the function of the tail rotor, counter-
+rotating rotors.
+Multi-rotor aircraft dynamics
+  1. Principles of flight and torque  Describe how yaw, pitch, roll, and climb are
+  2. Pilot flight controls achieved in a multi-rotor aircraft.
+  3. Settling with power  Describe how to avoid dynamic rollover in a
+  4. Recirculation crosswind.
+  5. Dynamic rollover  Describe typical multi-rotor autopilot modes
+(manual, attitude, GPS Position hold).
+ Describe how asymmetric recirculation can upset
+lateral control of a rotorcraft.
+38
+===== PAGE 33 =====
+Load factor
+  1. Load factorturns  Describe what can affect the load factor on an
+  2. Gust loads, turbulence aircraft.
+  3. Structural/power limitations  Recall that increasing the load factor produces a
+requirement for increased lift, thus producing
+increased drag.
+39
+===== PAGE 34 =====
+Section 8: Radiotelephony
+RPAS Knowledge areas (topics) Sample learning objectives
+type of operation The RPA pilot operating within Canada must be able to:
+Basic Advanced
+Communications
+ 1. Operator’s certificate (aeronautical) - (Industry  Interpret aeronautical radio communications
+Canada Operator Certificate – with Aeronautical (position, phase of flight).
+Qualification course)  Communicate using standard radio terminology.
+ 2. Terminology  Give an example of a routine blind broadcast.
+ 3. Common frequencies  List the contents of a routine call to ATC.
+ 4. Emergencies  Give an example of an emergency (flyaway)
+broadcast.
+ Distinguish between “height” and “altitude” in
+communications.
+ Give examples of proper radio etiquette, including
+practices to avoid interfering with other
+communications.
+Crew member radios
+  1. Terminology  Give an example of an advisory describing a possible
+  2. Reception performance aircraft conflict.
+ Describe factors affecting radio reception range.
+ Describe the verbal communication elements in a
+positive transfer of control or visual following.
+40

@@ -1,0 +1,28 @@
+{
+  "total_paragraphs": 338,
+  "learning_objectives": [
+    "The applicable type of operation (basic and advanced) is shown to the left of the topics. Sample learning objectives are shown to the right of the topics. The list of sample objectives is not all-inclusive, its purpose is to illustrate the depth of knowledge required to operate sRPAS in Canadian airspace. Types of operation (basic operations, advanced operations) are set out in the Canadian Aviation Regulations, Part IX.  There are minimum knowledge requirements for the pilots of sRPAS operating in each of those groups. Applicants for the pilot certificate – small remotely piloted aircraft (VLOS) – basic operations shall demonstrate their knowledge by writing the Transport Canada multiple choice examination based on the indicated applicable subjects contained in this guide and covering the subjects set out in Standard 921.01. Applicants for the pilot certificate – small remotely piloted aircraft (VLOS) – advanced operations shall demonstrate their knowledge by writing the Transport Canada multiple choice examination based on the indicated applicable subjects contained in this guide and covering the subjects set out in Standard 921.02. z",
+    "State that the regulations do not apply to indoor or underground operations.",
+    "State that computer-stored records may be used in place of paper records if measures are taken to protect them.",
+    "Describe the horizontal and vertical limits of the various classifications of airspace, control areas, special use airspace. ",
+    "Recall that advanced operations in Class F airspace require the permission of the airspace operator. ",
+    "Describe the communications required with air traffic control (ATC) for operating a small RPA VLOS within class C or D airspace.",
+    "Recall the restrictions to operations in the vicinity of forest fire areas. ",
+    "Describe the circumstances when a small RPAS is permitted to be operated in the vicinity of a forest fire. ",
+    "Describe the process required to legally use a LIDAR (light detection and ranging) on a small RPA.",
+    "(b) in any airspace that is described in a NOTAM issued pursuant to section 601.16.",
+    "601.16 The Minister may issue a NOTAM that relates to restrictions on the operation of aircraft in the case of a forest fire and that describes",
+    "State that pilots of small RPAs shall avoid flying the RPA in the traffic pattern at an aerodrome. ",
+    "Recall the minimum operating conditions for VFR flight in uncontrolled airspace.",
+    "Describe the actions to be taken in the event of a two-way radio communication failure when flying in class C or D airspace.",
+    " Recall that weapons may not be carried on RPAS unless authorized.",
+    "Class F airspace is described in terms of horizontal and vertical dimensions, effective for a specified period of time. Class F airspace may be restricted airspace, advisory airspace, or danger areas, and can be controlled airspace, uncontrolled airspace or a combination of both.",
+    "*  The terminology \"Class B, C, D or E equivalent\" used for the designations of MTCAs describes the equivalent level of service and operating rules for civilian aircraft operating within the MTCA and under military control."
+  ],
+  "cars_references": [
+    "CARS 602 Operating and flight rules"
+  ],
+  "aim_references": [
+    "601.17 (1) Section 601.15 does not apply to"
+  ]
+}

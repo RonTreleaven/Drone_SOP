@@ -1,0 +1,194 @@
+{
+  "timestamp": "2026-09-01",
+  "total_regulations": 50,
+  "already_mapped": 3,
+  "newly_mapped_count": 31,
+  "proposed_mappings": [
+    {
+      "id": "reg-001",
+      "section": "901.26",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-002",
+      "section": "901.26",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-004",
+      "section": "901.02",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-006",
+      "section": "901.06",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-007",
+      "section": "901.26",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-008",
+      "section": "901.27",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-009",
+      "section": "901.26",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-010",
+      "section": "901.23",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-012",
+      "section": "901.26",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-013",
+      "section": "901.01",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-014",
+      "section": "901.87",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-015",
+      "section": "901.87",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-016",
+      "section": "901.27",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-019",
+      "section": "901.01",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-021",
+      "section": "901.21",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-024",
+      "section": "901.26",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-026",
+      "section": "901.26",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-031",
+      "section": "901.01",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-032",
+      "section": "901.27",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-033",
+      "section": "901.01",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-034",
+      "section": "901.23",
+      "confidence": "HIGH",
+      "source": "authoritative_map"
+    },
+    {
+      "id": "reg-036",
+      "section": "901.27",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-040",
+      "section": "901.87",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-042",
+      "section": "901.87",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-043",
+      "section": "901.87",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-045",
+      "section": "901.19",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-046",
+      "section": "901.19",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-047",
+      "section": "901.01",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-048",
+      "section": "901.01",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-049",
+      "section": "901.01",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    },
+    {
+      "id": "reg-050",
+      "section": "901.27",
+      "confidence": "MEDIUM",
+      "source": "keyword_match"
+    }
+  ]
+}

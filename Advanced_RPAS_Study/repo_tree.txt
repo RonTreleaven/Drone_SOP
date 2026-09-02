@@ -1,0 +1,27 @@
+Folder PATH listing
+Volume serial number is 902B-FD89
+C:.
+¦   Advanced_RPAS_Master_2026-08-27.zip
+¦   Advanced_RPAS_Master_2026-08-27_v2.zip
+¦   index.html
+¦   quiz.html
+¦   README.md
+¦   repo_tree.txt
+¦   RPAS_session_DQ-2026-08-27-01_ingest.zip
+¦   
++---Advanced_RPAS_Master_2026-08-27
++---Advanced_RPAS_Master_2026-08-27_v2
+¦   +---Advanced_RPAS
++---data
+¦       progress.json
+¦       questions.json
+¦       references.json
+¦       ~tmp40_categories.json
+¦       
++---docs
+¦       Aeronautics Act R.S.C._A-2.pdf
+¦       aim-2026-1_rpa_en_March 19_2026 .pdf
+¦       
++---notes
+        study_guide_notes.md
+        

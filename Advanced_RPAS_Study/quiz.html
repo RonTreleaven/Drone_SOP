@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Advanced RPAS Quiz</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="../assets/css/advanced-rpas-quiz.css">
+</head>
+<body>
+<main>
+<h1>Advanced RPAS Quiz</h1>
+<p class="meta">Adaptive quiz: questions are weighted toward categories and items you've missed most, using stats stored in this browser.</p>
+
+<section id="setup">
+  <fieldset class="category-fieldset">
+    <legend>Question categories</legend>
+    <div class="category-actions" aria-label="Category selection actions">
+      <button class="secondary compact-button" id="select-all-categories-btn" type="button">Select all</button>
+      <button class="secondary compact-button" id="clear-categories-btn" type="button">Clear</button>
+      <span class="meta" id="category-selection-status" aria-live="polite"></span>
+    </div>
+    <div id="category-filters"></div>
+  </fieldset>
+  <label>Questions this round:
+    <input type="number" id="round-length" value="5" min="1" max="50">
+  </label>
+  <button class="primary" id="start-btn">Start Quiz</button>
+  <button class="secondary" id="reset-stats-btn">Reset local stats</button>
+</section>
+
+<section id="question-card" hidden>
+  <p class="meta" id="progress-line"></p>
+  <p class="meta" id="category-line"></p>
+  <div id="scoreboard"></div>
+  <p id="question-text"></p>
+  <div id="choices"></div>
+  <div id="feedback"></div>
+  <div class="nav-row">
+    <button class="secondary" id="prev-btn">&larr; Previous</button>
+    <button class="primary" id="next-btn">Next &rarr;</button>
+    <button class="primary" id="finish-btn" hidden>Finish round</button>
+    <button class="secondary" id="abandon-btn">Abandon round</button>
+  </div>
+</section>
+
+<section id="summary" hidden>
+  <h2>Round complete</h2>
+  <p id="summary-line"></p>
+  <a class="secondary home-link" href="../index.html">Return to Home</a>
+  <button class="secondary" id="restart-btn">New round</button>
+  <div id="review-list"></div>
+</section>
+
+<section id="stats-panel" hidden>
+  <h2>Category performance (this browser)</h2>
+  <table id="stats-table"><thead><tr><th>Category</th><th>Asked</th><th>Correct</th><th>Accuracy</th></tr></thead><tbody></tbody></table>
+</section>
+</main>
+
+<script>
+const STATS_KEY = "rpasQuizStats_v1";
+const ROUND_KEY = "rpasQuizActiveRound_v1";
+
+let categories = [];
+let questions = [];
+let carsSectionUrlTemplate = null;
+let sourceLinkPattern = null;
+let sourceLinkMap = {};
+let stats = loadStats();
+// round.answers is sparse/parallel to round.queue: null = unanswered, else {chosenIndex, correct}.
+let round = { queue: [], index: 0, answers: [] };
+let roundActive = false;
+
+const LETTERS = "ABCDEFGHIJ";
+
+function loadStats() {
+  try {
+    return JSON.parse(localStorage.getItem(STATS_KEY)) || {};
+  } catch {
+    return {};
+  }
+}
+
+function saveStats() {
+  localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+}
+
+function ensureStat(id) {
+  if (!stats[id]) stats[id] = { asked: 0, correct: 0 };
+  return stats[id];
+}
+
+// Persists the in-progress round (by question id, not full objects) so a reload can resume it.
+function saveRoundState() {
+  if (!roundActive) return;
+  localStorage.setItem(ROUND_KEY, JSON.stringify({
+    queueIds: round.queue.map(q => q.id),
+    answers: round.answers.map(a => a ? { chosenIndex: a.chosenIndex } : null),
+    index: round.index
+  }));
+}
+
+function clearRoundState() {
+  localStorage.removeItem(ROUND_KEY);
+}
+
+// Rebuilds a round from persisted state, re-deriving correctness against the live question bank
+// rather than trusting stored data, in case questions.json changed since the round started.
+function loadRoundState() {
+  let saved;
+  try {
+    saved = JSON.parse(localStorage.getItem(ROUND_KEY));
+  } catch {
+    return null;
+  }
+  if (!saved || !Array.isArray(saved.queueIds) || saved.queueIds.length === 0) return null;
+
+  const byId = Object.fromEntries(questions.map(q => [q.id, q]));
+  const queue = saved.queueIds.map(id => byId[id]);
+  if (queue.some(q => !q)) return null; // question bank changed; can't safely resume
+
+  const answers = queue.map((q, i) => {
+    const a = saved.answers?.[i];
+    return a ? { chosenIndex: a.chosenIndex, correct: a.chosenIndex === q.answerIndex } : null;
+  });
+  const index = Math.min(Math.max(saved.index || 0, 0), queue.length - 1);
+  return { queue, index, answers };
+}
+
+// Renders a clickable deep-link to a specific CARs section (e.g. "901.27") when available.
+function carsSectionLink(section) {
+  if (!section || !carsSectionUrlTemplate) return "";
+  const url = carsSectionUrlTemplate.replace("{section}", section);
+  return ` &middot; <a href="${url}" target="_blank" rel="noopener">CARs ${section}</a>`;
+}
+
+// Maps recognizable reference names/abbreviations found in a question's "source" text
+// to that reference's best available link (local gold-source copy, else PDF, else webpage).
+const SOURCE_TOKEN_TO_REF_ID = {
+  "NAV CANADA VFR Phraseology": "ref-navcanada-vfr-phraseology",
+  "NAV CANADA Designated Airspace Handbook": "ref-navcanada-dah",
+  "Designated Airspace Handbook": "ref-navcanada-dah",
+  "NAV CANADA CWAS": "ref-navcanada-products",
+  "NAV CANADA CFS": "ref-navcanada-products",
+  "NAV CANADA VNC": "ref-navcanada-products",
+  "NAV CANADA VTA": "ref-navcanada-products",
+  "NAV CANADA": "ref-navcanada-products",
+  "CWAS": "ref-navcanada-products",
+  "CFS": "ref-navcanada-products",
+  "VNC": "ref-navcanada-products",
+  "VTA": "ref-navcanada-products",
+  "DAH": "ref-navcanada-dah",
+  "TC AIM": "ref-tc-aim-full",
+  "TP 15530": "ref-tp-15530",
+  "TP 15263": "ref-tp-15263",
+  "TP 12863": "ref-tp-12863",
+  "TP 12864": "ref-tp-12864",
+  "RIC-21": "ref-roc-a-study-guide",
+  "AC 107-002": "ref-ac-107-002",
+  "AC 903-001": "ref-ac-903-001",
+  "Aeronautics Act": "ref-aeronautics-act",
+  "CARs Part IX": "ref-justice-cars",
+  "Justice Laws": "ref-justice-cars",
+  "RPAS 101": "ref-rpas101"
+};
+
+function resolveRefHref(ref) {
+  return ref?.localCopy || ref?.pdfUrl || ref?.url || null;
+}
+
+function buildSourceLinkMap(references) {
+  const refsById = Object.fromEntries(references.map(r => [r.id, r]));
+  const tokens = Object.entries(SOURCE_TOKEN_TO_REF_ID)
+    .map(([token, refId]) => ({ token, href: resolveRefHref(refsById[refId]) }))
+    .filter(t => t.href)
+    .sort((a, b) => b.token.length - a.token.length);
+  tokens.forEach(t => { sourceLinkMap[t.token] = t.href; });
+  if (tokens.length) {
+    const escaped = tokens.map(t => t.token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    sourceLinkPattern = new RegExp(escaped.join("|"), "g");
+  }
+}
+
+// Wraps any recognized reference name within a source citation string in a link to that reference.
+function linkifySource(text) {
+  if (!text || !sourceLinkPattern) return text;
+  return text.replace(sourceLinkPattern, match =>
+    `<a href="${sourceLinkMap[match]}" target="_blank" rel="noopener">${match}</a>`
+  );
+}
+
+async function init() {
+  const [catRes, qRes, refRes] = await Promise.all([
+    fetch("data/~tmp40_categories.json"),
+    fetch("data/questions.json"),
+    fetch("data/references.json")
+  ]);
+  categories = await catRes.json();
+  const qData = await qRes.json();
+  questions = qData.questions || [];
+  const references = await refRes.json();
+  const carsRef = references.find(r => r.id === "ref-justice-cars");
+  carsSectionUrlTemplate = carsRef?.sectionUrlTemplate || null;
+  buildSourceLinkMap(references);
+
+  renderCategoryFilters();
+
+  document.getElementById("start-btn").addEventListener("click", startRound);
+  document.getElementById("select-all-categories-btn").addEventListener("click", () => setAllCategories(true));
+  document.getElementById("clear-categories-btn").addEventListener("click", () => setAllCategories(false));
+  document.getElementById("next-btn").addEventListener("click", () => navigate(1));
+  document.getElementById("prev-btn").addEventListener("click", () => navigate(-1));
+  document.getElementById("finish-btn").addEventListener("click", finishRound);
+  document.getElementById("abandon-btn").addEventListener("click", () => {
+    if (confirm("Abandon this round? Your progress on it will be discarded.")) {
+      clearRoundState();
+      roundActive = false;
+      document.getElementById("question-card").hidden = true;
+      document.getElementById("setup").hidden = false;
+    }
+  });
+  document.getElementById("restart-btn").addEventListener("click", () => {
+    document.getElementById("summary").hidden = true;
+    document.getElementById("setup").hidden = false;
+  });
+  document.getElementById("reset-stats-btn").addEventListener("click", () => {
+    if (confirm("Clear all locally stored quiz stats?")) {
+      stats = {};
+      saveStats();
+      renderStatsTable();
+    }
+  });
+
+  // Warn before a reload/close would silently discard an in-progress round.
+  window.addEventListener("beforeunload", (e) => {
+    if (roundActive) {
+      e.preventDefault();
+      e.returnValue = "";
+    }
+  });
+
+  const resumed = loadRoundState();
+  if (resumed) {
+    round = resumed;
+    roundActive = true;
+    document.getElementById("setup").hidden = true;
+    document.getElementById("stats-panel").hidden = true;
+    document.getElementById("question-card").hidden = false;
+    showQuestion();
+  }
+}
+
+function renderCategoryFilters() {
+  const wrap = document.getElementById("category-filters");
+  wrap.innerHTML = "";
+  categories.forEach(c => {
+    const available = questions.some(q => q.category === c.id);
+    const label = document.createElement("label");
+    label.innerHTML = `<input type="checkbox" value="${c.id}" ${available ? "checked" : "disabled"}> ${c.name}${available ? "" : " (no questions yet)"}`;
+    label.querySelector("input").addEventListener("change", updateCategorySelectionState);
+    wrap.appendChild(label);
+  });
+  updateCategorySelectionState();
+}
+
+function setAllCategories(selected) {
+  document.querySelectorAll("#category-filters input:not(:disabled)").forEach(input => {
+    input.checked = selected;
+  });
+  updateCategorySelectionState();
+}
+
+function updateCategorySelectionState() {
+  const inputs = Array.from(document.querySelectorAll("#category-filters input:not(:disabled)"));
+  const selectedCount = inputs.filter(input => input.checked).length;
+  document.getElementById("category-selection-status").textContent =
+    `${selectedCount} of ${inputs.length} selected`;
+  document.getElementById("select-all-categories-btn").disabled = selectedCount === inputs.length;
+  document.getElementById("clear-categories-btn").disabled = selectedCount === 0;
+}
+
+// Weight = higher for categories/questions with lower accuracy or never asked.
+function weightFor(id) {
+  const s = stats[id];
+  if (!s || s.asked === 0) return 3;
+  const accuracy = s.correct / s.asked;
+  return 1 + (1 - accuracy) * 3;
+}
+
+function weightedSample(pool, count) {
+  const chosen = [];
+  const remaining = pool.slice();
+  while (chosen.length < count && remaining.length > 0) {
+    const weights = remaining.map(q => weightFor(q.id) * weightFor("cat:" + q.category));
+    const total = weights.reduce((a, b) => a + b, 0);
+    let r = Math.random() * total;
+    let idx = 0;
+    for (; idx < weights.length; idx++) {
+      r -= weights[idx];
+      if (r <= 0) break;
+    }
+    idx = Math.min(idx, remaining.length - 1);
+    chosen.push(remaining.splice(idx, 1)[0]);
+  }
+  return chosen;
+}
+
+function startRound() {
+  const activeCategories = Array.from(document.querySelectorAll("#category-filters input:checked")).map(el => el.value);
+  const pool = questions.filter(q => activeCategories.includes(q.category));
+  const length = Math.min(parseInt(document.getElementById("round-length").value, 10) || 5, pool.length);
+
+  if (pool.length === 0) {
+    alert("No questions available for the selected categories.");
+    return;
+  }
+
+  round = { queue: weightedSample(pool, length), index: 0, answers: new Array(length).fill(null) };
+  roundActive = true;
+  document.getElementById("setup").hidden = true;
+  document.getElementById("summary").hidden = true;
+  document.getElementById("stats-panel").hidden = true;
+  document.getElementById("question-card").hidden = false;
+  saveRoundState();
+  showQuestion();
+}
+
+function firstUnansweredIndex() {
+  const idx = round.answers.findIndex(a => !a);
+  return idx === -1 ? round.queue.length : idx;
+}
+
+function allAnswered() {
+  return round.answers.every(a => a);
+}
+
+function renderScoreboard() {
+  const wrap = document.getElementById("scoreboard");
+  wrap.innerHTML = "";
+  const reachable = firstUnansweredIndex();
+  round.queue.forEach((q, i) => {
+    const pill = document.createElement("button");
+    const answer = round.answers[i];
+    const canReach = i <= reachable;
+    pill.className = "pill" + (i === round.index ? " current" : "") +
+      (answer ? (answer.correct ? " correct" : " incorrect") : "") +
+      (canReach ? "" : " unreached");
+    pill.textContent = i + 1;
+    pill.title = answer ? (answer.correct ? "Correct \u2014 click to review" : "Incorrect \u2014 click to review") : (canReach ? "Not yet answered" : "Not reached yet");
+    pill.disabled = !canReach;
+    pill.addEventListener("click", () => { if (canReach) { round.index = i; showQuestion(); } });
+    wrap.appendChild(pill);
+  });
+}
+
+// index defaults to round.index; pass explicitly when navigating.
+function showQuestion() {
+  const q = round.queue[round.index];
+  const answer = round.answers[round.index];
+
+  document.getElementById("progress-line").textContent =
+    `Question ${round.index + 1} of ${round.queue.length} · Score so far: ${round.answers.filter(a => a && a.correct).length} / ${round.answers.filter(Boolean).length}`;
+  const catName = categories.find(c => c.id === q.category)?.name || q.category;
+  document.getElementById("category-line").textContent =
+    `Category: ${catName} · Difficulty: ${q.difficulty}` + (q.examLevel ? ` · ${q.examLevel} only` : "");
+  document.getElementById("question-text").textContent = q.question;
+  renderScoreboard();
+
+  const choicesEl = document.getElementById("choices");
+  choicesEl.innerHTML = "";
+  q.choices.forEach((choice, i) => {
+    const btn = document.createElement("button");
+    btn.className = "choice";
+    btn.innerHTML = `<span class="choice-letter">${LETTERS[i]}.</span><span>${choice}</span>`;
+    if (answer) {
+      btn.disabled = true;
+      if (i === q.answerIndex) btn.classList.add("correct");
+      else if (i === answer.chosenIndex) btn.classList.add("incorrect");
+    } else {
+      btn.addEventListener("click", () => handleAnswer(i));
+    }
+    choicesEl.appendChild(btn);
+  });
+
+  const quoteBlock = q.carsQuote
+    ? `<blockquote style="margin: 0.8rem 0 0; padding: 0.75rem 0.9rem; border-left: 4px solid #7aa8ba; background: #f4f9fb; color: #1f2d39; border-radius: 6px;">“${q.carsQuote}”</blockquote>`
+    : "";
+
+  document.getElementById("feedback").innerHTML = answer
+    ? `<p><strong>${answer.correct ? "Correct." : "Incorrect."}</strong> You selected ${LETTERS[answer.chosenIndex]}; correct answer is ${LETTERS[q.answerIndex]}. ${q.rationale}</p>` +
+      `<p class="meta">Source: ${linkifySource(q.source)}${carsSectionLink(q.carsSection)}</p>` +
+      quoteBlock
+    : "";
+
+  document.getElementById("prev-btn").disabled = round.index === 0;
+  document.getElementById("next-btn").hidden = !answer || round.index >= round.queue.length - 1;
+  document.getElementById("finish-btn").hidden = !allAnswered();
+}
+
+function handleAnswer(chosenIndex) {
+  const q = round.queue[round.index];
+  const correct = chosenIndex === q.answerIndex;
+  round.answers[round.index] = { chosenIndex, correct };
+
+  const qStat = ensureStat(q.id);
+  qStat.asked++; if (correct) qStat.correct++;
+  const catStat = ensureStat("cat:" + q.category);
+  catStat.asked++; if (correct) catStat.correct++;
+  saveStats();
+  renderStatsTable();
+  saveRoundState();
+
+  showQuestion();
+}
+
+function navigate(direction) {
+  const target = round.index + direction;
+  if (target < 0 || target >= round.queue.length) return;
+  round.index = target;
+  showQuestion();
+}
+
+function finishRound() {
+  if (!allAnswered()) {
+    alert("Answer all questions in this round before finishing.");
+    return;
+  }
+  roundActive = false;
+  clearRoundState();
+  const correctCount = round.answers.filter(a => a.correct).length;
+  document.getElementById("question-card").hidden = true;
+  document.getElementById("summary").hidden = false;
+  document.getElementById("summary-line").textContent = `Score: ${correctCount} / ${round.queue.length}`;
+  renderReviewList();
+  renderStatsTable();
+  document.getElementById("stats-panel").hidden = false;
+}
+
+function renderReviewList() {
+  const wrap = document.getElementById("review-list");
+  wrap.innerHTML = "<h3>Review</h3>";
+  round.queue.forEach((q, i) => {
+    const a = round.answers[i];
+    const div = document.createElement("div");
+    div.className = `review-item ${a.correct ? "right" : "wrong"}`;
+    div.innerHTML =
+      `<p><strong>Q${i + 1}.</strong> ${q.question}</p>` +
+      `<p class="meta">Your answer: ${LETTERS[a.chosenIndex]} &middot; Correct answer: ${LETTERS[q.answerIndex]} &middot; ${a.correct ? "Correct" : "Incorrect"}${q.examLevel ? ` &middot; ${q.examLevel} only` : ""}</p>` +
+      `<p class="meta">Correct choice: ${q.choices[q.answerIndex]}</p>` +
+      `<p class="meta">Source: ${linkifySource(q.source)}${carsSectionLink(q.carsSection)}</p>`;
+    wrap.appendChild(div);
+  });
+}
+
+function renderStatsTable() {
+  const tbody = document.querySelector("#stats-table tbody");
+  tbody.innerHTML = "";
+  categories.forEach(c => {
+    const s = stats["cat:" + c.id];
+    const asked = s?.asked || 0;
+    const correct = s?.correct || 0;
+    const accuracy = asked ? Math.round((correct / asked) * 100) + "%" : "-";
+    const row = document.createElement("tr");
+    row.innerHTML = `<td>${c.name}</td><td>${asked}</td><td>${correct}</td><td>${accuracy}</td>`;
+    tbody.appendChild(row);
+  });
+}
+
+init();
+</script>
+</body>
+</html>

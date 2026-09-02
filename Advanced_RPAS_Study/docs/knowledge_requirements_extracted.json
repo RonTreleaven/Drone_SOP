@@ -1,0 +1,1544 @@
+{
+  "title": "ADVANCED PILOT KNOWLEDGE REQUIREMENTS",
+  "source": "TP15263_E_Knowledge-Requirements-Basic-Advanced.pdf",
+  "section": "ADVANCED PILOT ONLY (Excluding Level 1 Complex and BVLOS)",
+  "sections": {
+    "2": {
+      "title": "RPA airframes, power plants, propulsion and systems",
+      "knowledge_areas": [
+        {
+          "name": "Airframes",
+          "subtopics": []
+        },
+        {
+          "name": "contamination, wiring damage, structural",
+          "subtopics": []
+        },
+        {
+          "name": "damage.",
+          "subtopics": []
+        },
+        {
+          "name": "Electrical systems",
+          "subtopics": []
+        },
+        {
+          "name": "speed controllers, batteries, etc.) components.",
+          "subtopics": [
+            {
+              "name": "Servo motors",
+              "objectives": [
+                "Describe the actions of a servo."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "components dry.",
+          "subtopics": []
+        },
+        {
+          "name": "Redundancies & critical items",
+          "subtopics": []
+        },
+        {
+          "name": "scenarios.",
+          "subtopics": []
+        },
+        {
+          "name": "Control station",
+          "subtopics": [
+            {
+              "name": "Orientation",
+              "objectives": [
+                "State the importance of pilot and antenna"
+              ]
+            },
+            {
+              "name": "Software version control orientations in reference to the RPA.",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "Data links",
+          "subtopics": [
+            {
+              "name": "Frequency bands (licensed and unlicensed)",
+              "objectives": [
+                "Describe how to assess the Radio Frequency"
+              ]
+            },
+            {
+              "name": "Line-of-sight (RF) environment or conduct and RF sweep.",
+              "objectives": []
+            },
+            {
+              "name": "Antenna and tracking systems",
+              "objectives": [
+                "Discuss the importance of radio line-of-sight."
+              ]
+            },
+            {
+              "name": "Interference",
+              "objectives": [
+                "Discuss the importance of Ground Control"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "recovery.",
+          "subtopics": []
+        },
+        {
+          "name": "Batteries",
+          "subtopics": [
+            {
+              "name": "Types and hazards",
+              "objectives": [
+                "Interpret maintenance log history."
+              ]
+            },
+            {
+              "name": "Battery parameters such as Energy Capacity (measured in",
+              "objectives": [
+                "Describe the variables affecting batteries"
+              ]
+            },
+            {
+              "name": "Battery configurations (parallel, series) status).",
+              "objectives": []
+            },
+            {
+              "name": "Charge cycles, storage, and maintenance",
+              "objectives": [
+                "Assess battery voltages (understand discharge"
+              ]
+            },
+            {
+              "name": "Discharge curves curves).",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "Regulations flight.",
+          "subtopics": []
+        },
+        {
+          "name": "lithium battery fires.",
+          "subtopics": []
+        },
+        {
+          "name": "Fuel systems",
+          "subtopics": [
+            {
+              "name": "Fuel system types and hazards.",
+              "objectives": [
+                "Describe different fuel systems in RPA."
+              ]
+            },
+            {
+              "name": "Fuel quantity measurement.",
+              "objectives": [
+                "Describes hazards of different fuels."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "grounding/bonding techniques.",
+          "subtopics": []
+        },
+        {
+          "name": "Autopilots",
+          "subtopics": [
+            {
+              "name": "The role of an autopilot",
+              "objectives": [
+                "Describe the types of pilot intervention"
+              ]
+            },
+            {
+              "name": "Different levels of control (e.g., stabilization vs. waypoint) possible during flight.",
+              "objectives": []
+            },
+            {
+              "name": "Flight termination systems (internal and remote)",
+              "objectives": [
+                "Describe the pre-flight preparation related to"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "improper software version control.",
+          "subtopics": []
+        },
+        {
+          "name": "firmware only from trusted sources.",
+          "subtopics": []
+        },
+        {
+          "name": "Payloads",
+          "subtopics": []
+        },
+        {
+          "name": "atmospheric, etc.) rest of the system.",
+          "subtopics": []
+        },
+        {
+          "name": "Propulsion",
+          "subtopics": []
+        },
+        {
+          "name": "outrunner) types.",
+          "subtopics": [
+            {
+              "name": "Speed controllers",
+              "objectives": [
+                "Describe 2-stroke and 4-stroke engines."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "propulsion system failure.",
+          "subtopics": []
+        },
+        {
+          "name": "Launch and recovery systems",
+          "subtopics": [
+            {
+              "name": "Types of launchers",
+              "objectives": [
+                "Identify the different danger areas of a safety"
+              ]
+            },
+            {
+              "name": "Types of recovery systems–parachute, deep stall, arresting template.",
+              "objectives": [
+                "system/hook, normal landing  Describe different methods of recovering an"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Maintenance and record keeping",
+          "subtopics": []
+        },
+        {
+          "name": "independently verified.",
+          "subtopics": [
+            {
+              "name": "Servicing, elementary tasks, critical tasks",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "Magnetic compass",
+          "subtopics": [
+            {
+              "name": "Principles of operation",
+              "objectives": [
+                "Explain the difference between magnetic and"
+              ]
+            },
+            {
+              "name": "Variation true north.",
+              "objectives": []
+            },
+            {
+              "name": "Factors adversely affecting compass operation",
+              "objectives": [
+                "Explain what can affect compass operation"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Altimeter",
+          "subtopics": [
+            {
+              "name": "Principles of operation",
+              "objectives": [
+                "Explain the purpose of a barometric altimeter"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "and barometric altitude.",
+          "subtopics": []
+        },
+        {
+          "name": "sea level (ASL).",
+          "subtopics": []
+        },
+        {
+          "name": "Airspeed indicator",
+          "subtopics": [
+            {
+              "name": "Principles of operation",
+              "objectives": [
+                "Describe the difference between indicated"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Inertial measurement unit (IMU)",
+          "subtopics": [
+            {
+              "name": "Components",
+              "objectives": [
+                "Describe what the IMU responsible for."
+              ]
+            },
+            {
+              "name": "Errors & malfunctions",
+              "objectives": [
+                "Give examples of what can cause the IMU to"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "3": {
+      "title": "Human factors",
+      "knowledge_areas": [
+        {
+          "name": "Aviation physiology",
+          "subtopics": [
+            {
+              "name": "Vision/visual scanning techniques",
+              "objectives": [
+                "Describe good scanning techniques (visual, audio)"
+              ]
+            },
+            {
+              "name": "Hearing for visual observers (conflicting aircraft).",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "visual/perspective/parallax illusions) distant aircraft.",
+          "subtopics": [
+            {
+              "name": "Body rhythms/jet lag",
+              "objectives": [
+                "Describe factors that affect alertness."
+              ]
+            },
+            {
+              "name": "Sleep/fatigue",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "The pilot and the operating environment",
+          "subtopics": [
+            {
+              "name": "Medications (prescribed and over-the-counter)",
+              "objectives": [
+                "Describe the effects of medications and other"
+              ]
+            },
+            {
+              "name": "Substance abuse (alcohol/drugs) substances on pilot performance, including lasting",
+              "objectives": []
+            },
+            {
+              "name": "Heat/cold effects beyond initial impairment.",
+              "objectives": []
+            },
+            {
+              "name": "Noise",
+              "objectives": [
+                "Describe the effects of exposure to cold and"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "poisoning.",
+          "subtopics": []
+        },
+        {
+          "name": "Aviation psychology",
+          "subtopics": []
+        },
+        {
+          "name": "decision-making making.",
+          "subtopics": [
+            {
+              "name": "Situational awareness",
+              "objectives": [
+                "List the factors that affect situational awareness."
+              ]
+            },
+            {
+              "name": "Stress",
+              "objectives": [
+                "Describe how a given operational risk might be"
+              ]
+            },
+            {
+              "name": "Managing risk managed.",
+              "objectives": []
+            },
+            {
+              "name": "Attitudes",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "Pilotequipment/materials relationship",
+          "subtopics": []
+        },
+        {
+          "name": "control procedures and considering lessons learned from",
+          "subtopics": [
+            {
+              "name": "Standard operating proceduresrationale/benefits operating experience.",
+              "objectives": []
+            },
+            {
+              "name": "Correct use of checklists and manuals",
+              "objectives": [
+                "Explain how to manage an interruption to a"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Interpersonal relations",
+          "subtopics": [
+            {
+              "name": "Communications with flight crew/air traffic",
+              "objectives": [
+                "Resolve differences peacefully.",
+                "services/customers/public/authorities  Promote open communications."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "group organization/politics.",
+          "subtopics": [
+            {
+              "name": "Operating pressuresemployer",
+              "objectives": []
+            }
+          ]
+        }
+      ]
+    },
+    "4": {
+      "title": "Meteorology",
+      "knowledge_areas": [
+        {
+          "name": "The earth’s atmosphere",
+          "subtopics": [
+            {
+              "name": "Composition and physical properties",
+              "objectives": [
+                "Describe the chemical composition of the"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Atmospheric pressure",
+          "subtopics": [
+            {
+              "name": "Pressure measurements",
+              "objectives": [
+                "Define atmospheric pressure, station pressure, sea"
+              ]
+            },
+            {
+              "name": "Station pressure level pressure.",
+              "objectives": []
+            },
+            {
+              "name": "Sea level pressure",
+              "objectives": [
+                "Explain how atmospheric pressure varies with"
+              ]
+            },
+            {
+              "name": "Pressure system and their variations height.",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "low-pressure systems, convergence, and divergence.",
+          "subtopics": []
+        },
+        {
+          "name": "Meteorological aspects of altimetry",
+          "subtopics": [
+            {
+              "name": "Pressure altitude",
+              "objectives": [
+                "Recall the factors that affect density altitude."
+              ]
+            },
+            {
+              "name": "Density altitude",
+              "objectives": [
+                "Assess weather and density altitude for anticipated"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "envelope limitations.",
+          "subtopics": []
+        },
+        {
+          "name": "Moisture",
+          "subtopics": [
+            {
+              "name": "Temperature variations with altitude",
+              "objectives": [
+                "Explain the relationship between lapse rate,"
+              ]
+            },
+            {
+              "name": "Relative humidity/dewpoint temperature-dewpoint spread and cloud base.",
+              "objectives": []
+            },
+            {
+              "name": "Cloud formation",
+              "objectives": [
+                "Explain the effect of moisture and temperature on"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "potential air traffic.",
+          "subtopics": []
+        },
+        {
+          "name": "Stability and instability",
+          "subtopics": [
+            {
+              "name": "Characteristics of stable/unstable air",
+              "objectives": [
+                "Characterize the effects of stable and unstable air"
+              ]
+            },
+            {
+              "name": "Surface heating/cooling masses (visibility, turbulence, and smog layers).",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "Clouds",
+          "subtopics": [
+            {
+              "name": "Types applicable to low level flying and recognition",
+              "objectives": [
+                "Identify cloud types and their impact on flying"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "development.",
+          "subtopics": []
+        },
+        {
+          "name": "Surface based layers",
+          "subtopics": [
+            {
+              "name": "Fog formation",
+              "objectives": [
+                "Explain how fog is formed."
+              ]
+            },
+            {
+              "name": "Haze/smoke",
+              "objectives": [
+                "Identify the elements that can dissipate fog."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Turbulence",
+          "subtopics": [
+            {
+              "name": "Convection",
+              "objectives": [
+                "Explain the sources of mechanical turbulence."
+              ]
+            },
+            {
+              "name": "Mechanical",
+              "objectives": [
+                "Describe the formation of turbulence around large"
+              ]
+            },
+            {
+              "name": "Orographic objects and mountain tops.",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "wind shear.",
+          "subtopics": []
+        },
+        {
+          "name": "Wind",
+          "subtopics": [
+            {
+              "name": "Pressure gradient",
+              "objectives": [
+                "Explain the effect of pressure gradient on the"
+              ]
+            },
+            {
+              "name": "Low level windsvariation in surface wind horizontal movement of air.",
+              "objectives": []
+            },
+            {
+              "name": "Friction",
+              "objectives": [
+                "Explain how wind changes in the friction layer due to"
+              ]
+            },
+            {
+              "name": "Diurnal effects surface heating.",
+              "objectives": []
+            },
+            {
+              "name": "Land/sea breezes",
+              "objectives": [
+                "Define wind shear and its effect on turbulence."
+              ]
+            },
+            {
+              "name": "Katabatic/anabatic effects",
+              "objectives": [
+                "Explain the formation of land/sea breezes."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "winds.",
+          "subtopics": []
+        },
+        {
+          "name": "Fronts and frontal weather",
+          "subtopics": [
+            {
+              "name": "Structure/frontal wave",
+              "objectives": [
+                "Discuss the relationship between air masses and"
+              ]
+            },
+            {
+              "name": "Cold front creation of weather fronts.",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "approaches and passes over your location.",
+          "subtopics": []
+        },
+        {
+          "name": "Aircraft icing",
+          "subtopics": [
+            {
+              "name": "Formation",
+              "objectives": [
+                "Explain how icing is formed and the conditions that"
+              ]
+            },
+            {
+              "name": "In-flightfreezing rain cause it.",
+              "objectives": []
+            },
+            {
+              "name": "Hoar frost",
+              "objectives": [
+                "Recognize weather conditions that can cause surface"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "susceptible to icing.",
+          "subtopics": []
+        },
+        {
+          "name": "Thunderstorms",
+          "subtopics": [
+            {
+              "name": "Requirements for development",
+              "objectives": [
+                "Describe the three stages of thunderstorm"
+              ]
+            },
+            {
+              "name": "Typesair mass/frontal development.",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "fronts/downbursts/microbursts/hail/lightning/antennas approaching thunderstorm.",
+          "subtopics": []
+        },
+        {
+          "name": "activity.",
+          "subtopics": []
+        },
+        {
+          "name": "Meteorological services available to pilots",
+          "subtopics": [
+            {
+              "name": "Flight Information Centres (FIC) – telephone service",
+              "objectives": [
+                "Identify the sources for local weather information."
+              ]
+            },
+            {
+              "name": "Aviation weather web site",
+              "objectives": [
+                "Describe the differences in cloud base and wind"
+              ]
+            },
+            {
+              "name": "Automatic Terminal Information Service (ATIS) forecasts between aviation and non-aviation",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "Aviation weather reports",
+          "subtopics": []
+        },
+        {
+          "name": "information and identify methods of decoding.",
+          "subtopics": []
+        },
+        {
+          "name": "Aviation forecasts",
+          "subtopics": [
+            {
+              "name": "Times issued and validity periods",
+              "objectives": [
+                "Compare forecast weather with the regulatory"
+              ]
+            },
+            {
+              "name": "Aerodrome Forecasts (TAF) requirements.",
+              "objectives": [
+                "Assess forecast ceiling, wind, turbulence,",
+                "Assess forecast vs. control station requirements"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "5": {
+      "title": "Navigation",
+      "knowledge_areas": [
+        {
+          "name": "Definitions",
+          "subtopics": [
+            {
+              "name": "Longitude",
+              "objectives": [
+                "Demonstrate operational understanding of these"
+              ]
+            },
+            {
+              "name": "Latitude definitions.",
+              "objectives": []
+            },
+            {
+              "name": "Variation",
+              "objectives": []
+            },
+            {
+              "name": "Track",
+              "objectives": []
+            },
+            {
+              "name": "Heading",
+              "objectives": []
+            },
+            {
+              "name": "Airspeed",
+              "objectives": []
+            },
+            {
+              "name": "Bearing",
+              "objectives": []
+            },
+            {
+              "name": "Wind velocity",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "Maps and charts",
+          "subtopics": [
+            {
+              "name": "Aeronautical charts: VNC, VTA",
+              "objectives": [
+                "Locate your position on an aeronautical chart."
+              ]
+            },
+            {
+              "name": "Topographical symbols",
+              "objectives": [
+                "Interpret topographical information from charts."
+              ]
+            },
+            {
+              "name": "Elevation and contours (relief)",
+              "objectives": [
+                "Determine your distance from the nearest"
+              ]
+            },
+            {
+              "name": "Aeronautical information aerodrome.",
+              "objectives": []
+            },
+            {
+              "name": "Scale and units of measurement",
+              "objectives": [
+                "Identify a control zone on an aeronautical chart."
+              ]
+            },
+            {
+              "name": "Locating position by latitude and longitude",
+              "objectives": [
+                "Determine the validity/currency of aeronautical"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "identify airport operators and air traffic control",
+          "subtopics": []
+        },
+        {
+          "name": "agencies.",
+          "subtopics": []
+        },
+        {
+          "name": "Time and longitude",
+          "subtopics": [
+            {
+              "name": "24 Hour system",
+              "objectives": [
+                "Convert UTC to local time & vice versa."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "local and vice versa",
+          "subtopics": []
+        },
+        {
+          "name": "Pilot navigation",
+          "subtopics": [
+            {
+              "name": "Use of aeronautical charts",
+              "objectives": [
+                "Describe location and activities referring to"
+              ]
+            },
+            {
+              "name": "Measurement of bearing and distance appropriate aeronautical charts and aeronautical",
+              "objectives": []
+            },
+            {
+              "name": "Variation reference points.",
+              "objectives": []
+            },
+            {
+              "name": "True track/magnetic track",
+              "objectives": [
+                "Identify the class of airspace and proximity of"
+              ]
+            },
+            {
+              "name": "True/magnetic/headings aerodromes to the operating location using",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "heading.",
+          "subtopics": []
+        },
+        {
+          "name": "Flight planning",
+          "subtopics": [
+            {
+              "name": "Factors affecting choice of flying area",
+              "objectives": [
+                "Describe the factors that will influence your choice"
+              ]
+            },
+            {
+              "name": "NOTAM of flying area (restricted airspace, property lines,",
+              "objectives": []
+            },
+            {
+              "name": "Use of Canada Flight Supplement (CFS) requirement for an SFOC — RPAS, etc.).",
+              "objectives": []
+            },
+            {
+              "name": "Fuel/energy requirements",
+              "objectives": [
+                "State where to obtain NOTAMs."
+              ]
+            },
+            {
+              "name": "Weight and balance",
+              "objectives": [
+                "Obtain NOTAMs, including GPS NOTAMs, and"
+              ]
+            },
+            {
+              "name": "Documents to be available to crew members interpret them.",
+              "objectives": []
+            },
+            {
+              "name": "Aircraft serviceability, configuration",
+              "objectives": [
+                "Demonstrate how to use the CFS to determine type"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "charge status, demand due to weight)",
+          "subtopics": []
+        },
+        {
+          "name": "correct and complete in the autopilot.",
+          "subtopics": []
+        },
+        {
+          "name": "Radio theory",
+          "subtopics": []
+        },
+        {
+          "name": "frequency radio waves propagation.",
+          "subtopics": []
+        },
+        {
+          "name": "communication range.",
+          "subtopics": []
+        },
+        {
+          "name": "Global navigation satellite system (GNSS/GPS)",
+          "subtopics": [
+            {
+              "name": "Principles of operation",
+              "objectives": [
+                "Describe how GNSS systems may be enhanced by"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "of satellites, weather).",
+          "subtopics": []
+        },
+        {
+          "name": "Other radio and radar aidsbasic principles and use",
+          "subtopics": [
+            {
+              "name": "Air traffic control (ATC) transponder",
+              "objectives": [
+                "Describe the function of an ATC radar transponder."
+              ]
+            },
+            {
+              "name": "Locator devices",
+              "objectives": []
+            }
+          ]
+        }
+      ]
+    },
+    "6": {
+      "title": "Flight operations",
+      "knowledge_areas": [
+        {
+          "name": "General",
+          "subtopics": [
+            {
+              "name": "Pilot-in-command responsibilities",
+              "objectives": [
+                "Describe the hazards that can occur in different"
+              ]
+            },
+            {
+              "name": "Aircraft defects geographic or topographical areas.",
+              "objectives": []
+            },
+            {
+              "name": "Winter operations",
+              "objectives": [
+                "Describe the normal flow of traditional aircraft"
+              ]
+            },
+            {
+              "name": "Thunderstorm avoidance traffic at an aerodrome (circuit, taxiing, etc.).",
+              "objectives": []
+            },
+            {
+              "name": "Wildlife hazards",
+              "objectives": [
+                "Explain how local and portable devices might be"
+              ]
+            },
+            {
+              "name": "Wildlife conservation controlled to reduce interference.",
+              "objectives": []
+            },
+            {
+              "name": "Collision avoidanceuse of lights",
+              "objectives": []
+            },
+            {
+              "name": "Runway numbering",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "prevention of runway incursions and conflicts)",
+          "subtopics": []
+        },
+        {
+          "name": "devices",
+          "subtopics": []
+        },
+        {
+          "name": "Aircraft performance",
+          "subtopics": [
+            {
+              "name": "Effects of density altitude and humidity",
+              "objectives": [
+                "Describe the effect of density altitude on launch and"
+              ]
+            },
+            {
+              "name": "Bank/speed vs rate/radius of turn climb performance.",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "flight manual.",
+          "subtopics": []
+        },
+        {
+          "name": "Performance charts/data",
+          "subtopics": []
+        },
+        {
+          "name": "temperature) cord launchers, pneumatic launchers or hydraulic",
+          "subtopics": [
+            {
+              "name": "Crosswind limits launchers.",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "speeds, climb power, etc.)",
+          "subtopics": []
+        },
+        {
+          "name": "maximum altitude at which an RPA can hover.",
+          "subtopics": []
+        },
+        {
+          "name": "Weight and balance",
+          "subtopics": [
+            {
+              "name": "Locating centre of gravity (C of G)",
+              "objectives": [
+                "Describe methods of determining C of G."
+              ]
+            },
+            {
+              "name": "Weightse.g., empty/gross",
+              "objectives": [
+                "Describe how to return a C of G to within limits."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Aircraft critical surface contamination",
+          "subtopics": []
+        },
+        {
+          "name": "performance airfoils.",
+          "subtopics": []
+        },
+        {
+          "name": "condensation, tape, etc.)",
+          "subtopics": []
+        },
+        {
+          "name": "RPAS operations (VLOS)",
+          "subtopics": [
+            {
+              "name": "Landowner authorizations",
+              "objectives": [
+                "Identify typical functional areas in a VLOS site (e.g.,"
+              ]
+            },
+            {
+              "name": "Coordination with public safety (municipality) launch, observer).",
+              "objectives": []
+            },
+            {
+              "name": "Charging areas",
+              "objectives": [
+                "Identify desirable characteristics of alternate"
+              ]
+            },
+            {
+              "name": "Site control, safety perimeter recovery areas.",
+              "objectives": []
+            },
+            {
+              "name": "Launch points, recovery points",
+              "objectives": [
+                "Identify the requirements of visual observer"
+              ]
+            },
+            {
+              "name": "Obstacles locations.",
+              "objectives": []
+            },
+            {
+              "name": "Emergency procedures",
+              "objectives": [
+                "Identify and evaluate access routes for both normal"
+              ]
+            },
+            {
+              "name": "Defining roles and responsibilities and emergency operations.",
+              "objectives": []
+            },
+            {
+              "name": "Communications",
+              "objectives": [
+                "Assess public access and determine crowd control"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "data, check for damage, clean and dry as needed,",
+          "subtopics": []
+        },
+        {
+          "name": "remove batteries, record information into logs,",
+          "subtopics": []
+        },
+        {
+          "name": "disassemble and pack per system manual, etc.).",
+          "subtopics": []
+        },
+        {
+          "name": "RPAS Operations (Extended VLOS - EVLOS)",
+          "subtopics": [
+            {
+              "name": "Where EVLOS is permitted",
+              "objectives": [
+                "Identify that EVLOS is permitted in uncontrolled"
+              ]
+            },
+            {
+              "name": "Maximum range from pilot and visual observer (VO) airspace away from aerodromes.",
+              "objectives": []
+            },
+            {
+              "name": "Proximity to people",
+              "objectives": [
+                "Identify that EVLOS operations must be conducted more"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "C2 Links.",
+          "subtopics": []
+        },
+        {
+          "name": "when performing EVLOS operations.",
+          "subtopics": []
+        },
+        {
+          "name": "RPAS Operations (Sheltered Operations)",
+          "subtopics": [
+            {
+              "name": "Where sheltered operations are permitted",
+              "objectives": [
+                "Identify that sheltered operations can take place in"
+              ]
+            },
+            {
+              "name": "Maximum range from pilot controlled and uncontrolled airspace.",
+              "objectives": []
+            },
+            {
+              "name": "Proximity to people",
+              "objectives": [
+                "Identify what constitutes an obstacle."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "need airspace authorization.",
+          "subtopics": []
+        },
+        {
+          "name": "operations",
+          "subtopics": []
+        },
+        {
+          "name": "must be more than 100 feet from the RPA at all times",
+          "subtopics": []
+        },
+        {
+          "name": "during a sheltered operation.",
+          "subtopics": []
+        },
+        {
+          "name": "Occupational safety & health",
+          "subtopics": [
+            {
+              "name": "Charging areas",
+              "objectives": [
+                "List the safety equipment necessary for the"
+              ]
+            },
+            {
+              "name": "Launch points, recovery points operation (fire extinguishers, first aid kit, etc.).",
+              "objectives": []
+            },
+            {
+              "name": "Obstacles",
+              "objectives": [
+                "Assess weather threats in relation to ground control"
+              ]
+            },
+            {
+              "name": "Emergency procedures station (GCS) operations.",
+              "objectives": []
+            },
+            {
+              "name": "Responsibilities",
+              "objectives": [
+                "Identify and evaluate access routes."
+              ]
+            },
+            {
+              "name": "Communications",
+              "objectives": [
+                "List typical emergency contacts appropriate to flying"
+              ]
+            },
+            {
+              "name": "Post-flight actions site (flyaways, EMS etc.)",
+              "objectives": [
+                "Identify legal site access issues (trespass, insurance,",
+                "List typical personal safety equipment.",
+                "Describe the hazards of launchers and recovery"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "7": {
+      "title": "Theory of flight",
+      "knowledge_areas": [
+        {
+          "name": "Principles of flight",
+          "subtopics": [
+            {
+              "name": "Bernoulli's principle",
+              "objectives": [
+                "Describe how lift is produced."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Aircraft parts and components",
+          "subtopics": [
+            {
+              "name": "Fixed wing",
+              "objectives": [
+                "Explain the function of the vertical fin."
+              ]
+            },
+            {
+              "name": "Multi-rotor aircraft",
+              "objectives": [
+                "Identify basic components including lifting and"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Forces acting on an aircraft",
+          "subtopics": [
+            {
+              "name": "Lift",
+              "objectives": [
+                "Identify the 4 forces acting on an aircraft in flight."
+              ]
+            },
+            {
+              "name": "Draginduced/parasite",
+              "objectives": [
+                "Describe how the 4 forces are balanced during"
+              ]
+            },
+            {
+              "name": "Thrust manoeuvres and steady flight.",
+              "objectives": []
+            },
+            {
+              "name": "Weight",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "Stability",
+          "subtopics": [
+            {
+              "name": "Longitudinal, lateral, directional stability",
+              "objectives": [
+                "Explain how the centre of gravity affects longitudinal"
+              ]
+            },
+            {
+              "name": "Inherent stability stability.",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "position",
+          "subtopics": []
+        },
+        {
+          "name": "Aerofoils",
+          "subtopics": [
+            {
+              "name": "Relative airflow and angle of attack",
+              "objectives": [
+                "Explain how lift is controlled."
+              ]
+            },
+            {
+              "name": "Relationship of lift and drag to angle of attack",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "Propellers & rotors",
+          "subtopics": []
+        },
+        {
+          "name": "affects performance.",
+          "subtopics": []
+        },
+        {
+          "name": "Design of the wing",
+          "subtopics": [
+            {
+              "name": "Wing planform",
+              "objectives": [
+                "Describe how the design of the wing affects"
+              ]
+            },
+            {
+              "name": "Spoilers performance.",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "Aeroplane flight controls",
+          "subtopics": [
+            {
+              "name": "Aeroplane axes and planes of movement",
+              "objectives": [
+                "Describe the function of different control surfaces."
+              ]
+            },
+            {
+              "name": "Control surfaces",
+              "objectives": [
+                "Explain the function of trim."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Helicopter flight controls",
+          "subtopics": [
+            {
+              "name": "Cyclic",
+              "objectives": [
+                "Describe how lift is created with a rotary wing"
+              ]
+            },
+            {
+              "name": "Collective (powered and autorotation).",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "rotating rotors.",
+          "subtopics": []
+        },
+        {
+          "name": "Multi-rotor aircraft dynamics",
+          "subtopics": [
+            {
+              "name": "Principles of flight and torque",
+              "objectives": [
+                "Describe how yaw, pitch, roll, and climb are"
+              ]
+            },
+            {
+              "name": "Pilot flight controls achieved in a multi-rotor aircraft.",
+              "objectives": []
+            },
+            {
+              "name": "Settling with power",
+              "objectives": [
+                "Describe how to avoid dynamic rollover in a"
+              ]
+            },
+            {
+              "name": "Recirculation crosswind.",
+              "objectives": []
+            }
+          ]
+        },
+        {
+          "name": "lateral control of a rotorcraft.",
+          "subtopics": []
+        },
+        {
+          "name": "Load factor",
+          "subtopics": [
+            {
+              "name": "Load factorturns",
+              "objectives": [
+                "Describe what can affect the load factor on an"
+              ]
+            },
+            {
+              "name": "Gust loads, turbulence aircraft.",
+              "objectives": []
+            },
+            {
+              "name": "Structural/power limitations",
+              "objectives": [
+                "Recall that increasing the load factor produces a"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "8": {
+      "title": "Radiotelephony",
+      "knowledge_areas": [
+        {
+          "name": "Communications",
+          "subtopics": []
+        },
+        {
+          "name": "Canada Operator Certificate – with Aeronautical (position, phase of flight).",
+          "subtopics": [
+            {
+              "name": "Terminology",
+              "objectives": [
+                "Give an example of a routine blind broadcast."
+              ]
+            },
+            {
+              "name": "Common frequencies",
+              "objectives": [
+                "List the contents of a routine call to ATC."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "practices to avoid interfering with other",
+          "subtopics": []
+        },
+        {
+          "name": "communications.",
+          "subtopics": []
+        },
+        {
+          "name": "Crew member radios",
+          "subtopics": [
+            {
+              "name": "Terminology",
+              "objectives": [
+                "Give an example of an advisory describing a possible"
+              ]
+            },
+            {
+              "name": "Reception performance aircraft conflict.",
+              "objectives": [
+                "Describe factors affecting radio reception range.",
+                "Describe the verbal communication elements in a"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

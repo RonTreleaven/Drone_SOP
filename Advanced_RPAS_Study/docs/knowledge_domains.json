@@ -1,0 +1,37 @@
+[
+  {
+    "number": "2",
+    "title": "RPA airframes, power plants, propulsion and systems",
+    "knowledge_areas": []
+  },
+  {
+    "number": "3",
+    "title": "Human factors",
+    "knowledge_areas": []
+  },
+  {
+    "number": "4",
+    "title": "Meteorology",
+    "knowledge_areas": []
+  },
+  {
+    "number": "5",
+    "title": "Navigation",
+    "knowledge_areas": []
+  },
+  {
+    "number": "6",
+    "title": "Flight operations",
+    "knowledge_areas": []
+  },
+  {
+    "number": "7",
+    "title": "Theory of flight",
+    "knowledge_areas": []
+  },
+  {
+    "number": "8",
+    "title": "Radiotelephony",
+    "knowledge_areas": []
+  }
+]

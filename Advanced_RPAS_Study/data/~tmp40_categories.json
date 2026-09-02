@@ -1,0 +1,58 @@
+[
+  {
+    "id": "regulations",
+    "name": "Regulations / CARs Part IX"
+  },
+  {
+    "id": "airspace",
+    "name": "Airspace & Controlled Airspace"
+  },
+  {
+    "id": "aerodromes",
+    "name": "Aerodromes / Airports / Heliports"
+  },
+  {
+    "id": "notams",
+    "name": "NOTAMs & Aeronautical Information"
+  },
+  {
+    "id": "weather",
+    "name": "Weather / METAR / TAF"
+  },
+  {
+    "id": "visual-observers",
+    "name": "Visual Observers / EVLOS"
+  },
+  {
+    "id": "human-factors",
+    "name": "Human Factors / Crew Fitness"
+  },
+  {
+    "id": "aircraft-systems",
+    "name": "Aircraft Systems / Declarations / Standard 922"
+  },
+  {
+    "id": "maintenance",
+    "name": "Maintenance / Serviceability / Records"
+  },
+  {
+    "id": "abnormal",
+    "name": "Abnormal & Emergency Operations"
+  },
+  {
+    "id": "flight-planning",
+    "name": "Pre-flight / Site Survey / Flight Planning"
+  },
+  {
+    "id": "radio",
+    "name": "Radio / ATS / Phraseology"
+  },
+  {
+    "id": "navigation",
+    "name": "Navigation / Charts / CFS"
+  },
+  {
+    "id": "safety",
+    "name": "Right-of-Way / Collision Avoidance / Public Safety"
+  }
+]

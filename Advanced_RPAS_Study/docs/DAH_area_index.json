@@ -1,0 +1,1216 @@
+{
+  "metadata": {
+    "sourceFile": "NAVCANADA_DAH_current_20260709.pdf",
+    "sourceUrl": "https://www.navcanada.ca/en/dah20260709.pdf",
+    "effectiveDate": "2026-07-09",
+    "pageCount": 216,
+    "uniqueAreaCodesFound": 241
+  },
+  "areas": {
+    "CYA113": {
+      "code": "CYA113",
+      "firstPage": 128,
+      "snippet": "fication code group CYA113(A) is as follows: CY - indicates Canada A - indicates Advisory Area 113 - indicates the number of the area in British Columbia (A) - indicates acrobatic activity takes place within the area The whole"
+    },
+    "CYD101": {
+      "code": "CYD101",
+      "firstPage": 128,
+      "snippet": ".\" 5.1 DANGER AREAS CYD101 PACIFIC OCEAN (Near Tofino, BC) The airspace within the area bounded by a line beginning at: N50°00'00.00\" W128°10'00.00\" to N49°20'00.00\" W126°30'00.00\" to N49°00'00.00\" W126°30'00.00\" to N49°00'00."
+    },
+    "CYD106": {
+      "code": "CYD106",
+      "firstPage": 129,
+      "snippet": "R 2026 DANGER AREAS CYD106 PACIFIC OCEAN (NEAR TOFINO, BC) 126 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N50°00'00.00\" W128°10'00.00"
+    },
+    "CYD111": {
+      "code": "CYD111",
+      "firstPage": 129,
+      "snippet": "Controlling Agency. CYD111 PACIFIC OCEAN (Near Tofino, BC) The airspace within the area bounded by a line beginning at: N50°54'33.05\" W129°55'33.66\" to N50°00'00.00\" W128°10'00.00\" to N50°00'00.00\" W128°30'00.00\" to N49°20'00."
+    },
+    "CYD703": {
+      "code": "CYD703",
+      "firstPage": 130,
+      "snippet": "R 2026 DANGER AREAS CYD703 HALIFAX, NS 127 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYD703 HALIFAX, NS The airspace within the area"
+    },
+    "CYD734": {
+      "code": "CYD734",
+      "firstPage": 130,
+      "snippet": "Controlling Agency. CYD734 HALIFAX, NS The airspace within the area bounded by a line beginning at: N44°19'00.00\" W064°00'00.00\" to N44°19'00.00\" W063°45'00.00\" to N44°10'00.00\" W063°45'00.00\" to N44°10'00.00\" W064°00'00.00\" t"
+    },
+    "CYD735": {
+      "code": "CYD735",
+      "firstPage": 130,
+      "snippet": "Controlling Agency. CYD735 HALIFAX, NS The airspace within the area bounded by a line beginning at: N44°19'00.00\" W063°45'00.00\" to N44°19'00.00\" W063°30'00.00\" to N44°10'00.00\" W063°30'00.00\" to N44°10'00.00\" W063°45'00.00\" t"
+    },
+    "CYD736": {
+      "code": "CYD736",
+      "firstPage": 130,
+      "snippet": "Controlling Agency. CYD736 HALIFAX, NS The airspace within the area bounded by a line beginning at: N44°10'00.00\" W064°00'00.00\" to N44°10'00.00\" W063°45'00.00\" to N44°00'00.00\" W063°45'00.00\" to N44°00'00.00\" W064°00'00.00\" t"
+    },
+    "CYD737": {
+      "code": "CYD737",
+      "firstPage": 131,
+      "snippet": "R 2026 DANGER AREAS CYD737 HALIFAX, NS 128 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Controlling Agency – Moncton ACC (506) 867-7178"
+    },
+    "CYD738": {
+      "code": "CYD738",
+      "firstPage": 131,
+      "snippet": "Controlling Agency. CYD738 HALIFAX, NS The airspace within the area bounded by a line beginning at: N44°19'00.00\" W063°30'00.00\" to N44°19'00.00\" W063°00'00.00\" to N44°00'00.00\" W063°00'00.00\" to N44°00'00.00\" W063°30'00.00\" t"
+    },
+    "CYD739": {
+      "code": "CYD739",
+      "firstPage": 131,
+      "snippet": "Controlling Agency. CYD739 HALIFAX, NS The airspace within the area bounded by a line beginning at: N44°00'00.00\" W064°00'00.00\" to N44°00'00.00\" W063°30'00.00\" to N43°30'00.00\" W063°30'00.00\" to N43°30'00.00\" W064°00'00.00\" t"
+    },
+    "CYD740": {
+      "code": "CYD740",
+      "firstPage": 131,
+      "snippet": "Controlling Agency. CYD740 HALIFAX, NS The airspace within the area bounded by a line beginning at: N44°00'00.00\" W063°30'00.00\" to N44°00'00.00\" W063°00'00.00\" to N43°30'00.00\" W063°00'00.00\" to N43°30'00.00\" W063°30'00.00\" t"
+    },
+    "CYD741": {
+      "code": "CYD741",
+      "firstPage": 132,
+      "snippet": "R 2026 DANGER AREAS CYD741 HALIFAX, NS 129 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Designated Altitude – Surface to FL300, Ocsl hi"
+    },
+    "CYD742": {
+      "code": "CYD742",
+      "firstPage": 132,
+      "snippet": "Controlling Agency. CYD742 HALIFAX, NS The airspace within the area bounded by a line beginning at: N44°00'00.00\" W062°30'00.00\" to N44°00'00.00\" W062°00'00.00\" to N43°30'00.00\" W062°00'00.00\" to N43°30'00.00\" W062°30'00.00\" t"
+    },
+    "CYD743": {
+      "code": "CYD743",
+      "firstPage": 132,
+      "snippet": "Controlling Agency. CYD743 HALIFAX, NS The airspace within the area bounded by a line beginning at: N43°30'00.00\" W064°00'00.00\" to N43°30'00.00\" W063°30'00.00\" to N43°00'00.00\" W063°30'00.00\" to N43°00'00.00\" W064°00'00.00\" t"
+    },
+    "CYD744": {
+      "code": "CYD744",
+      "firstPage": 132,
+      "snippet": "Controlling Agency. CYD744 HALIFAX, NS The airspace within the area bounded by a line beginning at: N43°30'00.00\" W063°30'00.00\" to"
+    },
+    "CYD745": {
+      "code": "CYD745",
+      "firstPage": 133,
+      "snippet": "R 2026 DANGER AREAS CYD745 HALIFAX , NS 130 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N43°30'00.00\" W063°00'00.00\" to N43°00'00.00\""
+    },
+    "CYD746": {
+      "code": "CYD746",
+      "firstPage": 133,
+      "snippet": "Controlling Agency. CYD746 HALIFAX, NS The airspace within the area bounded by a line beginning at: N43°30'00.00\" W062°30'00.00\" to N43°30'00.00\" W062°00'00.00\" to N43°00'00.00\" W062°00'00.00\" to N43°00'00.00\" W062°30'00.00\" t"
+    },
+    "CYD751": {
+      "code": "CYD751",
+      "firstPage": 133,
+      "snippet": "Controlling Agency. CYD751 HALIFAX, NS The airspace within the area bounded by a line beginning at: N44°19'00.00\" W062°30'00.00\" to N44°00'00.00\" W062°30'00.00\" to N44°00'00.00\" W063°00'00.00\" to N44°19'00.00\" W063°00'00.00\" t"
+    },
+    "CYD752": {
+      "code": "CYD752",
+      "firstPage": 134,
+      "snippet": "26 RESTRICTED AREAS CYD752 HALIFAX, NS 131 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYD752 HALIFAX, NS The airspace within the area"
+    },
+    "CYR103": {
+      "code": "CYR103",
+      "firstPage": 134,
+      "snippet": ".2 RESTRICTED AREAS CYR103 BENTINCK ISLAND, BC The airspace within the area bounded by a circle of: 1 mile radius centred on N48°19'00.00\" W123°32'24.00\" Designated Altitude – Surface to 1500´ Time of Designation – Cont Design"
+    },
+    "CYR104": {
+      "code": "CYR104",
+      "firstPage": 134,
+      "snippet": "Controlling Agency. CYR104 ESQUIMALT, BC The airspace within the area bounded by a line beginning at: N48°26'34.00\" W123°26'43.00\" to N48°26'21.00\" W123°25'49.00\" to N48°26'12.00\" W123°25'54.00\" to N48°26'25.00\" W123°26'48.00\""
+    },
+    "CYR107": {
+      "code": "CYR107",
+      "firstPage": 134,
+      "snippet": "Controlling Agency. CYR107 STRAIT OF GEORGIA, BC The airspace within the area bounded by a line beginning at: N49°19'30.00\" W123°51'00.00\" to N49°15'54.00\" W123°56'00.00\" to N49°17'18.00\" W124°05'00.00\" to N49°20'30.00\" W124°1"
+    },
+    "CYR108": {
+      "code": "CYR108",
+      "firstPage": 135,
+      "snippet": "26 RESTRICTED AREAS CYR108 MARY HILL, BC (NEAR VICTORIA, BC) 132 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N49°19'30.00\" W123°51'00."
+    },
+    "CYR109": {
+      "code": "CYR109",
+      "firstPage": 135,
+      "snippet": "Controlling Agency. CYR109 JUAN DE FUCA STRAIT, BC The airspace within the area bounded by a line beginning at: N48°22'00.00\" W123°55'00.00\" to N48°16'51.00\" W123°55'00.00\" to N48°17'54.00\" W124°01'00.00\" to N48°22'30.00\" W124"
+    },
+    "CYR114": {
+      "code": "CYR114",
+      "firstPage": 135,
+      "snippet": "Controlling Agency. CYR114 VICTORIA, BC The airspace within the area bounded by a circle of: 0.5 mile radius centred on N48°28'57.00\" W123°24'39.00\" Designated Altitude – Surface to 500´ Time of Designation – Cont User/Control"
+    },
+    "CYR115": {
+      "code": "CYR115",
+      "firstPage": 136,
+      "snippet": "26 RESTRICTED AREAS CYR115 WHITE LAKE, BC (NEAR PENTICTON) 133 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYR115 WHITE LAKE, BC (Near"
+    },
+    "CYR130": {
+      "code": "CYR130",
+      "firstPage": 136,
+      "snippet": "Controlling Agency. CYR130 VALEMOUNT, BC The airspace within the area bounded by a line beginning at: N53°25'00.00\" W118°20'00.00\" to N53°34'00.00\" W120°16'00.00\" to N52°43'00.00\" W121°12'00.00\" to N51°47'00.00\" W120°26'00.00\""
+    },
+    "CYR138": {
+      "code": "CYR138",
+      "firstPage": 136,
+      "snippet": "Controlling Agency. CYR138 KENT MOUNTAIN, BC (Near Agassiz) The airspace within the area bounded by a line beginning at: N49°16'23.00\" W121°50'46.00\" to N49°16'28.00\" W121°50'32.00\" thence clockwise along the arc of a circle o"
+    },
+    "CYR139": {
+      "code": "CYR139",
+      "firstPage": 136,
+      "snippet": "Controlling Agency. CYR139 WILLIAM HEAD, BC (Near Victoria, BC) The airspace within the area bounded by a circle of: 1 mile radius centred on N48°20'35.00\" W123°31'50.00\""
+    },
+    "CYR140": {
+      "code": "CYR140",
+      "firstPage": 137,
+      "snippet": "26 RESTRICTED AREAS CYR140 MISSION, BC 134 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Designated Altitude – Surface to 1000´ Time of"
+    },
+    "CYR141": {
+      "code": "CYR141",
+      "firstPage": 137,
+      "snippet": "Controlling Agency. CYR141 MATSQUI, BC (Abbotsford, BC) The airspace within the area bounded by lines tangent to circles of: 0.8 mile radius centred on N49°01'35.00\" W122°18'10.00\" and N49°01'10.00\" W122°18'05.00\" Designated A"
+    },
+    "CYR156": {
+      "code": "CYR156",
+      "firstPage": 137,
+      "snippet": "Controlling Agency. CYR156 ALBERT HEAD, BC (Near Victoria, BC) The airspace within the area bounded by a circle of: 1 mile radius centred on N48°23'15.00\" W123°28'36.00\" Designated Altitude – Surface to 3000´ Time of Designati"
+    },
+    "CYR157": {
+      "code": "CYR157",
+      "firstPage": 137,
+      "snippet": "Controlling Agency. CYR157 COMOX, BC The airspace within the area bounded by a line beginning at: N51°59'00.00\" W127°05'00.00\" to N51°03'42.00\" W125°15'00.00\" to N51°00'00.00\" W125°15'00.00\" to N50°36'00.00\" W125°47'00.00\" to"
+    },
+    "CYR160": {
+      "code": "CYR160",
+      "firstPage": 138,
+      "snippet": "26 RESTRICTED AREAS CYR160 WILLIAMS LAKE, BC 135 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Operating Procedures – No person shall op"
+    },
+    "CYR163": {
+      "code": "CYR163",
+      "firstPage": 138,
+      "snippet": "Controlling Agency. CYR163 COMOX, BC The airspace within the area bounded by a line beginning at: N52°40'00.00\" W127°09'53.00\" to N52°40'00.00\" W125°30'00.00\" to N51°00'00.00\" W125°30'00.00\" to N51°00'00.00\" W126°10'00.00\" to"
+    },
+    "CYR164": {
+      "code": "CYR164",
+      "firstPage": 138,
+      "snippet": "Controlling Agency. CYR164 COMOX, BC The airspace within the area bounded by a line beginning at: N52°40'00.00\" W125°30'00.00\" to N52°40'00.00\" W123°46'00.00\" to N51°00'00.00\" W123°50'00.00\" to N51°00'00.00\" W125°30'00.00\" to"
+    },
+    "CYR165": {
+      "code": "CYR165",
+      "firstPage": 138,
+      "snippet": "Controlling Agency. CYR165 CHILLIWACK, BC The airspace within the area bounded by a line beginning at: N49°05'16.00\" W121°40'39.00\" to N49°04'20.00\" W121°38'27.00\" to N49°01'30.00\" W121°38'27.00\" to N49°01'30.00\" W121°41'09.00"
+    },
+    "CYR166": {
+      "code": "CYR166",
+      "firstPage": 139,
+      "snippet": "26 RESTRICTED AREAS CYR166 COMOX, BC 136 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N49°03'55.00\" W121°41'09.00\" to N49°04'08.00\" W12"
+    },
+    "CYR172": {
+      "code": "CYR172",
+      "firstPage": 139,
+      "snippet": "Controlling Agency. CYR172 WHISTLER, BC The airspace within the area bounded by a line beginning at: N50°04'08.49\" W122°57'49.77\" to N50°06'30.38\" W122°54'05.51\" to N50°05'48.93\" W122°53'07.17\" to N50°03'30.57\" W122°56'41.82\""
+    },
+    "CYR203": {
+      "code": "CYR203",
+      "firstPage": 139,
+      "snippet": "icial duty flights. CYR203 CAMP WAINWRIGHT, AB The airspace within the area bounded by a line beginning at: N52°51'15.00\" W111°11'20.00\" to N52°41'51.97\" W111°11'20.00\" to N52°41'52.19\" W111°04'04.32\" to N52°40'04.72\" W111°04'"
+    },
+    "CYR204": {
+      "code": "CYR204",
+      "firstPage": 140,
+      "snippet": "26 RESTRICTED AREAS CYR204 COLD LAKE, AB 137 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N52°36'58.79\" W110°42'45.98\" to N52°37'24.44\""
+    },
+    "CYR208": {
+      "code": "CYR208",
+      "firstPage": 140,
+      "snippet": "Controlling Agency. CYR208 BOWDEN, AB The airspace within the area bounded by a circle of: 1 mile radius centred on N51°58'35.00\" W114°00'25.00\" Designated Altitude – Surface to 4100´ Time of Designation – Cont User/Controllin"
+    },
+    "CYR211": {
+      "code": "CYR211",
+      "firstPage": 141,
+      "snippet": "26 RESTRICTED AREAS CYR211 DRUMHELLER, AB 138 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYR211 DRUMHELLER, AB The airspace within th"
+    },
+    "CYR212": {
+      "code": "CYR212",
+      "firstPage": 141,
+      "snippet": "Controlling Agency. CYR212 EDMONTON, AB The airspace within the area bounded by a circle of: 1 mile radius centred on N53°40'35.00\" W113°20'20.00\" Designated Altitude – Surface to 3200´ Time of Designation – Cont User/Controll"
+    },
+    "CYR220": {
+      "code": "CYR220",
+      "firstPage": 141,
+      "snippet": "Controlling Agency. CYR220 GRANDE CACHE, AB The airspace within the area bounded by a circle of: 1 mile radius centred on N53°52'00.00\" W119°09'00.00\" Designated Altitude – Surface to 4900´ Time of Designation – Cont User/Cont"
+    },
+    "CYR221": {
+      "code": "CYR221",
+      "firstPage": 141,
+      "snippet": "Controlling Agency. CYR221 COLD LAKE, AB The airspace within the area bounded by a line beginning at: N54°45'00.00\" W111°56'00.00\" to N55°19'00.00\" W111°41'00.00\" to N55°56'00.00\" W111°18'30.00\" to N56°04'00.00\" W111°04'00.00\""
+    },
+    "CYR222": {
+      "code": "CYR222",
+      "firstPage": 141,
+      "snippet": "Controlling Agency. CYR222 COLD LAKE, AB The airspace within the area bounded by a line beginning at: N56°04'00.00\" W111°04'00.00\" to"
+    },
+    "CYR223": {
+      "code": "CYR223",
+      "firstPage": 142,
+      "snippet": "26 RESTRICTED AREAS CYR223 COLD LAKE, AB 139 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N56°30'00.00\" W110°18'00.00\" to N56°30'00.00\""
+    },
+    "CYR224": {
+      "code": "CYR224",
+      "firstPage": 142,
+      "snippet": "Controlling Agency. CYR224 COLD LAKE, AB The airspace within the area bounded by a line beginning at: N54°12'00.00\" W108°37'36.00\" to N54°12'00.00\" W107°00'00.00\" to N54°17'00.00\" W106°50'00.00\" to N56°05'42.00\" W106°50'00.00\""
+    },
+    "CYR225": {
+      "code": "CYR225",
+      "firstPage": 143,
+      "snippet": "26 RESTRICTED AREAS CYR225 COLD LAKE, AB 140 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N53°42'00.00\" W106°30'00.00\" to N53°42'00.00\""
+    },
+    "CYR229": {
+      "code": "CYR229",
+      "firstPage": 143,
+      "snippet": "Controlling Agency. CYR229 SUFFIELD, AB The airspace within the area bounded by a line beginning at: N50°20'15.00\" W111°10'00.00\" to N50°35'00.00\" W111°10'00.00\" to N50°43'00.00\" W111°05'00.00\" to N50°43'00.00\" W110°17'00.00\""
+    },
+    "CYR230": {
+      "code": "CYR230",
+      "firstPage": 143,
+      "snippet": "Controlling Agency. CYR230 SUFFIELD, AB The airspace within the area bounded by a line beginning at: N50°15'00.00\" W111°10'00.00\" to"
+    },
+    "CYR231": {
+      "code": "CYR231",
+      "firstPage": 144,
+      "snippet": "26 RESTRICTED AREAS CYR231 SUFFIELD, AB 141 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N50°20'15.00\" W111°10'00.00\" to N50°20'15.00\""
+    },
+    "CYR232": {
+      "code": "CYR232",
+      "firstPage": 144,
+      "snippet": "Controlling Agency. CYR232 NAMAO, AB The airspace within the area bounded by a line beginning at: N53°39'03.00\" W113°29'32.00\" to N53°43'05.00\" W113°29'32.00\" thence clockwise along the arc of a circle of 3 miles radius centre"
+    },
+    "CYR233": {
+      "code": "CYR233",
+      "firstPage": 144,
+      "snippet": "Controlling Agency. CYR233 NAMAO, AB The airspace within the area bounded by a line beginning at: N53°40'15.84\" W113°26'30.18\" to N53°40'16.18\" W113°26'02.46\" to N53°42'05.13\" W113°25'49.27\" to N53°42'05.23\" W113°27'03.84\" to"
+    },
+    "CYR234": {
+      "code": "CYR234",
+      "firstPage": 145,
+      "snippet": "26 RESTRICTED AREAS CYR234 FOREMOST, AB 142 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYR234 FOREMOST, AB The airspace within the ar"
+    },
+    "CYR235": {
+      "code": "CYR235",
+      "firstPage": 145,
+      "snippet": "oses upon request. CYR235 FOREMOST, AB The airspace within the area bounded by a line beginning at: N49°27'53.90\" W111°26'26.26\" to N49°27'53.90\" W111°13'00.00\" to N49°28'44.70\" W111°13'00.00\" to N49°28'44.70\" W110°59'28.00\""
+    },
+    "CYR236": {
+      "code": "CYR236",
+      "firstPage": 145,
+      "snippet": "poses upon request. CYR236 FOREMOST, AB The airspace within the area bounded by a line beginning at: N49°31'24.97\" W111°51'59.79\" to N49°31'24.97\" W111°48'00.00\" to N49°29'40.00\" W111°48'00.00\" to N49°29'40.00\" W111°40'30.00\""
+    },
+    "CYR251": {
+      "code": "CYR251",
+      "firstPage": 146,
+      "snippet": "26 RESTRICTED AREAS CYR251 LETHBRIDGE, AB 143 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N49°27'53.90\" W111°26'26.26\" to N49°27'53.90"
+    },
+    "CYR252": {
+      "code": "CYR252",
+      "firstPage": 146,
+      "snippet": "Controlling Agency. CYR252 LETHBRIDGE, AB The airspace within the area bounded by a circle of: 5 miles radius centred on N49°27'20.80\" W112°00'26.60\" Designated Altitude – Surface to FL230 Time of Designation – Ocsl daylight b"
+    },
+    "CYR268": {
+      "code": "CYR268",
+      "firstPage": 146,
+      "snippet": "Controlling Agency. CYR268 COLD LAKE, AB Air Combat Manoeuvering Range: The airspace within the area bounded by a line beginning at: N53°32'35.00\" W110°45'35.00\" to N53°31'09.00\" W109°57'04.00\" to N53°43'37.00\" W109°16'17.00\""
+    },
+    "CYR269": {
+      "code": "CYR269",
+      "firstPage": 147,
+      "snippet": "26 RESTRICTED AREAS CYR269 COLD LAKE, AB 144 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Time of Designation – 15-01Z (DT 14-2359Z) Mo"
+    },
+    "CYR270": {
+      "code": "CYR270",
+      "firstPage": 147,
+      "snippet": "Controlling Agency. CYR270 COLD LAKE, AB The airspace within the area bounded by a line beginning at: N54°31'33.38\" W111°51'13.91\" to N54°28'30.36\" W111°08'40.43\" to N54°13'08.53\" W111°05'08.05\" to N54°03'25.68\" W111°44'17.20\""
+    },
+    "CYR301": {
+      "code": "CYR301",
+      "firstPage": 147,
+      "snippet": "Controlling Agency. CYR301 CAMP DUNDURN, SK The airspace within the area bounded by a line beginning at: N51°58'30.00\" W106°43'30.00\" to N51°58'30.00\" W106°34'00.00\" to N51°54'30.00\" W106°31'20.00\" to N51°45'30.00\" W106°31'20."
+    },
+    "CYR302": {
+      "code": "CYR302",
+      "firstPage": 148,
+      "snippet": "26 RESTRICTED AREAS CYR302 REGIONAL PSYCHIATRIC CENTRE, SK (SASKATOON, SK) 145 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Operating P"
+    },
+    "CYR303": {
+      "code": "CYR303",
+      "firstPage": 148,
+      "snippet": "Controlling Agency. CYR303 MOOSE JAW, SK A military operations airspace within the area bounded by a line beginning at: N49°59'00.00\" W105°58'00.00\" to N49°59'00.00\" W105°33'34.00\" to N49°52'00.00\" W105°32'00.00\" to N49°45'00."
+    },
+    "CYR309": {
+      "code": "CYR309",
+      "firstPage": 148,
+      "snippet": "Controlling Agency. CYR309 PRINCE ALBERT, SK The airspace within the area bounded by a circle of: 0.5 mile radius centred on N53°11'50.00\" W105°48'55.00\" Designated Altitude – Surface to 1900´ Time of Designation – Cont User/C"
+    },
+    "CYR316": {
+      "code": "CYR316",
+      "firstPage": 148,
+      "snippet": "Controlling Agency. CYR316 MAPLE CREEK, SK The airspace within the area bounded by a circle of: 1 mile radius centred on N49°45'28.00\" W109°15'58.00\" Designated Altitude – Surface to 5000´ Time of Designation – Cont User/Cont"
+    },
+    "CYR401": {
+      "code": "CYR401",
+      "firstPage": 149,
+      "snippet": "26 RESTRICTED AREAS CYR401 PINAWA, MB 146 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYR401 PINAWA, MB The airspace within the area b"
+    },
+    "CYR402": {
+      "code": "CYR402",
+      "firstPage": 149,
+      "snippet": "Controlling Agency. CYR402 CAMP SHILO, MB The airspace within the area bounded by a line beginning at: N49°47'52.50\" W099°40'40.00\" to N49°47'52.30\" W099°39'59.80\" to N49°47'00.20\" W099°39'59.70\" to N49°47'00.30\" W099°40'39.70"
+    },
+    "CYR405": {
+      "code": "CYR405",
+      "firstPage": 149,
+      "snippet": "Controlling Agency. CYR405 STONY MOUNTAIN, MB The airspace within the area bounded by a line beginning at: N50°05'10.00\" W097°13'44.00\" to N50°05'09.00\" W097°12'23.00\" to N50°03'50.00\" W097°12'22.00\" to N50°03'51.00\" W097°13'3"
+    },
+    "CYR406": {
+      "code": "CYR406",
+      "firstPage": 149,
+      "snippet": "Controlling Agency. CYR406 CAMP SHILO, MB The airspace within the area bounded by a line beginning at: N49°50'50.00\" W099°37'18.00\" to N49°51'10.00\" W099°33'58.00\" to N49°48'34.05\" W099°30'12.61\" to N49°48'35.61\" W099°37'16.93"
+    },
+    "CYR409": {
+      "code": "CYR409",
+      "firstPage": 150,
+      "snippet": "26 RESTRICTED AREAS CYR409 STONY MOUNTAIN, MB 147 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYR409 STONY MOUNTAIN, MB The airspace w"
+    },
+    "CYR410": {
+      "code": "CYR410",
+      "firstPage": 150,
+      "snippet": "Controlling Agency. CYR410 CAMP SHILO, MB The airspace within the area bounded by a line beginning at: N49°48'33.00\" W099°26'21.00\" to N49°47'52.00\" W099°20'56.00\" to N49°42'28.00\" W099°20'48.00\" to N49°42'33.00\" W099°16'49.00"
+    },
+    "CYR412": {
+      "code": "CYR412",
+      "firstPage": 150,
+      "snippet": "Controlling Agency. CYR412 ROLAND, MB The airspace within the area bounded by a circle of: 2 miles radius centred on N49°23'32.00\" W097°43'08.00\" Designated Altitude – Surface to 8800´ Time of Designation – Ocsl by NOTAM User"
+    },
+    "CYR501": {
+      "code": "CYR501",
+      "firstPage": 150,
+      "snippet": "Controlling Agency. CYR501 MEAFORD RANGE, ON The airspace within the area bounded by a line beginning at: N44°42'48.00\" W080°46'11.00\" to N44°44'40.00\" W080°46'22.00\" to N44°44'40.00\" W080°39'32.00\" to N44°44'25.00\" W080°37'17"
+    },
+    "CYR502": {
+      "code": "CYR502",
+      "firstPage": 151,
+      "snippet": "26 RESTRICTED AREAS CYR502 CFB BORDEN, ON 148 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N44°37'40.00\" W080°43'40.00\" to N44°42'48.00"
+    },
+    "CYR504": {
+      "code": "CYR504",
+      "firstPage": 151,
+      "snippet": "Controlling Agency. CYR504 JOYCEVILLE, ON The airspace within the area bounded by a circle of: 1 mile radius centred on N44°21'30.00\" W076°21'10.00\" Designated Altitude – Surface to 1400´ Time of Designation – Cont User/Contro"
+    },
+    "CYR505": {
+      "code": "CYR505",
+      "firstPage": 151,
+      "snippet": "Controlling Agency. CYR505 MILLHAVEN, ON (Bath, ON) The airspace within the area bounded by a circle of: 1 mile radius centred on N44°11'48.00\" W076°45'10.00\" Designated Altitude – Surface to 1300´ Time of Designation – Cont U"
+    },
+    "CYR506": {
+      "code": "CYR506",
+      "firstPage": 151,
+      "snippet": "Controlling Agency. CYR506 WARKWORTH, ON The airspace within the area bounded by a circle of: 1 mile radius centred on N44°12'40.00\" W077°48'30.00\" Designated Altitude – Surface to 1400´"
+    },
+    "CYR507": {
+      "code": "CYR507",
+      "firstPage": 152,
+      "snippet": "26 RESTRICTED AREAS CYR507 COLLINS BAY, ON (KINGSTON, ON) 149 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Time of Designation – Cont U"
+    },
+    "CYR508": {
+      "code": "CYR508",
+      "firstPage": 152,
+      "snippet": "Controlling Agency. CYR508 HAZELDEAN, ON The airspace within the area bounded by a circle of: 0.4 mile radius centred on N45°19'18.00\" W075°52'32.00\" Designated Altitude – Surface to 1400´ Time of Designation – Cont daylight U"
+    },
+    "CYR510": {
+      "code": "CYR510",
+      "firstPage": 152,
+      "snippet": "Controlling Agency. CYR510 CHALK RIVER, ON The airspace within the area bounded by a line beginning at: N46°01'06.00\" W077°25'21.00\" thence clockwise along the arc of a circle of 2.5 miles radius centred on N46°02'00.00\" W077°"
+    },
+    "CYR511": {
+      "code": "CYR511",
+      "firstPage": 152,
+      "snippet": "Controlling Agency. CYR511 CFB PETAWAWA, ON The airspace within the area bounded by a line beginning at: N45°55'24.00\" W077°17'34.00\" to N45°53'40.00\" W077°19'30.00\" to N45°50'25.00\" W077°32'16.00\" to N45°58'45.00\" W077°37'00."
+    },
+    "CYR512": {
+      "code": "CYR512",
+      "firstPage": 153,
+      "snippet": "26 RESTRICTED AREAS CYR512 CFB PETAWAWA, ON 150 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N46°00'42.00\" W077°16'31.00\" to N45°58'28."
+    },
+    "CYR514": {
+      "code": "CYR514",
+      "firstPage": 153,
+      "snippet": "Controlling Agency. CYR514 IPPERWASH, ON The airspace within the area bounded by a circle of: 3 miles radius centred on N43°12'38.00\" W081°55'56.00\" Designated Altitude – Surface to 6000´ Time of Designation – Ocsl by NOTAM Us"
+    },
+    "CYR518": {
+      "code": "CYR518",
+      "firstPage": 153,
+      "snippet": "Controlling Agency. CYR518 NIAGARA FALLS, ON The airspace within the area bounded by a circle of: 2 miles radius centred on N43°05'00.00\" W079°04'25.00\" Excluding that portion outside of Canadian airspace. Designated Altitude"
+    },
+    "CYR531": {
+      "code": "CYR531",
+      "firstPage": 154,
+      "snippet": "26 RESTRICTED AREAS CYR531 CONNAUGHT RANGE, ON 151 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada User/Controlling Agency – Transport Can"
+    },
+    "CYR532": {
+      "code": "CYR532",
+      "firstPage": 154,
+      "snippet": "Controlling Agency. CYR532 MOUNTAIN VIEW, ON The airspace within the area bounded by a line beginning at: N44°04'40.00\" W077°20'40.00\" to N44°05'31.00\" W077°15'14.00\" thence clockwise along the arc of a circle of 4 miles radiu"
+    },
+    "CYR533": {
+      "code": "CYR533",
+      "firstPage": 154,
+      "snippet": "Controlling Agency. CYR533 KITCHENER, ON The airspace within the area bounded by a circle of: 1 mile radius centred on N43°24'07.00\" W080°26'28.00\" Designated Altitude – Surface to 1500´ Time of Designation – Cont User/Control"
+    },
+    "CYR536": {
+      "code": "CYR536",
+      "firstPage": 154,
+      "snippet": "Controlling Agency. CYR536 DWYER HILL, ON The airspace within the area bounded by a line beginning at: N45°09'46.00\" W075°56'24.00\" to N45°07'25.00\" W075°53'37.00\" to N45°05'16.00\" W075°57'09.00\" to N45°07'35.00\" W075°59'10.00"
+    },
+    "CYR537": {
+      "code": "CYR537",
+      "firstPage": 155,
+      "snippet": "26 RESTRICTED AREAS CYR537 PARLIAMENT HILL, ON 152 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada User/Controlling Agency – Dwyer Hill Tr"
+    },
+    "CYR538": {
+      "code": "CYR538",
+      "firstPage": 155,
+      "snippet": "ing within CYR537. CYR538 RIDEAU HALL, ON The airspace within the area bounded by a circle of: 0.4 mile radius centred on N45°26'38.90\" W075°41'17.80\" Designated Altitude – Surface to 3000´ Time of Designation – Cont User/Con"
+    },
+    "CYR540": {
+      "code": "CYR540",
+      "firstPage": 155,
+      "snippet": "ts and IFR flights. CYR540 CFB PETAWAWA, ON The airspace within the area bounded by a line beginning at: N46°11'00.00\" W077°57'00.00\" to N46°11'00.00\" W077°44'00.33\" to N45°46'00.00\" W077°29'46.11\" to N45°48'00.00\" W077°44'00."
+    },
+    "CYR541": {
+      "code": "CYR541",
+      "firstPage": 155,
+      "snippet": "Controlling Agency. CYR541 CFB PETAWAWA, ON The airspace within the area bounded by a line beginning at: N46°11'00.00\" W077°44'00.33\" to N46°11'00.00\" W077°32'00.00\" to N46°00'34.17\" W077°29'29.13\" to"
+    },
+    "CYR542": {
+      "code": "CYR542",
+      "firstPage": 156,
+      "snippet": "26 RESTRICTED AREAS CYR542 CFB PETAWAWA, ON 153 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N46°00'40.00\" W077°30'10.00\" to N45°58'45."
+    },
+    "CYR543": {
+      "code": "CYR543",
+      "firstPage": 156,
+      "snippet": "Controlling Agency. CYR543 CFB PETAWAWA, ON The airspace within the area bounded by a line beginning at: N46°07'00.00\" W077°06'00.00\" to N45°55'00.00\" W077°02'00.00\" to N45°55'24.00\" W077°17'34.00\" to N45°58'28.00\" W077°19'00."
+    },
+    "CYR544": {
+      "code": "CYR544",
+      "firstPage": 156,
+      "snippet": "Controlling Agency. CYR544 CFB PETAWAWA, ON The airspace within the area bounded by a line beginning at: N45°54'31.21\" W077°17'29.93\" to N45°54'48.06\" W077°16'43.09\" to N45°54'56.14\" W077°16'35.19\" to N45°55'06.06\" W077°16'42."
+    },
+    "CYR601": {
+      "code": "CYR601",
+      "firstPage": 157,
+      "snippet": "26 RESTRICTED AREAS CYR601 MIRABEL, QC 154 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Time of Designation – Cont User/Controlling Age"
+    },
+    "CYR602": {
+      "code": "CYR602",
+      "firstPage": 157,
+      "snippet": "Controlling Agency. CYR602 VALCARTIER, QC The airspace within the area bounded by a line beginning at: N47°13'00.00\" W071°55'00.00\" to N47°13'00.00\" W071°25'30.00\" to N47°00'00.00\" W071°25'00.00\" to N46°56'53.00\" W071°27'13.00"
+    },
+    "CYR603": {
+      "code": "CYR603",
+      "firstPage": 157,
+      "snippet": "Controlling Agency. CYR603 VALCARTIER, QC The airspace within the area bounded by a line beginning at: N46°52'05.00\" W071°33'57.00\" to N47°00'15.00\" W071°42'25.00\" to N47°05'10.00\" W071°35'14.00\" to"
+    },
+    "CYR604": {
+      "code": "CYR604",
+      "firstPage": 158,
+      "snippet": "26 RESTRICTED AREAS CYR604 ST FRÉDÉRIC, QC 155 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N47°01'23.00\" W071°29'22.00\" to N46°56'53.0"
+    },
+    "CYR605": {
+      "code": "CYR605",
+      "firstPage": 158,
+      "snippet": "Controlling Agency. CYR605 FARNHAM, QC The airspace within the area bounded by a line beginning at: N45°17'15.05\" W072°59'34.29\" to N45°17'55.50\" W072°59'56.99\" to N45°18'07.70\" W072°59'34.10\" to N45°19'15.00\" W072°59'39.20\" t"
+    },
+    "CYR606": {
+      "code": "CYR606",
+      "firstPage": 158,
+      "snippet": "/Controlling Agency CYR606 LAC SAINT PIERRE, QC The airspace within the area bounded by a line beginning at: N46°15'00.00\" W072°39'14.00\" to N46°15'00.00\" W072°43'20.00\" to"
+    },
+    "CYR608": {
+      "code": "CYR608",
+      "firstPage": 159,
+      "snippet": "26 RESTRICTED AREAS CYR608 DONNACONA, QC 156 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N46°12'18.00\" W072°48'41.00\" to N46°10'54.00\""
+    },
+    "CYR610": {
+      "code": "CYR610",
+      "firstPage": 159,
+      "snippet": "Controlling Agency. CYR610 COWANSVILLE, QC The airspace within the area bounded by a circle of: 1 mile radius centred on N45°13'08.00\" W072°47'15.00\" Designated Altitude – Surface to 600´ Time of Designation – Cont User/Contro"
+    },
+    "CYR612": {
+      "code": "CYR612",
+      "firstPage": 159,
+      "snippet": "Controlling Agency. CYR612 VALCARTIER, QC The airspace within the area bounded by a line beginning at: N46°50'44.00\" W071°32'39.00\" to N46°52'05.00\" W071°33'57.00\" to N46°56'53.00\" W071°27'13.00\" to N46°54'10.00\" W071°26'05.00"
+    },
+    "CYR613": {
+      "code": "CYR613",
+      "firstPage": 160,
+      "snippet": "26 RESTRICTED AREAS CYR613 ARCHAMBAULT (STE-ANNE-DES-PLAINES, QC) 157 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYR613 ARCHAMBAULT ("
+    },
+    "CYR614": {
+      "code": "CYR614",
+      "firstPage": 160,
+      "snippet": "ntrolling agencies. CYR614 LECLERC (St-Vincent-de-Paul, QC) The airspace within the area bounded by a line beginning at: N45°36'12.00\" W073°38'45.00\" thence clockwise along the arc of a circle of 1 mile radius centred on N45°3"
+    },
+    "CYR615": {
+      "code": "CYR615",
+      "firstPage": 160,
+      "snippet": "ntrolling agencies. CYR615 LA MACAZA, QC The airspace within the area bounded by a line beginning at: N46°23'43.50\" W074°46'44.93\" to N46°24'04.00\" W074°46'48.00\" to N46°25'00.00\" W074°46'34.00\" to N46°25'38.88\" W074°46'07.75\""
+    },
+    "CYR617": {
+      "code": "CYR617",
+      "firstPage": 160,
+      "snippet": "Controlling Agency. CYR617 PORT CARTIER, QC The airspace within the area bounded by a line beginning at: N50°02'38.00\" W066°51'56.00\" to N50°02'51.00\" W066°52'49.00\" to N50°03'20.00\" W066°53'54.00\" to N50°03'47.00\" W066°54'28."
+    },
+    "CYR618": {
+      "code": "CYR618",
+      "firstPage": 161,
+      "snippet": "26 RESTRICTED AREAS CYR618 DRUMMOND, QC 158 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Operating Procedures – No person shall operate"
+    },
+    "CYR620": {
+      "code": "CYR620",
+      "firstPage": 161,
+      "snippet": "Controlling Agency. CYR620 HARRINGTON LAKE, QC (Lac Mousseau) The airspace within the area bounded by a circle of: 1 mile radius centred on N45°33'06.00\" W075°55'45.00\" Designated Altitude – Surface to 2000´ Time of Designatio"
+    },
+    "CYR624": {
+      "code": "CYR624",
+      "firstPage": 161,
+      "snippet": "ontrolling Agency. CYR624 STE-THÉRÈSE, QC The airspace within the area bounded by a line beginning at: N45°40'24.00\" W073°57'15.00\" to N45°41'25.81\" W073°56'02.25\" to N45°42'14.37\" W073°54'29.62\" to N45°43'55.16\" W073°51'17.1"
+    },
+    "CYR625": {
+      "code": "CYR625",
+      "firstPage": 161,
+      "snippet": "Controlling Agency. CYR625 JOLIETTE, QC The airspace within the area bounded by a circle of: 0.5 mile radius centred on N46°01'56.00\" W073°24'54.00\" Designated Altitude – Surface to 725´ Time of Designation – Cont User/Control"
+    },
+    "CYR626": {
+      "code": "CYR626",
+      "firstPage": 162,
+      "snippet": "26 RESTRICTED AREAS CYR626 CHUTE MONTMORENCY, QC 159 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYR626 CHUTE MONTMORENCY, QC The airs"
+    },
+    "CYR628": {
+      "code": "CYR628",
+      "firstPage": 162,
+      "snippet": "Controlling Agency. CYR628 BAGOTVILLE, QC The airspace within the area bounded by a line beginning at: N50°44'02.11\" W072°00'00.00\" to N48°55'12.00\" W072°00'00.00\" to N48°49'35.71\" W071°50'33.84\" thence counter-clockwise along"
+    },
+    "CYR629": {
+      "code": "CYR629",
+      "firstPage": 162,
+      "snippet": "Controlling Agency. CYR629 BAGOTVILLE, QC The airspace within the area bounded by a line beginning at: N51°00'05.99\" W071°22'41.94\" to N51°00'00.36\" W069°36'39.48\" to N49°52'16.14\" W071°08'32.70\" to N49°04'22.15\" W071°09'03.05"
+    },
+    "CYR630": {
+      "code": "CYR630",
+      "firstPage": 163,
+      "snippet": "26 RESTRICTED AREAS CYR630 BAGOTVILLE, QC 160 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYR630 BAGOTVILLE, QC The airspace within th"
+    },
+    "CYR631": {
+      "code": "CYR631",
+      "firstPage": 163,
+      "snippet": "Controlling Agency. CYR631 STE-THÉRÈSE, QC The airspace within the area bounded by a line beginning at: N45°43'55.16\" W073°51'17.11\" to N45°44'00.00\" W073°50'35.00\" to N45°44'00.00\" W073°49'28.00\" to N45°44'35.00\" W073°45'31.0"
+    },
+    "CYR651": {
+      "code": "CYR651",
+      "firstPage": 163,
+      "snippet": "Controlling Agency. CYR651 ALMA, QC The airspace within the area bounded by a line beginning at: N48°33'00.44\" W071°45'02.38\" to N48°28'55.18\" W071°31'18.88\" thence clockwise along the arc of a circle of 5 miles radius centred"
+    },
+    "CYR652": {
+      "code": "CYR652",
+      "firstPage": 164,
+      "snippet": "26 RESTRICTED AREAS CYR652 ALMA, QC 161 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Controlling Agency – Bagotville Military Terminal"
+    },
+    "CYR653": {
+      "code": "CYR653",
+      "firstPage": 164,
+      "snippet": "Controlling Agency. CYR653 ALMA, QC The airspace within the area bounded by a line beginning at: N48°36'50.82\" W071°58'03.01\" to N48°30'14.62\" W071°35'44.76\" to N48°24'07.98\" W071°38'16.85\" to N48°27'42.29\" W071°58'18.94\" to N"
+    },
+    "CYR654": {
+      "code": "CYR654",
+      "firstPage": 164,
+      "snippet": "Controlling Agency. CYR654 ALMA, QC The airspace within the area bounded by a line beginning at: N48°36'50.82\" W071°58'03.01\" to N48°33'44.16\" W071°47'30.00\" to N48°32'30.00\" W071°48'30.00\" to N48°30'00.00\" W071°48'00.00\" to N"
+    },
+    "CYR655": {
+      "code": "CYR655",
+      "firstPage": 165,
+      "snippet": "26 RESTRICTED AREAS CYR655 ALMA, QC 162 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Controlling Agency – Bagotville Military Terminal"
+    },
+    "CYR656": {
+      "code": "CYR656",
+      "firstPage": 165,
+      "snippet": "Controlling Agency. CYR656 ALMA, QC The airspace within the area bounded by a line beginning at: N48°29'16.86\" W071°45'15.00\" thence counter-clockwise along the arc of a circle of 5 miles radius centred on N48°30'58.02\" W071°3"
+    },
+    "CYR657": {
+      "code": "CYR657",
+      "firstPage": 165,
+      "snippet": "Controlling Agency. CYR657 ALMA, QC The airspace within the area bounded by a line beginning at: N48°19'00.00\" W072°49'04.51\" thence counter-clockwise along the arc of a circle of 25 miles radius centred on N48°32'41.00\" W072°"
+    },
+    "CYR658": {
+      "code": "CYR658",
+      "firstPage": 166,
+      "snippet": "26 RESTRICTED AREAS CYR658 ALMA, QC 163 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Time of Designation – Ocsl by NOTAM, 48 hrs prior"
+    },
+    "CYR664": {
+      "code": "CYR664",
+      "firstPage": 166,
+      "snippet": "Controlling Agency. CYR664 BAGOTVILLE, QC The airspace within the area bounded by a line beginning at: N50°44'02.11\" W072°00'00.00\" to N48°55'12.00\" W072°00'00.00\" to N48°49'35.71\" W071°50'33.84\" thence counter-clockwise along"
+    },
+    "CYR665": {
+      "code": "CYR665",
+      "firstPage": 166,
+      "snippet": "Controlling Agency. CYR665 BAGOTVILLE, QC The airspace within the area bounded by a line beginning at: N51°00'05.99\" W071°22'41.94\" to N51°00'00.36\" W069°36'39.48\" to N49°52'16.14\" W071°08'32.70\" to N49°04'22.15\" W071°09'03.05"
+    },
+    "CYR666": {
+      "code": "CYR666",
+      "firstPage": 167,
+      "snippet": "26 RESTRICTED AREAS CYR666 BAGOTVILLE, QC 164 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N50°44'02.11\" W072°00'00.00\" to N51°00'05.99"
+    },
+    "CYR667": {
+      "code": "CYR667",
+      "firstPage": 167,
+      "snippet": "Controlling Agency. CYR667 HULL, QC The airspace within the area bounded by a circle of: 0.75 mile radius centred on N45°25'41.00\" W075°44'58.00\" Designated Altitude – Surface to 1200´ Time of Designation – Cont User/Controlli"
+    },
+    "CYR668": {
+      "code": "CYR668",
+      "firstPage": 167,
+      "snippet": "or any IFR flights. CYR668 RIVIÈRE-DES-PRAIRIES, QC The airspace within the area bounded by a line beginning at: N45°40'36.99\" W073°32'09.80\" thence clockwise along the arc of a circle of 1 mile radius centred on N45°39'37.00\""
+    },
+    "CYR669": {
+      "code": "CYR669",
+      "firstPage": 168,
+      "snippet": "26 RESTRICTED AREAS CYR669 SHERBROOKE, QC 165 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N45°40'36.99\" W073°32'09.80\" point of beginn"
+    },
+    "CYR670": {
+      "code": "CYR670",
+      "firstPage": 168,
+      "snippet": "or any IFR flights. CYR670 SOREL, QC The airspace within the area bounded by a circle of: 1 mile radius centred on N46°01'49.00\" W073°04'40.00\" Designated Altitude – Surface to 1000´ Time of Designation – Cont User/Controlling"
+    },
+    "CYR671": {
+      "code": "CYR671",
+      "firstPage": 168,
+      "snippet": "or any IFR flights. CYR671 TROIS-RIVIÈRES, QC The airspace within the area bounded by a circle of: 0.5 mile radius centred on N46°22'00.00\" W072°37'34.00\" Designated Altitude – Surface to 700´ Time of Designation – Cont User/C"
+    },
+    "CYR672": {
+      "code": "CYR672",
+      "firstPage": 168,
+      "snippet": "or any IFR flights. CYR672 ORSAINVILLE, QC The airspace within the area bounded by a circle of: 1 mile radius centred on N46°53'15.00\" W071°18'58.00\" Designated Altitude – Surface to 1200´ Time of Designation – Cont"
+    },
+    "CYR673": {
+      "code": "CYR673",
+      "firstPage": 169,
+      "snippet": "26 RESTRICTED AREAS CYR673 SAINT-JÉRÔME, QC 166 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada User/Controlling Agency – Deputy Director"
+    },
+    "CYR674": {
+      "code": "CYR674",
+      "firstPage": 169,
+      "snippet": "or any IFR flights. CYR674 RIMOUSKI, QC The airspace within the area bounded by a circle of: 0.25 mile radius centred on N48°27'48.00\" W068°29'55.00\" Designated Altitude – Surface to 500´ Time of Designation – Cont User/Contro"
+    },
+    "CYR675": {
+      "code": "CYR675",
+      "firstPage": 169,
+      "snippet": "or any IFR flights. CYR675 BAIE-COMEAU, QC The airspace within the area bounded by a circle of: 0.75 mile radius centred on N49°13'12.00\" W068°08'59.00\" Designated Altitude – Surface to 1100´ Time of Designation – Cont User/Co"
+    },
+    "CYR676": {
+      "code": "CYR676",
+      "firstPage": 169,
+      "snippet": "or any IFR flights. CYR676 AMOS, QC The airspace within the area bounded by a circle of: 0.75 mile radius centred on N48°35'06.00\" W078°08'14.00\" Designated Altitude – Surface to 2000´ Time of Designation – Cont User/Controlli"
+    },
+    "CYR701": {
+      "code": "CYR701",
+      "firstPage": 170,
+      "snippet": "26 RESTRICTED AREAS CYR701 GOOSE BAY, NL 167 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Operating Procedures – No person shall operat"
+    },
+    "CYR704": {
+      "code": "CYR704",
+      "firstPage": 170,
+      "snippet": "Controlling Agency. CYR704 HALIFAX, NS The airspace within the area bounded by a line beginning at: N43°56'26.00\" W065°01'18.00\" to N43°43'33.00\" W064°51'05.00\" to N43°41'29.00\" W064°54'01.00\" to N43°54'52.00\" W065°04'53.00\" t"
+    },
+    "CYR705": {
+      "code": "CYR705",
+      "firstPage": 170,
+      "snippet": "Controlling Agency. CYR705 HALIFAX, NS The airspace within the area bounded by a line beginning at: N44°06'32.00\" W065°09'21.00\" to N43°56'26.00\" W065°01'18.00\" to N43°49'51.00\" W065°16'16.00\" to N44°00'09.00\" W065°24'39.00\" t"
+    },
+    "CYR706": {
+      "code": "CYR706",
+      "firstPage": 170,
+      "snippet": "Controlling Agency. CYR706 CAMP ALDERSHOT, NS The airspace within the area bounded by a circle of: 1 mile radius centred on N45°06'00.00\" W064°33'00.00\" Designated Altitude – Surface to 1000´ Time of Designation – Cont User Ag"
+    },
+    "CYR711": {
+      "code": "CYR711",
+      "firstPage": 171,
+      "snippet": "26 RESTRICTED AREAS CYR711 SPRINGHILL, NS 168 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Operating Procedures – No person shall opera"
+    },
+    "CYR717": {
+      "code": "CYR717",
+      "firstPage": 171,
+      "snippet": "Controlling Agency. CYR717 HALIFAX, NS The airspace within the area bounded by a circle of: 0.75 miles radius centred on N44°42'43.00\" W063°38'04.00\" Designated Altitude – Surface to 1700´ Time of Designation – Cont User Agenc"
+    },
+    "CYR720": {
+      "code": "CYR720",
+      "firstPage": 171,
+      "snippet": "Controlling Agency. CYR720 FREDERICTON/GAGETOWN, NB The airspace within the area bounded by a line beginning at: N45°27'50.00\" W066°21'10.00\" to N45°29'00.00\" W066°39'00.00\" to N45°36'00.00\" W066°53'00.00\" to N45°46'30.00\" W06"
+    },
+    "CYR721": {
+      "code": "CYR721",
+      "firstPage": 171,
+      "snippet": "Controlling Agency. CYR721 FREDERICTON/GAGETOWN, NB The airspace within the area bounded by a line beginning at: N45°50'00.00\" W066°14'40.00\" to N45°52'00.00\" W066°02'30.00\" to N45°39'00.00\" W065°56'00.00\" to N45°37'00.00\" W06"
+    },
+    "CYR722": {
+      "code": "CYR722",
+      "firstPage": 172,
+      "snippet": "26 RESTRICTED AREAS CYR722 FREDERICTON/GAGETOWN, NB 169 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Operating Procedures – No person s"
+    },
+    "CYR724": {
+      "code": "CYR724",
+      "firstPage": 172,
+      "snippet": "Controlling Agency. CYR724 FREDERICTON/GAGETOWN, NB The airspace within the area bounded by a line beginning at: N45°51'20.00\" W066°15'40.00\" to N45°46'00.00\" W066°11'40.00\" to N45°34'40.00\" W066°05'30.00\" to N45°28'10.00\" W06"
+    },
+    "CYR725": {
+      "code": "CYR725",
+      "firstPage": 172,
+      "snippet": "Controlling Agency. CYR725 FREDERICTON/GAGETOWN, NB The airspace within the area bounded by a line beginning at: N45°28'10.00\" W066°14'40.00\" to N45°26'07.00\" W066°17'40.00\" to N45°27'50.00\" W066°21'10.00\" to N45°28'10.00\" W06"
+    },
+    "CYR726": {
+      "code": "CYR726",
+      "firstPage": 172,
+      "snippet": "Controlling Agency. CYR726 GOOSE BAY, NL The airspace within the area bounded by a circle of: 30 miles radius centred on"
+    },
+    "CYR727": {
+      "code": "CYR727",
+      "firstPage": 173,
+      "snippet": "26 RESTRICTED AREAS CYR727 GOOSE BAY, NL 170 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N52°17'23.00\" W060°57'14.00\" Excluding CYR727"
+    },
+    "CYR750": {
+      "code": "CYR750",
+      "firstPage": 173,
+      "snippet": "ing the area within CYR750. Designated Altitude – Surface to FL280 Time of Designation – Ocsl by NOTAM User/Controlling Agency – Wing Operations Centre 5 Wing, CFB Goose Bay (709) 896-6900 Ext 555- 7331, (CSN) 555-7331, 1-800-"
+    },
+    "CYR728": {
+      "code": "CYR728",
+      "firstPage": 173,
+      "snippet": "Controlling Agency. CYR728 DORCHESTER, NB The airspace within the area bounded by a circle of: 1 mile radius centred on N45°54'40.00\" W064°30'40.00\" Designated Altitude – Surface to 1200´ Time of Designation – Cont User/Contro"
+    },
+    "CYR729": {
+      "code": "CYR729",
+      "firstPage": 173,
+      "snippet": "Controlling Agency. CYR729 ATLANTIC (Near Chatham, NB) The airspace within the area bounded by a circle of: 0.25 mile radius centred on N46°47'55.00\" W065°48'12.00\" Designated Altitude – Surface to 600´ Time of Designation – C"
+    },
+    "CYR747": {
+      "code": "CYR747",
+      "firstPage": 174,
+      "snippet": "26 RESTRICTED AREAS CYR747 TRURO, NS 171 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Operating Procedures – No person shall operate an"
+    },
+    "CYR748": {
+      "code": "CYR748",
+      "firstPage": 174,
+      "snippet": "Controlling Agency. CYR748 HALIFAX, NS The airspace within the area bounded by a line beginning at: N44°36'06.00\" W063°26'06.00\" to N44°32'41.00\" W063°25'15.00\" to N44°26'54.00\" W063°10'48.00\" to N44°36'54.00\" W063°05'00.00\" t"
+    },
+    "CYR754": {
+      "code": "CYR754",
+      "firstPage": 174,
+      "snippet": "Controlling Agency. CYR754 CONFEDERATION BRIDGE, PE The airspace within the area bounded by a line beginning at: N46°09'27.00\" W063°48'24.00\" to N46°12'06.00\" W063°44'45.00\" to N46°14'45.00\" W063°41'45.00\" to N46°15'24.00\" W06"
+    },
+    "CYA102": {
+      "code": "CYA102",
+      "firstPage": 175,
+      "snippet": "2026 ADVISORY AREAS CYA102(M) BLACK ROCK, BC 172 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Operating Procedures – No person shall op"
+    },
+    "CYA105": {
+      "code": "CYA105",
+      "firstPage": 175,
+      "snippet": "ing airspace apply. CYA105(A)(T)(H) CHILLIWACK, BC The airspace within the area bounded by a line beginning at: N49°04'44.00\" W121°23'23.00\" to N49°15'00.00\" W121°29'00.00\" to N49°14'00.00\" W121°41'30.00\" to N49°06'33.93\" W121"
+    },
+    "CYA110": {
+      "code": "CYA110",
+      "firstPage": 175,
+      "snippet": "ing airspace apply. CYA110(H) VICTORIA, BC The airspace within the area bounded by a line beginning at: N48°33'37.09\" W123°32'34.28\" to N48°33'50.00\" W123°30'50.00\" to N48°37'00.00\" W123°30'50.00\" to N48°37'00.00\" W123°35'43.4"
+    },
+    "CYA116": {
+      "code": "CYA116",
+      "firstPage": 176,
+      "snippet": "ing airspace apply. CYA116(H) PEMBERTON, BC The airspace within the area bounded by a line beginning at: N50°33'33.00\" W122°56'51.00\" to N50°31'32.00\" W123°00'52.00\" to N50°19'58.00\" W122°48'18.00\" to N50°21'29.00\" W122°44'50."
+    },
+    "CYA117": {
+      "code": "CYA117",
+      "firstPage": 176,
+      "snippet": "ing airspace apply. CYA117(H) OLIVER, BC The airspace within the area bounded by a line beginning at: N49°14'15.00\" W119°46'30.00\" to N49°14'15.00\" W119°36'45.00\" to N49°12'10.59\" W119°36'45.00\" thence counter-clockwise along"
+    },
+    "CYA118": {
+      "code": "CYA118",
+      "firstPage": 176,
+      "snippet": "ing airspace apply. CYA118(A)(T)(H) DUNCAN, BC The airspace within the area bounded by a line beginning at: N48°41'14.00\" W123°55'31.00\" to N48°47'31.07\" W123°57'32.72\" to N48°54'52.14\" W123°53'03.92\" to N48°51'43.46\" W123°48'"
+    },
+    "CYA119": {
+      "code": "CYA119",
+      "firstPage": 177,
+      "snippet": "2026 ADVISORY AREAS CYA119(A)(T) VANDERHOOF, BC 174 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Designated Altitude – Surface to 3000´"
+    },
+    "CYA120": {
+      "code": "CYA120",
+      "firstPage": 177,
+      "snippet": "ing airspace apply. CYA120(A) PENTICTON, BC The airspace within the area bounded by a line beginning at: N49°18'00.00\" W119°32'30.00\" to N49°18'00.00\" W119°23'00.00\" to N49°05'15.00\" W119°23'00.00\" to N49°05'15.00\" W119°32'30."
+    },
+    "CYA121": {
+      "code": "CYA121",
+      "firstPage": 177,
+      "snippet": "ing airspace apply. CYA121(A)(S) HOPE, BC The airspace within the area bounded by a line beginning at: N49°24'30.00\" W121°19'30.00\" to N49°19'30.00\" W121°19'30.00\" to N49°19'30.00\" W121°33'00.00\" to N49°24'30.00\" W121°33'00.00"
+    },
+    "CYA122": {
+      "code": "CYA122",
+      "firstPage": 177,
+      "snippet": "ing airspace apply. CYA122(A)(H) VERNON, BC The airspace within the area bounded by a line beginning at: N50°20'00.00\" W118°36'00.00\" to N50°10'00.00\" W118°36'00.00\" to N50°10'00.00\" W119°10'00.00\" to N50°20'00.00\" W119°02'00."
+    },
+    "CYA124": {
+      "code": "CYA124",
+      "firstPage": 178,
+      "snippet": "2026 ADVISORY AREAS CYA124(M) TEXADA ISLAND, BC 175 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Designated Altitude – Surface to 6200´"
+    },
+    "CYA131": {
+      "code": "CYA131",
+      "firstPage": 178,
+      "snippet": "s G airspace apply. CYA131(M) VALEMOUNT, BC The airspace within the area bounded by a line beginning at: N53°25'00.00\" W118°20'00.00\" to N53°34'00.00\" W120°16'00.00\" to N52°43'00.00\" W121°12'00.00\" to N51°47'00.00\" W120°26'00."
+    },
+    "CYA133": {
+      "code": "CYA133",
+      "firstPage": 178,
+      "snippet": "ing airspace apply. CYA133(H) VANCOUVER, BC The airspace within the area bounded by a line beginning at: N49°21'40.00\" W123°01'05.00\" to N49°21'40.00\" W123°05'40.00\" to N49°24'20.00\" W123°07'46.00\" thence clockwise along the a"
+    },
+    "CYA135": {
+      "code": "CYA135",
+      "firstPage": 178,
+      "snippet": "ing airspace apply. CYA135(H) LAKE COWICHAN, BC The airspace within the area bounded by a line beginning at: N48°58'45.00\" W124°08'39.00\" to"
+    },
+    "CYA145": {
+      "code": "CYA145",
+      "firstPage": 179,
+      "snippet": "2026 ADVISORY AREAS CYA145(H) VICTORIA/SALTSPRING ISLAND, BC 176 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N48°48'46.00\" W124°05'43."
+    },
+    "CYA158": {
+      "code": "CYA158",
+      "firstPage": 179,
+      "snippet": "ing airspace apply. CYA158(P) WILLIAMS LAKE, BC The airspace within the area bounded by a circle of: 2 miles radius centred on N51°55'00.00\" W122°05'00.00\" Designated Altitude – Surface to 7000´ Time of Designation – Ocsl by"
+    },
+    "CYA159": {
+      "code": "CYA159",
+      "firstPage": 179,
+      "snippet": "ing airspace apply. CYA159(S) SMITHERS, BC The airspace within the area bounded by a line beginning at: N55°24'30.00\" W127°16'30.00\" to N54°55'00.00\" W126°40'00.00\" to N54°27'08.00\" W126°39'03.00\" (Houston, BC - VOR) \\ to N54°"
+    },
+    "CYA167": {
+      "code": "CYA167",
+      "firstPage": 179,
+      "snippet": "ing airspace apply. CYA167(S) GOLDEN, BC The airspace within the area bounded by a line beginning at: N51°29'00.00\" W117°03'00.00\" to N51°12'00.00\" W116°45'00.00\" to N51°06'00.00\" W117°24'00.00\" to N51°16'00.00\" W117°26'00.00\""
+    },
+    "CYA168": {
+      "code": "CYA168",
+      "firstPage": 180,
+      "snippet": "2026 ADVISORY AREAS CYA168(H) TERRACE, BC 177 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N51°29'00.00\" W117°03'00.00\" point of beginn"
+    },
+    "CYA184": {
+      "code": "CYA184",
+      "firstPage": 180,
+      "snippet": "ing airspace apply. CYA184(A)(T)(H) CHILLIWACK, BC The airspace within the area bounded by a line beginning at: N49°02'42.64\" W121°56'40.00\" to N49°06'10.00\" W121°56'40.00\" thence counter-clockwise along the arc of a circle of"
+    },
+    "CYA185": {
+      "code": "CYA185",
+      "firstPage": 180,
+      "snippet": "ing airspace apply. CYA185(A)(T)(H) ALOUETTE LAKE, BC The airspace within the area bounded by a line beginning at: N49°26'08.47\" W122°33'16.77\" to N49°25'36.39\" W122°30'52.98\" to N49°21'40.00\" W122°32'05.00\" to N49°15'24.37\" W"
+    },
+    "CYA186": {
+      "code": "CYA186",
+      "firstPage": 181,
+      "snippet": "2026 ADVISORY AREAS CYA186(A)(T)(H) DICKSON LAKE, BC 178 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Time of Designation – Cont daylig"
+    },
+    "CYA188": {
+      "code": "CYA188",
+      "firstPage": 181,
+      "snippet": "ing airspace apply. CYA188(A)(T) GLEN VALLEY, BC The airspace within the area bounded by a line beginning at: N49°10'10.05\" W122°28'18.86\" to N49°09'09.48\" W122°24'06.96\" to N49°07'52.92\" W122°22'47.00\" to N49°06'27.31\" W122°2"
+    },
+    "CYA201": {
+      "code": "CYA201",
+      "firstPage": 181,
+      "snippet": "ing airspace apply. CYA201(S) COWLEY, AB The airspace within the area bounded by a line beginning at: N49°28'00.00\" W114°00'00.00\" to N49°28'00.00\" W114°30'00.00\" to N50°02'00.00\" W114°30'00.00\" to N50°05'00.00\" W114°20'00.00\""
+    },
+    "CYA202": {
+      "code": "CYA202",
+      "firstPage": 182,
+      "snippet": "2026 ADVISORY AREAS CYA202(S) CHIPMAN, AB 179 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Operating Procedures – The rules for Class G"
+    },
+    "CYA209": {
+      "code": "CYA209",
+      "firstPage": 182,
+      "snippet": "ing airspace apply. CYA209(T) EDMONTON, AB The airspace within the area bounded by a line beginning at: N53°43'00.00\" W114°22'00.00\" to N53°43'00.00\" W114°11'00.00\" to N53°34'00.00\" W114°11'00.00\" to N53°34'00.00\" W114°22'00.0"
+    },
+    "CYA218": {
+      "code": "CYA218",
+      "firstPage": 182,
+      "snippet": "beginning Excluding CYA218(P). Designated Altitude – Surface to 9000´ Time of Designation – Cont daylight Operating Procedures – The rules for Class G airspace apply when the area is active. When not active, the rules for th"
+    },
+    "CYA210": {
+      "code": "CYA210",
+      "firstPage": 182,
+      "snippet": "ing airspace apply. CYA210(T) LETHBRIDGE, AB The airspace within the area bounded by a line beginning at: N49°21'00.00\" W113°10'00.00\" to N49°21'00.00\" W112°51'00.00\" to N49°11'00.00\" W112°51'00.00\" to N49°11'00.00\" W113°10'00"
+    },
+    "CYA214": {
+      "code": "CYA214",
+      "firstPage": 182,
+      "snippet": "s G airspace apply. CYA214(M) REDWATER, AB The airspace within the area bounded by a circle of: 5 miles radius centred on N53°54'00.00\" W112°58'00.00\" Designated Altitude – Surface to 3200´ Time of Designation – Cont User/Cont"
+    },
+    "CYA215": {
+      "code": "CYA215",
+      "firstPage": 182,
+      "snippet": "s G airspace apply. CYA215(S) GRANDE PRAIRIE, AB The airspace within the area bounded by a line beginning at: N54°30'00.00\" W120°18'00.00\" to N54°30'00.00\" W118°55'00.00\" to N54°05'00.00\" W118°55'00.00\" to N54°05'00.00\" W119°3"
+    },
+    "CYA226": {
+      "code": "CYA226",
+      "firstPage": 183,
+      "snippet": "ing airspace apply. CYA226(T) CALGARY, AB The airspace within the area bounded by a line beginning at: N51°25'00.00\" W115°00'00.00\" to N51°25'00.00\" W114°39'00.00\" to N51°14'00.00\" W114°39'00.00\" to N51°14'00.00\" W114°50'00.00"
+    },
+    "CYA227": {
+      "code": "CYA227",
+      "firstPage": 183,
+      "snippet": "ing airspace apply. CYA227(T) CALGARY, AB The airspace within the area bounded by a line beginning at: N51°11'00.00\" W114°50'00.00\" to N51°14'00.00\" W114°50'00.00\" to N51°14'00.00\" W114°39'00.00\" to N51°11'00.00\" W114°39'00.00"
+    },
+    "CYA228": {
+      "code": "CYA228",
+      "firstPage": 183,
+      "snippet": "ing airspace apply. CYA228(H) CALGARY, AB The airspace within the area bounded by a line beginning at: N51°11'00.00\" W114°28'00.00\" to N51°13'16.62\" W114°28'00.00\" to N51°13'16.62\" W114°25'30.00\" to N51°11'00.00\" W114°25'30.00"
+    },
+    "CYA263": {
+      "code": "CYA263",
+      "firstPage": 184,
+      "snippet": "2026 ADVISORY AREAS CYA263(S) BLACK DIAMOND, AB 181 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Operating Procedures – The rules for C"
+    },
+    "CYA264": {
+      "code": "CYA264",
+      "firstPage": 184,
+      "snippet": "ing airspace apply. CYA264(P) BEISEKER, AB The airspace within the area bounded by a circle of: 2 miles radius centred on N51°23'36.00\" W113°28'19.00\" Designated Altitude – Surface to 7000´ Time of Designation – Ocsl by NOTAM"
+    },
+    "CYA304": {
+      "code": "CYA304",
+      "firstPage": 184,
+      "snippet": "ing airspace apply. CYA304(M) MOOSE JAW, SK The airspace within the area bounded by a line beginning at: N50°21'44.65\" W105°57'02.37\" thence counter-clockwise along the arc of a circle of 15 miles radius centred on N50°19'52."
+    },
+    "CYA305": {
+      "code": "CYA305",
+      "firstPage": 185,
+      "snippet": "2026 ADVISORY AREAS CYA305(M) MOOSE JAW, SK 182 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYA305(M) MOOSE JAW, SK The airspace withi"
+    },
+    "CYA306": {
+      "code": "CYA306",
+      "firstPage": 185,
+      "snippet": "ing airspace apply. CYA306(T) DELISLE, SK The airspace within the area bounded by a line beginning at: N51°59'53.00\" W106°58'20.00\" to N51°47'40.00\" W106°58'20.00\" to N51°47'40.00\" W107°26'40.00\" to N51°59'53.00\" W107°26'40.00"
+    },
+    "CYA307": {
+      "code": "CYA307",
+      "firstPage": 185,
+      "snippet": "ing airspace apply. CYA307(M) MOOSE JAW, SK The airspace within the area bounded by a line beginning at: N50°05'38.33\" W105°26'27.64\" thence counter-clockwise along the arc of a circle of 15 miles radius centred on N50°19'52.0"
+    },
+    "CYA308": {
+      "code": "CYA308",
+      "firstPage": 186,
+      "snippet": "2026 ADVISORY AREAS CYA308(S) STRAWBERRY LAKES, SK 183 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYA308(S) STRAWBERRY LAKES, SK The"
+    },
+    "CYA310": {
+      "code": "CYA310",
+      "firstPage": 186,
+      "snippet": "ing airspace apply. CYA310(M) MOOSE JAW, SK The airspace within the area bounded by a line beginning at: N50°20'05.00\" W106°36'14.13\" thence counter-clockwise along the arc of a circle of 40 miles radius centred on N50°19'52.0"
+    },
+    "CYA311": {
+      "code": "CYA311",
+      "firstPage": 186,
+      "snippet": "ing airspace apply. CYA311(M) MOOSE JAW, SK The airspace within the area bounded by a line beginning at: N49°49'58.89\" W106°15'02.40\" thence counter-clockwise along the arc of a circle of 40 miles radius centred on N50°19'52.0"
+    },
+    "CYA315": {
+      "code": "CYA315",
+      "firstPage": 186,
+      "snippet": "ing airspace apply. CYA315(M) MOOSE JAW, SK The airspace within the area bounded by a line beginning at: N49°40'43.94\" W105°46'23.41\" thence counter-clockwise along the arc of a circle of"
+    },
+    "CYA316": {
+      "code": "CYA316",
+      "firstPage": 187,
+      "snippet": "2026 ADVISORY AREAS CYA316(M) MOOSE JAW, SK 184 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada 40 miles radius centred on N50°19'52.00\" W"
+    },
+    "CYA317": {
+      "code": "CYA317",
+      "firstPage": 187,
+      "snippet": "ing airspace apply. CYA317(P) ESTEVAN, SK The airspace within the area bounded by a circle of: 2 miles radius centred on N49°12'37.00\" W102°57'57.00\" (Estevan, SK - AD) Designated Altitude – Surface to 11,500´ Time of Designat"
+    },
+    "CYA403": {
+      "code": "CYA403",
+      "firstPage": 187,
+      "snippet": "ing airspace apply. CYA403(T) BRANDON, MB The airspace within the area bounded by a line beginning at: N49°44'20.00\" W100°11'50.00\" to N49°37'20.00\" W100°11'50.00\" to N49°37'20.00\" W099°57'20.00\" to N49°44'20.00\" W099°57'20.00"
+    },
+    "CYA404": {
+      "code": "CYA404",
+      "firstPage": 188,
+      "snippet": "2026 ADVISORY AREAS CYA404(T) WINNIPEG, MB 185 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Time of Designation – Cont daylight Operati"
+    },
+    "CYA407": {
+      "code": "CYA407",
+      "firstPage": 188,
+      "snippet": "ing airspace apply. CYA407(M) SOUTHPORT, MB The airspace within the area bounded by a line beginning at: N49°54'30.80\" W099°02'35.98\" to N49°55'02.91\" W099°01'24.16\" to N49°56'44.29\" W098°59'25.47\" to N49°56'53.46\" W098°57'59."
+    },
+    "CYA408": {
+      "code": "CYA408",
+      "firstPage": 188,
+      "snippet": "ing airspace apply. CYA408(S) STARBUCK, MB The airspace within the area bounded by a line beginning at: N49°46'07.35\" W097°37'06.10\" to N49°35'29.29\" W097°37'03.96\" to N49°35'29.88\" W097°46'37.92\" to N49°44'33.67\" W097°46'40.0"
+    },
+    "CYA411": {
+      "code": "CYA411",
+      "firstPage": 189,
+      "snippet": "2026 ADVISORY AREAS CYA411(F) STONY MOUNTAIN, MB 186 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N49°45'21.34\" W097°40'27.76\" to N49°4"
+    },
+    "CYA413": {
+      "code": "CYA413",
+      "firstPage": 189,
+      "snippet": "ing airspace apply. CYA413(M) SOUTHPORT, MB The airspace within the area bounded by a line beginning at: N49°47'21.07\" W098°36'49.10\" to N49°38'24.98\" W099°04'22.89\" thence counter-clockwise along the arc of a circle of 35 mil"
+    },
+    "CYA420": {
+      "code": "CYA420",
+      "firstPage": 189,
+      "snippet": "ing airspace apply. CYA420(T) GIMLI, MB The airspace within the area bounded by a line beginning at: N50°48'24.00\" W097°36'07.00\" to N50°48'12.00\" W097°13'31.00\" to N50°34'30.00\" W097°13'31.00\" to N50°34'45.00\" W097°36'01.00\""
+    },
+    "CYA509": {
+      "code": "CYA509",
+      "firstPage": 189,
+      "snippet": "ing airspace apply. CYA509(P) COOKSTOWN, ON The airspace within the area bounded by a circle of: 1 mile radius centred on N44°14'20.00\" W079°38'20.00\""
+    },
+    "CYA513": {
+      "code": "CYA513",
+      "firstPage": 190,
+      "snippet": "2026 ADVISORY AREAS CYA513(P) PORT COLBORNE, ON 187 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Designated Altitude – Surface to 4500´"
+    },
+    "CYA515": {
+      "code": "CYA515",
+      "firstPage": 190,
+      "snippet": "ing airspace apply. CYA515(M) THUNDER BAY, ON The airspace within the area bounded by a line beginning at: N48°01'24.00\" W089°26'48.00\" to N48°15'24.00\" W088°59'55.00\" to N48°08'00.00\" W088°59'51.00\" to N47°59'22.00\" W089°20'3"
+    },
+    "CYA516": {
+      "code": "CYA516",
+      "firstPage": 190,
+      "snippet": "ing airspace apply. CYA516(M) THUNDER BAY, ON The airspace within the area bounded by a line beginning at: N48°01'24.00\" W089°26'48.00\" to N48°15'24.00\" W088°59'55.00\" to N48°08'00.00\" W088°59'51.00\" to N47°59'22.00\" W089°20'3"
+    },
+    "CYA521": {
+      "code": "CYA521",
+      "firstPage": 190,
+      "snippet": "ing airspace apply. CYA521(M) NORTH BAY, ON The airspace within the area bounded by a line beginning at: N46°32'17.00\" W079°51'34.00\" to N46°56'00.00\" W080°46'00.00\" to"
+    },
+    "CYA524": {
+      "code": "CYA524",
+      "firstPage": 191,
+      "snippet": "2026 ADVISORY AREAS CYA524(S) HAWKESBURY, ON 188 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N47°22'08.00\" W080°51'54.00\" to N47°47'17"
+    },
+    "CYA528": {
+      "code": "CYA528",
+      "firstPage": 191,
+      "snippet": "ing airspace apply. CYA528(S)(T) KEMPTVILLE, ON The airspace within the area bounded by a line beginning at: N45°05'59.00\" W075°46'23.00\" to N45°03'50.00\" W075°45'48.00\" to N45°03'02.00\" W075°44'51.00\" to N45°01'42.00\" W075°39"
+    },
+    "CYA529": {
+      "code": "CYA529",
+      "firstPage": 192,
+      "snippet": "2026 ADVISORY AREAS CYA529(P) GRAND BEND, ON 189 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada CYA529(P) GRAND BEND, ON The airspace wit"
+    },
+    "CYA530": {
+      "code": "CYA530",
+      "firstPage": 192,
+      "snippet": "ing airspace apply. CYA530(M) LAKE ONTARIO, ON The airspace within the area bounded by a line beginning at: N43°37'52.06\" W078°41'26.00\" to N43°49'00.00\" W078°00'00.00\" to N43°50'00.00\" W076°47'47.98\" to N43°37'52.06\" W076°47'"
+    },
+    "CYA534": {
+      "code": "CYA534",
+      "firstPage": 192,
+      "snippet": "ing airspace apply. CYA534(S) KARS, ON The airspace within the area bounded by a line beginning at: N45°06'46.00\" W075°42'06.00\" to N45°06'53.00\" W075°41'26.00\" to N45°05'50.00\" W075°33'46.00\" thence counter-clockwise along th"
+    },
+    "CYA616": {
+      "code": "CYA616",
+      "firstPage": 192,
+      "snippet": "ing airspace apply. CYA616(T) QUÉBEC, QC The airspace within the area bounded by a line beginning at: N46°38'00.00\" W070°58'00.00\" to N46°32'00.00\" W070°47'00.00\" to N46°30'52.38\" W070°57'08.08\" thence counter-clockwise along"
+    },
+    "CYA619": {
+      "code": "CYA619",
+      "firstPage": 193,
+      "snippet": "2026 ADVISORY AREAS CYA619 (H) MONT GRAND MORNE, QC 190 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Designated Altitude – Surface to 4"
+    },
+    "CYA621": {
+      "code": "CYA621",
+      "firstPage": 193,
+      "snippet": "ing airspace apply. CYA621 (H) MONT YAMASKA, QC The airspace within the area bounded by a circle of: 3 miles radius centred on N45°27'20.00\" W072°52'00.00\" Designated Altitude – Surface to 7000´ Time of Designation – Cont day"
+    },
+    "CYA623": {
+      "code": "CYA623",
+      "firstPage": 193,
+      "snippet": "ing airspace apply. CYA623(H) ROUGEMONT, QC The airspace within the area bounded by a line beginning at: N45°24'22.00\" W072°52'39.00\" to N45°25'24.00\" W073°02'08.00\" thence clockwise along the arc of a circle of 3 miles radius"
+    },
+    "CYA627": {
+      "code": "CYA627",
+      "firstPage": 193,
+      "snippet": "ing airspace apply. CYA627(S) ST-DOMINIQUE, QC The airspace within the area bounded by a line beginning at: N45°31'00.00\" W072°54'52.00\" to N45°34'20.00\" W072°56'10.00\" to N45°39'00.00\" W072°56'30.00\" to N45°39'48.00\" W072°52'"
+    },
+    "CYA632": {
+      "code": "CYA632",
+      "firstPage": 194,
+      "snippet": "2026 ADVISORY AREAS CYA632(P) JOLIETTE, QC 191 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N45°31'00.00\" W072°52'10.00\" to N45°31'00.0"
+    },
+    "CYA633": {
+      "code": "CYA633",
+      "firstPage": 194,
+      "snippet": "ing airspace apply. CYA633(P) JOLIETTE, QC The airspace within the area bounded by a line beginning at: N46°11'43.00\" W073°21'44.00\" to N46°09'41.00\" W073°21'44.00\" to N46°05'51.00\" W073°23'43.00\" thence clockwise along the ar"
+    },
+    "CYA640": {
+      "code": "CYA640",
+      "firstPage": 194,
+      "snippet": "ing airspace apply. CYA640(M) BAGOTVILLE, QC The airspace within the area bounded by a line beginning at: N52°00'00.00\" W074°00'00.00\" to N52°00'00.00\" W068°00'00.00\" to N51°12'25.00\" W068°00'00.00\" to N51°12'24.75\" W069°19'0"
+    },
+    "CYA641": {
+      "code": "CYA641",
+      "firstPage": 195,
+      "snippet": "2026 ADVISORY AREAS CYA641(M) BAGOTVILLE, QC 192 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada User Agency – 3 Wing Operations, CFB Bago"
+    },
+    "CYA642": {
+      "code": "CYA642",
+      "firstPage": 195,
+      "snippet": "ing airspace apply. CYA642(M) BAGOTVILLE, QC The airspace within the area bounded by a line beginning at: N51°00'05.99\" W071°22'41.94\" to N51°00'00.36\" W069°36'39.48\" to N49°52'16.14\" W071°08'32.70\" to N49°04'22.15\" W071°09'0"
+    },
+    "CYA643": {
+      "code": "CYA643",
+      "firstPage": 195,
+      "snippet": "ing airspace apply. CYA643(M) BAGOTVILLE, QC The airspace within the area bounded by a line beginning at: N51°12'25.00\" W068°00'00.00\" to N50°36'17.35\" W068°00'00.00\" to N50°27'20.53\" W068°01'23.28\" to N49°11'15.00\" W068°40'0"
+    },
+    "CYA644": {
+      "code": "CYA644",
+      "firstPage": 196,
+      "snippet": "2026 ADVISORY AREAS CYA644(P) ST-ESPRIT, QC 193 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada N48°19'50.00\" W070°59'47.00\" (Bagotville,"
+    },
+    "CYA645": {
+      "code": "CYA645",
+      "firstPage": 196,
+      "snippet": "ing airspace apply. CYA645(P) ST-ESPRIT, QC The airspace within the area bounded by a line beginning at: N46°02'57.00\" W073°37'27.00\" to N46°01'18.00\" W073°31'10.00\" to N45°53'29.95\" W073°37'11.84\" thence clockwise along the a"
+    },
+    "CYA702": {
+      "code": "CYA702",
+      "firstPage": 196,
+      "snippet": "ing airspace apply. CYA702(P) GREENWOOD, NS The airspace within the area bounded by a circle of: 0.5 mile radius centred on N45°03'47.00\" W064°43'19.00\" Designated Altitude – Surface to 500´ Time of Designation – Cont daylight"
+    },
+    "CYA731": {
+      "code": "CYA731",
+      "firstPage": 197,
+      "snippet": "2026 ADVISORY AREAS CYA731(M) GOOSE BAY, NL 194 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Operating Procedures – The rules for Class"
+    },
+    "CYA732": {
+      "code": "CYA732",
+      "firstPage": 197,
+      "snippet": "ing airspace apply. CYA732(M) GOOSE BAY, NL The airspace within the area bounded by a line beginning at: N53°31'20.00\" W061°26'12.00\" to N53°45'00.00\" W062°43'00.00\" to N53°50'00.00\" W064°20'00.00\" to N53°42'00.00\" W064°55'00."
+    },
+    "CYA733": {
+      "code": "CYA733",
+      "firstPage": 198,
+      "snippet": "2026 ADVISORY AREAS CYA733(M) GOOSE BAY, NL 195 DAH June 2, 2026 10:58 am © 2026 His Majesty the King in Right of CanadaSource of Canadian Airspace Data © 2026 Transport Canada Time of Designation – Ocsl by NOTAM User/C"
+    },
+    "CYA755": {
+      "code": "CYA755",
+      "firstPage": 198,
+      "snippet": "ing airspace apply. CYA755(M) GOOSE BAY, NL The airspace within the area bounded by a line beginning at: N52°18'24.00\" W062°02'38.00\" to N51°22'26.00\" W063°51'11.00\" to N51°25'00.00\" W064°00'00.00\" to N52°47'00.00\" W064°00'00."
+    }
+  }
+}

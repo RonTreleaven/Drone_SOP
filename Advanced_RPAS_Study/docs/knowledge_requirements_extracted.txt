@@ -1,0 +1,338 @@
+Advance Pilot Knowledge Requirements
+Small RPAS pilot knowledge requirements Knowledge requirements for sRPAS pilots operating VLOS are shown in the following tables. 
+The applicable type of operation (basic and advanced) is shown to the left of the topics. Sample learning objectives are shown to the right of the topics. The list of sample objectives is not all-inclusive, its purpose is to illustrate the depth of knowledge required to operate sRPAS in Canadian airspace. Types of operation (basic operations, advanced operations) are set out in the Canadian Aviation Regulations, Part IX.  There are minimum knowledge requirements for the pilots of sRPAS operating in each of those groups. Applicants for the pilot certificate – small remotely piloted aircraft (VLOS) – basic operations shall demonstrate their knowledge by writing the Transport Canada multiple choice examination based on the indicated applicable subjects contained in this guide and covering the subjects set out in Standard 921.01. Applicants for the pilot certificate – small remotely piloted aircraft (VLOS) – advanced operations shall demonstrate their knowledge by writing the Transport Canada multiple choice examination based on the indicated applicable subjects contained in this guide and covering the subjects set out in Standard 921.02. z
+Applicants for the flight reviewer rating attached to the pilot certificate – small remotely piloted aircraft (VLOS) – advanced operations shall demonstrate their knowledge by writing the Transport Canada multiple choice examination on the indicated applicable subjects contained in the “Knowledge areas” section of this guide related to advanced operations and “Appendix A: Flight review guide - sRPAS exercises” related to conducting a flight review covering the subjects set out in Standard 921.03.
+sRPAS category 
+Knowledge area (topics)
+The small RPAS pilot operating within visual line of sight must be able to:
+URLs 
+Notes:
+Basic
+Advanced
+Aeronautics Act
+Links
+s3-Definitions
+Define aerodrome, airport, and pilot in command.
+Aeronautics Act
+Aerodrome means any area of land, water (including the frozen surface thereof) or other supporting surface used, designed, prepared, equipped or set apart for use either in whole or in part for the arrival, departure, movement or servicing of aircraft and includes any buildings, installations and equipment situated thereon or associated therewith;
+airport means an aerodrome in respect of which a Canadian aviation document is in force;
+pilot-in-command means, in relation to an aircraft, the pilot having responsibility and authority for the operation and safety of the aircraft during flight time;
+Canadia Aviation Regulations (CARs)
+Part I – General provisions
+CARs Part IX 
+101-Interpretation
+Canadian Aviation Regulations
+101.01 Interpretation (definitions)
+102 - Application
+102 - Application
+102.01 Application
+State that the regulations do not apply to indoor or underground operations.
+102.01
+102.01 These Regulations do not apply in respect of
+(a) military aircraft of Her Majesty in right of Canada when they are being maneuvered under the authority of the Minister of National Defence;
+(b) military aircraft of a country other than Canada, to the extent that the Minister of National Defence has exempted them from the application of these Regulations pursuant to subsection 5.9(2) of the Act;
+(b.1) remotely piloted aircraft that are operated indoors or underground; or
+(c) rockets, hovercraft or wing-in-ground-effect machines, unless otherwise indicated in these Regulations.
+103 − Administration and compliance
+103 Division II - Compliance
+103.02 Inspection of aircraft, requests for production of documents and prohibitions
+State who may demand to inspect aviation documents. 
+103.02 (1) The owner or operator of an aircraft shall, on reasonable notice given by the Minister, make the aircraft available for inspection in accordance with the notice.
+(2) Every person who
+(a) is the holder of a Canadian aviation document,
+(b) is the owner, operator or pilot-in-command of an aircraft in respect of which a Canadian aviation document, technical record or other document is kept, or
+(c) has in possession a Canadian aviation document, technical record or other document relating to an aircraft or a commercial air service
+shall produce the Canadian aviation document, technical record or other document for inspection in accordance with the terms of a demand made by a peace officer, an immigration officer or the Minister.
+(3) No person shall
+(a) lend a Canadian aviation document to any person who is not entitled to it by these Regulations, or allow any such person to use a Canadian aviation document; or
+(b) mutilate, alter or render illegible a Canadian aviation document.
+(4) For the purposes of this section, other document includes all writings, papers and other records made, held or maintained by the owner, operator or pilot-in-command of an aircraft for the purpose of recording any action, activity, performance or use of the aircraft or any activity of the owner, operator or crew members in respect of that aircraft, whether or not the documents are required by law to be made, held or maintained.
+103.03 Return of Canadian Aviation Documents
+103.03 Where a Canadian aviation document has been suspended or cancelled, the person to whom it was issued shall return it to the Minister immediately after the effective date of the suspension or cancellation.
+103.04 Record keeping
+State that computer-stored records may be used in place of paper records if measures are taken to protect them.
+103.04 Recording systems, including computer records and microfiche, that do not comprise entries on paper may be used to comply with the record-keeping requirements of these Regulations if
+(a) measures are taken to ensure that the records contained in the recording systems are protected, by electronic or other means, against inadvertent loss or destruction and against tampering; and
+(b) a copy of the records contained in the recording systems can be printed on paper and provided to the Minister on reasonable notice given by the Minister.
+Part III – Aerodrome and airports
+301 – Aerodromes
+Explain that persons, vehicles, obstacles and operations at aerodromes are subject to the approval of the aerodrome operator and the appropriate air traffic control unit
+State the restrictions/rules for activities on an aerodrome, or airport.
+Part III - Aerodromes, Airports and Heliports
+301.01 Application
+301.01 This Subpart applies in respect of all aerodromes except airports, heliports and military aerodromes.
+301.08 Prohibitions
+Prohibitions
+301.08 No person shall
+(a) walk, stand, drive a vehicle, park a vehicle or aircraft or cause an obstruction on the movement area of an aerodrome, except in accordance with permission given
+(i) by the operator of the aerodrome, and
+(ii) where applicable, by the appropriate air traffic services unit;
+(b) tow an aircraft on an active movement area at night unless the aircraft displays operating wingtip, tail and anti-collision lights or is illuminated by lights mounted on the towing vehicle and directed at the aircraft;
+(c) park or otherwise leave an aircraft on an active manoeuvring area at night unless the aircraft displays operating wingtip, tail and anti-collision lights or is illuminated by lanterns suspended from the wingtips, tail and nose of the aircraft;
+(d) operate any vessel, or cause any obstruction, on the surface of any part of a water area of an aerodrome that is to be kept clear of obstructions in the interest of aviation safety, when ordered, by signal or otherwise, to leave or not to approach that area by the appropriate air traffic services unit or by the operator of the aerodrome;
+(e) knowingly remove, deface, extinguish or interfere with a marker, marking, light or signal that is used at an aerodrome for the purpose of air navigation, except in accordance with permission given
+(i) by the operator of the aerodrome, and
+(ii) where applicable, by the appropriate air traffic services unit;
+(f) at a place other than an aerodrome, knowingly display a marker, marking, light or signal that is likely to cause a person to believe that the place is an aerodrome;
+(g) knowingly display at or in the vicinity of an aerodrome a marker, marking, sign, light or signal that is likely to be hazardous to aviation safety by causing glare or by causing confusion with or preventing clear visual perception of a marker, marking, sign, light or signal that is required under this Subpart;
+(h) allow a bird or other animal that is owned by the person or that is in the person’s custody or control to be unrestrained within the boundaries of an aerodrome except for the purpose of controlling other birds or animals at the aerodrome as permitted by the operator; or
+discharge a firearm within or into an aerodrome without the permission of the operator of the aerodrome.
+301.09 Fire prevention
+301.09 (1) Subject to subsection 301.07(12) and subsections (2) and (3), no person shall, while at an aerodrome, smoke or display an open flame
+(a) on an apron.
+(b) on an aircraft loading bridge or on a gallery or balcony that is contiguous to or that overhangs an apron; or
+(c) in an area where smoking or the presence of an open flame is likely to create a fire hazard that could endanger persons or property.(2) The operator of an aerodrome may, in writing, authorize maintenance or servicing operations on an apron that involve the use, production or potential development of an open flame or that involve the production or potential development of a spark where the operations are conducted in a manner that is not likely to create a fire hazard that could endanger persons or property.(3) The operator of an aerodrome may permit smoking in an enclosed building or shelter located on an apron where such smoking is not likely to create a fire hazard that could endanger persons or property.
+302 – Airports
+Subpart 2 - Airports
+302.10 Prohibitions
+Prohibitions
+302.10 No person shall
+(a) operate an aerodrome referred to in subsection 302.01(1) unless an airport certificate is issued in respect of that aerodrome;
+(b) knowingly use an airport in a manner contrary to a condition set out in the airport certificate;
+(c) walk, stand, drive a vehicle, park a vehicle or aircraft or cause an obstruction on the movement area of an airport, except in accordance with permission given
+(i) by the operator of the airport, and
+(ii) where applicable, by the appropriate air traffic services unit;
+(d) operate any vessel, or cause any obstruction, on the surface of any part of a water area of an airport that is to be kept clear of obstructions in the interest of aviation safety, when ordered, by signal or otherwise, to leave or not to approach that area by the appropriate air traffic services unit or by the operator of the airport;
+(e) tow an aircraft on an active movement area at night unless the aircraft displays operating wingtip, tail and anti-collision lights or is illuminated by lights mounted on the towing vehicle and directed at the aircraft being towed;
+(f) park or otherwise leave an aircraft on an active manoeuvring area at night unless the aircraft displays operating wingtip, tail and anti-collision lights or is illuminated by lanterns suspended from the wingtips, tail and nose of the aircraft;
+(g) at an airport, knowingly remove, deface, extinguish or interfere with a marker, marking, light or signal that is used for the purpose of air navigation, except in accordance with permission given
+(i) by the operator of the airport, and
+(ii) where applicable, by the appropriate air traffic services unit;
+(h) at or in the vicinity of an airport, knowingly display a marker, marking, sign, light or signal that is likely to be hazardous to aviation safety by causing glare or by causing confusion with or preventing clear visual perception of a marker, marking, sign, light or signal that is required under this Subpart;
+(i) allow a bird or other animal that is owned by the person or that is in the person’s custody or control to be unrestrained within the boundaries of an airport, except for the purpose of controlling other birds or animals at the airport as permitted by the operator; or
+(j) discharge a firearm within or into an airport without the permission of the operator of the airport.
+302.11 Fire prevention
+Fire Prevention
+302.11 (1) Subject to subsections (2) to (4), no person shall, at an airport, smoke or display an open flame
+(a) on an apron;
+(b) on an aircraft loading bridge or on a gallery or balcony that is contiguous to or that overhangs an apron; or
+(c) in an area where smoking or an open flame is likely to create a fire hazard that could endanger persons or property.
+(2) The operator of an airport may display flare pots to provide temporary lighting for the take-off or landing of aircraft.
+(3) The operator of an airport may, in writing, authorize maintenance or servicing operations on an apron that involve the use, production or potential development of an open flame or that involve the production or potential development of a spark where the operations are conducted in a manner that is not likely to create a fire hazard that could endanger persons or property.
+(4) The operator of an airport may permit smoking in an enclosed building or shelter located on an apron where such smoking is not likely to create a fire hazard that could endanger persons or property.
+Part VI – General operating and flight rules
+Part VI - General Operating and Flight Rules
+Airspace structure, classification and use
+601 - Airspace
+601.01 Airspace structure
+Describe the horizontal and vertical limits of the various classifications of airspace, control areas, special use airspace. 
+Identify the altimeter setting region and the standard pressure region. 
+Recall that advanced operations in Class F airspace require the permission of the airspace operator. 
+Describe the communications required with air traffic control (ATC) for operating a small RPA VLOS within class C or D airspace.
+600.01 In this Part,
+ADIZ or Air Defence Identification Zone means the airspace that extends upward from the surface in those areas of Canada and off the coasts of Canada, the boundaries of which are specified in the Designated Airspace Handbook 
+aerial application means the seeding from an aircraft or the spraying or dusting of chemicals from an aircraft, or any other operation of a similar nature 
+aerial inspection means the inspection from an aircraft of crops, forests, livestock or wildlife, the patrolling of pipelines or power lines, a flight inspection or any other operation of a similar nature
+appropriate ATS unit means
+(a) with respect to aircraft operations within a control zone or on the movement area of an aerodrome,
+(i) the ATC unit identified for the aerodrome in the Canada Air Pilot or Canada Flight Supplement, or
+(ii) if the ATC unit is not in operation or an ATC unit is not identified, the FS unit identified in the Canada Air Pilot or Canada Flight Supplement as providing air traffic services to the aerodrome;
+(b) with respect to aircraft operations within an MF area or on the movement area of an aerodrome, the FS unit identified in the Canada Air Pilot or Canada Flight Supplement as providing air traffic services to the aerodrome; and
+(c) with respect to any other situation, the ATS unit identified in an aeronautical publication as providing air traffic services in the airspace concerned; 
+601.02 Airspace classification
+DAH_#314_English_17_April_2025
+https://www.navcanada.ca/en/dah20250417.pdf
+(Designated Airspace Handbook – url)
+601.02 (1) The class of any controlled airspace of a type referred to in subsection 601.01(1) is one of the following, as specified in the Designated Airspace Handbook:
+(a) Class A;
+(b) Class B;
+(c) Class C;
+(d) Class D;
+(e) Class E;
+(f) Class F Special Use Restricted; or
+(g) Class F Special Use Advisory.
+(2) The class of any uncontrolled airspace of a type referred to in subsection 601.01(2) is one of the following, as specified in the Designated Airspace Handbook:
+(a) Class G;
+(b) Class F Special Use Restricted; or
+(c) Class F Special Use Advisory.
+601.03 Transponder airspace
+601.03 Transponder airspace consists of
+(a) all Class A, B and C airspace as specified in the Designated Airspace Handbook; and
+(b) any Class D or E airspace specified as transponder airspace in the Designated Airspace Handbook.
+601.04 IFR or VFR Flight in class F special use restricted airspace or class F special use advisory airspace
+601.04 (1) The procedures for the operation of aircraft in Class F Special Use Restricted airspace and Class F Special Use Advisory airspace are those specified in the Designated Airspace Handbook.
+(2) No person shall operate an aircraft in Class F Special Use Restricted airspace unless authorized to do so by the person specified for that purpose in the Designated Airspace Handbook.
+(3) For the purposes of subsection (2), a person specified in the Designated Airspace Handbook may authorize the operation of an aircraft where activities on the ground or in the airspace are not hazardous to aircraft operating in that airspace and access by aircraft to that airspace does not jeopardize national security interests.
+601.08 VFR flight in class C airspace
+VFR Flight in Class C Airspace
+601.08 (1) Subject to subsection (2), no person operating a VFR aircraft shall enter Class C airspace unless the person receives a clearance to enter from the appropriate air traffic control unit before entering the airspace.
+(2) The pilot-in-command of a VFR aircraft that is not equipped with radiocommunication equipment capable of two-way communication with the appropriate air traffic control unit may, during daylight in VMC, enter Class C airspace if the pilot-in-command receives authorization to enter from the appropriate air traffic control unit before entering the airspace.
+(3) Class C airspace becomes Class E airspace when the appropriate air traffic control unit is not in operation.
+601.09 VFR flight in class D airspace
+VFR Flight in Class D Airspace
+601.09 (1) Subject to subsection (2), no person operating a VFR aircraft shall enter Class D airspace unless the person establishes two-way radio contact with the appropriate air traffic control unit before entering the airspace.
+(2) The pilot-in-command of a VFR aircraft that is not equipped with radiocommunication equipment capable of two-way communication with the appropriate air traffic control unit may, during daylight in VMC, enter Class D airspace if the pilot-in-command receives authorization to enter from the appropriate air traffic control unit before entering the airspace.
+(3) Class D airspace becomes Class E airspace when the appropriate air traffic control unit is not in operation.
+Aircraft operating restrictions and hazards to aviation safety
+Recall the restrictions to operations in the vicinity of forest fire areas. 
+Describe the circumstances when a small RPAS is permitted to be operated in the vicinity of a forest fire. 
+Describe the process required to legally use a LIDAR (light detection and ranging) on a small RPA.
+601.14 Interpretation
+Interpretation601.14 In this Division,
+directed bright light source means any directed light source (coherent or non-coherent), including lasers, that may create a hazard to aviation safety or cause damage to an aircraft or injury to persons on board the aircraft;  fire control authority means an official of a government forestry service or other fire control agency that is responsible for the protection of persons and property against fire;
+forest fire area means an area on the surface of the earth on which standing timber, grass or any other vegetation or buildings are burning.
+601.15 Forest fire aircraft operating restrictions
+601.15 No person shall operate an aircraft
+(a) over a forest fire area, or over any area that is located within five nautical miles of a forest fire area, at an altitude of less than 3,000 feet AGL; or
+(b) in any airspace that is described in a NOTAM issued pursuant to section 601.16.
+601.16 Issuance of NOTAM for forest fire
+601.16 The Minister may issue a NOTAM that relates to restrictions on the operation of aircraft in the case of a forest fire and that describes
+(a) the location and dimensions of the forest fire area; and
+(b) the airspace in which forest fire control operations are being conducted.
+601.17 Exceptions
+601.17 (1) Section 601.15 does not apply to
+(a) persons who are operating an aircraft at the request of, or with the authorization of, an appropriate fire control authority for the purpose of assisting the fire control authority in the conduct of its operations;
+(b) persons who are operating an aircraft with the authorization of the Minister issued under subsection (2); or
+(c) Department of Transport personnel who are operating an aircraft in the performance of duties related to surveillance and the enforcement of aviation legislation.
+(2) On receipt of an application in writing, the Minister shall issue a written authorization permitting the applicant to operate an aircraft if the Minister is of the opinion that operating the aircraft is necessary for the safety of the public or to support the operation of an aerodrome that is in or adjacent to the forest fire area.
+(3) The Minister may specify conditions in the authorization governing the operation of the aircraft as are necessary for its safe and proper operation.
+(4) No person shall operate an aircraft under the authorization unless the authorization is on board and the aircraft is operated in accordance with any conditions specified in the authorization.
+601.20 Projection of directed bright light source at an Aircraft
+601.20 Subject to section 601.21, no person shall project or cause to be projected a directed bright light source into navigable airspace in such a manner as to create a hazard to aviation safety or cause damage to an aircraft or injury to persons on board the aircraft.
+601.21 Requirement for notification
+601.21 (1) Any person planning to project or cause to be projected a directed bright light source into navigable airspace shall, before the projection,
+(a) submit a written request to the Minister for an authorization to project the directed bright light source into navigable airspace; and
+(b) obtain a written authorization from the Minister to do so.
+(2) On receipt of the request for authorization, the Minister shall issue a written authorization if the projection is not likely to create a hazard to aviation safety or to cause damage to an aircraft or injury to persons on board the aircraft.
+(3) The Minister may specify in the authorization any conditions necessary to ensure that the projection is not likely to create a hazard to aviation safety or to cause damage to an aircraft or injury to persons on board the aircraft.
+601.22 Requirement for pilot-in-command
+601.22 (1) No pilot-in-command shall intentionally operate an aircraft into a beam from a directed bright light source or into an area where a directed bright light source is projected, unless the aircraft is operated in accordance with an authorization issued by the Minister.
+(2) The Minister may issue the authorization if the operation of the aircraft is not likely to create a hazard to aviation safety.
+602 − Operating and flight rules - general
+CARS 602 Operating and flight rules
+Operation at or in the vicinity of an aerodrome
+602.96 General
+State that pilots of small RPAs shall avoid flying the RPA in the traffic pattern at an aerodrome. 
+Recall the minimum operating conditions for VFR flight in uncontrolled airspace.
+602.96 (1) This section applies to persons operating VFR or IFR aircraft at or in the vicinity of an uncontrolled or controlled aerodrome.
+(2) Before taking off from, landing at or otherwise operating an aircraft at an aerodrome, the pilot-in-command of the aircraft shall be satisfied that
+(a) there is no likelihood of collision with another aircraft or a vehicle; and
+(b) the aerodrome is suitable for the intended operation.
+(3) The pilot-in-command of an aircraft operating at or in the vicinity of an aerodrome shall
+(a) observe aerodrome traffic for the purpose of avoiding a collision;
+(b) conform to or avoid the pattern of traffic formed by other aircraft in operation;
+(c) make all turns to the left when operating within the aerodrome traffic circuit, except where right turns are specified by the Minister in the Canada Flight Supplement or where otherwise authorized by the appropriate air traffic control unit;
+(d) if the aerodrome is an airport or heliport, comply with any airport or heliport operating restrictions specified by the Minister in the Canada Flight Supplement or in a NOTAM;
+(e) where practicable, land and take off into the wind unless otherwise authorized by the appropriate air traffic control unit;
+(f) maintain a continuous listening watch on the appropriate frequency for aerodrome control communications or, if this is not possible and an air traffic control unit is in operation at the aerodrome, keep a watch for such instructions as may be issued by visual means by the air traffic control unit; and
+(g) where the aerodrome is a controlled aerodrome, obtain from the appropriate air traffic control unit, either by radio communication or by visual signal, clearance to taxi, take-off from or land at the aerodrome.
+(4) Unless otherwise authorized by the appropriate air traffic control unit, no pilot-in-command shall operate an aircraft at an altitude of less than 2,000 feet over an aerodrome except for the purpose of landing or taking off or if the aircraft is operated pursuant to subsection (5).
+(5) Where it is necessary for the purposes of the operation in which the aircraft is engaged, a pilot-in-command may operate an aircraft at an altitude of less than 2,000 feet over an aerodrome, where it is being operated
+(a) in the service of a police authority;
+(b) for the purpose of saving human life;
+(c) for fire-fighting or air ambulance operations;
+(d) for the purpose of the administration of the Fisheries Act or the Coastal Fisheries Protection Act;
+(e) for the purpose of the administration of the national or provincial parks;
+(f) for the purpose of flight inspection;
+(g) for the purpose of aerial application or aerial inspection;
+(h) for the purpose of highway or city traffic patrol;
+(i) for the purpose of aerial photography conducted by the holder of an air operator certificate;
+(j) for the purpose of helicopter external load operations; or
+(k) for the purpose of flight training conducted by the holder of a flight training unit operator certificate.
+(6) No person shall conduct a take-off or landing at a designated airport without an aircraft fire-fighting service in an aeroplane in respect of which a type certificate has been issued authorizing the transport of 20 or more passengers if the airplane is operated under
+(a) Part VI, Subpart 4; or
+(b) Part VII, Subpart 1 or 5.
+(7) Subsection (6) does not apply in respect of
+(a) a cargo flight without passengers;
+(b) a ferry flight;
+(c) a positioning flight;
+(d) a training flight if no fare-paying passengers are on board;
+(e) the arrival of an aeroplane when the airport is being used for a diversion or as an alternate aerodrome; or
+(f) the subsequent departure of an aeroplane referred to in paragraph (e) if
+(i) the air operator or private operator has notified the operator of the designated airport of the intended time of departure,
+(ii) the operator of the designated airport has advised the air operator or private operator that aircraft fire-fighting services cannot be made available within one hour after the later of the time that notification was given under subparagraph (i) and the time of landing, and
+(iii) the pilot-in-command and the operations manager of the air operator or private operator have agreed that the aeroplane will depart without aircraft fire-fighting services being available.
+602.97 VFR and IFR aircraft operations at uncontrolled aerodromes within a mandatory frequency (MF) Area
+602.97 (1) Subject to subsection (3), no pilot-in-command shall operate a VFR or IFR aircraft within an MF area unless the aircraft is equipped with radiocommunication equipment pursuant to Subpart 5.
+(2) The pilot-in-command of a VFR or IFR aircraft operating within an MF area shall maintain a listening watch on the mandatory frequency specified for use in the MF area.
+(3) The pilot-in-command of a VFR aircraft that is not equipped with the radiocommunication equipment referred to in subsection (1) may operate the aircraft to or from an uncontrolled aerodrome that lies within an MF area if
+(a) a ground station is in operation at the aerodrome;
+(b) prior notice of the pilot-in-command’s intention to operate the aircraft at the aerodrome has been given to the ground station;
+(c) when conducting a take-off, the pilot-in-command ascertains by visual observation that there is no likelihood of collision with another aircraft or a vehicle during take-off; and
+(d) when approaching for a landing, the aircraft enters the aerodrome traffic circuit from a position that will require it to complete two sides of a rectangular circuit before turning onto the final approach path.
+602.98 General MF reporting requirements
+MF – mandatory frequency
+602.98 (1) Every report made pursuant to this Division shall be made on the mandatory frequency that has been specified for use in the applicable MF area.
+(2) Every report referred to in subsection (1) shall be
+(a) directed to the ground station associated with the MF area, if a ground station exists and is in operation; or
+(b) broadcast, if a ground station does not exist or is not in operation.
+602.99 MF reporting procedures before entering manoeuvring area
+602.99 The pilot-in-command of a VFR or IFR aircraft that is operated at an uncontrolled aerodrome that lies within an MF area shall report the pilot-in-command’s intentions before entering the manoeuvring area of the aerodrome.
+602.100 MF reporting procedures on departure
+602.100 The pilot-in-command of a VFR or IFR aircraft that is departing from an uncontrolled aerodrome that lies within an MF area shall
+(a) before moving onto the take-off surface, report the pilot-in-command’s departure procedure intentions;
+(b) before take-off, ascertain by radiocommunication and by visual observation that there is no likelihood of collision with another aircraft or a vehicle during take-off; and
+(c) after take-off, report departing from the aerodrome traffic circuit.
+602.101 MF reporting procedures on arrival
+602.101 The pilot-in-command of a VFR aircraft arriving at an uncontrolled aerodrome that lies within an MF area shall report
+(a) before entering the MF area and, where circumstances permit, shall do so at least five minutes before entering the area, giving the aircraft’s position, altitude and estimated time of landing and the pilot-in-command’s arrival procedure intentions;
+(b) when joining the aerodrome traffic circuit, giving the aircraft’s position in the circuit;
+(c) when on the downwind leg, if applicable;
+(d) when on final approach; and
+(e) when clear of the surface on which the aircraft has landed.
+602.102 MF reporting procedures when flying continuous circuits
+602.102 The pilot-in-command of a VFR aircraft carrying out continuous circuits at an uncontrolled aerodrome that lies within an MF area shall report
+(a) when joining the downwind leg of the circuit;
+(b) when on final approach, stating the pilot-in-command’s intentions; and
+(c) when clear of the surface on which the aircraft has landed.
+602.103 Reporting procedures when flying through an MF area
+602.103 The pilot-in-command of an aircraft flying through an MF area shall report
+(a) before entering the MF area and, where circumstances permit, shall do so at least five minutes before entering the area, giving the aircraft’s position and altitude and the pilot-in-command’s intentions; and
+(b) when clear of the MF area.
+Radio Communications
+Describe the actions to be taken in the event of a two-way radio communication failure when flying in class C or D airspace.
+ Recall that weapons may not be carried on RPAS unless authorized.
+602.136 Continuous listening watch
+602.136 Subject to sections 602.137 and 602.138, where an aircraft is equipped with radiocommunication equipment, the pilot-in-command shall ensure that
+(a) a listening watch is maintained on the appropriate frequency; and
+(b) where communications are required, communication is established with an air traffic services unit or community aerodrome radio station, as applicable, on that appropriate frequency.
+602.138 Two-way radio communication failure in VFR flight
+Two-way Radiocommunication Failure in IFR Flight
+602.137 (1) Where there is a two-way radiocommunication failure between the controlling air traffic control unit and an IFR aircraft that is in or has received a clearance to enter controlled airspace, the pilot-in-command shall maintain a listening watch on the appropriate frequency for control messages or further clearance and acknowledge receipt of any such messages, if possible, by any means available; set the transponder to code 7600; and attempt to establish communications with any air traffic services facility or other aircraft, inform the facility or aircraft of the difficulty and request it to relay the information to the last air traffic control unit with which communications had been established.
+(2) Where communications cannot be established with any air traffic services facility, either directly or by relay through an intermediary, the pilot-in-command shall, except where specific instructions to cover an anticipated communications failure have been received from an air traffic control unit, comply with the procedures specified by the Minister in the Canada Air Pilot and the Canada Flight Supplement.
+Two-way Radiocommunication Failure in VFR Flight
+602.138 Where there is a two-way radiocommunication failure between the controlling air traffic control unit and a VFR aircraft while operating in Class B, Class C or Class D airspace, the pilot-in-command shall leave the airspace where the airspace is a control zone, by landing at the aerodrome for which the control zone is established, and in any other case, by the shortest route; where the aircraft is equipped with a transponder, set the transponder to code 7600; and inform an air traffic control unit as soon as possible of the actions taken pursuant to paragraph (a).
+602.146 ESCAT Plan
+602.146 (1) This section applies in respect of aircraft before entering into and while operating within Canadian domestic airspace or the ADIZ.
+(2) The pilot-in-command of an aircraft referred to in subsection (1) who is notified by an air traffic control unit of the implementation of the ESCAT Plan shall
+(a) before take-off, obtain approval for the flight from the appropriate air traffic services unit;
+(b) comply with any instruction to land or to change course or altitude that is received from the appropriate air traffic services unit; and
+(c) provide the appropriate air traffic services unit with position reports
+(i) when operating within controlled airspace, as required pursuant to section 602.125, and
+(ii) when operating outside controlled airspace, at least every 30 minutes.
+606−Miscellaneous
+Subpart 6 - Micellaneous
+Munitions of war, Liability Insurance, Synthetic Flight Training equipment
+606.01 Munitions of war
+Munitions of War
+606.01 No person shall carry weapons, ammunition or other equipment designed for use in war on board an aircraft unless the aircraft is a Canadian aircraft or the Minister has authorized the carriage of such equipment.
+Airspace Classification – Designated Airspace Handbook
+1.3 GLOSSARY OF AERONAUTICAL TERMS AND DESIGNATIONS OF MISCELLANEOUS AIRSPACE
+ADVISORY AREA: Airspace of defined dimensions within which a high volume of pilot training or an unusual type of aerial activity may be carried out. 
+AIR DEFENCE IDENTIFICATION ZONE (See map page M6): Airspace of defined dimensions extending upwards from the surface of the earth within which certain rules for the security control of air traffic apply. 
+AIRSPACE CLASSIFICATION: Canadian Domestic Airspace has seven classifications. The application of any classification to an airspace structure determines the operating rules, the level of ATC service provided within the structure, and in some instances, communications and equipment requirements. 
+Class A 
+High level controlled airspace within the SCA, NCA and ACA. The horizontal and vertical dimensions of high level controlled airspace within these CTAs are illustrated on page M2 (Arctic, Northern and Southern Control Areas). The vertical dimensions of Class A high level controlled airspace within these areas are as follows: 
+SCA : 18,000´ ASL or from 700´ AGL, whichever is higher, to FL600 
+NCA : FL230 to FL600
+ACA: FL270 to FL600
+Class B
+All low level controlled airspace above 12,500´ ASL or from the MEA, whichever is higher, to below 18,000´ ASL. TCAs and associated primary CZs may also be classified Class B airspace.
+Class C*
+TCAs and associated primary CZs may be classified Class C airspace.
+Class D*
+TCAs and associated primary CZs may be classified Class D airspace.
+Class E*
+All high level controlled airspace above FL600 within the SCA, NCA and ACA. Also, low level airways, low level fixed RNAV routes, CAEs, Transition Areas or CZs established without an operating control tower may be classified Class E airspace.
+Class F
+Class F airspace is described in terms of horizontal and vertical dimensions, effective for a specified period of time. Class F airspace may be restricted airspace, advisory airspace, or danger areas, and can be controlled airspace, uncontrolled airspace or a combination of both.
+Class G
+Airspace shall be classified as G if it has not been designated A, B, C, D, E or F. 
+*  The terminology "Class B, C, D or E equivalent" used for the designations of MTCAs describes the equivalent level of service and operating rules for civilian aircraft operating within the MTCA and under military control.
+Figure M6 Air Defence Identification Zone (ADIZ)
+Figure 1ADIZ
+rctic, Northern and Southern Control Area
+Canadian Domestic Airspace
+Altimeter Setting and Standard Pressure Regions
+Canadian Minimum Navigation Performance Specifications
+ (CMNPS) Airspace and Canadian Minimum Navigation Performance Specifications (CMNPS) Transition Area Required Navigation Performance Capability (RNPC) Airspace
