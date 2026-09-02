@@ -7767,7 +7767,7 @@
       "rpas101_reference": "4.1 VFR Navigation Charts - Chart selection and use (p. 145-160)"
     },
     {
-      "id": "nav-004",
+      "id": "nav-chart-004",
       "category": "navigation",
       "difficulty": "hard",
       "question": "A pilot plans a mission that starts within VTA-chart coverage near a terminal area, but the flight extends beyond the VTA's edge into VNC-only coverage. What must the pilot ensure?",
@@ -7902,7 +7902,7 @@
       "lastVerified": "2026-08-29"
     },
     {
-      "id": "nav-012",
+      "id": "nav-cfs-012",
       "category": "navigation",
       "difficulty": "medium",
       "question": "A pilot identifies an aerodrome on a VNC but needs the specific frequency/contact for coordination. What should the pilot do?",
@@ -8907,21 +8907,21 @@
       "nav canada_reference": "VFR Phraseology, p. 15-1"
     },
     {
-      "id": "nav-004",
+      "id": "nav-coordinate-004",
       "category": "navigation",
       "difficulty": "easy",
-      "question": "What is a UTM (Universal Transverse Mercator) coordinate, and how does it differ from latitude/longitude?",
+      "question": "Which coordinate system is explicitly identified in the Advanced navigation knowledge requirements for locating a position?",
       "choices": [
-        "UTM is the same as latitude/longitude; both refer to the same coordinate system",
-        "UTM divides the Earth into zones with unique Easting and Northing values (meters); more accurate for local distances than latitude/longitude decimal degrees",
-        "UTM is only used for marine navigation",
-        "UTM coordinates are only applicable in the Northern Hemisphere"
+        "Latitude and longitude",
+        "UTM easting and northing only",
+        "A radio frequency and an aerodrome identifier",
+        "A runway designator and magnetic variation"
       ],
-      "answerIndex": 1,
-      "rationale": "UTM coordinates divide Earth into 60 zones, each with Easting (X) and Northing (Y) values in meters. UTM is ideal for RPAS operations because distances and directions are computed in meters, reducing conversion errors.",
-      "source": "TP 15263 Section 5 – Navigation Systems, RPAS 101 Navigation Fundamentals",
+      "answerIndex": 0,
+      "rationale": "TP 15263, Section 5, lists 'Locating position by latitude and longitude' in the Maps and charts knowledge area. This requirement focuses on identifying an operating location using the geographic coordinates shown on aeronautical charts.",
+      "source": "TP 15263, Section 5 - Navigation: Maps and charts, 'Locating position by latitude and longitude'; NAV CANADA VNC - geographic graticule",
       "lastVerified": "2026-09-01",
-      "rpas101_reference": "4.2 Airspace Identification - Chart airspace markings (p. 160-175)"
+      "rpas101_reference": "Navigation charts - latitude and longitude"
     },
     {
       "id": "nav-005",
@@ -8972,7 +8972,7 @@
       "rationale": "Common datums include WGS84 and NAD83. A GPS unit set to the wrong datum may display coordinates several hundred meters off. Always verify your GPS unit is set to the same datum as your maps.",
       "source": "TP 15263 Section 5 – Coordinate Systems, RPAS 101 GPS Fundamentals",
       "lastVerified": "2026-09-01",
-      "rpas101_reference": "4.3 Coordinate Systems - Grid systems and UTM (p. 175-190)"
+      "rpas101_reference": "Navigation charts - latitude and longitude"
     },
     {
       "id": "nav-008",
@@ -9009,21 +9009,21 @@
       "rpas101_reference": "4.3 Coordinate Systems - Map datum considerations (p. 175-190)"
     },
     {
-      "id": "nav-010",
+      "id": "nav-chart-010",
       "category": "navigation",
       "difficulty": "hard",
-      "question": "What is a grid convergence angle, and when does it become significant for RPAS mission planning?",
+      "question": "Why must a pilot verify that the aeronautical chart used for a planned Advanced operation is current?",
       "choices": [
-        "Grid convergence is irrelevant to RPAS operations",
-        "It is the angle between grid north (map) and true north; becomes significant over large distances (typically >30 km) or near the poles",
-        "It is the same as magnetic variation",
-        "It only affects satellite navigation, not RPAS GPS"
+        "A current chart is required to identify applicable airspace, aerodromes, obstacles, and other information at the intended operating location.",
+        "Chart currency matters only for flights above 18,000 feet ASL.",
+        "A chart remains current permanently once it has been purchased.",
+        "Current charts are useful only for filing a flight plan."
       ],
-      "answerIndex": 1,
-      "rationale": "Grid north (map lines) and true north converge at the edges of UTM zones. For long-distance RPAS missions, the convergence angle can cause direction errors. For most local RPAS operations (<5 km), it's negligible. [RPAS 101, Chapter 4: Navigation Systems] Distance and scale measurement (p. 145-160)",
-      "source": "TP 15263 Section 5 – Advanced Navigation, RPAS 101 UTM Considerations",
+      "answerIndex": 0,
+      "rationale": "TP 15263 identifies determining the validity and currency of aeronautical charts as an Advanced navigation objective. A current chart supports correct assessment of the planned location, including airspace and nearby aerodromes.",
+      "source": "TP 15263, Section 5 - Navigation: Maps and charts, 'Locating position by latitude and longitude' - determine the validity/currency of aeronautical charts; NAV CANADA VNC/VTA - current edition",
       "lastVerified": "2026-09-01",
-      "rpas101_reference": "4.1 VFR Navigation Charts - Distance and scale measurement (p. 145-160)"
+      "rpas101_reference": "Navigation charts - chart currency"
     },
     {
       "id": "nav-011",
@@ -9042,19 +9042,19 @@
       "lastVerified": "2026-09-01"
     },
     {
-      "id": "nav-012",
+      "id": "nav-waypoint-012",
       "category": "navigation",
       "difficulty": "medium",
       "question": "What is a waypoint, and how is it used in RPAS mission planning?",
       "choices": [
         "A waypoint is the same as a checkpoint; both refer to the destination",
-        "A waypoint is a predetermined geographic location (lat/long or UTM) used as a navigation reference; multiple waypoints form a flight path or mission plan",
+        "A waypoint is a predetermined geographic location, such as one recorded by latitude and longitude, used as a navigation reference; multiple waypoints form a flight path or mission plan",
         "Waypoints are only used for manned aircraft, not RPAS",
         "A waypoint is a point where fuel must be loaded"
       ],
       "answerIndex": 1,
-      "rationale": "Waypoints are set in mission-planning software (lat/long or UTM coordinates) to define a route. RPAS systems (many with autopilot) navigate between waypoints. Proper waypoint placement avoids obstacles and airspace restrictions.",
-      "source": "TP 15263 Section 5 – Navigation Planning, RPAS 101 Mission Planning",
+      "rationale": "A waypoint is a predetermined location used to define a route or flight path. TP 15263 requires pilots to locate positions by latitude and longitude and use aeronautical charts for pilot navigation; those skills support accurate waypoint planning.",
+      "source": "TP 15263, Section 5 - Navigation: 'Locating position by latitude and longitude' and 'Pilot navigation'; NAV CANADA VNC - geographic graticule",
       "lastVerified": "2026-09-01"
     },
     {
@@ -9730,19 +9730,19 @@
       "lastVerified": "2026-09-01"
     },
     {
-      "id": "nav-calc-010",
+      "id": "nav-coordinate-010",
       "category": "navigation",
       "difficulty": "medium",
-      "question": "A UTM coordinate is 17T 500000 4700000. What does '17T' represent?",
+      "question": "A pilot receives a latitude/longitude position for the proposed operating area. What should the pilot do before using it to assess airspace and nearby aerodromes?",
       "choices": [
-        "The year and type of aircraft",
-        "The UTM zone (17) and band letter (T, representing latitude band in the Northern Hemisphere)",
-        "The temperature and direction",
-        "Cannot be determined"
+        "Plot or verify the position on a current aeronautical chart.",
+        "Convert the position into a radio frequency.",
+        "Use the position only after the flight is complete.",
+        "Ignore the position because charts do not use coordinates."
       ],
-      "answerIndex": 1,
-      "rationale": "'17T' indicates UTM Zone 17, Band T. Band T covers roughly 32°N to 40°N latitude. This format allows RPAS operators to quickly identify geographic location.",
-      "source": "TP 15263 Section 5 – UTM Coordinate System, RPAS 101 Navigation Systems",
+      "answerIndex": 0,
+      "rationale": "TP 15263 identifies locating a position by latitude and longitude and using aeronautical charts as Advanced navigation knowledge areas. Plotting or verifying the position on a current chart supports the site survey required before an RPAS operation.",
+      "source": "TP 15263, Section 5 - Navigation: Maps and charts, 'Locating position by latitude and longitude'; CARs 901.27(a), (d)-(e)",
       "lastVerified": "2026-09-01"
     },
     {
@@ -9781,7 +9781,7 @@
       "id": "nav-calc-013",
       "category": "navigation",
       "difficulty": "medium",
-      "question": "An RPAS operator plots a mission on a chart with UTM coordinates. The scale is 1:250,000. A measured distance of 8 cm on the chart equals how many kilometers?",
+      "question": "An RPAS operator plots a mission on a 1:250,000 aeronautical chart. A measured distance of 8 cm on the chart equals how many kilometers?",
       "choices": [
         "2 km (8 cm ÷ 4 = 2 km... wait, scale is 1:250,000)",
         "20 km (scale 1:250,000: 1 cm = 2.5 km; 8 cm × 2.5 = 20 km)",
@@ -9813,16 +9813,16 @@
       "id": "nav-calc-015",
       "category": "navigation",
       "difficulty": "medium",
-      "question": "An RPAS is navigating using GPS/UTM. It's at waypoint 17T 467500 4823000 and must reach 17T 475500 4823000. Distance is approximately:",
+      "question": "A site survey gives the proposed launch location as 45 degrees 25 minutes 30 seconds N, 75 degrees 42 minutes 15 seconds W. Which chart-navigation skill is needed to identify the exact operating location?",
       "choices": [
-        "8000 m (475500 – 467500 = 8000 m easting; northing unchanged)",
-        "8 km easting (8000 m ÷ 1000 = 8 km)",
-        "Cannot be calculated",
-        "80 km"
+        "Plot the latitude and longitude on the aeronautical chart using its geographic graticule.",
+        "Convert the coordinates to a radio frequency before using the chart.",
+        "Use only the airport elevation because coordinates cannot identify a location.",
+        "Estimate the position from the nearest city name without using coordinates."
       ],
-      "answerIndex": 1,
-      "rationale": "UTM easting increases east. Difference: 475500 – 467500 = 8000 m = 8 km. Northing is same, so pure east movement of 8 km.",
-      "source": "TP 15263 Section 5 – UTM Coordinates, RPAS 101 GPS Navigation",
+      "answerIndex": 0,
+      "rationale": "TP 15263 identifies 'Locating position by latitude and longitude' as a navigation knowledge area. The latitude/longitude graticule on an aeronautical chart is used to plot the operating location accurately before assessing nearby airspace, aerodromes, and hazards.",
+      "source": "TP 15263, Section 5 - Navigation: Maps and charts, 'Locating position by latitude and longitude'; NAV CANADA VNC - geographic graticule",
       "lastVerified": "2026-09-01"
     },
     {
