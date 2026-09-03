@@ -1,0 +1,196 @@
+{
+  "date": "2026-09-03",
+  "threshold": 0.72,
+  "currentBankSize": 696,
+  "candidatePool": 112,
+  "target": 100,
+  "selected": 99,
+  "selectedByCategory": {
+    "regulations": 8,
+    "airspace": 8,
+    "aerodromes": 7,
+    "notams": 7,
+    "weather": 8,
+    "visual-observers": 6,
+    "human-factors": 7,
+    "aircraft-systems": 8,
+    "maintenance": 6,
+    "abnormal": 6,
+    "flight-planning": 8,
+    "radio": 7,
+    "navigation": 7,
+    "safety": 6
+  },
+  "shortfalls": {
+    "aerodromes": 1
+  },
+  "selectedIds": [
+    "b3-regu-001",
+    "b3-regu-002",
+    "b3-regu-003",
+    "b3-regu-004",
+    "b3-regu-005",
+    "b3-regu-006",
+    "b3-regu-007",
+    "b3-regu-008",
+    "b3-airs-001",
+    "b3-airs-002",
+    "b3-airs-003",
+    "b3-airs-004",
+    "b3-airs-005",
+    "b3-airs-006",
+    "b3-airs-007",
+    "b3-airs-008",
+    "b3-aero-001",
+    "b3-aero-002",
+    "b3-aero-003",
+    "b3-aero-004",
+    "b3-aero-005",
+    "b3-aero-006",
+    "b3-aero-008",
+    "b3-nota-001",
+    "b3-nota-002",
+    "b3-nota-003",
+    "b3-nota-004",
+    "b3-nota-005",
+    "b3-nota-006",
+    "b3-nota-007",
+    "b3-weat-001",
+    "b3-weat-002",
+    "b3-weat-003",
+    "b3-weat-004",
+    "b3-weat-005",
+    "b3-weat-006",
+    "b3-weat-007",
+    "b3-weat-008",
+    "b3-visu-001",
+    "b3-visu-002",
+    "b3-visu-003",
+    "b3-visu-004",
+    "b3-visu-006",
+    "b3-visu-007",
+    "b3-huma-001",
+    "b3-huma-002",
+    "b3-huma-003",
+    "b3-huma-004",
+    "b3-huma-005",
+    "b3-huma-006",
+    "b3-huma-007",
+    "b3-airc-001",
+    "b3-airc-002",
+    "b3-airc-003",
+    "b3-airc-004",
+    "b3-airc-005",
+    "b3-airc-006",
+    "b3-airc-007",
+    "b3-airc-008",
+    "b3-main-001",
+    "b3-main-002",
+    "b3-main-003",
+    "b3-main-004",
+    "b3-main-005",
+    "b3-main-006",
+    "b3-abno-001",
+    "b3-abno-002",
+    "b3-abno-003",
+    "b3-abno-004",
+    "b3-abno-005",
+    "b3-abno-006",
+    "b3-flig-001",
+    "b3-flig-002",
+    "b3-flig-003",
+    "b3-flig-004",
+    "b3-flig-005",
+    "b3-flig-006",
+    "b3-flig-007",
+    "b3-flig-008",
+    "b3-radi-001",
+    "b3-radi-002",
+    "b3-radi-003",
+    "b3-radi-004",
+    "b3-radi-005",
+    "b3-radi-006",
+    "b3-radi-007",
+    "b3-navi-001",
+    "b3-navi-002",
+    "b3-navi-003",
+    "b3-navi-004",
+    "b3-navi-005",
+    "b3-navi-006",
+    "b3-navi-007",
+    "b3-safe-001",
+    "b3-safe-002",
+    "b3-safe-003",
+    "b3-safe-004",
+    "b3-safe-005",
+    "b3-safe-006"
+  ],
+  "rejected": [
+    {
+      "id": "b3-aero-007",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7482678983833718,
+        "sequence": 0.7482678983833718,
+        "jaccard": 0.5454545454545454,
+        "existingId": "chat-20260827-10",
+        "existingQuestion": "A VLOS RPA operation is planned 2.5 NM from the centre of an aerodrome operated under the authority of the Minister of National Defence. An established civilian RPAS procedure exists for a nearby airport. What authorization is specifically required by CAR 901.47(4)?"
+      }
+    },
+    {
+      "id": "b3-nota-008",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b3-visu-005",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7394957983193278,
+        "sequence": 0.7394957983193278,
+        "jaccard": 0.26666666666666666,
+        "existingId": "adv6-012",
+        "existingQuestion": "Which qualification is acceptable for a visual observer supporting an extended VLOS operation under Division V?"
+      }
+    },
+    {
+      "id": "b3-visu-008",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b3-huma-008",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b3-main-007",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b3-main-008",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b3-abno-007",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b3-abno-008",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b3-radi-008",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b3-navi-008",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b3-safe-007",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b3-safe-008",
+      "reason": "category quota filled"
+    }
+  ]
+}

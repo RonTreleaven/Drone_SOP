@@ -1,0 +1,379 @@
+{
+  "schemaVersion": 1,
+  "batch": "batch2",
+  "reviewDate": "2026-09-03",
+  "sourceSessions": [
+    "DQ-2026-09-02-01",
+    "DQ-2026-09-02-02"
+  ],
+  "summary": {
+    "reviewed": 20,
+    "accepted_for_merge": 10,
+    "held": 10
+  },
+  "selectionPolicy": {
+    "scopeAuthority": "TP 15263 Fourth Edition, March 2025",
+    "coreExamMode": "Questions must map to an Advanced TP 15263 knowledge topic/objective. CARs Part IX and TC AIM are primary supporting authorities where applicable.",
+    "exclude": "Semantic duplicates, pure reinforcement variants, and Level 1 Complex/BVLOS-specific operational privilege questions."
+  },
+  "questions": [
+    {
+      "id": "chat-20260902-01-q02",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A pilot plans an Advanced VLOS operation 1.1 NM from the centre of a heliport listed in the CFS. The route would cross the established helicopter traffic pattern. Which statement is most accurate?",
+      "choices": [
+        "Being beyond 1 NM automatically makes the operation compliant.",
+        "The operation must still be planned so it does not interfere with aircraft operating in the established traffic pattern.",
+        "Heliport traffic patterns are relevant only inside 1 NM.",
+        "The RPA has priority because it is conducting an Advanced operation."
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.47(1) separately prohibits operating at or near a listed aerodrome in a manner that could interfere with an aircraft in the established traffic pattern. Being outside the less-than-1-NM heliport distance threshold does not remove that independent requirement.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.47 — Aerodrome traffic-pattern interference",
+      "learningObjective": "Apply the traffic-pattern interference prohibition independently from the numerical airport/heliport distance thresholds.",
+      "carsSection": "901.47",
+      "source": "CAR 901.47(1); TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-09-02-01",
+        "question": 2
+      }
+    },
+    {
+      "id": "chat-20260902-01-q06",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "A crew has programmed a lost-command-and-control procedure that climbs before returning home. A newly issued airspace restriction now affects part of that contingency trajectory. What should the crew do before launch?",
+      "choices": [
+        "Launch because emergency programming overrides temporary airspace restrictions.",
+        "Reassess and, where necessary, revise the contingency procedure so the foreseeable lost-link trajectory remains compatible with current airspace constraints.",
+        "Disable all lost-link behaviour and allow the RPA to continue indefinitely if the link fails.",
+        "Ignore the restriction because a lost command-and-control event is unlikely."
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.23 requires emergency procedures for loss of command and control and requires operations to be conducted in accordance with those procedures. TP 15263 also expects Advanced pilots to assess lost-link behaviour, emergency procedures and current operating conditions. A contingency trajectory must therefore be suitable for the actual airspace environment before launch.",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Emergency procedures — lost command and control / current airspace constraints",
+      "learningObjective": "Assess whether a programmed lost-link procedure remains safe and compliant when the operating environment or airspace constraints change.",
+      "carsSection": "901.23",
+      "source": "CAR 901.23; TP 15263 Section 6 — RPAS operations and emergency procedures",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-09-02-01",
+        "question": 6
+      }
+    },
+    {
+      "id": "chat-20260902-01-q09",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A warm, humid afternoon produces a substantially higher density altitude than the cool morning conditions used for the original performance calculation. What operational effect should the pilot expect?",
+      "choices": [
+        "Performance margins may decrease, requiring reassessment of payload, endurance, launch/climb and manoeuvre capability.",
+        "Performance must improve because warmer air always increases lift.",
+        "Density altitude affects only crewed piston aircraft.",
+        "Only GNSS accuracy changes with density altitude."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to recall factors affecting density altitude and assess density altitude for anticipated performance and flight-envelope limitations. Higher density altitude generally reduces aerodynamic and propulsion performance margins.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Meteorological aspects of altimetry — density altitude",
+      "learningObjective": "Assess weather and density altitude for anticipated aircraft performance and flight-envelope limitations.",
+      "source": "TP 15263 Section 4 — Density altitude; Section 6 — Aircraft performance",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-09-02-01",
+        "question": 9
+      }
+    },
+    {
+      "id": "chat-20260902-01-q10",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "A pilot has been troubleshooting a recurring warning and becomes convinced it is a harmless sensor glitch. A second crew member points out evidence that it could indicate a flight-critical fault. Which response best reflects sound Advanced-pilot decision-making?",
+      "choices": [
+        "Continue because the pilot's initial diagnosis should not be challenged once made.",
+        "Seek disconfirming evidence, use the crew member's input, and reassess the aircraft's serviceability before launch.",
+        "Clear the warning and launch before it reappears.",
+        "Ignore the crew member because only the pilot can recognize technical hazards."
+      ],
+      "answerIndex": 1,
+      "rationale": "TP 15263 Human Factors requires pilots to identify factors that interfere with effective decision-making, maintain situational awareness, manage risk and promote open crew communication. Actively testing an initial assumption and considering contrary evidence is the strongest response.",
+      "examScope": "core-advanced",
+      "tp15263Section": 3,
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Aviation psychology — decision-making, situational awareness and risk management",
+      "learningObjective": "Recognize factors that interfere with effective decision-making and use crew input to manage operational risk.",
+      "source": "TP 15263 Section 3 — Human Factors",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tp-12863",
+        "ref-tp-12864"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-09-02-01",
+        "question": 10
+      }
+    },
+    {
+      "id": "chat-20260902-02-q03",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A single pilot wants to control exactly five RPA simultaneously from one control station. The operation is VLOS, the applicable manuals permit it, and the RPAS is designed for multiple-aircraft control. No SFOC-RPAS applies. Is this permitted under CAR 901.40?",
+      "choices": [
+        "Yes; five is the maximum permitted under the ordinary multiple-RPA provision when all stated conditions are met.",
+        "No; ordinary operations are limited to two RPA.",
+        "No; any operation involving more than one RPA requires an SFOC-RPAS.",
+        "Yes, and the same ordinary conditions also permit six RPA."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.40 permits more than one RPA at a time when the operation is VLOS, the aircraft are operated in accordance with applicable manuals, the system is designed for multiple-aircraft control, and no more than five aircraft are operated at a time. More than five requires an SFOC-RPAS.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.40 — Multiple remotely piloted aircraft",
+      "learningObjective": "State the conditions and maximum number of RPA that may be operated simultaneously under the ordinary multiple-RPA rule.",
+      "carsSection": "901.40",
+      "source": "CAR 901.40; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-09-02-02",
+        "question": 3
+      }
+    },
+    {
+      "id": "chat-20260902-02-q04",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "An RPA is carrying a surveying sensor suspended beneath it by a line. The applicable operating manuals specifically provide procedures for carrying that payload by line, and the payload creates no other prohibited hazard. Which statement best applies CAR 901.43?",
+      "choices": [
+        "A payload attached by a line is always prohibited without an SFOC-RPAS.",
+        "The operation may be permitted because the applicable operating manuals specifically support the line-attached payload.",
+        "The payload is permitted only if it weighs less than 250 g.",
+        "The payload is permitted only in Class G airspace."
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.43(1)(d) prohibits a line-attached payload unless the operation is conducted in accordance with the operating manuals applicable to the system. Other payload prohibitions and SFOC provisions still apply.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.43 — Payloads",
+      "learningObjective": "Apply the regulatory conditions governing payloads attached to an RPA by a line.",
+      "carsSection": "901.43",
+      "source": "CAR 901.43; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-09-02-02",
+        "question": 4
+      }
+    },
+    {
+      "id": "chat-20260902-02-q05",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "An RPA lacks a transponder and automatic pressure-altitude reporting equipment, but the pilot wants to enter transponder airspace referred to in CAR 601.03. Under CAR 901.46, which combination can allow the operation?",
+      "choices": [
+        "The pilot enters first and requests ATC authorization after establishing contact.",
+        "The responsible ATC unit provides service in that airspace, the request is made before entry, and aviation safety is not likely to be affected.",
+        "The RPA remains below 400 ft AGL and the pilot holds an Advanced certificate.",
+        "The operation is VLOS and a visual observer is present."
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.46(2) allows an ATC unit to authorize an unequipped RPA when that unit provides ATC service for the airspace, the pilot requests authorization before entry, and aviation safety is not likely to be affected.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.46 — Transponder and automatic pressure-altitude reporting equipment",
+      "learningObjective": "Apply the equipment requirement and the specific ATC authorization exception for entry into transponder airspace.",
+      "carsSection": "901.46",
+      "source": "CAR 901.46; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-09-02-02",
+        "question": 5
+      }
+    },
+    {
+      "id": "chat-20260902-02-q07",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "Two qualified pilots intend to transfer control of an RPA from Pilot 1 to Pilot 2 during flight. Under CAR 901.42, what must exist before takeoff or launch?",
+      "choices": [
+        "Only verbal agreement that a handover may occur.",
+        "A pre-arrangement between the pilots and a procedure to mitigate the risk of loss of control.",
+        "An SFOC-RPAS for every pilot handover.",
+        "Approval from the nearest ATC unit even in uncontrolled airspace."
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.42 requires, before takeoff or launch, both a pre-arrangement concerning the handover and a procedure developed to mitigate the risk of loss of control.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.42 — Handovers",
+      "learningObjective": "State the pre-flight conditions required before pilot responsibilities may be transferred during flight.",
+      "carsSection": "901.42",
+      "source": "CAR 901.42; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-09-02-02",
+        "question": 7
+      }
+    },
+    {
+      "id": "chat-20260902-02-q08",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A pilot conducts a night RPAS operation using night-vision goggles. The RPA's required lights are on. What additional requirement applies specifically to use of the goggles under CAR 901.39?",
+      "choices": [
+        "The goggles must magnify the RPA by at least 2×.",
+        "The goggles must be capable of detecting all light within the visual spectrum, or the person must have another means of doing so.",
+        "The pilot must remain below 200 ft AGL.",
+        "A second pilot must be present."
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.39(2) prohibits operation using night-vision goggles unless the goggles are capable of, or the person has another means of, detecting all light within the visual spectrum.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.39 — Night flight requirements",
+      "learningObjective": "State the additional visual-spectrum detection requirement when night-vision goggles are used.",
+      "carsSection": "901.39",
+      "source": "CAR 901.39; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-09-02-02",
+        "question": 8
+      }
+    },
+    {
+      "id": "chat-20260902-02-q09",
+      "category": "flight-planning",
+      "difficulty": "hard",
+      "question": "A multirotor's payload is moved substantially upward, raising the aircraft's centre of gravity. What operational consideration should the pilot make?",
+      "choices": [
+        "The changed centre of gravity can alter stability and control margins, so the aircraft must remain within approved loading limits and performance must be reassessed.",
+        "Centre-of-gravity position has no effect on multirotor stability because flight-control software cancels all mass-distribution effects.",
+        "Raising the centre of gravity always increases passive stability.",
+        "Centre of gravity matters only during fixed-wing gliding flight."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires knowledge of locating centre of gravity, returning C of G within limits, the effects of external loads on performance and stability, and how C of G affects aircraft stability. Flight-control automation does not make mass distribution irrelevant.",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Weight and balance — centre of gravity and external-load effects",
+      "learningObjective": "Assess how payload location and centre-of-gravity changes affect aircraft stability, control and operating limits.",
+      "source": "TP 15263 Section 6 — Weight and balance; Section 7 — Stability",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-09-02-02",
+        "question": 9
+      }
+    }
+  ],
+  "held": [
+    {
+      "session": "DQ-2026-09-02-01",
+      "question": 1,
+      "topic": "EVLOS observer handover",
+      "reason": "Useful operational scenario, but the exact positive-handover formulation is not directly tied to a specific CAR requirement; hold until mapped to a precise TP 15263 objective/source."
+    },
+    {
+      "session": "DQ-2026-09-02-01",
+      "question": 3,
+      "topic": "CYA status and current information",
+      "reason": "Substantial semantic overlap with existing Class F/CYA questions."
+    },
+    {
+      "session": "DQ-2026-09-02-01",
+      "question": 4,
+      "topic": "NOTAM Q-line 040 vertical qualifier",
+      "reason": "Same cognitive task as existing/recent Q-line vertical qualifier questions; retain as reinforcement, not master-bank expansion."
+    },
+    {
+      "session": "DQ-2026-09-02-01",
+      "question": 5,
+      "topic": "Site survey / public footpath",
+      "reason": "Substantial overlap with existing CAR 901.27 public-access/site-survey coverage."
+    },
+    {
+      "session": "DQ-2026-09-02-01",
+      "question": 7,
+      "topic": "Maintenance record traceability",
+      "reason": "Likely overlaps maintenance/record-keeping bank; hold for full semantic scan."
+    },
+    {
+      "session": "DQ-2026-09-02-01",
+      "question": 8,
+      "topic": "BVLOS detect-and-avoid serviceability",
+      "reason": "Primary learning target is BVLOS/Level 1 Complex capability; exclude from core Advanced Exam Mode."
+    },
+    {
+      "session": "DQ-2026-09-02-02",
+      "question": 1,
+      "topic": "NOTAM Q-line 025 vertical qualifier",
+      "reason": "Direct reinforcement variant of Q-line vertical qualifier interpretation; do not add as a new master concept."
+    },
+    {
+      "session": "DQ-2026-09-02-02",
+      "question": 2,
+      "topic": "Site survey / uncontrolled walkway",
+      "reason": "Near-duplicate of existing site-survey public-access questions."
+    },
+    {
+      "session": "DQ-2026-09-02-02",
+      "question": 6,
+      "topic": "BVLOS less-than-5-NM aerodrome rule",
+      "reason": "Operational target is BVLOS/Level 1 Complex; repo policy excludes Level 1 Complex/BVLOS-specific questions from core Advanced mode."
+    },
+    {
+      "session": "DQ-2026-09-02-02",
+      "question": 10,
+      "topic": "PAN PAN urgency signal",
+      "reason": "Likely duplicates the already-expanded radio/phraseology bank; hold for semantic scan."
+    }
+  ]
+}

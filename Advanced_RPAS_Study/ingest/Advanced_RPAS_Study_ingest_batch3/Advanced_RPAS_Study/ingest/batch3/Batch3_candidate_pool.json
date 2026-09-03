@@ -1,0 +1,3364 @@
+{
+  "schemaVersion": 1,
+  "batch": "batch3",
+  "reviewDate": "2026-09-03",
+  "candidatePoolSize": 112,
+  "targetMergeCount": 100,
+  "categoryTargets": {
+    "regulations": 8,
+    "airspace": 8,
+    "aerodromes": 8,
+    "notams": 7,
+    "weather": 8,
+    "visual-observers": 6,
+    "human-factors": 7,
+    "aircraft-systems": 8,
+    "maintenance": 6,
+    "abnormal": 6,
+    "flight-planning": 8,
+    "radio": 7,
+    "navigation": 7,
+    "safety": 6
+  },
+  "scopeAuthority": {
+    "document": "TP 15263 Fourth Edition, 03/2025",
+    "rule": "Core questions must map to an Advanced knowledge topic/objective. CARs Part IX/other CARs provide legal authority; TC AIM/NAV CANADA/ISED provide supporting operational material where applicable."
+  },
+  "questions": [
+    {
+      "id": "b3-regu-001",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A Transport Canada inspector asks an RPAS pilot to produce an aviation document that the pilot is required to hold. Which response best reflects the CARs compliance framework?",
+      "choices": [
+        "The pilot may refuse unless police are present.",
+        "The pilot must produce the required aviation document when lawfully requested.",
+        "Only paper originals may ever be produced.",
+        "The request applies only to crewed-aircraft pilots."
+      ],
+      "answerIndex": 1,
+      "rationale": "TP 15263 requires Advanced pilots to know who may demand inspection of aviation documents and the associated compliance obligations",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CARs Part I — inspection and production of aviation documents",
+      "learningObjective": "TP 15263 requires Advanced pilots to know who may demand inspection of aviation documents and the associated compliance obligations.",
+      "carsSection": "103.02",
+      "source": "CAR 103.02; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-regu-002",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A company stores required aviation records electronically instead of on paper. Which principle does TP 15263 expect an Advanced pilot to understand?",
+      "choices": [
+        "Electronic records are never acceptable.",
+        "Computer-stored records may be used when appropriate measures protect their integrity and availability.",
+        "Electronic records are valid only for 30 days.",
+        "Only NAV CANADA may authorize electronic records."
+      ],
+      "answerIndex": 1,
+      "rationale": "TP 15263 explicitly includes the principle that computer-stored records may replace paper records when protective measures are taken",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CARs Part I — record keeping and electronic records",
+      "learningObjective": "TP 15263 explicitly includes the principle that computer-stored records may replace paper records when protective measures are taken.",
+      "carsSection": "103.04",
+      "source": "CAR 103.04; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-regu-003",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A pilot wants to conduct an RPAS operation entirely inside a warehouse. Which regulatory-scope concept should be checked first?",
+      "choices": [
+        "Whether Part IX applies to indoor operations at all.",
+        "Whether the warehouse is inside Class G airspace.",
+        "Whether the roof height exceeds 400 ft.",
+        "Whether the pilot has filed a NOTAM."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to know the CARs application rule concerning indoor and underground operations",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CARs Part I — application to indoor or underground operations",
+      "learningObjective": "TP 15263 requires pilots to know the CARs application rule concerning indoor and underground operations.",
+      "carsSection": "102.01",
+      "source": "CAR 102.01; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-regu-004",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "An RPA is flying normally, but a developing failure makes continued flight likely to endanger persons on the ground. Before using a flight-termination function, what must the pilot consider under CAR 901.44?",
+      "choices": [
+        "Whether activation itself will or is likely to endanger aviation safety or any person.",
+        "Whether the aircraft is below 400 ft AGL only.",
+        "Whether the visual observer agrees in writing.",
+        "Whether the aircraft has flown for at least five minutes."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.44 prohibits activation of a flight-termination system when doing so will or is likely to endanger aviation safety or any person",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.44 — flight termination system",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.44",
+      "source": "CAR 901.44; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-regu-005",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A pilot proposes installing an emergency locator transmitter (ELT) on an RPA as a precaution. Which statement reflects CAR 901.45?",
+      "choices": [
+        "An ELT is mandatory on every Advanced RPA.",
+        "An RPA must not be equipped with an ELT.",
+        "An ELT is required only at night.",
+        "An ELT may be installed if the pilot holds a ROC-A."
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.45 prohibits operating an RPA equipped with an emergency locator transmitter",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.45 — emergency locator transmitters",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.45",
+      "source": "CAR 901.45; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-regu-006",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A planned operation falls outside the ordinary operating privileges available under Part IX. What regulatory mechanism should the pilot consider?",
+      "choices": [
+        "A Special Flight Operations Certificate — RPAS, where required by Subpart 903.",
+        "A recreational pilot permit.",
+        "A VFR flight itinerary only.",
+        "A municipal business licence as a substitute for aviation authorization."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires Advanced pilots to give examples of operations requiring an SFOC-RPAS and understand the Subpart 903 pathway",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Subpart 903 — SFOC-RPAS",
+      "learningObjective": "TP 15263 requires Advanced pilots to give examples of operations requiring an SFOC-RPAS and understand the Subpart 903 pathway.",
+      "carsSection": "903.01",
+      "source": "CAR 903.01-903.03; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-regu-007",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A pilot plans an RPA flight at an advertised public event. Which initial regulatory question is most important?",
+      "choices": [
+        "Whether CAR 901.41 requires an SFOC-RPAS for the proposed operation or whether a specific exception applies.",
+        "Whether the event has food vendors.",
+        "Whether the pilot can remain below 50 ft AGL.",
+        "Whether the RPA has obstacle avoidance."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.41 makes advertised-event operations an SFOC-RPAS issue unless an applicable exception is satisfied",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.41 — advertised events",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.41",
+      "source": "CAR 901.41; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-regu-008",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "Which statement correctly distinguishes an RPA from an RPAS for regulatory study purposes?",
+      "choices": [
+        "The RPA is the aircraft; the RPAS includes the aircraft and associated elements required for operation such as the control station and C2 link.",
+        "RPA and RPAS always mean exactly the same physical object.",
+        "RPAS means only the control station.",
+        "RPA means only an aircraft heavier than 25 kg."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires Advanced pilots to define remotely piloted aircraft, remotely piloted aircraft system, control station and command-and-control link",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CARs terminology — RPA, RPAS, C2 link and control station",
+      "learningObjective": "TP 15263 requires Advanced pilots to define remotely piloted aircraft, remotely piloted aircraft system, control station and command-and-control link.",
+      "carsSection": "101.01",
+      "source": "CAR 101.01; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airs-001",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "A pilot identifies an active CYR area on the planned route. What is the correct starting assumption?",
+      "choices": [
+        "Entry is permitted below 400 ft AGL.",
+        "Authorization from the person or agency specified for the restricted area is required before entry.",
+        "An Advanced certificate automatically authorizes entry.",
+        "CYR areas apply only to IFR aircraft."
+      ],
+      "answerIndex": 1,
+      "rationale": "TP 15263 requires pilots to recall that operations in Class F restricted airspace require authorization from the person specified in the DAH",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Class F restricted airspace — authorization",
+      "learningObjective": "TP 15263 requires pilots to recall that operations in Class F restricted airspace require authorization from the person specified in the DAH.",
+      "carsSection": "601.04",
+      "source": "CAR 601.04; NAV CANADA DAH; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airs-002",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "A CYA advisory area is published along the route. Which statement is most accurate?",
+      "choices": [
+        "CYA means entry is legally prohibited in all circumstances.",
+        "The pilot must determine the area's activity, hazards and current status; advisory designation is not the same as restricted airspace.",
+        "CYA automatically becomes Class G whenever no NOTAM is issued.",
+        "CYA areas can be ignored by RPAS below 400 ft."
+      ],
+      "answerIndex": 1,
+      "rationale": "TP 15263 requires operational understanding of Class F special-use airspace and the DAH; advisory and restricted designations must not be confused",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Class F advisory airspace — operational assessment",
+      "learningObjective": "TP 15263 requires operational understanding of Class F special-use airspace and the DAH; advisory and restricted designations must not be confused.",
+      "carsSection": null,
+      "source": "TP 15263 Section 1; NAV CANADA DAH",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airs-003",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "An Advanced pilot receives authorization to operate in Class D controlled airspace. What remains true?",
+      "choices": [
+        "The authorization eliminates all other Part IX requirements.",
+        "The pilot must comply with ATC instructions and the conditions of the authorization in addition to other applicable requirements.",
+        "The pilot may disregard later ATC instructions if they differ from the original authorization.",
+        "The authorization converts the airspace to Class G for the RPA."
+      ],
+      "answerIndex": 1,
+      "rationale": "Advanced controlled-airspace operations require authorization and compliance with ATC instructions; authorization does not displace other applicable rules",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Controlled airspace — ATS authorization and ATC instructions",
+      "learningObjective": "Advanced controlled-airspace operations require authorization and compliance with ATC instructions; authorization does not displace other applicable rules.",
+      "carsSection": "901.72",
+      "source": "CAR 901.71-901.72; TC AIM RPA; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-rpa-2026-1",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airs-004",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "Why must a pilot distinguish an aerodrome's proximity rules from the classification of the surrounding airspace?",
+      "choices": [
+        "Because aerodrome-proximity requirements and controlled-airspace requirements are separate regulatory questions that can apply independently.",
+        "Because every aerodrome is surrounded by Class C airspace.",
+        "Because uncontrolled airspace removes all aerodrome rules.",
+        "Because an Advanced certificate replaces both requirements."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 separately requires knowledge of airspace classification and operations at or near aerodromes; one determination does not answer the other",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Airspace classification versus aerodrome-proximity requirements",
+      "learningObjective": "TP 15263 separately requires knowledge of airspace classification and operations at or near aerodromes; one determination does not answer the other.",
+      "carsSection": "901.47",
+      "source": "CAR 901.47 and 901.71; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars",
+        "ref-tc-aim-rpa-2026-1"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airs-005",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "A wildfire is being actively fought by aircraft. What should an RPAS pilot understand about the associated forest-fire airspace restriction?",
+      "choices": [
+        "RPAS may enter if they stay under 400 ft AGL.",
+        "Aircraft operations near a forest fire are subject to specific CAR restrictions intended to protect fire-control aircraft and operations.",
+        "Only helicopters are restricted.",
+        "The restriction applies only when a control tower is open."
+      ],
+      "answerIndex": 1,
+      "rationale": "TP 15263 explicitly requires recall of restrictions on all aircraft, including RPA, in the vicinity of forest-fire areas",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 601.15 — forest-fire aircraft operating restrictions",
+      "learningObjective": "TP 15263 explicitly requires recall of restrictions on all aircraft, including RPA, in the vicinity of forest-fire areas.",
+      "carsSection": "601.15",
+      "source": "CAR 601.15-601.17; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airs-006",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "A pilot is operating in transponder airspace with an RPA that lacks the normally required equipment. When can an exception be considered under CAR 901.46?",
+      "choices": [
+        "Whenever the RPA remains in VLOS.",
+        "When the responsible ATC unit provides service, authorization is requested before entry, and aviation safety is not likely to be affected.",
+        "Whenever an Advanced certificate is held.",
+        "Only after entering the airspace."
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.46 provides a specific pre-entry ATC authorization pathway for an unequipped RPA; VLOS or certificate level alone does not create the exception",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.46 — transponder airspace exception",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.46",
+      "source": "CAR 901.46; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airs-007",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "What is the practical purpose of identifying whether a planned operation lies in an altimeter-setting region or standard-pressure region?",
+      "choices": [
+        "It determines the pressure reference used for altitude reporting and interpretation in the applicable airspace.",
+        "It determines whether the RPA must be painted a specific colour.",
+        "It automatically determines the pilot-certificate level.",
+        "It replaces the need to check the DAH."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to identify the altimeter-setting region and standard-pressure region as part of airspace knowledge",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Altimeter-setting and standard-pressure regions",
+      "learningObjective": "TP 15263 requires pilots to identify the altimeter-setting region and standard-pressure region as part of airspace knowledge.",
+      "carsSection": null,
+      "source": "TP 15263 Section 1; TC AIM RAC",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airs-008",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "An uncontrolled RPA inadvertently enters controlled airspace. What should the pilot's response be based on?",
+      "choices": [
+        "The applicable inadvertent-entry and emergency procedures, including communication/notification as required, rather than continuing as planned.",
+        "The assumption that controlled airspace rules no longer apply after accidental entry.",
+        "A rule requiring immediate battery shutdown in every case.",
+        "A requirement to climb above 400 ft."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 includes inadvertent entry into controlled airspace and emergency procedures as Advanced knowledge topics",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Inadvertent entry into controlled airspace",
+      "learningObjective": "TP 15263 includes inadvertent entry into controlled airspace and emergency procedures as Advanced knowledge topics.",
+      "carsSection": "901.15",
+      "source": "CAR 901.15; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars",
+        "ref-tc-aim-rpa-2026-1"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-aero-001",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A VLOS operation is planned 2.8 NM from an airport centre. What additional airport-specific condition must be checked under the Advanced Operations division?",
+      "choices": [
+        "Whether the operation can be conducted in accordance with the established RPAS procedure applicable to that airport.",
+        "Whether the RPA is painted orange.",
+        "Whether the flight lasts less than 10 minutes.",
+        "Whether the pilot can avoid using GPS."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.73 requires a Division V operation less than 3 NM from an airport centre to follow the established RPAS procedure applicable to that airport",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.73 — operations near airports",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.73",
+      "source": "CAR 901.73; TC AIM RPA; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars",
+        "ref-tc-aim-rpa-2026-1"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-aero-002",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A VLOS operation is planned exactly 1.0 NM from the centre of a heliport. Which wording detail matters when applying the ordinary heliport-distance trigger?",
+      "choices": [
+        "The rule uses 'less than 1 NM', so exactly 1.0 NM is not inside that particular numerical trigger, although other aerodrome and airspace rules still apply.",
+        "The rule means 1 NM or less.",
+        "Exactly 1 NM always requires an SFOC-RPAS.",
+        "Distance is irrelevant at heliports."
+      ],
+      "answerIndex": 0,
+      "rationale": "Advanced exam questions can hinge on exclusive regulatory wording; the less-than-1-NM heliport trigger does not include exactly 1.0 NM",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Airport/heliport distance boundaries — exclusive wording",
+      "learningObjective": "Advanced exam questions can hinge on exclusive regulatory wording; the less-than-1-NM heliport trigger does not include exactly 1.",
+      "carsSection": "901.73",
+      "source": "CAR 901.73; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-aero-003",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "An RPA is outside the 3 NM airport-distance trigger but would cross an active downwind leg used by crewed aircraft. What is the key concern?",
+      "choices": [
+        "CAR 901.47 traffic-pattern interference remains relevant even outside the numerical distance trigger.",
+        "The RPA has priority because it is farther than 3 NM from the airport centre.",
+        "No aerodrome rule can apply outside 3 NM.",
+        "Only the airport manager can determine collision risk."
+      ],
+      "answerIndex": 0,
+      "rationale": "The traffic-pattern interference prohibition is an independent requirement and is not switched off merely because a numerical distance threshold is not triggered",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Aerodrome traffic pattern — interference",
+      "learningObjective": "The traffic-pattern interference prohibition is an independent requirement and is not switched off merely because a numerical distance threshold is not triggered.",
+      "carsSection": "901.47",
+      "source": "CAR 901.47; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-aero-004",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A pilot wants to operate on the movement area of a certified airport. Which approvals must be considered?",
+      "choices": [
+        "Approval/control requirements of the airport or aerodrome operator and the appropriate ATS unit, as applicable.",
+        "Only permission from a nearby property owner.",
+        "Only a Basic pilot certificate.",
+        "No approval if the RPA is under 250 g."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires Advanced pilots to understand that persons, vehicles, obstacles and operations at aerodromes are subject to operator and appropriate ATC control/approval",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Aerodrome movement-area approvals and restrictions",
+      "learningObjective": "TP 15263 requires Advanced pilots to understand that persons, vehicles, obstacles and operations at aerodromes are subject to operator and appropriate ATC control/approval.",
+      "carsSection": "301.08",
+      "source": "CAR 301/302; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-aero-005",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "At an uncontrolled aerodrome, why is understanding the normal circuit and taxi flow important to an RPAS pilot?",
+      "choices": [
+        "It helps predict where crewed aircraft may be operating so the RPA can avoid interference and collision risk.",
+        "It allows the RPA to join the circuit as an aircraft with priority.",
+        "It removes the need for a site survey.",
+        "It determines battery capacity."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 Flight Operations requires pilots to describe the normal flow of traditional aircraft traffic at an aerodrome, including circuit and taxiing activity",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Traditional aircraft flow at aerodromes",
+      "learningObjective": "TP 15263 Flight Operations requires pilots to describe the normal flow of traditional aircraft traffic at an aerodrome, including circuit and taxiing activity.",
+      "carsSection": null,
+      "source": "TP 15263 Section 6; TC AIM RAC/AGA",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-aero-006",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "What is the main operational distinction between an MF area and an aerodrome traffic frequency (ATF) environment?",
+      "choices": [
+        "An MF area has mandatory frequency procedures; an ATF supports traffic coordination where the applicable published procedures differ.",
+        "ATF always provides radar separation.",
+        "MF is used only by helicopters.",
+        "There is no operational distinction."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires Advanced pilots to understand controlled and uncontrolled aerodrome operations, MF and ATF procedures",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Mandatory Frequency and Aerodrome Traffic Frequency procedures",
+      "learningObjective": "TP 15263 requires Advanced pilots to understand controlled and uncontrolled aerodrome operations, MF and ATF procedures.",
+      "carsSection": null,
+      "source": "TP 15263 Section 1; TC AIM RAC; NAV CANADA VFR Phraseology Guide",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full",
+        "ref-navcanada-vfr-phraseology"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-aero-007",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A VLOS operation is planned 2.5 NM from the centre of an aerodrome operated under the authority of the Minister of National Defence. What specific authorization is required?",
+      "choices": [
+        "Authorization from the Department of National Defence.",
+        "Only an airport operator's civilian RPAS procedure.",
+        "Only an Advanced certificate.",
+        "None if the airspace is uncontrolled."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.47(4) separately requires DND authorization for operations less than 3 NM from a DND aerodrome",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "DND aerodrome authorization",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.47",
+      "source": "CAR 901.47(4); TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-aero-008",
+      "category": "aerodromes",
+      "difficulty": "medium",
+      "question": "Which statement best distinguishes an aerodrome from an airport in Canadian aviation law?",
+      "choices": [
+        "An airport is an aerodrome for which an airport certificate is in force; not every aerodrome is a certified airport.",
+        "Every aerodrome is automatically an airport.",
+        "An airport is any place where an RPA launches.",
+        "Aerodrome is a NAV CANADA term with no legal meaning."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to define aerodrome and airport and understand the different regulatory treatment of aerodromes and certified airports",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Aerodrome versus airport definitions",
+      "learningObjective": "TP 15263 requires pilots to define aerodrome and airport and understand the different regulatory treatment of aerodromes and certified airports.",
+      "carsSection": null,
+      "source": "Aeronautics Act definitions; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-nota-001",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "In an ICAO NOTAM Q-code, what do the four letters after the initial Q primarily describe?",
+      "choices": [
+        "The subject and its condition/status.",
+        "The pilot certificate required.",
+        "The exact latitude and longitude only.",
+        "The issuing airport's runway length."
+      ],
+      "answerIndex": 0,
+      "rationale": "Canadian NOTAM interpretation uses the Q-code subject and condition to classify the aeronautical information",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "NOTAM Q-code — subject and condition",
+      "learningObjective": "Canadian NOTAM interpretation uses the Q-code subject and condition to classify the aeronautical information.",
+      "carsSection": null,
+      "source": "TP 15263 Section 1; NAV CANADA NOTAM procedures",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-nota-002",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A NOTAM Q-line shows a broad radius, while Item E contains precise polygon coordinates for the affected activity. Which information should be treated as the more precise operational geometry?",
+      "choices": [
+        "The detailed Item E geometry.",
+        "The Q-line radius in every case.",
+        "A fixed 5 NM circle.",
+        "The FIR boundary."
+      ],
+      "answerIndex": 0,
+      "rationale": "The Q-line supports filtering and area-of-influence processing; precise operational geometry described in the NOTAM text should be used when provided",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "NOTAM Q-line filtering versus detailed geometry",
+      "learningObjective": "The Q-line supports filtering and area-of-influence processing; precise operational geometry described in the NOTAM text should be used when provided.",
+      "carsSection": null,
+      "source": "TP 15263 Section 1; NAV CANADA NOTAM procedures",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-nota-003",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "Why should a pilot not use the Q-line lower and upper vertical qualifiers as the sole source of exact operational limits?",
+      "choices": [
+        "They support NOTAM filtering; the detailed NOTAM fields/text provide the actual limits that must be interpreted.",
+        "They are always expressed in metres AGL.",
+        "They apply only to IFR flights.",
+        "They are decorative metadata."
+      ],
+      "answerIndex": 0,
+      "rationale": "Advanced NOTAM interpretation requires distinguishing Q-line filtering qualifiers from the detailed operational information in the NOTAM",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "NOTAM Q-line vertical qualifiers",
+      "learningObjective": "Advanced NOTAM interpretation requires distinguishing Q-line filtering qualifiers from the detailed operational information in the NOTAM.",
+      "carsSection": null,
+      "source": "TP 15263 Section 1; NAV CANADA NOTAM procedures",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-nota-004",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A NOTAM is published with times in UTC. A pilot planning in Eastern Time should do what?",
+      "choices": [
+        "Convert the published UTC validity period carefully to the local operating time and account for the correct UTC offset.",
+        "Assume NOTAM times are always local.",
+        "Subtract 12 hours in every season.",
+        "Ignore the time if the NOTAM is within the same FIR."
+      ],
+      "answerIndex": 0,
+      "rationale": "Operational NOTAM planning requires correct interpretation of published UTC validity periods relative to the planned local operation",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "NOTAM time interpretation — UTC",
+      "learningObjective": "Operational NOTAM planning requires correct interpretation of published UTC validity periods relative to the planned local operation.",
+      "carsSection": null,
+      "source": "TP 15263 Section 1; NAV CANADA NOTAM procedures",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-nota-005",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A NOTAM is cancelled before the planned flight. What should the pilot conclude?",
+      "choices": [
+        "The cancelled notice is no longer current, but the pilot must still check for replacement or newly issued information affecting the operation.",
+        "The original restriction permanently remains in force.",
+        "All NOTAMs for the FIR are cancelled.",
+        "No further pre-flight information check is required."
+      ],
+      "answerIndex": 0,
+      "rationale": "NOTAM status must be assessed using current information; cancellation of one notice does not guarantee that no replacement or related notice exists",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "NOTAM lifecycle — cancellation and replacement",
+      "learningObjective": "NOTAM status must be assessed using current information; cancellation of one notice does not guarantee that no replacement or related notice exists.",
+      "carsSection": null,
+      "source": "TP 15263 Section 1; NAV CANADA NOTAM procedures",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-nota-006",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "During the site survey, why should the pilot review both aerodrome-specific and area/FIR NOTAM information where relevant?",
+      "choices": [
+        "Hazards affecting the operation may be published under different NOTAM locations or scopes, so a single aerodrome search may not capture everything.",
+        "FIR NOTAMs never apply below 400 ft.",
+        "Aerodrome NOTAMs replace all area information.",
+        "Only NOTAMs containing 'RPAS' can affect an RPAS operation."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 and CAR site-survey/pre-flight requirements require pilots to obtain current aeronautical information relevant to the operation",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "NOTAM scope in pre-flight/site-survey planning",
+      "learningObjective": "TP 15263 and CAR site-survey/pre-flight requirements require pilots to obtain current aeronautical information relevant to the operation.",
+      "carsSection": "901.27",
+      "source": "CAR 901.27; TP 15263 Section 1; NAV CANADA NOTAM procedures",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-nota-007",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A NOTAM warns of crane activity near the planned operating area. What is the correct use of that information?",
+      "choices": [
+        "Incorporate the obstacle location/height and validity period into the site survey and operational-volume planning.",
+        "Ignore it if the crane is outside airport property.",
+        "Assume the crane lights guarantee separation.",
+        "Treat the NOTAM as applicable only to crewed aircraft."
+      ],
+      "answerIndex": 0,
+      "rationale": "NOTAM obstacle information is operational aeronautical information that must be considered when assessing obstacles and the planned flight path",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM obstacle information in site survey",
+      "learningObjective": "NOTAM obstacle information is operational aeronautical information that must be considered when assessing obstacles and the planned flight path.",
+      "carsSection": "901.27",
+      "source": "CAR 901.27; TP 15263 Sections 1 and 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-nota-008",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A forest-fire NOTAM is issued for an area. Which statement is correct?",
+      "choices": [
+        "The pilot must consider both the NOTAM and the underlying CAR forest-fire operating restrictions; the NOTAM does not replace the regulation.",
+        "The NOTAM creates an exemption for Advanced pilots.",
+        "Only the NOTAM matters; CAR 601.15 can be ignored.",
+        "The restriction ends automatically when the pilot can no longer see smoke."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires knowledge of forest-fire operating restrictions and related NOTAM information as complementary sources",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Forest-fire NOTAM and CAR restrictions",
+      "learningObjective": "TP 15263 requires knowledge of forest-fire operating restrictions and related NOTAM information as complementary sources.",
+      "carsSection": "601.15",
+      "source": "CAR 601.15-601.17; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-weat-001",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A METAR shows temperature and dew point rapidly converging toward the same value while winds are light. What hazard should receive increased attention?",
+      "choices": [
+        "Fog or low-cloud formation and reduced visibility.",
+        "Guaranteed improvement to unlimited visibility.",
+        "A magnetic compass failure.",
+        "A transponder malfunction."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 meteorology requires understanding humidity, dew point, visibility and cloud/fog formation for operational decisions",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Humidity, dew point and fog formation",
+      "learningObjective": "TP 15263 meteorology requires understanding humidity, dew point, visibility and cloud/fog formation for operational decisions.",
+      "carsSection": null,
+      "source": "TP 15263 Section 4; TC AIM MET",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-weat-002",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A strong wind crosses a ridge before reaching the operating site on the lee side. What should the pilot anticipate?",
+      "choices": [
+        "Mechanical turbulence, rotor effects and potentially large local wind variations.",
+        "Perfectly smooth air because the ridge blocks the wind.",
+        "No wind at ground level.",
+        "Only a change in GNSS accuracy."
+      ],
+      "answerIndex": 0,
+      "rationale": "Topography can create mechanical turbulence and significant local wind effects that must be considered in RPAS planning",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Wind, terrain and mechanical turbulence",
+      "learningObjective": "Topography can create mechanical turbulence and significant local wind effects that must be considered in RPAS planning.",
+      "carsSection": null,
+      "source": "TP 15263 Section 4; TC AIM MET",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-weat-003",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "What is the main difference between a METAR and a TAF for pre-flight planning?",
+      "choices": [
+        "A METAR reports observed aerodrome weather; a TAF provides a forecast for the aerodrome and validity period.",
+        "A TAF is an aircraft maintenance report.",
+        "A METAR is always a 24-hour forecast.",
+        "They are identical products."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to interpret aviation weather reports and aerodrome forecasts as different products",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "METAR versus TAF",
+      "learningObjective": "TP 15263 requires pilots to interpret aviation weather reports and aerodrome forecasts as different products.",
+      "carsSection": null,
+      "source": "TP 15263 Section 4; TC AIM MET",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-weat-004",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A cold front is approaching the operating area. Which weather tendency is generally most relevant to an RPAS pilot?",
+      "choices": [
+        "Potential rapid changes in wind, turbulence, cloud and precipitation near frontal passage.",
+        "Guaranteed calm winds and clear skies.",
+        "No change in pressure or temperature.",
+        "A permanent increase in GNSS accuracy."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires understanding frontal weather and how pressure systems and air masses affect operational conditions",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Fronts and rapidly changing weather",
+      "learningObjective": "TP 15263 requires understanding frontal weather and how pressure systems and air masses affect operational conditions.",
+      "carsSection": null,
+      "source": "TP 15263 Section 4; TC AIM MET",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-weat-005",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "Why can a high density altitude reduce RPAS performance margin?",
+      "choices": [
+        "Lower air density can reduce aerodynamic and propulsion effectiveness, affecting climb, payload and endurance margins.",
+        "It makes the aircraft heavier on a scale.",
+        "It increases battery voltage automatically.",
+        "It removes wind effects."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to assess density altitude for anticipated performance and flight-envelope limitations",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Density altitude and aircraft performance",
+      "learningObjective": "TP 15263 requires pilots to assess density altitude for anticipated performance and flight-envelope limitations.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 4 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-weat-006",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "Thunderstorms are forecast near the operating area. Which planning decision best reflects TP 15263 knowledge requirements?",
+      "choices": [
+        "Maintain conservative separation and account for strong gusts, turbulence, precipitation and rapid wind shifts rather than planning to operate underneath the cell.",
+        "Operate directly below the cloud because the RPA remains under 400 ft.",
+        "Use obstacle avoidance as a thunderstorm-detection system.",
+        "Assume small RPA are unaffected by convective outflows."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 Flight Operations explicitly includes thunderstorm avoidance and Meteorology covers convective hazards",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Thunderstorm avoidance",
+      "learningObjective": "TP 15263 Flight Operations explicitly includes thunderstorm avoidance and Meteorology covers convective hazards.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 4 and 6; TC AIM MET",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-weat-007",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "Icing is reported along the intended route. What is the regulatory decision point under CAR 901.35?",
+      "choices": [
+        "Do not operate unless the applicable icing provisions are satisfied, including the required de-icing/anti-icing equipment or a means to detect icing where the exception applies.",
+        "Continue if the aircraft is under 25 kg.",
+        "Continue if the pilot can see the propellers.",
+        "Icing rules apply only above 400 ft AGL."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.35 establishes specific restrictions on operation in icing conditions and on contamination of critical surfaces",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.35 — icing",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.35",
+      "source": "CAR 901.35; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-weat-008",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A deepening low-pressure system is moving toward the mission area. Which broad expectation is most useful for planning?",
+      "choices": [
+        "Weather may become more unsettled, with changing winds/cloud/precipitation, so current forecasts and observations should be reassessed.",
+        "Low pressure guarantees calm clear weather.",
+        "Pressure systems do not affect RPAS operations.",
+        "Only temperature changes; wind cannot change."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to relate weather characteristics and air movement to high- and low-pressure systems",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Pressure systems and associated weather",
+      "learningObjective": "TP 15263 requires pilots to relate weather characteristics and air movement to high- and low-pressure systems.",
+      "carsSection": null,
+      "source": "TP 15263 Section 4; TC AIM MET",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-visu-001",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "A visual observer detects a helicopter approaching the operating area but cannot communicate promptly with the pilot. What crew requirement has failed?",
+      "choices": [
+        "The ability to maintain reliable and timely communication needed to support the operation.",
+        "The requirement to carry an ELT.",
+        "The requirement to use a transponder.",
+        "The requirement to file an IFR flight plan."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 and Part IX visual-observer requirements depend on effective crew communication so hazards can be acted upon",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Visual observer — reliable and timely communication",
+      "learningObjective": "TP 15263 and Part IX visual-observer requirements depend on effective crew communication so hazards can be acted upon.",
+      "carsSection": "901.20",
+      "source": "CAR 901.20; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-visu-002",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "During a VLOS operation, who may maintain the required visual line of sight with the RPA?",
+      "choices": [
+        "The pilot or a properly used visual observer, subject to the applicable VLOS requirements.",
+        "Only the pilot; a visual observer can never satisfy VLOS.",
+        "Only an ATC controller.",
+        "Any member of the public."
+      ],
+      "answerIndex": 0,
+      "rationale": "Part IX VLOS provisions permit the required visual line of sight to be maintained by the pilot or a properly used visual observer",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.11 — visual line of sight",
+      "learningObjective": "Part IX VLOS provisions permit the required visual line of sight to be maintained by the pilot or a properly used visual observer.",
+      "carsSection": "901.11",
+      "source": "CAR 901.11; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-visu-003",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "For an EVLOS operation under Division V, what must the visual observer watch?",
+      "choices": [
+        "The operating airspace sufficiently to detect conflicting traffic and other hazards and enable avoidance action.",
+        "Only the live camera feed.",
+        "Only the pilot's hands.",
+        "Only the RPA battery percentage."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.74 requires the EVLOS visual observer to maintain unaided visual contact with the operating airspace to detect conflicts and hazards",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.74 — EVLOS visual observer duties",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.74",
+      "source": "CAR 901.74; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-visu-004",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "An EVLOS observer is 2.1 NM from the RPA while all other conditions are satisfied. Which statement is correct?",
+      "choices": [
+        "The operation does not satisfy the ordinary EVLOS distance condition requiring the RPA to remain no more than 2 NM from the required persons/control station.",
+        "The operation is compliant because 2 NM is only a recommendation.",
+        "The observer may be any distance away if binoculars are used.",
+        "Distance matters only in controlled airspace."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.74 contains a no-more-than-2-NM condition for the RPA relative to the pilot, control station and visual observer",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.74 — EVLOS distance limit",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.74",
+      "source": "CAR 901.74; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-visu-005",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "Which qualification can satisfy the certificate requirement for a visual observer supporting an EVLOS operation under CAR 901.75?",
+      "choices": [
+        "A Basic, Advanced, or Level 1 Complex RPAS pilot certificate, provided the other observer conditions are met.",
+        "No aviation qualification of any kind.",
+        "Only an airline transport pilot licence.",
+        "Only an Advanced RPAS certificate."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.75 identifies acceptable RPAS pilot certificates for an EVLOS visual observer and imposes additional visual-contact/distance requirements",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.75 — EVLOS observer qualification",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.75",
+      "source": "CAR 901.75; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-visu-006",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "A visual observer becomes occupied with a phone call and stops scanning the operating airspace. What is the primary operational problem?",
+      "choices": [
+        "The observer can no longer reliably perform the assigned collision/hazard-detection function.",
+        "The phone automatically invalidates the RPA registration.",
+        "The pilot must switch to IFR.",
+        "The RPA must immediately climb."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 emphasizes attention management, situational awareness and visual-observer responsibilities during RPAS operations",
+      "examScope": "core-advanced",
+      "tp15263Section": 3,
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Visual observer attention and situational awareness",
+      "learningObjective": "TP 15263 emphasizes attention management, situational awareness and visual-observer responsibilities during RPAS operations.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tp-12863"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-visu-007",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "Before launch, what should the pilot and visual observer agree on to reduce ambiguity during a traffic conflict?",
+      "choices": [
+        "Clear communication terms, responsibilities and immediate actions for reporting and avoiding conflicting aircraft.",
+        "A plan to discuss responsibilities only after takeoff.",
+        "A rule that the observer never interrupts the pilot.",
+        "A requirement to use text messages for every warning."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires crew communication, planning, responsibilities and collision-avoidance coordination as part of Advanced operations",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Crew coordination with visual observers",
+      "learningObjective": "TP 15263 requires crew communication, planning, responsibilities and collision-avoidance coordination as part of Advanced operations.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tp-12863"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-visu-008",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "A visual observer can see the RPA only through a zoomed video display and cannot visually scan the surrounding operating airspace. Why is that insufficient for an EVLOS observer?",
+      "choices": [
+        "EVLOS observer duties require unaided visual contact with the operating airspace sufficient to detect conflicting traffic and hazards.",
+        "A video display is legally identical to unaided visual contact.",
+        "The observer's only duty is to monitor battery voltage.",
+        "EVLOS does not require traffic detection."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.74 requires unaided visual contact with the airspace, not merely observation through the aircraft's camera system",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "EVLOS — unaided observation of operating airspace",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.74",
+      "source": "CAR 901.74; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-huma-001",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "A pilot slept poorly, has difficulty concentrating and is making simple calculation errors before a flight. What is the appropriate response?",
+      "choices": [
+        "Treat the impairment as a fitness risk and delay/cancel the flight rather than relying on automation to compensate.",
+        "Launch because fatigue affects only crewed-aircraft pilots.",
+        "Assign the visual observer to make every decision.",
+        "Reduce altitude and ignore the symptoms."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 Human Factors requires recognition of fatigue, performance limitations and factors that impair safe decision-making",
+      "examScope": "core-advanced",
+      "tp15263Section": 3,
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Fatigue and fitness for duty",
+      "learningObjective": "TP 15263 Human Factors requires recognition of fatigue, performance limitations and factors that impair safe decision-making.",
+      "carsSection": null,
+      "source": "TP 15263 Section 3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tp-12863"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-huma-002",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "A pilot sees weather deteriorating but continues because substantial time has already been invested in travelling to the site. Which decision trap is this closest to?",
+      "choices": [
+        "Press-on/continuation bias influenced by sunk effort.",
+        "Improved situational awareness.",
+        "Positive transfer of training.",
+        "A navigation correction."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to identify factors that interfere with effective decision-making and risk management",
+      "examScope": "core-advanced",
+      "tp15263Section": 3,
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Decision-making bias and operational pressure",
+      "learningObjective": "TP 15263 requires pilots to identify factors that interfere with effective decision-making and risk management.",
+      "carsSection": null,
+      "source": "TP 15263 Section 3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tp-12864"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-huma-003",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "During a complex mission, the pilot focuses intensely on the map display and stops noticing radio calls and the visual observer's warnings. What human-factors problem is illustrated?",
+      "choices": [
+        "Attention narrowing/task saturation reducing situational awareness.",
+        "Improved workload management.",
+        "A compass deviation error.",
+        "A normal GNSS mode change."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 Human Factors covers attention, workload, situational awareness and their effect on operational performance",
+      "examScope": "core-advanced",
+      "tp15263Section": 3,
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Attention management and task saturation",
+      "learningObjective": "TP 15263 Human Factors covers attention, workload, situational awareness and their effect on operational performance.",
+      "carsSection": null,
+      "source": "TP 15263 Section 3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tp-12863"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-huma-004",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "A crew member reports evidence that contradicts the pilot's preferred diagnosis of a warning. What is the strongest decision-making response?",
+      "choices": [
+        "Actively consider the contrary evidence and reassess serviceability before flight.",
+        "Dismiss the report to preserve command authority.",
+        "Launch quickly before more warnings occur.",
+        "Ask the crew member to stop reporting anomalies."
+      ],
+      "answerIndex": 0,
+      "rationale": "Effective Advanced-pilot decision-making uses crew input and disconfirming evidence rather than confirmation bias",
+      "examScope": "core-advanced",
+      "tp15263Section": 3,
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Confirmation bias and crew resource management",
+      "learningObjective": "Effective Advanced-pilot decision-making uses crew input and disconfirming evidence rather than confirmation bias.",
+      "carsSection": null,
+      "source": "TP 15263 Section 3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tp-12864"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-huma-005",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "A pilot begins a mission while angry and preoccupied after a stressful event. Why can this be operationally significant?",
+      "choices": [
+        "Stress and emotional state can degrade attention, judgment and decision-making even when technical skills are unchanged.",
+        "Emotion has no effect on aviation performance.",
+        "Only physical fatigue matters.",
+        "Stress improves all reaction times."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 Human Factors includes psychological and physiological factors that influence pilot performance and risk management",
+      "examScope": "core-advanced",
+      "tp15263Section": 3,
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Stress and emotional factors",
+      "learningObjective": "TP 15263 Human Factors includes psychological and physiological factors that influence pilot performance and risk management.",
+      "carsSection": null,
+      "source": "TP 15263 Section 3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tp-12863"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-huma-006",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "A pilot takes a new over-the-counter medication that causes drowsiness. What is the appropriate aviation decision?",
+      "choices": [
+        "Treat the side effect as a potential impairment and do not act as crew if fitness is compromised.",
+        "Fly because non-prescription medication is always acceptable.",
+        "Fly only at lower altitude.",
+        "Use caffeine to cancel the regulatory concern."
+      ],
+      "answerIndex": 0,
+      "rationale": "Advanced pilots must assess fitness and the effect of medication or substances on safe performance",
+      "examScope": "core-advanced",
+      "tp15263Section": 3,
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Medication and impairment",
+      "learningObjective": "Advanced pilots must assess fitness and the effect of medication or substances on safe performance.",
+      "carsSection": "901.19",
+      "source": "CAR 901.19; TP 15263 Section 3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tp-12863",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-huma-007",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "Why is an explicit pre-flight briefing valuable when several crew members are supporting an RPAS operation?",
+      "choices": [
+        "It establishes shared mental models, responsibilities, communications and contingency actions before workload rises.",
+        "It eliminates the need for a site survey.",
+        "It transfers regulatory responsibility away from the pilot.",
+        "It permits the crew to ignore changing conditions."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 emphasizes crew coordination, communications, responsibilities and effective decision-making",
+      "examScope": "core-advanced",
+      "tp15263Section": 3,
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Crew briefing and shared situational awareness",
+      "learningObjective": "TP 15263 emphasizes crew coordination, communications, responsibilities and effective decision-making.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tp-12864"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-huma-008",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "A pilot is visually searching for traffic. Which scanning practice best reduces the risk of missing an aircraft because of fixation?",
+      "choices": [
+        "Use a deliberate sector scan with repeated checks rather than staring continuously at one point.",
+        "Fixate on the horizon centre without moving the eyes.",
+        "Watch only the RPA video feed.",
+        "Scan only after the visual observer calls traffic."
+      ],
+      "answerIndex": 0,
+      "rationale": "Human-factors knowledge includes limitations of vision, attention and practical techniques for maintaining situational awareness",
+      "examScope": "core-advanced",
+      "tp15263Section": 3,
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Visual scanning and fixation",
+      "learningObjective": "Human-factors knowledge includes limitations of vision, attention and practical techniques for maintaining situational awareness.",
+      "carsSection": null,
+      "source": "TP 15263 Section 3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tp-12863"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airc-001",
+      "category": "aircraft-systems",
+      "difficulty": "hard",
+      "question": "An RPA's compass heading becomes erratic immediately after launch beside a large steel structure. What is the most plausible first concern?",
+      "choices": [
+        "Magnetic interference affecting the compass/magnetometer.",
+        "A sudden change in atmospheric pressure only.",
+        "An ELT transmission.",
+        "A NOTAM coding error."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires understanding aircraft sensors, their errors/malfunctions and environmental causes of erroneous indications",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Magnetometer/compass interference",
+      "learningObjective": "TP 15263 requires understanding aircraft sensors, their errors/malfunctions and environmental causes of erroneous indications.",
+      "carsSection": null,
+      "source": "TP 15263 Section 2",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airc-002",
+      "category": "aircraft-systems",
+      "difficulty": "hard",
+      "question": "What is the IMU's broad role in an RPAS?",
+      "choices": [
+        "Measure motion/attitude-related quantities used by the flight-control system to estimate aircraft state.",
+        "Provide airport certification.",
+        "Transmit NOTAMs.",
+        "Replace every navigation sensor."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 specifically requires pilots to describe what the inertial measurement unit is responsible for and causes of malfunction",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Inertial measurement unit — function",
+      "learningObjective": "TP 15263 specifically requires pilots to describe what the inertial measurement unit is responsible for and causes of malfunction.",
+      "carsSection": null,
+      "source": "TP 15263 Section 2",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airc-003",
+      "category": "aircraft-systems",
+      "difficulty": "hard",
+      "question": "A GNSS position jumps several metres while the RPA is close to reflective buildings. Which effect should be considered?",
+      "choices": [
+        "Multipath or degraded satellite geometry affecting GNSS position quality.",
+        "A change in propeller pitch.",
+        "A mandatory-frequency radio call.",
+        "A pressure-altimeter failure only."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires operational knowledge of satellite-navigation errors and limitations rather than treating GNSS position as infallible",
+      "examScope": "core-advanced",
+      "tp15263Section": 5,
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "GNSS errors and multipath",
+      "learningObjective": "TP 15263 requires operational knowledge of satellite-navigation errors and limitations rather than treating GNSS position as infallible.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 2 and 5",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airc-004",
+      "category": "aircraft-systems",
+      "difficulty": "hard",
+      "question": "Why should a pilot treat a swollen lithium battery as unserviceable?",
+      "choices": [
+        "Swelling can indicate internal damage/degradation and increased thermal or electrical risk.",
+        "Swelling improves cold-weather capacity.",
+        "It proves the cells are fully balanced.",
+        "It has no safety significance if voltage is normal."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires knowledge of battery handling, hazards, limitations and aircraft serviceability",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Battery condition and hazards",
+      "learningObjective": "TP 15263 requires knowledge of battery handling, hazards, limitations and aircraft serviceability.",
+      "carsSection": null,
+      "source": "TP 15263 Section 2",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airc-005",
+      "category": "aircraft-systems",
+      "difficulty": "hard",
+      "question": "One propeller has a small crack near the hub. What is the correct pre-flight decision?",
+      "choices": [
+        "Do not fly until the propeller is replaced or otherwise made serviceable in accordance with applicable instructions.",
+        "Fly at half altitude.",
+        "Add tape to the crack without consulting instructions.",
+        "Increase RPM to compensate."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to explain how propeller/rotor condition affects performance and to apply serviceability criteria",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Propeller/rotor condition and serviceability",
+      "learningObjective": "TP 15263 requires pilots to explain how propeller/rotor condition affects performance and to apply serviceability criteria.",
+      "carsSection": "901.29",
+      "source": "TP 15263 Section 2; CAR 901.29",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airc-006",
+      "category": "aircraft-systems",
+      "difficulty": "hard",
+      "question": "The control link intermittently drops when a high-power radio transmitter nearby begins operating. What should the pilot investigate?",
+      "choices": [
+        "Radio-frequency interference affecting the C2 link and whether the site remains suitable for the operation.",
+        "Whether the RPA is in the standard-pressure region.",
+        "Whether a runway is wet.",
+        "Whether the propellers are clockwise only."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to understand C2-link limitations and how local/portable devices can create interference",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "C2 link interference",
+      "learningObjective": "TP 15263 requires pilots to understand C2-link limitations and how local/portable devices can create interference.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 2 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airc-007",
+      "category": "aircraft-systems",
+      "difficulty": "hard",
+      "question": "Why should the pilot verify the configured return-to-home altitude before flight?",
+      "choices": [
+        "The automated contingency path must be compatible with known obstacles and airspace constraints; a default value may be unsafe for the site.",
+        "RTH altitude affects only camera exposure.",
+        "The setting changes the aircraft registration.",
+        "RTH always flies at 400 ft regardless of configuration."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires understanding automated flight-management functions, obstacles and emergency/lost-link planning",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Automated return-to-home configuration",
+      "learningObjective": "TP 15263 requires understanding automated flight-management functions, obstacles and emergency/lost-link planning.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 2 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-airc-008",
+      "category": "aircraft-systems",
+      "difficulty": "hard",
+      "question": "After a firmware update, a sensor behaves differently from the previous version. What is the best pre-flight approach?",
+      "choices": [
+        "Review applicable release/manual information and verify system function before relying on the changed behaviour operationally.",
+        "Assume every update preserves identical behaviour.",
+        "Fly a full mission immediately because firmware cannot affect sensors.",
+        "Disable all warnings."
+      ],
+      "answerIndex": 0,
+      "rationale": "Advanced pilots must understand aircraft systems, applicable manuals and serviceability after configuration changes",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Firmware/configuration changes and system verification",
+      "learningObjective": "Advanced pilots must understand aircraft systems, applicable manuals and serviceability after configuration changes.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 2 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-main-001",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "A required flight-control sensor fails its built-in test before launch. What is the correct serviceability decision?",
+      "choices": [
+        "Do not operate until the RPAS is serviceable in accordance with applicable instructions and requirements.",
+        "Clear the warning and launch if weather is good.",
+        "Use a visual observer as a substitute for the failed sensor in every case.",
+        "Fly only below 100 ft."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.29 and TP 15263 require the RPAS to be serviceable and maintained in accordance with applicable instructions",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.29 — serviceability",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.29",
+      "source": "CAR 901.29; TP 15263 Sections 1 and 2",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-main-002",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "Why should maintenance actions and component replacements be traceable in an operational record system?",
+      "choices": [
+        "Traceability helps establish configuration, serviceability history and whether required actions were completed.",
+        "Records are useful only for resale value.",
+        "Part IX prohibits recording maintenance.",
+        "Traceability replaces pre-flight inspection."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 includes record keeping and maintenance/serviceability knowledge needed to verify the aircraft's condition and configuration",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Maintenance records and traceability",
+      "learningObjective": "TP 15263 includes record keeping and maintenance/serviceability knowledge needed to verify the aircraft's condition and configuration.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 1 and 2",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-main-003",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "A propeller is replaced with a visually similar third-party part that is not identified as compatible by the applicable instructions. What should the pilot do?",
+      "choices": [
+        "Verify compatibility/approved instructions before operation rather than assuming visual similarity is sufficient.",
+        "Fly because all propellers of the same diameter are interchangeable.",
+        "Reduce maximum altitude to make the part legal.",
+        "Balance only one blade and launch."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires maintenance and component care in accordance with applicable system instructions; compatibility cannot be inferred from appearance alone",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Replacement-part compatibility",
+      "learningObjective": "TP 15263 requires maintenance and component care in accordance with applicable system instructions; compatibility cannot be inferred from appearance alone.",
+      "carsSection": null,
+      "source": "TP 15263 Section 2",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-main-004",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "After a hard landing, the aircraft appears externally undamaged. What is the best maintenance response before the next mission?",
+      "choices": [
+        "Inspect relevant structure, propulsion and sensors in accordance with applicable instructions because hidden damage may affect serviceability.",
+        "Assume no damage if the shell has no scratches.",
+        "Reset the flight log and continue.",
+        "Charge the battery only."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to understand airframe handling/care, inspection and how damage can affect performance and serviceability",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Post-event inspection after hard landing",
+      "learningObjective": "TP 15263 requires pilots to understand airframe handling/care, inspection and how damage can affect performance and serviceability.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 2 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-main-005",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "A battery repeatedly shows one cell at significantly lower voltage than the others after charging. What is the operational concern?",
+      "choices": [
+        "Cell imbalance may indicate degradation or failure risk and warrants evaluation before further flight.",
+        "The battery has improved endurance.",
+        "Cell imbalance affects only camera operation.",
+        "The battery should be heated with an open flame."
+      ],
+      "answerIndex": 0,
+      "rationale": "Battery condition and cell health are part of aircraft serviceability and power-system knowledge in TP 15263",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Battery cell imbalance and degradation",
+      "learningObjective": "Battery condition and cell health are part of aircraft serviceability and power-system knowledge in TP 15263.",
+      "carsSection": null,
+      "source": "TP 15263 Section 2",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-main-006",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "Why is a functional check appropriate after maintenance affecting flight controls?",
+      "choices": [
+        "It verifies that the system responds correctly before the aircraft is exposed to operational risk.",
+        "It is unnecessary if screws were tightened.",
+        "It replaces all documentation.",
+        "It is required only after repainting."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 maintenance and systems knowledge requires verification of aircraft condition and proper operation after maintenance affecting flight-critical systems",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Post-maintenance functional checks",
+      "learningObjective": "TP 15263 maintenance and systems knowledge requires verification of aircraft condition and proper operation after maintenance affecting flight-critical systems.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 2 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-main-007",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "A declared RPAS is modified in a way that can affect a Standard 922 technical requirement. What must be considered before using it for an operation dependent on that declaration?",
+      "choices": [
+        "Whether the modified system continues to meet the applicable technical requirements and modification instructions.",
+        "Only whether the modification reduces weight.",
+        "Only whether the pilot likes the new configuration.",
+        "Nothing; declarations can never be affected by modifications."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.70 requires a modified system used for applicable operations to continue meeting the relevant technical requirements and applicable modification instructions",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.70 — modifications to declared RPAS",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.70",
+      "source": "CAR 901.70; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-main-008",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "Why should dust, sand or foreign debris around motors and cooling openings be addressed before flight?",
+      "choices": [
+        "Debris can impair cooling, bearings or propulsion reliability and therefore aircraft serviceability.",
+        "Debris improves motor cooling.",
+        "It affects only image sharpness.",
+        "It has no effect on small RPAS."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 airframe/power-system handling and care includes maintaining components in a condition that supports reliable operation",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Foreign debris and component care",
+      "learningObjective": "TP 15263 airframe/power-system handling and care includes maintaining components in a condition that supports reliable operation.",
+      "carsSection": null,
+      "source": "TP 15263 Section 2",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-abno-001",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "The C2 link is lost and the programmed contingency action begins. What should the pilot do?",
+      "choices": [
+        "Follow the established lost-link/emergency procedure while monitoring the situation and taking available actions to protect aviation safety.",
+        "Immediately invent a new procedure unrelated to the pre-flight plan.",
+        "Assume the RPA has priority over all aircraft.",
+        "Ignore the aircraft until the battery is depleted."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 and CAR 901.23 require established emergency procedures for loss of command and control",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Lost C2 link — emergency procedure",
+      "learningObjective": "TP 15263 and CAR 901.",
+      "carsSection": "901.23",
+      "source": "CAR 901.23; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-abno-002",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "GNSS position becomes unreliable but the aircraft remains controllable using other available references. What is the best response?",
+      "choices": [
+        "Use the applicable abnormal procedure, maintain control and land or recover conservatively rather than continuing a navigation-dependent mission.",
+        "Continue the full automated mission because GNSS errors self-correct.",
+        "Climb until satellites become visible regardless of airspace.",
+        "Turn off all attitude sensors."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to understand navigation-system errors/malfunctions and abnormal procedures",
+      "examScope": "core-advanced",
+      "tp15263Section": 5,
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "GNSS degradation/loss",
+      "learningObjective": "TP 15263 requires pilots to understand navigation-system errors/malfunctions and abnormal procedures.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 2, 5 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-abno-003",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "A multirotor motor suddenly stops producing thrust. What should the pilot's priority be?",
+      "choices": [
+        "Execute the aircraft-specific emergency procedure and minimize risk to people and other aircraft, recognizing controllability may be severely degraded.",
+        "Increase payload weight to rebalance.",
+        "Continue the mission if three motors remain.",
+        "Disable all warnings and climb."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires knowledge of propulsion-system failures, emergency procedures and risk mitigation",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Propulsion failure",
+      "learningObjective": "TP 15263 requires knowledge of propulsion-system failures, emergency procedures and risk mitigation.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 2 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-abno-004",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "A lithium battery begins venting and producing smoke on the ground. What is the safest immediate principle?",
+      "choices": [
+        "Treat it as a battery fire/thermal event, keep people clear and follow the applicable emergency/fire procedure rather than handling it casually.",
+        "Place it immediately in a pocket.",
+        "Reconnect it to the charger.",
+        "Puncture the cells to release pressure."
+      ],
+      "answerIndex": 0,
+      "rationale": "Battery hazards and emergency response are part of TP 15263 aircraft-systems and operational safety knowledge",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Battery thermal event",
+      "learningObjective": "Battery hazards and emergency response are part of TP 15263 aircraft-systems and operational safety knowledge.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 2 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-abno-005",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "A crewed aircraft unexpectedly enters the operating area at low altitude. What is the RPAS pilot's primary obligation?",
+      "choices": [
+        "Give way and take immediate action necessary to avoid conflict, including landing or moving the RPA if appropriate.",
+        "Maintain course because the RPA was there first.",
+        "Climb to improve visibility.",
+        "Wait for ATC to resolve every conflict, even in uncontrolled airspace."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires RPAS pilots to recall that RPA must give way to traditional aircraft and apply collision-avoidance procedures",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Give-way and collision avoidance",
+      "learningObjective": "TP 15263 requires RPAS pilots to recall that RPA must give way to traditional aircraft and apply collision-avoidance procedures.",
+      "carsSection": "901.16",
+      "source": "CAR Part IX flight safety/give-way provisions; TP 15263 Sections 1 and 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-abno-006",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "The aircraft's attitude indicator and visual attitude no longer agree. What is the correct response?",
+      "choices": [
+        "Treat the disagreement as a potential sensor/system malfunction and use applicable abnormal procedures rather than trusting one indication blindly.",
+        "Assume the display is always correct.",
+        "Assume visual observation is always wrong.",
+        "Continue automatic flight without monitoring."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires understanding IMU/sensor errors and malfunctions and appropriate operational response",
+      "examScope": "core-advanced",
+      "tp15263Section": 2,
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Sensor disagreement / IMU malfunction",
+      "learningObjective": "TP 15263 requires understanding IMU/sensor errors and malfunctions and appropriate operational response.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 2 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-abno-007",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "A rapidly developing gust front arrives earlier than forecast during flight. What is the best operational response?",
+      "choices": [
+        "Reassess immediately and recover/land if conditions threaten aircraft limits or safe control rather than relying on the original forecast.",
+        "Continue because the pre-flight forecast controls for the whole mission.",
+        "Increase altitude to escape all gusts.",
+        "Ignore wind if VLOS remains possible."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires continuous weather assessment, aircraft-performance awareness and conservative operational decisions when conditions change",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Deteriorating weather during flight",
+      "learningObjective": "TP 15263 requires continuous weather assessment, aircraft-performance awareness and conservative operational decisions when conditions change.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 4 and 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-abno-008",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "An RPA becomes a flyaway and is approaching controlled or restricted airspace. What should the pilot do?",
+      "choices": [
+        "Apply the established flyaway/lost-control procedure and notify the appropriate ATS unit or agency when required by the applicable rules.",
+        "Do nothing because the aircraft is no longer under control.",
+        "Turn off the control station immediately.",
+        "Publish a social-media warning instead of aviation notification."
+      ],
+      "answerIndex": 0,
+      "rationale": "Part IX and TP 15263 require procedures and appropriate notification when an uncontrolled RPA threatens protected airspace",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Flyaway and airspace notification",
+      "learningObjective": "Part IX and TP 15263 require procedures and appropriate notification when an uncontrolled RPA threatens protected airspace.",
+      "carsSection": "900.07",
+      "source": "CAR 900.07; TP 15263 Sections 1 and 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-flig-001",
+      "category": "flight-planning",
+      "difficulty": "hard",
+      "question": "A site survey identifies a public walkway crossing the planned operating area. What should the pilot do?",
+      "choices": [
+        "Assess foreseeable uninvolved-person exposure and use effective controls, relocation or timing changes so the operation meets applicable separation requirements.",
+        "Ask a visual observer to physically restrain pedestrians.",
+        "Ignore the walkway if no one is present at survey time.",
+        "Fly higher because altitude removes person-distance requirements."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.27 requires the site survey to address the applicable separation from persons and the suitability of the operating volume",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Site survey — uninvolved persons",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.27",
+      "source": "CAR 901.27; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-flig-002",
+      "category": "flight-planning",
+      "difficulty": "hard",
+      "question": "Why should the planned lost-link trajectory be included in obstacle and airspace assessment?",
+      "choices": [
+        "A contingency path is a foreseeable aircraft trajectory and can create hazards if it intersects obstacles or restricted/controlled airspace.",
+        "Lost-link routes are exempt from all rules.",
+        "Only the normal route matters.",
+        "The aircraft always descends vertically after link loss."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires emergency/lost-link planning together with obstacle, airspace and site-survey assessment",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Contingency-volume planning",
+      "learningObjective": "TP 15263 requires emergency/lost-link planning together with obstacle, airspace and site-survey assessment.",
+      "carsSection": "901.23",
+      "source": "CAR 901.23/901.27; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-flig-003",
+      "category": "flight-planning",
+      "difficulty": "hard",
+      "question": "A mission requires several repeated climbs in cold weather. Which planning factor is most important for endurance?",
+      "choices": [
+        "Use realistic energy consumption and reserve margins for the actual temperature, payload, wind and manoeuvre profile rather than nominal advertised endurance.",
+        "Use the manufacturer's maximum advertised flight time as a guaranteed value.",
+        "Ignore wind because the route returns to the start.",
+        "Plan to land only when the battery reaches zero."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to assess aircraft performance, power-system limitations and operational endurance under actual conditions",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Endurance and energy reserve planning",
+      "learningObjective": "TP 15263 requires pilots to assess aircraft performance, power-system limitations and operational endurance under actual conditions.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 2 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-flig-004",
+      "category": "flight-planning",
+      "difficulty": "hard",
+      "question": "Why should the pilot identify both launch and recovery areas during the site survey?",
+      "choices": [
+        "Both phases can expose people, obstacles and aircraft to different hazards and must be suitable for normal and abnormal operations.",
+        "Only launch matters because landing is automatic.",
+        "Recovery areas need not be accessible.",
+        "A recovery point is required only for fixed-wing RPA."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 Flight Operations explicitly includes launch points, recovery points, obstacles and emergency procedures in operational planning",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Launch and recovery area selection",
+      "learningObjective": "TP 15263 Flight Operations explicitly includes launch points, recovery points, obstacles and emergency procedures in operational planning.",
+      "carsSection": null,
+      "source": "TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-flig-005",
+      "category": "flight-planning",
+      "difficulty": "hard",
+      "question": "A crane NOTAM and a nearby charted tower both affect the intended route. What is the correct planning approach?",
+      "choices": [
+        "Consider both current temporary obstacles and permanent charted obstacles when defining altitude, lateral clearance and contingency routes.",
+        "Use only the taller obstacle.",
+        "Ignore temporary obstacles.",
+        "Assume obstacle lights provide legal clearance."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires use of current aeronautical information, charts and site-survey obstacle assessment",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Obstacle integration from charts and NOTAMs",
+      "learningObjective": "TP 15263 requires use of current aeronautical information, charts and site-survey obstacle assessment.",
+      "carsSection": "901.27",
+      "source": "CAR 901.27; TP 15263 Sections 5 and 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-flig-006",
+      "category": "flight-planning",
+      "difficulty": "hard",
+      "question": "The operating site is inside a published Class F area whose times of use vary. Which source should be checked for the area's designation, limits and using/controlling information?",
+      "choices": [
+        "The current NAV CANADA Designated Airspace Handbook, supplemented by current NOTAM information as applicable.",
+        "Only a road map.",
+        "Only the RPA manufacturer's app.",
+        "A weather radar image."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 specifically references the DAH for special-use airspace and requires pilots to understand published aeronautical information",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "DAH use in flight planning",
+      "learningObjective": "TP 15263 specifically references the DAH for special-use airspace and requires pilots to understand published aeronautical information.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 1 and 5; NAV CANADA DAH",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-flig-007",
+      "category": "flight-planning",
+      "difficulty": "hard",
+      "question": "The site's cell network is weak, but the RPAS control link does not depend on cellular service. Why can the weak network still matter?",
+      "choices": [
+        "It may affect access to weather, NOTAM, authorization or coordination services, so required information and contingency communications should be secured before flight.",
+        "It makes the RPA automatically unairworthy.",
+        "It changes the airspace class.",
+        "It eliminates the need for a visual observer."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires operational planning for communications, current information and interference/availability of local or portable systems",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Communications and information availability at the site",
+      "learningObjective": "TP 15263 requires operational planning for communications, current information and interference/availability of local or portable systems.",
+      "carsSection": null,
+      "source": "TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-flig-008",
+      "category": "flight-planning",
+      "difficulty": "hard",
+      "question": "A structure is 600 ft AGL and the pilot plans to use the CAR 901.25 structure provision. What horizontal condition must be preserved for that provision?",
+      "choices": [
+        "The RPA must remain less than 200 ft (61 m) horizontally from the building or structure.",
+        "The RPA may be exactly 200 ft or farther away.",
+        "The RPA must remain within 3 NM of an airport.",
+        "No horizontal condition applies."
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.25's structure-related altitude provision depends on the aircraft remaining less than 200 ft horizontally from the qualifying structure",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.25 — structure-proximity altitude provision",
+      "learningObjective": "CAR 901.",
+      "carsSection": "901.25",
+      "source": "CAR 901.25; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-radi-001",
+      "category": "radio",
+      "difficulty": "hard",
+      "question": "What is the purpose of using standard aeronautical phraseology during an RPAS radio call?",
+      "choices": [
+        "Reduce ambiguity and allow other airspace users/ATS to understand the message quickly and consistently.",
+        "Make transmissions longer.",
+        "Avoid stating position.",
+        "Replace the need for a ROC-A where one is required."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 Radiotelephony requires pilots to communicate using standard terminology and proper radio etiquette",
+      "examScope": "core-advanced",
+      "tp15263Section": 8,
+      "knowledgeArea": "Radiotelephony",
+      "knowledgeTopic": "Standard aeronautical terminology",
+      "learningObjective": "TP 15263 Radiotelephony requires pilots to communicate using standard terminology and proper radio etiquette.",
+      "carsSection": null,
+      "source": "TP 15263 Section 8; NAV CANADA VFR Phraseology Guide",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-vfr-phraseology",
+        "ref-roc-a-study-guide"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-radi-002",
+      "category": "radio",
+      "difficulty": "hard",
+      "question": "Which information belongs in a routine position/intention broadcast near an aerodrome?",
+      "choices": [
+        "Station or traffic addressed, aircraft/RPAS identification, position/altitude as appropriate, and intentions using concise standard phraseology.",
+        "Only the pilot's home address.",
+        "Only battery percentage.",
+        "Only the aircraft serial number."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to interpret and make routine aeronautical radio calls describing position and phase of flight",
+      "examScope": "core-advanced",
+      "tp15263Section": 8,
+      "knowledgeArea": "Radiotelephony",
+      "knowledgeTopic": "Routine aerodrome broadcast contents",
+      "learningObjective": "TP 15263 requires pilots to interpret and make routine aeronautical radio calls describing position and phase of flight.",
+      "carsSection": null,
+      "source": "TP 15263 Section 8; NAV CANADA VFR Phraseology Guide",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-vfr-phraseology"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-radi-003",
+      "category": "radio",
+      "difficulty": "hard",
+      "question": "When making a blind broadcast because no ground station is responding, what is the objective?",
+      "choices": [
+        "Transmit relevant position and intentions for the benefit of other traffic that may be listening.",
+        "Repeatedly call until the frequency is blocked.",
+        "Use non-standard slang so the message is distinctive.",
+        "Avoid identifying the location."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 explicitly requires Advanced pilots to give an example of a routine blind broadcast",
+      "examScope": "core-advanced",
+      "tp15263Section": 8,
+      "knowledgeArea": "Radiotelephony",
+      "knowledgeTopic": "Blind broadcasts",
+      "learningObjective": "TP 15263 explicitly requires Advanced pilots to give an example of a routine blind broadcast.",
+      "carsSection": null,
+      "source": "TP 15263 Section 8",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-vfr-phraseology"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-radi-004",
+      "category": "radio",
+      "difficulty": "hard",
+      "question": "A serious and imminent danger requires immediate assistance. Which radiotelephony signal has priority?",
+      "choices": [
+        "MAYDAY.",
+        "PAN PAN.",
+        "STANDBY.",
+        "ROGER."
+      ],
+      "answerIndex": 0,
+      "rationale": "Radiotelephony knowledge requires distinguishing distress from urgency communications and using standard terminology",
+      "examScope": "core-advanced",
+      "tp15263Section": 8,
+      "knowledgeArea": "Radiotelephony",
+      "knowledgeTopic": "Distress versus urgency signals",
+      "learningObjective": "Radiotelephony knowledge requires distinguishing distress from urgency communications and using standard terminology.",
+      "carsSection": null,
+      "source": "TP 15263 Section 8; RIC-21",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-roc-a-study-guide"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-radi-005",
+      "category": "radio",
+      "difficulty": "hard",
+      "question": "An abnormal situation is urgent but does not involve grave and imminent danger. Which signal is appropriate?",
+      "choices": [
+        "PAN PAN.",
+        "MAYDAY only.",
+        "WILCO.",
+        "SQUAWK."
+      ],
+      "answerIndex": 0,
+      "rationale": "PAN PAN is the standard urgency signal, distinct from the MAYDAY distress signal",
+      "examScope": "core-advanced",
+      "tp15263Section": 8,
+      "knowledgeArea": "Radiotelephony",
+      "knowledgeTopic": "Urgency signal — PAN PAN",
+      "learningObjective": "PAN PAN is the standard urgency signal, distinct from the MAYDAY distress signal.",
+      "carsSection": null,
+      "source": "TP 15263 Section 8; RIC-21",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-roc-a-study-guide"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-radi-006",
+      "category": "radio",
+      "difficulty": "hard",
+      "question": "Why does TP 15263 distinguish 'height' from 'altitude' in radio communications?",
+      "choices": [
+        "The terms use different reference concepts, so using the correct one reduces ambiguity about vertical position.",
+        "They are always interchangeable.",
+        "Height can only be used by helicopters.",
+        "Altitude means horizontal distance."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 explicitly requires pilots to distinguish between height and altitude in communications",
+      "examScope": "core-advanced",
+      "tp15263Section": 8,
+      "knowledgeArea": "Radiotelephony",
+      "knowledgeTopic": "Height versus altitude terminology",
+      "learningObjective": "TP 15263 explicitly requires pilots to distinguish between height and altitude in communications.",
+      "carsSection": null,
+      "source": "TP 15263 Section 8",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-vfr-phraseology"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-radi-007",
+      "category": "radio",
+      "difficulty": "hard",
+      "question": "ATC issues an instruction containing a safety-critical altitude or routing restriction. What is the purpose of an accurate readback when required?",
+      "choices": [
+        "Confirm that the pilot received and understood the instruction correctly so errors can be detected.",
+        "Create a new authorization independent of ATC.",
+        "Replace the need to comply with the instruction.",
+        "Keep other pilots from using the frequency."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 includes ATC clearances/instructions and mandatory readback procedures as knowledge topics",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "ATC instruction/readback procedures",
+      "learningObjective": "TP 15263 includes ATC clearances/instructions and mandatory readback procedures as knowledge topics.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 1 and 8",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-vfr-phraseology",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-radi-008",
+      "category": "radio",
+      "difficulty": "hard",
+      "question": "What is good radio etiquette when the frequency is busy?",
+      "choices": [
+        "Listen before transmitting, use concise standard phraseology, avoid unnecessary transmissions and do not block urgent traffic.",
+        "Transmit over other calls to establish priority.",
+        "Use long conversational explanations.",
+        "Repeat every message three times regardless of need."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 explicitly requires examples of radio etiquette and practices that avoid interfering with other communications",
+      "examScope": "core-advanced",
+      "tp15263Section": 8,
+      "knowledgeArea": "Radiotelephony",
+      "knowledgeTopic": "Radio etiquette and frequency discipline",
+      "learningObjective": "TP 15263 explicitly requires examples of radio etiquette and practices that avoid interfering with other communications.",
+      "carsSection": null,
+      "source": "TP 15263 Section 8",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-vfr-phraseology"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-navi-001",
+      "category": "navigation",
+      "difficulty": "medium",
+      "question": "An aircraft's nose points 090° but its actual path over the ground is 100° because of crosswind. Which term describes the 100° path?",
+      "choices": [
+        "Track.",
+        "Heading.",
+        "Variation.",
+        "Elevation."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires operational understanding of track, heading, wind velocity and drift",
+      "examScope": "core-advanced",
+      "tp15263Section": 5,
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Track versus heading",
+      "learningObjective": "TP 15263 requires operational understanding of track, heading, wind velocity and drift.",
+      "carsSection": null,
+      "source": "TP 15263 Section 5",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-navi-002",
+      "category": "navigation",
+      "difficulty": "hard",
+      "question": "What is drift in basic navigation terms?",
+      "choices": [
+        "The angular difference caused when wind displaces the aircraft's track from the direction associated with its heading.",
+        "The difference between battery cells.",
+        "A compass calibration routine.",
+        "The vertical distance above terrain."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 lists drift among the navigation definitions an RPA pilot must understand operationally",
+      "examScope": "core-advanced",
+      "tp15263Section": 5,
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Wind drift",
+      "learningObjective": "TP 15263 lists drift among the navigation definitions an RPA pilot must understand operationally.",
+      "carsSection": null,
+      "source": "TP 15263 Section 5",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-navi-003",
+      "category": "navigation",
+      "difficulty": "hard",
+      "question": "Why is magnetic variation relevant when comparing a charted true direction with a magnetic heading?",
+      "choices": [
+        "Variation is the angular difference between true north and magnetic north and must be accounted for when converting between references.",
+        "Variation is wind speed.",
+        "Variation is runway slope.",
+        "Variation is a GNSS battery error."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 includes variation as a required navigation definition and expects operational understanding",
+      "examScope": "core-advanced",
+      "tp15263Section": 5,
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Magnetic variation",
+      "learningObjective": "TP 15263 includes variation as a required navigation definition and expects operational understanding.",
+      "carsSection": null,
+      "source": "TP 15263 Section 5",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-navi-004",
+      "category": "navigation",
+      "difficulty": "medium",
+      "question": "What does latitude measure?",
+      "choices": [
+        "Angular position north or south of the equator.",
+        "Angular position east or west of Greenwich.",
+        "Height above sea level.",
+        "Magnetic compass error only."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires operational understanding of latitude and longitude",
+      "examScope": "core-advanced",
+      "tp15263Section": 5,
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Latitude and longitude",
+      "learningObjective": "TP 15263 requires operational understanding of latitude and longitude.",
+      "carsSection": null,
+      "source": "TP 15263 Section 5",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-navi-005",
+      "category": "navigation",
+      "difficulty": "hard",
+      "question": "A strong headwind increases while the RPA maintains the same airspeed. What happens to groundspeed?",
+      "choices": [
+        "Groundspeed decreases.",
+        "Groundspeed necessarily increases.",
+        "Groundspeed is always equal to airspeed.",
+        "Groundspeed becomes zero in every headwind."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires operational understanding of airspeed, wind velocity, track and navigation effects",
+      "examScope": "core-advanced",
+      "tp15263Section": 5,
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Airspeed, wind and groundspeed",
+      "learningObjective": "TP 15263 requires operational understanding of airspeed, wind velocity, track and navigation effects.",
+      "carsSection": null,
+      "source": "TP 15263 Section 5",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-navi-006",
+      "category": "navigation",
+      "difficulty": "hard",
+      "question": "Why should GNSS position be cross-checked against the site survey, map/chart and visible features when practical?",
+      "choices": [
+        "GNSS can be degraded or erroneous; independent context helps detect gross position errors.",
+        "GNSS is legally prohibited for RPAS.",
+        "Charts are always more precise than GNSS.",
+        "Visual features replace all navigation equipment."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires understanding positioning accuracy, navigation errors and chart use rather than relying blindly on one system",
+      "examScope": "core-advanced",
+      "tp15263Section": 5,
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Navigation cross-checking and GNSS limitations",
+      "learningObjective": "TP 15263 requires understanding positioning accuracy, navigation errors and chart use rather than relying blindly on one system.",
+      "carsSection": null,
+      "source": "TP 15263 Section 5",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-navi-007",
+      "category": "navigation",
+      "difficulty": "medium",
+      "question": "Which chart type is specifically identified in TP 15263 for visual aeronautical navigation study?",
+      "choices": [
+        "VNC and VTA charts.",
+        "Marine bathymetric charts only.",
+        "Road atlases only.",
+        "Satellite imagery only."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 explicitly identifies VNC and VTA aeronautical charts under maps and charts",
+      "examScope": "core-advanced",
+      "tp15263Section": 5,
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "VNC and VTA chart use",
+      "learningObjective": "TP 15263 explicitly identifies VNC and VTA aeronautical charts under maps and charts.",
+      "carsSection": null,
+      "source": "TP 15263 Section 5; NAV CANADA aeronautical information products",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-products"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-navi-008",
+      "category": "navigation",
+      "difficulty": "medium",
+      "question": "A pilot is given a bearing to a landmark. What does bearing describe?",
+      "choices": [
+        "The direction from one point to another relative to a stated reference.",
+        "The aircraft's mass.",
+        "The vertical speed.",
+        "The battery temperature."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 lists bearing as a navigation definition requiring operational understanding",
+      "examScope": "core-advanced",
+      "tp15263Section": 5,
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Bearing",
+      "learningObjective": "TP 15263 lists bearing as a navigation definition requiring operational understanding.",
+      "carsSection": null,
+      "source": "TP 15263 Section 5",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-safe-001",
+      "category": "safety",
+      "difficulty": "hard",
+      "question": "Wildlife begins reacting strongly to the RPA near a nesting area. What is the best operational response?",
+      "choices": [
+        "Increase separation or terminate/relocate the operation to avoid creating a wildlife hazard or disturbance.",
+        "Fly closer to document the reaction.",
+        "Use louder propellers.",
+        "Assume wildlife concerns are unrelated to flight safety."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 Flight Operations explicitly includes wildlife hazards and wildlife conservation",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Wildlife hazards and conservation",
+      "learningObjective": "TP 15263 Flight Operations explicitly includes wildlife hazards and wildlife conservation.",
+      "carsSection": null,
+      "source": "TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-safe-002",
+      "category": "safety",
+      "difficulty": "hard",
+      "question": "Why is launching near active fire-control aircraft especially hazardous?",
+      "choices": [
+        "An RPA can conflict with low-flying firefighting aircraft and disrupt emergency operations, which is why specific forest-fire restrictions exist.",
+        "Firefighting aircraft always fly above 10,000 ft.",
+        "RPA have automatic priority near emergencies.",
+        "Smoke guarantees visual separation."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires pilots to know forest-fire restrictions and the safety rationale for protecting fire-control aircraft",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Forest-fire aviation safety",
+      "learningObjective": "TP 15263 requires pilots to know forest-fire restrictions and the safety rationale for protecting fire-control aircraft.",
+      "carsSection": "601.15",
+      "source": "CAR 601.15-601.17; TP 15263 Sections 1 and 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-safe-003",
+      "category": "safety",
+      "difficulty": "hard",
+      "question": "A high-power laser display is planned near the operating area. Why should the pilot investigate it?",
+      "choices": [
+        "Directed bright light can create an aviation hazard and is subject to specific Canadian aviation restrictions/notification requirements.",
+        "Lasers improve visual-observer performance.",
+        "Laser activity automatically closes all Class G airspace.",
+        "Only military aircraft are affected."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 includes restrictions and notification requirements for projection of directed bright light sources at aircraft",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Directed bright light/laser hazards",
+      "learningObjective": "TP 15263 includes restrictions and notification requirements for projection of directed bright light sources at aircraft.",
+      "carsSection": "601.20",
+      "source": "CAR 601.20-601.22; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-safe-004",
+      "category": "safety",
+      "difficulty": "hard",
+      "question": "A night mission is legal and the RPA lights are operating. Why should the pilot still assess the effect of those lights on other people or aircraft?",
+      "choices": [
+        "Required lighting supports conspicuity but can also create glare/distraction depending on orientation and environment; operational risk still must be managed.",
+        "Legal lights eliminate every other risk.",
+        "Brighter is always safer regardless of direction.",
+        "Lights matter only to photographers."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 includes collision avoidance/use of lights and broader operational risk assessment",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Collision-avoidance lighting and secondary hazards",
+      "learningObjective": "TP 15263 includes collision avoidance/use of lights and broader operational risk assessment.",
+      "carsSection": "901.39",
+      "source": "CAR 901.39; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-safe-005",
+      "category": "safety",
+      "difficulty": "hard",
+      "question": "A crowd begins forming near the planned launch point after the site survey was completed. What should the pilot do?",
+      "choices": [
+        "Reassess the site and person-exposure controls before launch; the earlier survey does not freeze conditions in time.",
+        "Launch because the site survey was already signed.",
+        "Ask the crowd to watch the RPA for traffic.",
+        "Ignore the change if the weather is unchanged."
+      ],
+      "answerIndex": 0,
+      "rationale": "A site survey and operational risk assessment must remain representative of actual conditions at the time of flight",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Dynamic site-risk reassessment",
+      "learningObjective": "A site survey and operational risk assessment must remain representative of actual conditions at the time of flight.",
+      "carsSection": "901.27",
+      "source": "CAR 901.27; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-safe-006",
+      "category": "safety",
+      "difficulty": "hard",
+      "question": "Why should a pilot establish a clear abort criterion before a complex mission?",
+      "choices": [
+        "Predefined limits reduce pressure to continue when safety margins deteriorate and support consistent decision-making.",
+        "Abort criteria remove the need for pilot judgment.",
+        "They allow regulatory limits to be exceeded once.",
+        "They are useful only for crewed aircraft."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 Human Factors and Flight Operations require risk management, sound decision-making and emergency/contingency planning",
+      "examScope": "core-advanced",
+      "tp15263Section": 3,
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Operational risk limits and abort criteria",
+      "learningObjective": "TP 15263 Human Factors and Flight Operations require risk management, sound decision-making and emergency/contingency planning.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tp-12864"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-safe-007",
+      "category": "safety",
+      "difficulty": "hard",
+      "question": "A bird is circling aggressively near the RPA. What is the safest immediate principle?",
+      "choices": [
+        "Increase separation and recover the RPA if necessary rather than escalating the encounter.",
+        "Chase the bird away with the RPA.",
+        "Climb directly above the bird.",
+        "Remain stationary until the bird contacts the aircraft."
+      ],
+      "answerIndex": 0,
+      "rationale": "Wildlife hazards can threaten both the aircraft and wildlife; TP 15263 requires recognition and mitigation of these risks",
+      "examScope": "core-advanced",
+      "tp15263Section": 6,
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Bird-strike/wildlife conflict avoidance",
+      "learningObjective": "Wildlife hazards can threaten both the aircraft and wildlife; TP 15263 requires recognition and mitigation of these risks.",
+      "carsSection": null,
+      "source": "TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    },
+    {
+      "id": "b3-safe-008",
+      "category": "safety",
+      "difficulty": "hard",
+      "question": "A pilot identifies a hazard whose probability is low but whose consequence could be catastrophic. How should that influence planning?",
+      "choices": [
+        "The severity still warrants meaningful controls; low probability alone does not justify ignoring a catastrophic consequence.",
+        "Ignore it because low-probability hazards never matter.",
+        "Accept it automatically if the flight is under 400 ft.",
+        "Transfer responsibility to the visual observer."
+      ],
+      "answerIndex": 0,
+      "rationale": "TP 15263 requires risk-management thinking that considers both likelihood and consequence when deciding whether an operation is acceptable",
+      "examScope": "core-advanced",
+      "tp15263Section": 3,
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Risk assessment — likelihood and consequence",
+      "learningObjective": "TP 15263 requires risk-management thinking that considers both likelihood and consequence when deciding whether an operation is acceptable.",
+      "carsSection": null,
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "type": "batch3-generated",
+        "batch": "Batch 3"
+      }
+    }
+  ]
+}

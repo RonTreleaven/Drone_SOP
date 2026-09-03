@@ -1,0 +1,50 @@
+{
+  "candidateCount": 112,
+  "countsByCategory": {
+    "regulations": 8,
+    "airspace": 8,
+    "aerodromes": 8,
+    "notams": 8,
+    "weather": 8,
+    "visual-observers": 8,
+    "human-factors": 8,
+    "aircraft-systems": 8,
+    "maintenance": 8,
+    "abnormal": 8,
+    "flight-planning": 8,
+    "radio": 8,
+    "navigation": 8,
+    "safety": 8
+  },
+  "targetCounts": {
+    "regulations": 8,
+    "airspace": 8,
+    "aerodromes": 8,
+    "notams": 7,
+    "weather": 8,
+    "visual-observers": 6,
+    "human-factors": 7,
+    "aircraft-systems": 8,
+    "maintenance": 6,
+    "abnormal": 6,
+    "flight-planning": 8,
+    "radio": 7,
+    "navigation": 7,
+    "safety": 6
+  },
+  "allCoreAdvanced": true,
+  "allFourChoices": true,
+  "uniqueIds": true,
+  "sourceRefCounts": {
+    "ref-tp-15263": 112,
+    "ref-justice-cars": 46,
+    "ref-navcanada-dah": 3,
+    "ref-tc-aim-rpa-2026-1": 4,
+    "ref-tc-aim-full": 12,
+    "ref-navcanada-vfr-phraseology": 7,
+    "ref-tp-12863": 7,
+    "ref-tp-12864": 4,
+    "ref-roc-a-study-guide": 3,
+    "ref-navcanada-products": 1
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "batch": "batch1",
+  "reviewDate": "2026-09-03",
+  "selectionPolicy": {
+    "coreExamMode": "Include only questions with examScope='core-advanced'.",
+    "scopeAuthority": "TP 15263 Fourth Edition 03/2025",
+    "legalAuthority": "Current Canadian Aviation Regulations, with Justice Laws authoritative wording.",
+    "operationalGuidance": "Current TC AIM RPA chapter and other official sources where TP 15263 identifies the knowledge topic."
+  },
+  "questions": [
+    {
+      "id": "chat-20260827-01",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "In the March 19, 2026 TC AIM RPA chapter, Transport Canada uses “should” and “shall” differently. Which interpretation is correct?",
+      "choices": [
+        "Both words identify mandatory regulatory requirements",
+        "“Should” is encouraged practice; “shall” indicates a mandatory procedure supported by regulation",
+        "“Should” is mandatory; “shall” is advisory",
+        "Neither word has regulatory significance in the TC AIM"
+      ],
+      "answerIndex": 1,
+      "rationale": "TC AIM RPA 1.0 uses 'should' for encouraged practice and 'shall' for a procedure that is mandatory because it is supported by regulation.",
+      "examScope": "supplemental",
+      "tp15263Section": null,
+      "knowledgeArea": "Supporting TC AIM usage",
+      "knowledgeTopic": "TC AIM terminology",
+      "learningObjective": "Understand TC AIM convention for 'should' versus 'shall'.",
+      "source": "TC AIM 2026-1, RPA 1.0 General Information",
+      "sourceRefs": [
+        "ref-tc-aim-rpa-2026-1"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-08-27-01",
+        "questionId": "DQ-2026-08-27-01-Q01"
+      }
+    },
+    {
+      "id": "chat-20260827-03",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "A crew member consumed an alcoholic beverage 11 hours and 45 minutes before a planned RPAS flight and is otherwise unimpaired. Under CAR 901.19, may that person act as a crew member?",
+      "choices": [
+        "Yes, because observable impairment is the only restriction",
+        "Yes, if the pilot-in-command approves",
+        "No, because fewer than 12 hours have elapsed",
+        "No, because the required interval is 24 hours"
+      ],
+      "answerIndex": 2,
+      "rationale": "CAR 901.19 prohibits acting as an RPAS crew member within 12 hours after consuming an alcoholic beverage. At 11 h 45 min, the restriction still applies.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.19 — Fitness of crew members",
+      "learningObjective": "Apply the crew-fitness prohibitions, including the 12-hour alcohol restriction.",
+      "source": "CAR 901.19; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-08-27-01",
+        "questionId": "DQ-2026-08-27-01-Q03"
+      }
+    },
+    {
+      "id": "chat-20260827-06",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "Icing is reported along the intended RPAS route. Under CAR 901.35, which condition can permit the operation with respect to the forecast icing provision?",
+      "choices": [
+        "The aircraft remains below 400 ft AGL",
+        "The pilot shortens the flight to less than 15 minutes",
+        "The aircraft has de-icing or anti-icing equipment, or the pilot has a means to detect icing",
+        "A visual observer watches the propellers continuously"
+      ],
+      "answerIndex": 2,
+      "rationale": "CAR 901.35 prohibits flight when icing is observed, reported or likely along the route unless the aircraft has de-icing/anti-icing equipment or the pilot has a means to detect icing. Other icing restrictions still apply.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.35 — Icing",
+      "learningObjective": "Apply the icing restrictions and identify the equipment/means that can satisfy the regulatory exception.",
+      "source": "CAR 901.35; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-08-27-01",
+        "questionId": "DQ-2026-08-27-01-Q06"
+      }
+    },
+    {
+      "id": "chat-20260827-07",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "An Advanced RPAS pilot successfully completed an accepted recurrent training activity 23 months ago. Under CAR 901.65, what is the effect on recency for an Advanced operation today?",
+      "choices": [
+        "The pilot remains current because the activity occurred within the preceding 24 months",
+        "The pilot is not current because recurrent training is valid for only 12 months",
+        "The pilot must complete another flight review before every Advanced flight",
+        "Recency never expires once an Advanced certificate has been issued"
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.65 requires a qualifying recency event within the 24 months preceding the flight. A qualifying activity 23 months earlier remains inside that window.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.65 — Advanced recency requirements",
+      "learningObjective": "Apply the 24-month recency requirement for holders of an Advanced Operations pilot certificate.",
+      "source": "CAR 901.65; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-08-27-01",
+        "questionId": "DQ-2026-08-27-01-Q07"
+      }
+    },
+    {
+      "id": "chat-20260827-09",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "The TC AIM notes that expanded RPAS regulations effective November 4, 2025 gave Advanced pilots additional privileges. Which is one of those privileges identified by Transport Canada?",
+      "choices": [
+        "Unrestricted BVLOS flight anywhere in Canada",
+        "Sheltered operations in any airspace and EVLOS operations in uncontrolled airspace, subject to applicable requirements",
+        "Automatic authorization to enter every CYR restricted area",
+        "Exemption from the site-survey requirement for EVLOS operations"
+      ],
+      "answerIndex": 1,
+      "rationale": "TP 15263 and CAR 901.74 include EVLOS and sheltered-operation knowledge for Advanced pilots. TC AIM 2026-1 explains the expanded privileges and their operating context.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.74 — Extended VLOS and sheltered operations",
+      "learningObjective": "Identify permitted Advanced EVLOS and sheltered operations and their applicable operating limitations.",
+      "source": "CAR 901.74; TP 15263 Sections 1 and 6; TC AIM 2026-1 RPA",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263",
+        "ref-tc-aim-rpa-2026-1"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-08-27-01",
+        "questionId": "DQ-2026-08-27-01-Q09"
+      }
+    },
+    {
+      "id": "chat-20260827-10",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A VLOS RPA operation is planned 2.5 NM from the centre of an aerodrome operated under the authority of the Minister of National Defence. An established civilian RPAS procedure exists for a nearby airport. What authorization is specifically required by CAR 901.47(4)?",
+      "choices": [
+        "Authorization from the Department of National Defence",
+        "Only compliance with the nearby civilian airport procedure",
+        "Only an Advanced pilot certificate",
+        "No authorization because the operation is more than 1 NM away"
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.47(4) requires Department of National Defence authorization for an operation less than 3 NM from the centre of an aerodrome operated under the authority of the Minister of National Defence.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.47 — Operations at or near aerodromes, airports or heliports",
+      "learningObjective": "Apply the special authorization requirement for operations near aerodromes operated under the authority of the Minister of National Defence.",
+      "source": "CAR 901.47(4); TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "lastVerified": "2026-09-03",
+      "origin": {
+        "session": "DQ-2026-08-27-01",
+        "questionId": "DQ-2026-08-27-01-Q10"
+      }
+    }
+  ]
+}
