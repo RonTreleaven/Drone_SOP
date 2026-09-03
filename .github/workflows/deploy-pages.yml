@@ -48,7 +48,6 @@ on:
       - "Advanced_RPAS_Study/docs/NAVCANADA_DAH_current_20260709.pdf"
       - "Advanced_RPAS_Study/docs/NAVCANADA_VFR-Phraseology.pdf"
       - "Advanced_RPAS_Study/docs/TP15263_E_Knowledge-Requirements-Basic-Advanced.pdf"
-      - "Advanced_RPAS_Study/docs/TP15530E_Knowledge-Requirements-Level1-Complex.pdf"
       - ".github/workflows/deploy-pages.yml"
       - "_config.yml"
 
