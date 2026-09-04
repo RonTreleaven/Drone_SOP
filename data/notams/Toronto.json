@@ -81,30 +81,12 @@
     ]
   },
   {
-    "raw": "(U1521/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/011/4216N08211W006\nA) CZYZ B) 2609030912 C) 2609042000\nE) OBST LGT U/S WIND FARM WITHIN 6NM RADIUS CENTRED ON 421628N \n0821055W (APRX 4.8NM WSW CHATHAM-KENT AD (CYCK)). 492FT AGL \n1082FT AMSL.)",
-    "startValidity": "2026-09-03T09:12:00",
-    "endValidity": "2026-09-04T20:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "42.274444, -82.181944"
-    ]
-  },
-  {
     "raw": "(U1517/26 NOTAMR U1312/26\nQ) CZYZ/QOLAS/IV/M/AE/000/005/4311N07913W005\nA) CYSN B) 2609022254 C) 2610172230\nE) OBST LGT U/S ANTENNA 431042N 0791257W (APRX 2.1NM WSW AD) 167FT \nAGL, 495FT AMSL.)",
     "startValidity": "2026-09-02T22:54:00",
     "endValidity": "2026-10-17T22:30:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.178333, -79.215833"
-    ]
-  },
-  {
-    "raw": "(K3079/26 NOTAMN\nQ) CZUL/QOBCE/IV/M/AE/000/003/4531N07534W005\nA) CYND B) 2609031100 C) 2609042000\nD) DAILY 1100-2000\nE) CRANE 453057N 0753420W APRX 320FT BEYOND THR 09 AND 1510FT SOUTH \nRCL. 100FT AGL 296FT AMSL. LGTD, PAINTED.\n\nFR:\nGRUE 453057N 0753420W APRX 320FT APRES THR 09 ET 1510FT AU SUD DE \nRCL. 100FT AGL 296FT AMSL. LGTD, PEINTE.)",
-    "startValidity": "2026-09-02T20:47:44.839",
-    "endValidity": "2026-09-04T20:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "45.515833, -75.572222"
     ]
   },
   {
@@ -141,15 +123,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.000833, -81.592222"
-    ]
-  },
-  {
-    "raw": "(J5994/26 NOTAMN\nQ) CZYZ/QOBCE/IV/M/AE/000/006/4355N07853W005\nA) CYOO B) 2609041100 C) 2609041900\nE) MOBILE CRANE WITHIN 105FT RADIUS CENTRED ON 435448N 0785258W APRX \n2380FT BFR DTHR 30 AND 1780FT SW EXTENDED RCL. 141FT AGL 576FT \nAMSL. LGTD, PAINTED.)",
-    "startValidity": "2026-09-02T09:31:02.720",
-    "endValidity": "2026-09-04T19:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "43.913333, -78.882778"
     ]
   },
   {
@@ -207,12 +180,12 @@
     ]
   },
   {
-    "raw": "(D3595/26 NOTAMN\nQ) CZYZ/QOBCE/IV/M/AE/000/009/4312N07959W005\nA) CYHM B) 2609011100 C) 2609041900\nD) DAILY 1100-1900\nE) MOBILE CRANE WITHIN 100FT RADIUS CENTRED ON 431207N 0795852W APRX \n1.8NM BFR DTHR 12 AND 5230FT NE EXTENDED RCL. 71FT AGL 874FT \nAMSL. NOT LGTD, PAINTED.)",
-    "startValidity": "2026-08-30T14:42:57.484",
-    "endValidity": "2026-09-04T19:00:00",
-    "q_code": "QOBCE",
+    "raw": "(U1495/26 NOTAMR U1261/26\nQ) CZYZ/QOLAS/IV/M/E/000/020/4327N08036W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 432700N 0803608W (APRX 8NM S ELMIRA AD (CNT6)) \n600FT AGL, 1902FT AMSL.)",
+    "startValidity": "2026-08-30T10:18:00",
+    "endValidity": "2026-10-14T23:59:00",
+    "q_code": "QOLAS",
     "coordinates_dd": [
-      "43.201944, -79.981111"
+      "43.450000, -80.602222"
     ]
   },
   {
@@ -222,15 +195,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "46.044444, -77.467778"
-    ]
-  },
-  {
-    "raw": "(U1495/26 NOTAMR U1261/26\nQ) CZYZ/QOLAS/IV/M/E/000/020/4327N08036W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 432700N 0803608W (APRX 8NM S ELMIRA AD (CNT6)) \n600FT AGL, 1902FT AMSL.)",
-    "startValidity": "2026-08-30T10:18:00",
-    "endValidity": "2026-10-14T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.450000, -80.602222"
     ]
   },
   {
@@ -819,21 +783,21 @@
     ]
   },
   {
-    "raw": "(U1355/26 NOTAMR U0790/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
-    "startValidity": "2026-08-03T13:32:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.906667, -78.731389"
-    ]
-  },
-  {
     "raw": "(U1356/26 NOTAMR U0788/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
     "startValidity": "2026-08-03T13:32:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.907222, -79.371389"
+    ]
+  },
+  {
+    "raw": "(U1355/26 NOTAMR U0790/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
+    "startValidity": "2026-08-03T13:32:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.906667, -78.731389"
     ]
   },
   {
@@ -1437,15 +1401,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "42.960000, -81.219722"
-    ]
-  },
-  {
-    "raw": "(U1117/26 NOTAMR U0679/26\nQ) CZYZ/QOLAS/IV/M/AE/000/012/4523N08002W005\nA) CXXX B) 2606262008 C) 2609251800EST\nE) CPS3 PARRY SOUND (PORTAGE LAKE) (WATER)\nOBST LGT U/S TOWER 452324N 0800220W (APRX 1.1NM SSE AD) 444FT \nAGL, 1185FT AMSL.)",
-    "startValidity": "2026-06-26T20:08:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.390000, -80.038889"
     ]
   },
   {
