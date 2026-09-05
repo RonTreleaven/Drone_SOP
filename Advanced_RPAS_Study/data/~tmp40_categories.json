@@ -54,5 +54,9 @@
   {
     "id": "safety",
     "name": "Right-of-Way / Collision Avoidance / Public Safety"
+  },
+  {
+    "id": "theory-of-flight",
+    "name": "Theory of Flight / Stability"
   }
 ]

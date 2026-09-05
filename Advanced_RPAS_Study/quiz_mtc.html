@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Advanced RPAS Quiz &mdash; Maintenance Review</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="../assets/css/advanced-rpas-quiz.css">
+</head>
+<body>
+<main>
+<h1>Question Maintenance &amp; Review</h1>
+<p class="meta">Look up questions by exact id or category-tag prefix (e.g. <code>nav-007</code>, <code>air-</code>, <code>reg-021</code>) to validate content/citation fixes. Approving a question clears it from the flagged-for-review list.</p>
+
+<section id="mtc-setup">
+  <label>
+    Source:
+    <select id="mtc-source">
+      <option value="flagged" selected>Currently flagged for review (from quiz sessions)</option>
+      <option value="search">Search by id / tag prefix</option>
+    </select>
+  </label>
+  <div id="mtc-search-row" hidden>
+    <label>
+      Ids or prefixes (comma/space separated):
+      <input type="text" id="mtc-query" placeholder="nav-007, air-, reg-021">
+    </label>
+  </div>
+  <button class="primary" id="mtc-load-btn">Load queue</button>
+  <p class="meta" id="mtc-load-status" aria-live="polite"></p>
+</section>
+
+<section id="mtc-review" hidden>
+  <p class="meta" id="mtc-progress-line"></p>
+  <div id="mtc-scoreboard"></div>
+
+  <p class="meta" id="mtc-meta-line"></p>
+  <p class="meta" id="mtc-flag-status"></p>
+
+  <p id="mtc-question-text"></p>
+  <div id="mtc-choices"></div>
+
+  <div id="mtc-rationale"></div>
+
+  <div class="nav-row">
+    <button class="secondary" id="mtc-prev-btn">&larr; Previous</button>
+    <button class="secondary" id="mtc-next-btn">Next &rarr;</button>
+    <button class="primary" id="mtc-approve-btn">&#9989; Approve &amp; clear flag</button>
+  </div>
+</section>
+
+<section id="mtc-summary" hidden>
+  <h2>Session summary</h2>
+  <p class="meta" id="mtc-summary-line"></p>
+  <div id="mtc-approved-list"></div>
+  <div id="mtc-remaining-list"></div>
+  <button class="secondary" id="mtc-restart-btn">New queue</button>
+</section>
+
+<p><a class="secondary home-link" href="quiz.html">&larr; Back to quiz</a></p>
+</main>
+
+<script>
+const FLAGGED_KEY = "rpasQuizFlaggedQuestions_v1";
+const APPROVALS_KEY = "rpasQuizApprovals_v1";
+const LETTERS = "ABCDEFGHIJ";
+
+let allQuestions = [];
+let carsSectionUrlTemplate = null;
+let sourceLinkPattern = null;
+let sourceLinkMap = {};
+let flaggedQuestions = loadJson(FLAGGED_KEY, {});
+let approvals = loadJson(APPROVALS_KEY, {});
+
+let queue = [];
+let index = 0;
+const approvedThisSession = new Set();
+
+function loadJson(key, fallback) {
+  try {
+    return JSON.parse(localStorage.getItem(key)) || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function saveFlaggedQuestions() {
+  localStorage.setItem(FLAGGED_KEY, JSON.stringify(flaggedQuestions));
+}
+
+function saveApprovals() {
+  localStorage.setItem(APPROVALS_KEY, JSON.stringify(approvals));
+}
+
+// Same reference-link resolution as quiz.html, kept minimal for the review console.
+const SOURCE_TOKEN_TO_REF_ID = {
+  "NAV CANADA VFR Phraseology": "ref-navcanada-vfr-phraseology",
+  "NAV CANADA Designated Airspace Handbook": "ref-navcanada-dah",
+  "Designated Airspace Handbook": "ref-navcanada-dah",
+  "NAV CANADA CWAS": "ref-navcanada-products",
+  "NAV CANADA CFS": "ref-navcanada-products",
+  "NAV CANADA VNC": "ref-navcanada-products",
+  "NAV CANADA VTA": "ref-navcanada-products",
+  "NAV CANADA": "ref-navcanada-products",
+  "CWAS": "ref-navcanada-products",
+  "CFS": "ref-navcanada-products",
+  "VNC": "ref-navcanada-products",
+  "VTA": "ref-navcanada-products",
+  "DAH": "ref-navcanada-dah",
+  "TC AIM": "ref-tc-aim-full",
+  "TP 15530": "ref-tp-15530",
+  "TP 15263": "ref-tp-15263",
+  "TP 12863": "ref-tp-12863",
+  "TP 12864": "ref-tp-12864",
+  "RIC-21": "ref-roc-a-study-guide",
+  "AC 107-002": "ref-ac-107-002",
+  "AC 903-001": "ref-ac-903-001",
+  "Aeronautics Act": "ref-aeronautics-act",
+  "CARs Part IX": "ref-justice-cars",
+  "Justice Laws": "ref-justice-cars",
+  "RPAS 101": "ref-rpas101"
+};
+
+function resolveRefHref(ref) {
+  return ref?.localCopy || ref?.pdfUrl || ref?.url || null;
+}
+
+function buildSourceLinkMap(references) {
+  const refsById = Object.fromEntries(references.map(r => [r.id, r]));
+  const tokens = Object.entries(SOURCE_TOKEN_TO_REF_ID)
+    .map(([token, refId]) => ({ token, href: resolveRefHref(refsById[refId]) }))
+    .filter(t => t.href)
+    .sort((a, b) => b.token.length - a.token.length);
+  tokens.forEach(t => { sourceLinkMap[t.token] = t.href; });
+  if (tokens.length) {
+    const escaped = tokens.map(t => t.token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    sourceLinkPattern = new RegExp(escaped.join("|"), "g");
+  }
+}
+
+function linkifySource(text) {
+  if (!text || !sourceLinkPattern) return text;
+  return text.replace(sourceLinkPattern, match =>
+    `<a href="${sourceLinkMap[match]}" target="_blank" rel="noopener">${match}</a>`
+  );
+}
+
+function carsSectionLink(section) {
+  if (!section || !carsSectionUrlTemplate) return "";
+  const url = carsSectionUrlTemplate.replace("{section}", section);
+  return ` &middot; <a href="${url}" target="_blank" rel="noopener">CARs ${section}</a>`;
+}
+
+async function init() {
+  const [qRes, refRes] = await Promise.all([
+    fetch("data/questions.json"),
+    fetch("data/references.json")
+  ]);
+  const qData = await qRes.json();
+  allQuestions = qData.questions || [];
+  const references = await refRes.json();
+  const carsRef = references.find(r => r.id === "ref-justice-cars");
+  carsSectionUrlTemplate = carsRef?.sectionUrlTemplate || null;
+  buildSourceLinkMap(references);
+
+  document.getElementById("mtc-source").addEventListener("change", (e) => {
+    document.getElementById("mtc-search-row").hidden = e.target.value !== "search";
+  });
+  document.getElementById("mtc-load-btn").addEventListener("click", loadQueue);
+  document.getElementById("mtc-prev-btn").addEventListener("click", () => navigate(-1));
+  document.getElementById("mtc-next-btn").addEventListener("click", () => navigate(1));
+  document.getElementById("mtc-approve-btn").addEventListener("click", approveCurrent);
+  document.getElementById("mtc-restart-btn").addEventListener("click", () => {
+    document.getElementById("mtc-summary").hidden = true;
+    document.getElementById("mtc-setup").hidden = false;
+  });
+}
+
+// Matches a token against a question id: exact match, or prefix match when the token
+// doesn't itself look like a complete "category-number" id (e.g. "nav-" or "reg").
+function matchesToken(id, token) {
+  if (id === token) return true;
+  return id.startsWith(token);
+}
+
+function parseQueryTokens(raw) {
+  return raw.split(/[,\s]+/).map(t => t.trim()).filter(Boolean);
+}
+
+function loadQueue() {
+  const source = document.getElementById("mtc-source").value;
+  let matched;
+
+  if (source === "flagged") {
+    const ids = new Set(Object.keys(flaggedQuestions));
+    matched = allQuestions.filter(q => ids.has(q.id));
+  } else {
+    const tokens = parseQueryTokens(document.getElementById("mtc-query").value);
+    if (!tokens.length) {
+      document.getElementById("mtc-load-status").textContent = "Enter at least one id or tag prefix.";
+      return;
+    }
+    matched = allQuestions.filter(q => tokens.some(t => matchesToken(q.id, t)));
+  }
+
+  matched.sort((a, b) => a.id.localeCompare(b.id));
+
+  if (!matched.length) {
+    document.getElementById("mtc-load-status").textContent = "No matching questions found.";
+    document.getElementById("mtc-review").hidden = true;
+    return;
+  }
+
+  queue = matched;
+  index = 0;
+  approvedThisSession.clear();
+  document.getElementById("mtc-load-status").textContent = `${matched.length} question(s) loaded.`;
+  document.getElementById("mtc-setup").hidden = true;
+  document.getElementById("mtc-summary").hidden = true;
+  document.getElementById("mtc-review").hidden = false;
+  showCurrent();
+}
+
+function renderScoreboard() {
+  const wrap = document.getElementById("mtc-scoreboard");
+  wrap.innerHTML = "";
+  queue.forEach((q, i) => {
+    const pill = document.createElement("button");
+    const approved = approvedThisSession.has(q.id);
+    pill.className = "pill" + (i === index ? " current" : "") + (approved ? " correct" : "");
+    pill.textContent = i + 1;
+    pill.title = q.id + (approved ? " (approved)" : "");
+    pill.addEventListener("click", () => { index = i; showCurrent(); });
+    wrap.appendChild(pill);
+  });
+}
+
+function showCurrent() {
+  const q = queue[index];
+  const flagged = flaggedQuestions[q.id];
+
+  document.getElementById("mtc-progress-line").textContent = `Reviewing ${index + 1} of ${queue.length}`;
+  renderScoreboard();
+
+  const meta = [
+    `Id: ${q.id}`,
+    `Category: ${q.category}`,
+    `Difficulty: ${q.difficulty}`,
+    q.examScope ? `Scope: ${q.examScope}` : null,
+    q.examLevel ? `Level: ${q.examLevel}` : null,
+    q.tp15263Section ? `TP 15263 Section: ${q.tp15263Section}` : null,
+    q.knowledgeArea ? `Knowledge area: ${q.knowledgeArea}` : null,
+    q.lastVerified ? `Last verified: ${q.lastVerified}` : null,
+    q.reviewFlags?.length ? `Content flags: ${q.reviewFlags.join(", ")}` : null
+  ].filter(Boolean).join(" &middot; ");
+  document.getElementById("mtc-meta-line").innerHTML = meta;
+
+  document.getElementById("mtc-flag-status").innerHTML = flagged
+    ? `&#128681; Flagged for review since ${new Date(flagged.flaggedAt).toLocaleString()}`
+    : approvedThisSession.has(q.id)
+      ? "&#9989; Approved this session."
+      : "Not currently flagged for review.";
+
+  document.getElementById("mtc-question-text").textContent = q.question;
+
+  const choicesEl = document.getElementById("mtc-choices");
+  choicesEl.innerHTML = "";
+  q.choices.forEach((choice, i) => {
+    const div = document.createElement("div");
+    div.className = "choice" + (i === q.answerIndex ? " correct" : "");
+    div.innerHTML = `<span class="choice-letter">${LETTERS[i]}.</span><span>${choice}</span>`;
+    choicesEl.appendChild(div);
+  });
+
+  const quoteBlock = q.carsQuote
+    ? `<blockquote style="margin: 0.8rem 0 0; padding: 0.75rem 0.9rem; border-left: 4px solid #7aa8ba; background: #f4f9fb; color: #1f2d39; border-radius: 6px;">"${q.carsQuote}"</blockquote>`
+    : "";
+  document.getElementById("mtc-rationale").innerHTML =
+    `<p><strong>Rationale:</strong> ${q.rationale}</p>` +
+    `<p class="meta">Source: ${linkifySource(q.source)}${carsSectionLink(q.carsSection)}${q.rpas101_reference ? ` &middot; RPAS 101: ${q.rpas101_reference}` : ""}</p>` +
+    quoteBlock;
+
+  document.getElementById("mtc-prev-btn").disabled = index === 0;
+  document.getElementById("mtc-next-btn").disabled = index >= queue.length - 1;
+}
+
+function navigate(direction) {
+  const target = index + direction;
+  if (target < 0 || target >= queue.length) return;
+  index = target;
+  showCurrent();
+}
+
+function approveCurrent() {
+  const q = queue[index];
+  delete flaggedQuestions[q.id];
+  saveFlaggedQuestions();
+  approvals[q.id] = { id: q.id, category: q.category, question: q.question, approvedAt: new Date().toISOString() };
+  saveApprovals();
+  approvedThisSession.add(q.id);
+
+  if (index < queue.length - 1) {
+    navigate(1);
+  } else {
+    showCurrent();
+    finishSession();
+  }
+}
+
+function finishSession() {
+  document.getElementById("mtc-review").hidden = true;
+  document.getElementById("mtc-summary").hidden = false;
+
+  const approvedIds = queue.filter(q => approvedThisSession.has(q.id)).map(q => q.id);
+  const remainingIds = queue.filter(q => flaggedQuestions[q.id]).map(q => q.id);
+
+  document.getElementById("mtc-summary-line").textContent =
+    `Approved ${approvedIds.length} of ${queue.length} this session.`;
+  document.getElementById("mtc-approved-list").innerHTML = approvedIds.length
+    ? `<h3>&#9989; Approved (flag cleared)</h3><p class="meta">${approvedIds.join(", ")}</p>`
+    : "";
+  document.getElementById("mtc-remaining-list").innerHTML = remainingIds.length
+    ? `<h3>&#128681; Still flagged</h3><p class="meta">${remainingIds.join(", ")}</p>`
+    : "";
+}
+
+init();
+</script>
+</body>
+</html>

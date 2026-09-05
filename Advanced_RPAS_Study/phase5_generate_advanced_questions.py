@@ -51,17 +51,17 @@ new_questions_data = [
         "id": "aero-adv-003",
         "category": "aerodromes",
         "difficulty": "hard",
-        "question": "What is the minimum altitude at which a pilot-in-command may operate an aircraft over an uncontrolled aerodrome when NOT landing, taking off, or conducting authorized special operations?",
+        "question": "An RPA is operating near an aerodrome listed in the Canada Flight Supplement. What must the pilot ensure regarding the established aircraft traffic pattern?",
         "choices": [
-            "2,000 feet above the aerodrome",
-            "1,500 feet above ground level",
-            "500 feet AGL or as required by operating rules",
-            "No minimum altitude when over uncontrolled aerodromes"
+            "The operation does not interfere with an aircraft operating in the established traffic pattern",
+            "The pilot files a flight plan before operating nearby",
+            "The RPA follows the same circuit turns as crewed aircraft",
+            "No additional consideration is needed when the RPA remains below 400 feet AGL"
         ],
         "answerIndex": 0,
-        "rationale": "CARs 602.96(4) states that unless otherwise authorized by the appropriate air traffic control unit, no pilot-in-command shall operate an aircraft at an altitude of less than 2,000 feet over an aerodrome except for the purpose of landing, taking off, or if the aircraft is operated pursuant to specific authorized activities (police, rescue, fire-fighting, etc.).",
-        "source": "CARs 602.96(4) + TP 15263 Section 7",
-        "carsSection": "602.96"
+        "rationale": "CAR 901.47(1) prohibits operating an RPA at or near an aerodrome listed in the Canada Flight Supplement or Water Aerodrome Supplement in a manner that could interfere with an aircraft operating in the established traffic pattern.",
+        "source": "CAR 901.47(1) + TP 15263 Section 1",
+        "carsSection": "901.47"
     },
     {
         "id": "aero-adv-004",

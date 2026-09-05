@@ -13,6 +13,44 @@
 <p class="meta">Adaptive quiz: questions are weighted toward categories and items you've missed most, using stats stored in this browser.</p>
 
 <section id="setup">
+  <fieldset class="exam-scope-fieldset">
+    <legend>Exam scope</legend>
+    <label>
+      <input type="checkbox" name="exam-scope" value="advanced" checked>
+      Advanced Drone Pilot knowledge (TP 15263 / CARs / AIM RPA)
+    </label>
+    <label>
+      <input type="checkbox" name="exam-scope" value="supplemental">
+      Supplemental review
+    </label>
+    <label>
+      <input type="checkbox" name="exam-scope" value="level-1-complex">
+      Level 1 Complex / BVLOS
+    </label>
+    <p class="meta" id="scope-selection-status" aria-live="polite"></p>
+  </fieldset>
+
+  <fieldset class="review-focus-fieldset">
+    <legend>Review focus</legend>
+    <label>
+      <input type="checkbox" name="review-focus" value="phase7-tp15263-batch-1">
+      New TP 15263 batch
+    </label>
+    <label>
+      <input type="checkbox" name="review-focus" value="legacy-normalized">
+      Legacy normalized
+    </label>
+    <label>
+      <input type="checkbox" name="review-focus" value="needs-tp15263-mapping">
+      Needs TP 15263 mapping
+    </label>
+    <label>
+      <input type="checkbox" name="review-focus" value="needs-source-review">
+      Needs source review
+    </label>
+    <p class="meta" id="review-focus-status" aria-live="polite"></p>
+  </fieldset>
+
   <fieldset class="category-fieldset">
     <legend>Question categories</legend>
     <div class="category-actions" aria-label="Category selection actions">
@@ -35,6 +73,10 @@
   <div id="scoreboard"></div>
   <p id="question-text"></p>
   <div id="choices"></div>
+  <div class="flag-row">
+    <button class="secondary flag-btn" id="flag-btn" type="button">&#128681; Flag for review</button>
+    <span class="meta" id="flag-status"></span>
+  </div>
   <div id="feedback"></div>
   <div class="nav-row">
     <button class="secondary" id="prev-btn">&larr; Previous</button>
@@ -49,6 +91,7 @@
   <p id="summary-line"></p>
   <a class="secondary home-link" href="../index.html">Return to Home</a>
   <button class="secondary" id="restart-btn">New round</button>
+  <div id="flagged-summary"></div>
   <div id="review-list"></div>
 </section>
 
@@ -61,15 +104,23 @@
 <script>
 const STATS_KEY = "rpasQuizStats_v1";
 const ROUND_KEY = "rpasQuizActiveRound_v1";
+const FLAGGED_KEY = "rpasQuizFlaggedQuestions_v1";
+const ADVANCED_SCOPE = "advanced";
+const SUPPLEMENTAL_SCOPE = "supplemental";
+const LEVEL_1_COMPLEX_SCOPE = "level-1-complex";
+const LEVEL_1_COMPLEX_MARKER = /\b(BVLOS|Level 1 Complex|TP\s*15530|detect-and-avoid|DAA|beyond visual line[- ]of[- ]sight)\b/i;
 
 let categories = [];
+let allQuestions = [];
 let questions = [];
 let carsSectionUrlTemplate = null;
 let sourceLinkPattern = null;
 let sourceLinkMap = {};
 let stats = loadStats();
+let flaggedQuestions = loadFlaggedQuestions();
 // round.answers is sparse/parallel to round.queue: null = unanswered, else {chosenIndex, correct}.
-let round = { queue: [], index: 0, answers: [] };
+// round.flags is sparse/parallel to round.queue: true = flagged for review.
+let round = { queue: [], index: 0, answers: [], flags: [] };
 let roundActive = false;
 
 const LETTERS = "ABCDEFGHIJ";
@@ -91,12 +142,40 @@ function ensureStat(id) {
   return stats[id];
 }
 
+// Persistent, cross-round list of questions flagged for review/reclassification, keyed by question id.
+function loadFlaggedQuestions() {
+  try {
+    return JSON.parse(localStorage.getItem(FLAGGED_KEY)) || {};
+  } catch {
+    return {};
+  }
+}
+
+function saveFlaggedQuestions() {
+  localStorage.setItem(FLAGGED_KEY, JSON.stringify(flaggedQuestions));
+}
+
+function setQuestionFlagged(q, flagged) {
+  if (flagged) {
+    flaggedQuestions[q.id] = {
+      id: q.id,
+      category: q.category,
+      question: q.question,
+      flaggedAt: new Date().toISOString()
+    };
+  } else {
+    delete flaggedQuestions[q.id];
+  }
+  saveFlaggedQuestions();
+}
+
 // Persists the in-progress round (by question id, not full objects) so a reload can resume it.
 function saveRoundState() {
   if (!roundActive) return;
   localStorage.setItem(ROUND_KEY, JSON.stringify({
     queueIds: round.queue.map(q => q.id),
     answers: round.answers.map(a => a ? { chosenIndex: a.chosenIndex } : null),
+    flags: round.flags,
     index: round.index
   }));
 }
@@ -125,7 +204,8 @@ function loadRoundState() {
     return a ? { chosenIndex: a.chosenIndex, correct: a.chosenIndex === q.answerIndex } : null;
   });
   const index = Math.min(Math.max(saved.index || 0, 0), queue.length - 1);
-  return { queue, index, answers };
+  const flags = queue.map((q, i) => Boolean(saved.flags?.[i]));
+  return { queue, index, answers, flags };
 }
 
 // Renders a clickable deep-link to a specific CARs section (e.g. "901.27") when available.
@@ -190,6 +270,74 @@ function linkifySource(text) {
   );
 }
 
+function questionTextForScope(q) {
+  return [
+    q.examScope,
+    q.examLevel,
+    q.question,
+    q.rationale,
+    q.source,
+    ...(q.sourceRefs || []),
+    ...(q.reviewFlags || []),
+    ...(q.choices || [])
+  ].filter(Boolean).join(" ");
+}
+
+function inferredQuestionScope(q) {
+  if (q.examScope === "core-advanced" || q.examScope === "core-basic-advanced") return ADVANCED_SCOPE;
+  if (q.examScope === SUPPLEMENTAL_SCOPE) return SUPPLEMENTAL_SCOPE;
+  if (q.examScope === LEVEL_1_COMPLEX_SCOPE || String(q.examLevel).toLowerCase() === "level 1 complex") return LEVEL_1_COMPLEX_SCOPE;
+  if (LEVEL_1_COMPLEX_MARKER.test(questionTextForScope(q))) return LEVEL_1_COMPLEX_SCOPE;
+  return ADVANCED_SCOPE;
+}
+
+function selectedExamScopes() {
+  return Array.from(document.querySelectorAll("input[name='exam-scope']:checked")).map(el => el.value);
+}
+
+function selectedReviewFlags() {
+  return Array.from(document.querySelectorAll("input[name='review-focus']:checked")).map(el => el.value);
+}
+
+function questionMatchesReviewFocus(q, activeFlags) {
+  if (!activeFlags.length) return true;
+  const flags = q.reviewFlags || [];
+  return activeFlags.some(flag => flags.includes(flag));
+}
+
+function applyQuestionFilters() {
+  const selectedScopes = selectedExamScopes();
+  const activeFlags = selectedReviewFlags();
+  questions = allQuestions.filter(q =>
+    selectedScopes.includes(inferredQuestionScope(q)) && questionMatchesReviewFocus(q, activeFlags)
+  );
+  updateScopeSelectionState();
+  updateReviewFocusState();
+}
+
+function updateScopeSelectionState() {
+  const counts = allQuestions.reduce((acc, q) => {
+    const scope = inferredQuestionScope(q);
+    acc[scope] = (acc[scope] || 0) + 1;
+    return acc;
+  }, {});
+  const selectedCount = questions.length;
+  document.getElementById("scope-selection-status").textContent =
+    `${selectedCount} questions available: Advanced ${counts[ADVANCED_SCOPE] || 0}, supplemental ${counts[SUPPLEMENTAL_SCOPE] || 0}, Level 1/BVLOS ${counts[LEVEL_1_COMPLEX_SCOPE] || 0}.`;
+}
+
+function updateReviewFocusState() {
+  const activeFlags = selectedReviewFlags();
+  const flagCounts = allQuestions.reduce((acc, q) => {
+    (q.reviewFlags || []).forEach(flag => { acc[flag] = (acc[flag] || 0) + 1; });
+    return acc;
+  }, {});
+  const summary = activeFlags.length
+    ? activeFlags.map(flag => `${flag}: ${flagCounts[flag] || 0}`).join(" · ")
+    : "No review-focus filter selected.";
+  document.getElementById("review-focus-status").textContent = summary;
+}
+
 async function init() {
   const [catRes, qRes, refRes] = await Promise.all([
     fetch("data/~tmp40_categories.json"),
@@ -198,7 +346,8 @@ async function init() {
   ]);
   categories = await catRes.json();
   const qData = await qRes.json();
-  questions = qData.questions || [];
+  allQuestions = qData.questions || [];
+  applyQuestionFilters();
   const references = await refRes.json();
   const carsRef = references.find(r => r.id === "ref-justice-cars");
   carsSectionUrlTemplate = carsRef?.sectionUrlTemplate || null;
@@ -206,12 +355,26 @@ async function init() {
 
   renderCategoryFilters();
 
+  document.querySelectorAll("input[name='exam-scope']").forEach(input => {
+    input.addEventListener("change", () => {
+      if (!selectedExamScopes().length) input.checked = true;
+      applyQuestionFilters();
+      renderCategoryFilters();
+    });
+  });
+  document.querySelectorAll("input[name='review-focus']").forEach(input => {
+    input.addEventListener("change", () => {
+      applyQuestionFilters();
+      renderCategoryFilters();
+    });
+  });
   document.getElementById("start-btn").addEventListener("click", startRound);
   document.getElementById("select-all-categories-btn").addEventListener("click", () => setAllCategories(true));
   document.getElementById("clear-categories-btn").addEventListener("click", () => setAllCategories(false));
   document.getElementById("next-btn").addEventListener("click", () => navigate(1));
   document.getElementById("prev-btn").addEventListener("click", () => navigate(-1));
   document.getElementById("finish-btn").addEventListener("click", finishRound);
+  document.getElementById("flag-btn").addEventListener("click", toggleFlag);
   document.getElementById("abandon-btn").addEventListener("click", () => {
     if (confirm("Abandon this round? Your progress on it will be discarded.")) {
       clearRoundState();
@@ -316,7 +479,7 @@ function startRound() {
     return;
   }
 
-  round = { queue: weightedSample(pool, length), index: 0, answers: new Array(length).fill(null) };
+  round = { queue: weightedSample(pool, length), index: 0, answers: new Array(length).fill(null), flags: new Array(length).fill(false) };
   roundActive = true;
   document.getElementById("setup").hidden = true;
   document.getElementById("summary").hidden = true;
@@ -362,8 +525,9 @@ function showQuestion() {
   document.getElementById("progress-line").textContent =
     `Question ${round.index + 1} of ${round.queue.length} · Score so far: ${round.answers.filter(a => a && a.correct).length} / ${round.answers.filter(Boolean).length}`;
   const catName = categories.find(c => c.id === q.category)?.name || q.category;
+  const flags = q.reviewFlags?.length ? ` · Flags: ${q.reviewFlags.join(", ")}` : "";
   document.getElementById("category-line").textContent =
-    `Category: ${catName} · Difficulty: ${q.difficulty}` + (q.examLevel ? ` · ${q.examLevel} only` : "");
+    `Category: ${catName} · Difficulty: ${q.difficulty} · Scope: ${inferredQuestionScope(q)}` + (q.examLevel ? ` · Level: ${q.examLevel}` : "") + flags;
   document.getElementById("question-text").textContent = q.question;
   renderScoreboard();
 
@@ -396,6 +560,26 @@ function showQuestion() {
   document.getElementById("prev-btn").disabled = round.index === 0;
   document.getElementById("next-btn").hidden = !answer || round.index >= round.queue.length - 1;
   document.getElementById("finish-btn").hidden = !allAnswered();
+
+  renderFlagButton();
+}
+
+function renderFlagButton() {
+  const q = round.queue[round.index];
+  const flagged = Boolean(round.flags[round.index]);
+  const btn = document.getElementById("flag-btn");
+  btn.classList.toggle("active", flagged);
+  btn.textContent = flagged ? "\u{1F6A9} Flagged for review" : "\u{1F6A9} Flag for review";
+  document.getElementById("flag-status").textContent = flagged ? `Flagged \u2014 ${q.id}` : "";
+}
+
+function toggleFlag() {
+  const q = round.queue[round.index];
+  const flagged = !round.flags[round.index];
+  round.flags[round.index] = flagged;
+  setQuestionFlagged(q, flagged);
+  saveRoundState();
+  renderFlagButton();
 }
 
 function handleAnswer(chosenIndex) {
@@ -432,9 +616,35 @@ function finishRound() {
   document.getElementById("question-card").hidden = true;
   document.getElementById("summary").hidden = false;
   document.getElementById("summary-line").textContent = `Score: ${correctCount} / ${round.queue.length}`;
+  renderFlaggedSummary();
   renderReviewList();
   renderStatsTable();
   document.getElementById("stats-panel").hidden = false;
+}
+
+// Lists question ids flagged this round, plus the running total across all rounds, for reclassification follow-up.
+function renderFlaggedSummary() {
+  const wrap = document.getElementById("flagged-summary");
+  const flaggedThisRound = round.queue.filter((q, i) => round.flags[i]);
+  const totalFlagged = Object.keys(flaggedQuestions).length;
+
+  if (!flaggedThisRound.length && !totalFlagged) {
+    wrap.innerHTML = "";
+    return;
+  }
+
+  const items = flaggedThisRound.map(q =>
+    `<li><code>${q.id}</code> &mdash; ${q.question}</li>`
+  ).join("");
+
+  wrap.innerHTML =
+    `<h3>&#128681; Flagged for review</h3>` +
+    (flaggedThisRound.length
+      ? `<ul class="flagged-list">${items}</ul>`
+      : `<p class="meta">No questions flagged this round.</p>`) +
+    `<p class="meta">Total flagged for review across all rounds (this browser): ${totalFlagged}` +
+    (totalFlagged ? ` &middot; <a href="quiz_mtc.html">Open maintenance review &rarr;</a>` : "") +
+    `</p>`;
 }
 
 function renderReviewList() {
@@ -444,9 +654,10 @@ function renderReviewList() {
     const a = round.answers[i];
     const div = document.createElement("div");
     div.className = `review-item ${a.correct ? "right" : "wrong"}`;
+    const flaggedBadge = round.flags[i] ? ` &middot; &#128681; Flagged for review (${q.id})` : "";
     div.innerHTML =
       `<p><strong>Q${i + 1}.</strong> ${q.question}</p>` +
-      `<p class="meta">Your answer: ${LETTERS[a.chosenIndex]} &middot; Correct answer: ${LETTERS[q.answerIndex]} &middot; ${a.correct ? "Correct" : "Incorrect"}${q.examLevel ? ` &middot; ${q.examLevel} only` : ""}</p>` +
+      `<p class="meta">Your answer: ${LETTERS[a.chosenIndex]} &middot; Correct answer: ${LETTERS[q.answerIndex]} &middot; ${a.correct ? "Correct" : "Incorrect"}${q.examLevel ? ` &middot; Level: ${q.examLevel}` : ""}${q.reviewFlags?.length ? ` &middot; Flags: ${q.reviewFlags.join(", ")}` : ""}${flaggedBadge}</p>` +
       `<p class="meta">Correct choice: ${q.choices[q.answerIndex]}</p>` +
       `<p class="meta">Source: ${linkifySource(q.source)}${carsSectionLink(q.carsSection)}</p>`;
     wrap.appendChild(div);

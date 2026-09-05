@@ -12,6 +12,8 @@ h1 {
   font-size: 0.875rem;
 }
 
+.exam-scope-fieldset,
+.review-focus-fieldset,
 .category-fieldset,
 #question-card,
 #summary,
@@ -23,10 +25,36 @@ h1 {
   padding: 1rem;
 }
 
+.exam-scope-fieldset {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.exam-scope-fieldset label,
+.review-focus-fieldset label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  color: #1f4464;
+  cursor: pointer;
+}
+
+.exam-scope-fieldset input,
+.review-focus-fieldset input {
+  margin: 0.2rem 0 0;
+}
+
+.review-focus-fieldset {
+  display: grid;
+  gap: 0.45rem;
+}
+
 .category-fieldset {
   margin: 1rem 0;
 }
 
+.exam-scope-fieldset legend,
+.review-focus-fieldset legend,
 .category-fieldset legend {
   color: #0f3a5d;
   font-weight: 700;
@@ -128,6 +156,32 @@ button:disabled {
   margin-top: 0.75rem;
 }
 
+.flag-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.5rem 0;
+}
+
+.flag-btn.active {
+  border-color: #b8860b;
+  background: #fff8e6;
+  color: #7a5a00;
+}
+
+#flagged-summary h3 {
+  margin-bottom: 0.4rem;
+}
+
+.flagged-list {
+  margin: 0 0 0.5rem;
+  padding-left: 1.2rem;
+}
+
+.flagged-list li {
+  margin: 0.2rem 0;
+}
+
 #scoreboard {
   display: flex;
   flex-wrap: wrap;
@@ -198,4 +252,45 @@ button:disabled {
   #category-filters {
     grid-template-columns: 1fr;
   }
+}
+
+#mtc-setup,
+#mtc-review,
+#mtc-summary {
+  margin-top: 1rem;
+  border: 1px solid #d7e3ef;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 1rem;
+}
+
+#mtc-scoreboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.5rem 0;
+}
+
+#mtc-scoreboard .pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  margin: 0;
+  padding: 0;
+  border: 2px solid #9ec9e8;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #1f4464;
+  font-size: 0.8rem;
+}
+
+#mtc-scoreboard .pill.current {
+  border-color: #0b5ea8;
+  box-shadow: 0 0 0 2px rgba(11, 94, 168, 0.16);
+}
+
+#mtc-choices .choice {
+  cursor: default;
 }

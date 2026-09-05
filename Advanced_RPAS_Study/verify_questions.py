@@ -1,5 +1,5 @@
 import json
-with open('data/questions.json') as f:
+with open('data/questions.json', encoding='utf-8') as f:
     d = json.load(f)
 print(f'Total Questions: {len(d["questions"])}')
 print('\nLast 10 question IDs:')
