@@ -38,6 +38,7 @@ on:
       - "data/schema/*.schema.json"
       - "data/rc2/**"
       - "Advanced_RPAS_Study/quiz.html"
+      - "Advanced_RPAS_Study/quiz_mtc.html"
       - "Advanced_RPAS_Study/index.html"
       - "Advanced_RPAS_Study/data/questions.json"
       - "Advanced_RPAS_Study/data/references.json"
@@ -140,7 +141,7 @@ jobs:
           cp -r data/rc2 _site/data/
 
            # Advanced RPAS quiz: deploy only browser runtime files and linked source PDFs.
-           cp Advanced_RPAS_Study/quiz.html Advanced_RPAS_Study/index.html _site/Advanced_RPAS_Study/
+           cp Advanced_RPAS_Study/quiz.html Advanced_RPAS_Study/quiz_mtc.html Advanced_RPAS_Study/index.html _site/Advanced_RPAS_Study/
            cp Advanced_RPAS_Study/data/questions.json \
              Advanced_RPAS_Study/data/references.json \
              Advanced_RPAS_Study/data/~tmp40_categories.json \
@@ -160,6 +161,7 @@ jobs:
           test -f _site/JobBoard.html
           test -f _site/data/jobs.json
           test -f _site/Advanced_RPAS_Study/quiz.html
+          test -f _site/Advanced_RPAS_Study/quiz_mtc.html
           test -f _site/Advanced_RPAS_Study/data/questions.json
           test -f _site/Advanced_RPAS_Study/data/references.json
 
