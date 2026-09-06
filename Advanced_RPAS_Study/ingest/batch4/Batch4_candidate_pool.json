@@ -1,0 +1,3061 @@
+{
+  "schemaVersion": 1,
+  "batch": "batch4",
+  "reviewDate": "2026-09-06",
+  "candidatePoolSize": 100,
+  "targetMergeCount": 100,
+  "categoryTargets": {
+    "regulations": 50,
+    "weather": 50
+  },
+  "scopeAuthority": {
+    "document": "TP 15263 Fourth Edition, 03/2025",
+    "rule": "Core questions must map to an Advanced knowledge topic/objective. CARs Part IX/other CARs provide legal authority; TC AIM/NAV CANADA/Standards 921/922 provide supporting operational material where applicable."
+  },
+  "questions": [
+    {
+      "id": "b4-regu-001",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "You plan a VLOS RPAS operation 2.5 NM from the centre of a DND-operated aerodrome. What is required?",
+      "choices": [
+        "Nothing if below 400 ft AGL",
+        "Authorization from the Department of National Defence",
+        "Only NAV CANADA authorization",
+        "An Advanced certificate alone"
+      ],
+      "answerIndex": 1,
+      "rationale": "Current CAR 901.47(4) prohibits RPAS operation within 3 NM of a DND aerodrome unless authorized by DND.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.47(4)",
+      "learningObjective": "Current CAR 901.47(4) prohibits RPAS operation within 3 NM of a DND aerodrome unless authorized by DND.",
+      "source": "CAR 901.47(4)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.47(4)"
+    },
+    {
+      "id": "b4-regu-002",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "Which statement best reflects the current SFOC-RPAS framework?",
+      "choices": [
+        "Every Advanced operation requires an SFOC",
+        "SFOCs are required only for operations captured by CAR 903.01 or when otherwise required by the regulations/Minister",
+        "Any RPAS over 25 kg automatically requires an SFOC",
+        "Only foreign operators can receive an SFOC"
+      ],
+      "answerIndex": 1,
+      "rationale": "The current framework uses CAR 903.01 and related provisions; older blanket 25 kg rules are obsolete.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 903.01-903.04",
+      "learningObjective": "The current framework uses CAR 903.01 and related provisions; older blanket 25 kg rules are obsolete.",
+      "source": "CAR 903.01-903.04",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "903.01"
+    },
+    {
+      "id": "b4-regu-003",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "What is the minimum age for a flight reviewer rating?",
+      "choices": [
+        "14",
+        "16",
+        "18",
+        "21"
+      ],
+      "answerIndex": 2,
+      "rationale": "CAR 901.176(a) requires the applicant to be at least 18 years of age.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.176(a)",
+      "learningObjective": "CAR 901.176(a) requires the applicant to be at least 18 years of age.",
+      "source": "CAR 901.176(a)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.176(a)"
+    },
+    {
+      "id": "b4-regu-004",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "Under the current regulations, which operating weight by itself triggers the SFOC category in CAR 903.01(a)?",
+      "choices": [
+        "More than 25 kg",
+        "More than 35 kg",
+        "More than 150 kg",
+        "Any medium RPA"
+      ],
+      "answerIndex": 2,
+      "rationale": "CAR 903.01(a) identifies operation of an RPA having an operating weight of more than 150 kg.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 903.01(a)",
+      "learningObjective": "CAR 903.01(a) identifies operation of an RPA having an operating weight of more than 150 kg.",
+      "source": "CAR 903.01(a)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "903.01(a)"
+    },
+    {
+      "id": "b4-regu-005",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "Which qualification is required to perform duties as an Advanced-operation flight reviewer?",
+      "choices": [
+        "Basic certificate plus 12 months experience",
+        "Advanced or Level 1 Complex certificate endorsed with a flight reviewer rating, plus required training-provider affiliation",
+        "Any commercial pilot licence",
+        "Advanced certificate only"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.175 requires both the appropriate endorsed RPAS pilot certificate and affiliation with a declared training provider.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.175",
+      "learningObjective": "CAR 901.175 requires both the appropriate endorsed RPAS pilot certificate and affiliation with a declared training provider.",
+      "source": "CAR 901.175",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.175"
+    },
+    {
+      "id": "b4-regu-006",
+      "category": "regulations",
+      "difficulty": "easy",
+      "question": "In aviation, a ferry flight is best described as:",
+      "choices": [
+        "A scheduled passenger flight",
+        "A flight conducted primarily to reposition an aircraft rather than carry revenue passengers or cargo",
+        "A flight over water",
+        "A flight conducted only by helicopters"
+      ],
+      "answerIndex": 1,
+      "rationale": "The term is used in CAR operational exemptions to distinguish non-revenue repositioning activity.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 602.96(7)(b) context",
+      "learningObjective": "The term is used in CAR operational exemptions to distinguish non-revenue repositioning activity.",
+      "source": "CAR 602.96(7)(b) context",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "602.96(7)(b)"
+    },
+    {
+      "id": "b4-regu-007",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A diverted aeroplane at a designated airport may subsequently depart without aircraft firefighting service when the conditions in CAR 602.96 are met. Which is one of those conditions?",
+      "choices": [
+        "The pilot alone decides to leave",
+        "The airport operator has advised that firefighting services cannot be made available within the prescribed one-hour period",
+        "The aircraft has fewer than 50 passengers",
+        "The weather is VFR"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 602.96(7)(f) sets the notification, one-hour unavailability advice, and operator/PIC agreement conditions.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 602.96(7)(f)",
+      "learningObjective": "CAR 602.96(7)(f) sets the notification, one-hour unavailability advice, and operator/PIC agreement conditions.",
+      "source": "CAR 602.96(7)(f)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "602.96(7)(f)"
+    },
+    {
+      "id": "b4-regu-008",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "How many RPAs may a pilot operate at the same time unless specifically authorized otherwise by the applicable rules?",
+      "choices": [
+        "One",
+        "Two",
+        "Three",
+        "Unlimited if automated"
+      ],
+      "answerIndex": 0,
+      "rationale": "The default principle is one pilot controlling one RPA unless the regulatory framework and authorization permit otherwise.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR Part IX - control of RPAS",
+      "learningObjective": "The default principle is one pilot controlling one RPA unless the regulatory framework and authorization permit otherwise.",
+      "source": "CAR Part IX - control of RPAS",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-regu-009",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "For an SFOC application, which aircraft information may be required for medium/high complexity operations?",
+      "choices": [
+        "Only colour",
+        "Type, manufacturer, model and relevant operating limitations/equipment information",
+        "Only serial number",
+        "Only purchase price"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 903.02 requires detailed operational and system information appropriate to the complexity of the proposed operation.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 903.02",
+      "learningObjective": "CAR 903.02 requires detailed operational and system information appropriate to the complexity of the proposed operation.",
+      "source": "CAR 903.02",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "903.02"
+    },
+    {
+      "id": "b4-regu-010",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "A training provider associated with flight reviews must ensure reviews are conducted in accordance with:",
+      "choices": [
+        "A locally invented checklist only",
+        "Standard 921 and the applicable CAR provisions",
+        "Manufacturer marketing material",
+        "Provincial traffic law"
+      ],
+      "answerIndex": 1,
+      "rationale": "Flight-review requirements are tied directly to CAR Part IX and Standard 921.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.181 / Standard 921",
+      "learningObjective": "Flight-review requirements are tied directly to CAR Part IX and Standard 921.",
+      "source": "CAR 901.181 / Standard 921",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.181"
+    },
+    {
+      "id": "b4-regu-011",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "When operating near an aerodrome, what is a core collision-avoidance obligation?",
+      "choices": [
+        "Remain below tree height",
+        "Avoid interfering with aircraft operating in the established traffic pattern",
+        "Use ADS-B as the sole means of separation",
+        "Land whenever any aircraft is within 10 NM"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.47(1) prohibits operation in a manner that could interfere with aircraft in the established traffic pattern.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.47(1)",
+      "learningObjective": "CAR 901.47(1) prohibits operation in a manner that could interfere with aircraft in the established traffic pattern.",
+      "source": "CAR 901.47(1)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.47(1)"
+    },
+    {
+      "id": "b4-regu-012",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "Which flight is expressly listed as an exception to the designated-airport firefighting-service takeoff/landing prohibition in CAR 602.96(7)?",
+      "choices": [
+        "A revenue charter flight with passengers",
+        "A ferry flight",
+        "Any IFR flight",
+        "Any flight under 5,700 kg"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 602.96(7) lists cargo without passengers, ferry, positioning, certain training flights and diversion-related cases.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 602.96(7)",
+      "learningObjective": "CAR 602.96(7) lists cargo without passengers, ferry, positioning, certain training flights and diversion-related cases.",
+      "source": "CAR 602.96(7)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "602.96(7)"
+    },
+    {
+      "id": "b4-regu-013",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "A flight reviewer must be affiliated with:",
+      "choices": [
+        "Any flying club",
+        "A training provider that has made the required declaration under Standard 921",
+        "NAV CANADA",
+        "A municipal airport authority"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.175 links flight reviewer eligibility to declared training-provider affiliation.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.175",
+      "learningObjective": "CAR 901.175 links flight reviewer eligibility to declared training-provider affiliation.",
+      "source": "CAR 901.175",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.175"
+    },
+    {
+      "id": "b4-regu-014",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "How long must an applicant have held an Advanced or Level 1 Complex RPAS pilot certificate before applying for a flight reviewer rating?",
+      "choices": [
+        "30 days",
+        "3 months",
+        "6 months",
+        "2 years"
+      ],
+      "answerIndex": 2,
+      "rationale": "CAR 901.176(c) specifies at least six months immediately before application.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.176(c)",
+      "learningObjective": "CAR 901.176(c) specifies at least six months immediately before application.",
+      "source": "CAR 901.176(c)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.176(c)"
+    },
+    {
+      "id": "b4-regu-015",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "What is the normal maximum RPAS altitude under CAR 901.25(1)(a), absent an applicable exception?",
+      "choices": [
+        "300 ft AGL",
+        "400 ft AGL",
+        "500 ft AGL",
+        "1,000 ft AGL"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.25 sets 400 ft AGL, with a separate structure-relative provision and authorization pathways.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.25",
+      "learningObjective": "CAR 901.25 sets 400 ft AGL, with a separate structure-relative provision and authorization pathways.",
+      "source": "CAR 901.25",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.25"
+    },
+    {
+      "id": "b4-regu-016",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "At a designated airport, the firefighting-service takeoff/landing restriction in CAR 602.96(6) applies to certain aeroplanes type-certified to carry at least:",
+      "choices": [
+        "10 passengers",
+        "20 passengers",
+        "30 passengers",
+        "50 passengers"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 602.96(6) uses the threshold of a type certificate authorizing transport of 20 or more passengers.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 602.96(6)",
+      "learningObjective": "CAR 602.96(6) uses the threshold of a type certificate authorizing transport of 20 or more passengers.",
+      "source": "CAR 602.96(6)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "602.96(6)"
+    },
+    {
+      "id": "b4-regu-017",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "What conduct is prohibited during an RPAS examination?",
+      "choices": [
+        "Using a calculator",
+        "Copying or removing examination content contrary to the examination rules",
+        "Taking notes before the exam",
+        "Reviewing TC study material beforehand"
+      ],
+      "answerIndex": 1,
+      "rationale": "The CAR examination rules prohibit misconduct such as copying/removing exam content or receiving unauthorized assistance.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.66 / 901.177 examination rules",
+      "learningObjective": "The CAR examination rules prohibit misconduct such as copying/removing exam content or receiving unauthorized assistance.",
+      "source": "CAR 901.66 / 901.177 examination rules",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.66"
+    },
+    {
+      "id": "b4-regu-018",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "Which conduct during an RPAS examination is prohibited?",
+      "choices": [
+        "Asking the invigilator about technical problems",
+        "Giving or receiving unauthorized assistance",
+        "Reading the question twice",
+        "Using scratch paper if permitted"
+      ],
+      "answerIndex": 1,
+      "rationale": "Examination integrity rules prohibit unauthorized assistance.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.66 / 901.177",
+      "learningObjective": "Examination integrity rules prohibit unauthorized assistance.",
+      "source": "CAR 901.66 / 901.177",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.66"
+    },
+    {
+      "id": "b4-regu-019",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "Which item would generally NOT be an operational-safety element of an SFOC-RPAS application?",
+      "choices": [
+        "Operational risk information",
+        "Crew qualifications",
+        "Procedures and system limitations",
+        "The pilot's favourite recreational hobby"
+      ],
+      "answerIndex": 3,
+      "rationale": "CAR 903.02 focuses on information pertinent to safe conduct of the proposed operation.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 903.02",
+      "learningObjective": "CAR 903.02 focuses on information pertinent to safe conduct of the proposed operation.",
+      "source": "CAR 903.02",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "903.02"
+    },
+    {
+      "id": "b4-regu-020",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "Which payload may require an SFOC pathway under CAR 901.43?",
+      "choices": [
+        "A standard camera",
+        "Weapons, ammunition, hazardous payloads, or a line-suspended payload outside manual provisions",
+        "A memory card",
+        "A landing pad"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.43 restricts listed hazardous or line-attached payloads unless conditions are met, including SFOC authorization where applicable.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.43",
+      "learningObjective": "CAR 901.43 restricts listed hazardous or line-attached payloads unless conditions are met, including SFOC authorization where applicable.",
+      "source": "CAR 901.43",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.43"
+    },
+    {
+      "id": "b4-regu-021",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "After failing a flight-reviewer examination, the applicable retest waiting rule is found in:",
+      "choices": [
+        "CAR 901.178",
+        "CAR 602.96",
+        "CAR 901.25",
+        "CAR 903.04"
+      ],
+      "answerIndex": 0,
+      "rationale": "Flight reviewer examination retaking requirements are specifically addressed in CAR 901.178.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.178",
+      "learningObjective": "Flight reviewer examination retaking requirements are specifically addressed in CAR 901.178.",
+      "source": "CAR 901.178",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.178"
+    },
+    {
+      "id": "b4-regu-022",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "Beyond holding the correct endorsed certificate, a flight reviewer must:",
+      "choices": [
+        "Own an airport",
+        "Be affiliated with an appropriately declared training provider",
+        "Hold an AME licence",
+        "Be employed by NAV CANADA"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.175 requires training-provider affiliation.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.175",
+      "learningObjective": "CAR 901.175 requires training-provider affiliation.",
+      "source": "CAR 901.175",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.175"
+    },
+    {
+      "id": "b4-regu-023",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "Which examination is required for a flight reviewer rating?",
+      "choices": [
+        "Basic Operations",
+        "Advanced Operations only",
+        "Remotely Piloted Aircraft Systems - Flight Reviewers",
+        "ROC-A only"
+      ],
+      "answerIndex": 2,
+      "rationale": "CAR 901.176(d) and Standard 921.03 specify the Flight Reviewers examination.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.176(d) / Standard 921.03",
+      "learningObjective": "CAR 901.176(d) and Standard 921.03 specify the Flight Reviewers examination.",
+      "source": "CAR 901.176(d) / Standard 921.03",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.176(d)"
+    },
+    {
+      "id": "b4-regu-024",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "A training flight may be exempt from the designated-airport firefighting restriction when:",
+      "choices": [
+        "No fare-paying passengers are on board",
+        "The aircraft is VFR",
+        "The runway is longer than 5,000 ft",
+        "The pilot has 1,000 hours"
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 602.96(7)(d) expressly identifies a training flight with no fare-paying passengers.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 602.96(7)(d)",
+      "learningObjective": "CAR 602.96(7)(d) expressly identifies a training flight with no fare-paying passengers.",
+      "source": "CAR 602.96(7)(d)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "602.96(7)(d)"
+    },
+    {
+      "id": "b4-regu-025",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "Which statement correctly reflects the current distinction between Advanced and Level 1 Complex operations?",
+      "choices": [
+        "They are the same certificate",
+        "Level 1 Complex is a separate operational division with additional certificate/operator/declaration requirements",
+        "Advanced automatically permits all BVLOS",
+        "Basic permits Level 1 Complex with an observer"
+      ],
+      "answerIndex": 1,
+      "rationale": "The 2025 regulatory amendments created a distinct Level 1 Complex framework in Part IX.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.87-901.96",
+      "learningObjective": "The 2025 regulatory amendments created a distinct Level 1 Complex framework in Part IX.",
+      "source": "CAR 901.87-901.96",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.87"
+    },
+    {
+      "id": "b4-regu-026",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "Unless otherwise directed or published, turns in an aerodrome traffic circuit are normally:",
+      "choices": [
+        "To the right",
+        "To the left",
+        "Alternating",
+        "Based only on wind direction"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 602.96 and TC AIM RAC describe the normal left-hand circuit convention unless otherwise directed.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 602.96 / TC AIM RAC",
+      "learningObjective": "CAR 602.96 and TC AIM RAC describe the normal left-hand circuit convention unless otherwise directed.",
+      "source": "CAR 602.96 / TC AIM RAC",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "602.96"
+    },
+    {
+      "id": "b4-regu-027",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "Which type of urgent operation may justify deviations that would otherwise be restricted, subject to the applicable legal authority?",
+      "choices": [
+        "Routine photography",
+        "An operation to save human life",
+        "Recreational training",
+        "Real-estate video"
+      ],
+      "answerIndex": 1,
+      "rationale": "Part IX contains specific public-authority/life-saving exceptions in several provisions; they are narrow and purpose-specific.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR Part IX public-authority exceptions",
+      "learningObjective": "Part IX contains specific public-authority/life-saving exceptions in several provisions; they are narrow and purpose-specific.",
+      "source": "CAR Part IX public-authority exceptions",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-regu-028",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "Which crew information is relevant to an SFOC-RPAS application?",
+      "choices": [
+        "Names/certificate information or means of ensuring necessary crew qualifications",
+        "Only home addresses",
+        "Only total flight hours",
+        "No crew information is ever required"
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 903.02 includes pilot certificate/crew qualification information depending on application complexity.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 903.02",
+      "learningObjective": "CAR 903.02 includes pilot certificate/crew qualification information depending on application complexity.",
+      "source": "CAR 903.02",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "903.02"
+    },
+    {
+      "id": "b4-regu-029",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "Which weather information belongs in planning for an SFOC operation?",
+      "choices": [
+        "Only sunrise time",
+        "Weather minima and related risk controls appropriate to the operation",
+        "Only temperature",
+        "Weather is not part of SFOC planning"
+      ],
+      "answerIndex": 1,
+      "rationale": "The SFOC application framework requires risk and operational information that addresses safe conduct, including meteorological limitations as applicable.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 903.02 / TP 15263",
+      "learningObjective": "The SFOC application framework requires risk and operational information that addresses safe conduct, including meteorological limitations as applicable.",
+      "source": "CAR 903.02 / TP 15263",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "903.02"
+    },
+    {
+      "id": "b4-regu-030",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A training provider's obligations concerning flight reviewers are governed primarily by:",
+      "choices": [
+        "Standard 921 and CAR Division X",
+        "Provincial education legislation",
+        "The Criminal Code",
+        "Airport zoning bylaws"
+      ],
+      "answerIndex": 0,
+      "rationale": "Training-provider and flight-review requirements are contained in CAR Part IX Division X and Standard 921.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.179-901.183 / Standard 921",
+      "learningObjective": "Training-provider and flight-review requirements are contained in CAR Part IX Division X and Standard 921.",
+      "source": "CAR 901.179-901.183 / Standard 921",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.179"
+    },
+    {
+      "id": "b4-regu-031",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "At an uncontrolled aerodrome with an MF area, a radio-equipped aircraft should:",
+      "choices": [
+        "Ignore the frequency below 1,000 ft",
+        "Maintain the required listening watch and make the prescribed reports",
+        "Use 121.5 only",
+        "Communicate only after landing"
+      ],
+      "answerIndex": 1,
+      "rationale": "TC AIM RAC and CAR 602.97-602.103 prescribe MF listening and reporting procedures.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "TC AIM RAC 4.5.7 / CAR 602.97 et seq.",
+      "learningObjective": "TC AIM RAC and CAR 602.97-602.103 prescribe MF listening and reporting procedures.",
+      "source": "TC AIM RAC 4.5.7 / CAR 602.97 et seq.",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "602.97"
+    },
+    {
+      "id": "b4-regu-032",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "Before operating an RPA in controlled airspace under Advanced operations, the pilot must obtain:",
+      "choices": [
+        "Authorization from the air traffic services provider for the area",
+        "Only airport-manager permission",
+        "A municipal permit",
+        "A police escort"
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.71 requires ATS-provider authorization before controlled-airspace operations under the Division.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.71",
+      "learningObjective": "CAR 901.71 requires ATS-provider authorization before controlled-airspace operations under the Division.",
+      "source": "CAR 901.71",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.71"
+    },
+    {
+      "id": "b4-regu-033",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "For an Advanced operation using a declared RPAS, the declaration must address:",
+      "choices": [
+        "Only colour and dimensions",
+        "The technical requirements applicable to the intended operation under Standard 922",
+        "Pilot age",
+        "Airport landing fees"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.194 and Standard 922 establish the safety-assurance declaration regime.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.194 / Standard 922",
+      "learningObjective": "CAR 901.194 and Standard 922 establish the safety-assurance declaration regime.",
+      "source": "CAR 901.194 / Standard 922",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.194"
+    },
+    {
+      "id": "b4-regu-034",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "Operating manuals for a declared RPAS should define:",
+      "choices": [
+        "Operating limitations and procedures applicable to the system",
+        "Only warranty terms",
+        "Only battery serial numbers",
+        "Only customer-support contacts"
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.31 requires operation in accordance with applicable operating manuals; Standard 922 supports the technical documentation framework.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.31 / Standard 922",
+      "learningObjective": "CAR 901.31 requires operation in accordance with applicable operating manuals; Standard 922 supports the technical documentation framework.",
+      "source": "CAR 901.31 / Standard 922",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.31"
+    },
+    {
+      "id": "b4-regu-035",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "What certification normally distinguishes an 'airport' from a general 'aerodrome' in Canadian regulation?",
+      "choices": [
+        "An airport is an aerodrome for which an airport certificate is in force",
+        "Every aerodrome is automatically an airport",
+        "Only military fields are airports",
+        "The presence of a paved runway alone"
+      ],
+      "answerIndex": 0,
+      "rationale": "The Aeronautics Act/CAR framework distinguishes certified airports from the broader category of aerodromes.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Aeronautics Act definitions / CAR Part III",
+      "learningObjective": "The Aeronautics Act/CAR framework distinguishes certified airports from the broader category of aerodromes.",
+      "source": "Aeronautics Act definitions / CAR Part III",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-regu-036",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "An SFOC application for a complex operation should address separation and collision-avoidance risk by:",
+      "choices": [
+        "Ignoring crewed aircraft below 400 ft",
+        "Describing relevant detection/avoidance capability and procedures",
+        "Using geofencing only",
+        "Assuming ATC will provide separation in all airspace"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 903.02 requires risk assessment and, where relevant, DAA/system/procedure information.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 903.02",
+      "learningObjective": "CAR 903.02 requires risk assessment and, where relevant, DAA/system/procedure information.",
+      "source": "CAR 903.02",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "903.02"
+    },
+    {
+      "id": "b4-regu-037",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "Which operating-limit information is particularly important in an RPAS operating manual?",
+      "choices": [
+        "Weight, configuration and operating limitations applicable to safe flight",
+        "Retail price",
+        "Country of purchase",
+        "Pilot's preferred camera settings"
+      ],
+      "answerIndex": 0,
+      "rationale": "Operating limitations are core system documentation under CAR 901.31 and Standard 922.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.31 / Standard 922",
+      "learningObjective": "Operating limitations are core system documentation under CAR 901.31 and Standard 922.",
+      "source": "CAR 901.31 / Standard 922",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.31"
+    },
+    {
+      "id": "b4-regu-038",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "If a pilot needs to exceed the normal altitude limits in CAR 901.25, what is required?",
+      "choices": [
+        "Nothing if the RPA is under 1 kg",
+        "An applicable authorization pathway, such as an SFOC or controlled-airspace authorization where specifically permitted",
+        "Only a visual observer",
+        "A NOTAM alone"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 901.25(2) provides an SFOC route, while CAR 901.71(2) addresses higher-altitude operation in controlled airspace when ATS authorization is issued.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.25(2), 901.71(2)",
+      "learningObjective": "CAR 901.25(2) provides an SFOC route, while CAR 901.71(2) addresses higher-altitude operation in controlled airspace when ATS authorization is issued.",
+      "source": "CAR 901.25(2), 901.71(2)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.25(2)"
+    },
+    {
+      "id": "b4-regu-039",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A manufacturer declaration may cease to support an intended operation if:",
+      "choices": [
+        "The pilot changes memory cards",
+        "The system no longer meets applicable declared technical requirements after a relevant change/modification",
+        "The aircraft is repainted",
+        "The owner changes email address"
+      ],
+      "answerIndex": 1,
+      "rationale": "The declaration/verification framework depends on continued compliance with applicable Standard 922 requirements.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.194-901.201 / Standard 922",
+      "learningObjective": "The declaration/verification framework depends on continued compliance with applicable Standard 922 requirements.",
+      "source": "CAR 901.194-901.201 / Standard 922",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.194"
+    },
+    {
+      "id": "b4-regu-040",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "Who issues an SFOC-RPAS?",
+      "choices": [
+        "NAV CANADA",
+        "The Minister of Transport",
+        "The airport operator",
+        "The local municipality"
+      ],
+      "answerIndex": 1,
+      "rationale": "CAR 903.03 provides for issuance by the Minister.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 903.03",
+      "learningObjective": "CAR 903.03 provides for issuance by the Minister.",
+      "source": "CAR 903.03",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "903.03"
+    },
+    {
+      "id": "b4-regu-041",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "Which circumstance can undermine the validity or applicability of a manufacturer's RPAS declaration?",
+      "choices": [
+        "A modification that causes the system to no longer meet the applicable technical requirements",
+        "Changing the flight location",
+        "Changing pilots",
+        "Using a different SD card"
+      ],
+      "answerIndex": 0,
+      "rationale": "Declared capabilities depend on the model/system meeting the applicable Standard 922 technical requirements.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.194-901.201 / Standard 922",
+      "learningObjective": "Declared capabilities depend on the model/system meeting the applicable Standard 922 technical requirements.",
+      "source": "CAR 901.194-901.201 / Standard 922",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.194"
+    },
+    {
+      "id": "b4-regu-042",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "When towing an aircraft on an active movement area at night, the applicable lighting/marking rules come primarily from:",
+      "choices": [
+        "CAR Part III aerodrome operations and applicable airport procedures",
+        "RPAS CAR 901.25 only",
+        "Highway Traffic Act only",
+        "No rule applies"
+      ],
+      "answerIndex": 0,
+      "rationale": "Movement-area vehicle/aircraft operations are governed by aerodrome/airport operating rules and local procedures.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR Part III / TC AIM AGA",
+      "learningObjective": "Movement-area vehicle/aircraft operations are governed by aerodrome/airport operating rules and local procedures.",
+      "source": "CAR Part III / TC AIM AGA",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-regu-043",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A manufacturer or declarant supporting an RPAS model must make available appropriate:",
+      "choices": [
+        "Maintenance instructions/documentation needed to keep the system airworthy/fit for operation",
+        "Advertising slogans",
+        "Pilot resumes",
+        "Airport maps only"
+      ],
+      "answerIndex": 0,
+      "rationale": "Standard 922 and the declaration/documentation framework require safety-related technical documentation.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Standard 922 / CAR 901.200",
+      "learningObjective": "Standard 922 and the declaration/documentation framework require safety-related technical documentation.",
+      "source": "Standard 922 / CAR 901.200",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.200"
+    },
+    {
+      "id": "b4-regu-044",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "When a manufacturer identifies a mandatory safety action affecting a declared RPAS, owners/operators should receive:",
+      "choices": [
+        "Applicable safety/maintenance instructions or mandatory action information",
+        "Only a sales invoice",
+        "A new pilot certificate",
+        "An airport slot"
+      ],
+      "answerIndex": 0,
+      "rationale": "The declaration/documentation framework requires continued communication of safety-relevant information.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.197-901.200 / Standard 922",
+      "learningObjective": "The declaration/documentation framework requires continued communication of safety-relevant information.",
+      "source": "CAR 901.197-901.200 / Standard 922",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.197"
+    },
+    {
+      "id": "b4-regu-045",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "A diverted aeroplane's subsequent departure without firefighting service may occur only after:",
+      "choices": [
+        "The prescribed notifications and agreement conditions in CAR 602.96(7)(f) are satisfied",
+        "Ten minutes have elapsed",
+        "ATC says 'approved'",
+        "All passengers sign a waiver"
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 602.96(7)(f) contains specific preconditions.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 602.96(7)(f)",
+      "learningObjective": "CAR 602.96(7)(f) contains specific preconditions.",
+      "source": "CAR 602.96(7)(f)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "602.96(7)(f)"
+    },
+    {
+      "id": "b4-regu-046",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "On an aerodrome movement area, aircraft/vehicle activity is subject to:",
+      "choices": [
+        "Applicable operator and ATC/ground-control instructions and procedures",
+        "Pilot preference only",
+        "Provincial boating rules",
+        "No restrictions if visibility is good"
+      ],
+      "answerIndex": 0,
+      "rationale": "Movement-area operations are controlled through CARs and published aerodrome procedures.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR Part III / TC AIM AGA-RAC",
+      "learningObjective": "Movement-area operations are controlled through CARs and published aerodrome procedures.",
+      "source": "CAR Part III / TC AIM AGA-RAC",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-regu-047",
+      "category": "regulations",
+      "difficulty": "easy",
+      "question": "What is the standard circuit-turn direction absent contrary instruction or published procedure?",
+      "choices": [
+        "Left",
+        "Right",
+        "Toward the control tower",
+        "Downwind"
+      ],
+      "answerIndex": 0,
+      "rationale": "The normal convention is left turns unless otherwise directed.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 602.96 / TC AIM RAC",
+      "learningObjective": "The normal convention is left turns unless otherwise directed.",
+      "source": "CAR 602.96 / TC AIM RAC",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "602.96"
+    },
+    {
+      "id": "b4-regu-048",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "At minimum, an RPAS operating manual should enable a pilot to understand:",
+      "choices": [
+        "System configuration, limitations, normal/emergency procedures and required operating conditions",
+        "Only warranty coverage",
+        "Only camera resolution",
+        "Only registration fees"
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.31 makes the applicable operating manuals operationally binding.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.31",
+      "learningObjective": "CAR 901.31 makes the applicable operating manuals operationally binding.",
+      "source": "CAR 901.31",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.31"
+    },
+    {
+      "id": "b4-regu-049",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A safety-assurance declaration under CAR 901.194 is fundamentally a statement that:",
+      "choices": [
+        "The system meets applicable technical requirements for the declared operation and required documentation exists",
+        "The pilot has passed the Advanced exam",
+        "The aircraft is insured",
+        "The airport approves every flight"
+      ],
+      "answerIndex": 0,
+      "rationale": "CAR 901.194 and Standard 922 establish the declarant's technical-compliance basis.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "CAR 901.194 / Standard 922",
+      "learningObjective": "CAR 901.194 and Standard 922 establish the declarant's technical-compliance basis.",
+      "source": "CAR 901.194 / Standard 922",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      },
+      "carsSection": "901.194"
+    },
+    {
+      "id": "b4-regu-050",
+      "category": "regulations",
+      "difficulty": "medium",
+      "question": "Which statement is correct?",
+      "choices": [
+        "Every airport is an aerodrome, but not every aerodrome is necessarily a certified airport",
+        "Every aerodrome is an airport",
+        "Heliports are never aerodromes",
+        "Only controlled fields are aerodromes"
+      ],
+      "answerIndex": 0,
+      "rationale": "Canadian aviation definitions treat 'aerodrome' as the broader category; an airport is a certified aerodrome.",
+      "examScope": "core-advanced",
+      "tp15263Section": 1,
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Aeronautics Act definitions / CAR Part III",
+      "learningObjective": "Canadian aviation definitions treat 'aerodrome' as the broader category; an airport is a certified aerodrome.",
+      "source": "Aeronautics Act definitions / CAR Part III",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-001",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "During which thunderstorm stage are mature convective hazards such as heavy precipitation, lightning, strong updrafts/downdrafts and turbulence most fully developed?",
+      "choices": [
+        "Cumulus stage",
+        "Mature stage",
+        "Dissipating stage",
+        "Stratus stage"
+      ],
+      "answerIndex": 1,
+      "rationale": "The mature stage contains both updrafts and downdrafts and is normally the most hazardous phase.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Thunderstorms",
+      "learningObjective": "The mature stage contains both updrafts and downdrafts and is normally the most hazardous phase.",
+      "source": "TP 15263 Section 4 - Thunderstorms",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-002",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "A microburst is best described as:",
+      "choices": [
+        "A broad high-level jet stream",
+        "A localized, intense downdraft producing strong divergent surface winds",
+        "A warm front",
+        "A pressure ridge"
+      ],
+      "answerIndex": 1,
+      "rationale": "Microbursts are localized downbursts with severe wind-shear potential.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Thunderstorm hazards",
+      "learningObjective": "Microbursts are localized downbursts with severe wind-shear potential.",
+      "source": "TP 15263 Section 4 - Thunderstorm hazards",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-003",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "Atmospheric density is:",
+      "choices": [
+        "Mass per unit volume",
+        "Pressure per unit area only",
+        "Humidity divided by temperature",
+        "Wind speed per unit height"
+      ],
+      "answerIndex": 0,
+      "rationale": "Density is mass per unit volume and directly affects aerodynamic and propulsion performance.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Atmosphere: density and pressure",
+      "learningObjective": "Density is mass per unit volume and directly affects aerodynamic and propulsion performance.",
+      "source": "TP 15263 Section 4 - Atmosphere: density and pressure",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-004",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Which conditions generally provide the greatest air density and best aircraft performance?",
+      "choices": [
+        "High temperature, high altitude, high humidity",
+        "Low temperature, low altitude, low humidity",
+        "High temperature, low pressure, high humidity",
+        "Low pressure, high altitude, high humidity"
+      ],
+      "answerIndex": 1,
+      "rationale": "Cooler, lower, drier air is denser and generally improves performance.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Density altitude",
+      "learningObjective": "Cooler, lower, drier air is denser and generally improves performance.",
+      "source": "TP 15263 Section 4 - Density altitude",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-005",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "The boundary between the troposphere and stratosphere is the:",
+      "choices": [
+        "Tropopause",
+        "Mesopause",
+        "Ionosphere",
+        "Thermocline"
+      ],
+      "answerIndex": 0,
+      "rationale": "The tropopause separates the troposphere from the stratosphere.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET / TP 15263 atmosphere",
+      "learningObjective": "The tropopause separates the troposphere from the stratosphere.",
+      "source": "TC AIM MET / TP 15263 atmosphere",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-006",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Convective icing/lightning risk is especially associated with:",
+      "choices": [
+        "Thunderstorm and cumulonimbus environments",
+        "Clear calm winter nights only",
+        "High-pressure centres with no cloud",
+        "Dry stable air only"
+      ],
+      "answerIndex": 0,
+      "rationale": "Cumulonimbus clouds can contain severe icing, lightning, turbulence, hail and wind shear.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Thunderstorms/Icing",
+      "learningObjective": "Cumulonimbus clouds can contain severe icing, lightning, turbulence, hail and wind shear.",
+      "source": "TP 15263 Section 4 - Thunderstorms/Icing",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-007",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "Density altitude is:",
+      "choices": [
+        "Pressure altitude corrected for non-standard temperature",
+        "True altitude corrected for compass variation",
+        "Height above the nearest runway",
+        "GPS altitude only"
+      ],
+      "answerIndex": 0,
+      "rationale": "Density altitude expresses the altitude in the standard atmosphere at which the current air density would occur.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Meteorological aspects of altimetry",
+      "learningObjective": "Density altitude expresses the altitude in the standard atmosphere at which the current air density would occur.",
+      "source": "TP 15263 Section 4 - Meteorological aspects of altimetry",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-008",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Most day-to-day weather occurs in the:",
+      "choices": [
+        "Troposphere",
+        "Stratosphere",
+        "Mesosphere",
+        "Thermosphere"
+      ],
+      "answerIndex": 0,
+      "rationale": "The troposphere contains most atmospheric moisture and conventional weather.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET / TP 15263 atmosphere",
+      "learningObjective": "The troposphere contains most atmospheric moisture and conventional weather.",
+      "source": "TC AIM MET / TP 15263 atmosphere",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-009",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "Indicated altitude is:",
+      "choices": [
+        "The altitude shown on the altimeter for the pressure setting currently selected",
+        "Always true altitude",
+        "Always pressure altitude",
+        "Height above ground measured by radar"
+      ],
+      "answerIndex": 0,
+      "rationale": "Indicated altitude is the instrument indication based on the selected altimeter setting.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET - Altimetry",
+      "learningObjective": "Indicated altitude is the instrument indication based on the selected altimeter setting.",
+      "source": "TC AIM MET - Altimetry",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-010",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "An aviation altimeter converts sensed static pressure into:",
+      "choices": [
+        "An altitude indication based on the selected pressure reference",
+        "A wind-speed indication",
+        "A temperature indication",
+        "A GPS position"
+      ],
+      "answerIndex": 0,
+      "rationale": "Barometric altimeters infer altitude from pressure using the selected setting/reference.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET - Altimetry",
+      "learningObjective": "Barometric altimeters infer altitude from pressure using the selected setting/reference.",
+      "source": "TC AIM MET - Altimetry",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-011",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "Which gases make up most of dry air?",
+      "choices": [
+        "Nitrogen and oxygen",
+        "Hydrogen and helium",
+        "Oxygen and carbon dioxide",
+        "Argon and methane"
+      ],
+      "answerIndex": 0,
+      "rationale": "Nitrogen and oxygen dominate the composition of the lower atmosphere.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Composition and physical properties",
+      "learningObjective": "Nitrogen and oxygen dominate the composition of the lower atmosphere.",
+      "source": "TP 15263 Section 4 - Composition and physical properties",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-012",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "As ambient temperature increases while other factors remain similar, density altitude generally:",
+      "choices": [
+        "Increases",
+        "Decreases",
+        "Remains exactly constant",
+        "Becomes zero"
+      ],
+      "answerIndex": 0,
+      "rationale": "Warmer air is less dense; higher density altitude results.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Density altitude",
+      "learningObjective": "Warmer air is less dense; higher density altitude results.",
+      "source": "TP 15263 Section 4 - Density altitude",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-013",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Flying from an area of high pressure toward lower pressure without resetting the altimeter tends to make true altitude:",
+      "choices": [
+        "Lower than indicated",
+        "Higher than indicated",
+        "Exactly equal to indicated",
+        "Independent of pressure"
+      ],
+      "answerIndex": 0,
+      "rationale": "The classic rule is 'high to low, look out below': true altitude is lower than indicated.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET - Altimetry",
+      "learningObjective": "The classic rule is 'high to low, look out below': true altitude is lower than indicated.",
+      "source": "TC AIM MET - Altimetry",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-014",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Squall lines are most commonly associated with:",
+      "choices": [
+        "Strong convective activity, often ahead of or along a cold front",
+        "A stationary high with clear skies",
+        "A temperature inversion only",
+        "A sea-breeze front with no convection"
+      ],
+      "answerIndex": 0,
+      "rationale": "Squall lines are organized lines of thunderstorms commonly associated with strong frontal/convective forcing.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Thunderstorms: squall lines",
+      "learningObjective": "Squall lines are organized lines of thunderstorms commonly associated with strong frontal/convective forcing.",
+      "source": "TP 15263 Section 4 - Thunderstorms: squall lines",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-015",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "Station pressure is:",
+      "choices": [
+        "Actual atmospheric pressure measured at station elevation",
+        "Sea-level pressure only",
+        "Always 1013.25 hPa",
+        "The same as density altitude"
+      ],
+      "answerIndex": 0,
+      "rationale": "Station pressure is measured at the station elevation, without reduction to sea level.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Atmospheric pressure",
+      "learningObjective": "Station pressure is measured at the station elevation, without reduction to sea level.",
+      "source": "TP 15263 Section 4 - Atmospheric pressure",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-016",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Pressure altitude is referenced to:",
+      "choices": [
+        "The standard datum of 29.92 inHg / 1013.25 hPa",
+        "Local QNH only",
+        "Mean sea level temperature",
+        "GPS ellipsoid height"
+      ],
+      "answerIndex": 0,
+      "rationale": "Pressure altitude is altitude in the standard atmosphere above the 29.92 inHg/1013.25 hPa datum.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Pressure altitude",
+      "learningObjective": "Pressure altitude is altitude in the standard atmosphere above the 29.92 inHg/1013.25 hPa datum.",
+      "source": "TP 15263 Section 4 - Pressure altitude",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-017",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Which weather phenomenon is particularly hazardous because it can produce abrupt low-level wind shear?",
+      "choices": [
+        "Microburst",
+        "Radiation fog",
+        "Cirrus cloud",
+        "A weak ridge"
+      ],
+      "answerIndex": 0,
+      "rationale": "Microbursts can produce rapid changes in wind direction and speed over short distances.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Thunderstorm hazards",
+      "learningObjective": "Microbursts can produce rapid changes in wind direction and speed over short distances.",
+      "source": "TP 15263 Section 4 - Thunderstorm hazards",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-018",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Heating air molecules generally causes their average kinetic energy to:",
+      "choices": [
+        "Increase",
+        "Decrease",
+        "Remain unchanged",
+        "Become zero"
+      ],
+      "answerIndex": 0,
+      "rationale": "Temperature is related to average molecular kinetic energy.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Physical properties",
+      "learningObjective": "Temperature is related to average molecular kinetic energy.",
+      "source": "TP 15263 Section 4 - Physical properties",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-019",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Two major variables that strongly affect air density are:",
+      "choices": [
+        "Pressure and temperature",
+        "Longitude and latitude",
+        "Magnetic variation and heading",
+        "Cloud type and runway length"
+      ],
+      "answerIndex": 0,
+      "rationale": "Density varies directly with pressure and inversely with absolute temperature for a given composition.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Density and pressure",
+      "learningObjective": "Density varies directly with pressure and inversely with absolute temperature for a given composition.",
+      "source": "TP 15263 Section 4 - Density and pressure",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-020",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "At constant temperature, if the density of a fixed-composition gas doubles, its pressure approximately:",
+      "choices": [
+        "Doubles",
+        "Halves",
+        "Stays the same",
+        "Falls to zero"
+      ],
+      "answerIndex": 0,
+      "rationale": "The ideal-gas relationship shows pressure proportional to density at constant temperature.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Density and pressure",
+      "learningObjective": "The ideal-gas relationship shows pressure proportional to density at constant temperature.",
+      "source": "TP 15263 Section 4 - Density and pressure",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-021",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "The lower atmosphere is heated primarily:",
+      "choices": [
+        "From below, as the Earth's surface absorbs solar energy and transfers heat to the air",
+        "Directly from space above",
+        "Only by lightning",
+        "Only by wind friction"
+      ],
+      "answerIndex": 0,
+      "rationale": "The surface absorbs solar radiation and transfers heat upward by conduction, convection and radiation.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET - Atmosphere",
+      "learningObjective": "The surface absorbs solar radiation and transfers heat upward by conduction, convection and radiation.",
+      "source": "TC AIM MET - Atmosphere",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-022",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "At constant pressure, as temperature falls, air density generally:",
+      "choices": [
+        "Increases",
+        "Decreases",
+        "Remains unchanged",
+        "Becomes unrelated to temperature"
+      ],
+      "answerIndex": 0,
+      "rationale": "Cooler air occupies less volume for the same mass at constant pressure and is therefore denser.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Density",
+      "learningObjective": "Cooler air occupies less volume for the same mass at constant pressure and is therefore denser.",
+      "source": "TP 15263 Section 4 - Density",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-023",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "The standard altimeter reference setting for pressure altitude is:",
+      "choices": [
+        "29.92 inHg / 1013.25 hPa",
+        "30.50 inHg",
+        "28.00 inHg",
+        "1000.00 inHg"
+      ],
+      "answerIndex": 0,
+      "rationale": "29.92 inHg (1013.25 hPa) is the standard pressure datum.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET - Altimetry",
+      "learningObjective": "29.92 inHg (1013.25 hPa) is the standard pressure datum.",
+      "source": "TC AIM MET - Altimetry",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-024",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "ISA standard sea-level temperature is:",
+      "choices": [
+        "15°C",
+        "0°C",
+        "25°C",
+        "-15°C"
+      ],
+      "answerIndex": 0,
+      "rationale": "The International Standard Atmosphere uses 15°C at mean sea level.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET / standard atmosphere",
+      "learningObjective": "The International Standard Atmosphere uses 15°C at mean sea level.",
+      "source": "TC AIM MET / standard atmosphere",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-025",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "Lines joining points of equal temperature are called:",
+      "choices": [
+        "Isotherms",
+        "Isobars",
+        "Isohyets",
+        "Contours"
+      ],
+      "answerIndex": 0,
+      "rationale": "Isotherms connect equal-temperature observations.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET - Weather charts",
+      "learningObjective": "Isotherms connect equal-temperature observations.",
+      "source": "TC AIM MET - Weather charts",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-026",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Rapidly falling surface pressure commonly suggests:",
+      "choices": [
+        "An approaching or deepening low-pressure system and potentially deteriorating weather",
+        "A strengthening stationary high only",
+        "Guaranteed clear weather",
+        "No possible weather change"
+      ],
+      "answerIndex": 0,
+      "rationale": "Pressure tendency is an important indicator of changing synoptic conditions.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Pressure systems and variations",
+      "learningObjective": "Pressure tendency is an important indicator of changing synoptic conditions.",
+      "source": "TP 15263 Section 4 - Pressure systems and variations",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-027",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Air flowing horizontally toward the centre of a low-pressure system is called:",
+      "choices": [
+        "Convergence",
+        "Divergence",
+        "Subsidence",
+        "Advection fog"
+      ],
+      "answerIndex": 0,
+      "rationale": "Low-level convergence feeds rising motion in lows.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Pressure systems",
+      "learningObjective": "Low-level convergence feeds rising motion in lows.",
+      "source": "TP 15263 Section 4 - Pressure systems",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-028",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "As air temperature increases, its capacity to contain water vapour before saturation generally:",
+      "choices": [
+        "Increases",
+        "Decreases",
+        "Stays fixed",
+        "Becomes zero"
+      ],
+      "answerIndex": 0,
+      "rationale": "Warmer air has a higher saturation vapour pressure.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Moisture",
+      "learningObjective": "Warmer air has a higher saturation vapour pressure.",
+      "source": "TP 15263 Section 4 - Moisture",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-029",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "The approximate ISA temperature lapse rate in the troposphere is:",
+      "choices": [
+        "About 2°C per 1,000 ft",
+        "About 10°C per 1,000 ft",
+        "0°C per 1,000 ft",
+        "About 20°C per 1,000 ft"
+      ],
+      "answerIndex": 0,
+      "rationale": "A commonly used approximation is roughly 2°C per 1,000 ft (6.5°C/km).",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET / standard atmosphere",
+      "learningObjective": "A commonly used approximation is roughly 2°C per 1,000 ft (6.5°C/km).",
+      "source": "TC AIM MET / standard atmosphere",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-030",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "Lines joining equal atmospheric pressure are:",
+      "choices": [
+        "Isobars",
+        "Isotherms",
+        "Contours",
+        "Isogons"
+      ],
+      "answerIndex": 0,
+      "rationale": "Isobars depict pressure patterns and gradients.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET - Surface analysis",
+      "learningObjective": "Isobars depict pressure patterns and gradients.",
+      "source": "TC AIM MET - Surface analysis",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-031",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "A relative humidity of 100% means the air is:",
+      "choices": [
+        "Saturated with respect to water vapour at its current temperature",
+        "Composed entirely of water",
+        "At the freezing point",
+        "Always producing heavy rain"
+      ],
+      "answerIndex": 0,
+      "rationale": "100% relative humidity indicates saturation; condensation requires suitable nuclei/processes.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Relative humidity/dewpoint",
+      "learningObjective": "100% relative humidity indicates saturation; condensation requires suitable nuclei/processes.",
+      "source": "TP 15263 Section 4 - Relative humidity/dewpoint",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-032",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "An air mass is primarily characterized by its:",
+      "choices": [
+        "Temperature and moisture properties",
+        "Magnetic variation and longitude",
+        "Runway orientation",
+        "Pressure altitude only"
+      ],
+      "answerIndex": 0,
+      "rationale": "Air masses acquire characteristic temperature and moisture from their source regions.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Air masses",
+      "learningObjective": "Air masses acquire characteristic temperature and moisture from their source regions.",
+      "source": "TP 15263 Section 4 - Air masses",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-033",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "A practical rule for estimating convective cloud base from surface temperature/dewpoint spread is based on:",
+      "choices": [
+        "The differing lapse rates of temperature and dewpoint",
+        "Magnetic declination",
+        "Pressure altitude alone",
+        "Wind direction alone"
+      ],
+      "answerIndex": 0,
+      "rationale": "The temperature-dewpoint spread narrows with height until saturation; this relation is used to estimate cloud base.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Moisture/cloud formation",
+      "learningObjective": "The temperature-dewpoint spread narrows with height until saturation; this relation is used to estimate cloud base.",
+      "source": "TP 15263 Section 4 - Moisture/cloud formation",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-034",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "Dewpoint is the temperature to which air must be cooled, at essentially constant pressure and water-vapour content, to:",
+      "choices": [
+        "Reach saturation",
+        "Double its pressure",
+        "Eliminate all moisture",
+        "Reach ISA temperature"
+      ],
+      "answerIndex": 0,
+      "rationale": "Dewpoint is the saturation temperature for the existing vapour content.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Relative humidity/dewpoint",
+      "learningObjective": "Dewpoint is the saturation temperature for the existing vapour content.",
+      "source": "TP 15263 Section 4 - Relative humidity/dewpoint",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-035",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Cloud droplets grow into precipitation primarily through:",
+      "choices": [
+        "Collision-coalescence and/or ice-crystal growth processes",
+        "Magnetic attraction",
+        "Pressure altitude changes only",
+        "Solar flares"
+      ],
+      "answerIndex": 0,
+      "rationale": "Precipitation requires droplet/crystal growth beyond simple condensation.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Precipitation",
+      "learningObjective": "Precipitation requires droplet/crystal growth beyond simple condensation.",
+      "source": "TP 15263 Section 4 - Precipitation",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-036",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "A temperature inversion exists when temperature:",
+      "choices": [
+        "Increases with height through a layer",
+        "Always decreases 2°C per 1,000 ft",
+        "Equals dewpoint",
+        "Falls below -40°C"
+      ],
+      "answerIndex": 0,
+      "rationale": "An inversion reverses the normal decrease of temperature with height and is typically stable.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Stability/inversions",
+      "learningObjective": "An inversion reverses the normal decrease of temperature with height and is typically stable.",
+      "source": "TP 15263 Section 4 - Stability/inversions",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-037",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "A low-pressure system is commonly associated with:",
+      "choices": [
+        "Rising air, cloud and potentially unsettled weather",
+        "Persistent subsidence and guaranteed clear skies",
+        "No wind",
+        "Only winter weather"
+      ],
+      "answerIndex": 0,
+      "rationale": "Low-level convergence and rising motion promote cloud and precipitation.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Pressure systems",
+      "learningObjective": "Low-level convergence and rising motion promote cloud and precipitation.",
+      "source": "TP 15263 Section 4 - Pressure systems",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-038",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Condensation nuclei are important because they:",
+      "choices": [
+        "Provide surfaces on which water vapour can condense into droplets",
+        "Increase magnetic variation",
+        "Create pressure systems",
+        "Measure humidity"
+      ],
+      "answerIndex": 0,
+      "rationale": "Cloud droplets form efficiently around microscopic aerosols/condensation nuclei.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Cloud formation",
+      "learningObjective": "Cloud droplets form efficiently around microscopic aerosols/condensation nuclei.",
+      "source": "TP 15263 Section 4 - Cloud formation",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-039",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Which is a recognized North American air-mass category?",
+      "choices": [
+        "Continental polar (cP)",
+        "Equatorial lunar (EL)",
+        "Maritime magnetic (mM)",
+        "Polar isobaric (pI)"
+      ],
+      "answerIndex": 0,
+      "rationale": "Continental polar is a standard source-region air-mass classification.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET - Air masses",
+      "learningObjective": "Continental polar is a standard source-region air-mass classification.",
+      "source": "TC AIM MET - Air masses",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-040",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "If surface temperature and dewpoint become equal and winds/moisture conditions are favourable, what may form?",
+      "choices": [
+        "Fog or low cloud",
+        "A jet stream",
+        "A pressure ridge automatically",
+        "Clear-air turbulence only"
+      ],
+      "answerIndex": 0,
+      "rationale": "Equality indicates saturation; near the surface this can support fog/stratus formation.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Moisture/cloud formation",
+      "learningObjective": "Equality indicates saturation; near the surface this can support fog/stratus formation.",
+      "source": "TP 15263 Section 4 - Moisture/cloud formation",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-041",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "The principal North American air-mass classifications used in basic aviation meteorology are based on:",
+      "choices": [
+        "Moisture source (continental/maritime) and thermal source region (e.g., polar/tropical/arctic)",
+        "Runway length",
+        "Longitude alone",
+        "Altimeter setting"
+      ],
+      "answerIndex": 0,
+      "rationale": "Air-mass names combine moisture and temperature/source-region characteristics.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET - Air masses",
+      "learningObjective": "Air-mass names combine moisture and temperature/source-region characteristics.",
+      "source": "TC AIM MET - Air masses",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-042",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "A high-pressure system is most often associated with:",
+      "choices": [
+        "Subsiding air and generally more stable/fair conditions",
+        "Persistent widespread ascent",
+        "Guaranteed thunderstorms",
+        "A warm front at its centre"
+      ],
+      "answerIndex": 0,
+      "rationale": "Highs feature subsidence and divergence, although local exceptions can occur.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Pressure systems",
+      "learningObjective": "Highs feature subsidence and divergence, although local exceptions can occur.",
+      "source": "TP 15263 Section 4 - Pressure systems",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-043",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Horizontal airflow outward from the centre of a high-pressure system is called:",
+      "choices": [
+        "Divergence",
+        "Convergence",
+        "Convection",
+        "Occlusion"
+      ],
+      "answerIndex": 0,
+      "rationale": "Surface highs are associated with divergence.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Pressure systems",
+      "learningObjective": "Surface highs are associated with divergence.",
+      "source": "TP 15263 Section 4 - Pressure systems",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-044",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "A commonly taught cloud-base estimate uses the surface temperature-dewpoint spread because:",
+      "choices": [
+        "Temperature and dewpoint generally change at different rates with height until saturation occurs",
+        "Pressure never changes with height",
+        "Humidity is always 100% aloft",
+        "Wind speed determines dewpoint"
+      ],
+      "answerIndex": 0,
+      "rationale": "The spread can be converted to an approximate lifting condensation level/cloud base.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Moisture",
+      "learningObjective": "The spread can be converted to an approximate lifting condensation level/cloud base.",
+      "source": "TP 15263 Section 4 - Moisture",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-045",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Which pressure unit is widely used in Canadian aviation weather products?",
+      "choices": [
+        "Hectopascals (hPa)",
+        "Watts",
+        "Joules",
+        "Teslas"
+      ],
+      "answerIndex": 0,
+      "rationale": "Canadian meteorological products commonly use hectopascals; altimeter settings may also be expressed in inches of mercury.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET",
+      "learningObjective": "Canadian meteorological products commonly use hectopascals; altimeter settings may also be expressed in inches of mercury.",
+      "source": "TC AIM MET",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-046",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "A strong surface-based temperature inversion can contribute to:",
+      "choices": [
+        "Trapping haze, smoke and pollutants near the surface and reducing visibility",
+        "Automatic thunderstorm dissipation everywhere",
+        "Higher GPS accuracy",
+        "Elimination of wind shear"
+      ],
+      "answerIndex": 0,
+      "rationale": "Stable inversion layers suppress vertical mixing and can trap particulates/moisture.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Stability/surface layers",
+      "learningObjective": "Stable inversion layers suppress vertical mixing and can trap particulates/moisture.",
+      "source": "TP 15263 Section 4 - Stability/surface layers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-047",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "An approaching squall line may produce:",
+      "choices": [
+        "Strong gusts, wind shear, heavy precipitation, lightning and severe turbulence",
+        "Only light steady drizzle",
+        "Calm winds and clear skies",
+        "Only high cirrus"
+      ],
+      "answerIndex": 0,
+      "rationale": "Squall lines are organized severe convective systems.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Thunderstorms/squall lines",
+      "learningObjective": "Squall lines are organized severe convective systems.",
+      "source": "TP 15263 Section 4 - Thunderstorms/squall lines",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-048",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "Relative humidity is the ratio, usually expressed as a percentage, of:",
+      "choices": [
+        "Actual water-vapour content/pressure to the saturation value at the same temperature",
+        "Air pressure to sea-level pressure",
+        "Temperature to dewpoint",
+        "Wind speed to gust speed"
+      ],
+      "answerIndex": 0,
+      "rationale": "Relative humidity measures closeness to saturation at the current temperature.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Relative humidity",
+      "learningObjective": "Relative humidity measures closeness to saturation at the current temperature.",
+      "source": "TP 15263 Section 4 - Relative humidity",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-049",
+      "category": "weather",
+      "difficulty": "medium",
+      "question": "Air masses formed over large bodies of water are described as:",
+      "choices": [
+        "Maritime",
+        "Continental",
+        "Katabatic",
+        "Isothermal"
+      ],
+      "answerIndex": 0,
+      "rationale": "The 'maritime' designation indicates a moist water-source region.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TC AIM MET - Air masses",
+      "learningObjective": "The 'maritime' designation indicates a moist water-source region.",
+      "source": "TC AIM MET - Air masses",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    },
+    {
+      "id": "b4-wx-050",
+      "category": "weather",
+      "difficulty": "easy",
+      "question": "The temperature-dewpoint spread is:",
+      "choices": [
+        "The numerical difference between air temperature and dewpoint",
+        "The difference between station and sea-level pressure",
+        "The range between gust and steady wind",
+        "The difference between true and magnetic north"
+      ],
+      "answerIndex": 0,
+      "rationale": "A narrowing spread indicates increasing relative humidity and possible approach to saturation.",
+      "examScope": "core-advanced",
+      "tp15263Section": 4,
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "TP 15263 Section 4 - Moisture",
+      "learningObjective": "A narrowing spread indicates increasing relative humidity and possible approach to saturation.",
+      "source": "TP 15263 Section 4 - Moisture",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "lastVerified": "2026-09-06",
+      "origin": {
+        "type": "batch4-docx-ingest",
+        "batch": "Batch 4",
+        "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_100.docx"
+      }
+    }
+  ]
+}

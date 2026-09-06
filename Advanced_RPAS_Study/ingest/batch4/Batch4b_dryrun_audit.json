@@ -1,0 +1,784 @@
+{
+  "date": "2026-09-06",
+  "threshold": 0.72,
+  "currentBankSize": 812,
+  "candidatePool": 250,
+  "target": 250,
+  "selected": 200,
+  "selectedByCategory": {
+    "airspace": 22,
+    "radio": 25,
+    "aerodromes": 17,
+    "regulations": 19,
+    "notams": 2,
+    "safety": 6,
+    "weather": 42,
+    "navigation": 42,
+    "flight-planning": 10,
+    "maintenance": 8,
+    "human-factors": 3,
+    "abnormal": 4
+  },
+  "shortfalls": {
+    "airspace": 5,
+    "radio": 27,
+    "regulations": 1,
+    "weather": 8,
+    "navigation": 8,
+    "visual-observers": 1
+  },
+  "selectedIds": [
+    "b4b-asp-001",
+    "b4b-asp-002",
+    "b4b-radio-001",
+    "b4b-asp-004",
+    "b4b-asp-005",
+    "b4b-aero-001",
+    "b4b-asp-006",
+    "b4b-regu-001",
+    "b4b-regu-002",
+    "b4b-asp-007",
+    "b4b-regu-003",
+    "b4b-asp-008",
+    "b4b-regu-004",
+    "b4b-asp-009",
+    "b4b-aero-002",
+    "b4b-asp-011",
+    "b4b-asp-012",
+    "b4b-asp-013",
+    "b4b-regu-006",
+    "b4b-regu-007",
+    "b4b-regu-008",
+    "b4b-regu-009",
+    "b4b-notam-001",
+    "b4b-asp-014",
+    "b4b-asp-015",
+    "b4b-asp-016",
+    "b4b-asp-018",
+    "b4b-aero-003",
+    "b4b-asp-019",
+    "b4b-asp-021",
+    "b4b-asp-022",
+    "b4b-radio-002",
+    "b4b-asp-023",
+    "b4b-asp-024",
+    "b4b-asp-025",
+    "b4b-notam-002",
+    "b4b-safe-001",
+    "b4b-safe-002",
+    "b4b-regu-010",
+    "b4b-regu-011",
+    "b4b-aero-004",
+    "b4b-aero-005",
+    "b4b-regu-012",
+    "b4b-regu-013",
+    "b4b-wx-001",
+    "b4b-wx-002",
+    "b4b-wx-003",
+    "b4b-wx-004",
+    "b4b-wx-006",
+    "b4b-wx-007",
+    "b4b-wx-009",
+    "b4b-wx-010",
+    "b4b-wx-011",
+    "b4b-wx-012",
+    "b4b-wx-013",
+    "b4b-wx-014",
+    "b4b-wx-015",
+    "b4b-wx-016",
+    "b4b-wx-017",
+    "b4b-wx-018",
+    "b4b-wx-019",
+    "b4b-wx-020",
+    "b4b-wx-021",
+    "b4b-wx-022",
+    "b4b-wx-023",
+    "b4b-wx-024",
+    "b4b-wx-025",
+    "b4b-wx-026",
+    "b4b-wx-027",
+    "b4b-wx-030",
+    "b4b-wx-031",
+    "b4b-wx-032",
+    "b4b-wx-033",
+    "b4b-wx-034",
+    "b4b-wx-035",
+    "b4b-wx-036",
+    "b4b-wx-037",
+    "b4b-wx-040",
+    "b4b-wx-041",
+    "b4b-wx-042",
+    "b4b-wx-043",
+    "b4b-wx-045",
+    "b4b-wx-046",
+    "b4b-wx-048",
+    "b4b-wx-049",
+    "b4b-wx-050",
+    "b4b-nav-001",
+    "b4b-nav-002",
+    "b4b-nav-003",
+    "b4b-nav-004",
+    "b4b-nav-005",
+    "b4b-nav-008",
+    "b4b-nav-009",
+    "b4b-nav-010",
+    "b4b-nav-011",
+    "b4b-nav-013",
+    "b4b-nav-014",
+    "b4b-nav-015",
+    "b4b-nav-016",
+    "b4b-nav-017",
+    "b4b-nav-018",
+    "b4b-nav-019",
+    "b4b-nav-020",
+    "b4b-nav-023",
+    "b4b-nav-024",
+    "b4b-nav-025",
+    "b4b-nav-026",
+    "b4b-nav-027",
+    "b4b-nav-028",
+    "b4b-nav-030",
+    "b4b-nav-031",
+    "b4b-nav-033",
+    "b4b-nav-034",
+    "b4b-nav-035",
+    "b4b-nav-036",
+    "b4b-nav-037",
+    "b4b-nav-038",
+    "b4b-nav-039",
+    "b4b-nav-040",
+    "b4b-nav-042",
+    "b4b-nav-043",
+    "b4b-nav-044",
+    "b4b-nav-045",
+    "b4b-nav-046",
+    "b4b-nav-047",
+    "b4b-nav-048",
+    "b4b-nav-049",
+    "b4b-nav-050",
+    "b4b-regu-014",
+    "b4b-aero-006",
+    "b4b-regu-015",
+    "b4b-aero-007",
+    "b4b-asp-027",
+    "b4b-fp-001",
+    "b4b-maint-001",
+    "b4b-hf-001",
+    "b4b-hf-002",
+    "b4b-hf-003",
+    "b4b-abn-001",
+    "b4b-abn-002",
+    "b4b-maint-002",
+    "b4b-maint-003",
+    "b4b-maint-004",
+    "b4b-fp-002",
+    "b4b-fp-003",
+    "b4b-regu-016",
+    "b4b-maint-005",
+    "b4b-aero-008",
+    "b4b-aero-009",
+    "b4b-aero-010",
+    "b4b-aero-011",
+    "b4b-aero-012",
+    "b4b-aero-013",
+    "b4b-aero-014",
+    "b4b-aero-015",
+    "b4b-aero-016",
+    "b4b-aero-017",
+    "b4b-safe-003",
+    "b4b-regu-017",
+    "b4b-fp-004",
+    "b4b-safe-004",
+    "b4b-fp-005",
+    "b4b-safe-005",
+    "b4b-maint-006",
+    "b4b-fp-006",
+    "b4b-fp-007",
+    "b4b-maint-007",
+    "b4b-regu-018",
+    "b4b-fp-008",
+    "b4b-fp-009",
+    "b4b-fp-010",
+    "b4b-regu-019",
+    "b4b-abn-003",
+    "b4b-abn-004",
+    "b4b-safe-006",
+    "b4b-maint-008",
+    "b4b-regu-020",
+    "b4b-radio-003",
+    "b4b-radio-004",
+    "b4b-radio-005",
+    "b4b-radio-006",
+    "b4b-radio-007",
+    "b4b-radio-008",
+    "b4b-radio-009",
+    "b4b-radio-010",
+    "b4b-radio-011",
+    "b4b-radio-012",
+    "b4b-radio-013",
+    "b4b-radio-014",
+    "b4b-radio-015",
+    "b4b-radio-016",
+    "b4b-radio-017",
+    "b4b-radio-018",
+    "b4b-radio-019",
+    "b4b-radio-045",
+    "b4b-radio-046",
+    "b4b-radio-049",
+    "b4b-radio-050",
+    "b4b-radio-051",
+    "b4b-radio-052"
+  ],
+  "rejected": [
+    {
+      "id": "b4b-asp-003",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7857142857142858,
+        "sequence": 0.6519337016574586,
+        "jaccard": 0.7142857142857143,
+        "existingId": "b4-regu-032",
+        "existingQuestion": "Before operating an RPA in controlled airspace under Advanced operations, the pilot must obtain:"
+      }
+    },
+    {
+      "id": "b4b-asp-010",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.738255033557047,
+        "sequence": 0.738255033557047,
+        "jaccard": 0.45454545454545453,
+        "existingId": "b4b-asp-004",
+        "existingQuestion": "A VFR aircraft entering Class C airspace normally requires:"
+      }
+    },
+    {
+      "id": "b4b-regu-005",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.77,
+        "sequence": 0.6733668341708543,
+        "jaccard": 0.7,
+        "existingId": "b4-regu-015",
+        "existingQuestion": "What is the normal maximum RPAS altitude under CAR 901.25(1)(a), absent an applicable exception?"
+      }
+    },
+    {
+      "id": "b4b-asp-017",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.8360655737704918,
+        "sequence": 0.8360655737704918,
+        "jaccard": 0.7142857142857143,
+        "existingId": "b4b-asp-008",
+        "existingQuestion": "In Southern Domestic Airspace, Class B airspace is generally found:"
+      }
+    },
+    {
+      "id": "b4b-asp-020",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.9166666666666667,
+        "sequence": 0.6813186813186813,
+        "jaccard": 0.8333333333333334,
+        "existingId": "b4b-asp-009",
+        "existingQuestion": "A control zone described as Class D normally extends:"
+      }
+    },
+    {
+      "id": "b4b-asp-026",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7391304347826086,
+        "sequence": 0.7391304347826086,
+        "jaccard": 0.5,
+        "existingId": "b4b-asp-007",
+        "existingQuestion": "A Class E control zone begins:"
+      }
+    },
+    {
+      "id": "b4b-wx-005",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7927927927927928,
+        "sequence": 0.7927927927927928,
+        "jaccard": 0.5714285714285714,
+        "existingId": "b4-wx-042",
+        "existingQuestion": "A high-pressure system is most often associated with:"
+      }
+    },
+    {
+      "id": "b4b-wx-008",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7333333333333334,
+        "sequence": 0.6296296296296297,
+        "jaccard": 0.6666666666666666,
+        "existingId": "wx-001",
+        "existingQuestion": "What does a METAR primarily report?"
+      }
+    },
+    {
+      "id": "b4b-wx-028",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.9117647058823529,
+        "sequence": 0.9117647058823529,
+        "jaccard": 0.6,
+        "existingId": "b4b-wx-027",
+        "existingQuestion": "The group 'TEMPO' in a TAF indicates:"
+      }
+    },
+    {
+      "id": "b4b-wx-029",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.9230769230769231,
+        "sequence": 0.9230769230769231,
+        "jaccard": 0.75,
+        "existingId": "b4b-wx-027",
+        "existingQuestion": "The group 'TEMPO' in a TAF indicates:"
+      }
+    },
+    {
+      "id": "b4b-wx-038",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.958904109589041,
+        "sequence": 0.958904109589041,
+        "jaccard": 0.6,
+        "existingId": "b4b-wx-037",
+        "existingQuestion": "A stable atmosphere tends to favour:"
+      }
+    },
+    {
+      "id": "b4b-wx-039",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.735632183908046,
+        "sequence": 0.735632183908046,
+        "jaccard": 0.5,
+        "existingId": "b4-wx-036",
+        "existingQuestion": "A temperature inversion exists when temperature:"
+      }
+    },
+    {
+      "id": "b4b-wx-044",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.9090909090909091,
+        "sequence": 0.9090909090909091,
+        "jaccard": 0.3333333333333333,
+        "existingId": "b4b-wx-043",
+        "existingQuestion": "Katabatic wind is:"
+      }
+    },
+    {
+      "id": "b4b-wx-047",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.943089430894309,
+        "sequence": 0.943089430894309,
+        "jaccard": 0.75,
+        "existingId": "b4b-wx-046",
+        "existingQuestion": "Surface winds around a low in the Northern Hemisphere tend to:"
+      }
+    },
+    {
+      "id": "b4b-nav-006",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.927536231884058,
+        "sequence": 0.927536231884058,
+        "jaccard": 0.6,
+        "existingId": "b4b-nav-005",
+        "existingQuestion": "Latitude measures angular position:"
+      }
+    },
+    {
+      "id": "b4b-nav-007",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7619047619047619,
+        "sequence": 0.7619047619047619,
+        "jaccard": 0.0,
+        "existingId": "b4b-wx-021",
+        "existingQuestion": "A TROWAL is:"
+      }
+    },
+    {
+      "id": "b4b-nav-012",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.9285714285714286,
+        "sequence": 0.9285714285714286,
+        "jaccard": 0.6,
+        "existingId": "b4b-nav-011",
+        "existingQuestion": "A headwind generally causes groundspeed to:"
+      }
+    },
+    {
+      "id": "b4b-nav-021",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.9607843137254902,
+        "sequence": 0.9607843137254902,
+        "jaccard": 0.7142857142857143,
+        "existingId": "b4b-nav-020",
+        "existingQuestion": "To convert Toronto EDT (UTC-4) 14:00 local to UTC, use:"
+      }
+    },
+    {
+      "id": "b4b-nav-022",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7272727272727273,
+        "sequence": 0.7272727272727273,
+        "jaccard": 0.0,
+        "existingId": "b4b-nav-008",
+        "existingQuestion": "Heading is:"
+      }
+    },
+    {
+      "id": "b4b-nav-029",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.75,
+        "sequence": 0.75,
+        "jaccard": 0.3333333333333333,
+        "existingId": "b4b-asp-015",
+        "existingQuestion": "ESCAT stands for:"
+      }
+    },
+    {
+      "id": "b4b-nav-032",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7333333333333333,
+        "sequence": 0.7333333333333333,
+        "jaccard": 0.3333333333333333,
+        "existingId": "b4b-asp-015",
+        "existingQuestion": "ESCAT stands for:"
+      }
+    },
+    {
+      "id": "b4b-nav-041",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.88,
+        "sequence": 0.88,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-nav-040",
+        "existingQuestion": "One nautical mile equals approximately:"
+      }
+    },
+    {
+      "id": "b4b-vo-001",
+      "reason": "near duplicate",
+      "match": {
+        "score": 1.1,
+        "sequence": 0.4485981308411215,
+        "jaccard": 1.0,
+        "existingId": "vo-001",
+        "existingQuestion": "What is the primary role of a visual observer (VO) in an RPAS operation?"
+      }
+    },
+    {
+      "id": "b4b-radio-020",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-021",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-022",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-023",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.8253968253968254,
+        "sequence": 0.8253968253968254,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-024",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-025",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-026",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.8253968253968254,
+        "sequence": 0.8253968253968254,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-027",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-028",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-029",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-030",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.8253968253968254,
+        "sequence": 0.8253968253968254,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-031",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-032",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-033",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-034",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-035",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-036",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.8253968253968254,
+        "sequence": 0.8253968253968254,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-037",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-038",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.8253968253968254,
+        "sequence": 0.8253968253968254,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-039",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-040",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-041",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-042",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-043",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-044",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7936507936507936,
+        "sequence": 0.7936507936507936,
+        "jaccard": 0.6666666666666666,
+        "existingId": "b4b-radio-019",
+        "existingQuestion": "The phonetic word for the letter A is:"
+      }
+    },
+    {
+      "id": "b4b-radio-047",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7346938775510204,
+        "sequence": 0.7346938775510204,
+        "jaccard": 0.5,
+        "existingId": "b4b-radio-046",
+        "existingQuestion": "The digit 3 is commonly pronounced in ICAO aviation speech as:"
+      }
+    },
+    {
+      "id": "b4b-radio-048",
+      "reason": "near duplicate",
+      "match": {
+        "score": 0.7346938775510204,
+        "sequence": 0.7346938775510204,
+        "jaccard": 0.5,
+        "existingId": "b4b-radio-046",
+        "existingQuestion": "The digit 3 is commonly pronounced in ICAO aviation speech as:"
+      }
+    }
+  ]
+}

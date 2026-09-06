@@ -1,0 +1,250 @@
+101 [airspace        ] In Canadian Class D airspace, ATC normally provides separation between:
+102 [airspace        ] Which flight rules are permitted in Class C airspace?
+103 [airspace        ] Before an Advanced RPAS operation enters controlled airspace, the RPAS pilot must obtain:
+104 [radio           ] If ATS requires two-way aeronautical radio communications for an RPAS operation, the person operating the radio should hold:
+105 [airspace        ] A VFR aircraft entering Class C airspace normally requires:
+106 [airspace        ] Where should a pilot verify the dimensions and classification of Canadian controlled airspace?
+107 [aerodromes      ] Before using an aerodrome for a crewed-aircraft takeoff or landing, the PIC must ensure:
+108 [airspace        ] In Class C airspace, ATC separation is provided between:
+109 [regulations     ] For an RPAS model subject to a safety-assurance declaration, information about hazards capable of causing serious injury belongs primarily in:
+110 [regulations     ] A manufacturer/declarant must retain verification evidence primarily to demonstrate:
+111 [airspace        ] A Class E control zone begins:
+112 [regulations     ] An RPAS operating manual should identify the effects of foreseeable environmental conditions because:
+113 [airspace        ] In Southern Domestic Airspace, Class B airspace is generally found:
+114 [regulations     ] Safety-related mandatory actions issued for an RPAS model are intended to:
+115 [airspace        ] A control zone described as Class D normally extends:
+116 [airspace        ] For a VFR crewed aircraft entering Class D airspace, the normal communication requirement is:
+117 [regulations     ] The normal altitude ceiling for an RPAS under CAR 901.25, absent an applicable exception or authorization, is:
+118 [aerodromes      ] At a controlled aerodrome, crewed aircraft must comply with:
+119 [airspace        ] Class C airspace boundaries are shown primarily on:
+120 [airspace        ] Class A airspace in Canadian high-level airspace is reserved for:
+121 [airspace        ] Terminal control areas classified as Class C:
+122 [regulations     ] An operation can require an SFOC-RPAS when:
+123 [regulations     ] RPAS operation at an advertised event is governed through:
+124 [regulations     ] The purpose of emergency/contingency procedures in an SFOC application is to:
+125 [regulations     ] The period for retaining safety-assurance records is determined by:
+126 [notams          ] Some Class C or D control zones can change classification when the ATC unit closes. The pilot should determine the current status from:
+127 [airspace        ] Canadian Domestic Airspace is divided into:
+128 [airspace        ] ESCAT stands for:
+129 [airspace        ] If ESCAT restrictions are activated, a pilot should:
+130 [airspace        ] In Southern Domestic Airspace, Class A begins generally at:
+131 [airspace        ] A two-way radio failure in controlled airspace requires the pilot of a transponder-equipped crewed aircraft to:
+132 [aerodromes      ] Knowingly removing or interfering with an aerodrome marker, marking, light or signal used for air navigation is:
+133 [airspace        ] In much of Northern Domestic Airspace, navigation references use:
+134 [airspace        ] A Class C control zone normally extends:
+135 [airspace        ] When aeronautical radio equipment is carried and its use is required, the operator must:
+136 [airspace        ] Class E controlled airspace that is not a control zone:
+137 [radio           ] The transponder code 7600 signifies:
+138 [airspace        ] Airspace class and dimensions should be confirmed using:
+139 [airspace        ] An aerodrome traffic frequency (ATF) is used primarily to:
+140 [airspace        ] At an aerodrome where an MF area is designated, pilots must:
+141 [notams          ] A NOTAM is used to distribute:
+142 [safety          ] The PIC's responsibility to avoid creating a collision hazard applies:
+143 [safety          ] Within 3 NM of the centre of a DND aerodrome, an RPAS pilot needs:
+144 [regulations     ] A declared RPAS model used for an Advanced operation must:
+145 [regulations     ] If a modification changes an RPAS so it no longer conforms to its declared technical basis, the operator should:
+146 [airspace        ] A control zone is:
+147 [aerodromes      ] The difference between an aerodrome and an airport is that:
+148 [aerodromes      ] A pilot planning an Advanced RPAS flight near an aerodrome should check:
+149 [regulations     ] If an ATS authorization includes conditions, the RPAS pilot must:
+150 [regulations     ] Which source has the highest legal authority for a CAR requirement?
+151 [weather         ] Which weather phenomenon normally presents the broadest combination of severe aviation hazards?
+152 [weather         ] A gust front is:
+153 [weather         ] Approximately 78% of dry air is:
+154 [weather         ] In Canadian METARs, prevailing visibility is normally reported in:
+155 [weather         ] A surface high-pressure system is generally associated with:
+156 [weather         ] A microburst is especially hazardous because it can produce:
+157 [weather         ] A SIGMET is intended to advise of:
+158 [weather         ] A METAR is primarily:
+159 [weather         ] A SPECI is:
+160 [weather         ] The code 'BKN' in a METAR means:
+161 [weather         ] The code 'OVC' means:
+162 [weather         ] A ceiling is based on:
+163 [weather         ] The dewpoint spread becomes smaller as:
+164 [weather         ] Radiation fog is most favoured by:
+165 [weather         ] Advection fog forms when:
+166 [weather         ] Upslope fog/cloud can develop when:
+167 [weather         ] A cold front normally has:
+168 [weather         ] Compared with a warm front, a cold front commonly produces:
+169 [weather         ] A warm front is characterized by:
+170 [weather         ] An occluded front develops when:
+171 [weather         ] A TROWAL is:
+172 [weather         ] The GFA system divides Canada into:
+173 [weather         ] Convection is vertical motion caused primarily by:
+174 [weather         ] Orographic lift occurs when:
+175 [weather         ] TAFs are normally issued on a scheduled cycle:
+176 [weather         ] A TAF describes expected weather:
+177 [weather         ] The group 'TEMPO' in a TAF indicates:
+178 [weather         ] The group 'BECMG' in a TAF indicates:
+179 [weather         ] The group 'FM' in a TAF indicates:
+180 [weather         ] A GFA Clouds and Weather chart includes:
+181 [weather         ] A GFA Icing, Turbulence and Freezing Level chart includes:
+182 [weather         ] The freezing level is:
+183 [weather         ] Structural icing requires:
+184 [weather         ] Freezing rain is especially hazardous because:
+185 [weather         ] Mechanical turbulence is often strongest:
+186 [weather         ] Wind shear is:
+187 [weather         ] A stable atmosphere tends to favour:
+188 [weather         ] An unstable atmosphere tends to favour:
+189 [weather         ] A temperature inversion is a layer where:
+190 [weather         ] A strong inversion near the surface can:
+191 [weather         ] A sea breeze normally develops because:
+192 [weather         ] A land breeze normally occurs:
+193 [weather         ] Katabatic wind is:
+194 [weather         ] Anabatic wind is:
+195 [weather         ] The closer together isobars are on a surface chart, the stronger the:
+196 [weather         ] Surface winds around a low in the Northern Hemisphere tend to:
+197 [weather         ] Surface winds around a high in the Northern Hemisphere tend to:
+198 [weather         ] A PIREP is:
+199 [weather         ] AIRMET information addresses:
+200 [weather         ] Before an RPAS flight, weather assessment should include:
+201 [navigation      ] Which GNSS constellation was developed by the United States?
+202 [navigation      ] Compass deviation is:
+203 [navigation      ] Because radio signals travel near the speed of light, a timing error of 0.001 s corresponds to a range error of roughly:
+204 [navigation      ] Magnetic variation is:
+205 [navigation      ] Latitude measures angular position:
+206 [navigation      ] Longitude measures angular position:
+207 [navigation      ] A track is:
+208 [navigation      ] Heading is:
+209 [navigation      ] Drift angle is caused primarily by:
+210 [navigation      ] Groundspeed is:
+211 [navigation      ] A headwind generally causes groundspeed to:
+212 [navigation      ] A tailwind generally causes groundspeed to:
+213 [navigation      ] A VNC is designed primarily for:
+214 [navigation      ] A VTA provides:
+215 [navigation      ] Contour lines on a topographic/aeronautical chart join points of:
+216 [navigation      ] Closely spaced contour lines indicate:
+217 [navigation      ] Before relying on an aeronautical chart, a pilot should verify:
+218 [navigation      ] The Canada Flight Supplement is used to obtain:
+219 [navigation      ] UTC is used in aviation because it:
+220 [navigation      ] To convert Toronto EDT (UTC-4) 14:00 local to UTC, use:
+221 [navigation      ] To convert Toronto EST (UTC-5) 14:00 local to UTC, use:
+222 [navigation      ] A bearing is:
+223 [navigation      ] When applying variation to convert a true direction to magnetic, the pilot must:
+224 [navigation      ] RTK GNSS can provide:
+225 [navigation      ] DGPS improves GNSS accuracy by:
+226 [navigation      ] GNSS performance can degrade because of:
+227 [navigation      ] Multipath GNSS error occurs when:
+228 [navigation      ] Loss of GNSS during an RPAS flight can affect:
+229 [navigation      ] ADS-B stands for:
+230 [navigation      ] ADS-B 'dependent' means the surveillance data depends on:
+231 [navigation      ] An ATC transponder responds to:
+232 [navigation      ] VOR stands for:
+233 [navigation      ] VHF propagation for aeronautical communications is predominantly:
+234 [navigation      ] Increasing antenna height generally:
+235 [navigation      ] Buildings, terrain and the aircraft itself can affect RF links by:
+236 [navigation      ] An RF spectrum analyzer can help an RPAS operator:
+237 [navigation      ] Command-and-control link interference can result in:
+238 [navigation      ] A flight planning area should be rejected or modified if:
+239 [navigation      ] The distance between two latitude points is useful because one minute of latitude is approximately:
+240 [navigation      ] One nautical mile equals approximately:
+241 [navigation      ] One statute mile equals approximately:
+242 [navigation      ] A chart scale of 1:500,000 means:
+243 [navigation      ] When planning a route near controlled airspace, the pilot should:
+244 [navigation      ] Magnetic heading differs from true heading primarily because of:
+245 [navigation      ] If a strong crosswind exists, maintaining a desired ground track generally requires:
+246 [navigation      ] For RPAS range/endurance planning, a strong outbound tailwind can be deceptive because:
+247 [navigation      ] A GNSS receiver needs multiple satellites primarily to:
+248 [navigation      ] Poor GNSS satellite geometry is commonly described by:
+249 [navigation      ] Before relying on an automated return-to-home function, the pilot should verify:
+250 [navigation      ] When using a GNSS-derived map display near an airspace boundary, the pilot should:
+251 [regulations     ] Which CAR section governs the information/authorization basis for Advanced RPAS operation in controlled airspace?
+252 [aerodromes      ] The part of an aerodrome used for parking, loading/unloading, refuelling and servicing aircraft is the:
+253 [regulations     ] An ATS authorization may specify how two-way communications will be maintained. The RPAS pilot must:
+254 [aerodromes      ] The collective term for the manoeuvring area plus apron is:
+255 [airspace        ] Within an MF area, the operator of a radio-equipped aircraft must:
+256 [flight-planning ] An Advanced RPAS pilot conducting a site survey should identify:
+257 [maintenance     ] A pre-flight inspection should confirm:
+258 [human-factors   ] If a checklist is interrupted, best practice is to:
+259 [human-factors   ] Automation complacency is hazardous because:
+260 [human-factors   ] Positive transfer of control between RPAS crew members should include:
+261 [visual-observers] A visual observer's primary role is to:
+262 [abnormal        ] A flyaway contingency should include:
+263 [abnormal        ] If control-link quality degrades unexpectedly, the pilot should:
+264 [maintenance     ] Battery performance is typically degraded by:
+265 [maintenance     ] A safe charging area for lithium batteries should:
+266 [maintenance     ] A swollen, punctured or otherwise damaged lithium battery should:
+267 [flight-planning ] A launch/recovery area should be selected to:
+268 [flight-planning ] Loose objects near a multirotor launch point are hazardous because:
+269 [regulations     ] The primary reason to brief crew before flight is to:
+270 [maintenance     ] Post-flight actions should include:
+271 [aerodromes      ] A runway with magnetic direction 276° is normally designated:
+272 [aerodromes      ] A standard rectangular traffic circuit normally contains:
+273 [aerodromes      ] Red steady or flashing obstruction lights are commonly used to mark:
+274 [aerodromes      ] The purpose of an aerodrome traffic circuit is to:
+275 [aerodromes      ] At an uncontrolled aerodrome, an RPAS pilot planning nearby operations should:
+276 [aerodromes      ] When wind direction favours a particular runway, crewed aircraft generally use:
+277 [aerodromes      ] A windsock primarily indicates:
+278 [aerodromes      ] Taxiways are normally used to:
+279 [aerodromes      ] The manoeuvring area consists of:
+280 [aerodromes      ] A movement area incursion risk near an aerodrome is controlled by:
+281 [safety          ] If an RPAS operation could interfere with aircraft in an established traffic pattern, the pilot must:
+282 [regulations     ] Before a flight in controlled airspace, authorization should be checked for:
+283 [flight-planning ] A site survey should identify nearby heliports because:
+284 [safety          ] For an operation near uninvolved people, the pilot must:
+285 [flight-planning ] An emergency landing area should:
+286 [safety          ] If a crew member reports a crewed aircraft conflict, the RPAS PIC should:
+287 [maintenance     ] A low-battery return-to-home setting should be evaluated against:
+288 [flight-planning ] A strong headwind on the return leg increases the risk of:
+289 [flight-planning ] When flying near tall structures, turbulence can be:
+290 [maintenance     ] A pilot should not launch if:
+291 [regulations     ] Manufacturer operating limitations are:
+292 [flight-planning ] If weather deteriorates below the pilot's planned operating minima, the appropriate action is to:
+293 [flight-planning ] A first-aid kit and suitable fire extinguisher are examples of:
+294 [flight-planning ] Legal site access should be confirmed because:
+295 [regulations     ] The PIC remains responsible for the safe conduct of the RPAS flight even when:
+296 [abnormal        ] A contingency for GNSS loss should be based on:
+297 [abnormal        ] A contingency for C2 lost link should be tested/understood before flight because:
+298 [safety          ] The safest response to an unexpected person entering the operational area is to:
+299 [maintenance     ] After a hard landing or propeller strike, the aircraft should:
+300 [regulations     ] If the RPAS pilot cannot maintain the conditions of an ATS authorization during a controlled-airspace operation, the pilot should:
+301 [radio           ] The Restricted Operator Certificate-Aeronautical (ROC-A) authorizes a holder to:
+302 [radio           ] In standard radiotelephony, 'OUT' means:
+303 [radio           ] The international distress signal with highest priority is:
+304 [radio           ] The urgency signal is:
+305 [radio           ] A ROC-A holder should treat the certificate as:
+306 [radio           ] When broadcasting an urgency message to all stations, the address is:
+307 [radio           ] The procedural word 'ROGER' means:
+308 [radio           ] 'WILCO' means:
+309 [radio           ] 'AFFIRM' means:
+310 [radio           ] 'NEGATIVE' means:
+311 [radio           ] 'SAY AGAIN' means:
+312 [radio           ] 'STANDBY' means:
+313 [radio           ] 'CORRECTION' is used when:
+314 [radio           ] 'READ BACK' is an instruction to:
+315 [radio           ] Good radio technique uses:
+316 [radio           ] Before transmitting on a frequency, an operator should:
+317 [radio           ] The phonetic word for the letter A is:
+318 [radio           ] The phonetic word for B is:
+319 [radio           ] The phonetic word for C is:
+320 [radio           ] The phonetic word for D is:
+321 [radio           ] The phonetic word for E is:
+322 [radio           ] The phonetic word for F is:
+323 [radio           ] The phonetic word for G is:
+324 [radio           ] The phonetic word for H is:
+325 [radio           ] The phonetic word for I is:
+326 [radio           ] The phonetic word for J is:
+327 [radio           ] The phonetic word for K is:
+328 [radio           ] The phonetic word for L is:
+329 [radio           ] The phonetic word for M is:
+330 [radio           ] The phonetic word for N is:
+331 [radio           ] The phonetic word for O is:
+332 [radio           ] The phonetic word for P is:
+333 [radio           ] The phonetic word for Q is:
+334 [radio           ] The phonetic word for R is:
+335 [radio           ] The phonetic word for S is:
+336 [radio           ] The phonetic word for T is:
+337 [radio           ] The phonetic word for U is:
+338 [radio           ] The phonetic word for V is:
+339 [radio           ] The phonetic word for W is:
+340 [radio           ] The phonetic word for X is:
+341 [radio           ] The phonetic word for Y is:
+342 [radio           ] The phonetic word for Z is:
+343 [radio           ] In ICAO radiotelephony, a decimal point is spoken as:
+344 [radio           ] The digit 3 is commonly pronounced in ICAO aviation speech as:
+345 [radio           ] The digit 5 is commonly pronounced as:
+346 [radio           ] The digit 9 is commonly pronounced as:
+347 [radio           ] A routine initial radio call should normally include:
+348 [radio           ] If an RPAS flyaway creates an immediate collision hazard, an emergency broadcast should:
+349 [radio           ] 121.5 MHz is internationally recognized primarily as:
+350 [radio           ] In an MF area, the applicable frequency should be obtained from:

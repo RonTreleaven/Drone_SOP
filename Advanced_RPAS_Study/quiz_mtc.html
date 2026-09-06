@@ -138,15 +138,32 @@ function buildSourceLinkMap(references) {
   }
 }
 
+// Matches inline "CAR 901.27" / "CARs 901.27(4)(b)" citations so they can deep-link even when
+// a question has no separate structured carsSection field.
+const CAR_SECTION_RE = /\bCARs?\s+(\d{3}\.\d{1,3}(?:\(\d+\))?(?:\([a-z]\))?)/g;
+
+function linkifyCarSections(text) {
+  if (!text || !carsSectionUrlTemplate) return text;
+  return text.replace(CAR_SECTION_RE, (match, section) => {
+    const baseSection = section.match(/^\d{3}\.\d{1,3}/)[0];
+    const url = carsSectionUrlTemplate.replace("{section}", baseSection);
+    return `<a href="${url}" target="_blank" rel="noopener">${match}</a>`;
+  });
+}
+
 function linkifySource(text) {
-  if (!text || !sourceLinkPattern) return text;
-  return text.replace(sourceLinkPattern, match =>
+  if (!text) return text;
+  const withCarsLinks = linkifyCarSections(text);
+  if (!sourceLinkPattern) return withCarsLinks;
+  return withCarsLinks.replace(sourceLinkPattern, match =>
     `<a href="${sourceLinkMap[match]}" target="_blank" rel="noopener">${match}</a>`
   );
 }
 
-function carsSectionLink(section) {
+function carsSectionLink(section, sourceText) {
   if (!section || !carsSectionUrlTemplate) return "";
+  CAR_SECTION_RE.lastIndex = 0; // regex is reused with the global flag; reset before test()
+  if (sourceText && CAR_SECTION_RE.test(sourceText)) return "";
   const url = carsSectionUrlTemplate.replace("{section}", section);
   return ` &middot; <a href="${url}" target="_blank" rel="noopener">CARs ${section}</a>`;
 }
@@ -277,7 +294,7 @@ function showCurrent() {
     : "";
   document.getElementById("mtc-rationale").innerHTML =
     `<p><strong>Rationale:</strong> ${q.rationale}</p>` +
-    `<p class="meta">Source: ${linkifySource(q.source)}${carsSectionLink(q.carsSection)}${q.rpas101_reference ? ` &middot; RPAS 101: ${q.rpas101_reference}` : ""}</p>` +
+    `<p class="meta">Source: ${linkifySource(q.source)}${carsSectionLink(q.carsSection, q.source)}${q.rpas101_reference ? ` &middot; RPAS 101: ${q.rpas101_reference}` : ""}</p>` +
     quoteBlock;
 
   document.getElementById("mtc-prev-btn").disabled = index === 0;

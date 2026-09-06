@@ -1,0 +1,1781 @@
+Canadian Advanced RPAS — Validated MCQ Bank II
+Questions 101–350 • 250 additional multiple-choice questions • Current Canadian authority
+Scope
+This second volume completes the remaining 250 questions across Air Law 1-3/1-4, Meteorology 4-3/4-4, Navigation 5-1/5-2, Flight Operations 6-1/6-2 and Radiotelephony 8-1/8-2. Questions are normalized to current Canadian requirements and are not attributed to any secondary practice source.
+Authority hierarchy: Canadian Aviation Regulations (Justice Laws) for legal requirements; Transport Canada Standards 921/922 where applicable; TP 15263 Fourth Edition for Advanced knowledge objectives; TC AIM 2026-1 for operational procedures; and ISED RIC-21/ROC-A material for aeronautical radiotelephony.
+Authoritative reference index
+Canadian Aviation Regulations (SOR/96-433)
+TP 15263 — Advanced RPAS Knowledge Requirements
+TC AIM — main page
+TC AIM 2026-1 RAC — Rules of the Air and ATS
+TC AIM 2026-1 MET — Meteorology
+TC AIM 2026-1 COM — Communications
+TC AIM 2026-1 AGA — Aerodromes
+Standard 921 — Remotely Piloted Aircraft
+Standard 922 — RPAS Safety Assurance
+ISED — Restricted Operator Certificate Aeronautical (ROC-A)
+ISED RIC-21 — ROC-A Study Guide
+Section 1 — Air Law, Air Traffic Rules and Procedures (1-3 / 1-4)
+101. In Canadian Class D airspace, ATC normally provides separation between:
+A. IFR aircraft; VFR traffic receives traffic information and conflict-resolution assistance as workload permits
+B. All VFR aircraft
+C. VFR aircraft only
+D. No aircraft
+Answer: A. Class D permits IFR and VFR. IFR traffic receives ATC separation; VFR receives information and assistance rather than full VFR-to-VFR separation.
+Authority: TC AIM RAC - Airspace Classification
+102. Which flight rules are permitted in Class C airspace?
+A. IFR only
+B. Both IFR and VFR, subject to the applicable ATC requirements
+C. VFR only
+D. Military only
+Answer: B. Class C is controlled airspace used by both IFR and VFR traffic, with communications/clearance requirements.
+Authority: TC AIM RAC - Class C
+103. Before an Advanced RPAS operation enters controlled airspace, the RPAS pilot must obtain:
+A. A municipal permit
+B. Only an airport-manager email
+C. Authorization from the air traffic services provider responsible for the airspace
+D. A police clearance
+Answer: C. CAR 901.71 requires authorization from the applicable ATS provider before an Advanced RPAS operation in controlled airspace.
+Authority: CAR 901.71
+104. If ATS requires two-way aeronautical radio communications for an RPAS operation, the person operating the radio should hold:
+A. A marine ROC-M only
+B. No radio qualification
+C. A driver's licence
+D. The appropriate aeronautical radio operator qualification, such as ROC-A
+Answer: D. TP 15263 and ISED ROC-A material identify the aeronautical operator certificate as the applicable qualification for aeronautical-band voice radio operation.
+Authority: TP 15263 Section 8 / ISED ROC-A
+105. A VFR aircraft entering Class C airspace normally requires:
+A. An ATC clearance
+B. No communication
+C. Only a listening watch
+D. Only a flight service briefing
+Answer: A. Class C VFR entry is subject to ATC clearance and communications requirements.
+Authority: TC AIM RAC - Class C
+106. Where should a pilot verify the dimensions and classification of Canadian controlled airspace?
+A. An old road atlas
+B. Current aeronautical charts and publications such as the VNC/VTA, DAH and CFS
+C. A consumer weather app only
+D. Manufacturer warranty documents
+Answer: B. TP 15263 requires pilots to use current aeronautical charts and approved publications to identify airspace and aerodromes.
+Authority: TP 15263 Section 5 - Maps and Charts
+107. Before using an aerodrome for a crewed-aircraft takeoff or landing, the PIC must ensure:
+A. The runway is paved
+B. The aerodrome has a control tower
+C. The aerodrome is suitable for the intended operation
+D. The aerodrome is in Class C
+Answer: C. CAR and TC AIM aerodrome procedures place responsibility on the PIC to determine suitability for the intended operation.
+Authority: TC AIM RAC / AGA - Aerodrome Operations
+108. In Class C airspace, ATC separation is provided between:
+A. IFR aircraft only
+B. VFR aircraft only
+C. No aircraft
+D. IFR aircraft and, as prescribed, between IFR and VFR aircraft
+Answer: D. Class C provides a higher level of ATC service than Class D, including IFR/VFR separation as specified in the airspace rules.
+Authority: TC AIM RAC - Airspace Classification
+109. For an RPAS model subject to a safety-assurance declaration, information about hazards capable of causing serious injury belongs primarily in:
+A. Safety/operating documentation supporting the declared operation
+B. Advertising material
+C. The pilot's logbook only
+D. The airport CFS entry
+Answer: A. Standard 922 requires technical safety assurance and supporting documentation appropriate to the declared operation.
+Authority: Standard 922 - RPAS Safety Assurance
+110. A manufacturer/declarant must retain verification evidence primarily to demonstrate:
+A. Marketing performance
+B. Compliance of the RPAS model with the applicable technical requirements
+C. Pilot recency
+D. Airport access permission
+Answer: B. The declaration system depends on documented verification that the model meets the applicable Standard 922 requirements.
+Authority: CAR 901.194-901.201 / Standard 922
+111. A Class E control zone begins:
+A. At FL180
+B. At 12,500 ft AGL
+C. At the surface
+D. Only above 3,000 ft AGL
+Answer: C. A control zone, regardless of whether it is Class C, D or E, is controlled airspace extending upward from the surface; exact dimensions are published.
+Authority: TC AIM RAC - Control Zones
+112. An RPAS operating manual should identify the effects of foreseeable environmental conditions because:
+A. It is needed only for insurance
+B. It determines airport fees
+C. It replaces weather briefing
+D. Weather can affect aircraft, C2 link, sensors, batteries and pilot performance
+Answer: D. TP 15263 and Standard 922 require pilots/operators to understand environmental limitations and performance effects.
+Authority: TP 15263 / Standard 922
+113. In Southern Domestic Airspace, Class B airspace is generally found:
+A. From 12,500 ft ASL up to the floor of Class A where designated
+B. Only below 400 ft AGL
+C. Only in airport aprons
+D. Only above FL600
+Answer: A. TC AIM RAC describes Class B as controlled low-level airspace, generally from 12,500 ft ASL up to Class A where designated.
+Authority: TC AIM RAC - Class B
+114. Safety-related mandatory actions issued for an RPAS model are intended to:
+A. Set resale price
+B. Address identified conditions affecting continued safe operation
+C. Change pilot certificate privileges
+D. Replace the CFS
+Answer: B. The declaration/continued-safety framework requires safety-relevant actions and information to be maintained and communicated.
+Authority: CAR Part IX / Standard 922
+115. A control zone described as Class D normally extends:
+A. Only from 3,000 ft AGL upward
+B. Only above FL180
+C. From the surface to its published upper limit
+D. From 400 ft AGL to 1,000 ft AGL
+Answer: C. Control zones extend upward from the surface; their exact ceiling and lateral dimensions are published in aeronautical information.
+Authority: TC AIM RAC - Control Zones
+116. For a VFR crewed aircraft entering Class D airspace, the normal communication requirement is:
+A. Obtain an IFR clearance
+B. Make no radio contact
+C. Call the airport manager by phone after landing
+D. Establish two-way radio communication with the appropriate ATC unit before entry
+Answer: D. Class D VFR entry normally requires establishing two-way communication; unlike Class C, a specific VFR clearance is not generally the entry trigger.
+Authority: TC AIM RAC - Class D
+117. The normal altitude ceiling for an RPAS under CAR 901.25, absent an applicable exception or authorization, is:
+A. 400 ft AGL
+B. 300 ft AGL
+C. 500 ft AGL
+D. 1,000 ft AGL
+Answer: A. CAR 901.25 establishes the normal 400 ft AGL limit, with defined exceptions/authorization pathways.
+Authority: CAR 901.25
+118. At a controlled aerodrome, crewed aircraft must comply with:
+A. Only local road rules
+B. ATC clearances and instructions applicable to taxi, takeoff and landing
+C. RPAS-only rules
+D. No instructions when VFR
+Answer: B. Controlled aerodrome operations are subject to ATC clearances/instructions under CARs and TC AIM procedures.
+Authority: TC AIM RAC - Controlled Aerodromes
+119. Class C airspace boundaries are shown primarily on:
+A. Road maps
+B. Marine charts only
+C. Current VNC/VTA and other applicable aeronautical charts/publications
+D. Manufacturer maps
+Answer: C. TP 15263 requires Advanced pilots to identify controlled airspace from aeronautical charts.
+Authority: TP 15263 Section 5 - Maps and Charts
+120. Class A airspace in Canadian high-level airspace is reserved for:
+A. VFR traffic
+B. RPAS only
+C. Gliders only
+D. IFR traffic
+Answer: D. Class A is controlled high-level airspace in which only IFR operations are permitted.
+Authority: TC AIM RAC - Class A
+121. Terminal control areas classified as Class C:
+A. Have dimensions individually published; there is no single universal altitude band for every TCA
+B. Always extend surface to 3,000 ft AAE
+C. Always begin at 12,500 ft ASL
+D. Are uncontrolled
+Answer: A. Canadian controlled-airspace dimensions are designated and published; pilots must use current charts/DAH rather than assume a universal vertical range.
+Authority: TC AIM RAC / DAH principles
+122. An operation can require an SFOC-RPAS when:
+A. The pilot prefers paper authorization
+B. It falls within a category listed in CAR 903.01 or the Minister determines an SFOC is necessary for aviation safety
+C. The drone battery is below 50%
+D. The operation occurs on private property
+Answer: B. CAR 903.01 defines SFOC-required categories and includes Ministerial determination where necessary for aviation safety.
+Authority: CAR 903.01
+123. RPAS operation at an advertised event is governed through:
+A. A municipal noise bylaw only
+B. No aviation rule
+C. The applicable SFOC/event provisions of Part IX
+D. A Basic certificate automatically
+Answer: C. Advertised-event operations are among the special operations addressed by the SFOC framework.
+Authority: CAR 903.01 / Part IX
+124. The purpose of emergency/contingency procedures in an SFOC application is to:
+A. Choose camera settings
+B. Set pilot wages
+C. Determine weather history
+D. Define how abnormal and emergency situations will be managed safely
+Answer: D. CAR 903.02 requires operational and risk information sufficient to assess safe conduct, including emergency procedures where applicable.
+Authority: CAR 903.02
+125. The period for retaining safety-assurance records is determined by:
+A. The applicable CAR/Standard 922 record-retention provisions
+B. The first owner's preference
+C. A one-week minimum
+D. The airport manager
+Answer: A. Record retention is part of the regulatory declaration/verification framework and should be taken from the current CAR/Standard text.
+Authority: CAR 901.194-901.201 / Standard 922
+126. Some Class C or D control zones can change classification when the ATC unit closes. The pilot should determine the current status from:
+A. Assumption based on local time
+B. Published aeronautical information and any applicable NOTAMs
+C. A social-media post
+D. The drone's geofence only
+Answer: B. Airspace classification may be conditional on unit operating hours; pilots must use current published information and NOTAMs.
+Authority: TC AIM RAC / CFS
+127. Canadian Domestic Airspace is divided into:
+A. East and west only
+B. Controlled and uncontrolled only
+C. Northern Domestic Airspace and Southern Domestic Airspace
+D. Seven FIRs only
+Answer: C. TC AIM describes the NDA and SDA division, with different heading/reference conventions in northern regions.
+Authority: TC AIM RAC - Canadian Domestic Airspace
+128. ESCAT stands for:
+A. Emergency Scheduled Control of Air Transport
+B. Electronic Surveillance Control of Air Traffic
+C. Emergency Safety Communications and Tracking
+D. Emergency Security Control of Air Traffic
+Answer: D. ESCAT is the Emergency Security Control of Air Traffic plan.
+Authority: TC AIM RAC - ESCAT
+129. If ESCAT restrictions are activated, a pilot should:
+A. Comply with the published restrictions and obtain required ATS approval before flight
+B. Ignore them below 400 ft
+C. Continue VFR without contact
+D. Use only a police permit
+Answer: A. ESCAT can impose security controls on civil air traffic; compliance with ATS/security directions is mandatory.
+Authority: TC AIM RAC - ESCAT
+130. In Southern Domestic Airspace, Class A begins generally at:
+A. 12,500 ft AGL
+B. FL180
+C. 400 ft AGL
+D. FL600
+Answer: B. Class A in Southern Domestic Airspace generally begins at FL180.
+Authority: TC AIM RAC - Class A
+131. A two-way radio failure in controlled airspace requires the pilot of a transponder-equipped crewed aircraft to:
+A. Select 7500
+B. Select 7700 only in every case
+C. Follow lost-communications procedures and select code 7600 as applicable
+D. Turn off the transponder
+Answer: C. 7600 is the standard transponder code for radio communication failure; pilots must also follow the applicable lost-communications procedure.
+Authority: TC AIM COM/RAC - Communications Failure
+132. Knowingly removing or interfering with an aerodrome marker, marking, light or signal used for air navigation is:
+A. Permitted after dark
+B. Allowed for RPAS pilots
+C. A provincial matter only
+D. Prohibited except as authorized
+Answer: D. Aerodrome markings, lights and signals are protected safety infrastructure under Canadian aviation rules.
+Authority: CAR Part III / TC AIM AGA
+133. In much of Northern Domestic Airspace, navigation references use:
+A. True rather than magnetic directions because magnetic references become unreliable near the magnetic pole
+B. Only magnetic headings
+C. Grid headings in every location
+D. Runway numbers only
+Answer: A. TC AIM explains the use of true reference in NDA because of magnetic unreliability at high latitudes.
+Authority: TC AIM RAC - Northern Domestic Airspace
+134. A Class C control zone normally extends:
+A. From 3,000 ft to 12,500 ft AGL only
+B. From the surface to a published upper limit
+C. From 400 ft AGL only
+D. Only above FL180
+Answer: B. All control zones extend from the surface; exact upper/lateral limits are published.
+Authority: TC AIM RAC - Control Zones
+135. When aeronautical radio equipment is carried and its use is required, the operator must:
+A. Use it only after landing
+B. Listen but never transmit
+C. Maintain the required listening watch and establish/maintain communications as prescribed
+D. Use a cellular phone instead
+Answer: C. CAR/TC AIM radio procedures prescribe listening-watch and reporting/communication requirements in applicable airspace and MF areas.
+Authority: TC AIM COM/RAC
+136. Class E controlled airspace that is not a control zone:
+A. Always begins at 700 ft ASL everywhere
+B. Always begins at the surface
+C. Exists only above FL600
+D. May begin above the surface at a published floor; its exact dimensions must be verified from charts/publications
+Answer: D. Class E dimensions vary by designation; pilots must use current charts rather than memorize one universal floor.
+Authority: TC AIM RAC - Class E
+137. The transponder code 7600 signifies:
+A. Radio communications failure
+B. Unlawful interference
+C. General emergency
+D. VFR in Canada
+Answer: A. 7600 is the internationally recognized code for radio communications failure.
+Authority: TC AIM COM - SSR Codes
+138. Airspace class and dimensions should be confirmed using:
+A. A remembered value from an old exam
+B. Current DAH/chart/CFS/AIP information as applicable
+C. A drone sales brochure
+D. Satellite imagery alone
+Answer: B. TP 15263 explicitly requires use of current aeronautical charts and publications.
+Authority: TP 15263 Section 5
+139. An aerodrome traffic frequency (ATF) is used primarily to:
+A. Obtain IFR clearance worldwide
+B. Replace emergency frequency 121.5
+C. Facilitate traffic awareness and coordination at or near specified aerodromes where an MF is not in effect
+D. Control all Class A traffic
+Answer: C. TC AIM RAC describes ATF procedures for traffic coordination at certain uncontrolled aerodromes.
+Authority: TC AIM RAC - ATF
+140. At an aerodrome where an MF area is designated, pilots must:
+A. Use any frequency they prefer
+B. Remain radio silent
+C. Only call after landing
+D. Follow the mandatory listening and reporting procedures applicable to that MF area
+Answer: D. MF procedures are mandatory and are specified in CAR 602.97-602.103 and TC AIM RAC.
+Authority: CAR 602.97-602.103 / TC AIM RAC
+141. A NOTAM is used to distribute:
+A. Time-critical aeronautical information concerning facilities, services, procedures or hazards
+B. Long-term aircraft maintenance manuals
+C. Pilot licensing records
+D. Weather forecasts only
+Answer: A. NOTAMs provide timely operational information that may affect flight safety or operations.
+Authority: TC AIM MAP/RAC - NOTAM
+142. The PIC's responsibility to avoid creating a collision hazard applies:
+A. Only in uncontrolled airspace
+B. At all times, regardless of automation or ATC service
+C. Only above 400 ft AGL
+D. Only to crewed aircraft
+Answer: B. CAR Part IX and general rules impose continuing collision-avoidance responsibility on the RPAS pilot.
+Authority: CAR 901.18 / 901.47 context
+143. Within 3 NM of the centre of a DND aerodrome, an RPAS pilot needs:
+A. Only Advanced certification
+B. Only NAV CANADA authorization
+C. Authorization from the Department of National Defence
+D. No special action below 400 ft
+Answer: C. CAR 901.47(4) specifically requires DND authorization for RPAS operations within 3 NM of a DND aerodrome.
+Authority: CAR 901.47(4)
+144. A declared RPAS model used for an Advanced operation must:
+A. Be painted a specific colour
+B. Always weigh under 1 kg
+C. Carry a crewed-aircraft transponder
+D. Meet the technical requirements applicable to the intended operation under the declaration/Standard 922 framework
+Answer: D. The declaration identifies the technical capabilities for which the model has been shown to comply.
+Authority: CAR 901.194 / Standard 922
+145. If a modification changes an RPAS so it no longer conforms to its declared technical basis, the operator should:
+A. Not rely on the declaration for that capability until conformity/approval is restored
+B. Ignore the change if flight seems normal
+C. Continue because declarations never change
+D. Only update the pilot log
+Answer: A. Safety assurance depends on the configuration continuing to meet the declared technical requirements.
+Authority: Standard 922 / CAR declaration framework
+146. A control zone is:
+A. Any airspace below 400 ft
+B. Controlled airspace extending upward from the surface around an aerodrome
+C. Only Class C airspace
+D. A temporary NOTAM area
+Answer: B. TC AIM defines control zones as controlled airspace extending upward from the surface, normally around aerodromes.
+Authority: TC AIM RAC - Control Zones
+147. The difference between an aerodrome and an airport is that:
+A. They are always identical terms
+B. Only heliports are aerodromes
+C. An airport is an aerodrome for which an airport certificate is in force; aerodrome is the broader term
+D. Only military fields are aerodromes
+Answer: C. The Aeronautics Act/CAR framework uses aerodrome broadly and airport for a certified aerodrome.
+Authority: Aeronautics Act definitions / CAR Part III
+148. A pilot planning an Advanced RPAS flight near an aerodrome should check:
+A. Only the weather
+B. Only the drone map
+C. Only property ownership
+D. Airspace class, published aerodrome data, traffic procedures, NOTAMs and required authorization
+Answer: D. TP 15263 requires integration of charts, CFS/AIP information, airspace, aerodrome procedures and operational hazards.
+Authority: TP 15263 Sections 1, 5 and 6
+149. If an ATS authorization includes conditions, the RPAS pilot must:
+A. Comply with those conditions throughout the operation
+B. Treat them as optional
+C. Follow only manufacturer conditions
+D. Comply only above 400 ft
+Answer: A. Controlled-airspace authorization under CAR 901.71 is operational authority subject to the terms imposed by ATS.
+Authority: CAR 901.71
+150. Which source has the highest legal authority for a CAR requirement?
+A. A flight-school blog
+B. The current Canadian Aviation Regulations published by Justice Laws
+C. An app summary
+D. A forum post
+Answer: B. The CARs are the legal regulation; guidance such as TC AIM explains procedures but is not itself the regulation.
+Authority: Canadian Aviation Regulations
+
+Section 4 — Meteorology (4-3 / 4-4)
+151. Which weather phenomenon normally presents the broadest combination of severe aviation hazards?
+A. Light drizzle
+B. Thunderstorms
+C. Thin cirrus
+D. A weak ridge
+Answer: B. Thunderstorms can combine turbulence, lightning, hail, heavy precipitation, icing, wind shear and microbursts.
+Authority: TP 15263 Section 4 - Thunderstorms
+152. A gust front is:
+A. The centre of a high-pressure system
+B. A warm front above 10,000 ft
+C. The leading edge of cool outflow spreading outward from a thunderstorm
+D. A fog bank
+Answer: C. Thunderstorm downdraft outflow can produce a sharp wind shift and strong gusts ahead of the storm.
+Authority: TP 15263 Section 4 - Thunderstorms
+153. Approximately 78% of dry air is:
+A. Oxygen
+B. Carbon dioxide
+C. Argon
+D. Nitrogen
+Answer: D. Nitrogen is the dominant constituent of dry air.
+Authority: TP 15263 Section 4 - Atmosphere
+154. In Canadian METARs, prevailing visibility is normally reported in:
+A. Statute miles
+B. Nautical miles
+C. Feet
+D. Kilometres only
+Answer: A. Canadian METAR visibility is commonly expressed in statute miles, with metric conventions used for certain runway visual range products.
+Authority: TC AIM MET - METAR
+155. A surface high-pressure system is generally associated with:
+A. Strong persistent ascent at its centre
+B. Subsiding air and low-level divergence
+C. A mandatory thunderstorm
+D. A warm front at its centre
+Answer: B. High-pressure systems feature sinking motion and outward surface flow, generally favouring stability.
+Authority: TP 15263 Section 4 - Pressure Systems
+156. A microburst is especially hazardous because it can produce:
+A. Only high cloud
+B. Stable calm air
+C. Severe localized wind shear and rapidly changing wind
+D. A constant tailwind
+Answer: C. Microbursts create intense downdrafts and divergent surface winds over a small area.
+Authority: TP 15263 Section 4 - Thunderstorm Hazards
+157. A SIGMET is intended to advise of:
+A. Routine surface observations only
+B. Airport opening hours
+C. Pilot licensing changes
+D. Significant en-route weather phenomena potentially hazardous to aircraft
+Answer: D. SIGMETs provide warnings of significant meteorological phenomena hazardous to aviation.
+Authority: TC AIM MET - SIGMET
+158. A METAR is primarily:
+A. A routine aviation weather observation for an aerodrome/station
+B. A 24-hour flight plan
+C. A NOTAM
+D. A long-range seasonal forecast
+Answer: A. METAR is the standard routine aerodrome weather report.
+Authority: TC AIM MET - METAR
+159. A SPECI is:
+A. A six-hour forecast
+B. A special weather report issued when specified significant changes occur
+C. A radio licence
+D. A chart amendment
+Answer: B. SPECI is a special aerodrome meteorological report triggered by specified criteria.
+Authority: TC AIM MET - SPECI
+160. The code 'BKN' in a METAR means:
+A. Clear below 10,000 ft
+B. Scattered cloud, 1/8 to 2/8
+C. Broken cloud, 5/8 to 7/8 sky cover
+D. Overcast, 8/8
+Answer: C. BKN denotes broken cloud coverage, an aviation ceiling layer when applicable.
+Authority: TC AIM MET - METAR Cloud Amount
+161. The code 'OVC' means:
+A. Observed visibility clear
+B. Overrunning convection
+C. Outside visual conditions
+D. Overcast
+Answer: D. OVC indicates 8/8 cloud coverage.
+Authority: TC AIM MET - METAR Cloud Amount
+162. A ceiling is based on:
+A. The lowest BKN or OVC layer, or vertical visibility into an obscuration, as applicable
+B. The highest cloud layer
+C. Any FEW layer
+D. Only cirrus
+Answer: A. Aviation ceiling is the height of the lowest broken/overcast layer or vertical visibility into an obscuration.
+Authority: TC AIM MET - Ceiling
+163. The dewpoint spread becomes smaller as:
+A. Air becomes much drier
+B. Air approaches saturation
+C. Pressure altitude becomes zero
+D. Wind becomes calm
+Answer: B. Temperature approaching dewpoint indicates rising relative humidity and increased likelihood of cloud/fog.
+Authority: TP 15263 Section 4 - Moisture
+164. Radiation fog is most favoured by:
+A. Strong wind and dry air
+B. Hot dry afternoons
+C. Clear skies, light wind, moist low-level air and nighttime surface cooling
+D. Deep frontal mixing
+Answer: C. Radiational cooling under light winds can cool near-surface air to saturation.
+Authority: TP 15263 Section 4 - Fog
+165. Advection fog forms when:
+A. Cold air descends a mountain
+B. A thunderstorm downdraft reaches the ground
+C. Ice crystals fall from cirrus
+D. Moist air moves over a colder surface and is cooled to saturation
+Answer: D. Advection transports moist air over a cold surface, cooling it toward dewpoint.
+Authority: TP 15263 Section 4 - Fog
+166. Upslope fog/cloud can develop when:
+A. Moist air is forced to rise along terrain and cools adiabatically
+B. Dry air sinks
+C. Pressure rises suddenly
+D. A sea breeze stops
+Answer: A. Orographic ascent cools air and can produce saturation/cloud.
+Authority: TP 15263 Section 4 - Orographic Lift
+167. A cold front normally has:
+A. Warm air replacing cold air with no lifting
+B. Advancing colder air undercutting warmer air
+C. No wind shift
+D. Only high cloud
+Answer: B. Cold fronts are boundaries where colder air advances, forcing warmer air upward.
+Authority: TP 15263 Section 4 - Fronts
+168. Compared with a warm front, a cold front commonly produces:
+A. Only gradual layered cloud
+B. No precipitation
+C. A narrower band of more abrupt weather and stronger wind shifts
+D. No turbulence
+Answer: C. Cold fronts often have steeper slopes and more abrupt weather changes.
+Authority: TP 15263 Section 4 - Fronts
+169. A warm front is characterized by:
+A. Cold air undercutting warm air
+B. Only convective cloud
+C. No cloud sequence
+D. Warm air advancing and overrunning retreating colder air
+Answer: D. Warm frontal lifting is gradual and often produces layered cloud/precipitation.
+Authority: TP 15263 Section 4 - Fronts
+170. An occluded front develops when:
+A. A cold front overtakes a warm front
+B. Two highs merge
+C. A sea breeze reverses
+D. Fog lifts
+Answer: A. Occlusion occurs as the faster-moving cold front catches the warm front.
+Authority: TP 15263 Section 4 - Fronts
+171. A TROWAL is:
+A. A thunderstorm downdraft
+B. A trough of warm air aloft associated with an occluded system
+C. A runway wind report
+D. A radar outage
+Answer: B. TROWAL means trough of warm air aloft, an important feature of occluded cyclones.
+Authority: TC AIM MET - GFA/Fronts
+172. The GFA system divides Canada into:
+A. Five regions
+B. Ten regions
+C. Seven forecast regions
+D. Twelve regions
+Answer: C. The Canadian Graphic Area Forecast program uses seven GFA regions.
+Authority: TC AIM MET - GFA
+173. Convection is vertical motion caused primarily by:
+A. Magnetic variation
+B. Runway slope
+C. Satellite geometry
+D. Unequal heating and buoyancy, with warm air rising
+Answer: D. Surface heating can create buoyant thermals and convective cloud.
+Authority: TP 15263 Section 4 - Lifting Processes
+174. Orographic lift occurs when:
+A. Air is forced upward by rising terrain
+B. Air sinks behind a front
+C. Wind stops
+D. Pressure is constant
+Answer: A. Terrain mechanically forces air to rise and cool.
+Authority: TP 15263 Section 4 - Lifting Processes
+175. TAFs are normally issued on a scheduled cycle:
+A. Only once per week
+B. At specified routine times, commonly every six hours for many Canadian TAF locations
+C. Only after a pilot asks
+D. Every 15 minutes
+Answer: B. TAFs are scheduled aerodrome forecasts; issue frequency/validity is specified in Canadian meteorological services.
+Authority: TC AIM MET - TAF
+176. A TAF describes expected weather:
+A. Across an entire FIR only
+B. Only at the runway threshold
+C. At and in the vicinity of a specified aerodrome for a defined validity period
+D. For the next month
+Answer: C. TAFs are terminal aerodrome forecasts with a defined validity period.
+Authority: TC AIM MET - TAF
+177. The group 'TEMPO' in a TAF indicates:
+A. A permanent change
+B. The end of the forecast
+C. A NOTAM reference
+D. Temporary fluctuations expected during the stated period
+Answer: D. TEMPO identifies temporary forecast conditions expected to occur for limited portions of the period.
+Authority: TC AIM MET - TAF Change Groups
+178. The group 'BECMG' in a TAF indicates:
+A. Conditions expected to become the stated values during the indicated period
+B. A thunderstorm only
+C. No change
+D. A cancelled forecast
+Answer: A. BECMG denotes a gradual or indeterminate-time transition within the stated period.
+Authority: TC AIM MET - TAF Change Groups
+179. The group 'FM' in a TAF indicates:
+A. A temporary fluctuation
+B. A relatively rapid change beginning at the specified time
+C. Fog only
+D. Freezing rain only
+Answer: B. FM marks a new forecast condition beginning from a specified time.
+Authority: TC AIM MET - TAF Change Groups
+180. A GFA Clouds and Weather chart includes:
+A. Only upper winds
+B. Only NOTAMs
+C. Major cloud, precipitation, visibility and weather features for the forecast region
+D. Only airport diagrams
+Answer: C. The GFA Clouds and Weather chart depicts significant cloud/weather conditions over the region.
+Authority: TC AIM MET - GFA
+181. A GFA Icing, Turbulence and Freezing Level chart includes:
+A. Runway lighting
+B. Airspace classes
+C. Radio frequencies
+D. Forecast icing/turbulence areas and freezing-level information
+Answer: D. The companion GFA chart focuses on icing, turbulence and freezing levels.
+Authority: TC AIM MET - GFA
+182. The freezing level is:
+A. The altitude at which the air temperature is 0°C
+B. The altitude where all clouds stop
+C. Always 10,000 ft ASL
+D. The runway elevation
+Answer: A. Freezing-level information is important for icing assessment.
+Authority: TC AIM MET - Freezing Level
+183. Structural icing requires:
+A. Clear skies only
+B. Visible moisture and an aircraft surface at or below freezing under suitable conditions
+C. A temperature above 20°C
+D. Dry desert air
+Answer: B. Icing generally requires supercooled liquid water/visible moisture and a sufficiently cold surface.
+Authority: TP 15263 Section 4 - Icing
+184. Freezing rain is especially hazardous because:
+A. It always evaporates
+B. It cannot affect rotors
+C. Supercooled large droplets can freeze on contact and produce rapid clear-ice accretion
+D. It occurs only above FL180
+Answer: C. Freezing rain can generate severe clear icing and is a major aviation hazard.
+Authority: TC AIM MET - Icing/Freezing Precipitation
+185. Mechanical turbulence is often strongest:
+A. Over smooth water in calm air
+B. Only above the tropopause
+C. At the centre of a high
+D. Downwind of rough terrain, buildings and obstacles in strong wind
+Answer: D. Surface roughness and obstacles disrupt airflow and create eddies/turbulence.
+Authority: TP 15263 Section 4 - Turbulence
+186. Wind shear is:
+A. A change in wind speed and/or direction over a relatively short distance
+B. A constant wind
+C. Only a change in pressure
+D. The same as drift
+Answer: A. Wind shear can be vertical or horizontal and is especially important near the ground and convection.
+Authority: TP 15263 Section 4 - Wind Shear
+187. A stable atmosphere tends to favour:
+A. Strong thermals and towering cumulus
+B. Stratiform cloud, smoother air and limited vertical mixing
+C. Unlimited vertical mixing
+D. Microbursts by definition
+Answer: B. Stable air resists vertical displacement and favours layered cloud.
+Authority: TP 15263 Section 4 - Stability
+188. An unstable atmosphere tends to favour:
+A. Only fog
+B. No cloud
+C. Vertical motion, turbulence and convective cloud
+D. Only smooth laminar flow
+Answer: C. Instability supports rising parcels and convection.
+Authority: TP 15263 Section 4 - Stability
+189. A temperature inversion is a layer where:
+A. Pressure increases with height normally
+B. Wind is zero
+C. Dewpoint is always 0°C
+D. Temperature increases with height
+Answer: D. An inversion reverses the normal lapse-rate sign and usually indicates stability.
+Authority: TP 15263 Section 4 - Inversions
+190. A strong inversion near the surface can:
+A. Trap smoke, haze and pollutants and reduce visibility
+B. Guarantee unlimited visibility
+C. Eliminate fog
+D. Increase vertical mixing
+Answer: A. Stable inversions suppress vertical mixing and can trap particulates/moisture.
+Authority: TP 15263 Section 4 - Stability
+191. A sea breeze normally develops because:
+A. Water heats faster than land at night
+B. Land heats faster than adjacent water, producing an onshore daytime pressure gradient
+C. The Coriolis force stops
+D. Clouds pull air inland
+Answer: B. Differential daytime heating drives local onshore circulation.
+Authority: TP 15263 Section 4 - Local Winds
+192. A land breeze normally occurs:
+A. Only at noon
+B. Only in winter storms
+C. At night when land cools faster than water and flow may be offshore
+D. Only above 10,000 ft
+Answer: C. Nighttime differential cooling can reverse the local pressure gradient.
+Authority: TP 15263 Section 4 - Local Winds
+193. Katabatic wind is:
+A. Warm air rising a slope
+B. A jet stream
+C. A sea breeze
+D. Cold dense air flowing downslope under gravity
+Answer: D. Katabatic winds are downslope drainage flows of dense cold air.
+Authority: TP 15263 Section 4 - Local Winds
+194. Anabatic wind is:
+A. Upslope flow produced by daytime heating of terrain
+B. Downslope cold drainage
+C. A frontal jet
+D. A thunderstorm outflow
+Answer: A. Solar heating of slopes can produce upslope anabatic flow.
+Authority: TP 15263 Section 4 - Local Winds
+195. The closer together isobars are on a surface chart, the stronger the:
+A. Dewpoint spread
+B. Pressure gradient and generally the wind
+C. Cloud ceiling
+D. GPS signal
+Answer: B. A tighter pressure gradient generally supports stronger winds.
+Authority: TP 15263 Section 4 - Pressure Systems
+196. Surface winds around a low in the Northern Hemisphere tend to:
+A. Spiral outward clockwise
+B. Flow straight outward
+C. Spiral inward counter-clockwise
+D. Remain calm
+Answer: C. Friction and Coriolis combine to produce counter-clockwise convergent flow around lows in the Northern Hemisphere.
+Authority: TP 15263 Section 4 - Pressure Systems
+197. Surface winds around a high in the Northern Hemisphere tend to:
+A. Spiral inward counter-clockwise
+B. Always blow north
+C. Remain calm
+D. Spiral outward clockwise
+Answer: D. Highs are characterized by clockwise divergent flow in the Northern Hemisphere.
+Authority: TP 15263 Section 4 - Pressure Systems
+198. A PIREP is:
+A. A pilot report of observed in-flight weather conditions
+B. A terminal forecast
+C. A maintenance release
+D. A NOTAM
+Answer: A. PIREPs provide real-time pilot observations of weather such as turbulence, icing and cloud conditions.
+Authority: TC AIM MET - PIREP
+199. AIRMET information addresses:
+A. Runway closures only
+B. Specified potentially hazardous weather of lower intensity/coverage than SIGMET criteria but operational significance
+C. Aircraft registration
+D. Pilot licensing
+Answer: B. AIRMETs provide advisory information on specified weather hazards relevant to aviation.
+Authority: TC AIM MET - AIRMET
+200. Before an RPAS flight, weather assessment should include:
+A. Only temperature
+B. Only sunrise time
+C. Current observations, forecasts, wind/gusts, visibility, cloud, precipitation, convective hazards and changes during the operation
+D. Only a consumer weather icon
+Answer: C. TP 15263 requires pilots to assess meteorological conditions and their operational effects.
+Authority: TP 15263 Section 4 / Section 6
+
+Section 5 — Navigation (5-1 / 5-2)
+201. Which GNSS constellation was developed by the United States?
+A. Galileo
+B. BeiDou
+C. GPS
+D. GLONASS
+Answer: C. GPS is the United States Global Positioning System; other global constellations include Galileo, BeiDou and GLONASS.
+Authority: TP 15263 Section 5 - GNSS
+202. Compass deviation is:
+A. The angle between true and magnetic north
+B. Wind drift
+C. Ground track
+D. The error between a magnetic compass indication and magnetic heading caused by local magnetic influences
+Answer: D. Deviation is compass error produced by magnetic influences associated with the vehicle/equipment.
+Authority: TP 15263 Section 5 - Definitions
+203. Because radio signals travel near the speed of light, a timing error of 0.001 s corresponds to a range error of roughly:
+A. 300 km
+B. 30 km
+C. 3 km
+D. 300 m
+Answer: A. At about 300,000 km/s, one millisecond corresponds to roughly 300 km of propagation distance.
+Authority: TP 15263 Section 5 - GNSS Principles
+204. Magnetic variation is:
+A. Compass installation error
+B. The horizontal angle between true north and magnetic north
+C. The difference between airspeed and groundspeed
+D. A radio-frequency shift
+Answer: B. Variation describes the geographic difference between true and magnetic north.
+Authority: TP 15263 Section 5 - Definitions
+205. Latitude measures angular position:
+A. East or west of Greenwich
+B. Above sea level
+C. North or south of the equator
+D. Relative to magnetic north
+Answer: C. Latitude is angular distance north/south of the equator.
+Authority: TP 15263 Section 5 - Definitions
+206. Longitude measures angular position:
+A. North or south of the equator
+B. Above ground
+C. Relative to a runway
+D. East or west of the prime meridian
+Answer: D. Longitude is angular distance east/west of the prime meridian.
+Authority: TP 15263 Section 5 - Definitions
+207. A track is:
+A. The path of an aircraft over the surface of the Earth
+B. The direction the nose points only
+C. A compass error
+D. A radio bearing only
+Answer: A. Track describes the actual/intended path over the ground.
+Authority: TP 15263 Section 5 - Definitions
+208. Heading is:
+A. The ground path only
+B. The direction in which the aircraft's longitudinal axis/nose is pointed
+C. Distance travelled
+D. Wind speed
+Answer: B. Heading is aircraft orientation; track may differ because of wind.
+Authority: TP 15263 Section 5 - Definitions
+209. Drift angle is caused primarily by:
+A. Magnetic variation only
+B. GPS clock error
+C. Wind displacing the aircraft from the heading toward a different track
+D. Altitude
+Answer: C. Crosswind creates an angular difference between heading and track.
+Authority: TP 15263 Section 5 - Definitions
+210. Groundspeed is:
+A. Always equal to indicated airspeed
+B. Wind speed
+C. Rotor speed
+D. The aircraft's speed relative to the ground
+Answer: D. Groundspeed is the rate of movement over the ground and reflects the wind effect on airspeed.
+Authority: TP 15263 Section 5 - Pilot Navigation
+211. A headwind generally causes groundspeed to:
+A. Decrease relative to true airspeed
+B. Increase
+C. Remain identical
+D. Become zero in every case
+Answer: A. Headwind subtracts from the aircraft's progress over the ground.
+Authority: TP 15263 Section 5 - Airspeed vs Groundspeed
+212. A tailwind generally causes groundspeed to:
+A. Decrease
+B. Increase relative to true airspeed
+C. Remain identical
+D. Become negative
+Answer: B. Tailwind adds to movement over the ground.
+Authority: TP 15263 Section 5 - Airspeed vs Groundspeed
+213. A VNC is designed primarily for:
+A. Airport apron control
+B. Only IFR high-level routes
+C. Visual navigation over broader areas at a scale suitable for VFR planning
+D. Weather radar
+Answer: C. VNC charts support visual navigation and airspace/topographic interpretation.
+Authority: TP 15263 Section 5 - Aeronautical Charts
+214. A VTA provides:
+A. Only oceanic routes
+B. Only weather
+C. Only NOTAMs
+D. More detailed visual navigation information around selected terminal areas
+Answer: D. VTAs are larger-scale terminal-area visual charts for complex airspace/terrain near major centres.
+Authority: TP 15263 Section 5 - Aeronautical Charts
+215. Contour lines on a topographic/aeronautical chart join points of:
+A. Equal elevation
+B. Equal pressure
+C. Equal temperature
+D. Equal magnetic variation
+Answer: A. Contours depict terrain elevation and relief.
+Authority: TP 15263 Section 5 - Maps and Charts
+216. Closely spaced contour lines indicate:
+A. Flat terrain
+B. Steep terrain
+C. Low pressure
+D. Strong wind
+Answer: B. Rapid elevation change over short horizontal distance produces close contours.
+Authority: TP 15263 Section 5 - Maps and Charts
+217. Before relying on an aeronautical chart, a pilot should verify:
+A. Only its colour
+B. The printer brand
+C. Its edition/currency and applicable updates
+D. The pilot's licence number
+Answer: C. TP 15263 requires determining validity/currency of aeronautical charts.
+Authority: TP 15263 Section 5 - Maps and Charts
+218. The Canada Flight Supplement is used to obtain:
+A. Only weather radar images
+B. Only pilot licensing rules
+C. Only aircraft specifications
+D. Aerodrome/facility data, communications and operational information
+Answer: D. The CFS is a key aeronautical publication for Canadian aerodrome/facility information.
+Authority: TP 15263 Section 5 - CFS
+219. UTC is used in aviation because it:
+A. Provides a common time reference independent of local time zones
+B. Changes with each province
+C. Uses magnetic north
+D. Is tied to runway headings
+Answer: A. A common global time standard avoids ambiguity in aviation operations.
+Authority: TP 15263 Section 5 - Time and Longitude
+220. To convert Toronto EDT (UTC-4) 14:00 local to UTC, use:
+A. 10:00 UTC
+B. 18:00 UTC
+C. 14:00 UTC
+D. 22:00 UTC
+Answer: B. During EDT, add four hours to local time to obtain UTC.
+Authority: TP 15263 Section 5 - UTC Conversion
+221. To convert Toronto EST (UTC-5) 14:00 local to UTC, use:
+A. 09:00 UTC
+B. 14:00 UTC
+C. 19:00 UTC
+D. 20:00 UTC
+Answer: C. During EST, add five hours to local time to obtain UTC.
+Authority: TP 15263 Section 5 - UTC Conversion
+222. A bearing is:
+A. Aircraft speed
+B. Altitude above ground
+C. Cloud amount
+D. The horizontal direction from one point to another, expressed relative to a reference north
+Answer: D. Bearing is a direction to/from a point.
+Authority: TP 15263 Section 5 - Definitions
+223. When applying variation to convert a true direction to magnetic, the pilot must:
+A. Use the local variation value and its east/west sense correctly
+B. Always add 10 degrees
+C. Ignore variation in Canada
+D. Use compass deviation instead
+Answer: A. True/magnetic conversion depends on the local published variation.
+Authority: TP 15263 Section 5 - Variation
+224. RTK GNSS can provide:
+A. Only 10-km accuracy
+B. Centimetre-level positioning under suitable conditions using carrier-phase corrections
+C. No altitude information
+D. Only magnetic heading
+Answer: B. Real-Time Kinematic methods use correction data/carrier-phase processing for high-precision positioning.
+Authority: TP 15263 Section 5 - GNSS Augmentation
+225. DGPS improves GNSS accuracy by:
+A. Increasing aircraft power
+B. Changing magnetic variation
+C. Applying corrections derived from a known reference position
+D. Using barometric altitude only
+Answer: C. Differential corrections reduce common GNSS errors.
+Authority: TP 15263 Section 5 - GNSS
+226. GNSS performance can degrade because of:
+A. Only high humidity
+B. Only low battery temperature
+C. Runway lighting
+D. Poor satellite geometry, signal blockage, interference or jamming
+Answer: D. TP 15263 requires pilots to understand GNSS signal loss/interference and satellite geometry.
+Authority: TP 15263 Section 5 - GNSS
+227. Multipath GNSS error occurs when:
+A. Signals reflect from surfaces and reach the antenna by multiple paths
+B. The battery is low
+C. The compass is uncalibrated
+D. The aircraft is stationary
+Answer: A. Reflected GNSS signals can distort measured travel time and position.
+Authority: TP 15263 Section 5 - GNSS
+228. Loss of GNSS during an RPAS flight can affect:
+A. Only camera colour
+B. Position hold, navigation, geofencing and automated return functions depending on system design
+C. Only registration
+D. Only radio licensing
+Answer: B. Pilots must understand how GNSS loss affects the aircraft's specific flight-control modes.
+Authority: TP 15263 Section 5 - GNSS Loss
+229. ADS-B stands for:
+A. Air Data Signal Beacon
+B. Automatic Drone Separation-Band
+C. Automatic Dependent Surveillance-Broadcast
+D. Aerodrome Direction Service-Broadcast
+Answer: C. ADS-B is a surveillance technology in which aircraft broadcast position/identity derived from onboard navigation.
+Authority: TP 15263 Section 5 - Other Radio/Radar Aids
+230. ADS-B 'dependent' means the surveillance data depends on:
+A. Ground radar only
+B. Pilot voice estimates
+C. Runway lights
+D. Onboard navigation sources such as GNSS
+Answer: D. ADS-B position reports depend on onboard navigation data.
+Authority: TC AIM COM - Surveillance
+231. An ATC transponder responds to:
+A. Interrogations from surveillance systems by transmitting coded information
+B. Weather radar only
+C. GNSS satellites
+D. VHF voice calls
+Answer: A. A transponder supports cooperative surveillance by replying to interrogations.
+Authority: TP 15263 Section 5 - ATC Transponder
+232. VOR stands for:
+A. Variable Output Radar
+B. VHF Omnidirectional Range
+C. Visual Orientation Receiver
+D. Vertical Orbital Radio
+Answer: B. VOR is a VHF radio navigation aid providing azimuth information.
+Authority: TP 15263 Section 5 - Radio Navigation Aids
+233. VHF propagation for aeronautical communications is predominantly:
+A. Ground wave around the Earth indefinitely
+B. Ionospheric skywave only
+C. Line of sight
+D. Underwater
+Answer: C. VHF range is largely limited by radio horizon/line-of-sight geometry.
+Authority: TP 15263 Section 5 - Radio Theory
+234. Increasing antenna height generally:
+A. Always reduces range
+B. Has no effect
+C. Changes magnetic variation
+D. Increases VHF line-of-sight radio range
+Answer: D. Higher antennas increase the radio horizon.
+Authority: TP 15263 Section 5 - Radio Theory
+235. Buildings, terrain and the aircraft itself can affect RF links by:
+A. Blocking, reflecting or attenuating signals
+B. Changing UTC
+C. Changing true north
+D. Creating pressure altitude
+Answer: A. RF propagation can be impaired by obstruction, shadowing and multipath.
+Authority: TP 15263 Section 5 - RF Environment
+236. An RF spectrum analyzer can help an RPAS operator:
+A. Measure runway slope
+B. Identify signal activity/interference across frequencies
+C. Calculate dewpoint
+D. Determine magnetic variation
+Answer: B. TP 15263 explicitly includes assessing RF environments and the function of spectrum analyzers.
+Authority: TP 15263 Section 5 - Radio Theory
+237. Command-and-control link interference can result in:
+A. Higher air density
+B. Better GNSS geometry
+C. Latency, packet loss, degraded control or lost-link behaviour
+D. Lower wind
+Answer: C. RF interference can compromise the C2 link; pilots must understand system-specific lost-link behaviour.
+Authority: TP 15263 Sections 5 and 6
+238. A flight planning area should be rejected or modified if:
+A. It lacks a scenic view
+B. The pilot has extra batteries
+C. The drone has GPS
+D. Airspace, obstacles, people, property/access or RF/weather risks cannot be acceptably controlled
+Answer: D. TP 15263 requires evaluation of airspace, site access, hazards, weather and operational constraints.
+Authority: TP 15263 Sections 5 and 6
+239. The distance between two latitude points is useful because one minute of latitude is approximately:
+A. One nautical mile
+B. One statute mile exactly
+C. Ten nautical miles
+D. One kilometre
+Answer: A. The nautical mile is historically tied to one minute of latitude.
+Authority: TP 15263 Section 5 - Scale and Units
+240. One nautical mile equals approximately:
+A. 1.000 km
+B. 1.852 km
+C. 1.609 km
+D. 2.500 km
+Answer: B. The international nautical mile is exactly 1,852 metres.
+Authority: TP 15263 Section 5 - Units
+241. One statute mile equals approximately:
+A. 1.852 km
+B. 2.000 km
+C. 1.609 km
+D. 0.852 km
+Answer: C. One statute mile is approximately 1.609 kilometres.
+Authority: TP 15263 Section 5 - Units
+242. A chart scale of 1:500,000 means:
+A. 500,000 cm on chart equals 1 cm ground
+B. One inch equals 500 km exactly
+C. Scale is irrelevant
+D. One unit on the chart represents 500,000 of the same units on the ground
+Answer: D. Representative fraction scales compare identical units.
+Authority: TP 15263 Section 5 - Scale
+243. When planning a route near controlled airspace, the pilot should:
+A. Plot the operating area against current charted boundaries and verify required ATS authorization
+B. Rely only on the drone's map
+C. Assume 400 ft AGL is always uncontrolled
+D. Ignore vertical boundaries
+Answer: A. Advanced pilots must identify airspace class/proximity and comply with CAR 901.71.
+Authority: TP 15263 Section 5 / CAR 901.71
+244. Magnetic heading differs from true heading primarily because of:
+A. Wind only
+B. Magnetic variation, with compass deviation additionally affecting compass indication
+C. Groundspeed
+D. Altitude
+Answer: B. Variation converts true/magnetic references; deviation affects the compass itself.
+Authority: TP 15263 Section 5 - Variation/Deviation
+245. If a strong crosswind exists, maintaining a desired ground track generally requires:
+A. Pointing directly downwind
+B. Ignoring heading
+C. A wind-correction angle into the wind
+D. Reducing altitude only
+Answer: C. A crab/wind-correction angle counters lateral drift.
+Authority: TP 15263 Section 5 - Pilot Navigation
+246. For RPAS range/endurance planning, a strong outbound tailwind can be deceptive because:
+A. Tailwind always reduces battery use both ways
+B. Wind has no effect on multirotors
+C. GNSS cancels wind
+D. The return leg may face a strong headwind and require much more time/energy
+Answer: D. TP 15263 explicitly requires considering wind effects on range and endurance.
+Authority: TP 15263 Section 5 - Flight Planning
+247. A GNSS receiver needs multiple satellites primarily to:
+A. Solve position and receiver clock error through ranging geometry
+B. Determine battery capacity
+C. Measure air pressure
+D. Generate radio licences
+Answer: A. GNSS positioning uses pseudorange measurements from multiple satellites to solve receiver position/time.
+Authority: TP 15263 Section 5 - GNSS Principles
+248. Poor GNSS satellite geometry is commonly described by:
+A. Low dewpoint spread
+B. High dilution of precision (DOP)
+C. High QNH
+D. Low magnetic variation
+Answer: B. Widely separated satellites generally provide better geometry; clustered geometry increases DOP/error sensitivity.
+Authority: TP 15263 Section 5 - GNSS Performance
+249. Before relying on an automated return-to-home function, the pilot should verify:
+A. Only camera mode
+B. Only SD card capacity
+C. Home point, return altitude/route hazards, GNSS/C2 assumptions and manufacturer behaviour
+D. Only propeller colour
+Answer: C. Flight planning must account for system-specific automation and lost-link/RTH behaviour.
+Authority: TP 15263 Sections 2, 5 and 6
+250. When using a GNSS-derived map display near an airspace boundary, the pilot should:
+A. Treat the display as the sole legal source of airspace status
+B. Assume the geofence exactly matches regulated airspace
+C. Ignore vertical limits if below 400 ft AGL
+D. Cross-check position and airspace against current authoritative aeronautical information and account for navigation uncertainty
+Answer: D. TP 15263 requires pilots to use current aeronautical charts/publications and understand GNSS limitations; consumer or onboard mapping does not replace authoritative airspace information.
+Authority: TP 15263 Section 5 - Maps, Charts and GNSS
+
+Section 6 — Flight Operations (6-1 / 6-2)
+251. Which CAR section governs the information/authorization basis for Advanced RPAS operation in controlled airspace?
+A. CAR 602.96
+B. CAR 903.04 only
+C. CAR 101.01 only
+D. CAR 901.71
+Answer: D. CAR 901.71 specifically addresses operation in controlled airspace under the Advanced division.
+Authority: CAR 901.71
+252. The part of an aerodrome used for parking, loading/unloading, refuelling and servicing aircraft is the:
+A. Apron
+B. Runway
+C. Taxiway
+D. Control zone
+Answer: A. The apron is the area intended for accommodation of aircraft for loading, refuelling, parking or maintenance.
+Authority: TC AIM AGA - Aerodrome Terminology
+253. An ATS authorization may specify how two-way communications will be maintained. The RPAS pilot must:
+A. Switch to text messaging without approval
+B. Use the authorized method and remain available as required
+C. Use any consumer app
+D. Ignore communications after takeoff
+Answer: B. CAR 901.71 authorizations can include operational conditions, including communications.
+Authority: CAR 901.71
+254. The collective term for the manoeuvring area plus apron is:
+A. Control zone
+B. Runway strip
+C. Movement area
+D. Terminal area
+Answer: C. Movement area includes the manoeuvring area and apron(s).
+Authority: TC AIM AGA - Definitions
+255. Within an MF area, the operator of a radio-equipped aircraft must:
+A. Remain radio silent
+B. Use 121.5 only
+C. Use cellular voice only
+D. Maintain the prescribed listening watch and make required reports
+Answer: D. MF procedures are mandatory under CAR 602.97-602.103 and TC AIM RAC.
+Authority: CAR 602.97-602.103 / TC AIM RAC
+256. An Advanced RPAS pilot conducting a site survey should identify:
+A. Airspace, aerodromes, obstacles, people, property/access, weather, RF environment and emergency considerations
+B. Only battery count
+C. Only camera direction
+D. Only sunrise
+Answer: A. TP 15263 flight operations and Part IX site-planning duties require systematic hazard identification.
+Authority: TP 15263 Section 6 / CAR Part IX
+257. A pre-flight inspection should confirm:
+A. Only the camera lens
+B. Aircraft serviceability, configuration, batteries, propellers/structure, firmware/settings and required equipment
+C. Only registration marks
+D. Only weather
+Answer: B. TP 15263 requires pilots to assess aircraft serviceability/configuration before operation.
+Authority: TP 15263 Sections 2 and 6
+258. If a checklist is interrupted, best practice is to:
+A. Continue from memory
+B. Skip the remaining items
+C. Return to a known point or restart the checklist to ensure no item was missed
+D. Assume automation completed it
+Answer: C. TP 15263 highlights correct checklist use and managing interruptions to prevent omissions.
+Authority: TP 15263 Human Factors / Operations
+259. Automation complacency is hazardous because:
+A. Automation makes aircraft illegal
+B. Automation always fails
+C. It increases air density
+D. The pilot may stop actively monitoring system state and miss mode/errors
+Answer: D. TP 15263 specifically addresses automation and complacency as human-factors risks.
+Authority: TP 15263 - Human Factors
+260. Positive transfer of control between RPAS crew members should include:
+A. An explicit verbal handoff and acknowledgement identifying who has control
+B. Silent assumption
+C. Only eye contact
+D. A text after landing
+Answer: A. TP 15263 Section 8 requires clear verbal elements for positive transfer of control/visual following.
+Authority: TP 15263 Section 8 - Crew Communications
+261. A visual observer's primary role is to:
+A. Replace the PIC
+B. Assist the pilot in maintaining situational awareness/visual observation and reporting hazards as assigned
+C. Issue ATC clearances
+D. Perform maintenance during flight
+Answer: B. Visual observers support the PIC but do not remove the PIC's responsibility.
+Authority: TP 15263 / CAR Part IX
+262. A flyaway contingency should include:
+A. Only buying a new drone
+B. Turning off all radios
+C. Predetermined actions, emergency contacts, airspace/ATS notification criteria and tracking/recovery considerations
+D. Ignoring the event
+Answer: C. TP 15263 Section 6 requires emergency procedures and typical contacts for flyaways and other site emergencies.
+Authority: TP 15263 Section 6 - Emergency Procedures
+263. If control-link quality degrades unexpectedly, the pilot should:
+A. Continue farther away
+B. Disable return-to-home
+C. Ignore warning messages
+D. Apply the manufacturer's abnormal/lost-link procedures before control is lost if practicable
+Answer: D. C2-link limitations and lost-link behaviour are core knowledge areas in TP 15263.
+Authority: TP 15263 Sections 5 and 6
+264. Battery performance is typically degraded by:
+A. Cold temperature and high power demand
+B. A current chart
+C. A good GNSS fix
+D. Lower payload
+Answer: A. Temperature and load affect battery capacity, voltage sag and endurance.
+Authority: TP 15263 Sections 2, 4 and 6
+265. A safe charging area for lithium batteries should:
+A. Be beside flammable liquids
+B. Follow manufacturer instructions, reduce fire exposure, provide supervision and appropriate fire/emergency provisions
+C. Be unattended on carpet
+D. Ignore damaged batteries
+Answer: B. TP 15263 occupational safety includes charging areas and fire-safety equipment.
+Authority: TP 15263 Section 6 - Occupational Safety
+266. A swollen, punctured or otherwise damaged lithium battery should:
+A. Be fast-charged
+B. Be flown until empty
+C. Be removed from service and handled/disposed of according to manufacturer and safety guidance
+D. Be stored in a hot vehicle
+Answer: C. Damaged lithium batteries present fire/thermal-runaway hazards.
+Authority: TP 15263 Sections 2 and 6
+267. A launch/recovery area should be selected to:
+A. Maximize pedestrian traffic
+B. Be under overhead wires
+C. Be next to loose gravel in propwash
+D. Control access, avoid obstacles/debris and provide adequate margins for expected aircraft behaviour
+Answer: D. TP 15263 Section 6 requires assessment of launch/recovery points, obstacles and access.
+Authority: TP 15263 Section 6
+268. Loose objects near a multirotor launch point are hazardous because:
+A. Rotor wash can turn them into projectiles or contaminate propulsion/sensors
+B. They improve lift
+C. They strengthen GNSS
+D. They reduce noise
+Answer: A. Foreign-object/debris hazards are a basic launch-site safety concern.
+Authority: TP 15263 Section 6 - Launch/Recovery
+269. The primary reason to brief crew before flight is to:
+A. Meet a photography requirement
+B. Create a shared mental model of roles, communications, hazards, limits and contingencies
+C. Replace checklists
+D. Avoid weather review
+Answer: B. Crew coordination and communication are explicit Advanced knowledge requirements.
+Authority: TP 15263 Sections 3, 6 and 8
+270. Post-flight actions should include:
+A. Deleting all logs
+B. Charging damaged batteries immediately
+C. Securing the aircraft, identifying damage/anomalies, recording required information and addressing maintenance issues
+D. Ignoring minor strikes
+Answer: C. TP 15263 includes post-flight actions and maintenance/serviceability follow-up.
+Authority: TP 15263 Section 6
+271. A runway with magnetic direction 276° is normally designated:
+A. Runway 27
+B. Runway 276
+C. Runway 280
+D. Runway 28
+Answer: D. Runway numbers use magnetic direction rounded to the nearest 10 degrees with the final zero omitted.
+Authority: TC AIM AGA - Runway Designation
+272. A standard rectangular traffic circuit normally contains:
+A. Crosswind, downwind, base and final legs after departure/upwind
+B. Only final
+C. Only downwind
+D. A circular orbit
+Answer: A. TC AIM RAC describes the standard aerodrome traffic circuit pattern.
+Authority: TC AIM RAC - Traffic Circuit
+273. Red steady or flashing obstruction lights are commonly used to mark:
+A. Taxiway centre lines
+B. Tall structures/obstacles that may be hazardous to aviation
+C. Class C boundaries
+D. Wind direction
+Answer: B. Aeronautical obstruction marking/lighting identifies objects that may affect flight safety.
+Authority: TC AIM AGA - Obstruction Marking/Lighting
+274. The purpose of an aerodrome traffic circuit is to:
+A. Increase aircraft maximum speed
+B. Define controlled airspace
+C. Organize arriving and departing traffic into a predictable flow
+D. Replace ATC
+Answer: C. Predictable circuit procedures improve sequencing and situational awareness.
+Authority: TC AIM RAC - Aerodrome Traffic Circuit
+275. At an uncontrolled aerodrome, an RPAS pilot planning nearby operations should:
+A. Assume aircraft remain above 400 ft
+B. Fly over the runway if below 100 ft
+C. Ignore the CFS
+D. Understand the published circuit, MF/ATF procedures and likely crewed-aircraft traffic paths
+Answer: D. CAR 901.47 and TP 15263 require avoiding interference with aerodrome traffic and understanding local procedures.
+Authority: CAR 901.47 / TC AIM RAC
+276. When wind direction favours a particular runway, crewed aircraft generally use:
+A. The runway providing the most favourable headwind/crosswind conditions subject to local procedures and ATC
+B. Always runway 01
+C. The longest runway regardless of wind
+D. Any runway chosen by RPAS traffic
+Answer: A. Runway selection considers wind, operational limitations and local/ATC procedures.
+Authority: TC AIM RAC / AGA
+277. A windsock primarily indicates:
+A. Pressure altitude
+B. Surface wind direction and an approximate indication of speed
+C. Cloud ceiling
+D. Runway length
+Answer: B. Wind direction indicators provide pilots with local surface wind information.
+Authority: TC AIM AGA - Wind Direction Indicators
+278. Taxiways are normally used to:
+A. Store fuel
+B. Define Class D
+C. Connect runways with aprons and other aerodrome areas for aircraft ground movement
+D. Measure visibility
+Answer: C. Taxiways are defined paths for aircraft taxiing between parts of an aerodrome.
+Authority: TC AIM AGA - Taxiways
+279. The manoeuvring area consists of:
+A. Aprons only
+B. Parking lots
+C. All property inside the airport fence
+D. Runways and taxiways used for takeoff, landing and taxiing, excluding aprons
+Answer: D. The manoeuvring area excludes aprons and includes parts used for takeoff, landing and taxiing.
+Authority: TC AIM AGA - Definitions
+280. A movement area incursion risk near an aerodrome is controlled by:
+A. Staying outside protected operating areas unless authorized and coordinating as required
+B. Relying on propeller noise
+C. Flying lower
+D. Using a brighter strobe
+Answer: A. Aerodrome movement areas are safety-critical and subject to access/ATC/operator controls.
+Authority: TC AIM AGA/RAC
+281. If an RPAS operation could interfere with aircraft in an established traffic pattern, the pilot must:
+A. Continue below 400 ft
+B. Not conduct it in that manner
+C. Ask the observer to watch
+D. Use ADS-B only
+Answer: B. CAR 901.47(1) prohibits operation that could interfere with aircraft operating in an established traffic pattern.
+Authority: CAR 901.47(1)
+282. Before a flight in controlled airspace, authorization should be checked for:
+A. Only approval number
+B. Only aircraft colour
+C. Geographic boundaries, altitude, time window, communications and any other conditions
+D. Only pilot name
+Answer: C. ATS authorization conditions define the permitted operation and must be followed.
+Authority: CAR 901.71
+283. A site survey should identify nearby heliports because:
+A. Heliports are not aerodromes
+B. Helicopters cannot fly below 400 ft
+C. They only matter at night
+D. Helicopter traffic can operate at low altitude and may approach/depart on varied paths
+Answer: D. Advanced pilots must assess nearby aerodromes/heliports and traffic hazards.
+Authority: TP 15263 / CAR 901.47
+284. For an operation near uninvolved people, the pilot must:
+A. Apply the applicable Part IX separation/overflight rule and the RPAS declaration capability for the intended operation
+B. Use 30 m for every possible operation
+C. Ignore people if below 250 g
+D. Use a visual observer instead of compliance
+Answer: A. People-proximity privileges depend on the current regulatory category and technical declaration, not a single universal number.
+Authority: CAR Part IX / Standard 922
+285. An emergency landing area should:
+A. Be chosen only after battery reaches 0%
+B. Be considered before launch and remain suitable for foreseeable contingencies
+C. Always be a road
+D. Always be the original launch point
+Answer: B. Pre-planning emergency/contingency locations is part of sound flight risk management.
+Authority: TP 15263 Section 6
+286. If a crew member reports a crewed aircraft conflict, the RPAS PIC should:
+A. Continue mission until ATC calls
+B. Climb above the aircraft
+C. Immediately prioritize collision avoidance and take the action required to keep clear
+D. Ignore the observer
+Answer: C. Collision avoidance takes priority over mission objectives.
+Authority: CAR Part IX / TP 15263
+287. A low-battery return-to-home setting should be evaluated against:
+A. Only camera mode
+B. Only GPS satellite count
+C. Only ambient light
+D. Wind, distance, obstacles, required reserve and actual system behaviour
+Answer: D. Battery/endurance and automated RTH must be assessed together with weather/site hazards.
+Authority: TP 15263 Sections 2, 5 and 6
+288. A strong headwind on the return leg increases the risk of:
+A. Insufficient energy to reach the recovery point
+B. Excess GNSS satellites
+C. Higher air density
+D. Reduced C2 latency
+Answer: A. Wind can substantially change multirotor power demand and groundspeed, affecting endurance.
+Authority: TP 15263 Section 5 - Wind on Range/Endurance
+289. When flying near tall structures, turbulence can be:
+A. Eliminated by the structure
+B. Stronger and more erratic on the downwind side because of mechanical disturbance
+C. Always smooth below rooftop height
+D. Independent of wind
+Answer: B. Mechanical turbulence and rotor/eddy effects develop downwind of obstacles.
+Authority: TP 15263 Section 4 / Section 6
+290. A pilot should not launch if:
+A. The battery is 100%
+B. The chart is current
+C. A required safety-critical system is unserviceable or a limitation cannot be met
+D. The crew briefing is complete
+Answer: C. Aircraft serviceability and compliance with limitations are preconditions to safe operation.
+Authority: TP 15263 Sections 2 and 6
+291. Manufacturer operating limitations are:
+A. Optional suggestions only
+B. Superseded by a Basic certificate
+C. Relevant only to warranty
+D. Operational constraints the pilot must understand and follow as applicable
+Answer: D. CAR 901.31 and the safety-assurance framework rely on operation in accordance with applicable manuals/limitations.
+Authority: CAR 901.31
+292. If weather deteriorates below the pilot's planned operating minima, the appropriate action is to:
+A. Modify, delay or terminate the operation
+B. Continue because the legal altitude is unchanged
+C. Disable warnings
+D. Rely on obstacle sensors
+Answer: A. Operational decision-making requires applying conservative weather limits and stopping when risk controls are no longer effective.
+Authority: TP 15263 Sections 4 and 6
+293. A first-aid kit and suitable fire extinguisher are examples of:
+A. Navigation aids
+B. Site safety equipment identified during operational planning
+C. Airspace authorizations
+D. Radio licences
+Answer: B. TP 15263 occupational safety asks pilots to identify safety equipment appropriate to the operation.
+Authority: TP 15263 Section 6 - Occupational Safety
+294. Legal site access should be confirmed because:
+A. CAR 901.71 grants land access
+B. An Advanced certificate grants access everywhere
+C. Aviation authorization does not itself grant property access or override trespass/land-use restrictions
+D. Property law never applies to RPAS
+Answer: C. TP 15263 specifically identifies trespass, permissions and site access as operational planning issues.
+Authority: TP 15263 Section 6 - Site Access
+295. The PIC remains responsible for the safe conduct of the RPAS flight even when:
+A. The aircraft is under 25 kg
+B. ATC has issued authorization
+C. The drone has obstacle avoidance
+D. Using automation or assistance from visual observers/crew
+Answer: D. Automation and supporting crew do not transfer PIC responsibility.
+Authority: CAR Part IX / TP 15263
+296. A contingency for GNSS loss should be based on:
+A. The specific aircraft's documented mode changes, control characteristics and recovery procedures
+B. A generic assumption that it will hover
+C. Turning off the controller
+D. Only using a compass app
+Answer: A. TP 15263 requires understanding GPS loss and aircraft-system response.
+Authority: TP 15263 Sections 2 and 5
+297. A contingency for C2 lost link should be tested/understood before flight because:
+A. All RPAS behave identically
+B. The aircraft may execute programmed actions that could create new airspace or obstacle hazards
+C. Lost link cannot occur
+D. ATC takes control automatically
+Answer: B. System-specific lost-link behaviour is a core Advanced operations knowledge area.
+Authority: TP 15263 Section 6 - C2/Lost Link
+298. The safest response to an unexpected person entering the operational area is to:
+A. Ignore them
+B. Fly over them immediately
+C. Apply the pre-briefed procedure to maintain required separation, including repositioning/landing if necessary
+D. Increase speed
+Answer: C. People-proximity limits must be maintained throughout the operation, with contingencies for incursions.
+Authority: CAR Part IX / TP 15263
+299. After a hard landing or propeller strike, the aircraft should:
+A. Be flown immediately to test it
+B. Have only the camera checked
+C. Be reset and ignored
+D. Be inspected and not returned to service until its condition is acceptable under manufacturer guidance
+Answer: D. Structural/propulsion damage must be identified and addressed before further flight.
+Authority: TP 15263 Section 2 - Airframe Handling/Maintenance
+300. If the RPAS pilot cannot maintain the conditions of an ATS authorization during a controlled-airspace operation, the pilot should:
+A. Take appropriate action to remain compliant, including modifying or terminating the operation and coordinating with ATS as required
+B. Continue because authorization was already issued
+C. Climb above the authorized altitude
+D. Switch off the radio
+Answer: A. CAR 901.71 authorization is conditional authority. If its conditions can no longer be met, the operation must be brought back into compliance rather than continued outside the authorization.
+Authority: CAR 901.71
+
+Section 8 — Radiotelephony (8-1 / 8-2)
+301. The Restricted Operator Certificate-Aeronautical (ROC-A) authorizes a holder to:
+A. Operate radio equipment in the aeronautical service within the certificate's scope
+B. Issue ATC clearances
+C. Pilot any aircraft
+D. Use any radio frequency
+Answer: A. ISED identifies ROC-A as the operator certificate for aeronautical-band radios used by pilots, drone operators and aerodrome ground personnel.
+Authority: ISED ROC-A Overview
+302. In standard radiotelephony, 'OUT' means:
+A. I have received your last transmission
+B. This exchange is ended and no response is expected
+C. Repeat your message
+D. Stand by
+Answer: B. RIC-21 defines standard procedural words used in aeronautical communications.
+Authority: RIC-21 - Procedural Words
+303. The international distress signal with highest priority is:
+A. PAN PAN
+B. ROGER
+C. MAYDAY
+D. WILCO
+Answer: C. MAYDAY identifies distress: grave and imminent danger requiring immediate assistance.
+Authority: RIC-21 - Distress Communications
+304. The urgency signal is:
+A. MAYDAY
+B. SEELONCE MAYDAY
+C. ROGER
+D. PAN PAN
+Answer: D. PAN PAN identifies an urgent condition concerning safety without the immediate grave danger associated with distress.
+Authority: RIC-21 - Urgency Communications
+305. A ROC-A holder should treat the certificate as:
+A. A personal radio operator qualification; current ISED requirements should be followed for issue/reprint and use
+B. An ATC licence
+C. An aircraft registration
+D. A drone pilot certificate
+Answer: A. ROC-A is a radio operator certificate distinct from an RPAS pilot certificate.
+Authority: ISED ROC-A
+306. When broadcasting an urgency message to all stations, the address is:
+A. ANYONE LISTENING
+B. ALL STATIONS, repeated as prescribed
+C. EMERGENCY CENTRE
+D. CONTROL ONLY
+Answer: B. RIC-21 provides standard addressing/order for urgency and distress transmissions.
+Authority: RIC-21 - Urgency Message Format
+307. The procedural word 'ROGER' means:
+A. Yes
+B. I will comply
+C. I have received all of your last transmission
+D. End of transmission
+Answer: C. ROGER acknowledges receipt; it does not mean 'yes' or 'will comply'.
+Authority: RIC-21 - Procedural Words
+308. 'WILCO' means:
+A. I have received only
+B. No
+C. Repeat
+D. I understand your message and will comply with it
+Answer: D. WILCO combines understanding with intent to comply.
+Authority: RIC-21 - Procedural Words
+309. 'AFFIRM' means:
+A. Yes
+B. No
+C. Repeat
+D. Wait
+Answer: A. AFFIRM is the standard affirmative response in aeronautical phraseology.
+Authority: RIC-21 - Procedural Words
+310. 'NEGATIVE' means:
+A. Yes
+B. No, or permission not granted/that is not correct
+C. Message received
+D. End of conversation
+Answer: B. NEGATIVE is used for denial or correction.
+Authority: RIC-21 - Procedural Words
+311. 'SAY AGAIN' means:
+A. Speak louder
+B. Cancel clearance
+C. Repeat all or the specified part of your last transmission
+D. End transmission
+Answer: C. SAY AGAIN requests repetition.
+Authority: RIC-21 - Procedural Words
+312. 'STANDBY' means:
+A. End of conversation
+B. Proceed immediately
+C. Repeat
+D. Wait and I will call you
+Answer: D. STANDBY tells the other station to wait for a later call.
+Authority: RIC-21 - Procedural Words
+313. 'CORRECTION' is used when:
+A. An error has been made in the transmission and corrected information follows
+B. The frequency is wrong
+C. A distress exists
+D. The message is complete
+Answer: A. Standard phraseology uses CORRECTION to repair a transmission error.
+Authority: RIC-21 - Procedural Words
+314. 'READ BACK' is an instruction to:
+A. Transmit more slowly
+B. Repeat specified information back for verification
+C. End the call
+D. Change frequency
+Answer: B. Readback verifies safety-critical instructions/information.
+Authority: RIC-21 / TC AIM COM - Readback
+315. Good radio technique uses:
+A. Shouting rapidly
+B. Long conversational wording
+C. Clear, concise speech at a steady rate with the microphone close enough for intelligibility
+D. Unnecessary filler words
+Answer: C. RIC-21 emphasizes clear articulation, normal tone and an appropriate speaking rate.
+Authority: RIC-21 - Speech Transmission Techniques
+316. Before transmitting on a frequency, an operator should:
+A. Key the microphone immediately
+B. Transmit a long test message
+C. Use emergency priority
+D. Listen to avoid interrupting another transmission
+Answer: D. Good radio discipline requires listening first and avoiding interference.
+Authority: RIC-21 - Operating Procedures
+317. The phonetic word for the letter A is:
+A. ALFA
+B. ABLE
+C. APPLE
+D. ATLANTIC
+Answer: A. ICAO spelling alphabet uses ALFA.
+Authority: RIC-21 - Phonetic Alphabet
+318. The phonetic word for B is:
+A. BAKER
+B. BRAVO
+C. BETA
+D. BIRD
+Answer: B. ICAO spelling alphabet uses BRAVO.
+Authority: RIC-21 - Phonetic Alphabet
+319. The phonetic word for C is:
+A. CHARLES
+B. CANADA
+C. CHARLIE
+D. COBRA
+Answer: C. ICAO spelling alphabet uses CHARLIE.
+Authority: RIC-21 - Phonetic Alphabet
+320. The phonetic word for D is:
+A. DOG
+B. DOVER
+C. DRONE
+D. DELTA
+Answer: D. ICAO spelling alphabet uses DELTA.
+Authority: RIC-21 - Phonetic Alphabet
+321. The phonetic word for E is:
+A. ECHO
+B. EASY
+C. EAGLE
+D. EURO
+Answer: A. ICAO spelling alphabet uses ECHO.
+Authority: RIC-21 - Phonetic Alphabet
+322. The phonetic word for F is:
+A. FOX
+B. FOXTROT
+C. FRANCE
+D. FALCON
+Answer: B. ICAO spelling alphabet uses FOXTROT.
+Authority: RIC-21 - Phonetic Alphabet
+323. The phonetic word for G is:
+A. GEORGE
+B. GAMMA
+C. GOLF
+D. GREEN
+Answer: C. ICAO spelling alphabet uses GOLF.
+Authority: RIC-21 - Phonetic Alphabet
+324. The phonetic word for H is:
+A. HOW
+B. HENRY
+C. HARBOR
+D. HOTEL
+Answer: D. ICAO spelling alphabet uses HOTEL.
+Authority: RIC-21 - Phonetic Alphabet
+325. The phonetic word for I is:
+A. INDIA
+B. ITEM
+C. ITALY
+D. INDIGO
+Answer: A. ICAO spelling alphabet uses INDIA.
+Authority: RIC-21 - Phonetic Alphabet
+326. The phonetic word for J is:
+A. JIG
+B. JULIETT
+C. JAPAN
+D. JUPITER
+Answer: B. ICAO spelling alphabet uses JULIETT.
+Authority: RIC-21 - Phonetic Alphabet
+327. The phonetic word for K is:
+A. KING
+B. KENT
+C. KILO
+D. KITE
+Answer: C. ICAO spelling alphabet uses KILO.
+Authority: RIC-21 - Phonetic Alphabet
+328. The phonetic word for L is:
+A. LOVE
+B. LONDON
+C. LION
+D. LIMA
+Answer: D. ICAO spelling alphabet uses LIMA.
+Authority: RIC-21 - Phonetic Alphabet
+329. The phonetic word for M is:
+A. MIKE
+B. MARY
+C. MONTREAL
+D. METRO
+Answer: A. ICAO spelling alphabet uses MIKE.
+Authority: RIC-21 - Phonetic Alphabet
+330. The phonetic word for N is:
+A. NANCY
+B. NOVEMBER
+C. NORTH
+D. NEPTUNE
+Answer: B. ICAO spelling alphabet uses NOVEMBER.
+Authority: RIC-21 - Phonetic Alphabet
+331. The phonetic word for O is:
+A. OBOE
+B. ONTARIO
+C. OSCAR
+D. ORBIT
+Answer: C. ICAO spelling alphabet uses OSCAR.
+Authority: RIC-21 - Phonetic Alphabet
+332. The phonetic word for P is:
+A. PETER
+B. PARIS
+C. POLAR
+D. PAPA
+Answer: D. ICAO spelling alphabet uses PAPA.
+Authority: RIC-21 - Phonetic Alphabet
+333. The phonetic word for Q is:
+A. QUEBEC
+B. QUEEN
+C. QUICK
+D. QUARTZ
+Answer: A. ICAO spelling alphabet uses QUEBEC.
+Authority: RIC-21 - Phonetic Alphabet
+334. The phonetic word for R is:
+A. ROGER
+B. ROMEO
+C. RADAR
+D. RIVER
+Answer: B. ICAO spelling alphabet uses ROMEO.
+Authority: RIC-21 - Phonetic Alphabet
+335. The phonetic word for S is:
+A. SUGAR
+B. SOUTH
+C. SIERRA
+D. SIGNAL
+Answer: C. ICAO spelling alphabet uses SIERRA.
+Authority: RIC-21 - Phonetic Alphabet
+336. The phonetic word for T is:
+A. TARE
+B. TORONTO
+C. TIGER
+D. TANGO
+Answer: D. ICAO spelling alphabet uses TANGO.
+Authority: RIC-21 - Phonetic Alphabet
+337. The phonetic word for U is:
+A. UNIFORM
+B. UNCLE
+C. UNITED
+D. URBAN
+Answer: A. ICAO spelling alphabet uses UNIFORM.
+Authority: RIC-21 - Phonetic Alphabet
+338. The phonetic word for V is:
+A. VIENNA
+B. VICTOR
+C. VIOLET
+D. VHF
+Answer: B. ICAO spelling alphabet uses VICTOR.
+Authority: RIC-21 - Phonetic Alphabet
+339. The phonetic word for W is:
+A. WILLIAM
+B. WEST
+C. WHISKEY
+D. WATER
+Answer: C. ICAO spelling alphabet uses WHISKEY.
+Authority: RIC-21 - Phonetic Alphabet
+340. The phonetic word for X is:
+A. XENON
+B. XTRA
+C. XAVIER
+D. X-RAY
+Answer: D. ICAO spelling alphabet uses X-RAY.
+Authority: RIC-21 - Phonetic Alphabet
+341. The phonetic word for Y is:
+A. YANKEE
+B. YELLOW
+C. YORK
+D. YARD
+Answer: A. ICAO spelling alphabet uses YANKEE.
+Authority: RIC-21 - Phonetic Alphabet
+342. The phonetic word for Z is:
+A. ZEBRA
+B. ZULU
+C. ZERO
+D. ZONE
+Answer: B. ICAO spelling alphabet uses ZULU.
+Authority: RIC-21 - Phonetic Alphabet
+343. In ICAO radiotelephony, a decimal point is spoken as:
+A. POINT
+B. DOT
+C. DECIMAL
+D. STOP
+Answer: C. DECIMAL is the prescribed spoken form to avoid ambiguity.
+Authority: RIC-21 - Pronunciation of Numbers
+344. The digit 3 is commonly pronounced in ICAO aviation speech as:
+A. THREE exactly as conversational English
+B. TRI
+C. TERA
+D. TREE
+Answer: D. Standard radiotelephony pronunciation modifies some digits for intelligibility.
+Authority: RIC-21 - Pronunciation of Numbers
+345. The digit 5 is commonly pronounced as:
+A. FIFE
+B. FIVE
+C. FIV
+D. FEE
+Answer: A. FIFE is the standard aviation pronunciation.
+Authority: RIC-21 - Pronunciation of Numbers
+346. The digit 9 is commonly pronounced as:
+A. NINE
+B. NINER
+C. NIN
+D. NOVA
+Answer: B. NINER is the standard aviation pronunciation.
+Authority: RIC-21 - Pronunciation of Numbers
+347. A routine initial radio call should normally include:
+A. Only your first name
+B. A long weather report
+C. Station called, your identification, position/intent or request as applicable
+D. No identification
+Answer: C. TP 15263 requires pilots to know the contents of a routine ATC call; RIC-21 provides standard operating procedure.
+Authority: TP 15263 Section 8 / RIC-21
+348. If an RPAS flyaway creates an immediate collision hazard, an emergency broadcast should:
+A. Avoid giving position
+B. Use only text messaging
+C. Wait until the flight ends
+D. Use clear priority language, identify the station/aircraft, location, altitude/direction and nature of the hazard as available
+Answer: D. TP 15263 specifically requires an example of an emergency flyaway broadcast; concise hazard information supports ATS/aircraft response.
+Authority: TP 15263 Section 8 - Emergencies
+349. 121.5 MHz is internationally recognized primarily as:
+A. The aeronautical emergency frequency
+B. The universal MF frequency
+C. The VFR transponder code
+D. A weather radar channel
+Answer: A. 121.5 MHz is the principal VHF aeronautical emergency frequency.
+Authority: TC AIM COM - Emergency Frequency
+350. In an MF area, the applicable frequency should be obtained from:
+A. Always 121.5 MHz
+B. Current CFS/chart/aeronautical publication; do not assume one frequency for every MF area
+C. Always 126.7 MHz
+D. Any frequency selected by the pilot
+Answer: B. MF frequencies are published for each location; pilots must use current aeronautical information.
+Authority: TC AIM RAC / CFS - MF Procedures
+
+Validation notes
+This volume intentionally corrects common legacy or oversimplified training statements. Control-zone vertical limits and Class E floors are published rather than universally fixed; Advanced RPAS controlled-airspace authority is governed by CAR 901.71; DND-aerodrome proximity is addressed by CAR 901.47(4); and technical operating privileges depend on the current Part IX / Standard 922 declaration framework.
+For the master quiz database, retain the Authority label and URL as structured source fields. Legal questions should be revalidated against the linked CAR section when regulations change; TC AIM procedural questions should be refreshed against the current AIM issue.
+Validation build date: 4 September 2026.

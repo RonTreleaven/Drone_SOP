@@ -19,7 +19,7 @@
     "url": "https://laws-lois.justice.gc.ca/eng/regulations/SOR-96-433/",
     "localCopy": "docs/CARs_SOR-96-433_FullText.pdf",
     "localCopyXml": "docs/CARs_SOR-96-433_FullText.xml",
-    "sectionUrlTemplate": "https://laws-lois.justice.gc.ca/eng/regulations/SOR-96-433/FullText.html#s-{section}",
+    "sectionUrlTemplate": "https://laws-lois.justice.gc.ca/eng/regulations/SOR-96-433/section-{section}.html",
     "category": "Regulations",
     "type": "Official legal source",
     "authority": "Highest",
