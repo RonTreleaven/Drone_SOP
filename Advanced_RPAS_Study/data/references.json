@@ -125,8 +125,8 @@
     "type": "Official handbook",
     "authority": "Official guidance",
     "use": "Source material for human-factors/crew-fitness quiz category.",
-    "notes": "",
-    "lastVerified": "2026-08-29"
+    "notes": "Not freely downloadable: TC's Air Publications - Abstracts page lists this as \"available to order\" only, routing to the TC Publications Order Desk (phone/email/mail, priced/print-on-demand). No confirmed free public PDF as of 2026-09-06.",
+    "lastVerified": "2026-09-06"
   },
   {
     "id": "ref-tp-12864",
@@ -137,8 +137,8 @@
     "type": "Official handbook",
     "authority": "Official guidance",
     "use": "Deeper source material for human-factors category, including CRM and hazardous attitudes.",
-    "notes": "",
-    "lastVerified": "2026-08-29"
+    "notes": "Not freely downloadable: TC's Air Publications - Abstracts page lists this as \"available to order\" only, routing to the TC Publications Order Desk (phone/email/mail, priced/print-on-demand). No confirmed free public PDF as of 2026-09-06.",
+    "lastVerified": "2026-09-06"
   },
   {
     "id": "ref-roc-a-study-guide",
@@ -196,12 +196,13 @@
     "title": "Advisory Circular AC 107-002 \u2014 Safety Management System Development Guide for Smaller Aviation Organizations",
     "organization": "Transport Canada",
     "url": "https://tc.canada.ca/en/aviation/reference-centre/advisory-circulars/advisory-circular-ac-no-107-002",
+    "pdfUrl": "https://tc.canada.ca/sites/default/files/migrated/ac_107_002_issue_2.pdf",
     "category": "Safety Management",
     "type": "Official advisory circular",
     "authority": "Official guidance",
     "use": "Source for SMS/safety-culture concepts referenced across human-factors, maintenance, abnormal and safety quiz categories.",
-    "notes": "",
-    "lastVerified": "2026-08-31"
+    "notes": "Fully free/publicly hosted HTML + direct PDF download, no order required. Appendix J explicitly defines/uses ALARP (\"as low as reasonably practical\") in its risk-acceptability guidance, confirming this as the correct source for ALARP quiz questions.",
+    "lastVerified": "2026-09-06"
   },
   {
     "id": "ref-ac-903-001",

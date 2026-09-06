@@ -11669,18 +11669,16 @@
         "ALARP is a term unrelated to safety management"
       ],
       "answerIndex": 0,
-      "rationale": "ALARP involves reducing risk to the lowest level reasonably achievable, balancing safety benefit against the practical cost/effort of further mitigation.",
-      "source": "AC 107-002 – ALARP risk management concept",
-      "lastVerified": "2026-08-29",
+      "rationale": "ALARP involves reducing risk to the lowest level reasonably achievable, balancing safety benefit against the practical cost/effort of further mitigation. ALARP is a widely used SMS best-practice concept (per AC 107-002 guidance) rather than a specific CARs Part IX \"shall\" clause for Basic/Advanced RPAS operations; the closest regulatory hooks are the risk-assessment content required in an SFOC application (CAR 903.02) and the risk-based safety-assurance framework for declared RPAS (Standard 922).",
+      "source": "AC 107-002 (SMS Development Guide) – ALARP concept; general aviation SMS guidance, not a CARs Part IX mandate. Free full text/PDF at tc.canada.ca; see Appendix J (Risk Acceptability Matrix) for the ALARP wording.",
+      "lastVerified": "2026-09-06",
       "examLevel": "basic-advanced",
       "examScope": "core-basic-advanced",
       "reviewFlags": [
-        "legacy-normalized",
-        "needs-tp15263-mapping",
-        "needs-source-review"
+        "legacy-normalized"
       ],
-      "tp15263Section": "1",
-      "knowledgeArea": "Air law, air traffic rules and procedures"
+      "tp15263Section": "3",
+      "knowledgeArea": "Human factors"
     },
     {
       "id": "safety-022",
@@ -11694,18 +11692,16 @@
         "Cost is never a legitimate factor in any safety risk decision"
       ],
       "answerIndex": 1,
-      "rationale": "ALARP permits a reasoned judgment that further mitigation may not be required if its cost is grossly disproportionate to the marginal safety benefit, given already-acceptable residual risk.",
-      "source": "AC 107-002 – ALARP proportionality principle",
-      "lastVerified": "2026-08-29",
+      "rationale": "ALARP permits a reasoned judgment that further mitigation may not be required if its cost is grossly disproportionate to the marginal safety benefit, given already-acceptable residual risk. This is SMS best-practice guidance (AC 107-002), not a CARs Part IX \"shall\" provision for Basic/Advanced operations; CAR 903.02 (SFOC risk-assessment content) and Standard 922 (declared-RPAS safety assurance) are the applicable regulatory risk-management hooks.",
+      "source": "AC 107-002 (SMS Development Guide) – ALARP proportionality principle; general aviation SMS guidance, not a CARs Part IX mandate. Free full text/PDF at tc.canada.ca; see Appendix J (Risk Acceptability Matrix) for the ALARP wording.",
+      "lastVerified": "2026-09-06",
       "examLevel": "basic-advanced",
       "examScope": "core-basic-advanced",
       "reviewFlags": [
-        "legacy-normalized",
-        "needs-tp15263-mapping",
-        "needs-source-review"
+        "legacy-normalized"
       ],
-      "tp15263Section": "1",
-      "knowledgeArea": "Air law, air traffic rules and procedures"
+      "tp15263Section": "3",
+      "knowledgeArea": "Human factors"
     },
     {
       "id": "safety-023",
@@ -11719,18 +11715,16 @@
         "ALARP is not a legitimate safety management concept and should never be used"
       ],
       "answerIndex": 1,
-      "rationale": "ALARP requires a genuine cost/benefit weighing for each specific mitigation option; dismissing an easy, low-cost, meaningful improvement without real justification misapplies the principle.",
-      "source": "AC 107-002 – proper ALARP application",
-      "lastVerified": "2026-08-29",
+      "rationale": "ALARP requires a genuine cost/benefit weighing for each specific mitigation option; dismissing an easy, low-cost, meaningful improvement without real justification misapplies the principle. ALARP itself is SMS best-practice guidance (AC 107-002), not a codified CARs Part IX \"shall\" requirement for Basic/Advanced RPAS operations; CAR 903.02 and Standard 922 are the regulatory risk-management hooks that do apply (to SFOC and declared-RPAS operations respectively).",
+      "source": "AC 107-002 (SMS Development Guide) – proper ALARP application; general aviation SMS guidance, not a CARs Part IX mandate. Free full text/PDF at tc.canada.ca; see Appendix J (Risk Acceptability Matrix) for the ALARP wording.",
+      "lastVerified": "2026-09-06",
       "examLevel": "basic-advanced",
       "examScope": "core-basic-advanced",
       "reviewFlags": [
-        "legacy-normalized",
-        "needs-tp15263-mapping",
-        "needs-source-review"
+        "legacy-normalized"
       ],
-      "tp15263Section": "1",
-      "knowledgeArea": "Air law, air traffic rules and procedures"
+      "tp15263Section": "3",
+      "knowledgeArea": "Human factors"
     },
     {
       "id": "safety-024",
@@ -12007,15 +12001,14 @@
         "Development near a site is never relevant to a flight's risk assessment"
       ],
       "answerIndex": 1,
-      "rationale": "Failing to periodically review and update a risk assessment as conditions change can result in an outdated assessment that no longer reflects actual current risk.",
-      "source": "AC 903-001 / SMS – risk assessment currency",
-      "lastVerified": "2026-08-29",
+      "rationale": "CAR 901.27 requires a pilot to determine the operational volume is suitable via a site survey, including the proximity of people, obstacles and other factors; a static risk assessment that is never revisited will not reflect changes such as new residential development near the site, so periodic review/update is required to keep the assessment current.",
+      "source": "CAR 901.27 \u2013 site survey / operational volume suitability, reassessed as surrounding conditions change",
+      "carsSection": "901.27",
+      "lastVerified": "2026-09-06",
       "examLevel": "basic-advanced",
       "examScope": "core-basic-advanced",
       "reviewFlags": [
-        "legacy-normalized",
-        "needs-tp15263-mapping",
-        "needs-source-review"
+        "legacy-normalized"
       ],
       "tp15263Section": "1",
       "knowledgeArea": "Air law, air traffic rules and procedures"
