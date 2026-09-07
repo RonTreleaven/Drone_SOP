@@ -207,21 +207,21 @@
     ]
   },
   {
-    "raw": "(U1495/26 NOTAMR U1261/26\nQ) CZYZ/QOLAS/IV/M/E/000/020/4327N08036W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 432700N 0803608W (APRX 8NM S ELMIRA AD (CNT6)) \n600FT AGL, 1902FT AMSL.)",
-    "startValidity": "2026-08-30T10:18:00",
-    "endValidity": "2026-10-14T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.450000, -80.602222"
-    ]
-  },
-  {
     "raw": "(U1494/26 NOTAMR U1260/26\nQ) CZYZ/QOLAS/IV/M/E/000/012/4603N07728W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 460240N 0772804W (APRX 5NM SSE DEEP \nRIVER/ROLPH AD (CPH2)) 651FT AGL, 1188FT AMSL.)",
     "startValidity": "2026-08-30T10:18:00",
     "endValidity": "2026-10-14T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "46.044444, -77.467778"
+    ]
+  },
+  {
+    "raw": "(U1495/26 NOTAMR U1261/26\nQ) CZYZ/QOLAS/IV/M/E/000/020/4327N08036W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 432700N 0803608W (APRX 8NM S ELMIRA AD (CNT6)) \n600FT AGL, 1902FT AMSL.)",
+    "startValidity": "2026-08-30T10:18:00",
+    "endValidity": "2026-10-14T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.450000, -80.602222"
     ]
   },
   {
@@ -801,21 +801,21 @@
     ]
   },
   {
-    "raw": "(U1355/26 NOTAMR U0790/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
-    "startValidity": "2026-08-03T13:32:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.906667, -78.731389"
-    ]
-  },
-  {
     "raw": "(U1356/26 NOTAMR U0788/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
     "startValidity": "2026-08-03T13:32:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.907222, -79.371389"
+    ]
+  },
+  {
+    "raw": "(U1355/26 NOTAMR U0790/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
+    "startValidity": "2026-08-03T13:32:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.906667, -78.731389"
     ]
   },
   {
