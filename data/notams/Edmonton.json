@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(C4317/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/025/5321N11333W005\nA) CYEG B) 2609081730 C) 2609082200\nE) MOBILE CRANE WITHIN 144FT RADIUS CENTRED ON 532056N 1133306W APRX \n1.1NM BFR THR 20 AND 390FT WEST EXTENDED RCL. 99FT AGL 2438FT \nAMSL. NOT LGTD, NOT PAINTED.)",
+    "startValidity": "2026-09-08T17:30:00",
+    "endValidity": "2026-09-08T22:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "53.348889, -113.551667"
+    ]
+  },
+  {
+    "raw": "(U1553/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/026/5245N11007W002\nA) CZEG B) 2609091600 C) 2609092000\nE) OBST LGT U/S TOWER 524524N 1100638W (APRX 18NM WSW NEILBURG AD \n(CJV2)) 351FT AGL, 2556FT AMSL.)",
+    "startValidity": "2026-09-08T16:12:32.753",
+    "endValidity": "2026-09-09T20:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.756667, -110.110556"
+    ]
+  },
+  {
     "raw": "(R0842/26 NOTAMR R0574/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5707N12143W002\nA) CZEG B) 2609081513 C) 2612071800\nE) OBST LGT U/S TOWER 570706N 1214321W (APRX 62NM NW FORT ST. JOHN \nAD (CYXJ)) 180FT AGL, 2977FT AMSL.)",
     "startValidity": "2026-09-08T15:13:00",
     "endValidity": "2026-12-07T18:00:00",
@@ -33,15 +51,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.512778, -109.462222"
-    ]
-  },
-  {
-    "raw": "(I4993/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/030/5216N11349W005\nA) CXXX B) 2609081300 C) 2609081630\nE) CAD2 RED DEER/ALLAN DALE RESIDENCE (HELI)\nCRANE 521540N 1134903W (APRX 4.4NM WSW AD (CAD2)). 126FT AGL \n3000FT AMSL. LGTD, PAINTED.)",
-    "startValidity": "2026-09-06T16:00:21.080",
-    "endValidity": "2026-09-08T16:30:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "52.261111, -113.817500"
     ]
   },
   {
@@ -312,15 +321,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.781944, -112.440556"
-    ]
-  },
-  {
-    "raw": "(R0784/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/029/5259N11325W005\nA) CXXX B) 2608210628 C) 2610212359\nE) CEX3 WETASKIWIN REGIONAL \nOBST LGT U/S TOWER 525916N 1132452W (APRX 1.36NM NNW AD) 332FT \nAGL, 2850FT AMSL.)",
-    "startValidity": "2026-08-21T06:28:00",
-    "endValidity": "2026-10-21T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.987778, -113.414444"
     ]
   },
   {
