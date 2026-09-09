@@ -1,20 +1,20 @@
 [
   {
-    "raw": "(V1089/26 NOTAMR V0879/26\nQ) CZQX/QOLAS/IV/M/AE/000/002/5124N05606W005\nA) CYAY B) 2608312142 C) 2609302359\nE) OBST LGT U/S ANTENNA 512342N 0560603W (APRX 4182FT WNW AD) 40FT \nAGL, 200FT AMSL.)",
-    "startValidity": "2026-08-31T21:42:00",
-    "endValidity": "2026-09-30T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.395000, -56.100833"
-    ]
-  },
-  {
     "raw": "(V1090/26 NOTAMR V0895/26\nQ) CZQX/QOLAS/IV/M/AE/000/005/4857N05434W005\nA) CYQX B) 2608312142 C) 2609302359EST\nE) OBST LGT U/S ANTENNA 485701N 0543333W (APRX 5297FT NE AD) 19FT \nAGL, 478FT AMSL.)",
     "startValidity": "2026-08-31T21:42:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.950278, -54.559167"
+    ]
+  },
+  {
+    "raw": "(V1089/26 NOTAMR V0879/26\nQ) CZQX/QOLAS/IV/M/AE/000/002/5124N05606W005\nA) CYAY B) 2608312142 C) 2609302359\nE) OBST LGT U/S ANTENNA 512342N 0560603W (APRX 4182FT WNW AD) 40FT \nAGL, 200FT AMSL.)",
+    "startValidity": "2026-08-31T21:42:00",
+    "endValidity": "2026-09-30T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.395000, -56.100833"
     ]
   },
   {
