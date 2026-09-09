@@ -1,11 +1,11 @@
 [
   {
-    "raw": "(K3138/26 NOTAMN\nQ) CZQM/QOBCE/IV/M/AE/000/004/4550N06627W005\nA) CYFC B) 2609081146 C) 2609091900\nE) MOBILE CRANE WITHIN 100FT RADIUS CENTRED ON 454959N 0662717W \n(APRX 4.1NM SE AD (CYFC)). 150FT AGL 316FT AMSL. NOT LGTD, NOT \nPAINTED.)",
-    "startValidity": "2026-09-08T11:46:00",
-    "endValidity": "2026-09-09T19:00:00",
-    "q_code": "QOBCE",
+    "raw": "(V1157/26 NOTAMN\nQ) CZQM/QOLAS/IV/M/AE/000/006/4347N06518W005\nA) CXXX B) 2609091912 C) 2609112100\nE) CCZ9 SHELBURNE (ROSEWAY HOSPITAL) (HELI)\nOBST LGT U/S TOWER 434635N 0651829W (APRX 1.57NM NNE AD) 273FT \nAGL, 542FT AMSL.)",
+    "startValidity": "2026-09-09T19:12:00",
+    "endValidity": "2026-09-11T21:00:00",
+    "q_code": "QOLAS",
     "coordinates_dd": [
-      "45.833056, -66.454722"
+      "43.776389, -65.308056"
     ]
   },
   {
@@ -99,6 +99,15 @@
     ]
   },
   {
+    "raw": "(V1048/26 NOTAMR V0596/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4539N06126W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453914N 0612614W (APRX 2.9NM WNW AD) 391FT \nAGL, 398FT AMSL.)",
+    "startValidity": "2026-08-25T13:25:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.653889, -61.437222"
+    ]
+  },
+  {
     "raw": "(V1047/26 NOTAMR V0597/26\nQ) CZQM/QOLAS/IV/M/AE/000/005/4540N06125W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453935N 0612515W (APRX 2.2NM WNW AD) 391FT \nAGL, 426FT AMSL.)",
     "startValidity": "2026-08-25T13:25:00",
     "endValidity": null,
@@ -114,15 +123,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.647222, -61.455000"
-    ]
-  },
-  {
-    "raw": "(V1048/26 NOTAMR V0596/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4539N06126W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453914N 0612614W (APRX 2.9NM WNW AD) 391FT \nAGL, 398FT AMSL.)",
-    "startValidity": "2026-08-25T13:25:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.653889, -61.437222"
     ]
   },
   {
