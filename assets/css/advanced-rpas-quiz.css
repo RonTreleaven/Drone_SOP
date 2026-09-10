@@ -53,6 +53,39 @@ h1 {
   margin: 1rem 0;
 }
 
+.quiz-review {
+  margin: 1rem 0;
+  border: 1px solid #d7e3ef;
+  border-radius: 8px;
+  background: #f8fbfe;
+}
+
+.quiz-review summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  color: #0f3a5d;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.quiz-review summary::marker {
+  color: #0b5ea8;
+}
+
+.quiz-review[open] summary {
+  border-bottom: 1px solid #d7e3ef;
+}
+
+.quiz-review .review-focus-fieldset {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
 .exam-scope-fieldset legend,
 .review-focus-fieldset legend,
 .category-fieldset legend {

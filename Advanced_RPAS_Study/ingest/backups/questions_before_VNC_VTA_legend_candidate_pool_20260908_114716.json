@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updated": "2026-09-08",
+  "updated": "2026-09-06",
   "migrationNotes": [
     "Historical quiz questions from chat have not yet been normalized into this file.",
     "All 14 categories seeded with mixed easy/medium/hard/tricky questions (540 total as of 2026-08-29): regulations, airspace, aerodromes, notams, weather, visual-observers, human-factors, aircraft-systems, maintenance, abnormal, flight-planning, radio, navigation, safety.",
@@ -20,8 +20,7 @@
     "2026-09-03 PHASE 7: Finalized examLevel metadata for reviewed chat-import questions and restored the EVLOS/advanced-privilege item to core Advanced scope.",
     "2026-09-03 PHASE 7: Cleaned BVLOS wording from an Advanced EVLOS distractor so default TP 15263 quizzes avoid BVLOS terminology.",
     "2026-09-06 CHAT BATCH 4 (Batch4_candidate_pool.json): duplicate-screened docx ingest; 96 TP 15263 core-Advanced questions selected from 100 candidates.",
-    "2026-09-06 CHAT BATCH 4 (Batch4b_candidate_pool.json): duplicate-screened docx ingest; 200 TP 15263 core-Advanced questions selected from 250 candidates.",
-    "2026-09-08 CHAT BATCH 4 (VNC_VTA_legend_candidate_pool.json): duplicate-screened docx ingest; 4 TP 15263 core-Advanced questions selected from 4 candidates."
+    "2026-09-06 CHAT BATCH 4 (Batch4b_candidate_pool.json): duplicate-screened docx ingest; 200 TP 15263 core-Advanced questions selected from 250 candidates."
   ],
   "questions": [
     {
@@ -12003,7 +12002,7 @@
       ],
       "answerIndex": 1,
       "rationale": "CAR 901.27 requires a pilot to determine the operational volume is suitable via a site survey, including the proximity of people, obstacles and other factors; a static risk assessment that is never revisited will not reflect changes such as new residential development near the site, so periodic review/update is required to keep the assessment current.",
-      "source": "CAR 901.27 – site survey / operational volume suitability, reassessed as surrounding conditions change",
+      "source": "CAR 901.27 \u2013 site survey / operational volume suitability, reassessed as surrounding conditions change",
       "carsSection": "901.27",
       "lastVerified": "2026-09-06",
       "examLevel": "basic-advanced",
@@ -25698,131 +25697,8 @@
         "batch": "Batch 4",
         "sourceFile": "Canadian_Advanced_RPAS_Validated_MCQ_Bank_101-350.docx"
       }
-    },
-    {
-      "id": "vnc-legend-001",
-      "category": "airspace",
-      "difficulty": "medium",
-      "question": "On a Canadian VNC or VTA, how is Class F Special Use Airspace commonly identified in the chart legend and on the chart?",
-      "choices": [
-        "By a defined boundary with inward-facing perpendicular marks and an identifier such as CYA, CYR, or CYD",
-        "Only by a solid green circle with no identifier",
-        "Only by a runway symbol and aerodrome elevation",
-        "By a blue airway centreline with no area code"
-      ],
-      "answerIndex": 0,
-      "rationale": "Canadian Class F Advisory, Restricted, and Danger areas are depicted with a defined boundary, inward-facing perpendicular marks, and a CYA, CYR, or CYD identifier. The current DAH supplies the controlling boundaries, altitudes, activity, and status information.",
-      "examScope": "core-advanced",
-      "tp15263Section": "5",
-      "knowledgeArea": "Navigation and charts",
-      "knowledgeTopic": "VNC/VTA legend - Class F Special Use Airspace",
-      "learningObjective": "Recognize the chart notation and identifier used for Canadian Class F Special Use Airspace and cross-reference the area in the DAH.",
-      "source": "TP 15263 Section 5 - Maps and charts; NAV CANADA VNC/VTA legend; Designated Airspace Handbook; Coastal Drone VNC legend article",
-      "sourceRefs": [
-        "ref-tp-15263",
-        "ref-navcanada-products",
-        "ref-navcanada-dah",
-        "ref-coastaldrone-vnc-legend"
-      ],
-      "lastVerified": "2026-09-08",
-      "origin": {
-        "type": "reviewed-legend-expansion",
-        "sourceFile": "Coastal Drone VNC legend article and user-provided chart illustrations"
-      }
-    },
-    {
-      "id": "vnc-legend-002",
-      "category": "airspace",
-      "difficulty": "medium",
-      "question": "In a Canadian Class F chart label such as CYA 118(A)(T)(H), what do the letters in parentheses indicate?",
-      "choices": [
-        "The activity types associated with the area, such as aerobatic, training, and hang-gliding activity",
-        "The controlling agency, chart edition, and magnetic variation",
-        "The airspace class, floor, and ceiling in hundreds of feet",
-        "The aerodrome category, runway surface, and lighting status"
-      ],
-      "answerIndex": 0,
-      "rationale": "The parenthetical activity codes identify the type of activity associated with the Class F area. The DAH remains the authoritative source for the area's current dimensions, altitudes, times, and controlling or using agency.",
-      "examScope": "core-advanced",
-      "tp15263Section": "5",
-      "knowledgeArea": "Navigation and charts",
-      "knowledgeTopic": "VNC/VTA legend - Class F activity codes",
-      "learningObjective": "Interpret common Class F activity codes shown with a CYA, CYR, or CYD chart identifier.",
-      "source": "TP 15263 Section 5 - Maps and charts; NAV CANADA VNC/VTA legend; Designated Airspace Handbook; Coastal Drone VNC legend article",
-      "sourceRefs": [
-        "ref-tp-15263",
-        "ref-navcanada-products",
-        "ref-navcanada-dah",
-        "ref-coastaldrone-vnc-legend"
-      ],
-      "lastVerified": "2026-09-08",
-      "origin": {
-        "type": "reviewed-legend-expansion",
-        "sourceFile": "Coastal Drone VNC legend article and user-provided chart illustrations"
-      }
-    },
-    {
-      "id": "vnc-legend-003",
-      "category": "navigation",
-      "difficulty": "medium",
-      "question": "On an air/ground communication box in the Canadian VNC legend, what does a heavy box line generally indicate?",
-      "choices": [
-        "The standard FSS frequencies are available at the station shown",
-        "The frequencies are available only from a remote site shown below the box",
-        "The area is Class F Restricted airspace",
-        "The box is an aerodrome elevation and runway-data box"
-      ],
-      "answerIndex": 0,
-      "rationale": "The Canadian VNC legend uses the heavy communication-box line to identify an FSS with standard group frequencies available at that station. Communication information should still be checked against current publications before flight.",
-      "examScope": "core-advanced",
-      "tp15263Section": "5",
-      "knowledgeArea": "Navigation and charts",
-      "knowledgeTopic": "VNC/VTA legend - air/ground communication boxes",
-      "learningObjective": "Recognize the meaning of line weight in a Canadian VNC air/ground communication box.",
-      "source": "TP 15263 Section 5 - Maps and charts; NAV CANADA VNC/VTA legend; Coastal Drone VNC legend article",
-      "sourceRefs": [
-        "ref-tp-15263",
-        "ref-navcanada-products",
-        "ref-coastaldrone-vnc-legend"
-      ],
-      "lastVerified": "2026-09-08",
-      "origin": {
-        "type": "reviewed-legend-expansion",
-        "sourceFile": "Coastal Drone VNC legend article and user-provided chart illustrations"
-      }
-    },
-    {
-      "id": "vnc-legend-005",
-      "category": "navigation",
-      "difficulty": "easy",
-      "question": "An ICAO aerodrome entry shows a local magnetic variation such as W 11°. What does that value help a pilot determine?",
-      "choices": [
-        "The relationship between true directions on the chart and magnetic headings used for navigation",
-        "The maximum legal takeoff weight of an aircraft at the nearest aerodrome",
-        "Whether a Class F area is active today without checking the DAH or NOTAMs",
-        "The radio frequency used by every aircraft in the charted area"
-      ],
-      "answerIndex": 0,
-      "rationale": "The magnetic variation published with an aerodrome indicates the local difference between true and magnetic direction. It helps relate true directions used on charts to magnetic headings used by compass-based navigation; it does not replace current airspace status, NOTAM, or aerodrome information.",
-      "examScope": "core-advanced",
-      "tp15263Section": "5",
-      "knowledgeArea": "Navigation and charts",
-      "knowledgeTopic": "Aerodrome data - magnetic variation",
-      "learningObjective": "Interpret the magnetic variation published with an ICAO aerodrome and relate true directions to magnetic headings.",
-      "source": "TP 15263 Section 5 - Maps and charts; NAV CANADA aerodrome data/CFS; Coastal Drone VNC legend article",
-      "sourceRefs": [
-        "ref-tp-15263",
-        "ref-navcanada-products",
-        "ref-coastaldrone-vnc-legend",
-        "ref-skyvector-charts"
-      ],
-      "lastVerified": "2026-09-08",
-      "origin": {
-        "type": "reviewed-legend-expansion",
-        "sourceFile": "Coastal Drone VNC legend article and user-provided chart illustrations"
-      }
     }
   ],
-  "totalQuestions": 1016,
+  "totalQuestions": 1012,
   "lastUpdated": "2026-09-03"
 }

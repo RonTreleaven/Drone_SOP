@@ -1,0 +1,20 @@
+{
+  "date": "2026-09-08",
+  "threshold": 0.72,
+  "currentBankSize": 1012,
+  "candidatePool": 4,
+  "target": 4,
+  "selected": 4,
+  "selectedByCategory": {
+    "airspace": 2,
+    "navigation": 2
+  },
+  "shortfalls": {},
+  "selectedIds": [
+    "vnc-legend-001",
+    "vnc-legend-002",
+    "vnc-legend-003",
+    "vnc-legend-005"
+  ],
+  "rejected": []
+}

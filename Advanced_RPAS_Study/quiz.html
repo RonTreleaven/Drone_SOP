@@ -6,10 +6,23 @@
 <title>Advanced RPAS Quiz</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="stylesheet" href="../assets/css/advanced-rpas-quiz.css">
+<link rel="stylesheet" href="../assets/css/site-nav.css">
 </head>
 <body>
+<nav class="top-nav shared-site-nav" aria-label="Site navigation">
+  <div class="nav-primary">
+    <a href="../index.html">Home</a>
+    <span class="nav-sep" aria-hidden="true">|</span>
+    <a href="../tools.html">Tools</a>
+  </div>
+</nav>
 <main>
-<h1>Advanced RPAS Quiz</h1>
+<header class="site-header">
+  <a href="../index.html" aria-label="Go to Home">
+    <img src="../assets/img/logo_25.svg" alt="Drone SOP logo" class="site-logo">
+  </a>
+  <h1>Advanced RPAS Quiz</h1>
+</header>
 <p class="meta">Adaptive quiz: questions are weighted toward categories and items you've missed most, using stats stored in this browser.</p>
 
 <section id="setup">
@@ -30,27 +43,6 @@
     <p class="meta" id="scope-selection-status" aria-live="polite"></p>
   </fieldset>
 
-  <fieldset class="review-focus-fieldset">
-    <legend>Review focus</legend>
-    <label>
-      <input type="checkbox" name="review-focus" value="phase7-tp15263-batch-1">
-      New TP 15263 batch
-    </label>
-    <label>
-      <input type="checkbox" name="review-focus" value="legacy-normalized">
-      Legacy normalized
-    </label>
-    <label>
-      <input type="checkbox" name="review-focus" value="needs-tp15263-mapping">
-      Needs TP 15263 mapping
-    </label>
-    <label>
-      <input type="checkbox" name="review-focus" value="needs-source-review">
-      Needs source review
-    </label>
-    <p class="meta" id="review-focus-status" aria-live="polite"></p>
-  </fieldset>
-
   <fieldset class="category-fieldset">
     <legend>Question categories</legend>
     <div class="category-actions" aria-label="Category selection actions">
@@ -60,6 +52,32 @@
     </div>
     <div id="category-filters"></div>
   </fieldset>
+  <details class="quiz-review" id="quiz-review">
+    <summary>
+      <span>QuizReview tools</span>
+      <span class="meta" id="review-focus-summary">Optional filters</span>
+    </summary>
+    <fieldset class="review-focus-fieldset">
+      <legend>Review focus</legend>
+      <label>
+        <input type="checkbox" name="review-focus" value="phase7-tp15263-batch-1">
+        New TP 15263 batch
+      </label>
+      <label>
+        <input type="checkbox" name="review-focus" value="legacy-normalized">
+        Legacy normalized
+      </label>
+      <label>
+        <input type="checkbox" name="review-focus" value="needs-tp15263-mapping">
+        Needs TP 15263 mapping
+      </label>
+      <label>
+        <input type="checkbox" name="review-focus" value="needs-source-review">
+        Needs source review
+      </label>
+      <p class="meta" id="review-focus-status" aria-live="polite"></p>
+    </fieldset>
+  </details>
   <label>Questions this round:
     <input type="number" id="round-length" value="5" min="1" max="50">
   </label>
@@ -353,6 +371,9 @@ function updateReviewFocusState() {
   const summary = activeFlags.length
     ? activeFlags.map(flag => `${flag}: ${flagCounts[flag] || 0}`).join(" · ")
     : "No review-focus filter selected.";
+  document.getElementById("review-focus-summary").textContent = activeFlags.length
+    ? `${activeFlags.length} filter${activeFlags.length === 1 ? "" : "s"} active`
+    : "Optional filters";
   document.getElementById("review-focus-status").textContent = summary;
 }
 
