@@ -1,11 +1,11 @@
 [
   {
-    "raw": "(U1580/26 NOTAMR U1072/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609111941 C) 2609302359\nE) OBST LGT U/S TOWER 495532N 0971541W (APRX 1.26NM NW AD) 62FT AGL, \n845FT AMSL.)",
-    "startValidity": "2026-09-11T19:41:00",
-    "endValidity": "2026-09-30T23:59:00",
+    "raw": "(U1584/26 NOTAMR U1345/26\nQ) CZWG/QOLAS/IV/M/E/000/030/5023N10556W002\nA) CZWG B) 2609120950 C) 2610272359\nE) OBST LGT U/S TOWER 502324N 1055537W (APRX 15NM W MOOSE JAW/AIR \nVICE MARSHAL C.M. MCEWEN AD (CYMJ)) 570FT AGL, 2946FT AMSL.)",
+    "startValidity": "2026-09-12T09:50:00",
+    "endValidity": "2026-10-27T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
-      "49.925556, -97.261389"
+      "50.390000, -105.926944"
     ]
   },
   {
@@ -24,6 +24,15 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.925556, -97.261111"
+    ]
+  },
+  {
+    "raw": "(U1580/26 NOTAMR U1072/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609111941 C) 2609302359\nE) OBST LGT U/S TOWER 495532N 0971541W (APRX 1.26NM NW AD) 62FT AGL, \n845FT AMSL.)",
+    "startValidity": "2026-09-11T19:41:00",
+    "endValidity": "2026-09-30T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.925556, -97.261389"
     ]
   },
   {
@@ -366,15 +375,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.678889, -100.620000"
-    ]
-  },
-  {
-    "raw": "(U1345/26 NOTAMR U1066/26\nQ) CZWG/QOLAS/IV/M/E/000/030/5023N10556W002\nA) CZWG B) 2607311819 C) 2609141810\nE) OBST LGT U/S TOWER 502324N 1055537W (APRX 15NM W MOOSE JAW/AIR \nVICE MARSHAL C.M. MCEWEN AD (CYMJ)) 570FT AGL, 2946FT AMSL.)",
-    "startValidity": "2026-07-31T18:19:00",
-    "endValidity": "2026-09-14T18:10:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.390000, -105.926944"
     ]
   },
   {
