@@ -1,20 +1,29 @@
 [
   {
+    "raw": "(R0869/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/030/5334N11409W005\nA) CXXX B) 2609130923 C) 2611131800\nE) CSP3 STONY PLAIN (STONY FIELD) \nOBST LGT U/S TOWER 533338N 1140837W (APRX 3NM WNW AD) 380FT AGL, \n2913FT AMSL.)",
+    "startValidity": "2026-09-13T09:23:00",
+    "endValidity": "2026-11-13T18:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.560556, -114.143611"
+    ]
+  },
+  {
+    "raw": "(R0868/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/027/5354N11503W005\nA) CXXX B) 2609130652 C) 2611132359\nE) CMC3 MAYERTHORPE (HEALTHCARE CENTRE) (HELI)\nOBST LGT U/S TOWER 535417N 1150254W (APRX 4NM ESE AD) 368FT AGL, \n2693FT AMSL.)",
+    "startValidity": "2026-09-13T06:52:00",
+    "endValidity": "2026-11-13T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.904722, -115.048333"
+    ]
+  },
+  {
     "raw": "(R0866/26 NOTAMR R0547/26\nQ) CZEG/QOBCE/IV/M/E/000/018/5617N12115W002\nA) CZEG B) 2609121519 C) 2612112000EST\nE) CABLE CROSSING WITHIN 2000FT RADIUS CENTRED ON 561705N 1211509W \n(APRX 17NM W FORT ST. JOHN AD (CYXJ)). 340FT AGL 1800FT AMSL. \nNON-STANDARD MARKING (MARKER BALLS MISSING).)",
     "startValidity": "2026-09-12T15:19:00",
     "endValidity": null,
     "q_code": "QOBCE",
     "coordinates_dd": [
       "56.284722, -121.252500"
-    ]
-  },
-  {
-    "raw": "(C4446/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/008/6226N11427W005\nA) CYZF B) 2609121501 C) 2609122359\nE) CRANE 622621N 1142714W APRX 4810FT BFR THR 34 AND 2550FT WEST \nEXTENDED RCL. 120FT AGL 795FT AMSL. LGTD, PAINTED.)",
-    "startValidity": "2026-09-12T15:01:00",
-    "endValidity": "2026-09-12T23:59:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "62.439167, -114.453889"
     ]
   },
   {
@@ -711,21 +720,21 @@
     ]
   },
   {
-    "raw": "(R0695/26 NOTAMR R0383/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
-    "startValidity": "2026-07-20T17:14:00",
-    "endValidity": "2026-10-20T17:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "56.386111, -111.272778"
-    ]
-  },
-  {
     "raw": "(U1273/26 NOTAMR U0728/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
     "startValidity": "2026-07-20T17:14:00",
     "endValidity": "2026-10-20T17:00:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.480833, -109.194167"
+    ]
+  },
+  {
+    "raw": "(R0695/26 NOTAMR R0383/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
+    "startValidity": "2026-07-20T17:14:00",
+    "endValidity": "2026-10-20T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "56.386111, -111.272778"
     ]
   },
   {
@@ -1131,24 +1140,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "51.179722, -115.576111"
-    ]
-  },
-  {
-    "raw": "(R0545/26 NOTAMR R0266/26\nQ) CZEG/QOLAS/IV/M/AE/000/026/5221N11012W005\nA) CXXX B) 2606141224 C) 2609122359\nE) CEH6 PROVOST \nOBST LGT U/S TOWER 522106N 1101143W (APRX 3.2NM ENE AD) 349FT \nAGL, 2561FT AMSL.)",
-    "startValidity": "2026-06-14T12:24:00",
-    "endValidity": "2026-09-12T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.351667, -110.195278"
-    ]
-  },
-  {
-    "raw": "(R0542/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/023/5609N11328W005\nA) CXXX B) 2606131739 C) 2609122359\nE) CFT8 PELICAN \nOBST LGT U/S TOWER 560908N 1132745W (APRX 3865FT SE AD) 247FT \nAGL, 2284FT AMSL.)",
-    "startValidity": "2026-06-13T17:39:00",
-    "endValidity": "2026-09-12T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "56.152222, -113.462500"
     ]
   },
   {
