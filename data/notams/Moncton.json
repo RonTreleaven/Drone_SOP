@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(V1177/26 NOTAMR V0716/26\nQ) CZQM/QOLAS/IV/M/E/000/011/4613N06321W002\nA) CZQM B) 2609140307 C) 2612122100\nE) OBST LGT U/S TOWER 461244N 0632032W (APRX 10NM W CHARLOTTETOWN AD \n(CYYG)) 727FT AGL, 1042FT AMSL.)",
+    "startValidity": "2026-09-14T03:07:00",
+    "endValidity": "2026-12-12T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "46.212222, -63.342222"
+    ]
+  },
+  {
     "raw": "(K3190/26 NOTAMN\nQ) CZQM/QOBCE/IV/M/AE/000/004/4617N06308W005\nA) CYYG B) 2609111100 C) 2609142000\nD) DAILY 1100-2000\nE) MOBILE CRANE WITHIN 150FT RADIUS CENTRED ON 461725N 0630759W APRX \n1270FT BFR THR 10 AND 1100FT SOUTH EXTENDED RCL. 195FT AGL 352FT \nAMSL. LGTD, PAINTED.)",
     "startValidity": "2026-09-10T16:05:20.054",
     "endValidity": "2026-09-14T20:00:00",
@@ -90,21 +99,21 @@
     ]
   },
   {
-    "raw": "(V1048/26 NOTAMR V0596/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4539N06126W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453914N 0612614W (APRX 2.9NM WNW AD) 391FT \nAGL, 398FT AMSL.)",
-    "startValidity": "2026-08-25T13:25:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.653889, -61.437222"
-    ]
-  },
-  {
     "raw": "(V1049/26 NOTAMR V0598/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
     "startValidity": "2026-08-25T13:25:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.647222, -61.455000"
+    ]
+  },
+  {
+    "raw": "(V1048/26 NOTAMR V0596/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4539N06126W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453914N 0612614W (APRX 2.9NM WNW AD) 391FT \nAGL, 398FT AMSL.)",
+    "startValidity": "2026-08-25T13:25:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.653889, -61.437222"
     ]
   },
   {
@@ -321,15 +330,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "48.299722, -66.790833"
-    ]
-  },
-  {
-    "raw": "(V0716/26 NOTAMR V0340/26\nQ) CZQM/QOLAS/IV/M/E/000/011/4613N06321W002\nA) CZQM B) 2606170448 C) 2609142100\nE) OBST LGT U/S TOWER 461244N 0632032W (APRX 10NM W CHARLOTTETOWN AD \n(CYYG)) 727FT AGL, 1042FT AMSL.)",
-    "startValidity": "2026-06-17T04:48:00",
-    "endValidity": "2026-09-14T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "46.212222, -63.342222"
     ]
   },
   {
