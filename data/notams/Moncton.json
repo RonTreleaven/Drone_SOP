@@ -99,21 +99,21 @@
     ]
   },
   {
-    "raw": "(V1049/26 NOTAMR V0598/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
-    "startValidity": "2026-08-25T13:25:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.647222, -61.455000"
-    ]
-  },
-  {
     "raw": "(V1048/26 NOTAMR V0596/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4539N06126W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453914N 0612614W (APRX 2.9NM WNW AD) 391FT \nAGL, 398FT AMSL.)",
     "startValidity": "2026-08-25T13:25:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.653889, -61.437222"
+    ]
+  },
+  {
+    "raw": "(V1049/26 NOTAMR V0598/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
+    "startValidity": "2026-08-25T13:25:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.647222, -61.455000"
     ]
   },
   {
@@ -270,15 +270,6 @@
     ]
   },
   {
-    "raw": "(E4564/26 NOTAMN\nQ) CZQM/QOBCE/IV/M/AE/000/003/4459N06455W005\nA) CYZX B) 2607141355 C) 2609161600EST\nE) CRANE 445908N 0645432W APRX 1810FT BEYOND THR 26 AND 1320FT SOUTH \nRCL. 116FT AGL 208FT AMSL. NOT LGTD.)",
-    "startValidity": "2026-07-14T13:55:00",
-    "endValidity": null,
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "44.985556, -64.908889"
-    ]
-  },
-  {
     "raw": "(K2287/26 NOTAMN\nQ) CZQM/QOBCE/IV/M/AE/000/002/4625N06346W005\nA) CXXX B) 2607101718 C) 2609302200\nD) JUL 10 1718-2200, JUL 13-SEP 30 MON-FRI 0900-2200\nE) CCH6 SUMMERSIDE(PRINCE COUNTY HOSPITAL) (HELI)\nMOBILE CRANE WITHIN 950FT RADIUS CENTRED ON 462504N 0634626W \n(APRX AT SE AD (CCH6)). 110FT AGL 146FT AMSL. NOT LGTD.)",
     "startValidity": "2026-07-10T17:18:00",
     "endValidity": "2026-09-30T22:00:00",
@@ -312,15 +303,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.477778, -66.234444"
-    ]
-  },
-  {
-    "raw": "(E4084/26 NOTAMN\nQ) CZQM/QOBCE/IV/M/AE/000/003/4459N06454W005\nA) CYZX B) 2606211100 C) 2609161900\nD) DAILY 1100-1900\nE) CRANE 445901N 0645417W APRX 1150FT BEYOND THR 30 AND 1960FT NE \nRCL. 155FT AGL 247FT AMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-06-20T23:33:41.981",
-    "endValidity": "2026-09-16T19:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "44.983611, -64.904722"
     ]
   },
   {
