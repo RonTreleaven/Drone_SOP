@@ -1,5 +1,23 @@
 [
   {
+    "title": "unmanned aerial vehicle (UAV) technician",
+    "company": "CTS - Canadian Technology Systems",
+    "location": "Pointe-Claire (QC)",
+    "link": "https://www.jobbank.gc.ca/jobsearch/jobposting/50282864?source=searchresults",
+    "description": "New On site Direct Apply Green job Posted on Job Bank This job was posted directly by the employer on Job Bank. Job Bank unmanned aerial vehicle (UAV) technician September 14, 2026 CTS - Canadian Technology Systems Location Pointe-Claire (QC) Salary $24.00 to $30.00 hourly (to be negotiated) Job Bank Job number: 3670065 unmanned aerial vehicle (UAV) technician - Save to favourites Your favourites To add a job posting to your favourites, you need a Job Bank account. Sign in or sign up now! Sign in Sign up for a Plus account",
+    "summary": "New On site Direct Apply Green job Posted on Job Bank This job was posted directly by the employer on Job Bank. Job Bank unmanned aerial vehicle (UAV) technician September 14, 2026 CTS - Canadian Technology Systems Location Pointe-Claire (QC) Salary $24.00 to $30.00 hourly (to be negotiated) Job Bank Job number: 3670065 unmanned aerial vehicle (UAV) technician - Save to favourites Your favourites To add a job posting to your favourites, you need a Job Bank account. Sign in or sign up now! Sign in Sign up for a Plus account",
+    "date_posted": "",
+    "date_expires": "",
+    "category": "general",
+    "type": "unknown",
+    "source": "jobbank",
+    "query_family": "mapping",
+    "matched_query": "photogrammetry drone",
+    "confidence": 0.95,
+    "match_reason": "job-like URL; drone terms: aerial, uav; job terms: apply, job; source=jobbank; query_family=mapping; drone term in title/company; core term in title; core drone/uav signal; technician override via uav/rpas context",
+    "last_seen": "09/15/2026"
+  },
+  {
     "title": "Drone Operator, Safety Advisor - 6 Month Term, Empire Envelope",
     "company": "Qualico Canada",
     "location": "Calgary, Alberta, ca",
@@ -15,7 +33,7 @@
     "matched_query": "drone survey",
     "confidence": 0.95,
     "match_reason": "family terms: gis; drone terms: drone, rpas; job terms: job, operator, pilot; source=talent; query_family=mapping; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "09/14/2026"
+    "last_seen": "09/15/2026"
   },
   {
     "title": "Reality Capture / Drone Pilot",
@@ -33,7 +51,7 @@
     "matched_query": "drone pilot",
     "confidence": 0.95,
     "match_reason": "family terms: flight, pilot, rpas, uav; drone terms: aerial, drone, lidar, photogrammetry, rpas, uav; job terms: hiring, job, pilot, survey; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "09/14/2026"
+    "last_seen": "09/15/2026"
   },
   {
     "title": "drone pilot",
@@ -51,7 +69,7 @@
     "matched_query": "drone pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: pilot; drone terms: drone; job terms: apply, job, pilot; source=jobbank; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "09/14/2026"
+    "last_seen": "09/15/2026"
   },
   {
     "title": "drone pilot",
@@ -87,7 +105,7 @@
     "matched_query": "remote pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, pilot, uas; drone terms: drone, uas; job terms: apply, career, hiring, operator, pilot; source=greenhouse; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "09/14/2026"
+    "last_seen": "09/15/2026"
   },
   {
     "title": "Drone Operator (R5145)",
@@ -105,7 +123,7 @@
     "matched_query": "uas operator",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: operator, uas; drone terms: drone, uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "09/14/2026"
+    "last_seen": "09/15/2026"
   },
   {
     "title": "UAS Operator & Flight Operations Technician (R5438)",
@@ -123,6 +141,6 @@
     "matched_query": "uas operator",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, uas; drone terms: uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "09/14/2026"
+    "last_seen": "09/15/2026"
   }
 ]
