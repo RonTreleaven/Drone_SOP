@@ -540,21 +540,21 @@
     ]
   },
   {
-    "raw": "(U1494/26 NOTAMR U1260/26\nQ) CZYZ/QOLAS/IV/M/E/000/012/4603N07728W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 460240N 0772804W (APRX 5NM SSE DEEP \nRIVER/ROLPH AD (CPH2)) 651FT AGL, 1188FT AMSL.)",
-    "startValidity": "2026-08-30T10:18:00",
-    "endValidity": "2026-10-14T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "46.044444, -77.467778"
-    ]
-  },
-  {
     "raw": "(U1495/26 NOTAMR U1261/26\nQ) CZYZ/QOLAS/IV/M/E/000/020/4327N08036W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 432700N 0803608W (APRX 8NM S ELMIRA AD (CNT6)) \n600FT AGL, 1902FT AMSL.)",
     "startValidity": "2026-08-30T10:18:00",
     "endValidity": "2026-10-14T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.450000, -80.602222"
+    ]
+  },
+  {
+    "raw": "(U1494/26 NOTAMR U1260/26\nQ) CZYZ/QOLAS/IV/M/E/000/012/4603N07728W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 460240N 0772804W (APRX 5NM SSE DEEP \nRIVER/ROLPH AD (CPH2)) 651FT AGL, 1188FT AMSL.)",
+    "startValidity": "2026-08-30T10:18:00",
+    "endValidity": "2026-10-14T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "46.044444, -77.467778"
     ]
   },
   {
