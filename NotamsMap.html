@@ -639,6 +639,55 @@
         font-size: 11px;
         color: #6b7280;
     }
+    .cz-category-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-bottom: 6px;
+    }
+    .cz-category-tab {
+        border: 1px solid #9eb9d2;
+        background: #ffffff;
+        color: #294766;
+        border-radius: 999px;
+        padding: 3px 9px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    .cz-category-tab:hover {
+        background: #edf4fb;
+    }
+    .cz-category-tab.active {
+        background: #12406d;
+        border-color: #12406d;
+        color: #ffffff;
+    }
+    .cz-toggle-control {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        margin-top: 6px;
+    }
+    .cz-toggle-btn {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #ffffff;
+        border: 1px solid #d8e2ee;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        color: #12406d;
+        font-size: 15px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .cz-toggle-btn.active {
+        background: #12406d;
+        color: #ffffff;
+    }
 </style>
     
 <script>
@@ -2575,7 +2624,7 @@ window.onload = function() {
       d.style.position = 'absolute';
       d.style.left = '46px';
       d.style.top = '0px';
-      d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout pilot-flyout-v2"><div class="pilot-header-row"><div class="pilot-header-title">Operations Drawer</div><button id="pilotFlyoutClose" class="pilot-icon-btn" title="Close Drawer"><i class="fa-solid fa-xmark"></i></button></div><section id="drawerNotamsSection" class="drawer-section"><div class="drawer-section-title">NOTAM Tools</div><button type="button" id="notamsFlyoutToggleBtn" class="notams-flyout-btn">Hide NOTAM markers</button><button type="button" id="showAllNotamDetailBtn" class="notams-flyout-btn">Show all NOTAM detail</button><div id="notamsFlyoutStatus" class="notams-flyout-meta">In-scope markers: 0</div></section><section id="drawerAirportSection" class="drawer-section"><div class="drawer-section-title">Airport Circle Layers</div><div id="airportCircleRows"></div><div class="airport-circles-hint">Tap a row to toggle</div></section><section id="drawerPilotSection" class="drawer-section"><div class="drawer-section-title">Pilot Controls</div><div id="decimalDegreesText" class="controls-meta dd-hint">Decimal Degrees: --, --</div><div class="latlon-grid"><label class="coord-field"><span>Lat</span><input id="pLat" size="12" maxlength="12" placeholder="43.000000"></label><label class="coord-field"><span>Lon</span><input id="pLon" size="13" maxlength="13" placeholder="-79.000000"></label><div class="latlon-quick-actions"><button id="clearPilotLatLon" class="pilot-icon-btn" title="Clear Lat/Lon"><i class="fa-solid fa-xmark"></i></button><button id="upd" class="pilot-icon-btn" title="Set Lat/Lon"><i class="fa-solid fa-check"></i></button></div></div><div class="action-grid"><button id="getPilotLoc">Get Pilot Location</button><button id="sourceBtn">Switch Filter Group</button><button id="openLiveFetch">Open FetchNotams</button><button id="refreshFirCacheBtn">Refresh FIR</button></div><div class="radius-row"><span class="radius-label">Radius km</span><input id="radiusKmInput" size="6" maxlength="6" placeholder="10"><button id="setRadiusBtn">Change Radius</button></div><div class="pilot-status-block"><div id="currentPilotText" class="controls-meta status-line">Current Pilot Location: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Source: RAW</div><div id="livePayloadText" class="controls-meta status-line">Live payload: --</div><div id="currentBasemapText" class="controls-meta status-line">Basemap: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div><div id="refreshFirPanel" style="display:none;padding:5px 2px 2px 2px;border-top:1px solid #ccc;margin-top:5px;"><div style="font-size:0.82em;font-weight:600;margin-bottom:3px;color:#555;">Refresh NOTAMs Cache</div><div style="display:flex;gap:4px;align-items:center;"><span style="font-size:0.8em;">FIR:</span><input id="refreshFirInput" size="5" maxlength="4" placeholder="CZYZ" style="width:50px;font-size:0.8em;padding:2px 3px;border:1px solid #aaa;border-radius:3px;"><button id="refreshFirFetchBtn" style="font-size:0.8em;padding:2px 7px;background:#2d6a2d;color:#fff;border:none;border-radius:3px;cursor:pointer;">Fetch</button><button id="refreshFirCancelBtn" style="font-size:0.8em;padding:2px 6px;background:#888;color:#fff;border:none;border-radius:3px;cursor:pointer;">&#x2715;</button></div><div id="refreshFirStatus" style="font-size:0.78em;margin-top:4px;color:#555;min-height:1.1em;"></div></div></section></div>';
+      d.innerHTML = '<div id="pilotFlyout" class="pilot-flyout pilot-flyout-v2"><div class="pilot-header-row"><div class="pilot-header-title">Operations Drawer</div><button id="pilotFlyoutClose" class="pilot-icon-btn" title="Close Drawer"><i class="fa-solid fa-xmark"></i></button></div><section id="drawerNotamsSection" class="drawer-section"><div class="drawer-section-title">NOTAM Tools</div><button type="button" id="notamsFlyoutToggleBtn" class="notams-flyout-btn">Hide NOTAM markers</button><button type="button" id="showAllNotamDetailBtn" class="notams-flyout-btn">Show all NOTAM detail</button><div id="notamsFlyoutStatus" class="notams-flyout-meta">In-scope markers: 0</div></section><section id="drawerAirportSection" class="drawer-section"><div class="drawer-section-title">Airport Circle Layers</div><div id="airportCircleRows"></div><div class="airport-circles-hint">Tap a row to toggle</div></section><section id="drawerAirspaceSection" class="drawer-section"><div class="drawer-section-title">Control Zones</div><div id="czCategoryTabs" class="cz-category-tabs"></div><div id="czLayerRows"></div><div id="czLayerStatus" class="airport-circles-hint">Tap a row to load/toggle a class</div></section><section id="drawerPilotSection" class="drawer-section"><div class="drawer-section-title">Pilot Controls</div><div id="decimalDegreesText" class="controls-meta dd-hint">Decimal Degrees: --, --</div><div class="latlon-grid"><label class="coord-field"><span>Lat</span><input id="pLat" size="12" maxlength="12" placeholder="43.000000"></label><label class="coord-field"><span>Lon</span><input id="pLon" size="13" maxlength="13" placeholder="-79.000000"></label><div class="latlon-quick-actions"><button id="clearPilotLatLon" class="pilot-icon-btn" title="Clear Lat/Lon"><i class="fa-solid fa-xmark"></i></button><button id="upd" class="pilot-icon-btn" title="Set Lat/Lon"><i class="fa-solid fa-check"></i></button></div></div><div class="action-grid"><button id="getPilotLoc">Get Pilot Location</button><button id="sourceBtn">Switch Filter Group</button><button id="openLiveFetch">Open FetchNotams</button><button id="refreshFirCacheBtn">Refresh FIR</button></div><div class="radius-row"><span class="radius-label">Radius km</span><input id="radiusKmInput" size="6" maxlength="6" placeholder="10"><button id="setRadiusBtn">Change Radius</button></div><div class="pilot-status-block"><div id="currentPilotText" class="controls-meta status-line">Current Pilot Location: --, --</div><div id="notamSourceText" class="controls-meta status-line">NOTAM Source: RAW</div><div id="livePayloadText" class="controls-meta status-line">Live payload: --</div><div id="currentBasemapText" class="controls-meta status-line">Basemap: --</div><div id="radiusInfoText" class="controls-meta status-line">NOTAM Radius: 10 km</div><div id="obstacleCountText" class="controls-meta status-line">Obstacles (10 km): --</div></div><div id="refreshFirPanel" style="display:none;padding:5px 2px 2px 2px;border-top:1px solid #ccc;margin-top:5px;"><div style="font-size:0.82em;font-weight:600;margin-bottom:3px;color:#555;">Refresh NOTAMs Cache</div><div style="display:flex;gap:4px;align-items:center;"><span style="font-size:0.8em;">FIR:</span><input id="refreshFirInput" size="5" maxlength="4" placeholder="CZYZ" style="width:50px;font-size:0.8em;padding:2px 3px;border:1px solid #aaa;border-radius:3px;"><button id="refreshFirFetchBtn" style="font-size:0.8em;padding:2px 7px;background:#2d6a2d;color:#fff;border:none;border-radius:3px;cursor:pointer;">Fetch</button><button id="refreshFirCancelBtn" style="font-size:0.8em;padding:2px 6px;background:#888;color:#fff;border:none;border-radius:3px;cursor:pointer;">&#x2715;</button></div><div id="refreshFirStatus" style="font-size:0.78em;margin-top:4px;color:#555;min-height:1.1em;"></div></div></section></div>';
       return d;
   };
   ctl.addTo(map);
@@ -3257,6 +3306,327 @@ window.onload = function() {
         window._airportCircleLegendControl = null;
     })();
     // End airspace circles + legend
+
+    // Control Zone polygons (real geometry, lazy-loaded from OpenAIP CA airspace export)
+    (function buildControlZoneLayer() {
+        var CZ_SOURCES = [
+            'data/airspace/_sources/ca_asp.geojson',
+            'data/airspace/Control_ca_asp.geojson',
+            'data/airspace/ca_asp_restricted.geojson',
+            'data/ca_asp.geojson',
+            'ca_asp.geojson'
+        ];
+        var CLASS_CODE_TO_LETTER = { 0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F', 6: 'G' };
+        var CZ_CLASS_CONFIG = {
+            B: { label: 'Class B Control Zones', color: '#0d47a1', fillOpacity: 0.10 },
+            C: { label: 'Class C Control Zones', color: '#6a1b9a', fillOpacity: 0.10 },
+            D: { label: 'Class D Control Zones', color: '#c62828', fillOpacity: 0.10 },
+            E: { label: 'Class E Surface/Low-Level', color: '#00897b', fillOpacity: 0.08 },
+            F: { label: 'Class F Control/Related', color: '#ef6c00', fillOpacity: 0.10 },
+            R: { label: 'Class F - Restricted or Danger (CYR/CYD)', color: '#c62828', fillOpacity: 0.12 },
+            FA: { label: 'Class F - Advisory (CYA)', color: '#fb8c00', fillOpacity: 0.10 }
+        };
+        var czClassOrder = ['B', 'C', 'D', 'E', 'F', 'R', 'FA'];
+        var czLayersByClass = {};
+        var czEnabledByClass = {};
+        var czRowsByClass = {};
+        var czSwatchByClass = {};
+        var czFeatureCollection = null;
+        var czLoadPromise = null;
+        var czMasterBtn = null;
+        var czRememberedClasses = [];
+        var currentPilotCategory = 'basic';
+
+        // Approximates the NAV Drone risk-tier colouring: Micro is caution/orange, Basic/Advanced/Level1 treat controlled airspace as red
+        var PILOT_CATEGORY_LABELS = { micro: 'Micro', basic: 'Basic', advanced: 'Advanced', level1: 'Level 1 Complex' };
+        var PILOT_CATEGORY_PRESETS = {
+            micro: {
+                colors: { B: '#fb8c00', C: '#fb8c00', D: '#fb8c00', E: '#00897b', F: '#fb8c00', R: '#c62828', FA: '#fb8c00' },
+                defaultClasses: ['D', 'F', 'R', 'FA']
+            },
+            basic: {
+                colors: { B: '#c62828', C: '#c62828', D: '#c62828', E: '#fb8c00', F: '#fb8c00', R: '#c62828', FA: '#fb8c00' },
+                defaultClasses: ['B', 'C', 'D', 'F', 'R', 'FA']
+            },
+            advanced: {
+                colors: { B: '#c62828', C: '#c62828', D: '#c62828', E: '#fb8c00', F: '#fb8c00', R: '#c62828', FA: '#fb8c00' },
+                defaultClasses: ['B', 'C', 'D', 'F', 'R', 'FA']
+            },
+            level1: {
+                colors: { B: '#c62828', C: '#c62828', D: '#c62828', E: '#fb8c00', F: '#fb8c00', R: '#c62828', FA: '#fb8c00' },
+                defaultClasses: ['B', 'C', 'D', 'F', 'R', 'FA']
+            }
+        };
+
+        czClassOrder.forEach(function(cls) {
+            czLayersByClass[cls] = L.layerGroup();
+            czEnabledByClass[cls] = false;
+        });
+
+        function normalizeIcaoClass(value) {
+            if (typeof value === 'number' && isFinite(value)) {
+                return CLASS_CODE_TO_LETTER[value] || 'UNK';
+            }
+            if (typeof value !== 'string') return 'UNK';
+            var text = value.trim().toUpperCase();
+            if (!text) return 'UNK';
+            if (/^\d+$/.test(text)) {
+                return CLASS_CODE_TO_LETTER[Number(text)] || 'UNK';
+            }
+            if (/^[A-G]$/.test(text)) return text;
+            var m = text.match(/\bCLASS[ _-]*([A-G])\b/);
+            return m ? m[1] : 'UNK';
+        }
+
+        function getFeatureClassLetter(feature) {
+            var p = (feature && feature.properties) || {};
+            var classValue = p.class != null ? p.class : p.icaoClass;
+            return normalizeIcaoClass(classValue);
+        }
+
+        // CYR/CYD = restricted or danger (red); CYA = advisory (orange), per NAV Canada Class F sub-categories
+        function getRestrictedKind(feature) {
+            var p = (feature && feature.properties) || {};
+            var id = String(p.id || p.name || '').toUpperCase();
+            var designation = String(p.designation || '').toUpperCase();
+            var zoneType = String(p.zone_type || '').toUpperCase();
+            if (/\bCYA\d*/.test(id) || designation === 'ADVISORY' || zoneType === 'ADVISORY') return 'FA';
+            if (/\b(CYR|CYD)\d*/.test(id) || designation === 'RESTRICTED' || designation === 'DANGER' ||
+                zoneType === 'RESTRICTED' || zoneType === 'DANGER') return 'R';
+            return null;
+        }
+
+        function czBucketForFeature(feature) {
+            var restrictedKind = getRestrictedKind(feature);
+            if (restrictedKind) return restrictedKind;
+            var letter = getFeatureClassLetter(feature);
+            return czClassOrder.indexOf(letter) !== -1 ? letter : null;
+        }
+
+
+        function setCzStatus(text) {
+            var el = document.getElementById('czLayerStatus');
+            if (el) el.textContent = text;
+        }
+
+        function czPopupHtml(feature) {
+            var p = (feature && feature.properties) || {};
+            var name = p.name || 'Control Zone';
+            var cls = getFeatureClassLetter(feature);
+            var lower = p.lowerLimit && isFinite(p.lowerLimit.value) ? (p.lowerLimit.value + ' ft') : 'n/a';
+            var upper = p.upperLimit && isFinite(p.upperLimit.value) ? (p.upperLimit.value + ' ft') : 'n/a';
+            return '<div class="notam-popup"><div class="notam-title">' + escapeHtml(name) + '</div>' +
+                '<div><span class="notam-label">Class:</span> ' + escapeHtml(cls) + '</div>' +
+                '<div><span class="notam-label">Lower:</span> ' + escapeHtml(String(lower)) + '</div>' +
+                '<div><span class="notam-label">Upper:</span> ' + escapeHtml(String(upper)) + '</div></div>';
+        }
+
+        function populateCzLayers(featureCollection) {
+            var features = (featureCollection && featureCollection.features) || [];
+            features.forEach(function(feature) {
+                var bucket = czBucketForFeature(feature);
+                if (!bucket || !feature.geometry) return;
+                var cfg = CZ_CLASS_CONFIG[bucket];
+                L.geoJSON(feature, {
+                    style: { color: cfg.color, weight: 1.5, fill: true, fillColor: cfg.color, fillOpacity: cfg.fillOpacity },
+                    onEachFeature: function(f, layer) {
+                        layer.bindPopup(czPopupHtml(f));
+                    }
+                }).addTo(czLayersByClass[bucket]);
+            });
+        }
+
+        function loadCzData() {
+            if (czLoadPromise) return czLoadPromise;
+            setCzStatus('Loading control zones...');
+            czLoadPromise = (async function() {
+                for (var i = 0; i < CZ_SOURCES.length; i++) {
+                    try {
+                        var res = await fetch(CZ_SOURCES[i], { cache: 'no-store' });
+                        if (!res.ok) continue;
+                        var data = await res.json();
+                        if (data && Array.isArray(data.features)) {
+                            czFeatureCollection = data;
+                            populateCzLayers(data);
+                            setCzStatus('Control zones loaded (' + data.features.length + ' features).');
+                            return data;
+                        }
+                    } catch (err) {
+                        // try next source
+                    }
+                }
+                setCzStatus('Could not load control zone data.');
+                return null;
+            })();
+            return czLoadPromise;
+        }
+
+        function updateCzRowStatus(cls) {
+            var row = czRowsByClass[cls];
+            if (!row) return;
+            var on = czEnabledByClass[cls];
+            row.style.opacity = on ? '1' : '0.55';
+            var status = row.querySelector('[data-role="status"]');
+            if (status) status.textContent = on ? 'On' : 'Off';
+        }
+
+        function setCzClassVisible(cls, enabled) {
+            czEnabledByClass[cls] = !!enabled;
+            updateCzRowStatus(cls);
+            updateCzMasterButtonVisual();
+            if (!enabled) {
+                if (map.hasLayer(czLayersByClass[cls])) map.removeLayer(czLayersByClass[cls]);
+                return;
+            }
+            loadCzData().then(function() {
+                if (czEnabledByClass[cls]) czLayersByClass[cls].addTo(map);
+            });
+        }
+
+        function anyCzClassVisible() {
+            return czClassOrder.some(function(cls) { return czEnabledByClass[cls]; });
+        }
+
+        function setAllCzVisible(visible) {
+            if (visible) {
+                var toShow = czRememberedClasses.length
+                    ? czRememberedClasses
+                    : (PILOT_CATEGORY_PRESETS[currentPilotCategory] || PILOT_CATEGORY_PRESETS.basic).defaultClasses;
+                toShow.forEach(function(cls) { setCzClassVisible(cls, true); });
+            } else {
+                czRememberedClasses = czClassOrder.filter(function(cls) { return czEnabledByClass[cls]; });
+                czClassOrder.forEach(function(cls) { setCzClassVisible(cls, false); });
+            }
+            updateCzMasterButtonVisual();
+        }
+
+        function updateCzMasterButtonVisual() {
+            if (!czMasterBtn) return;
+            var active = anyCzClassVisible();
+            czMasterBtn.classList.toggle('active', active);
+            czMasterBtn.title = active ? 'Hide Control Zones' : 'Show Control Zones';
+        }
+
+        function restyleCzClassLayer(cls) {
+            var group = czLayersByClass[cls];
+            var cfg = CZ_CLASS_CONFIG[cls];
+            if (!group || !cfg) return;
+            group.eachLayer(function(sub) {
+                if (sub.setStyle) sub.setStyle({ color: cfg.color, fillColor: cfg.color, fillOpacity: cfg.fillOpacity });
+            });
+            var swatch = czSwatchByClass[cls];
+            if (swatch) swatch.style.background = cfg.color;
+        }
+
+        function applyCzCategory(category, activate) {
+            var preset = PILOT_CATEGORY_PRESETS[category] || PILOT_CATEGORY_PRESETS.basic;
+            currentPilotCategory = PILOT_CATEGORY_PRESETS[category] ? category : 'basic';
+            czClassOrder.forEach(function(cls) {
+                if (preset.colors[cls]) CZ_CLASS_CONFIG[cls].color = preset.colors[cls];
+                restyleCzClassLayer(cls);
+            });
+            updateCzCategoryTabs();
+            if (activate) {
+                czRememberedClasses = preset.defaultClasses.slice();
+                czClassOrder.forEach(function(cls) {
+                    setCzClassVisible(cls, preset.defaultClasses.indexOf(cls) !== -1);
+                });
+            }
+        }
+
+        function updateCzCategoryTabs() {
+            Object.keys(czCategoryTabEls).forEach(function(key) {
+                czCategoryTabEls[key].classList.toggle('active', key === currentPilotCategory);
+            });
+        }
+
+        var czCategoryTabEls = {};
+
+        function buildCzCategoryTabs(container) {
+            if (!container) return;
+            container.innerHTML = '';
+            Object.keys(PILOT_CATEGORY_LABELS).forEach(function(key) {
+                var tab = document.createElement('button');
+                tab.type = 'button';
+                tab.className = 'cz-category-tab';
+                tab.textContent = PILOT_CATEGORY_LABELS[key];
+                tab.addEventListener('click', function() {
+                    applyCzCategory(key, true);
+                });
+                czCategoryTabEls[key] = tab;
+                container.appendChild(tab);
+            });
+            updateCzCategoryTabs();
+        }
+
+        function buildCzDrawerContent(container) {
+            if (!container) return;
+            container.innerHTML = '';
+            czClassOrder.forEach(function(cls) {
+                var cfg = CZ_CLASS_CONFIG[cls];
+                var row = document.createElement('button');
+                row.type = 'button';
+                row.className = 'airport-circles-row';
+
+                var swatch = document.createElement('span');
+                swatch.style.width = '12px';
+                swatch.style.height = '12px';
+                swatch.style.borderRadius = '50%';
+                swatch.style.background = cfg.color;
+                swatch.style.border = '1px solid rgba(0,0,0,0.2)';
+
+                var label = document.createElement('span');
+                label.className = 'airport-circles-row-label';
+                label.textContent = cfg.label;
+
+                var status = document.createElement('span');
+                status.setAttribute('data-role', 'status');
+                status.className = 'airport-circles-row-status';
+                status.textContent = 'Off';
+
+                row.appendChild(swatch);
+                row.appendChild(label);
+                row.appendChild(status);
+                row.addEventListener('click', function() {
+                    setCzClassVisible(cls, !czEnabledByClass[cls]);
+                });
+
+                czRowsByClass[cls] = row;
+                czSwatchByClass[cls] = swatch;
+                container.appendChild(row);
+                updateCzRowStatus(cls);
+            });
+        }
+
+        buildCzCategoryTabs(document.getElementById('czCategoryTabs'));
+        buildCzDrawerContent(document.getElementById('czLayerRows'));
+        applyCzCategory('basic', false);
+
+        // Master toggle next to the airport (plane icon) control, top-right
+        var czToggleCtl = L.control({ position: 'topright' });
+        czToggleCtl.onAdd = function() {
+            var d = L.DomUtil.create('div', 'cz-toggle-control leaflet-bar');
+            L.DomEvent.disableClickPropagation(d);
+            var btn = L.DomUtil.create('a', 'cz-toggle-btn', d);
+            btn.href = '#';
+            btn.title = 'Show Control Zones';
+            btn.setAttribute('aria-label', 'Toggle Control Zones');
+            btn.innerHTML = '<i class="fa-solid fa-draw-polygon"></i>';
+            L.DomEvent.on(btn, 'click', function(ev) {
+                L.DomEvent.stop(ev);
+                setAllCzVisible(!anyCzClassVisible());
+            });
+            czMasterBtn = btn;
+            updateCzMasterButtonVisual();
+            return d;
+        };
+        czToggleCtl.addTo(map);
+
+        window._czLayersByClass = czLayersByClass;
+        window._czEnabledByClass = czEnabledByClass;
+        window._applyCzCategory = applyCzCategory;
+    })();
+    // End Control Zone polygons
 
     updatePilotDisplay(startupPilotLocation);
     updateSourceDisplay();

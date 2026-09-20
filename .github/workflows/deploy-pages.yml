@@ -39,7 +39,10 @@ on:
       - "data/rc2/**"
       - "Advanced_RPAS_Study/quiz.html"
       - "Advanced_RPAS_Study/quiz_mtc.html"
-      - "Advanced_RPAS_Study/index.html"
+      - "Advanced_RPAS_Study/AdvStudy.html"
+      - "Advanced_RPAS_Study/KnowedgeRequirements.html"
+      - "Advanced_RPAS_Study/CARs_Part_IX_English.html"
+      - "Advanced_RPAS_Study/KnowedgeRequirements_assets/**"
       - "Advanced_RPAS_Study/data/questions.json"
       - "Advanced_RPAS_Study/data/references.json"
       - "Advanced_RPAS_Study/data/~tmp40_categories.json"
@@ -87,7 +90,8 @@ jobs:
                    _site/assets/Emergency _site/assets/pdf \
                    _site/data/notams _site/data/airspace/_sources \
                    _site/data/schema _site/sections \
-                   _site/Advanced_RPAS_Study/data _site/Advanced_RPAS_Study/docs
+                   _site/Advanced_RPAS_Study/data _site/Advanced_RPAS_Study/docs \
+                   _site/Advanced_RPAS_Study/KnowedgeRequirements_assets
 
           # Root-level HTML pages (exclude local backups/drafts)
           find . -maxdepth 1 -type f -name "*.html" \
@@ -141,7 +145,8 @@ jobs:
           cp -r data/rc2 _site/data/
 
            # Advanced RPAS quiz: deploy only browser runtime files and linked source PDFs.
-           cp Advanced_RPAS_Study/quiz.html Advanced_RPAS_Study/quiz_mtc.html Advanced_RPAS_Study/index.html _site/Advanced_RPAS_Study/
+           cp Advanced_RPAS_Study/quiz.html Advanced_RPAS_Study/quiz_mtc.html Advanced_RPAS_Study/AdvStudy.html Advanced_RPAS_Study/KnowedgeRequirements.html Advanced_RPAS_Study/CARs_Part_IX_English.html _site/Advanced_RPAS_Study/
+           cp -a Advanced_RPAS_Study/KnowedgeRequirements_assets/. _site/Advanced_RPAS_Study/KnowedgeRequirements_assets/
            cp Advanced_RPAS_Study/data/questions.json \
              Advanced_RPAS_Study/data/references.json \
              Advanced_RPAS_Study/data/~tmp40_categories.json \
@@ -162,6 +167,10 @@ jobs:
           test -f _site/data/jobs.json
           test -f _site/Advanced_RPAS_Study/quiz.html
           test -f _site/Advanced_RPAS_Study/quiz_mtc.html
+          test -f _site/Advanced_RPAS_Study/AdvStudy.html
+          test -f _site/Advanced_RPAS_Study/KnowedgeRequirements.html
+          test -f _site/Advanced_RPAS_Study/CARs_Part_IX_English.html
+          test -f _site/Advanced_RPAS_Study/KnowedgeRequirements_assets/image1.png
           test -f _site/Advanced_RPAS_Study/data/questions.json
           test -f _site/Advanced_RPAS_Study/data/references.json
 

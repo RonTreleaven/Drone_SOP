@@ -187,11 +187,39 @@ function setQuestionFlagged(q, flagged) {
   saveFlaggedQuestions();
 }
 
+// Returns a random permutation of [0..n-1] (Fisher-Yates) used to reorder a question's choices.
+function randomChoiceOrder(n) {
+  const order = Array.from({ length: n }, (_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return order;
+}
+
+// Applies a choice order (array of original indices, in their new order) to a question, returning
+// a shallow clone so the shared question bank objects are never mutated with a shuffled order.
+function applyChoiceOrder(q, order) {
+  return {
+    ...q,
+    choices: order.map(i => q.choices[i]),
+    answerIndex: order.indexOf(q.answerIndex),
+    _choiceOrder: order
+  };
+}
+
+// Randomizes a question's choice order so the correct answer isn't biased toward the same letter
+// (source data tends to list the correct choice first/second more often than not).
+function shuffleQuestionChoices(q) {
+  return applyChoiceOrder(q, randomChoiceOrder(q.choices.length));
+}
+
 // Persists the in-progress round (by question id, not full objects) so a reload can resume it.
 function saveRoundState() {
   if (!roundActive) return;
   localStorage.setItem(ROUND_KEY, JSON.stringify({
     queueIds: round.queue.map(q => q.id),
+    choiceOrders: round.queue.map(q => q._choiceOrder),
     answers: round.answers.map(a => a ? { chosenIndex: a.chosenIndex } : null),
     flags: round.flags,
     index: round.index
@@ -214,7 +242,12 @@ function loadRoundState() {
   if (!saved || !Array.isArray(saved.queueIds) || saved.queueIds.length === 0) return null;
 
   const byId = Object.fromEntries(questions.map(q => [q.id, q]));
-  const queue = saved.queueIds.map(id => byId[id]);
+  const queue = saved.queueIds.map((id, i) => {
+    const base = byId[id];
+    if (!base) return null;
+    const order = saved.choiceOrders?.[i];
+    return order && order.length === base.choices.length ? applyChoiceOrder(base, order) : shuffleQuestionChoices(base);
+  });
   if (queue.some(q => !q)) return null; // question bank changed; can't safely resume
 
   const answers = queue.map((q, i) => {
@@ -518,7 +551,7 @@ function startRound() {
     return;
   }
 
-  round = { queue: weightedSample(pool, length), index: 0, answers: new Array(length).fill(null), flags: new Array(length).fill(false) };
+  round = { queue: weightedSample(pool, length).map(shuffleQuestionChoices), index: 0, answers: new Array(length).fill(null), flags: new Array(length).fill(false) };
   roundActive = true;
   document.getElementById("setup").hidden = true;
   document.getElementById("summary").hidden = true;

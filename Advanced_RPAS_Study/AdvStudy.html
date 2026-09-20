@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Advanced RPAS Study</title>
+  <link rel="stylesheet" href="../assets/css/site-nav.css">
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5b6578;
+      --line: #d6dde8;
+      --panel: #f4f7fb;
+      --blue: #0b5ea8;
+      --head: #172b4d;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.45;
+    }
+
+    .top-nav,
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .top-nav {
+      padding-top: 18px;
+    }
+
+    main {
+      padding-top: 28px;
+      padding-bottom: 56px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+    }
+
+    .meta {
+      margin: 0 0 24px;
+      color: var(--muted);
+    }
+
+    .study-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .study-card {
+      display: block;
+      min-height: 150px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .study-card:hover,
+    .study-card:focus-visible {
+      border-color: #0f6d5a;
+      box-shadow: 0 0 0 4px rgba(15, 109, 90, 0.38), 0 0 18px rgba(15, 109, 90, 0.36), 0 10px 24px rgba(0, 0, 0, 0.10);
+      outline: none;
+      background: #eef7ff;
+    }
+
+    .study-card.primary {
+      border-color: #9ec9e8;
+      background: #eaf5ff;
+    }
+
+    .study-card h2 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+      color: var(--head);
+    }
+
+    .study-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <nav class="top-nav shared-site-nav" aria-label="Site navigation">
+    <div class="nav-primary">
+      <a href="../index.html">Home</a>
+      <span class="nav-sep" aria-hidden="true">|</span>
+      <a href="../tools.html">Tools</a>
+    </div>
+  </nav>
+
+  <main>
+    <h1>Advanced RPAS Study</h1>
+    <p class="meta">Study guide, source references, and quiz tools for Canadian Advanced RPAS preparation.</p>
+
+    <section class="study-grid" aria-label="Advanced RPAS study options">
+      <a class="study-card primary" href="../quiz.html">
+        <h2>Advanced RPAS Quiz</h2>
+        <p>Practice questions and review workflow for exam preparation.</p>
+      </a>
+
+      <a class="study-card" href="KnowedgeRequirements.html">
+        <h2>Advanced Pilot Study Guide</h2>
+        <p>Knowledge requirements with CARs/AIM links, notes, and source references.</p>
+      </a>
+
+      <a class="study-card" href="CARs_Part_IX_English.html">
+        <h2>CARs Part IX English Extract</h2>
+        <p>Readable Part IX reference with section lookup and text search.</p>
+      </a>
+    </section>
+  </main>
+</body>
+</html>

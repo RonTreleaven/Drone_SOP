@@ -199,10 +199,6 @@
     }
     .card:hover {
       transform: translateY(-2px);
-      border-color: #a9c8df;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    }
-    .card.is-highlighted {
       border-color: #0f6d5a;
       box-shadow: 0 0 0 4px rgba(15, 109, 90, 0.38), 0 0 18px rgba(15, 109, 90, 0.36), 0 10px 24px rgba(0, 0, 0, 0.10);
     }
@@ -579,9 +575,9 @@
           <h2>Flight Summary</h2>
           <p>Review mission details and save a summary for your records.</p>
         </a>
-        <a class="card is-highlighted" href="quiz.html">
+        <a class="card" href="Advanced_RPAS_Study/AdvStudy.html">
           <h2>Advanced RPAS Study</h2>
-          <p>Daily exam-style review for Advanced pilot knowledge and Transport Canada preparation.</p>
+          <p>Daily quiz, study guide, and CARs Part IX lookup for Advanced pilot exam preparation.</p>
         </a>
       </section>
 
@@ -2473,11 +2469,9 @@
 
     function updateHighlightState(hasPilotLocation) {
       const btn = document.getElementById('init-pilot-location');
-      const toolsCard = document.getElementById('tools-card');
-      if (!btn || !toolsCard) return;
+      if (!btn) return;
 
       btn.classList.toggle('is-highlighted', !hasPilotLocation);
-      toolsCard.classList.toggle('is-highlighted', hasPilotLocation);
     }
 
     function snapshotTermsAcceptance() {
@@ -3113,5 +3107,3 @@
   </script>
 </body>
 </html>
-
-
