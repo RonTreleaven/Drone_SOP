@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U1618/26 NOTAMR U1099/26\nQ) CZWG/QOLAS/IV/M/E/000/014/4950N09731W002\nA) CZWG B) 2609210419 C) 2612192100\nE) OBST LGT U/S TOWER 495012N 0973043W (APRX 5NM SSE ST. FRANCOIS \nXAVIER AD (CKA8)) 600FT AGL, 1381FT AMSL.)",
+    "startValidity": "2026-09-21T04:19:00",
+    "endValidity": "2026-12-19T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.836667, -97.511944"
+    ]
+  },
+  {
     "raw": "(J6492/26 NOTAMR J6491/26\nQ) CZWG/QOBCE/IV/M/AE/000/020/5036N10436W005\nA) CXXX B) 2609200306 C) 2612200200\nE) CAG2 REGINA/AEROGATE \nFARM EQPT 300FT BFR THR 11. 20FT AGL 2000FT AMSL)",
     "startValidity": "2026-09-20T03:06:00",
     "endValidity": "2026-12-20T02:00:00",
@@ -54,15 +63,6 @@
     ]
   },
   {
-    "raw": "(U1582/26 NOTAMR U1052/26\nQ) CZWG/QOLAS/IV/M/E/000/025/5336N10733W002\nA) CZWG B) 2609111941 C) 2612102359\nE) OBST LGT U/S TOWER 533616N 1073324W (APRX 20NM N SPIRITWOOD/H AND \nM FAST FARMS AD (CHM2)) 490FT AGL, 2490FT AMSL.)",
-    "startValidity": "2026-09-11T19:41:00",
-    "endValidity": "2026-12-10T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.604444, -107.556667"
-    ]
-  },
-  {
     "raw": "(U1580/26 NOTAMR U1072/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609111941 C) 2609302359\nE) OBST LGT U/S TOWER 495532N 0971541W (APRX 1.26NM NW AD) 62FT AGL, \n845FT AMSL.)",
     "startValidity": "2026-09-11T19:41:00",
     "endValidity": "2026-09-30T23:59:00",
@@ -78,6 +78,15 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.925556, -97.261111"
+    ]
+  },
+  {
+    "raw": "(U1582/26 NOTAMR U1052/26\nQ) CZWG/QOLAS/IV/M/E/000/025/5336N10733W002\nA) CZWG B) 2609111941 C) 2612102359\nE) OBST LGT U/S TOWER 533616N 1073324W (APRX 20NM N SPIRITWOOD/H AND \nM FAST FARMS AD (CHM2)) 490FT AGL, 2490FT AMSL.)",
+    "startValidity": "2026-09-11T19:41:00",
+    "endValidity": "2026-12-10T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.604444, -107.556667"
     ]
   },
   {
@@ -618,15 +627,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.954167, -96.973889"
-    ]
-  },
-  {
-    "raw": "(U1099/26 NOTAMR U0570/26\nQ) CZWG/QOLAS/IV/M/E/000/014/4950N09731W002\nA) CZWG B) 2606240526 C) 2609212359\nE) OBST LGT U/S TOWER 495012N 0973043W (APRX 5NM SSE ST. FRANCOIS \nXAVIER AD (CKA8)) 600FT AGL, 1381FT AMSL.)",
-    "startValidity": "2026-06-24T05:26:00",
-    "endValidity": "2026-09-21T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.836667, -97.511944"
     ]
   },
   {
