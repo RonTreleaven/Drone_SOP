@@ -63,15 +63,6 @@
     ]
   },
   {
-    "raw": "(R0905/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/030/5335N11438W002\nA) CZEG B) 2609211600 C) 2609211900\nE) OBST LGT U/S TOWER 533452N 1143758W (APRX 20NM W STONY PLAIN \n(STONY FIELD) AD (CSP3)) 394FT AGL, 2972FT AMSL.)",
-    "startValidity": "2026-09-19T13:15:48.928",
-    "endValidity": "2026-09-21T19:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.581111, -114.632778"
-    ]
-  },
-  {
     "raw": "(R0904/26 NOTAMR R0583/26\nQ) CZEG/QOLAS/IV/M/AE/000/038/4905N11202W005\nA) CXXX B) 2609190419 C) 2612172100\nE) CEW5 MILK RIVER \nOBST LGT U/S TOWER 490434N 1120140W (APRX 3.5NM SSE AD) 240FT \nAGL, 3790FT AMSL.)",
     "startValidity": "2026-09-19T04:19:00",
     "endValidity": "2026-12-17T21:00:00",
@@ -114,15 +105,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "51.122222, -114.006944"
-    ]
-  },
-  {
-    "raw": "(R0899/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/024/5400N11114W005\nA) CXXX B) 2609180258 C) 2609211800\nE) CTP5 ST. PAUL (ST. THERESE HEALTH CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 535934N 1111342W (APRX 2.2NM ENE AD) 207FT \nAGL, 2313FT AMSL.)",
-    "startValidity": "2026-09-18T02:58:00",
-    "endValidity": "2026-09-21T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.992778, -111.228333"
     ]
   },
   {
@@ -243,21 +225,21 @@
     ]
   },
   {
-    "raw": "(R0880/26 NOTAMR R0559/26\nQ) CZEG/QOLAS/IV/M/E/000/024/5512N11226W002\nA) CZEG B) 2609141703 C) 2612132359\nE) OBST LGT U/S TOWER 551153N 1122551W (APRX 29NM E CALLING LAKE AD \n(CFK4)) 400FT AGL, 2367FT AMSL.)",
-    "startValidity": "2026-09-14T17:03:00",
-    "endValidity": "2026-12-13T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.198056, -112.430833"
-    ]
-  },
-  {
     "raw": "(R0881/26 NOTAMR R0560/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5335N11425W002\nA) CZEG B) 2609141703 C) 2612132359\nE) OBST LGT U/S TOWER 533503N 1142516W (APRX 13NM W STONY PLAIN \n(STONY FIELD) AD (CSP3)) 404FT AGL, 2926FT AMSL.)",
     "startValidity": "2026-09-14T17:03:00",
     "endValidity": "2026-12-13T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.584167, -114.421111"
+    ]
+  },
+  {
+    "raw": "(R0880/26 NOTAMR R0559/26\nQ) CZEG/QOLAS/IV/M/E/000/024/5512N11226W002\nA) CZEG B) 2609141703 C) 2612132359\nE) OBST LGT U/S TOWER 551153N 1122551W (APRX 29NM E CALLING LAKE AD \n(CFK4)) 400FT AGL, 2367FT AMSL.)",
+    "startValidity": "2026-09-14T17:03:00",
+    "endValidity": "2026-12-13T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "55.198056, -112.430833"
     ]
   },
   {
@@ -963,21 +945,21 @@
     ]
   },
   {
-    "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
-    "startValidity": "2026-07-20T17:14:00",
-    "endValidity": "2026-10-20T17:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.099167, -110.165278"
-    ]
-  },
-  {
     "raw": "(R0695/26 NOTAMR R0383/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
     "startValidity": "2026-07-20T17:14:00",
     "endValidity": "2026-10-20T17:00:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "56.386111, -111.272778"
+    ]
+  },
+  {
+    "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
+    "startValidity": "2026-07-20T17:14:00",
+    "endValidity": "2026-10-20T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.099167, -110.165278"
     ]
   },
   {
