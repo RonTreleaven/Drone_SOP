@@ -5,65 +5,245 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Advanced RPAS Study Guide v1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="../assets/css/site-nav.css" rel="stylesheet"/>
 <style>
-    :root { --border:#d7dbe2; --head:#182b49; --soft:#f5f7fa; --ink:#172033; --muted:#5f6b7a; }
-    body { margin:0; font-family: Arial, Helvetica, sans-serif; color:var(--ink); background:#fff; }
-    header { padding:28px 32px 18px; border-bottom:1px solid var(--border); background:#f8fafc; }
-    header h1 { margin:0 0 8px; font-size:28px; }
-    header p { margin:0; color:var(--muted); }
-    main { padding:24px 32px 48px; }
-    h2 { margin:28px 0 12px; font-size:22px; }
-    h3 { margin:18px 0 8px; font-size:16px; }
-    p { max-width:980px; line-height:1.45; }
-    a { color:#075aaa; }
-    .table-wrap { overflow:auto; border:1px solid var(--border); margin:18px 0 28px; }
-    table.study-table { border-collapse:collapse; min-width:1500px; width:100%; font-size:13px; }
-    .study-table th { position:sticky; top:0; background:var(--head); color:white; z-index:1; }
-    .study-table th, .study-table td { border:1px solid var(--border); padding:7px 8px; vertical-align:top; line-height:1.28; }
-    .study-table tbody tr:nth-child(even) td { background:var(--soft); }
-    .study-table th:nth-child(1), .study-table th:nth-child(2), .study-table td:nth-child(1), .study-table td:nth-child(2) { text-align:center; min-width:64px; }
-    .study-table th:nth-child(3), .study-table td:nth-child(3) { min-width:260px; }
-    .study-table th:nth-child(4), .study-table td:nth-child(4) { min-width:360px; }
-    .study-table th:nth-child(5), .study-table td:nth-child(5) { min-width:220px; }
-    .study-table th:nth-child(6), .study-table td:nth-child(6) { min-width:560px; }
-    figure.doc-image { margin:20px 0; }
-    figure.doc-image img, p img { max-width:100%; height:auto; border:1px solid var(--border); }
-    .caption { color:var(--muted); font-size:13px; }
-    .source-library { border-top:1px solid var(--border); margin-top:36px; padding-top:20px; }
-    .source-library ul { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:10px; padding:0; list-style:none; }
-    .source-library li { border:1px solid var(--border); padding:10px; background:#fbfcfe; }
-    .source-library span { display:block; font-weight:700; margin-bottom:4px; }
-    .source-library code { color:var(--muted); white-space:normal; word-break:break-word; }
-  
-    .study-table tr.section-row td { background:var(--head) !important; color:#ffffff; font-weight:700; }
-    .study-table tr.section-row a { color:#d8ecff; }
-    .study-table tr.section-row td:empty::after { content:""; }
-    .note-statute { margin:0; }
-    .note-statute p { margin:0 0 0.25rem; }
-    .note-statute .lead { margin-bottom:0.35rem; }
-    .note-statute .clause { text-indent:-1.2rem; }
-    .note-statute .level-0 { margin-left:0; text-indent:0; }
-    .note-statute .level-1 { margin-left:1.2rem; }
-    .note-statute .level-2 { margin-left:2.4rem; }
+        :root {
+            --bg-a: #f2f8fb;
+            --bg-b: #edf4f8;
+            --ink: #172033;
+            --muted: #5f6b7a;
+            --accent-blue: #55aabb;
+            --accent-blue-dark: #2e6f86;
+            --head: #182b49;
+            --border: #cfe0e8;
+            --soft: #f5f9fb;
+            --panel: #ffffff;
+            --shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 12% 10%, rgba(85, 170, 187, 0.12), transparent 42%),
+                radial-gradient(circle at 90% 85%, rgba(209, 18, 42, 0.08), transparent 45%),
+                linear-gradient(160deg, var(--bg-a), var(--bg-b));
+            min-height: 100vh;
+            line-height: 1.45;
+        }
+        .top-nav,
+        header,
+        main {
+            max-width: 1180px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .top-nav {
+            padding: 1.25rem 1.25rem 0;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1.2rem 1.35rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.86);
+            box-shadow: var(--shadow);
+        }
+        .site-logo {
+            width: 76px;
+            height: 76px;
+            object-fit: contain;
+            flex: 0 0 auto;
+        }
+        header h1 { margin: 0 0 0.35rem; font-size: clamp(1.5rem, 3vw, 2.1rem); }
+        header p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+        main { padding: 1.4rem 1.25rem 3.5rem; }
+        h2 { margin: 1.6rem 0 0.75rem; font-size: 1.45rem; color: var(--head); }
+        h3 { margin: 1.1rem 0 0.5rem; font-size: 1rem; }
+        p { max-width: 980px; }
+        a { color: #075aaa; }
+        .table-wrap {
+            overflow: auto;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin: 1.1rem 0 1.75rem;
+            background: var(--panel);
+            box-shadow: var(--shadow);
+        }
+        table.study-table { border-collapse: collapse; min-width: 1500px; width: 100%; font-size: 13px; }
+        .study-table th { position: sticky; top: 0; background: var(--head); color: white; z-index: 1; }
+        .study-table th, .study-table td { border: 1px solid var(--border); padding: 7px 8px; vertical-align: top; line-height: 1.28; }
+        .study-table tbody tr:nth-child(even) td { background: var(--soft); }
+        .study-table th:nth-child(1), .study-table td:nth-child(1) { min-width: 195px; width: 195px; overflow-wrap: anywhere; }
+        .study-table th:nth-child(2), .study-table td:nth-child(2) { min-width: 360px; }
+        .study-table th:nth-child(3), .study-table td:nth-child(3) { min-width: 220px; }
+        .study-table th:nth-child(4), .study-table td:nth-child(4) { min-width: 560px; }
+        .study-table td:nth-child(1), .study-table td:nth-child(2), .study-table td:nth-child(3), .study-table td:nth-child(4) { text-align: justify; }
+        figure.doc-image { margin: 1.25rem 0; }
+        figure.doc-image img, p img { max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 6px; }
+        .caption { color: var(--muted); font-size: 13px; }
+        .source-library { border-top: 1px solid var(--border); margin-top: 2.25rem; padding-top: 1.25rem; }
+        .source-library ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 10px; padding: 0; list-style: none; }
+        .source-library li { border: 1px solid var(--border); border-radius: 8px; padding: 10px; background: rgba(255, 255, 255, 0.82); }
+        .source-library span { display: block; font-weight: 700; margin-bottom: 4px; }
+        .source-library code { color: var(--muted); white-space: normal; word-break: break-word; }
+        .study-table tr.section-row td { background: var(--head) !important; color: #ffffff; font-weight: 700; }
+        .study-table tr.section-row a { color: #d8ecff; }
+        .study-table tr.section-row td:empty::after { content: ""; }
+        .note-statute { margin: 0; }
+        .note-statute p { margin: 0 0 0.25rem; }
+        .note-statute .lead { margin-bottom: 0.35rem; }
+        .note-statute .clause { text-indent: -1.2rem; }
+        .note-statute .level-0 { margin-left: 0; text-indent: 0; }
+        .note-statute .level-1 { margin-left: 1.2rem; }
+        .note-statute .level-2 { margin-left: 2.4rem; }
+        .knowledge-details {
+            margin: 0 0 1.1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.72);
+        }
+        .knowledge-details summary {
+            padding: 0.7rem 0.85rem;
+            color: var(--accent-blue-dark);
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .knowledge-details .details-copy { padding: 0 0.85rem 0.7rem; }
+        .knowledge-details p { margin: 0 0 0.7rem; }
+        .mobile-table-options { display: none; }
+        .category-filter {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin: 0 0 0.8rem;
+            padding: 0.65rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.72);
+        }
+        .category-filter legend { padding: 0; color: var(--accent-blue-dark); font-size: 0.85rem; font-weight: 700; }
+        .category-filter label { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--muted); font-size: 0.84rem; cursor: pointer; }
+        .category-filter input { accent-color: var(--accent-blue-dark); }
+        .filter-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.65rem;
+            height: 1.35rem;
+            padding: 0 0.35rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: #ffffff;
+            color: var(--accent-blue-dark);
+            font-size: 0.72rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .study-table tr.category-hidden { display: none; }
+        .section-nav {
+            position: sticky;
+            top: 0.5rem;
+            z-index: 4;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin: 0 0 0.8rem;
+            padding: 0.55rem;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow: 0 5px 16px rgba(23, 32, 51, 0.1);
+            backdrop-filter: blur(8px);
+        }
+        .section-nav-label { flex: 0 0 100%; color: var(--muted); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+        .section-nav a { flex: 1 1 auto; min-width: 5.5rem; padding: 0.38rem 0.45rem; border: 1px solid var(--border); border-radius: 6px; background: #f7fbfd; color: var(--accent-blue-dark); font-size: 0.73rem; font-weight: 700; line-height: 1.15; text-align: center; text-decoration: none; }
+        .section-nav a:hover, .section-nav a:focus-visible { border-color: var(--accent-blue); background: #eaf6f8; outline: none; }
+        .section-nav a.active { background: var(--head); border-color: var(--head); color: #fff; }
+        .floating-x-scroll { position: fixed; right: 1rem; bottom: 0.75rem; left: 1rem; z-index: 8; display: none; align-items: center; gap: 0.35rem; padding: 0.35rem; border: 1px solid var(--border); border-radius: 8px; background: rgba(255, 255, 255, 0.95); box-shadow: 0 5px 16px rgba(23, 32, 51, 0.16); }
+        .floating-x-scroll.is-visible { display: flex; }
+        .floating-x-scroll button { width: 2rem; height: 2rem; margin: 0; padding: 0; border: 1px solid var(--border); border-radius: 5px; background: #f7fbfd; color: var(--accent-blue-dark); cursor: pointer; }
+        .floating-x-scroll .x-track { flex: 1; overflow-x: auto; overflow-y: hidden; height: 2rem; border: 1px solid var(--border); border-radius: 5px; }
+        .floating-x-scroll .x-spacer { height: 1px; }
+        .floating-x-scroll button:hover, .floating-x-scroll button:focus-visible { background: #eaf6f8; outline: none; }
+        @media (min-width: 1200px) {
+            .top-nav, header, main { max-width: 1600px; }
+            main { padding-right: 2rem; padding-left: 2rem; }
+            table.study-table { min-width: 0; width: 100%; table-layout: fixed; }
+            .study-table th:nth-child(1), .study-table td:nth-child(1) { width: 18%; min-width: 0; }
+            .study-table th:nth-child(2), .study-table td:nth-child(2) { width: 30%; min-width: 0; }
+            .study-table th:nth-child(3), .study-table td:nth-child(3) { width: 14%; min-width: 0; }
+            .study-table th:nth-child(4), .study-table td:nth-child(4) { width: 38%; min-width: 0; }
+            .floating-x-scroll { display: none !important; }
+        }
+        @media (min-width: 768px) and (max-width: 1199px) {
+            .top-nav, header, main { max-width: 1100px; }
+            table.study-table { min-width: 1050px !important; }
+            .study-table th:nth-child(1), .study-table td:nth-child(1) { min-width: 180px; }
+            .study-table th:nth-child(2), .study-table td:nth-child(2) { min-width: 330px; }
+            .study-table th:nth-child(3), .study-table td:nth-child(3) { min-width: 190px; }
+            .study-table th:nth-child(4), .study-table td:nth-child(4) { min-width: 470px; }
+        }
+        @media (max-width: 767px) {
+            header { align-items: flex-start; }
+            .site-logo { width: 60px; height: 60px; }
+            header h1 { font-size: 1.35rem; }
+            main { padding-top: 1rem; }
+            .study-table { min-width: 850px !important; font-size: 11px !important; }
+            .study-table th, .study-table td { padding: 6px 5px; }
+            .study-table th:nth-child(1), .study-table td:nth-child(1) { min-width: 128px !important; width: 128px !important; max-width: 128px; }
+            .study-table th:nth-child(2), .study-table td:nth-child(2) { min-width: 250px; }
+            .study-table th:nth-child(3), .study-table td:nth-child(3) { min-width: 150px; }
+            .study-table th:nth-child(4), .study-table td:nth-child(4) { min-width: 320px; }
+            .mobile-table-options { display: block; margin: 0 0 0.7rem; border: 1px solid var(--border); border-radius: 8px; background: rgba(255, 255, 255, 0.72); }
+            .mobile-table-options summary { padding: 0.6rem 0.75rem; color: var(--accent-blue-dark); font-size: 0.85rem; font-weight: 700; cursor: pointer; }
+            .mobile-table-options label { display: block; padding: 0 0.75rem 0.7rem; color: var(--muted); font-size: 0.82rem; }
+            .mobile-table-options input { margin-right: 0.35rem; }
+            .table-wrap.hide-notes .study-table th:nth-child(4), .table-wrap.hide-notes .study-table td:nth-child(4) { display: none; }
+            .table-wrap.hide-notes .study-table { min-width: 530px !important; }
+            .category-filter { gap: 0.45rem; }
+            .section-nav { top: 0.25rem; gap: 0.25rem; padding: 0.4rem; }
+            .section-nav a { min-width: 4.2rem; font-size: 0.66rem; }
+            .floating-x-scroll { right: 0.4rem; bottom: 0.4rem; left: 0.4rem; }
+        }
 </style>
 </head>
 <body>
+<nav aria-label="Site navigation" class="top-nav shared-site-nav">
+<div class="nav-primary">
+<a class="back-link" href="AdvStudy.html"><span aria-hidden="true" class="back-icon">&#8592;</span>BACK</a>
+<span aria-hidden="true" class="nav-sep">|</span>
+<a href="../index.html">Home</a>
+<span aria-hidden="true" class="nav-sep">|</span>
+<a href="../tools.html">Tools</a>
+</div>
+</nav>
 <header>
+<a href="../index.html" aria-label="Go to Drone SOP Home"><img alt="Drone SOP logo" class="site-logo" src="../assets/img/logo_25.svg"/></a>
+<div>
 <h1>Advanced RPAS Study Guide v1.0</h1>
 <p>Static HTML inspection copy generated from the Word document. Source links and citations will be refined in later passes.</p>
+</div>
 </header>
 <main>
-<h2>Advance Pilot Knowledge Requirements</h2><p>Small RPAS pilot knowledge requirements Knowledge requirements for sRPAS pilots operating VLOS are shown in the following tables.</p><p>The applicable type of operation (basic and advanced) is shown to the left of the topics. Sample learning objectives are shown to the right of the topics. The list of sample objectives is not all-inclusive, its purpose is to illustrate the depth of knowledge required to operate sRPAS in Canadian airspace. Types of operation (basic operations, advanced operations) are set out in the Canadian Aviation Regulations, Part IX.  There are minimum knowledge requirements for the pilots of sRPAS operating in each of those groups. <br/>Applicants for the pilot certificate – small remotely piloted aircraft (VLOS) – <br/>basic operations shall demonstrate their knowledge by writing the Transport Canada multiple choice examination based on the indicated applicable subjects contained in this guide and covering the subjects set out in Standard 921.01. <br/>Applicants for the pilot certificate – small remotely piloted aircraft (VLOS) – <br/>advanced operations shall demonstrate their knowledge by writing the Transport Canada multiple choice examination based on the indicated applicable subjects contained in this guide and covering the subjects set out in Standard 921.02. z<br/></p><p>Applicants for the flight reviewer rating attached to the pilot certificate – small remotely piloted aircraft (VLOS) – advanced operations shall demonstrate their knowledge by writing the Transport Canada multiple choice examination on the indicated applicable subjects contained in the “Knowledge areas” section of this guide related to advanced operations and “Appendix A: Flight review guide - sRPAS exercises” related to conducting a flight review covering the subjects set out in Standard 921.03.</p><p><br/></p><div class="table-wrap"><table class="study-table">
+<h2>Advance Pilot Knowledge Requirements</h2><p>Small RPAS pilot knowledge requirements for sRPAS pilots operating VLOS are shown in the following tables.</p><details class="knowledge-details"><summary>About these knowledge requirements</summary><div class="details-copy"><p>The applicable type of operation (basic and advanced) is shown to the left of the topics. Sample learning objectives are shown to the right of the topics. The list of sample objectives is not all-inclusive, its purpose is to illustrate the depth of knowledge required to operate sRPAS in Canadian airspace. Types of operation (basic operations, advanced operations) are set out in the Canadian Aviation Regulations, Part IX. There are minimum knowledge requirements for the pilots of sRPAS operating in each of those groups.</p><p>Applicants for the pilot certificate – small remotely piloted aircraft (VLOS) – basic operations shall demonstrate their knowledge by writing the Transport Canada multiple choice examination based on the indicated applicable subjects contained in this guide and covering the subjects set out in Standard 921.01.</p><p>Applicants for the pilot certificate – small remotely piloted aircraft (VLOS) – advanced operations shall demonstrate their knowledge by writing the Transport Canada multiple choice examination based on the indicated applicable subjects contained in this guide and covering the subjects set out in Standard 921.02.</p><p>Applicants for the flight reviewer rating attached to the pilot certificate – small remotely piloted aircraft (VLOS) – advanced operations shall demonstrate their knowledge by writing the Transport Canada multiple choice examination on the indicated applicable subjects contained in this guide and covering the subjects set out in Standard 921.03.</p></div></details><fieldset class="category-filter"><legend>Show requirements for</legend><label><input type="radio" name="category-filter" value="both" checked> Bas + Adv <span class="filter-count" id="count-both">0</span></label><label><input type="radio" name="category-filter" value="basic"> Bas only <span class="filter-count" id="count-basic">0</span></label><label><input type="radio" name="category-filter" value="advanced"> Adv only <span class="filter-count" id="count-advanced">0</span></label></fieldset><p><br/></p><div class="table-wrap"><details class="mobile-table-options"><summary>Table display options</summary><label><input type="checkbox" id="show-notes"> Show Notes column</label></details><table class="study-table">
 <thead><tr>
-<th colspan="2">sRPAS category</th>
+<th class="category-col" title="Basic operations">Bas</th>
+<th class="category-col" title="Advanced operations">Adv</th>
 <th>Knowledge area (topics)</th>
 <th>The small RPAS pilot operating within visual line of sight must be able to:</th>
 <th>URLs</th>
 <th>Notes:</th>
 </tr></thead><tbody>
-<tr>
-<td>Basic</td>
-<td>Advanced</td>
+<tr class="category-legend-row">
+<td class="category-col">Bas</td>
+<td class="category-col">Adv</td>
 <td></td>
 <td></td>
 <td></td>
@@ -3796,8 +3976,131 @@
 <td></td>
 <td></td>
 </tr>
-</tbody></table></div><h2>Airspace Classification – Designated Airspace Handbook</h2><p>1.3 GLOSSARY OF AERONAUTICAL TERMS AND DESIGNATIONS OF MISCELLANEOUS AIRSPACE<br/></p><p>ADVISORY AREA: Airspace of defined dimensions within which a high volume of pilot training or an unusual type of aerial activity may be carried out.</p><p>AIR DEFENCE IDENTIFICATION ZONE (): Airspace of defined dimensions extending upwards from the surface of the earth within which certain rules for the security control of air traffic apply.</p><p>AIRSPACE CLASSIFICATION: Canadian Domestic Airspace has seven classifications. <br/>The application of any classification to an airspace structure determines the operating rules, the level of ATC service provided within the structure, and in some instances, communications and equipment requirements.</p><h3>Class A</h3><p>High level controlled airspace within the SCA, NCA and ACA. The horizontal and vertical dimensions of high level controlled airspace within these CTAs are illustrated on page M2 (Arctic, Northern and Southern Control Areas). The vertical dimensions of Class A high level controlled airspace within these areas are as follows:</p><h3>SCA : 18,000´ ASL or from 700´ AGL, whichever is higher, to FL600</h3><h3>NCA : FL230 to FL600</h3><h3>ACA: FL270 to FL600</h3><h3>Class B</h3><p>All low level controlled airspace above 12,500´ ASL or from the MEA, whichever is higher, to below 18,000´ ASL. TCAs and associated primary CZs may also be classified Class B airspace.</p><h3>Class C*</h3><p>TCAs and associated primary CZs may be classified Class C airspace.</p><h3>Class D*</h3><p>TCAs and associated primary CZs may be classified Class D airspace.</p><h3>Class E*</h3><p>All high level controlled airspace above FL600 within the SCA, NCA and ACA. Also, low level airways, low level fixed RNAV routes, CAEs, Transition Areas or CZs established without an operating control tower may be classified Class E airspace.</p><h3>Class F</h3><p>Class F airspace is described in terms of horizontal and vertical dimensions, effective for a specified period of time. Class F airspace may be restricted airspace, advisory airspace, or danger areas, and can be controlled airspace, uncontrolled airspace or a combination of both.</p><h3>Class G</h3><p>Airspace shall be classified as G if it has not been designated A, B, C, D, E or F.</p><p><br/>*  The terminology "Class B, C, D or E equivalent" used for the designations of MTCAs describes the equivalent level of service and operating rules for civilian aircraft operating within the MTCA and under military control.</p><p><br/></p><p>Figure M6 Air Defence Identification Zone (ADIZ)</p><figure class="doc-image"><img alt="" src="KnowedgeRequirements_assets/image1.png"/></figure><p class="caption">Figure ADIZ</p><p><br/></p><p>rctic, Northern and Southern Control Area</p><figure class="doc-image"><img alt="" src="KnowedgeRequirements_assets/image2.png"/></figure><p>Canadian Domestic Airspace</p><figure class="doc-image"><img alt="" src="KnowedgeRequirements_assets/image3.png"/></figure><p>Altimeter Setting and Standard Pressure Regions</p><figure class="doc-image"><img alt="" src="KnowedgeRequirements_assets/image4.png"/></figure><p>Canadian Minimum Navigation Performance Specifications</p><p>(CMNPS) Airspace and Canadian Minimum Navigation Performance Specifications (CMNPS) Transition Area Required Navigation Performance Capability (RNPC) Airspace</p><figure class="doc-image"><img alt="" src="KnowedgeRequirements_assets/image5.png"/></figure>
+</tbody></table></div><h2>Airspace Classification – Designated Airspace Handbook</h2><p>1.3 GLOSSARY OF AERONAUTICAL TERMS AND DESIGNATIONS OF MISCELLANEOUS AIRSPACE<br/></p><p>ADVISORY AREA: Airspace of defined dimensions within which a high volume of pilot training or an unusual type of aerial activity may be carried out.</p><p>AIR DEFENCE IDENTIFICATION ZONE (): Airspace of defined dimensions extending upwards from the surface of the earth within which certain rules for the security control of air traffic apply.</p><p>AIRSPACE CLASSIFICATION: Canadian Domestic Airspace has seven classifications. <br/>The application of any classification to an airspace structure determines the operating rules, the level of ATC service provided within the structure, and in some instances, communications and equipment requirements.</p><h3>Class A</h3><p>High level controlled airspace within the SCA, NCA and ACA. The horizontal and vertical dimensions of high level controlled airspace within these CTAs are illustrated on page M2 (Arctic, Northern and Southern Control Areas). The vertical dimensions of Class A high level controlled airspace within these areas are as follows:</p><h3>SCA : 18,000´ ASL or from 700´ AGL, whichever is higher, to FL600</h3><h3>NCA : FL230 to FL600</h3><h3>ACA: FL270 to FL600</h3><h3>Class B</h3><p>All low level controlled airspace above 12,500´ ASL or from the MEA, whichever is higher, to below 18,000´ ASL. TCAs and associated primary CZs may also be classified Class B airspace.</p><h3>Class C*</h3><p>TCAs and associated primary CZs may be classified Class C airspace.</p><h3>Class D*</h3><p>TCAs and associated primary CZs may be classified Class D airspace.</p><h3>Class E*</h3><p>All high level controlled airspace above FL600 within the SCA, NCA and ACA. Also, low level airways, low level fixed RNAV routes, CAEs, Transition Areas or CZs established without an operating control tower may be classified Class E airspace.</p><h3>Class F</h3><p>Class F airspace is described in terms of horizontal and vertical dimensions, effective for a specified period of time. Class F airspace may be restricted airspace, advisory airspace, or danger areas, and can be controlled airspace, uncontrolled airspace or a combination of both.</p><h3>Class G</h3><p>Airspace shall be classified as G if it has not been designated A, B, C, D, E or F.</p><p><br/>*  The terminology "Class B, C, D or E equivalent" used for the designations of MTCAs describes the equivalent level of service and operating rules for civilian aircraft operating within the MTCA and under military control.</p><p><br/></p><p>Figure M6 Air Defence Identification Zone (ADIZ)</p><figure class="doc-image"><img alt="" src="KnowledgeRequirements_assets/image1.png"/></figure><p class="caption">Figure ADIZ</p><p><br/></p><p>rctic, Northern and Southern Control Area</p><figure class="doc-image"><img alt="" src="KnowledgeRequirements_assets/image2.png"/></figure><p>Canadian Domestic Airspace</p><figure class="doc-image"><img alt="" src="KnowledgeRequirements_assets/image3.png"/></figure><p>Altimeter Setting and Standard Pressure Regions</p><figure class="doc-image"><img alt="" src="KnowledgeRequirements_assets/image4.png"/></figure><p>Canadian Minimum Navigation Performance Specifications</p><p>(CMNPS) Airspace and Canadian Minimum Navigation Performance Specifications (CMNPS) Transition Area Required Navigation Performance Capability (RNPC) Airspace</p><figure class="doc-image"><img alt="" src="KnowledgeRequirements_assets/image5.png"/></figure>
 <section class="source-library" id="source-library"><h2>Source Library</h2><p>Source documents copied into the repo for local use now and GitHub Pages links later.</p><ul><li><a href="docs/All%20AIM%20PDF/1_aim-2026-1_eoc_en.pdf">AIM 1_aim-2026-1_eoc_en</a><code>docs/All AIM PDF/1_aim-2026-1_eoc_en.pdf</code></li><li><a href="docs/All%20AIM%20PDF/2_aim-2026-1_gen_en.pdf">AIM 2_aim-2026-1_gen_en</a><code>docs/All AIM PDF/2_aim-2026-1_gen_en.pdf</code></li><li><a href="docs/All%20AIM%20PDF/3_aim-2026-1_aga_en.pdf">AIM 3_aim-2026-1_aga_en</a><code>docs/All AIM PDF/3_aim-2026-1_aga_en.pdf</code></li><li><a href="docs/All%20AIM%20PDF/4_aim-2026-1_com_en.pdf">AIM 4_aim-2026-1_com_en</a><code>docs/All AIM PDF/4_aim-2026-1_com_en.pdf</code></li><li><a href="docs/All%20AIM%20PDF/5_aim-2026-1_met_en.pdf">AIM 5_aim-2026-1_met_en</a><code>docs/All AIM PDF/5_aim-2026-1_met_en.pdf</code></li><li><a href="docs/All%20AIM%20PDF/6_aim-2026-1_rac_en.pdf">AIM 6_aim-2026-1_rac_en</a><code>docs/All AIM PDF/6_aim-2026-1_rac_en.pdf</code></li><li><a href="docs/All%20AIM%20PDF/7_aim-2026-1_nat_en.pdf">AIM 7_aim-2026-1_nat_en</a><code>docs/All AIM PDF/7_aim-2026-1_nat_en.pdf</code></li><li><a href="docs/All%20AIM%20PDF/8_aim-2026-1_sar_en.pdf">AIM 8_aim-2026-1_sar_en</a><code>docs/All AIM PDF/8_aim-2026-1_sar_en.pdf</code></li><li><a href="docs/All%20AIM%20PDF/9_aim-2026-1_map_en.pdf">AIM 9_aim-2026-1_map_en</a><code>docs/All AIM PDF/9_aim-2026-1_map_en.pdf</code></li><li><a href="docs/All%20AIM%20PDF/10_aim-2026-1_lra_en.pdf">AIM 10_aim-2026-1_lra_en</a><code>docs/All AIM PDF/10_aim-2026-1_lra_en.pdf</code></li><li><a href="docs/All%20AIM%20PDF/11_aim-2026-1_air_en.pdf">AIM 11_aim-2026-1_air_en</a><code>docs/All AIM PDF/11_aim-2026-1_air_en.pdf</code></li><li><a href="docs/All%20AIM%20PDF/12_aim-2026-1_rpa_en.pdf">AIM 12_aim-2026-1_rpa_en</a><code>docs/All AIM PDF/12_aim-2026-1_rpa_en.pdf</code></li><li><a href="docs/TP15263_E_Knowledge-Requirements-Basic-Advanced.pdf">TP15263 Knowledge Requirements - Basic and Advanced</a><code>docs/TP15263_E_Knowledge-Requirements-Basic-Advanced.pdf</code></li><li><a href="CARs_Part_IX_English.html">Canadian Aviation Regulations - Part IX English Extract</a><code>CARs_Part_IX_English.html</code></li><li><a href="docs/Aeronautics%20Act%20R.S.C._A-2.pdf">Aeronautics Act</a><code>docs/Aeronautics Act R.S.C._A-2.pdf</code></li><li><a href="docs/NAVCANADA_DAH_current_20260709.pdf">Designated Airspace Handbook</a><code>docs/NAVCANADA_DAH_current_20260709.pdf</code></li><li><a href="docs/NAVCANADA_VFR-Phraseology.pdf">NAV CANADA VFR Phraseology</a><code>docs/NAVCANADA_VFR-Phraseology.pdf</code></li></ul></section>
+<script>
+    const notesToggle = document.getElementById('hide-notes') || document.getElementById('show-notes');
+    const tableWrap = notesToggle ? notesToggle.closest('.table-wrap') : null;
+    if (notesToggle && tableWrap) {
+        const notesLabel = notesToggle.parentElement;
+        if (notesToggle.id === 'show-notes' && notesLabel) notesLabel.lastChild.textContent = ' Hide Notes column';
+        notesToggle.addEventListener('change', () => {
+            tableWrap.classList.toggle('hide-notes', notesToggle.checked);
+        });
+    }
+
+    const studyTable = document.querySelector('.study-table');
+    const headerRow = studyTable ? studyTable.querySelector('thead tr') : null;
+    if (headerRow) headerRow.querySelectorAll('.category-col').forEach(cell => cell.remove());
+
+    const sectionDefinitions = [
+        { id: 'section-air-law', label: '1. Air law', match: /Aeronautics Act|PART I - General Provisions/i },
+        { id: 'section-airframes', label: '2. Airframes', match: /^Airframes$/i },
+        { id: 'section-human-factors', label: '3. Human factors', match: /Aviation physiology|The pilot and the operating environment/i },
+        { id: 'section-meteorology', label: '4. Meteorology', match: /The earth.?s atmosphere|Meteorological services available/i },
+        { id: 'section-navigation', label: '5. Navigation', match: /^Definitions|Maps and charts|Pilot navigation/i },
+        { id: 'section-flight-operations', label: '6. Flight operations', match: /^RPAS operations \(VLOS\)$/i },
+        { id: 'section-theory-of-flight', label: '7. Theory of flight', match: /^Principles of flight$/i },
+        { id: 'section-radiotelephony', label: '8. Radiotelephony', match: /^Communications /i }
+    ];
+    const sectionRows = Array.from(document.querySelectorAll('.study-table tbody tr.section-row'));
+    const sectionNav = document.createElement('nav');
+    sectionNav.className = 'section-nav';
+    sectionNav.setAttribute('aria-label', 'Knowledge requirement sections');
+    const sectionNavLabel = document.createElement('span');
+    sectionNavLabel.className = 'section-nav-label';
+    sectionNavLabel.textContent = 'Knowledge areas';
+    sectionNav.appendChild(sectionNavLabel);
+    sectionDefinitions.forEach(section => {
+        const row = sectionRows.find(candidate => section.match.test(candidate.textContent.replace(/\s+/g, ' ').trim()));
+        if (!row) return;
+        row.id = section.id;
+        row.classList.add('major-section-row');
+        const link = document.createElement('a');
+        link.href = `#${section.id}`;
+        link.textContent = section.label;
+        link.dataset.sectionId = section.id;
+        link.addEventListener('click', () => {
+            sectionNav.querySelectorAll('a').forEach(candidate => candidate.classList.remove('active'));
+            link.classList.add('active');
+        });
+        sectionNav.appendChild(link);
+    });
+    if (tableWrap) tableWrap.parentElement.insertBefore(sectionNav, tableWrap);
+
+    const floatingScroll = document.createElement('div');
+    floatingScroll.className = 'floating-x-scroll';
+    floatingScroll.setAttribute('aria-label', 'Horizontal table scrolling');
+    floatingScroll.innerHTML = '<button type="button" data-scroll-direction="left" aria-label="Scroll table left">&#8592;</button><div class="x-track" tabindex="0"><div class="x-spacer"></div></div><button type="button" data-scroll-direction="right" aria-label="Scroll table right">&#8594;</button>';
+    document.body.appendChild(floatingScroll);
+    const xTrack = floatingScroll.querySelector('.x-track');
+    const xSpacer = floatingScroll.querySelector('.x-spacer');
+    let syncingScroll = false;
+    const syncScrollWidth = () => { xSpacer.style.width = `${tableWrap.scrollWidth}px`; };
+    const syncFromTable = () => { if (!syncingScroll) xTrack.scrollLeft = tableWrap.scrollLeft; };
+    const syncFromTrack = () => { syncingScroll = true; tableWrap.scrollLeft = xTrack.scrollLeft; syncingScroll = false; };
+    tableWrap.addEventListener('scroll', syncFromTable, { passive: true });
+    xTrack.addEventListener('scroll', syncFromTrack, { passive: true });
+    floatingScroll.querySelectorAll('button[data-scroll-direction]').forEach(button => button.addEventListener('click', () => {
+        const amount = Math.max(180, tableWrap.clientWidth * 0.7) * (button.dataset.scrollDirection === 'left' ? -1 : 1);
+        tableWrap.scrollBy({ left: amount, behavior: 'smooth' });
+    }));
+    syncScrollWidth();
+    new ResizeObserver(syncScrollWidth).observe(tableWrap);
+    new IntersectionObserver(entries => floatingScroll.classList.toggle('is-visible', entries[0].isIntersecting)).observe(tableWrap);
+
+    const sectionObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        sectionNav.querySelectorAll('a').forEach(link => link.classList.toggle('active', link.dataset.sectionId === entry.target.id));
+    }), { rootMargin: '-18% 0px -70% 0px', threshold: 0 });
+    sectionDefinitions.forEach(section => { const row = document.getElementById(section.id); if (row) sectionObserver.observe(row); });
+
+    const categoryRows = Array.from(document.querySelectorAll('.study-table tbody tr'));
+    const categoryCounts = { both: 0, basic: 0, advanced: 0 };
+    categoryRows.forEach(row => {
+        if (row.classList.contains('category-legend-row')) return;
+        const categoryCells = Array.from(row.children).slice(0, 2);
+        if (row.classList.contains('section-row')) {
+            categoryCells.forEach(cell => cell.remove());
+            return;
+        }
+        row.dataset.basic = categoryCells[0]?.textContent.includes('✓') ? 'true' : 'false';
+        row.dataset.advanced = categoryCells[1]?.textContent.includes('✓') ? 'true' : 'false';
+        if (row.dataset.basic === 'true' || row.dataset.advanced === 'true') categoryCounts.both += 1;
+        if (row.dataset.basic === 'true') categoryCounts.basic += 1;
+        if (row.dataset.advanced === 'true') categoryCounts.advanced += 1;
+        categoryCells.forEach(cell => cell.remove());
+    });
+    const legendRow = document.querySelector('.category-legend-row');
+    if (legendRow) legendRow.remove();
+
+    const categoryFilters = Array.from(document.querySelectorAll('input[name="category-filter"]'));
+    const combinedFilter = categoryFilters.find(filter => filter.value === 'both');
+    if (combinedFilter) combinedFilter.closest('label')?.remove();
+    const basicFilter = categoryFilters.find(filter => filter.value === 'basic');
+    if (basicFilter) basicFilter.checked = true;
+    if (basicFilter?.parentElement) basicFilter.parentElement.childNodes[1].textContent = ' Basic ';
+    const advancedFilter = categoryFilters.find(filter => filter.value === 'advanced');
+    if (advancedFilter?.parentElement) advancedFilter.parentElement.childNodes[1].textContent = ' Advanced ';
+    document.getElementById('count-basic').textContent = categoryCounts.basic;
+    document.getElementById('count-advanced').textContent = categoryCounts.advanced;
+    categoryFilters.forEach(filter => {
+        filter.addEventListener('change', () => {
+            const selected = filter.value;
+            categoryRows.forEach(row => {
+                if (row.classList.contains('section-row')) {
+                    return;
+                }
+                const basic = row.dataset.basic === 'true';
+                const advanced = row.dataset.advanced === 'true';
+                const visible = (selected === 'both' && (basic || advanced)) || (selected === 'basic' && basic) || (selected === 'advanced' && advanced);
+                row.classList.toggle('category-hidden', !visible);
+            });
+        });
+    });
+    const initialCategoryFilter = categoryFilters.find(filter => filter.checked && filter.value !== 'both');
+    if (initialCategoryFilter) initialCategoryFilter.dispatchEvent(new Event('change'));
+</script>
 </main>
 </body>
 </html>

@@ -22,11 +22,7 @@
     "2026-09-06 CHAT BATCH 4 (Batch4_candidate_pool.json): duplicate-screened docx ingest; 96 TP 15263 core-Advanced questions selected from 100 candidates.",
     "2026-09-06 CHAT BATCH 4 (Batch4b_candidate_pool.json): duplicate-screened docx ingest; 200 TP 15263 core-Advanced questions selected from 250 candidates.",
     "2026-09-08 CHAT BATCH 4 (VNC_VTA_legend_candidate_pool.json): duplicate-screened docx ingest; 4 TP 15263 core-Advanced questions selected from 4 candidates.",
-    "2026-09-22 CHAT BATCH 3: duplicate-screened local ingest; 99 TP 15263 core-Advanced questions selected from 112 candidates across all 14 quiz categories.",
-    "2026-09-22 CHAT BATCH 3 LEFTOVERS: added 10 reviewed Batch 3 leftover questions with exactRefs; omitted b3-nota-008 forest-fire candidate by review decision.",
-    "2026-09-22 LOCAL QUIZ REVIEW: approved sys-042; cleared flags ['needs-source-review']; reviewed sets [].",
-    "2026-09-22 QUIZ REVIEW: applied review approvals to 2 questions using quiz-review-actions.json.",
-    "2026-09-22 QUIZ REVIEW: applied review approvals to 3 questions using quiz-review-actions_1.json."
+    "2026-09-22 CHAT BATCH 3: duplicate-screened local ingest; 99 TP 15263 core-Advanced questions selected from 112 candidates across all 14 quiz categories."
   ],
   "questions": [
     {
@@ -8056,7 +8052,8 @@
       "examScope": "core-basic-advanced",
       "reviewFlags": [
         "legacy-normalized",
-        "needs-tp15263-mapping"
+        "needs-tp15263-mapping",
+        "needs-source-review"
       ],
       "tp15263Section": "2",
       "knowledgeArea": "RPA airframes, power plants, propulsion and systems"
@@ -9330,7 +9327,8 @@
       "examScope": "core-basic-advanced",
       "reviewFlags": [
         "legacy-normalized",
-        "needs-tp15263-mapping"
+        "needs-tp15263-mapping",
+        "needs-source-review"
       ],
       "tp15263Section": "6",
       "knowledgeArea": "Flight operations"
@@ -9354,7 +9352,8 @@
       "examScope": "core-basic-advanced",
       "reviewFlags": [
         "legacy-normalized",
-        "needs-tp15263-mapping"
+        "needs-tp15263-mapping",
+        "needs-source-review"
       ],
       "tp15263Section": "6",
       "knowledgeArea": "Flight operations"
@@ -9613,7 +9612,8 @@
       "examScope": "core-basic-advanced",
       "reviewFlags": [
         "legacy-normalized",
-        "needs-tp15263-mapping"
+        "needs-tp15263-mapping",
+        "needs-source-review"
       ],
       "tp15263Section": "6",
       "knowledgeArea": "Flight operations"
@@ -16223,7 +16223,10 @@
       "knowledgeArea": "Canadian Aviation Regulations",
       "knowledgeTopic": "Controlled airspace",
       "learningObjective": "Describe the communication and authorization requirements for small-RPA VLOS operations in controlled airspace.",
-      "lastVerified": "2026-09-03"
+      "lastVerified": "2026-09-03",
+      "reviewFlags": [
+        "phase7-tp15263-batch-1"
+      ]
     },
     {
       "id": "tp15263-002",
@@ -16601,7 +16604,10 @@
       "knowledgeArea": "Canadian Aviation Regulations",
       "knowledgeTopic": "Collision avoidance",
       "learningObjective": "Apply the prohibition against operating an RPA near another aircraft in a way that creates collision risk.",
-      "lastVerified": "2026-09-03"
+      "lastVerified": "2026-09-03",
+      "reviewFlags": [
+        "phase7-tp15263-batch-1"
+      ]
     },
     {
       "id": "tp15263-015",
@@ -28864,443 +28870,8 @@
         "batch": "Batch 3"
       },
       "examLevel": "advanced"
-    },
-    {
-      "id": "b3-visu-008",
-      "category": "visual-observers",
-      "difficulty": "hard",
-      "question": "A visual observer can see the RPA only through a zoomed video display and cannot visually scan the surrounding operating airspace. Why is that insufficient for an EVLOS observer?",
-      "choices": [
-        "EVLOS observer duties require unaided visual contact with the operating airspace sufficient to detect conflicting traffic and hazards.",
-        "A video display is legally identical to unaided visual contact.",
-        "The observer's only duty is to monitor battery voltage.",
-        "EVLOS does not require traffic detection."
-      ],
-      "answerIndex": 0,
-      "rationale": "CAR 901.74 requires unaided visual contact with the airspace, not merely observation through the aircraft's camera system",
-      "examScope": "core-advanced",
-      "tp15263Section": "6",
-      "knowledgeArea": "Flight operations",
-      "knowledgeTopic": "EVLOS - unaided observation of operating airspace",
-      "learningObjective": "Apply EVLOS visual-observer requirements by distinguishing unaided airspace scanning from monitoring an RPA video display.",
-      "carsSection": "901.74",
-      "source": "CAR 901.74; TP 15263 Section 6",
-      "sourceRefs": [
-        "ref-tp-15263",
-        "ref-justice-cars"
-      ],
-      "lastVerified": "2026-09-03",
-      "origin": {
-        "type": "batch3-generated",
-        "batch": "Batch 3"
-      },
-      "examLevel": "advanced",
-      "exactRefs": [
-        {
-          "source": "CARs",
-          "section": "901.74",
-          "title": "Extended VLOS Operations and Sheltered Operations",
-          "topic": "Unaided visual contact with operating airspace"
-        },
-        {
-          "source": "TP 15263",
-          "section": "6",
-          "sectionTitle": "Flight operations",
-          "topic": "Extended VLOS / visual observer duties",
-          "objective": "Assess whether the observer can visually scan the operating airspace to detect conflicting traffic and hazards."
-        }
-      ]
-    },
-    {
-      "id": "b3-huma-008",
-      "category": "human-factors",
-      "difficulty": "hard",
-      "question": "A pilot is visually searching for traffic. Which scanning practice best reduces the risk of missing an aircraft because of fixation?",
-      "choices": [
-        "Use a deliberate sector scan with repeated checks rather than staring continuously at one point.",
-        "Fixate on the horizon centre without moving the eyes.",
-        "Watch only the RPA video feed.",
-        "Scan only after the visual observer calls traffic."
-      ],
-      "answerIndex": 0,
-      "rationale": "Human-factors knowledge includes limitations of vision, attention and practical techniques for maintaining situational awareness",
-      "examScope": "core-advanced",
-      "tp15263Section": 3,
-      "knowledgeArea": "Human factors",
-      "knowledgeTopic": "Visual scanning and fixation",
-      "learningObjective": "Human-factors knowledge includes limitations of vision, attention and practical techniques for maintaining situational awareness.",
-      "carsSection": null,
-      "source": "TP 15263 Section 3",
-      "sourceRefs": [
-        "ref-tp-15263",
-        "ref-tp-12863"
-      ],
-      "lastVerified": "2026-09-03",
-      "origin": {
-        "type": "batch3-generated",
-        "batch": "Batch 3"
-      },
-      "examLevel": "advanced",
-      "exactRefs": [
-        {
-          "source": "TP 15263",
-          "section": "3",
-          "sectionTitle": "Human factors",
-          "topic": "Vision / visual scanning techniques",
-          "objective": "Describe good scanning techniques and factors that affect situational awareness."
-        }
-      ]
-    },
-    {
-      "id": "b3-main-007",
-      "category": "maintenance",
-      "difficulty": "hard",
-      "question": "A declared RPAS is modified in a way that can affect a Standard 922 technical requirement. What must be considered before using it for an operation dependent on that declaration?",
-      "choices": [
-        "Whether the modified system continues to meet the applicable technical requirements and modification instructions.",
-        "Only whether the modification reduces weight.",
-        "Only whether the pilot likes the new configuration.",
-        "Nothing; declarations can never be affected by modifications."
-      ],
-      "answerIndex": 0,
-      "rationale": "CAR 901.70 requires a modified system used for applicable operations to continue meeting the relevant technical requirements and applicable modification instructions",
-      "examScope": "core-advanced",
-      "tp15263Section": 1,
-      "knowledgeArea": "Air law, air traffic rules and procedures",
-      "knowledgeTopic": "CAR 901.70 — modifications to declared RPAS",
-      "learningObjective": "Apply CAR 901.70 by confirming whether a modified declared RPAS continues to meet applicable technical requirements before using it for an operation that depends on the declaration.",
-      "carsSection": "901.70",
-      "source": "CAR 901.70; TP 15263 Section 1",
-      "sourceRefs": [
-        "ref-tp-15263",
-        "ref-justice-cars"
-      ],
-      "lastVerified": "2026-09-03",
-      "origin": {
-        "type": "batch3-generated",
-        "batch": "Batch 3"
-      },
-      "examLevel": "advanced",
-      "exactRefs": [
-        {
-          "source": "CARs",
-          "section": "901.70",
-          "title": "Operation of a modified remotely piloted aircraft system",
-          "topic": "Modified declared RPAS must continue to meet applicable technical requirements and instructions."
-        },
-        {
-          "source": "TP 15263",
-          "section": "1",
-          "sectionTitle": "Air law, air traffic rules and procedures",
-          "topic": "RPAS declaration and permitted advanced operations"
-        }
-      ]
-    },
-    {
-      "id": "b3-main-008",
-      "category": "maintenance",
-      "difficulty": "hard",
-      "question": "Why should dust, sand or foreign debris around motors and cooling openings be addressed before flight?",
-      "choices": [
-        "Debris can impair cooling, bearings or propulsion reliability and therefore aircraft serviceability.",
-        "Debris improves motor cooling.",
-        "It affects only image sharpness.",
-        "It has no effect on small RPAS."
-      ],
-      "answerIndex": 0,
-      "rationale": "TP 15263 airframe/power-system handling and care includes maintaining components in a condition that supports reliable operation",
-      "examScope": "core-advanced",
-      "tp15263Section": 2,
-      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
-      "knowledgeTopic": "Foreign debris and component care",
-      "learningObjective": "TP 15263 airframe/power-system handling and care includes maintaining components in a condition that supports reliable operation.",
-      "carsSection": null,
-      "source": "TP 15263 Section 2",
-      "sourceRefs": [
-        "ref-tp-15263"
-      ],
-      "lastVerified": "2026-09-03",
-      "origin": {
-        "type": "batch3-generated",
-        "batch": "Batch 3"
-      },
-      "examLevel": "advanced",
-      "exactRefs": [
-        {
-          "source": "TP 15263",
-          "section": "2",
-          "sectionTitle": "RPA airframes, power plants, propulsion and systems",
-          "topic": "Handling/care/securing and component integrity/maintenance",
-          "objective": "Identify airframe, propulsion, and component conditions that affect serviceability."
-        }
-      ]
-    },
-    {
-      "id": "b3-abno-007",
-      "category": "abnormal",
-      "difficulty": "hard",
-      "question": "A rapidly developing gust front arrives earlier than forecast during flight. What is the best operational response?",
-      "choices": [
-        "Reassess immediately and recover/land if conditions threaten aircraft limits or safe control rather than relying on the original forecast.",
-        "Continue because the pre-flight forecast controls for the whole mission.",
-        "Increase altitude to escape all gusts.",
-        "Ignore wind if VLOS remains possible."
-      ],
-      "answerIndex": 0,
-      "rationale": "TP 15263 requires continuous weather assessment, aircraft-performance awareness and conservative operational decisions when conditions change",
-      "examScope": "core-advanced",
-      "tp15263Section": 4,
-      "knowledgeArea": "Meteorology",
-      "knowledgeTopic": "Deteriorating weather during flight",
-      "learningObjective": "TP 15263 requires continuous weather assessment, aircraft-performance awareness and conservative operational decisions when conditions change.",
-      "carsSection": null,
-      "source": "TP 15263 Sections 4 and 6",
-      "sourceRefs": [
-        "ref-tp-15263",
-        "ref-tc-aim-full"
-      ],
-      "lastVerified": "2026-09-03",
-      "origin": {
-        "type": "batch3-generated",
-        "batch": "Batch 3"
-      },
-      "examLevel": "advanced",
-      "exactRefs": [
-        {
-          "source": "TP 15263",
-          "section": "4",
-          "sectionTitle": "Meteorology",
-          "topic": "Weather threats and operational weather assessment",
-          "objective": "Assess weather and density-altitude effects for anticipated launch and flight performance."
-        },
-        {
-          "source": "TP 15263",
-          "section": "6",
-          "sectionTitle": "Flight operations",
-          "topic": "Operational decision-making when conditions change"
-        }
-      ]
-    },
-    {
-      "id": "b3-abno-008",
-      "category": "abnormal",
-      "difficulty": "hard",
-      "question": "An RPA becomes a flyaway and is approaching controlled or restricted airspace. What should the pilot do?",
-      "choices": [
-        "Apply the established flyaway/lost-control procedure and notify the appropriate ATS unit or agency when required by the applicable rules.",
-        "Do nothing because the aircraft is no longer under control.",
-        "Turn off the control station immediately.",
-        "Publish a social-media warning instead of aviation notification."
-      ],
-      "answerIndex": 0,
-      "rationale": "Part IX and TP 15263 require procedures and appropriate notification when an uncontrolled RPA threatens protected airspace",
-      "examScope": "core-advanced",
-      "tp15263Section": 1,
-      "knowledgeArea": "Air law, air traffic rules and procedures",
-      "knowledgeTopic": "Flyaway and airspace notification",
-      "learningObjective": "Part IX and TP 15263 require procedures and appropriate notification when an uncontrolled RPA threatens protected airspace.",
-      "carsSection": "900.07",
-      "source": "CAR 900.07; CAR 901.15; TP 15263 Sections 1 and 6",
-      "sourceRefs": [
-        "ref-tp-15263",
-        "ref-justice-cars"
-      ],
-      "lastVerified": "2026-09-03",
-      "origin": {
-        "type": "batch3-generated",
-        "batch": "Batch 3"
-      },
-      "examLevel": "advanced",
-      "exactRefs": [
-        {
-          "source": "CARs",
-          "section": "900.07",
-          "title": "Inadvertent entry into Class F Special Use Restricted airspace",
-          "topic": "Immediate notification if uncontrolled RPA enters or is likely to enter restricted airspace."
-        },
-        {
-          "source": "CARs",
-          "section": "901.15",
-          "title": "Inadvertent entry into controlled airspace",
-          "topic": "Immediate notification if uncontrolled RPA enters or is likely to enter controlled airspace."
-        },
-        {
-          "source": "TP 15263",
-          "section": "6",
-          "sectionTitle": "Flight operations",
-          "topic": "Emergency procedures / flyaway response"
-        }
-      ]
-    },
-    {
-      "id": "b3-radi-008",
-      "category": "radio",
-      "difficulty": "hard",
-      "question": "What is good radio etiquette when the frequency is busy?",
-      "choices": [
-        "Listen before transmitting, use concise standard phraseology, avoid unnecessary transmissions and do not block urgent traffic.",
-        "Transmit over other calls to establish priority.",
-        "Use long conversational explanations.",
-        "Repeat every message three times regardless of need."
-      ],
-      "answerIndex": 0,
-      "rationale": "TP 15263 explicitly requires examples of radio etiquette and practices that avoid interfering with other communications",
-      "examScope": "core-advanced",
-      "tp15263Section": 8,
-      "knowledgeArea": "Radiotelephony",
-      "knowledgeTopic": "Radio etiquette and frequency discipline",
-      "learningObjective": "TP 15263 explicitly requires examples of radio etiquette and practices that avoid interfering with other communications.",
-      "carsSection": null,
-      "source": "TP 15263 Section 8",
-      "sourceRefs": [
-        "ref-tp-15263",
-        "ref-navcanada-vfr-phraseology"
-      ],
-      "lastVerified": "2026-09-03",
-      "origin": {
-        "type": "batch3-generated",
-        "batch": "Batch 3"
-      },
-      "examLevel": "advanced",
-      "exactRefs": [
-        {
-          "source": "TP 15263",
-          "section": "8",
-          "sectionTitle": "Radiotelephony",
-          "topic": "Communications - radio etiquette",
-          "objective": "Give examples of proper radio etiquette, including practices to avoid interfering with other communications."
-        },
-        {
-          "source": "NAV CANADA",
-          "title": "VFR Phraseology",
-          "topic": "Concise standard phraseology and frequency discipline"
-        }
-      ]
-    },
-    {
-      "id": "b3-navi-008",
-      "category": "navigation",
-      "difficulty": "medium",
-      "question": "A pilot is given a bearing from the launch site to a nearby landmark. What does that bearing describe?",
-      "choices": [
-        "The direction from one point to another relative to a stated reference.",
-        "The aircraft's mass.",
-        "The vertical speed.",
-        "The battery temperature."
-      ],
-      "answerIndex": 0,
-      "rationale": "TP 15263 lists bearing as a navigation definition requiring operational understanding",
-      "examScope": "core-advanced",
-      "tp15263Section": 5,
-      "knowledgeArea": "Navigation",
-      "knowledgeTopic": "Bearing",
-      "learningObjective": "Define and apply bearing as a direction from one point to another relative to a stated reference.",
-      "carsSection": null,
-      "source": "TP 15263 Section 5",
-      "sourceRefs": [
-        "ref-tp-15263"
-      ],
-      "lastVerified": "2026-09-03",
-      "origin": {
-        "type": "batch3-generated",
-        "batch": "Batch 3"
-      },
-      "examLevel": "advanced",
-      "exactRefs": [
-        {
-          "source": "TP 15263",
-          "section": "5",
-          "sectionTitle": "Navigation",
-          "topic": "Bearing",
-          "objective": "Define and apply bearing as a direction from one point to another relative to a stated reference."
-        }
-      ]
-    },
-    {
-      "id": "b3-safe-007",
-      "category": "safety",
-      "difficulty": "hard",
-      "question": "A bird is circling aggressively near the RPA. What is the safest immediate principle?",
-      "choices": [
-        "Increase separation and recover the RPA if necessary rather than escalating the encounter.",
-        "Chase the bird away with the RPA.",
-        "Climb directly above the bird.",
-        "Remain stationary until the bird contacts the aircraft."
-      ],
-      "answerIndex": 0,
-      "rationale": "Wildlife hazards can threaten both the aircraft and wildlife; TP 15263 requires recognition and mitigation of these risks",
-      "examScope": "core-advanced",
-      "tp15263Section": 6,
-      "knowledgeArea": "Flight operations",
-      "knowledgeTopic": "Bird-strike/wildlife conflict avoidance",
-      "learningObjective": "Wildlife hazards can threaten both the aircraft and wildlife; TP 15263 requires recognition and mitigation of these risks.",
-      "carsSection": null,
-      "source": "TP 15263 Section 6",
-      "sourceRefs": [
-        "ref-tp-15263"
-      ],
-      "lastVerified": "2026-09-03",
-      "origin": {
-        "type": "batch3-generated",
-        "batch": "Batch 3"
-      },
-      "examLevel": "advanced",
-      "exactRefs": [
-        {
-          "source": "TP 15263",
-          "section": "6",
-          "sectionTitle": "Flight operations",
-          "topic": "Wildlife conservation / wildlife hazards",
-          "objective": "Recognize wildlife hazards and choose controls that avoid escalating risk to people, wildlife, or the RPA."
-        }
-      ]
-    },
-    {
-      "id": "b3-safe-008",
-      "category": "safety",
-      "difficulty": "hard",
-      "question": "A pilot identifies a hazard whose probability is low but whose consequence could be catastrophic. How should that influence planning?",
-      "choices": [
-        "The severity still warrants meaningful controls; low probability alone does not justify ignoring a catastrophic consequence.",
-        "Ignore it because low-probability hazards never matter.",
-        "Accept it automatically if the flight is under 400 ft.",
-        "Transfer responsibility to the visual observer."
-      ],
-      "answerIndex": 0,
-      "rationale": "TP 15263 requires risk-management thinking that considers both likelihood and consequence when deciding whether an operation is acceptable",
-      "examScope": "core-advanced",
-      "tp15263Section": 3,
-      "knowledgeArea": "Human factors",
-      "knowledgeTopic": "Risk assessment — likelihood and consequence",
-      "learningObjective": "TP 15263 requires risk-management thinking that considers both likelihood and consequence when deciding whether an operation is acceptable.",
-      "carsSection": null,
-      "source": "TP 15263 Sections 3 and 6",
-      "sourceRefs": [
-        "ref-tp-15263"
-      ],
-      "lastVerified": "2026-09-03",
-      "origin": {
-        "type": "batch3-generated",
-        "batch": "Batch 3"
-      },
-      "examLevel": "advanced",
-      "exactRefs": [
-        {
-          "source": "TP 15263",
-          "section": "3",
-          "sectionTitle": "Human factors",
-          "topic": "Risk assessment and decision-making",
-          "objective": "Consider both likelihood and severity when deciding whether an operation is acceptable."
-        },
-        {
-          "source": "TP 15263",
-          "section": "6",
-          "sectionTitle": "Flight operations",
-          "topic": "Site control / operational risk controls"
-        }
-      ]
     }
   ],
-  "totalQuestions": 1125,
-  "lastUpdated": "2026-09-22"
+  "totalQuestions": 1115,
+  "lastUpdated": "2026-09-03"
 }

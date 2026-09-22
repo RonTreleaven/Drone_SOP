@@ -53,7 +53,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-002",
@@ -83,7 +84,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-003",
@@ -113,7 +115,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-004",
@@ -143,7 +146,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-005",
@@ -173,7 +177,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-006",
@@ -203,7 +208,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-007",
@@ -233,7 +239,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-008",
@@ -263,7 +270,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-001",
@@ -294,7 +302,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-002",
@@ -324,7 +333,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-003",
@@ -355,7 +365,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-004",
@@ -386,7 +397,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-005",
@@ -416,7 +428,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-006",
@@ -446,7 +459,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-007",
@@ -476,7 +490,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-008",
@@ -507,7 +522,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-aero-001",
@@ -538,7 +554,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-aero-002",
@@ -568,7 +585,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-aero-003",
@@ -598,7 +616,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-aero-004",
@@ -629,7 +648,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-aero-005",
@@ -659,7 +679,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-aero-006",
@@ -690,7 +711,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-aero-007",
@@ -720,7 +742,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-aero-008",
@@ -750,7 +773,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-nota-001",
@@ -779,7 +803,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-nota-002",
@@ -808,7 +833,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-nota-003",
@@ -837,7 +863,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-nota-004",
@@ -866,7 +893,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-nota-005",
@@ -895,7 +923,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-nota-006",
@@ -925,7 +954,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-nota-007",
@@ -955,7 +985,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-nota-008",
@@ -985,7 +1016,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-weat-001",
@@ -1015,7 +1047,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-weat-002",
@@ -1045,7 +1078,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-weat-003",
@@ -1075,7 +1109,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-weat-004",
@@ -1105,7 +1140,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-weat-005",
@@ -1134,7 +1170,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-weat-006",
@@ -1164,7 +1201,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-weat-007",
@@ -1194,7 +1232,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-weat-008",
@@ -1224,7 +1263,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-visu-001",
@@ -1254,7 +1294,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-visu-002",
@@ -1284,7 +1325,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-visu-003",
@@ -1314,7 +1356,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-visu-004",
@@ -1344,7 +1387,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-visu-005",
@@ -1374,7 +1418,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-visu-006",
@@ -1404,7 +1449,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-visu-007",
@@ -1434,7 +1480,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-visu-008",
@@ -1464,7 +1511,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-huma-001",
@@ -1494,7 +1542,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-huma-002",
@@ -1524,7 +1573,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-huma-003",
@@ -1554,7 +1604,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-huma-004",
@@ -1584,7 +1635,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-huma-005",
@@ -1614,7 +1666,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-huma-006",
@@ -1645,7 +1698,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-huma-007",
@@ -1675,7 +1729,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-huma-008",
@@ -1705,7 +1760,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airc-001",
@@ -1734,7 +1790,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airc-002",
@@ -1763,7 +1820,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airc-003",
@@ -1792,7 +1850,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airc-004",
@@ -1821,7 +1880,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airc-005",
@@ -1851,7 +1911,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airc-006",
@@ -1880,7 +1941,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airc-007",
@@ -1909,7 +1971,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airc-008",
@@ -1938,7 +2001,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-main-001",
@@ -1968,7 +2032,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-main-002",
@@ -1998,7 +2063,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-main-003",
@@ -2027,7 +2093,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-main-004",
@@ -2056,7 +2123,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-main-005",
@@ -2085,7 +2153,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-main-006",
@@ -2114,7 +2183,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-main-007",
@@ -2144,7 +2214,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-main-008",
@@ -2173,7 +2244,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-abno-001",
@@ -2203,7 +2275,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-abno-002",
@@ -2232,7 +2305,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-abno-003",
@@ -2261,7 +2335,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-abno-004",
@@ -2290,7 +2365,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-abno-005",
@@ -2320,7 +2396,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-abno-006",
@@ -2349,7 +2426,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-abno-007",
@@ -2379,7 +2457,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-abno-008",
@@ -2409,7 +2488,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-flig-001",
@@ -2439,7 +2519,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-flig-002",
@@ -2469,7 +2550,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-flig-003",
@@ -2498,7 +2580,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-flig-004",
@@ -2527,7 +2610,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-flig-005",
@@ -2557,7 +2641,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-flig-006",
@@ -2587,7 +2672,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-flig-007",
@@ -2616,7 +2702,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-flig-008",
@@ -2646,7 +2733,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-radi-001",
@@ -2677,7 +2765,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-radi-002",
@@ -2707,7 +2796,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-radi-003",
@@ -2737,7 +2827,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-radi-004",
@@ -2767,7 +2858,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-radi-005",
@@ -2797,7 +2889,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-radi-006",
@@ -2827,7 +2920,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-radi-007",
@@ -2858,7 +2952,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-radi-008",
@@ -2888,7 +2983,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-navi-001",
@@ -2917,7 +3013,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-navi-002",
@@ -2946,7 +3043,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-navi-003",
@@ -2975,7 +3073,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-navi-004",
@@ -3004,7 +3103,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-navi-005",
@@ -3033,7 +3133,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-navi-006",
@@ -3062,7 +3163,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-navi-007",
@@ -3092,7 +3194,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-navi-008",
@@ -3121,7 +3224,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-safe-001",
@@ -3150,7 +3254,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-safe-002",
@@ -3180,7 +3285,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-safe-003",
@@ -3210,7 +3316,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-safe-004",
@@ -3240,7 +3347,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-safe-005",
@@ -3270,7 +3378,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-safe-006",
@@ -3300,7 +3409,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-safe-007",
@@ -3329,7 +3439,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     },
     {
       "id": "b3-safe-008",
@@ -3358,7 +3469,8 @@
       "origin": {
         "type": "batch3-generated",
         "batch": "Batch 3"
-      }
+      },
+      "examLevel": "advanced"
     }
   ]
 }

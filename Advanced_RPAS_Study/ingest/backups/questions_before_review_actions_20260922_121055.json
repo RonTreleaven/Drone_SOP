@@ -24,9 +24,7 @@
     "2026-09-08 CHAT BATCH 4 (VNC_VTA_legend_candidate_pool.json): duplicate-screened docx ingest; 4 TP 15263 core-Advanced questions selected from 4 candidates.",
     "2026-09-22 CHAT BATCH 3: duplicate-screened local ingest; 99 TP 15263 core-Advanced questions selected from 112 candidates across all 14 quiz categories.",
     "2026-09-22 CHAT BATCH 3 LEFTOVERS: added 10 reviewed Batch 3 leftover questions with exactRefs; omitted b3-nota-008 forest-fire candidate by review decision.",
-    "2026-09-22 LOCAL QUIZ REVIEW: approved sys-042; cleared flags ['needs-source-review']; reviewed sets [].",
-    "2026-09-22 QUIZ REVIEW: applied review approvals to 2 questions using quiz-review-actions.json.",
-    "2026-09-22 QUIZ REVIEW: applied review approvals to 3 questions using quiz-review-actions_1.json."
+    "2026-09-22 LOCAL QUIZ REVIEW: approved sys-042; cleared flags ['needs-source-review']; reviewed sets []."
   ],
   "questions": [
     {
@@ -9330,7 +9328,8 @@
       "examScope": "core-basic-advanced",
       "reviewFlags": [
         "legacy-normalized",
-        "needs-tp15263-mapping"
+        "needs-tp15263-mapping",
+        "needs-source-review"
       ],
       "tp15263Section": "6",
       "knowledgeArea": "Flight operations"
@@ -9354,7 +9353,8 @@
       "examScope": "core-basic-advanced",
       "reviewFlags": [
         "legacy-normalized",
-        "needs-tp15263-mapping"
+        "needs-tp15263-mapping",
+        "needs-source-review"
       ],
       "tp15263Section": "6",
       "knowledgeArea": "Flight operations"
@@ -9613,7 +9613,8 @@
       "examScope": "core-basic-advanced",
       "reviewFlags": [
         "legacy-normalized",
-        "needs-tp15263-mapping"
+        "needs-tp15263-mapping",
+        "needs-source-review"
       ],
       "tp15263Section": "6",
       "knowledgeArea": "Flight operations"
@@ -16223,7 +16224,10 @@
       "knowledgeArea": "Canadian Aviation Regulations",
       "knowledgeTopic": "Controlled airspace",
       "learningObjective": "Describe the communication and authorization requirements for small-RPA VLOS operations in controlled airspace.",
-      "lastVerified": "2026-09-03"
+      "lastVerified": "2026-09-03",
+      "reviewFlags": [
+        "phase7-tp15263-batch-1"
+      ]
     },
     {
       "id": "tp15263-002",
@@ -16601,7 +16605,10 @@
       "knowledgeArea": "Canadian Aviation Regulations",
       "knowledgeTopic": "Collision avoidance",
       "learningObjective": "Apply the prohibition against operating an RPA near another aircraft in a way that creates collision risk.",
-      "lastVerified": "2026-09-03"
+      "lastVerified": "2026-09-03",
+      "reviewFlags": [
+        "phase7-tp15263-batch-1"
+      ]
     },
     {
       "id": "tp15263-015",

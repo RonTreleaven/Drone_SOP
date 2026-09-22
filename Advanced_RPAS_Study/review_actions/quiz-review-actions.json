@@ -1,0 +1,24 @@
+{
+  "generatedAt": "2026-09-22T15:37:11.453Z",
+  "note": "Apply these approvals to data/questions.json by removing listed reviewFlags and adding reviewedSets for each matching question.",
+  "approvals": [
+    {
+      "id": "tp15263-001",
+      "clearedFlags": [
+        "phase7-tp15263-batch-1"
+      ],
+      "reviewedSets": [],
+      "approvedAt": "2026-09-22T15:37:04.495Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "tp15263-014",
+      "clearedFlags": [
+        "phase7-tp15263-batch-1"
+      ],
+      "reviewedSets": [],
+      "approvedAt": "2026-09-22T15:37:08.993Z",
+      "appliedLocally": false
+    }
+  ]
+}

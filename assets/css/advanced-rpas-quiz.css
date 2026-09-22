@@ -30,6 +30,16 @@ h1 {
   gap: 0.45rem;
 }
 
+.setup-inline-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-top: 0.35rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #d7e3ef;
+}
+
 .exam-scope-fieldset label,
 .review-focus-fieldset label {
   display: flex;
@@ -95,6 +105,7 @@ h1 {
 }
 
 .category-actions,
+.review-tool-actions,
 .nav-row {
   display: flex;
   flex-wrap: wrap;
@@ -102,7 +113,8 @@ h1 {
   gap: 0.5rem;
 }
 
-.category-actions {
+.category-actions,
+.review-tool-actions {
   margin-bottom: 0.65rem;
 }
 
@@ -138,6 +150,10 @@ h1 {
 #round-length {
   width: 4rem;
   margin-left: 0.4rem;
+}
+
+.round-length-label {
+  align-items: center;
 }
 
 #question-text {
@@ -196,6 +212,22 @@ button:disabled {
   margin: 0.5rem 0;
 }
 
+.admin-review-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  border: 1px solid #d7e3ef;
+  border-radius: 6px;
+  background: #f8fbfe;
+}
+
+.admin-review-row[hidden] {
+  display: none;
+}
+
 .flag-btn.active {
   border-color: #b8860b;
   background: #fff8e6;
@@ -242,6 +274,13 @@ button:disabled {
   box-shadow: 0 0 0 2px rgba(11, 94, 168, 0.16);
 }
 
+#scoreboard .pill.approved {
+  border-color: #2f9e44;
+  background: #dcf7e4;
+  color: #185c2a;
+  font-weight: 700;
+}
+
 #scoreboard .pill.unreached {
   cursor: not-allowed;
 }
@@ -264,6 +303,17 @@ button:disabled {
 
 #review-list {
   margin-top: 1rem;
+}
+
+.review-export {
+  max-height: 18rem;
+  overflow: auto;
+  padding: 0.75rem;
+  border: 1px solid #d7e3ef;
+  border-radius: 6px;
+  background: #f8fbfe;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
 }
 
 #review-list .review-item {

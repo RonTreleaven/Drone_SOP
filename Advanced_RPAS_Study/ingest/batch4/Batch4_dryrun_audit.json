@@ -1,117 +1,85 @@
 {
-  "date": "2026-09-06",
+  "date": "2026-09-22",
   "threshold": 0.72,
-  "currentBankSize": 716,
+  "currentBankSize": 1016,
   "candidatePool": 100,
   "target": 100,
-  "selected": 96,
-  "selectedByCategory": {
-    "regulations": 48,
-    "weather": 48
-  },
+  "selected": 0,
+  "selectedByCategory": {},
   "shortfalls": {
-    "regulations": 2,
-    "weather": 2
+    "regulations": 50,
+    "weather": 50
   },
-  "selectedIds": [
-    "b4-regu-001",
-    "b4-regu-002",
-    "b4-regu-003",
-    "b4-regu-004",
-    "b4-regu-005",
-    "b4-regu-006",
-    "b4-regu-007",
-    "b4-regu-008",
-    "b4-regu-009",
-    "b4-regu-010",
-    "b4-regu-011",
-    "b4-regu-012",
-    "b4-regu-013",
-    "b4-regu-014",
-    "b4-regu-015",
-    "b4-regu-016",
-    "b4-regu-017",
-    "b4-regu-019",
-    "b4-regu-020",
-    "b4-regu-021",
-    "b4-regu-022",
-    "b4-regu-024",
-    "b4-regu-025",
-    "b4-regu-026",
-    "b4-regu-027",
-    "b4-regu-028",
-    "b4-regu-029",
-    "b4-regu-030",
-    "b4-regu-031",
-    "b4-regu-032",
-    "b4-regu-033",
-    "b4-regu-034",
-    "b4-regu-035",
-    "b4-regu-036",
-    "b4-regu-037",
-    "b4-regu-038",
-    "b4-regu-039",
-    "b4-regu-040",
-    "b4-regu-041",
-    "b4-regu-042",
-    "b4-regu-043",
-    "b4-regu-044",
-    "b4-regu-045",
-    "b4-regu-046",
-    "b4-regu-047",
-    "b4-regu-048",
-    "b4-regu-049",
-    "b4-regu-050",
-    "b4-wx-001",
-    "b4-wx-002",
-    "b4-wx-003",
-    "b4-wx-004",
-    "b4-wx-005",
-    "b4-wx-006",
-    "b4-wx-007",
-    "b4-wx-008",
-    "b4-wx-009",
-    "b4-wx-010",
-    "b4-wx-011",
-    "b4-wx-012",
-    "b4-wx-013",
-    "b4-wx-014",
-    "b4-wx-015",
-    "b4-wx-016",
-    "b4-wx-017",
-    "b4-wx-018",
-    "b4-wx-019",
-    "b4-wx-020",
-    "b4-wx-021",
-    "b4-wx-022",
-    "b4-wx-023",
-    "b4-wx-024",
-    "b4-wx-025",
-    "b4-wx-026",
-    "b4-wx-027",
-    "b4-wx-028",
-    "b4-wx-029",
-    "b4-wx-030",
-    "b4-wx-031",
-    "b4-wx-032",
-    "b4-wx-033",
-    "b4-wx-034",
-    "b4-wx-035",
-    "b4-wx-036",
-    "b4-wx-038",
-    "b4-wx-039",
-    "b4-wx-040",
-    "b4-wx-041",
-    "b4-wx-042",
-    "b4-wx-044",
-    "b4-wx-045",
-    "b4-wx-046",
-    "b4-wx-047",
-    "b4-wx-048",
-    "b4-wx-049",
-    "b4-wx-050"
-  ],
+  "selectedIds": [],
   "rejected": [
+    {
+      "id": "b4-regu-001",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-002",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-003",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-004",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-005",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-006",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-007",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-008",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-009",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-010",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-011",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-012",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-013",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-014",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-015",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-016",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-017",
+      "reason": "duplicate id"
+    },
     {
       "id": "b4-regu-018",
       "reason": "near duplicate",
@@ -122,6 +90,22 @@
         "existingId": "b4-regu-017",
         "existingQuestion": "What conduct is prohibited during an RPAS examination?"
       }
+    },
+    {
+      "id": "b4-regu-019",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-020",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-021",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-022",
+      "reason": "duplicate id"
     },
     {
       "id": "b4-regu-023",
@@ -135,15 +119,287 @@
       }
     },
     {
+      "id": "b4-regu-024",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-025",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-026",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-027",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-028",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-029",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-030",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-031",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-032",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-033",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-034",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-035",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-036",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-037",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-038",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-039",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-040",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-041",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-042",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-043",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-044",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-045",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-046",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-047",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-048",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-049",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-regu-050",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-001",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-002",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-003",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-004",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-005",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-006",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-007",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-008",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-009",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-010",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-011",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-012",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-013",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-014",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-015",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-016",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-017",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-018",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-019",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-020",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-021",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-022",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-023",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-024",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-025",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-026",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-027",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-028",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-029",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-030",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-031",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-032",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-033",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-034",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-035",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-036",
+      "reason": "duplicate id"
+    },
+    {
       "id": "b4-wx-037",
       "reason": "near duplicate",
       "match": {
-        "score": 0.7368421052631579,
-        "sequence": 0.7368421052631579,
-        "jaccard": 0.2857142857142857,
-        "existingId": "b4-wx-014",
-        "existingQuestion": "Squall lines are most commonly associated with:"
+        "score": 0.8118811881188119,
+        "sequence": 0.8118811881188119,
+        "jaccard": 0.42857142857142855,
+        "existingId": "b4-wx-042",
+        "existingQuestion": "A high-pressure system is most often associated with:"
       }
+    },
+    {
+      "id": "b4-wx-038",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-039",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-040",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-041",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-042",
+      "reason": "duplicate id"
     },
     {
       "id": "b4-wx-043",
@@ -155,6 +411,34 @@
         "existingId": "b4-wx-027",
         "existingQuestion": "Air flowing horizontally toward the centre of a low-pressure system is called:"
       }
+    },
+    {
+      "id": "b4-wx-044",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-045",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-046",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-047",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-048",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-049",
+      "reason": "duplicate id"
+    },
+    {
+      "id": "b4-wx-050",
+      "reason": "duplicate id"
     }
   ]
 }

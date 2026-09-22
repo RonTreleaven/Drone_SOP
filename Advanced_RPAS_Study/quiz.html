@@ -7,10 +7,28 @@
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="stylesheet" href="../assets/css/advanced-rpas-quiz.css">
 <link rel="stylesheet" href="../assets/css/site-nav.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --quiz-bg-a:#f2f8fb; --quiz-bg-b:#edf4f8; --quiz-ink:#172033; --quiz-muted:#5f6b7a; --quiz-line:#cfe0e8; --quiz-panel:#fff; }
+  html, body { min-height:100%; }
+  body { max-width:none; margin:0; padding:0; font-family:'Montserrat', sans-serif; color:var(--quiz-ink); background:radial-gradient(circle at 12% 10%, rgba(85,170,187,.12), transparent 42%), radial-gradient(circle at 90% 85%, rgba(209,18,42,.08), transparent 45%), linear-gradient(160deg, var(--quiz-bg-a), var(--quiz-bg-b)); }
+  .top-nav, main { max-width:900px; margin-left:auto; margin-right:auto; }
+  .top-nav { padding:1.25rem 1.25rem 0; }
+  main { padding:1rem 1.25rem 3.5rem; }
+  .site-header { gap:1rem; margin:0 0 1rem; padding:1.2rem 1.35rem; border:1px solid var(--quiz-line); border-radius:12px; background:rgba(255,255,255,.86); box-shadow:0 10px 26px rgba(0,0,0,.08); }
+  .site-header .site-logo { width:76px; height:76px; object-fit:contain; margin-right:0; }
+  .site-header h1 { margin:0; font-size:clamp(1.5rem, 3vw, 2.1rem); }
+  .meta { color:var(--quiz-muted); }
+  #setup, #question-card, #summary, #stats-panel { box-shadow:0 10px 26px rgba(0,0,0,.06); }
+  button, .choice { font-family:inherit; }
+  @media (max-width:600px) { .site-header { align-items:flex-start; } .site-header .site-logo { width:60px; height:60px; } }
+</style>
 </head>
 <body>
 <nav class="top-nav shared-site-nav" aria-label="Site navigation">
   <div class="nav-primary">
+    <a class="back-link" href="AdvStudy.html"><span class="back-icon" aria-hidden="true">&#8592;</span>BACK</a>
+    <span class="nav-sep" aria-hidden="true">|</span>
     <a href="../index.html">Home</a>
     <span class="nav-sep" aria-hidden="true">|</span>
     <a href="../tools.html">Tools</a>
@@ -40,6 +58,11 @@
       <input type="checkbox" name="exam-scope" value="level-1-complex">
       Level 1 Complex / BVLOS
     </label>
+    <div class="setup-inline-controls">
+      <label class="round-length-label">Questions this round:
+        <input type="number" id="round-length" value="15" min="5" max="50" step="5">
+      </label>
+    </div>
     <p class="meta" id="scope-selection-status" aria-live="polite"></p>
   </fieldset>
 
@@ -60,6 +83,10 @@
     <fieldset class="review-focus-fieldset">
       <legend>Review focus</legend>
       <label>
+        <input type="checkbox" id="todays-added-only">
+        Today's added questions
+      </label>
+      <label>
         <input type="checkbox" name="review-focus" value="phase7-tp15263-batch-1">
         New TP 15263 batch
       </label>
@@ -76,11 +103,12 @@
         Needs source review
       </label>
       <p class="meta" id="review-focus-status" aria-live="polite"></p>
+      <div class="review-tool-actions">
+        <button class="secondary compact-button" id="review-selected-btn" type="button">Review selected set</button>
+        <span class="meta" id="review-tool-status" aria-live="polite"></span>
+      </div>
     </fieldset>
   </details>
-  <label>Questions this round:
-    <input type="number" id="round-length" value="5" min="1" max="50">
-  </label>
   <button class="primary" id="start-btn">Start Quiz</button>
   <button class="secondary" id="reset-stats-btn">Reset local stats</button>
 </section>
@@ -96,6 +124,10 @@
     <span class="meta" id="flag-status"></span>
   </div>
   <div id="feedback"></div>
+  <div class="admin-review-row" id="admin-review-row" hidden>
+    <button class="primary" id="approve-review-btn" type="button">Approve &amp; clear active review flags</button>
+    <span class="meta" id="review-approval-status" aria-live="polite"></span>
+  </div>
   <div class="nav-row">
     <button class="secondary" id="prev-btn">&larr; Previous</button>
     <button class="primary" id="next-btn">Next &rarr;</button>
@@ -110,6 +142,7 @@
   <a class="secondary home-link" href="../index.html">Return to Home</a>
   <button class="secondary" id="restart-btn">New round</button>
   <div id="flagged-summary"></div>
+  <div id="review-cleanup-summary"></div>
   <div id="review-list"></div>
 </section>
 
@@ -127,10 +160,12 @@ const ADVANCED_SCOPE = "advanced";
 const SUPPLEMENTAL_SCOPE = "supplemental";
 const LEVEL_1_COMPLEX_SCOPE = "level-1-complex";
 const LEVEL_1_COMPLEX_MARKER = /\b(BVLOS|Level 1 Complex|TP\s*15530|detect-and-avoid|DAA|beyond visual line[- ]of[- ]sight)\b/i;
+const LOCAL_REVIEW_API = "http://127.0.0.1:8765/api";
 
 let categories = [];
 let allQuestions = [];
 let questions = [];
+let localReviewApiAvailable = false;
 let carsSectionUrlTemplate = null;
 let sourceLinkPattern = null;
 let sourceLinkMap = {};
@@ -140,6 +175,8 @@ let flaggedQuestions = loadFlaggedQuestions();
 // round.flags is sparse/parallel to round.queue: true = flagged for review.
 let round = { queue: [], index: 0, answers: [], flags: [] };
 let roundActive = false;
+let roundReviewMode = false;
+let reviewSessionActions = [];
 
 const LETTERS = "ABCDEFGHIJ";
 
@@ -368,6 +405,21 @@ function selectedReviewFlags() {
   return Array.from(document.querySelectorAll("input[name='review-focus']:checked")).map(el => el.value);
 }
 
+function selectedReviewLabels() {
+  const labels = selectedReviewFlags();
+  if (todaysAddedOnly()) labels.unshift("today's added questions");
+  return labels;
+}
+
+function isTodaysAddedQuestion(q) {
+  const isBatch3 = String(q.id || "").startsWith("b3-") || String(q.origin || "").toLowerCase().includes("batch3");
+  return isBatch3 && !(q.reviewedSets || []).includes("todays-added");
+}
+
+function todaysAddedOnly() {
+  return Boolean(document.getElementById("todays-added-only")?.checked);
+}
+
 function questionMatchesReviewFocus(q, activeFlags) {
   if (!activeFlags.length) return true;
   const flags = q.reviewFlags || [];
@@ -378,7 +430,9 @@ function applyQuestionFilters() {
   const selectedScopes = selectedExamScopes();
   const activeFlags = selectedReviewFlags();
   questions = allQuestions.filter(q =>
-    selectedScopes.includes(inferredQuestionScope(q)) && questionMatchesReviewFocus(q, activeFlags)
+    selectedScopes.includes(inferredQuestionScope(q)) &&
+    questionMatchesReviewFocus(q, activeFlags) &&
+    (!todaysAddedOnly() || isTodaysAddedQuestion(q))
   );
   updateScopeSelectionState();
   updateReviewFocusState();
@@ -391,8 +445,12 @@ function updateScopeSelectionState() {
     return acc;
   }, {});
   const selectedCount = questions.length;
+  const todaysCount = allQuestions.filter(isTodaysAddedQuestion).length;
+  const setLabel = todaysAddedOnly()
+    ? ` Today's added filter: ${todaysCount} questions.`
+    : ` Today's added questions: ${todaysCount}.`;
   document.getElementById("scope-selection-status").textContent =
-    `${selectedCount} questions available: Advanced ${counts[ADVANCED_SCOPE] || 0}, supplemental ${counts[SUPPLEMENTAL_SCOPE] || 0}, Level 1/BVLOS ${counts[LEVEL_1_COMPLEX_SCOPE] || 0}.`;
+    `${selectedCount} questions available: Advanced ${counts[ADVANCED_SCOPE] || 0}, supplemental ${counts[SUPPLEMENTAL_SCOPE] || 0}, Level 1/BVLOS ${counts[LEVEL_1_COMPLEX_SCOPE] || 0}.${setLabel}`;
 }
 
 function updateReviewFocusState() {
@@ -408,13 +466,31 @@ function updateReviewFocusState() {
     ? `${activeFlags.length} filter${activeFlags.length === 1 ? "" : "s"} active`
     : "Optional filters";
   document.getElementById("review-focus-status").textContent = summary;
+  const mode = localReviewApiAvailable
+    ? "Local admin write enabled."
+    : "Export-only mode; local admin server not detected.";
+  document.getElementById("review-tool-status").textContent = (selectedReviewLabels().length
+    ? "Ready to review the selected filtered set."
+    : "Choose a review focus, today's added questions, categories, then review the set.") + ` ${mode}`;
+}
+
+async function detectLocalReviewApi() {
+  try {
+    const response = await fetch(`${LOCAL_REVIEW_API}/status`, { cache: "no-store" });
+    const status = await response.json();
+    localReviewApiAvailable = Boolean(status.ok);
+  } catch {
+    localReviewApiAvailable = false;
+  }
+  updateReviewFocusState();
 }
 
 async function init() {
+  const freshJson = { cache: "no-store" };
   const [catRes, qRes, refRes] = await Promise.all([
-    fetch("data/~tmp40_categories.json"),
-    fetch("data/questions.json"),
-    fetch("data/references.json")
+    fetch("data/~tmp40_categories.json", freshJson),
+    fetch("data/questions.json", freshJson),
+    fetch("data/references.json", freshJson)
   ]);
   categories = await catRes.json();
   const qData = await qRes.json();
@@ -426,6 +502,7 @@ async function init() {
   buildSourceLinkMap(references);
 
   renderCategoryFilters();
+  detectLocalReviewApi();
 
   document.querySelectorAll("input[name='exam-scope']").forEach(input => {
     input.addEventListener("change", () => {
@@ -440,6 +517,11 @@ async function init() {
       renderCategoryFilters();
     });
   });
+  document.getElementById("todays-added-only").addEventListener("change", () => {
+    applyQuestionFilters();
+    renderCategoryFilters();
+  });
+  document.getElementById("review-selected-btn").addEventListener("click", startReviewSelectedSet);
   document.getElementById("start-btn").addEventListener("click", startRound);
   document.getElementById("select-all-categories-btn").addEventListener("click", () => setAllCategories(true));
   document.getElementById("clear-categories-btn").addEventListener("click", () => setAllCategories(false));
@@ -447,10 +529,12 @@ async function init() {
   document.getElementById("prev-btn").addEventListener("click", () => navigate(-1));
   document.getElementById("finish-btn").addEventListener("click", finishRound);
   document.getElementById("flag-btn").addEventListener("click", toggleFlag);
+  document.getElementById("approve-review-btn").addEventListener("click", approveCurrentReviewItem);
   document.getElementById("abandon-btn").addEventListener("click", () => {
     if (confirm("Abandon this round? Your progress on it will be discarded.")) {
       clearRoundState();
       roundActive = false;
+      roundReviewMode = false;
       document.getElementById("question-card").hidden = true;
       document.getElementById("setup").hidden = false;
     }
@@ -488,14 +572,21 @@ async function init() {
 
 function renderCategoryFilters() {
   const wrap = document.getElementById("category-filters");
+  const previouslySelected = new Set(Array.from(wrap.querySelectorAll("input:checked")).map(input => input.value));
+  const hadSelection = previouslySelected.size > 0;
   wrap.innerHTML = "";
   categories.forEach(c => {
     const available = questions.some(q => q.category === c.id);
+    const checked = available && (!hadSelection || previouslySelected.has(c.id));
     const label = document.createElement("label");
-    label.innerHTML = `<input type="checkbox" value="${c.id}" ${available ? "checked" : "disabled"}> ${c.name}${available ? "" : " (no questions yet)"}`;
+    label.innerHTML = `<input type="checkbox" value="${c.id}" ${checked ? "checked" : ""} ${available ? "" : "disabled"}> ${c.name}${available ? "" : " (no questions yet)"}`;
     label.querySelector("input").addEventListener("change", updateCategorySelectionState);
     wrap.appendChild(label);
   });
+  const availableInputs = Array.from(wrap.querySelectorAll("input:not(:disabled)"));
+  if (availableInputs.length && !availableInputs.some(input => input.checked)) {
+    availableInputs.forEach(input => { input.checked = true; });
+  }
   updateCategorySelectionState();
 }
 
@@ -542,9 +633,16 @@ function weightedSample(pool, count) {
 }
 
 function startRound() {
+  roundReviewMode = false;
   const activeCategories = Array.from(document.querySelectorAll("#category-filters input:checked")).map(el => el.value);
   const pool = questions.filter(q => activeCategories.includes(q.category));
-  const length = Math.min(parseInt(document.getElementById("round-length").value, 10) || 5, pool.length);
+  const requestedLength = parseInt(document.getElementById("round-length").value, 10) || 15;
+  const length = Math.min(requestedLength, pool.length);
+
+  if (questions.length > 0 && activeCategories.length === 0) {
+    alert("Select at least one question category before starting.");
+    return;
+  }
 
   if (pool.length === 0) {
     alert("No questions available for the selected categories.");
@@ -558,6 +656,45 @@ function startRound() {
   document.getElementById("stats-panel").hidden = true;
   document.getElementById("question-card").hidden = false;
   saveRoundState();
+  showQuestion();
+}
+
+function selectedCategoryPool() {
+  const activeCategories = Array.from(document.querySelectorAll("#category-filters input:checked")).map(el => el.value);
+  return {
+    activeCategories,
+    pool: questions.filter(q => activeCategories.includes(q.category))
+  };
+}
+
+function startReviewSelectedSet() {
+  const labels = selectedReviewLabels();
+  if (!labels.length) {
+    alert("Choose at least one QuizReview filter before starting a review set.");
+    return;
+  }
+
+  const { activeCategories, pool } = selectedCategoryPool();
+  if (questions.length > 0 && activeCategories.length === 0) {
+    alert("Select at least one question category before starting review.");
+    return;
+  }
+  if (pool.length === 0) {
+    alert("No questions available for the selected review filters and categories.");
+    return;
+  }
+
+  const requestedLength = parseInt(document.getElementById("round-length").value, 10) || 15;
+  const length = Math.min(requestedLength, pool.length);
+  round = { queue: pool.slice(0, length), index: 0, answers: new Array(length).fill(null), flags: new Array(length).fill(false) };
+  roundActive = true;
+  roundReviewMode = true;
+  reviewSessionActions = [];
+  document.getElementById("setup").hidden = true;
+  document.getElementById("summary").hidden = true;
+  document.getElementById("stats-panel").hidden = true;
+  document.getElementById("question-card").hidden = false;
+  clearRoundState();
   showQuestion();
 }
 
@@ -577,12 +714,14 @@ function renderScoreboard() {
   round.queue.forEach((q, i) => {
     const pill = document.createElement("button");
     const answer = round.answers[i];
-    const canReach = i <= reachable;
+    const canReach = roundReviewMode || i <= reachable;
+    const approved = roundReviewMode && Boolean(reviewActionFor(q));
     pill.className = "pill" + (i === round.index ? " current" : "") +
       (answer ? (answer.correct ? " correct" : " incorrect") : "") +
+      (approved ? " approved" : "") +
       (canReach ? "" : " unreached");
     pill.textContent = i + 1;
-    pill.title = answer ? (answer.correct ? "Correct \u2014 click to review" : "Incorrect \u2014 click to review") : (canReach ? "Not yet answered" : "Not reached yet");
+    pill.title = approved ? `Approved ${q.id}` : (answer ? (answer.correct ? "Correct \u2014 click to review" : "Incorrect \u2014 click to review") : (canReach ? `${q.id}` : "Not reached yet"));
     pill.disabled = !canReach;
     pill.addEventListener("click", () => { if (canReach) { round.index = i; showQuestion(); } });
     wrap.appendChild(pill);
@@ -593,13 +732,17 @@ function renderScoreboard() {
 function showQuestion() {
   const q = round.queue[round.index];
   const answer = round.answers[round.index];
+  const displayAnswer = answer || (roundReviewMode ? { chosenIndex: q.answerIndex, correct: true } : null);
 
   document.getElementById("progress-line").textContent =
-    `Question ${round.index + 1} of ${round.queue.length} · Score so far: ${round.answers.filter(a => a && a.correct).length} / ${round.answers.filter(Boolean).length}`;
+    roundReviewMode
+      ? `Review item ${round.index + 1} of ${round.queue.length} · Question ID: ${q.id}`
+      : `Question ${round.index + 1} of ${round.queue.length} · Score so far: ${round.answers.filter(a => a && a.correct).length} / ${round.answers.filter(Boolean).length}`;
   const catName = categories.find(c => c.id === q.category)?.name || q.category;
   const flags = q.reviewFlags?.length ? ` · Flags: ${q.reviewFlags.join(", ")}` : "";
+  const reviewedSets = q.reviewedSets?.length ? ` · Reviewed sets: ${q.reviewedSets.join(", ")}` : "";
   document.getElementById("category-line").textContent =
-    `Category: ${catName} · Difficulty: ${q.difficulty} · Scope: ${inferredQuestionScope(q)}` + (q.examLevel ? ` · Level: ${q.examLevel}` : "") + flags;
+    `ID: ${q.id} · Category: ${catName} · Difficulty: ${q.difficulty} · Scope: ${inferredQuestionScope(q)}` + (q.examLevel ? ` · Level: ${q.examLevel}` : "") + flags + reviewedSets;
   document.getElementById("question-text").textContent = q.question;
   renderScoreboard();
 
@@ -609,10 +752,10 @@ function showQuestion() {
     const btn = document.createElement("button");
     btn.className = "choice";
     btn.innerHTML = `<span class="choice-letter">${LETTERS[i]}.</span><span>${choice}</span>`;
-    if (answer) {
+    if (displayAnswer) {
       btn.disabled = true;
       if (i === q.answerIndex) btn.classList.add("correct");
-      else if (i === answer.chosenIndex) btn.classList.add("incorrect");
+      else if (i === displayAnswer.chosenIndex && !roundReviewMode) btn.classList.add("incorrect");
     } else {
       btn.addEventListener("click", () => handleAnswer(i));
     }
@@ -627,13 +770,110 @@ function showQuestion() {
     ? `<p><strong>${answer.correct ? "Correct." : "Incorrect."}</strong> You selected ${LETTERS[answer.chosenIndex]}; correct answer is ${LETTERS[q.answerIndex]}. ${q.rationale}</p>` +
       `<p class="meta">Source: ${linkifySource(q.source)}${carsSectionLink(q.carsSection, q.source)}</p>` +
       quoteBlock
+    : roundReviewMode
+    ? `<p><strong>Review mode.</strong> Correct answer is ${LETTERS[q.answerIndex]}. ${q.rationale}</p>` +
+      `<p class="meta">Source: ${linkifySource(q.source)}${carsSectionLink(q.carsSection, q.source)}</p>` +
+      quoteBlock
     : "";
 
   document.getElementById("prev-btn").disabled = round.index === 0;
-  document.getElementById("next-btn").hidden = !answer || round.index >= round.queue.length - 1;
-  document.getElementById("finish-btn").hidden = !allAnswered();
+  document.getElementById("next-btn").hidden = roundReviewMode ? round.index >= round.queue.length - 1 : !answer || round.index >= round.queue.length - 1;
+  document.getElementById("finish-btn").hidden = roundReviewMode ? false : !allAnswered();
+  document.getElementById("finish-btn").textContent = roundReviewMode ? "Finish review" : "Finish round";
+  renderAdminReviewControls();
 
   renderFlagButton();
+}
+
+function activeClearableFlags(q) {
+  const activeFlags = new Set(selectedReviewFlags());
+  return (q.reviewFlags || []).filter(flag => activeFlags.has(flag));
+}
+
+function reviewActionFor(q) {
+  return reviewSessionActions.find(action => action.id === q.id);
+}
+
+function renderAdminReviewControls() {
+  const row = document.getElementById("admin-review-row");
+  const status = document.getElementById("review-approval-status");
+  if (!roundReviewMode) {
+    row.hidden = true;
+    status.textContent = "";
+    return;
+  }
+
+  const q = round.queue[round.index];
+  const flags = activeClearableFlags(q);
+  const reviewedSets = todaysAddedOnly() ? ["todays-added"] : [];
+  const alreadyApproved = Boolean(reviewActionFor(q));
+  row.hidden = false;
+  document.getElementById("approve-review-btn").disabled = alreadyApproved;
+  if (alreadyApproved) {
+    const action = reviewActionFor(q);
+    const mode = action?.appliedLocally ? "saved to questions.json" : "queued for export";
+    status.textContent = `Approved ${q.id} in this review session (${mode}).`;
+  } else if (flags.length) {
+    status.textContent = `${q.id}: will clear ${flags.join(", ")}`;
+  } else if (reviewedSets.length) {
+    status.textContent = `${q.id}: will mark this review set item as approved.`;
+  } else {
+    status.textContent = `${q.id}: no active review flag applies to this item.`;
+  }
+}
+
+async function approveCurrentReviewItem() {
+  if (!roundReviewMode) return;
+  const q = round.queue[round.index];
+  if (reviewActionFor(q)) return;
+
+  const clearedFlags = activeClearableFlags(q);
+  const reviewedSets = todaysAddedOnly() ? ["todays-added"] : [];
+  const action = {
+    id: q.id,
+    clearedFlags,
+    reviewedSets,
+    approvedAt: new Date().toISOString()
+  };
+
+  if (localReviewApiAvailable) {
+    try {
+      const response = await fetch(`${LOCAL_REVIEW_API}/approve-review`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(action)
+      });
+      const result = await response.json();
+      if (!response.ok || !result.ok) throw new Error(result.error || "Local review API rejected approval.");
+      replaceQuestionInMemory(result.question);
+      reviewSessionActions.push({ ...action, appliedLocally: true, backup: result.backup || null });
+      applyQuestionFilters();
+      renderCategoryFilters();
+      renderAdminReviewControls();
+      return;
+    } catch (error) {
+      localReviewApiAvailable = false;
+      document.getElementById("review-approval-status").textContent =
+        `Local write failed; approval kept for export. ${error.message}`;
+    }
+  }
+
+  if (clearedFlags.length) {
+    q.reviewFlags = (q.reviewFlags || []).filter(flag => !clearedFlags.includes(flag));
+  }
+  if (reviewedSets.length) {
+    q.reviewedSets = Array.from(new Set([...(q.reviewedSets || []), ...reviewedSets])).sort();
+  }
+  reviewSessionActions.push({ ...action, appliedLocally: false });
+  applyQuestionFilters();
+  renderCategoryFilters();
+  renderAdminReviewControls();
+}
+
+function replaceQuestionInMemory(updatedQuestion) {
+  if (!updatedQuestion || !updatedQuestion.id) return;
+  allQuestions = allQuestions.map(q => q.id === updatedQuestion.id ? updatedQuestion : q);
+  round.queue = round.queue.map(q => q.id === updatedQuestion.id ? updatedQuestion : q);
 }
 
 function renderFlagButton() {
@@ -678,20 +918,28 @@ function navigate(direction) {
 }
 
 function finishRound() {
-  if (!allAnswered()) {
+  const wasReviewMode = roundReviewMode;
+  if (!wasReviewMode && !allAnswered()) {
     alert("Answer all questions in this round before finishing.");
     return;
   }
   roundActive = false;
   clearRoundState();
-  const correctCount = round.answers.filter(a => a.correct).length;
+  const correctCount = round.answers.filter(a => a && a.correct).length;
   document.getElementById("question-card").hidden = true;
   document.getElementById("summary").hidden = false;
-  document.getElementById("summary-line").textContent = `Score: ${correctCount} / ${round.queue.length}`;
+  document.getElementById("summary-line").textContent = wasReviewMode
+    ? `Reviewed ${round.queue.length} questions; approved ${reviewSessionActions.length}.`
+    : `Score: ${correctCount} / ${round.queue.length}`;
+  document.getElementById("restart-btn").textContent = wasReviewMode ? "Back to QuizReview tools" : "New round";
   renderFlaggedSummary();
+  renderReviewCleanupSummary();
   renderReviewList();
   renderStatsTable();
-  document.getElementById("stats-panel").hidden = false;
+  document.getElementById("stats-panel").hidden = wasReviewMode;
+  roundReviewMode = false;
+  document.getElementById("finish-btn").textContent = "Finish round";
+  document.getElementById("summary").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 // Lists question ids flagged this round, plus the running total across all rounds, for reclassification follow-up.
@@ -725,15 +973,63 @@ function renderReviewList() {
   round.queue.forEach((q, i) => {
     const a = round.answers[i];
     const div = document.createElement("div");
-    div.className = `review-item ${a.correct ? "right" : "wrong"}`;
+    div.className = `review-item ${!a || a.correct ? "right" : "wrong"}`;
     const flaggedBadge = round.flags[i] ? ` &middot; &#128681; Flagged for review (${q.id})` : "";
+    const answerLine = a
+      ? `Your answer: ${LETTERS[a.chosenIndex]} &middot; Correct answer: ${LETTERS[q.answerIndex]} &middot; ${a.correct ? "Correct" : "Incorrect"}`
+      : `Reviewed item &middot; Correct answer: ${LETTERS[q.answerIndex]}`;
     div.innerHTML =
       `<p><strong>Q${i + 1}.</strong> ${q.question}</p>` +
-      `<p class="meta">Your answer: ${LETTERS[a.chosenIndex]} &middot; Correct answer: ${LETTERS[q.answerIndex]} &middot; ${a.correct ? "Correct" : "Incorrect"}${q.examLevel ? ` &middot; Level: ${q.examLevel}` : ""}${q.reviewFlags?.length ? ` &middot; Flags: ${q.reviewFlags.join(", ")}` : ""}${flaggedBadge}</p>` +
+      `<p class="meta">${answerLine}${q.examLevel ? ` &middot; Level: ${q.examLevel}` : ""}${q.reviewFlags?.length ? ` &middot; Remaining flags: ${q.reviewFlags.join(", ")}` : ""}${flaggedBadge}</p>` +
       `<p class="meta">Correct choice: ${q.choices[q.answerIndex]}</p>` +
       `<p class="meta">Source: ${linkifySource(q.source)}${carsSectionLink(q.carsSection, q.source)}</p>`;
     wrap.appendChild(div);
   });
+}
+
+function renderReviewCleanupSummary() {
+  const wrap = document.getElementById("review-cleanup-summary");
+  if (!reviewSessionActions.length) {
+    wrap.innerHTML =
+      `<h3>Review cleanup</h3>` +
+      `<p class="meta">No questions were approved in this review session. Nothing was changed.</p>`;
+    return;
+  }
+
+  const payload = {
+    generatedAt: new Date().toISOString(),
+    note: localReviewApiAvailable
+      ? "These approvals were applied through the local admin API where appliedLocally is true. Export retained for audit."
+      : "Apply these approvals to data/questions.json by removing listed reviewFlags and adding reviewedSets for each matching question.",
+    approvals: reviewSessionActions
+  };
+  wrap.innerHTML =
+    `<h3>${localReviewApiAvailable ? "Review cleanup audit" : "Review cleanup export"}</h3>` +
+    `<p class="meta">${localReviewApiAvailable ? "Approvals marked applied locally have already updated questions.json and created backups." : "Local admin write was not available. Use this export to apply the approvals to the local repo."}</p>` +
+    `<p class="meta">Approved IDs: ${reviewSessionActions.map(action => `<code>${action.id}</code>`).join(", ")}</p>` +
+    `<button class="secondary" id="download-review-actions-btn" type="button">Download review actions JSON</button>` +
+    `<pre class="review-export"><code>${escapeHtml(JSON.stringify(payload, null, 2))}</code></pre>`;
+  document.getElementById("download-review-actions-btn").addEventListener("click", () => downloadJson(payload, "quiz-review-actions.json"));
+}
+
+function downloadJson(payload, filename) {
+  const blob = new Blob([JSON.stringify(payload, null, 2) + "\n"], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[char]));
 }
 
 function renderStatsTable() {

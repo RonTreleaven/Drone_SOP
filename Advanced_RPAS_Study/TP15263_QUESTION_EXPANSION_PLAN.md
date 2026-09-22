@@ -25,6 +25,30 @@ Every new question should include:
 - `knowledgeTopic`: specific topic/subtopic when known.
 - `learningObjective`: the tested objective in plain language.
 - `sourceRefs`: array of precise sources used to verify the answer.
+- `exactRefs`: array of human-readable source anchors to display under the answer rationale.
+
+Use `sourceRefs` for document-level links and machine-readable authority IDs. Use `exactRefs` for the exact TP 15263 row, CARs section, AIM subsection, NAV CANADA topic, or short source excerpt that explains why the answer is correct.
+
+Recommended `exactRefs` shape:
+
+```json
+"exactRefs": [
+  {
+    "source": "TP 15263",
+    "section": "8",
+    "sectionTitle": "Radiotelephony",
+    "topic": "Communications - Common frequencies",
+    "objective": "List the contents of a routine call to ATC."
+  },
+  {
+    "source": "CARs",
+    "section": "901.72",
+    "title": "Compliance with air traffic control instructions"
+  }
+]
+```
+
+For legal text, prefer `section` and `title`, with a short `quote` only when it directly supports the answer. For TP 15263, prefer `section`, `sectionTitle`, `topic`, and `objective`. Do not use `exactRefs` for long pasted source passages.
 
 ## Default Pool Rules
 
@@ -62,6 +86,7 @@ Generate in batches of 25-40 questions. Each batch should:
 - Include A-D choices with one defensibly correct answer.
 - Use plausible distractors that reflect common RPAS exam traps.
 - Include concise rationales with exact source references.
+- Include `exactRefs` precise enough that a student can see the exact knowledge row, CARs section, AIM subsection, or NAV CANADA item being tested.
 - Avoid semantic duplicates of existing questions.
 - Be validated before merging into `data/questions.json`.
 

@@ -5,13 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Canadian Aviation Regulations - Part IX - English Extract</title>
   <link rel="stylesheet" href="../assets/css/site-nav.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root { color-scheme: light; --ink:#172033; --muted:#5b6578; --line:#d6dde8; --panel:#f4f7fb; --head:#172b4d; }
-    body { margin:0; font-family:Arial, Helvetica, sans-serif; color:var(--ink); background:#fff; line-height:1.45; }
-    main { max-width:1040px; margin:0 auto; padding:32px 20px 56px; }
-    .top-nav { max-width:1040px; margin:0 auto; padding:18px 20px 0; }
+    :root { color-scheme:light; --ink:#172033; --muted:#5f6b7a; --line:#cfe0e8; --panel:#fff; --head:#182b49; --bg-a:#f2f8fb; --bg-b:#edf4f8; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:'Montserrat', sans-serif; color:var(--ink); background:radial-gradient(circle at 12% 10%, rgba(85,170,187,.12), transparent 42%), radial-gradient(circle at 90% 85%, rgba(209,18,42,.08), transparent 45%), linear-gradient(160deg, var(--bg-a), var(--bg-b)); line-height:1.45; }
+    main, .top-nav { max-width:1180px; margin-left:auto; margin-right:auto; }
+    main { padding:1.2rem 1.25rem 3.5rem; }
+    .top-nav { padding:1.25rem 1.25rem 0; }
+    .document-header { display:flex; align-items:center; gap:1rem; margin:0 0 1.2rem; padding:1.2rem 1.35rem; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.86); box-shadow:0 10px 26px rgba(0,0,0,.08); }
+    .site-logo { width:76px; height:76px; object-fit:contain; flex:0 0 auto; }
+    .document-header h1 { margin:0 0 0.35rem; font-size:clamp(1.5rem, 3vw, 2.1rem); }
+    .document-header p { margin:0; }
     h1 { margin:0 0 8px; font-size:2rem; }
-    h2 { margin:32px 0 10px; padding:10px 12px; color:#fff; background:var(--head); font-size:1.35rem; }
+    h2 { margin:32px 0 10px; padding:10px 12px; color:#fff; background:var(--head); font-size:1.35rem; border-radius:6px; }
     h3 { margin:26px 0 8px; font-size:1.15rem; border-bottom:1px solid var(--line); padding-bottom:6px; }
     h4, h5 { margin:20px 0 6px; font-size:1rem; color:var(--muted); }
     .meta { color:var(--muted); margin:0 0 24px; }
@@ -24,34 +31,41 @@
     .paragraph { margin-left:2.2rem; }
     .subparagraph { margin-left:3.2rem; }
     .clause { margin-left:4.2rem; }
-    .lookup { position:sticky; top:0; z-index:10; display:flex; gap:8px; align-items:center; margin:20px 0 24px; padding:12px; background:#fff; border:1px solid var(--line); box-shadow:0 4px 14px rgba(23,32,51,0.08); }
-    .lookup input { flex:1; min-width:0; font:inherit; padding:9px 10px; border:1px solid var(--line); border-radius:4px; }
-    .lookup button { font:inherit; padding:9px 14px; border:1px solid #005ea8; border-radius:4px; color:#fff; background:#005ea8; cursor:pointer; }
-    .lookup .secondary { color:#005ea8; background:#fff; }
+    .lookup { position:sticky; top:0; z-index:10; display:flex; gap:8px; align-items:center; margin:20px 0 24px; padding:12px; background:rgba(255,255,255,.94); border:1px solid var(--line); border-radius:10px; box-shadow:0 4px 14px rgba(23,32,51,.08); }
+    .lookup input { flex:1; min-width:0; font:inherit; padding:9px 10px; border:1px solid var(--line); border-radius:6px; }
+    .lookup button { font:inherit; padding:9px 14px; border:1px solid #005ea8; border-radius:6px; color:#fff; background:#005ea8; cursor:pointer; }
     .lookup button:focus, .lookup input:focus { outline:3px solid rgba(0,94,168,0.22); outline-offset:1px; }
     .lookup-status { margin:0; color:var(--muted); font-size:0.9rem; }
     .section-anchor.target-highlight { background:#fff5c2; outline:2px solid #e0aa00; outline-offset:4px; }
     .section-anchor.text-match { background:#eef7ff; outline:2px solid #74b7e8; outline-offset:4px; }
-    .search-results { margin:-12px 0 24px; padding:12px; border:1px solid var(--line); background:var(--panel); }
+    .search-results { margin:-12px 0 24px; padding:12px; border:1px solid var(--line); border-radius:8px; background:var(--panel); box-shadow:0 4px 14px rgba(23,32,51,.05); }
     .search-results[hidden] { display:none; }
     .search-results h2 { margin:0 0 8px; padding:0; color:var(--ink); background:transparent; font-size:1rem; }
     .search-results ol { margin:0; padding-left:1.4rem; }
     .search-results li { margin:0.25rem 0; }
     mark.search-term { background:#ffdf5d; color:#111; padding:0 0.08em; }
     a { color:#005ea8; }
+    @media (max-width:600px) { .document-header { align-items:flex-start; } .site-logo { width:60px; height:60px; } .lookup { align-items:stretch; flex-wrap:wrap; } .lookup label { width:100%; } .lookup input { flex-basis:100%; } }
   </style>
 </head>
 <body>
 <nav class="top-nav shared-site-nav" aria-label="Site navigation">
   <div class="nav-primary">
+    <a class="back-link" href="AdvStudy.html"><span class="back-icon" aria-hidden="true">&#8592;</span>BACK</a>
+    <span class="nav-sep" aria-hidden="true">|</span>
     <a href="../index.html">Home</a>
     <span class="nav-sep" aria-hidden="true">|</span>
     <a href="../tools.html">Tools</a>
   </div>
 </nav>
 <main>
-  <h1>Canadian Aviation Regulations - Part IX</h1>
-  <p class="meta">English-only human-readable extract generated from <code>CARs_SOR-96-433_FullText.xml</code> consolidated 2026-6-18. French defined terms and French-only amended text are omitted.</p>
+  <header class="document-header">
+    <a href="../index.html" aria-label="Go to Drone SOP Home"><img src="../assets/img/logo_25.svg" alt="Drone SOP logo" class="site-logo"></a>
+    <div>
+      <h1>Canadian Aviation Regulations - Part IX</h1>
+      <p class="meta">English-only human-readable extract generated from <code>CARs_SOR-96-433_FullText.xml</code> consolidated 2026-6-18. French defined terms and French-only amended text are omitted.</p>
+    </div>
+  </header>
   <form class="lookup" id="sectionLookup">
     <label for="sectionSearch">Find section</label>
 	    <input id="sectionSearch" name="sectionSearch" type="search" inputmode="decimal" placeholder="Example: 903.01 or 901.47" autocomplete="off">
