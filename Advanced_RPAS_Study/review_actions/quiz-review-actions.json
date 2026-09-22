@@ -1,23 +1,77 @@
 {
-  "generatedAt": "2026-09-22T15:37:11.453Z",
+  "generatedAt": "2026-09-22T23:40:49.587Z",
   "note": "Apply these approvals to data/questions.json by removing listed reviewFlags and adding reviewedSets for each matching question.",
   "approvals": [
     {
-      "id": "tp15263-001",
+      "id": "safety-019",
       "clearedFlags": [
-        "phase7-tp15263-batch-1"
+        "needs-source-review"
       ],
       "reviewedSets": [],
-      "approvedAt": "2026-09-22T15:37:04.495Z",
+      "approvedAt": "2026-09-22T23:34:50.707Z",
       "appliedLocally": false
     },
     {
-      "id": "tp15263-014",
+      "id": "safety-024",
       "clearedFlags": [
-        "phase7-tp15263-batch-1"
+        "needs-source-review"
       ],
       "reviewedSets": [],
-      "approvedAt": "2026-09-22T15:37:08.993Z",
+      "approvedAt": "2026-09-22T23:35:13.923Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "safety-025",
+      "clearedFlags": [
+        "needs-source-review"
+      ],
+      "reviewedSets": [],
+      "approvedAt": "2026-09-22T23:35:35.989Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "safety-026",
+      "clearedFlags": [
+        "needs-source-review"
+      ],
+      "reviewedSets": [],
+      "approvedAt": "2026-09-22T23:35:52.028Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "safety-027",
+      "clearedFlags": [
+        "needs-source-review"
+      ],
+      "reviewedSets": [],
+      "approvedAt": "2026-09-22T23:36:42.372Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "safety-028",
+      "clearedFlags": [
+        "needs-source-review"
+      ],
+      "reviewedSets": [],
+      "approvedAt": "2026-09-22T23:36:48.629Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "safety-029",
+      "clearedFlags": [
+        "needs-source-review"
+      ],
+      "reviewedSets": [],
+      "approvedAt": "2026-09-22T23:36:57.153Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "safety-034",
+      "clearedFlags": [
+        "needs-source-review"
+      ],
+      "reviewedSets": [],
+      "approvedAt": "2026-09-22T23:40:48.249Z",
       "appliedLocally": false
     }
   ]
