@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(V1224/26 NOTAMR V0886/26\nQ) CZQM/QOLAS/IV/M/E/000/017/4532N06212W003\nA) CZQM B) 2609231503 C) 2609241500EST\nE) OBST LGT U/S WIND FARM WITHIN 3NM RADIUS CENTRED ON 453141N \n0621225W (APRX 11NM WSW ANTIGONISH (ST. MARTHA'S REGIONAL \nHOSPITAL) (HELI) AD (CDY5)). 667FT AGL 1629FT AMSL.)",
+    "startValidity": "2026-09-23T15:03:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.528056, -62.206944"
+    ]
+  },
+  {
     "raw": "(K3362/26 NOTAMN\nQ) CZQM/QOBCE/IV/M/AE/000/004/4550N06627W005\nA) CYFC B) 2609241030 C) 2609241900\nE) MOBILE CRANE WITHIN 100FT RADIUS CENTRED ON 454959N 0662717W \n(APRX 4.1NM SE AD (CYFC)). 150FT AGL 316FT AMSL. NOT LGTD, NOT \nPAINTED.)",
     "startValidity": "2026-09-22T13:43:24.461",
     "endValidity": "2026-09-24T19:00:00",
@@ -126,21 +135,21 @@
     ]
   },
   {
-    "raw": "(V1049/26 NOTAMR V0598/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
-    "startValidity": "2026-08-25T13:25:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.647222, -61.455000"
-    ]
-  },
-  {
     "raw": "(V1048/26 NOTAMR V0596/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4539N06126W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453914N 0612614W (APRX 2.9NM WNW AD) 391FT \nAGL, 398FT AMSL.)",
     "startValidity": "2026-08-25T13:25:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.653889, -61.437222"
+    ]
+  },
+  {
+    "raw": "(V1049/26 NOTAMR V0598/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
+    "startValidity": "2026-08-25T13:25:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.647222, -61.455000"
     ]
   },
   {
@@ -258,15 +267,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "46.297778, -63.119722"
-    ]
-  },
-  {
-    "raw": "(V0886/26 NOTAMN\nQ) CZQM/QOLAS/IV/M/E/000/017/4532N06212W003\nA) CZQM B) 2607241504 C) 2609231500EST\nE) OBST LGT U/S WIND FARM WITHIN 3NM RADIUS CENTRED ON 453141N \n0621225W (APRX 11NM WSW ANTIGONISH (ST. MARTHA'S REGIONAL \nHOSPITAL) (HELI) AD (CDY5)). 667FT AGL 1629FT AMSL.)",
-    "startValidity": "2026-07-24T15:04:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.528056, -62.206944"
     ]
   },
   {
