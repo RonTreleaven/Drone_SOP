@@ -495,21 +495,21 @@
     ]
   },
   {
-    "raw": "(U1247/26 NOTAMR U0674/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2607141316 C) 2610121400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
-    "startValidity": "2026-07-14T13:16:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.959167, -91.303889"
-    ]
-  },
-  {
     "raw": "(J4720/26 NOTAMR J2465/26\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2607141316 C) 2610121400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
     "startValidity": "2026-07-14T13:16:00",
     "endValidity": null,
     "q_code": "QOBCE",
     "coordinates_dd": [
       "52.467222, -92.960833"
+    ]
+  },
+  {
+    "raw": "(U1247/26 NOTAMR U0674/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2607141316 C) 2610121400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
+    "startValidity": "2026-07-14T13:16:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.959167, -91.303889"
     ]
   },
   {
@@ -618,15 +618,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.152778, -109.486944"
-    ]
-  },
-  {
-    "raw": "(U1112/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/011/4957N09658W002\nA) CZWG B) 2606251855 C) 2609232359\nE) OBST LGT U/S TOWER 495715N 0965826W (APRX 6NM NE WINNIPEG (CITY \nOF WINNIPEG) (HELI) AD (CWG2)) 229FT AGL, 1002FT AMSL.)",
-    "startValidity": "2026-06-25T18:55:00",
-    "endValidity": "2026-09-23T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.954167, -96.973889"
     ]
   },
   {
