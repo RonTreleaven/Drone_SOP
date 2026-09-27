@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U1651/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/010/4954N09711W005\nA) CYWG B) 2609270942 C) 2611272359\nE) OBST LGT U/S TOWER 495422N 0971119W (APRX 2NM E AD) 155FT AGL, \n921FT AMSL.)",
+    "startValidity": "2026-09-27T09:42:00",
+    "endValidity": "2026-11-27T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.906111, -97.188611"
+    ]
+  },
+  {
     "raw": "(U1648/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/037/4949N10241W002\nA) CZWG B) 2609261509 C) 2612252100\nE) OBST LGT U/S TOWER 494837N 1024114W (APRX 12NM N KISBEY/BRIGDEN \nFIELD AD (CBR3)) 1000FT AGL, 3628FT AMSL.)",
     "startValidity": "2026-09-26T15:09:00",
     "endValidity": "2026-12-25T21:00:00",
@@ -267,15 +276,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.808056, -93.885833"
-    ]
-  },
-  {
-    "raw": "(U1481/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/023/5322N10858W002\nA) CZWG B) 2608262128 C) 2609262359\nE) OBST LGT U/S TOWER 532150N 1085732W (APRX 12NM NW EDAM AD (CJU7)) \n250FT AGL, 2260FT AMSL.)",
-    "startValidity": "2026-08-26T21:28:00",
-    "endValidity": "2026-09-26T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.363889, -108.958889"
     ]
   },
   {
@@ -618,15 +618,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.828611, -101.757222"
-    ]
-  },
-  {
-    "raw": "(U1132/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/018/4845N08635W002\nA) CZYZ B) 2606292341 C) 2609272100\nE) OBST LGT U/S TOWER 484513N 0863508W (APRX 9NM WNW MARATHON \n(WILSON MEMORIAL HOSPITAL) (HELI) AD (CPX2)) 324FT AGL, 1774FT \nAMSL.)",
-    "startValidity": "2026-06-29T23:41:00",
-    "endValidity": "2026-09-27T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "48.753611, -86.585556"
     ]
   },
   {
