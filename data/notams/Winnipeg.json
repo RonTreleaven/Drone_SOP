@@ -1,11 +1,20 @@
 [
   {
-    "raw": "(U1656/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4914N08446W005\nA) CYHN B) 2609271419 C) 2609292100\nE) OBST LGT U/S TOWER 491400N 0844610W (APRX 2.5NM N AD) 299FT AGL, \n1415FT AMSL.)",
-    "startValidity": "2026-09-27T14:19:00",
-    "endValidity": "2026-09-29T21:00:00",
+    "raw": "(U1664/26 NOTAMR U1656/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4914N08446W005\nA) CYHN B) 2609290620 C) 2612282100\nE) OBST LGT U/S TOWER 491400N 0844610W (APRX 2.5NM N AD) 299FT AGL, \n1415FT AMSL.)",
+    "startValidity": "2026-09-29T06:20:00",
+    "endValidity": "2026-12-28T21:00:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.233333, -84.769444"
+    ]
+  },
+  {
+    "raw": "(U1662/26 NOTAMR U1430/26\nQ) CZWG/QOLAS/IV/M/E/000/031/4952N10623W002\nA) CZWG B) 2609282133 C) 2611121700\nE) OBST LGT U/S TOWER 495202N 1062305W (APRX 7NM E GRAVELBOURG AD \n(CJM4)) 690FT AGL, 3090FT AMSL.)",
+    "startValidity": "2026-09-28T21:33:00",
+    "endValidity": "2026-11-12T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.867222, -106.384722"
     ]
   },
   {
@@ -99,21 +108,21 @@
     ]
   },
   {
-    "raw": "(U1581/26 NOTAMR U1071/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609111941 C) 2609302359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
-    "startValidity": "2026-09-11T19:41:00",
-    "endValidity": "2026-09-30T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925556, -97.261111"
-    ]
-  },
-  {
     "raw": "(U1580/26 NOTAMR U1072/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609111941 C) 2609302359\nE) OBST LGT U/S TOWER 495532N 0971541W (APRX 1.26NM NW AD) 62FT AGL, \n845FT AMSL.)",
     "startValidity": "2026-09-11T19:41:00",
     "endValidity": "2026-09-30T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.925556, -97.261389"
+    ]
+  },
+  {
+    "raw": "(U1581/26 NOTAMR U1071/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609111941 C) 2609302359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
+    "startValidity": "2026-09-11T19:41:00",
+    "endValidity": "2026-09-30T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.925556, -97.261111"
     ]
   },
   {
@@ -339,15 +348,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.338889, -107.790000"
-    ]
-  },
-  {
-    "raw": "(U1430/26 NOTAMR U1171/26\nQ) CZWG/QOLAS/IV/M/E/000/031/4952N10623W002\nA) CZWG B) 2608161045 C) 2609302359\nE) OBST LGT U/S TOWER 495202N 1062305W (APRX 7NM E GRAVELBOURG AD \n(CJM4)) 690FT AGL, 3090FT AMSL.)",
-    "startValidity": "2026-08-16T10:45:00",
-    "endValidity": "2026-09-30T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.867222, -106.384722"
     ]
   },
   {
