@@ -928,9 +928,12 @@ function finishRound() {
   const correctCount = round.answers.filter(a => a && a.correct).length;
   document.getElementById("question-card").hidden = true;
   document.getElementById("summary").hidden = false;
+  const scorePercent = round.queue.length
+    ? Math.round((correctCount / round.queue.length) * 100)
+    : 0;
   document.getElementById("summary-line").textContent = wasReviewMode
     ? `Reviewed ${round.queue.length} questions; approved ${reviewSessionActions.length}.`
-    : `Score: ${correctCount} / ${round.queue.length}`;
+    : `Score: ${correctCount} / ${round.queue.length} (${scorePercent}%)`;
   document.getElementById("restart-btn").textContent = wasReviewMode ? "Back to QuizReview tools" : "New round";
   renderFlaggedSummary();
   renderReviewCleanupSummary();
@@ -945,7 +948,8 @@ function finishRound() {
 // Lists question ids flagged this round, plus the running total across all rounds, for reclassification follow-up.
 function renderFlaggedSummary() {
   const wrap = document.getElementById("flagged-summary");
-  const flaggedThisRound = round.queue.filter((q, i) => round.flags[i]);
+  flaggedQuestions = loadFlaggedQuestions();
+  const flaggedThisRound = round.queue.filter((q, i) => round.flags[i] && flaggedQuestions[q.id]);
   const totalFlagged = Object.keys(flaggedQuestions).length;
 
   if (!flaggedThisRound.length && !totalFlagged) {
@@ -974,7 +978,9 @@ function renderReviewList() {
     const a = round.answers[i];
     const div = document.createElement("div");
     div.className = `review-item ${!a || a.correct ? "right" : "wrong"}`;
-    const flaggedBadge = round.flags[i] ? ` &middot; &#128681; Flagged for review (${q.id})` : "";
+    const flaggedBadge = round.flags[i] && flaggedQuestions[q.id]
+      ? ` &middot; &#128681; Flagged for review (${q.id})`
+      : "";
     const answerLine = a
       ? `Your answer: ${LETTERS[a.chosenIndex]} &middot; Correct answer: ${LETTERS[q.answerIndex]} &middot; ${a.correct ? "Correct" : "Incorrect"}`
       : `Reviewed item &middot; Correct answer: ${LETTERS[q.answerIndex]}`;
@@ -1045,6 +1051,19 @@ function renderStatsTable() {
     tbody.appendChild(row);
   });
 }
+
+function refreshFlaggedSummary() {
+  flaggedQuestions = loadFlaggedQuestions();
+  if (!document.getElementById("summary").hidden) {
+    renderFlaggedSummary();
+    renderReviewList();
+  }
+}
+
+window.addEventListener("pageshow", refreshFlaggedSummary);
+window.addEventListener("storage", event => {
+  if (event.key === FLAGGED_KEY) refreshFlaggedSummary();
+});
 
 init();
 </script>

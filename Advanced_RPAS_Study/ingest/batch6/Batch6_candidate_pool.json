@@ -1,0 +1,2661 @@
+{
+  "batch": "Batch 6",
+  "description": "Additional Advanced RPAS quiz questions generated 2026-10-01 with weak-topic emphasis.",
+  "categoryTargets": {
+    "theory-of-flight": 5,
+    "visual-observers": 4,
+    "notams": 4,
+    "abnormal": 4,
+    "human-factors": 4,
+    "maintenance": 4,
+    "aircraft-systems": 4,
+    "safety": 4,
+    "aerodromes": 3,
+    "flight-planning": 3,
+    "radio": 3,
+    "airspace": 3,
+    "navigation": 3,
+    "weather": 1,
+    "regulations": 1
+  },
+  "questions": [
+    {
+      "id": "b6-theory-001",
+      "category": "theory-of-flight",
+      "difficulty": "hard",
+      "question": "A multirotor is hovering in gusty wind near the edge of its published wind limit. Which control concern best explains why the pilot should keep a larger safety margin?",
+      "choices": [
+        "A multirotor always becomes more stable as wind increases.",
+        "Only fixed-wing aircraft are affected by gust loading.",
+        "Wind affects video quality but not controllability.",
+        "The flight controller may need increasingly large control and power corrections, leaving less authority for a sudden gust or manoeuvre."
+      ],
+      "answerIndex": 3,
+      "rationale": "TP 15263 theory-of-flight knowledge includes stability, control, and performance limits. Near a published limit, extra control margin matters because disturbances can consume remaining authority quickly.",
+      "source": "TP 15263 Section 7",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "7",
+          "sectionTitle": "Theory of flight",
+          "topic": "Stability and control",
+          "objective": "Explain aircraft stability, control, and performance effects relevant to RPAS operation."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "7",
+      "knowledgeArea": "Theory of flight",
+      "knowledgeTopic": "Control margin near aircraft limits",
+      "learningObjective": "Apply stability and control concepts to decide whether wind conditions leave enough margin for safe RPAS control.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-theory-002",
+      "category": "theory-of-flight",
+      "difficulty": "medium",
+      "question": "A fixed-wing RPA launches with a heavier mapping payload than usual but the same wing and battery. What performance change should the pilot expect?",
+      "choices": [
+        "No change unless the centre of gravity moves outside limits.",
+        "Only radio range changes.",
+        "Higher stall speed and reduced climb/endurance margin compared with the lighter configuration.",
+        "Lower stall speed because weight increases inertia."
+      ],
+      "answerIndex": 2,
+      "rationale": "Increased weight raises the lift required for flight and generally increases stall speed while reducing climb and endurance margins.",
+      "source": "TP 15263 Sections 2 and 7",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "7",
+          "sectionTitle": "Theory of flight",
+          "topic": "Weight, lift and stall speed",
+          "objective": "Describe how weight affects lift requirement and aircraft performance."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-basic-advanced",
+      "examLevel": "basic-advanced",
+      "tp15263Section": "7",
+      "knowledgeArea": "Theory of flight",
+      "knowledgeTopic": "Weight effect on performance",
+      "learningObjective": "Explain how increased operating weight affects stall speed, climb performance, and endurance.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-theory-003",
+      "category": "theory-of-flight",
+      "difficulty": "hard",
+      "question": "A quadcopter is descending vertically into its own disturbed downwash and becomes mushy despite adequate battery power. What aerodynamic issue is most relevant?",
+      "choices": [
+        "The camera gimbal is absorbing lift.",
+        "The aircraft may be operating in recirculating/settling airflow where added power does not immediately restore normal lift.",
+        "The compass has reversed magnetic north.",
+        "A higher descent rate always improves rotor efficiency."
+      ],
+      "answerIndex": 1,
+      "rationale": "Rotorcraft can lose lift effectiveness in disturbed descending airflow. The operational response is to recover with margin rather than relying only on added throttle.",
+      "source": "TP 15263 Section 7",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "7",
+          "sectionTitle": "Theory of flight",
+          "topic": "Rotorcraft lift and airflow",
+          "objective": "Identify rotorcraft aerodynamic conditions that affect control and lift."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-basic-advanced",
+      "examLevel": "basic-advanced",
+      "tp15263Section": "7",
+      "knowledgeArea": "Theory of flight",
+      "knowledgeTopic": "Rotor downwash and descent performance",
+      "learningObjective": "Recognize rotorcraft performance hazards during vertical descent and choose conservative recovery actions.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-theory-004",
+      "category": "theory-of-flight",
+      "difficulty": "medium",
+      "question": "A fixed-wing RPA is trimmed for normal cruise, but the pilot commands a steep bank to turn inside a small survey area. What must the pilot remember about stall margin?",
+      "choices": [
+        "Banking increases load factor, so stall margin can decrease even if airspeed appears acceptable for level flight.",
+        "A banked turn lowers the load factor below one.",
+        "Stall margin is independent of manoeuvring.",
+        "Only multirotors can stall in turns."
+      ],
+      "answerIndex": 0,
+      "rationale": "In a banked turn, the aircraft must produce more lift than in straight-and-level flight. That raises effective stall speed and reduces margin.",
+      "source": "TP 15263 Section 7",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "7",
+          "sectionTitle": "Theory of flight",
+          "topic": "Load factor and stall margin",
+          "objective": "Explain how manoeuvring affects stall speed and control margin."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-basic-advanced",
+      "examLevel": "basic-advanced",
+      "tp15263Section": "7",
+      "knowledgeArea": "Theory of flight",
+      "knowledgeTopic": "Load factor in turns",
+      "learningObjective": "Apply load-factor concepts to fixed-wing RPA turn planning and stall avoidance.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-theory-005",
+      "category": "theory-of-flight",
+      "difficulty": "medium",
+      "question": "A pilot notices the RPA requires noticeably more power to hold altitude on a hot afternoon at a high-elevation site. Which explanation best connects theory of flight to the go/no-go decision?",
+      "choices": [
+        "Warm air always improves propeller thrust.",
+        "Density altitude affects only crewed aircraft altimeters.",
+        "The only concern is battery display brightness.",
+        "Lower air density reduces aerodynamic and propulsion performance, so takeoff, climb, and endurance margins may be reduced."
+      ],
+      "answerIndex": 3,
+      "rationale": "Meteorology and theory of flight intersect in density-altitude effects. Lower density can reduce lift, propeller thrust, cooling, and endurance margin.",
+      "source": "TP 15263 Sections 4 and 7",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Density altitude and aircraft performance",
+          "objective": "Assess density-altitude effects on anticipated launch and flight performance."
+        },
+        {
+          "source": "TP 15263",
+          "section": "7",
+          "sectionTitle": "Theory of flight",
+          "topic": "Lift and propulsion performance",
+          "objective": "Explain performance effects caused by air density changes."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-basic-advanced",
+      "examLevel": "basic-advanced",
+      "tp15263Section": "7",
+      "knowledgeArea": "Theory of flight",
+      "knowledgeTopic": "Density altitude and RPAS performance",
+      "learningObjective": "Relate air density to RPA lift, propulsion, cooling, climb, and endurance performance.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-vo-001",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "During an EVLOS operation, one observer can see the RPA clearly but cannot see the approach path of nearby crewed traffic because of a ridge. What is the key issue?",
+      "choices": [
+        "Seeing the RPA alone is enough for all observer duties.",
+        "The observer can rely entirely on the pilot's screen.",
+        "Terrain shielding improves observer effectiveness.",
+        "The observer must be able to maintain unaided visual awareness of the relevant operating airspace, not merely see the RPA."
+      ],
+      "answerIndex": 3,
+      "rationale": "EVLOS depends on observers supporting traffic and hazard detection. A blocked view of relevant airspace can defeat the purpose of the observer position.",
+      "source": "CAR 901.74; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "CARs",
+          "section": "901.74",
+          "title": "Extended VLOS Operations and Sheltered Operations",
+          "topic": "Unaided visual contact with the RPA and operating airspace."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Visual observer duties",
+          "objective": "Determine suitable visual-observer placement and responsibilities."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "EVLOS observer field of view",
+      "learningObjective": "Assess whether a visual observer position supports unaided monitoring of the operating airspace.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-vo-002",
+      "category": "visual-observers",
+      "difficulty": "medium",
+      "question": "A visual observer reports 'traffic left' but does not identify altitude, direction, or relative movement. What is the best crew coordination improvement?",
+      "choices": [
+        "Avoid traffic calls unless a collision is certain.",
+        "Have the observer speak only after landing.",
+        "Use brief, standardized traffic calls that include relative bearing/location, direction, altitude estimate when possible, and urgency.",
+        "Require the observer to stop scanning and write a full report first."
+      ],
+      "answerIndex": 2,
+      "rationale": "Visual observers support timely collision-avoidance decisions. Standard, concise calls reduce ambiguity and workload.",
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Crew communication and workload",
+          "objective": "Apply effective communication practices in crewed operations."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Visual observer duties",
+          "objective": "Coordinate visual-observer traffic detection with pilot action."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Visual observer traffic calls",
+      "learningObjective": "Use concise crew communication to transfer traffic information quickly and accurately.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-vo-003",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "Two observers cover adjacent segments of an EVLOS route, but neither can see a short transition area between them. What should the pilot conclude before launch?",
+      "choices": [
+        "Coverage gaps are solved by increasing camera zoom.",
+        "The route has a coverage gap that must be corrected or the operation changed before relying on those observers.",
+        "The gap is acceptable if both observers can see the control station.",
+        "Only the launch and landing areas need observer coverage."
+      ],
+      "answerIndex": 1,
+      "rationale": "Observer coverage must support continuous situational awareness for the operating area being used. A known gap is an operational planning defect.",
+      "source": "CAR 901.74; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "CARs",
+          "section": "901.74",
+          "title": "Extended VLOS Operations and Sheltered Operations",
+          "topic": "Conditions for EVLOS operations."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Crew roles and observer placement",
+          "objective": "Plan visual-observer coverage for the operating area."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Observer coverage continuity",
+      "learningObjective": "Identify and correct visual-observer coverage gaps before an EVLOS operation.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-vo-004",
+      "category": "visual-observers",
+      "difficulty": "medium",
+      "question": "A pilot assigns an observer but never briefs the lost-link route, termination area, or abort words. What is the operational weakness?",
+      "choices": [
+        "The observer cannot reliably support timely emergency or contingency decisions without knowing the planned responses and callouts.",
+        "Observers need only know the aircraft colour.",
+        "Emergency plans are relevant only after the flight.",
+        "Lost-link procedures should be kept from observers to reduce distraction."
+      ],
+      "answerIndex": 0,
+      "rationale": "Crew members need shared mental models for normal and abnormal procedures. Briefing observers improves response time when conditions change.",
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Crew coordination",
+          "objective": "Explain how briefing supports shared situational awareness."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Emergency procedures",
+          "objective": "Coordinate crew actions for contingencies and emergencies."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Observer briefing for contingencies",
+      "learningObjective": "Brief visual observers on procedures, hazards, communications, and contingency actions before flight.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-notam-001",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A NOTAM radius is centred on coordinates near the mission site. The planned route is just outside the published radius, but the contingency landing area is inside it. What is the best interpretation?",
+      "choices": [
+        "Ignore it because the planned route is outside the circle.",
+        "Use the NOTAM only if the centre point is inside the launch area.",
+        "Treat all circular NOTAMs as advisory only.",
+        "The NOTAM is still operationally relevant because contingency volumes and emergency options can be affected, not just the nominal route."
+      ],
+      "answerIndex": 3,
+      "rationale": "Pre-flight aeronautical information review should account for the whole operational volume, including contingency areas, not just the ideal track.",
+      "source": "TP 15263 Section 6; TC AIM",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Pre-flight information and site survey",
+          "objective": "Use current aeronautical information for flight planning."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MAP/GEN/RPA",
+          "topic": "NOTAM and aeronautical information use"
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM radius and operational volume",
+      "learningObjective": "Interpret NOTAM geography against planned, contingency, and emergency operating areas.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-notam-002",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A NOTAM lists an obstacle from the surface to 450 ft AGL, while the RPA mission is planned at 380 ft AGL nearby. What should the pilot do with that information?",
+      "choices": [
+        "Assume the obstacle top is exactly at the launch elevation.",
+        "Proceed if the obstacle is not visible from launch.",
+        "Assess the obstacle location, height reference, lateral clearance, and route/contingency margins before deciding whether the mission remains safe.",
+        "Ignore it because the RPA is below 400 ft AGL."
+      ],
+      "answerIndex": 2,
+      "rationale": "Obstacle NOTAMs can affect route selection and contingency planning. The pilot must reconcile height references and margins, not rely on the generic 400 ft limit.",
+      "source": "TP 15263 Sections 5 and 6; TC AIM",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "5",
+          "sectionTitle": "Navigation",
+          "topic": "Altitude and obstacle interpretation",
+          "objective": "Relate altitude references and obstacle data to route planning."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Site survey hazards",
+          "objective": "Identify hazards affecting planned and contingency flight areas."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Obstacle NOTAM interpretation",
+      "learningObjective": "Use obstacle NOTAM data to evaluate route, altitude, and contingency margins.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-notam-003",
+      "category": "notams",
+      "difficulty": "medium",
+      "question": "A NOTAM becomes active halfway through a planned one-hour flight. What is the best planning response?",
+      "choices": [
+        "Ignore activation times for short RPAS flights.",
+        "Plan the operation so it is complete before activation or adjust the route/time; do not assume the start time controls the entire flight.",
+        "Launch before activation and continue normally.",
+        "Use only the NOTAM issue time, not the active time."
+      ],
+      "answerIndex": 1,
+      "rationale": "NOTAM active periods must be compared with the entire mission window, including delays and recovery time.",
+      "source": "TP 15263 Section 6; TC AIM",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Pre-flight planning and aeronautical information",
+          "objective": "Apply time-valid aeronautical information to the planned operation."
+        },
+        {
+          "source": "TC AIM",
+          "topic": "NOTAM validity and active periods"
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM timing",
+      "learningObjective": "Compare NOTAM active times with the full RPAS operation window and adjust plans accordingly.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-notam-004",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A NOTAM describes blasting activity near the operating area with a short daily time window. Why should the pilot avoid treating it as irrelevant just because the aircraft will remain low?",
+      "choices": [
+        "The activity may create airspace, ground-risk, distraction, emergency-response, or exclusion-zone hazards that affect the site survey and timing.",
+        "Low-altitude RPAS operations are never affected by ground activity.",
+        "Blasting NOTAMs apply only above 400 ft.",
+        "Only crewed aircraft need to read activity NOTAMs."
+      ],
+      "answerIndex": 0,
+      "rationale": "NOTAMs may identify hazards that matter to launch/recovery, bystanders, emergency access, or operating-area suitability even when altitude seems low.",
+      "source": "TP 15263 Section 6; TC AIM",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Site survey and operational risk",
+          "objective": "Identify temporary hazards and restrictions before flight."
+        },
+        {
+          "source": "TC AIM",
+          "topic": "NOTAM activity information"
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Activity NOTAM operational relevance",
+      "learningObjective": "Evaluate activity NOTAMs as part of the site survey and go/no-go decision.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-abn-001",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "The RPA loses command link and its programmed return path would cross the edge of controlled airspace. What is the pilot's best immediate priority?",
+      "choices": [
+        "Wait until the battery is depleted before notifying anyone.",
+        "Assume the return path is authorized because it was programmed.",
+        "Cancel the mission log to avoid confusion.",
+        "Follow the lost-link procedure and notify the appropriate ATS unit if the uncontrolled RPA has entered or is likely to enter controlled airspace."
+      ],
+      "answerIndex": 3,
+      "rationale": "CARs require prompt notification when an uncontrolled RPA enters or is likely to enter controlled airspace. Lost-link planning should anticipate that obligation.",
+      "source": "CAR 901.15; TP 15263 Sections 1 and 6",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "CARs",
+          "section": "901.15",
+          "title": "Inadvertent entry into controlled airspace",
+          "topic": "Immediate notification if an uncontrolled RPA enters or is likely to enter controlled airspace."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Emergency procedures",
+          "objective": "Apply lost-link and flyaway procedures."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Lost link near controlled airspace",
+      "learningObjective": "Apply emergency notification obligations when an uncontrolled RPA threatens controlled airspace.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-abn-002",
+      "category": "abnormal",
+      "difficulty": "medium",
+      "question": "A low-battery warning appears earlier than expected because of stronger wind aloft. What is the best decision-making principle?",
+      "choices": [
+        "Climb higher to improve battery voltage.",
+        "Ignore warnings that occur before the planned return point.",
+        "Treat the warning as a changed condition, abandon non-essential mission objectives, and recover with adequate reserve.",
+        "Continue until the planned photo set is complete."
+      ],
+      "answerIndex": 2,
+      "rationale": "Abnormal procedures require conservative decisions when actual energy use differs from the plan. Mission completion is secondary to safe recovery.",
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Decision-making under pressure",
+          "objective": "Recognize plan continuation bias and make conservative decisions."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Abnormal and emergency procedures",
+          "objective": "Apply contingency procedures for degraded aircraft state."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Early low-battery abnormal response",
+      "learningObjective": "Respond to changing endurance margins by prioritizing safe recovery over mission completion.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-abn-003",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "During an automated mapping run, telemetry shows repeated navigation-quality warnings although the aircraft still appears stable on video. What should the pilot do?",
+      "choices": [
+        "Increase distance from the pilot to improve automation.",
+        "Pause or terminate the automated task and regain a safe mode of operation before navigation quality degrades further.",
+        "Rely on the video image and continue the automated run.",
+        "Disable all warnings for the remainder of the flight."
+      ],
+      "answerIndex": 1,
+      "rationale": "Navigation-quality warnings are abnormal cues. Continuing automation without reassessment can allow a recoverable condition to become an emergency.",
+      "source": "TP 15263 Sections 2, 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "sectionTitle": "RPA systems",
+          "topic": "Command, control and navigation system awareness",
+          "objective": "Recognize system indications affecting safe operation."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Abnormal procedures",
+          "objective": "Respond to degraded system status during flight."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Automation warning response",
+      "learningObjective": "Use telemetry and warning cues to interrupt automation and preserve safe control.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-abn-004",
+      "category": "abnormal",
+      "difficulty": "medium",
+      "question": "A designated emergency landing area is occupied by vehicles when a contingency occurs. What does this reveal about the original plan?",
+      "choices": [
+        "Emergency sites must be checked for current suitability and alternates considered because site conditions can change during the operation.",
+        "A listed emergency site is always available once chosen.",
+        "The pilot must continue to the original site regardless of obstacles.",
+        "Emergency areas are needed only for fixed-wing RPA."
+      ],
+      "answerIndex": 0,
+      "rationale": "Contingency planning is dynamic. A site that was suitable during planning may become unusable and must be monitored or backed up.",
+      "source": "TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Contingency and emergency planning",
+          "objective": "Select and maintain suitable contingency and emergency recovery areas."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Emergency landing site currency",
+      "learningObjective": "Maintain current contingency options and adapt when a planned emergency area becomes unsuitable.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-hf-001",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "A pilot feels pressure to finish a paid inspection before rain arrives and starts discounting warning signs from the aircraft. Which human factor is most relevant?",
+      "choices": [
+        "Paid work eliminates the need for conservative judgment.",
+        "Weather pressure improves attention.",
+        "Human factors apply only to crewed aircraft pilots.",
+        "Plan-continuation bias and external pressure can degrade judgment, so the pilot should deliberately reassess against go/no-go criteria."
+      ],
+      "answerIndex": 3,
+      "rationale": "External pressure and sunk-cost thinking can push pilots to continue when conditions no longer meet the plan. Structured reassessment counters that bias.",
+      "source": "TP 15263 Section 3",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Decision-making and hazardous attitudes",
+          "objective": "Identify human factors that affect pilot judgment and risk management."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "3",
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Plan-continuation bias",
+      "learningObjective": "Recognize pressure-driven decision errors and use structured go/no-go criteria.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-hf-002",
+      "category": "human-factors",
+      "difficulty": "medium",
+      "question": "A visual observer has been scanning a bright sky for 25 minutes and begins missing radio calls and traffic cues. What is the best mitigation?",
+      "choices": [
+        "Reduce crew communication to zero.",
+        "Assume fatigue cannot affect short RPAS flights.",
+        "Rotate duties or pause the operation before fatigue and visual scanning performance degrade further.",
+        "Ask the observer to stare continuously at one point."
+      ],
+      "answerIndex": 2,
+      "rationale": "Human performance degrades with fatigue, visual strain, and workload. Crew rotation and pauses preserve detection and communication effectiveness.",
+      "source": "TP 15263 Section 3",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Fatigue, workload and attention",
+          "objective": "Explain how fatigue and workload affect performance and situational awareness."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "3",
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Observer fatigue",
+      "learningObjective": "Apply fatigue and workload management to RPAS crew roles.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-hf-003",
+      "category": "human-factors",
+      "difficulty": "medium",
+      "question": "A pilot focuses on framing the perfect photo and stops monitoring battery, wind drift, and nearby traffic. What human-factor problem is this?",
+      "choices": [
+        "A radio phraseology issue only.",
+        "Attention tunnelling, where one task captures attention at the expense of overall situational awareness.",
+        "Improved situational awareness through specialization.",
+        "A maintenance defect."
+      ],
+      "answerIndex": 1,
+      "rationale": "Attention tunnelling can cause missed cues. RPAS pilots must manage payload tasks while maintaining aircraft and airspace awareness.",
+      "source": "TP 15263 Section 3",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Attention and situational awareness",
+          "objective": "Identify factors that reduce situational awareness and apply mitigations."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "3",
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Attention tunnelling",
+      "learningObjective": "Recognize attention tunnelling and preserve broad situational awareness during payload tasks.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-hf-004",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "A crew uses non-standard terms for abort, hold, land, and traffic calls. Why is this risky during an abnormal event?",
+      "choices": [
+        "Ambiguous callouts increase response time and can cause the pilot and observer to take conflicting actions.",
+        "Non-standard terms are always clearer because they are informal.",
+        "Callouts matter only for radio transmissions to ATS.",
+        "Abnormal events are too rare to brief."
+      ],
+      "answerIndex": 0,
+      "rationale": "Clear shared terminology reduces confusion under stress. Human-factors knowledge includes communication discipline and crew coordination.",
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Communication and crew coordination",
+          "objective": "Describe communication practices that reduce error."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Emergency procedures",
+          "objective": "Coordinate crew actions using briefed procedures."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "3",
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Crew callout discipline",
+      "learningObjective": "Use standardized crew callouts to support timely abnormal and emergency response.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-maint-001",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "After a minor propeller strike, the aircraft powers up normally and the propeller looks acceptable from a distance. What should the pilot do before the next flight?",
+      "choices": [
+        "Fly a short test over people to confirm vibration.",
+        "Ignore the strike if the app shows no error.",
+        "Only wipe the propeller clean.",
+        "Remove the aircraft from service until the propeller, motor, mount, and related structure are inspected according to the manufacturer's instructions."
+      ],
+      "answerIndex": 3,
+      "rationale": "Serviceability is not proven by a normal power-up. Propeller strikes can damage rotating components and structure in ways that affect safe flight.",
+      "source": "TP 15263 Section 2; CARs Part IX",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "sectionTitle": "RPA systems",
+          "topic": "Maintenance and serviceability",
+          "objective": "Identify defects and conditions that make an RPA unfit for flight."
+        },
+        {
+          "source": "CARs",
+          "section": "901.29",
+          "title": "Pre-flight Information",
+          "topic": "Confirm the aircraft is fit for safe operation before flight."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Post-strike serviceability",
+      "learningObjective": "Assess aircraft serviceability after an event that may damage propulsion or structure.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-maint-002",
+      "category": "maintenance",
+      "difficulty": "medium",
+      "question": "A battery pack has slight swelling after charging but still reports normal voltage. What is the best maintenance decision?",
+      "choices": [
+        "Freeze it briefly to reduce swelling.",
+        "Use it only for flights near people.",
+        "Do not use it for flight until it is assessed against manufacturer safety criteria; voltage alone does not prove battery serviceability.",
+        "Use it if the voltage is above 95 percent."
+      ],
+      "answerIndex": 2,
+      "rationale": "Battery condition includes physical state, temperature, history, and manufacturer limits. Swelling is a serviceability concern even with normal voltage.",
+      "source": "TP 15263 Section 2",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "sectionTitle": "RPA systems",
+          "topic": "Power systems and batteries",
+          "objective": "Identify battery conditions that affect safe operation."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Battery physical condition",
+      "learningObjective": "Evaluate battery serviceability using physical condition and manufacturer limits, not voltage alone.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-maint-003",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "A declared RPAS receives a third-party antenna modification before an operation that depends on the aircraft declaration. What must be confirmed?",
+      "choices": [
+        "Only the pilot certificate matters.",
+        "The modified system still meets the applicable technical requirements and any manufacturer or declaration-related modification instructions.",
+        "Any antenna change automatically improves compliance.",
+        "Declarations are never affected by physical modifications."
+      ],
+      "answerIndex": 1,
+      "rationale": "Advanced privileges may depend on the declared aircraft configuration. A modification can affect whether the system remains eligible for the intended operation.",
+      "source": "CAR 901.70; TP 15263 Sections 1 and 2",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "CARs",
+          "section": "901.70",
+          "title": "Operation of a modified remotely piloted aircraft system",
+          "topic": "Modified RPAS must continue to meet applicable technical requirements."
+        },
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "sectionTitle": "RPA systems",
+          "topic": "System configuration and maintenance",
+          "objective": "Assess configuration changes that affect serviceability or compliance."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Modification effect on declaration",
+      "learningObjective": "Confirm whether modifications affect declared RPAS eligibility for the planned operation.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-maint-004",
+      "category": "maintenance",
+      "difficulty": "medium",
+      "question": "A firmware update changes return-to-home behaviour and geofence settings. What should the pilot do before relying on the aircraft for the next operation?",
+      "choices": [
+        "Review release notes/settings and perform appropriate ground or controlled checks so emergency and boundary behaviours are understood.",
+        "Assume all previous settings are unchanged.",
+        "Disable return-to-home because updates are confusing.",
+        "Rely on memory from the previous firmware version."
+      ],
+      "answerIndex": 0,
+      "rationale": "Software changes can alter aircraft behaviour. A serviceable aircraft includes known, correctly configured systems before flight.",
+      "source": "TP 15263 Sections 2 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "sectionTitle": "RPA systems",
+          "topic": "Control systems and configuration",
+          "objective": "Identify system settings that affect operation."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Emergency procedures",
+          "objective": "Confirm programmed emergency behaviours before flight."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Firmware and configuration control",
+      "learningObjective": "Verify system configuration and emergency behaviours after firmware or software changes.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-sys-001",
+      "category": "aircraft-systems",
+      "difficulty": "hard",
+      "question": "An RPA shows intermittent compass disagreement during the site survey near a steel structure. What is the best system-aware response?",
+      "choices": [
+        "Calibrate on top of the steel structure to match local conditions.",
+        "Ignore compass warnings if GPS satellites are available.",
+        "Fly only higher to make the compass immune.",
+        "Relocate or reassess before launch because magnetic interference can affect heading, navigation, and automated flight behaviour."
+      ],
+      "answerIndex": 3,
+      "rationale": "Aircraft-system knowledge includes sensor limitations. Magnetic interference can produce unreliable heading information and degrade automated modes.",
+      "source": "TP 15263 Sections 2 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "sectionTitle": "RPA systems",
+          "topic": "Sensors and navigation systems",
+          "objective": "Identify system limitations and warnings."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Site survey",
+          "objective": "Identify site hazards affecting aircraft systems."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Compass interference",
+      "learningObjective": "Recognize sensor interference and adapt launch/site decisions before flight.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-sys-002",
+      "category": "aircraft-systems",
+      "difficulty": "medium",
+      "question": "The control station tablet overheats and dims in direct sun during pre-flight setup. Why is this more than a comfort issue?",
+      "choices": [
+        "Screen brightness never affects pilot workload.",
+        "Overheating is useful because it warms batteries.",
+        "The display and processing device is part of command/control awareness; overheating can reduce visibility, responsiveness, or reliability.",
+        "The tablet is not part of the RPAS operation."
+      ],
+      "answerIndex": 2,
+      "rationale": "Ground-control equipment supports safe operation. Display readability and device reliability affect command, monitoring, and workload.",
+      "source": "TP 15263 Section 2",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "sectionTitle": "RPA systems",
+          "topic": "Ground control station and command link",
+          "objective": "Describe control station components and limitations that affect safe operation."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Control station reliability",
+      "learningObjective": "Assess ground-control station limitations as part of RPAS system readiness.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-sys-003",
+      "category": "aircraft-systems",
+      "difficulty": "hard",
+      "question": "A mission relies on precise hover beside a building, but GNSS quality fluctuates as the aircraft moves close to the wall. What system limitation is most relevant?",
+      "choices": [
+        "Position hold is independent of sensor quality.",
+        "Satellite signal masking or reflection can degrade position hold, so the pilot should plan extra clearance and be ready for manual control or recovery.",
+        "Buildings always improve satellite accuracy.",
+        "GNSS quality matters only during takeoff."
+      ],
+      "answerIndex": 1,
+      "rationale": "GNSS and sensor limitations affect automated position hold. Structures can mask or reflect signals, increasing drift risk near obstacles.",
+      "source": "TP 15263 Sections 2 and 5",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "sectionTitle": "RPA systems",
+          "topic": "Navigation and positioning systems",
+          "objective": "Identify limitations of navigation sensors."
+        },
+        {
+          "source": "TP 15263",
+          "section": "5",
+          "sectionTitle": "Navigation",
+          "topic": "GNSS use and limitations",
+          "objective": "Apply GNSS limitations to flight planning."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "GNSS degradation near structures",
+      "learningObjective": "Recognize GNSS limitations around structures and plan control margins accordingly.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-sys-004",
+      "category": "aircraft-systems",
+      "difficulty": "medium",
+      "question": "A payload is mounted slightly off-centre on a multirotor. Why should the pilot care even if total weight remains below the limit?",
+      "choices": [
+        "An off-centre payload can shift balance, increase motor workload, and reduce control or endurance margins.",
+        "Only total weight matters; balance cannot affect multirotors.",
+        "Off-centre loads improve redundancy.",
+        "Payload position affects only image composition."
+      ],
+      "answerIndex": 0,
+      "rationale": "Aircraft-system and theory knowledge include weight distribution, balance, propulsion workload, and performance margins.",
+      "source": "TP 15263 Sections 2 and 7",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "sectionTitle": "RPA systems",
+          "topic": "Payload installation and system effects",
+          "objective": "Identify configuration factors affecting aircraft serviceability."
+        },
+        {
+          "source": "TP 15263",
+          "section": "7",
+          "sectionTitle": "Theory of flight",
+          "topic": "Centre of gravity and stability",
+          "objective": "Explain how balance affects control and performance."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Payload balance",
+      "learningObjective": "Assess how payload installation affects balance, propulsion workload, and controllability.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-safety-001",
+      "category": "safety",
+      "difficulty": "hard",
+      "question": "A crewed helicopter appears unexpectedly at low altitude near the site. What is the RPAS pilot's immediate safety priority?",
+      "choices": [
+        "Continue because the RPA is smaller.",
+        "Climb toward the helicopter so it can see the RPA.",
+        "Wait for ATC to resolve the conflict in uncontrolled airspace.",
+        "Give way, increase separation, and land or manoeuvre as necessary without creating a new ground hazard."
+      ],
+      "answerIndex": 3,
+      "rationale": "RPAS pilots must avoid creating collision hazards and give way to other aircraft while still considering ground risk during avoidance.",
+      "source": "CAR 901.18; TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "CARs",
+          "section": "901.18",
+          "title": "Right of Way",
+          "topic": "Give way to crewed aircraft."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Collision avoidance",
+          "objective": "Maintain separation from other aircraft and hazards."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Right-of-way and collision avoidance",
+      "learningObjective": "Apply right-of-way and collision-avoidance principles while managing ground risk.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-safety-002",
+      "category": "safety",
+      "difficulty": "medium",
+      "question": "A member of the public walks toward the landing zone during final approach. What should the crew do?",
+      "choices": [
+        "Ask the bystander to move after touchdown.",
+        "Descend faster to finish before they arrive.",
+        "Abort or hold if safe, re-establish site control, and land only when the area is clear or use a safer alternate.",
+        "Continue landing because final approach has priority."
+      ],
+      "answerIndex": 2,
+      "rationale": "Site control is dynamic. The crew must prevent bystander exposure during landing and use briefed alternatives when the area becomes unsafe.",
+      "source": "TP 15263 Section 6; CARs Part IX",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Site control and bystander safety",
+          "objective": "Manage launch and recovery areas to protect people."
+        },
+        {
+          "source": "CARs",
+          "section": "901.28",
+          "title": "Minimum Distance",
+          "topic": "Operate at required distances from people unless authorized conditions are met."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Landing zone site control",
+      "learningObjective": "Maintain public safety and site control during launch and recovery.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-safety-003",
+      "category": "safety",
+      "difficulty": "hard",
+      "question": "An evasive manoeuvre would avoid airborne traffic but send the RPA toward a crowd. What should guide the pilot's decision?",
+      "choices": [
+        "The pilot should freeze controls until the conflict passes.",
+        "Choose the safest available action considering both air and ground risk, including landing or moving to a pre-briefed safer area if possible.",
+        "Air risk always overrides ground risk regardless of consequence.",
+        "Ground risk always overrides air risk regardless of collision potential."
+      ],
+      "answerIndex": 1,
+      "rationale": "Collision avoidance decisions must balance risks to aircraft and people on the ground. Pre-briefed contingency options help avoid forced improvisation.",
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Decision-making under stress",
+          "objective": "Make timely decisions under competing risks."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Collision avoidance and emergency procedures",
+          "objective": "Manage air and ground risk during conflicts."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Balancing air and ground risk",
+      "learningObjective": "Make collision-avoidance decisions that consider both airborne and ground hazards.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-safety-004",
+      "category": "safety",
+      "difficulty": "medium",
+      "question": "A pilot plans to fly over a roadway because no pedestrians are present. What additional safety issue should be considered?",
+      "choices": [
+        "The RPA could distract drivers or fail into moving traffic, so roadway exposure must be included in the risk controls.",
+        "Roadways matter only when pedestrians are standing on them.",
+        "Vehicles are not people, so there is no safety concern.",
+        "A roadway automatically counts as a controlled site."
+      ],
+      "answerIndex": 0,
+      "rationale": "Public safety includes indirect hazards, including distraction, crash consequences, and emergency access around vehicles.",
+      "source": "TP 15263 Section 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Site survey and public safety",
+          "objective": "Identify hazards to people, property, and other users near the operating area."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Roadway indirect risk",
+      "learningObjective": "Include moving vehicles and indirect public hazards in site-risk assessment.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-aero-001",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "An uncontrolled aerodrome near the site has no traffic when the pilot arrives, but a NOTAM shows parachute activity later in the day. What should the pilot do?",
+      "choices": [
+        "Use only the traffic observed on arrival.",
+        "Ignore parachute activity below 400 ft.",
+        "Assume uncontrolled aerodromes cannot have time-sensitive hazards.",
+        "Account for the full mission window and delay/re-route/cancel if the activity could affect the operation or contingency area."
+      ],
+      "answerIndex": 3,
+      "rationale": "Aerodrome risk assessment includes current aeronautical information and the whole operating window, not just observed traffic at setup.",
+      "source": "TP 15263 Section 6; TC AIM",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Aerodrome proximity and site survey",
+          "objective": "Assess aerodrome hazards before and during operations."
+        },
+        {
+          "source": "TC AIM",
+          "topic": "Aerodrome operations and activity information"
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Aerodrome activity timing",
+      "learningObjective": "Incorporate aerodrome activity and timing into site survey decisions.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-aero-002",
+      "category": "aerodromes",
+      "difficulty": "medium",
+      "question": "A heliport is several kilometres away, but its published approach path crosses near the planned survey site. Why does that matter?",
+      "choices": [
+        "Helicopters always remain above RPAS altitudes.",
+        "Published approach paths are irrelevant to site surveys.",
+        "Aircraft may be low on approach or departure along that path, so lateral distance to the heliport alone may understate the conflict risk.",
+        "Only the heliport centre point matters."
+      ],
+      "answerIndex": 2,
+      "rationale": "Aerodrome/heliport assessment should consider traffic flows and approach/departure paths, not just distance to a reference point.",
+      "source": "TP 15263 Section 6; TC AIM",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Site survey near aerodromes/heliports",
+          "objective": "Assess nearby aircraft routes and traffic patterns."
+        },
+        {
+          "source": "TC AIM",
+          "topic": "Heliport and aerodrome traffic considerations"
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Heliport approach path risk",
+      "learningObjective": "Evaluate nearby heliport traffic patterns and approach/departure paths during site survey.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-aero-003",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "The CFS indicates an MF area near the planned operation, but the pilot has no radio capability. What is the conservative planning response?",
+      "choices": [
+        "Assume listening is unnecessary if no aircraft are visible.",
+        "Assess whether the operation can be conducted safely without transmitting, use other coordination methods where appropriate, or choose another time/location.",
+        "Transmit anyway without the required operator qualification.",
+        "Ignore the MF because RPAS are small."
+      ],
+      "answerIndex": 1,
+      "rationale": "MF procedures and radio capability affect situational awareness and coordination. Lack of radio capability must be managed conservatively in planning.",
+      "source": "TP 15263 Sections 6 and 8; TC AIM",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full",
+        "ref-roc-a-study-guide"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Aerodrome and traffic awareness",
+          "objective": "Assess communication needs near aerodromes."
+        },
+        {
+          "source": "TP 15263",
+          "section": "8",
+          "sectionTitle": "Radiotelephony",
+          "topic": "Communication requirements",
+          "objective": "Understand radio use and operator requirements."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "MF area without radio capability",
+      "learningObjective": "Plan safe operations near MF areas when radio capability or qualification is limited.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-fp-001",
+      "category": "flight-planning",
+      "difficulty": "hard",
+      "question": "A site survey was completed two weeks ago, but construction fencing now changes public access and emergency landing options. What should happen before launch?",
+      "choices": [
+        "Use the earlier survey because it was documented.",
+        "Proceed if the aircraft route itself is unchanged.",
+        "Treat fencing as a privacy issue only.",
+        "Update the site survey and risk controls using current conditions before deciding whether the operation can proceed."
+      ],
+      "answerIndex": 3,
+      "rationale": "Site surveys must reflect current conditions. Changed access, bystander flow, and emergency options can alter the go/no-go decision.",
+      "source": "TP 15263 Section 6; CARs Part IX",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Site survey",
+          "objective": "Assess current operating-area hazards and mitigations."
+        },
+        {
+          "source": "CARs",
+          "section": "901.27",
+          "title": "Site Survey",
+          "topic": "Conduct a site survey before operation."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Site survey currency",
+      "learningObjective": "Update site surveys when conditions affecting hazards or mitigations change.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-fp-002",
+      "category": "flight-planning",
+      "difficulty": "medium",
+      "question": "A pilot calculates endurance using calm-wind groundspeed, but the forecast shows a headwind on the return leg. What planning error is present?",
+      "choices": [
+        "Return-leg wind is irrelevant if launch wind is calm.",
+        "Battery percentage automatically corrects the flight plan.",
+        "The endurance plan ignores wind effect on groundspeed and may overestimate the energy available for safe return.",
+        "Headwind affects only fixed-wing aircraft."
+      ],
+      "answerIndex": 2,
+      "rationale": "Flight planning must account for wind effects on groundspeed, time, and energy margins, especially for the recovery leg.",
+      "source": "TP 15263 Sections 4, 5 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Wind effects",
+          "objective": "Assess wind impact on operation."
+        },
+        {
+          "source": "TP 15263",
+          "section": "5",
+          "sectionTitle": "Navigation",
+          "topic": "Groundspeed and track",
+          "objective": "Relate wind to groundspeed and navigation planning."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Flight planning",
+          "objective": "Plan endurance and reserves for the full operation."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Wind and endurance planning",
+      "learningObjective": "Include wind effects in endurance, route, and recovery planning.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-fp-003",
+      "category": "flight-planning",
+      "difficulty": "hard",
+      "question": "A mission has a narrow landing zone bordered by spectators on one side and trees on the other. What should the flight plan include before launch?",
+      "choices": [
+        "No alternate if the pilot is experienced.",
+        "Defined abort criteria, site-control measures, and an alternate recovery option if the primary landing area becomes unsafe.",
+        "Only the camera shot list.",
+        "A plan to descend faster through the narrow area."
+      ],
+      "answerIndex": 1,
+      "rationale": "Flight planning should identify hazards, controls, abort points, and contingency recovery options before the operation begins.",
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Decision-making and risk management",
+          "objective": "Use pre-set criteria to support decisions."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Launch, recovery and contingency planning",
+          "objective": "Plan safe recovery and abort options."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Launch/recovery contingency planning",
+      "learningObjective": "Build abort criteria and alternate recovery options into the pre-flight plan.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-radio-001",
+      "category": "radio",
+      "difficulty": "medium",
+      "question": "Before transmitting on an aerodrome frequency, what should an RPAS crew member do first?",
+      "choices": [
+        "Transmit immediately to claim priority.",
+        "Use the frequency for crew chatter first.",
+        "Assume silence means the radio is broken.",
+        "Listen long enough to understand current traffic and avoid blocking or stepping on other transmissions."
+      ],
+      "answerIndex": 3,
+      "rationale": "Good radio practice starts with listening, then transmitting concise relevant information using standard phraseology.",
+      "source": "TP 15263 Section 8; NAV CANADA VFR Phraseology",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-vfr-phraseology"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "8",
+          "sectionTitle": "Radiotelephony",
+          "topic": "Radio etiquette",
+          "objective": "Give examples of practices that avoid interfering with communications."
+        },
+        {
+          "source": "NAV CANADA",
+          "title": "VFR Phraseology Guide",
+          "topic": "Concise radio communications"
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "8",
+      "knowledgeArea": "Radiotelephony",
+      "knowledgeTopic": "Listen before transmitting",
+      "learningObjective": "Use proper radio etiquette to avoid interfering with other communications.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-radio-002",
+      "category": "radio",
+      "difficulty": "hard",
+      "question": "A pilot receives an ATC instruction that conflicts with the requested RPAS altitude block. What is the correct operational response?",
+      "choices": [
+        "Ignore ATC once airborne below 400 ft.",
+        "Proceed and explain after landing.",
+        "Comply with the ATC instruction or obtain clarification/amendment before operating outside the cleared conditions.",
+        "Use the originally requested altitude because it was in the application."
+      ],
+      "answerIndex": 2,
+      "rationale": "Controlled-airspace authorization is conditional, and pilots must comply with ATC instructions or clarify before deviating.",
+      "source": "CAR 901.72; TP 15263 Sections 1 and 8",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "CARs",
+          "section": "901.72",
+          "title": "Compliance with air traffic control instructions",
+          "topic": "Comply with ATC instructions."
+        },
+        {
+          "source": "TP 15263",
+          "section": "8",
+          "sectionTitle": "Radiotelephony",
+          "topic": "ATC communications",
+          "objective": "Use clear communications with ATS."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "8",
+      "knowledgeArea": "Radiotelephony",
+      "knowledgeTopic": "ATC instruction compliance",
+      "learningObjective": "Apply ATC instruction and readback/clarification principles to RPAS operations.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-radio-003",
+      "category": "radio",
+      "difficulty": "medium",
+      "question": "An RPAS crew plans to monitor a frequency for situational awareness but not transmit. What should still be briefed?",
+      "choices": [
+        "A plan to transmit without a certificate if busy.",
+        "Who monitors, what traffic information matters, and how relevant information will be relayed to the pilot without distracting from aircraft control.",
+        "Nothing, because receiving is passive.",
+        "Only the radio volume setting."
+      ],
+      "answerIndex": 1,
+      "rationale": "Monitoring can improve awareness only if the crew knows what to listen for and how to communicate it effectively.",
+      "source": "TP 15263 Sections 3, 6 and 8",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Workload and communication",
+          "objective": "Manage information flow within the crew."
+        },
+        {
+          "source": "TP 15263",
+          "section": "8",
+          "sectionTitle": "Radiotelephony",
+          "topic": "Common frequencies and monitoring",
+          "objective": "Understand operational use of aviation frequencies."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "8",
+      "knowledgeArea": "Radiotelephony",
+      "knowledgeTopic": "Radio monitoring crew briefing",
+      "learningObjective": "Integrate radio monitoring into crew coordination and workload management.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-air-001",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "A CYA area is published as advisory airspace along the planned route. What should the RPAS pilot do before deciding it is acceptable to enter?",
+      "choices": [
+        "Treat all CYA areas as prohibited.",
+        "Ignore advisory airspace because it is never active.",
+        "Enter if below 400 ft without reviewing details.",
+        "Check the current status, activity type, times, altitudes, and risk to the operation, then apply mitigations or avoid it if necessary."
+      ],
+      "answerIndex": 3,
+      "rationale": "Class F advisory areas identify activities that can affect safety. The pilot should review DAH/NOTAM details and assess the specific risk.",
+      "source": "TP 15263 Section 1; DAH; TC AIM",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Airspace classification and restrictions",
+          "objective": "Interpret airspace that affects RPAS operations."
+        },
+        {
+          "source": "NAV CANADA DAH",
+          "topic": "Class F CYA/CYD/CYR details"
+        },
+        {
+          "source": "TC AIM",
+          "topic": "Class F airspace"
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Class F advisory airspace",
+      "learningObjective": "Interpret Class F advisory airspace and decide whether mitigations or avoidance are required.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-air-002",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "The planned launch point is outside controlled airspace, but wind drift or lost-link return could carry the RPA across the boundary. What should planning address?",
+      "choices": [
+        "Wind drift cannot create an airspace issue below 400 ft.",
+        "Boundaries matter only to crewed aircraft.",
+        "The pilot must account for the entire operating and contingency volume, including the possibility of inadvertent entry and required notification.",
+        "Only the launch point determines airspace requirements."
+      ],
+      "answerIndex": 2,
+      "rationale": "Airspace assessment should cover the planned and reasonably foreseeable contingency volume, not just where the aircraft takes off.",
+      "source": "CAR 901.15; TP 15263 Sections 1 and 6",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "CARs",
+          "section": "901.15",
+          "title": "Inadvertent entry into controlled airspace",
+          "topic": "Notify if an uncontrolled RPA enters or is likely to enter controlled airspace."
+        },
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Controlled airspace",
+          "objective": "Apply controlled-airspace rules to RPAS operations."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Airspace boundary margin",
+      "learningObjective": "Plan lateral and contingency margins near controlled-airspace boundaries.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-air-003",
+      "category": "airspace",
+      "difficulty": "medium",
+      "question": "A CYR restricted area is nearby but appears inactive on a planning app. What should the pilot do before relying on that display?",
+      "choices": [
+        "Use last year's printed screenshot.",
+        "Confirm the restriction details and current status using official aeronautical information such as the DAH and NOTAMs.",
+        "Trust the app because all apps are official sources.",
+        "Ignore CYR areas if the aircraft remains below tree height."
+      ],
+      "answerIndex": 1,
+      "rationale": "Unofficial planning tools can be helpful, but restrictions must be checked against authoritative current sources.",
+      "source": "TP 15263 Sections 1 and 6; DAH",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Airspace restrictions",
+          "objective": "Identify restricted airspace and required authorizations."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Pre-flight information",
+          "objective": "Validate current aeronautical information before flight."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Restricted airspace source validation",
+      "learningObjective": "Validate airspace status using authoritative publications rather than relying solely on third-party displays.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-nav-001",
+      "category": "navigation",
+      "difficulty": "hard",
+      "question": "A coordinate is supplied in degrees and decimal minutes, but the flight app is set to decimal degrees. What is the main risk?",
+      "choices": [
+        "Coordinate format changes only the label, not the location.",
+        "The app will always infer the intended format.",
+        "The error affects only map colour.",
+        "Entering the coordinate without converting format can place the operation in the wrong location, possibly affecting airspace, aerodrome, or bystander risk."
+      ],
+      "answerIndex": 3,
+      "rationale": "Navigation errors can move the planned site significantly. Pilots must verify coordinate format and plotted location before flight.",
+      "source": "TP 15263 Section 5",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "5",
+          "sectionTitle": "Navigation",
+          "topic": "Latitude/longitude and coordinate formats",
+          "objective": "Use coordinate formats correctly for flight planning."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-basic-advanced",
+      "examLevel": "basic-advanced",
+      "tp15263Section": "5",
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Coordinate format conversion",
+      "learningObjective": "Convert and verify coordinates using the correct format before operational use.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-nav-002",
+      "category": "navigation",
+      "difficulty": "medium",
+      "question": "A route is planned at a constant altitude above sea level across rising terrain. What must the pilot verify?",
+      "choices": [
+        "Terrain matters only at launch.",
+        "Rising terrain improves clearance.",
+        "That the RPA remains within required AGL limits and maintains obstacle/terrain clearance along the entire route.",
+        "ASL altitude automatically keeps AGL constant."
+      ],
+      "answerIndex": 2,
+      "rationale": "AGL changes as terrain elevation changes. RPAS pilots must reconcile ASL/AGL and obstacle clearance throughout the route.",
+      "source": "TP 15263 Section 5; CARs Part IX",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "5",
+          "sectionTitle": "Navigation",
+          "topic": "Altitude references",
+          "objective": "Calculate and interpret altitude references for flight planning."
+        },
+        {
+          "source": "CARs",
+          "section": "901.27",
+          "title": "Maximum Altitude",
+          "topic": "Comply with altitude limits unless an exception or authorization applies."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-basic-advanced",
+      "examLevel": "basic-advanced",
+      "tp15263Section": "5",
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "ASL versus AGL over terrain",
+      "learningObjective": "Relate ASL, AGL, terrain elevation, and operating limits during route planning.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-nav-003",
+      "category": "navigation",
+      "difficulty": "hard",
+      "question": "A pilot uses an old screenshot of a VNC to identify nearby obstacles and airspace. What is the best concern?",
+      "choices": [
+        "A VNC screenshot is better than current NOTAMs.",
+        "The screenshot may be out of date, incomplete, or missing current aeronautical information, so current official sources must be checked.",
+        "Screenshots are valid indefinitely once saved.",
+        "Only weather products expire."
+      ],
+      "answerIndex": 1,
+      "rationale": "Publication currency is part of navigation and pre-flight planning. Old static data can miss new obstacles, changed airspace, or temporary restrictions.",
+      "source": "TP 15263 Sections 5 and 6",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "5",
+          "sectionTitle": "Navigation",
+          "topic": "Aeronautical publications and chart validity",
+          "objective": "Determine validity of aeronautical publications."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Pre-flight information",
+          "objective": "Use current information before flight."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-basic-advanced",
+      "examLevel": "basic-advanced",
+      "tp15263Section": "5",
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Publication currency",
+      "learningObjective": "Verify currency and completeness of aeronautical publications used for navigation planning.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-weather-001",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A TAF remains acceptable, but successive METARs show visibility and ceiling trending down faster than forecast. What should the pilot do?",
+      "choices": [
+        "Use only the TAF because forecasts overrule observations.",
+        "Continue if the first METAR was acceptable.",
+        "Ignore ceiling trends for RPAS below 400 ft.",
+        "Treat the observed trend as a warning, reassess against operating minima and recovery options, and delay/cancel if margins are no longer adequate."
+      ],
+      "answerIndex": 3,
+      "rationale": "Weather planning should compare forecasts with actual trends. Deteriorating observations may remove safe margins before the nominal forecast changes.",
+      "source": "TP 15263 Section 4; TC AIM MET",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Weather reports and forecasts",
+          "objective": "Interpret weather information and trends for flight planning."
+        },
+        {
+          "source": "TC AIM MET",
+          "topic": "METAR/TAF interpretation and weather trends"
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-basic-advanced",
+      "examLevel": "basic-advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Observed weather trend conflict",
+      "learningObjective": "Reconcile forecast and observed weather trends for conservative go/no-go decisions.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-reg-001",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "An Advanced pilot wants to fly closer to people using an RPA that is registered but not declared for the intended reduced-distance operation. What is the key regulatory problem?",
+      "choices": [
+        "Registration alone gives all Advanced privileges.",
+        "The rule applies only at night.",
+        "A Basic certificate would allow closer operation.",
+        "The pilot certificate alone is not enough; the aircraft must also meet the applicable declaration/technical requirements for the operation."
+      ],
+      "answerIndex": 3,
+      "rationale": "Advanced operations near people can depend on both pilot qualification and the RPAS meeting applicable technical/declaration requirements.",
+      "source": "CARs 901.69-901.70; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "CARs",
+          "section": "901.69",
+          "title": "Manufacturer Declaration",
+          "topic": "RPAS declaration for certain Advanced operations."
+        },
+        {
+          "source": "CARs",
+          "section": "901.70",
+          "title": "Operation of a modified remotely piloted aircraft system",
+          "topic": "Declared system must remain compliant when modified."
+        },
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Advanced operations requirements",
+          "objective": "Apply certificate and aircraft requirements to Advanced operations."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Pilot privilege versus aircraft eligibility",
+      "learningObjective": "Distinguish pilot certification from RPAS declaration requirements for Advanced operations.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-theory-006",
+      "category": "theory-of-flight",
+      "difficulty": "medium",
+      "question": "A fixed-wing RPA is launched downwind from a short area because it is convenient for camera framing. What basic performance issue is being ignored?",
+      "choices": [
+        "Wind direction affects only landing, not launch.",
+        "Camera framing determines aircraft performance.",
+        "Downwind launch increases groundspeed needed over the surface and can reduce practical takeoff/climb margin in the available area.",
+        "Downwind launch always shortens takeoff distance."
+      ],
+      "answerIndex": 2,
+      "rationale": "Wind direction changes the relationship between airspeed and groundspeed. Launch/recovery direction affects practical performance margins.",
+      "source": "TP 15263 Sections 4 and 7",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "7",
+          "sectionTitle": "Theory of flight",
+          "topic": "Airspeed, groundspeed and performance",
+          "objective": "Explain wind effects on aircraft performance."
+        },
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Wind",
+          "objective": "Assess wind direction and speed for operations."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-basic-advanced",
+      "examLevel": "basic-advanced",
+      "tp15263Section": "7",
+      "knowledgeArea": "Theory of flight",
+      "knowledgeTopic": "Wind direction and launch performance",
+      "learningObjective": "Apply wind and airspeed/groundspeed concepts to launch and recovery planning.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-vo-005",
+      "category": "visual-observers",
+      "difficulty": "medium",
+      "question": "An observer is positioned where they can hear the pilot but must look into low sun for most of the operation. What should be changed?",
+      "choices": [
+        "Keep the position because voice contact is enough.",
+        "Tell the observer to scan only the ground.",
+        "Use sunglasses as the only possible mitigation regardless of effectiveness.",
+        "Reposition, shade, rotate, or reschedule so the observer can effectively scan the operating airspace."
+      ],
+      "answerIndex": 3,
+      "rationale": "Observer placement must support actual visual detection. Low sun can reduce detection performance and should be mitigated in planning.",
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Vision and scanning limitations",
+          "objective": "Explain visual limitations affecting detection."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Visual observer duties",
+          "objective": "Place observers to support traffic and hazard detection."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Observer placement and sun angle",
+      "learningObjective": "Select observer positions that support effective visual scanning.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-notam-005",
+      "category": "notams",
+      "difficulty": "medium",
+      "question": "A NOTAM is cancelled shortly before launch, but another NOTAM for the same area remains active with different times. What should the pilot do?",
+      "choices": [
+        "Assume all hazards are cancelled.",
+        "Use the cancelled NOTAM because it was printed first.",
+        "Proceed without checking the remaining active notice.",
+        "Review the complete current NOTAM set and base the decision on all active notices, not the cancellation of one notice."
+      ],
+      "answerIndex": 3,
+      "rationale": "A cancellation affects only that notice. The pilot must review the complete current briefing to avoid missing overlapping or replacement NOTAMs.",
+      "source": "TP 15263 Section 6; TC AIM",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Pre-flight information",
+          "objective": "Use current aeronautical information before flight."
+        },
+        {
+          "source": "TC AIM",
+          "topic": "NOTAM status and validity"
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM cancellation and replacement",
+      "learningObjective": "Review current NOTAMs as a set and identify active notices affecting the operation.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-abn-005",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "A return-to-home function starts climbing toward a height that would enter an overlying controlled-airspace shelf. What should the pilot have verified before flight?",
+      "choices": [
+        "Only the normal mission altitude matters.",
+        "Return-to-home altitude is always legal if factory-set.",
+        "Controlled airspace cannot be affected by automated emergency functions.",
+        "The programmed emergency altitude and route were compatible with airspace, obstacles, and the authorized operating volume."
+      ],
+      "answerIndex": 3,
+      "rationale": "Emergency automation can leave the planned operating envelope if not configured. Pre-flight checks should include programmed contingency behaviour.",
+      "source": "TP 15263 Sections 2 and 6; CARs Part IX",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "sectionTitle": "RPA systems",
+          "topic": "Automated functions and settings",
+          "objective": "Understand automated system behaviours."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Emergency procedures",
+          "objective": "Configure and brief emergency procedures before flight."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Emergency automation configuration",
+      "learningObjective": "Verify automated emergency settings against airspace and obstacle constraints.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-safety-005",
+      "category": "safety",
+      "difficulty": "hard",
+      "question": "A cordon keeps bystanders out of the launch area, but no one monitors a side entrance. What is the weakness in the control?",
+      "choices": [
+        "A cordon works once announced.",
+        "Side entrances are irrelevant if the pilot is focused.",
+        "Bystander controls apply only during takeoff.",
+        "An unmonitored access point can defeat the cordon, so site control needs active monitoring or a physical/control redesign."
+      ],
+      "answerIndex": 3,
+      "rationale": "Risk controls must be effective in practice. A cordon without monitoring can fail when bystanders enter unexpectedly.",
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Risk controls and monitoring",
+          "objective": "Assess whether mitigations remain effective."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Site control",
+          "objective": "Maintain control of the operating area."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Cordon effectiveness",
+      "learningObjective": "Evaluate whether public-safety controls are actively maintained during the operation.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-air-004",
+      "category": "airspace",
+      "difficulty": "medium",
+      "question": "A planned operation is below 400 ft AGL but inside Class C control zone boundaries. What is the key requirement?",
+      "choices": [
+        "The pilot must have the required airspace authorization/instructions for that specific controlled-airspace operation.",
+        "The 400 ft limit alone permits the flight.",
+        "Class C boundaries apply only above circuit altitude.",
+        "Authorization is optional if the RPA weighs under 25 kg."
+      ],
+      "answerIndex": 0,
+      "rationale": "Altitude below 400 ft does not remove controlled-airspace requirements. Advanced operations in controlled airspace require authorization and compliance.",
+      "source": "CAR 901.71; CAR 901.72; TP 15263 Section 1",
+      "sourceRefs": [
+        "ref-justice-cars",
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "CARs",
+          "section": "901.71",
+          "title": "Operations in Controlled Airspace",
+          "topic": "Authorization required for controlled-airspace RPAS operation."
+        },
+        {
+          "source": "CARs",
+          "section": "901.72",
+          "title": "Compliance with air traffic control instructions",
+          "topic": "Comply with ATC instructions."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Controlled airspace below 400 ft",
+      "learningObjective": "Apply controlled-airspace authorization requirements to RPAS operations below 400 ft.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-maint-005",
+      "category": "maintenance",
+      "difficulty": "medium",
+      "question": "A maintenance log shows repeated motor-temperature warnings on previous flights, but no current warning appears during setup. What should the pilot do?",
+      "choices": [
+        "Ignore old warnings if today's app screen is clear.",
+        "Delete the log to avoid confusion.",
+        "Fly until the warning becomes permanent.",
+        "Investigate the recurring trend before flight because repeated warnings can indicate an unresolved serviceability issue."
+      ],
+      "answerIndex": 3,
+      "rationale": "Maintenance and records help identify trends. Recurring warnings can indicate a defect even if the current pre-flight status looks normal.",
+      "source": "TP 15263 Section 2; CARs Part IX",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "sectionTitle": "RPA systems",
+          "topic": "Maintenance and defects",
+          "objective": "Identify recurring defects and serviceability concerns."
+        },
+        {
+          "source": "CARs",
+          "section": "901.48",
+          "title": "Records",
+          "topic": "Maintain records relevant to the RPAS and operations."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Recurring defect trends",
+      "learningObjective": "Use records and prior warnings to assess continuing serviceability.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-sys-005",
+      "category": "aircraft-systems",
+      "difficulty": "medium",
+      "question": "A pilot changes camera payloads and the aircraft now takes longer to stop from forward flight. What system/performance issue should be considered?",
+      "choices": [
+        "Payloads affect only image quality.",
+        "Forward stopping distance is fixed by regulation.",
+        "Drag decreases whenever payload weight increases.",
+        "Changed mass and drag can alter braking distance, control response, and obstacle-clearance margins."
+      ],
+      "answerIndex": 3,
+      "rationale": "Payload changes can affect inertia, drag, balance, and control response. Obstacle and buffer margins should reflect the configured aircraft.",
+      "source": "TP 15263 Sections 2 and 7",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "sectionTitle": "RPA systems",
+          "topic": "Payload configuration",
+          "objective": "Identify payload effects on aircraft operation."
+        },
+        {
+          "source": "TP 15263",
+          "section": "7",
+          "sectionTitle": "Theory of flight",
+          "topic": "Performance and control response",
+          "objective": "Explain performance effects caused by configuration changes."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Payload effects on response",
+      "learningObjective": "Assess how payload changes affect response, stopping distance, and flight margins.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    },
+    {
+      "id": "b6-fp-004",
+      "category": "flight-planning",
+      "difficulty": "medium",
+      "question": "A flight plan relies on one observer, one radio monitor, and one payload operator, but all roles are assigned to the pilot. What is the planning problem?",
+      "choices": [
+        "The workload is unrealistic; critical monitoring and decision tasks should be assigned so the pilot can maintain safe control.",
+        "More roles assigned to the pilot always improves accountability.",
+        "Payload work is the same as airspace monitoring.",
+        "Crew role planning is optional in Advanced operations."
+      ],
+      "answerIndex": 0,
+      "rationale": "Human factors and flight planning require realistic workload management. Overloading the pilot can reduce control and situational awareness.",
+      "source": "TP 15263 Sections 3 and 6",
+      "sourceRefs": [
+        "ref-tp-15263"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "sectionTitle": "Human factors",
+          "topic": "Workload management",
+          "objective": "Recognize and manage workload."
+        },
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "Crew roles and responsibilities",
+          "objective": "Plan roles for safe operation."
+        }
+      ],
+      "lastVerified": "2026-10-01",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Crew role workload planning",
+      "learningObjective": "Allocate crew duties to preserve pilot control and situational awareness.",
+      "origin": {
+        "type": "batch6-generated",
+        "batch": "Batch 6",
+        "request": "Generate 50 Additional Questions for our Adv Drone Quiz"
+      }
+    }
+  ]
+}

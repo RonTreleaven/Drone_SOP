@@ -31,13 +31,21 @@
     .paragraph { margin-left:2.2rem; }
     .subparagraph { margin-left:3.2rem; }
     .clause { margin-left:4.2rem; }
+    main > h1[id], main > h2[id], main > h3[id], main > h4[id] { scroll-margin-top:110px; }
     .lookup { position:sticky; top:0; z-index:10; display:flex; gap:8px; align-items:center; margin:20px 0 24px; padding:12px; background:rgba(255,255,255,.94); border:1px solid var(--line); border-radius:10px; box-shadow:0 4px 14px rgba(23,32,51,.08); }
     .lookup input { flex:1; min-width:0; font:inherit; padding:9px 10px; border:1px solid var(--line); border-radius:6px; }
     .lookup button { font:inherit; padding:9px 14px; border:1px solid #005ea8; border-radius:6px; color:#fff; background:#005ea8; cursor:pointer; }
     .lookup button:focus, .lookup input:focus { outline:3px solid rgba(0,94,168,0.22); outline-offset:1px; }
     .lookup-status { margin:0; color:var(--muted); font-size:0.9rem; }
-    .section-anchor.target-highlight { background:#fff5c2; outline:2px solid #e0aa00; outline-offset:4px; }
-    .section-anchor.text-match { background:#eef7ff; outline:2px solid #74b7e8; outline-offset:4px; }
+    .contents { margin:0 0 24px; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.94); box-shadow:0 4px 14px rgba(23,32,51,.06); }
+    .contents summary { padding:11px 14px; color:var(--head); font-weight:700; cursor:pointer; }
+    .contents nav { max-height:55vh; overflow:auto; padding:0 14px 14px; }
+    .contents ol { margin:0; padding-left:1.2rem; list-style:none; }
+    .contents li { margin:0.2rem 0; }
+    .contents li.toc-part > a, .contents li.toc-subpart > a, .contents li.toc-division > a { font-weight:700; }
+    .contents li.toc-division { margin-top:0.35rem; }
+    .target-highlight { background:#fff5c2; outline:2px solid #e0aa00; outline-offset:4px; }
+    .text-match { background:#eef7ff; outline:2px solid #74b7e8; outline-offset:4px; }
     .search-results { margin:-12px 0 24px; padding:12px; border:1px solid var(--line); border-radius:8px; background:var(--panel); box-shadow:0 4px 14px rgba(23,32,51,.05); }
     .search-results[hidden] { display:none; }
     .search-results h2 { margin:0 0 8px; padding:0; color:var(--ink); background:transparent; font-size:1rem; }
@@ -75,6 +83,12 @@
 		    <button class="secondary" id="topButton" type="button">Clear / Top</button>
 	    <p class="lookup-status" id="lookupStatus" aria-live="polite"></p>
 	  </form>
+  <details class="contents" id="partContents">
+    <summary>Browse Part IX</summary>
+    <nav aria-label="Part IX contents">
+      <ol id="contentsList"></ol>
+    </nav>
+  </details>
   <section class="search-results" id="searchResults" hidden></section>
 	  <h1 id="part-ix-remotely-piloted-aircraft-systems">Part IX — Remotely Piloted Aircraft Systems</h1>
 <h2 id="division-i-general-provisions">Division I — General Provisions</h2>
@@ -380,6 +394,7 @@
   const nextMatch = document.getElementById('nextMatch');
 		  const topButton = document.getElementById('topButton');
 	  const results = document.getElementById('searchResults');
+      const contentsList = document.getElementById('contentsList');
 		  let highlighted = null;
   let textMatches = [];
   let currentMatchIndex = -1;
@@ -400,9 +415,55 @@
     updateMatchButtons();
 		  }
 
-	  function sectionLabel(section) {
-		    return section.id || section.querySelector('.label')?.textContent?.trim() || 'section';
+    function sectionLabel(section) {
+      if (section.matches('h1, h2, h3, h4')) return section.textContent.trim();
+      return section.id || section.querySelector('.label')?.textContent?.trim() || 'section';
 		  }
+
+    function headingKind(heading) {
+      const text = heading.textContent.trim();
+      if (/^Part IX\b/i.test(text)) return 'part';
+      if (/^Subpart \d+\b/i.test(text)) return 'subpart';
+      if (/^Division [IVX]+\b/i.test(text)) return 'division';
+      return 'section';
+    }
+
+    function nextSectionForHeading(heading, sections) {
+      return sections.find((section) =>
+        heading.compareDocumentPosition(section) & Node.DOCUMENT_POSITION_FOLLOWING
+      ) || null;
+    }
+
+    function buildContents() {
+      const headings = Array.from(document.querySelectorAll('main > h1[id], main > h2[id], main > h3[id], main > h4[id]'));
+      const sections = Array.from(document.querySelectorAll('.section-anchor'));
+      const lists = [contentsList];
+      const lastItems = [];
+
+      headings.forEach((heading) => {
+        const level = Number(heading.tagName.slice(1));
+        while (lists.length < level) {
+          const parent = lastItems[lists.length - 1];
+          if (!parent) break;
+          const nestedList = document.createElement('ol');
+          parent.appendChild(nestedList);
+          lists.push(nestedList);
+        }
+        while (lists.length > level) lists.pop();
+
+        const kind = headingKind(heading);
+        const section = nextSectionForHeading(heading, sections);
+        const target = ['part', 'subpart', 'division'].includes(kind) ? heading : section || heading;
+        const item = document.createElement('li');
+        const link = document.createElement('a');
+        item.className = `toc-${kind}`;
+        link.href = `#${encodeURIComponent(target.id)}`;
+        link.textContent = [section?.id, heading.textContent.trim()].filter(Boolean).join(' — ');
+        item.appendChild(link);
+        lists[level - 1].appendChild(item);
+        lastItems[level - 1] = item;
+      });
+    }
 
   function searchTerms(value) {
     const base = value.trim().toLocaleLowerCase();
@@ -482,24 +543,16 @@
     if (updateHistory) {
       history.replaceState(null, '', `#${encodeURIComponent(highlighted.id)}`);
     }
-    status.textContent = `Match ${currentMatchIndex + 1} of ${textMatches.length}: section ${sectionLabel(highlighted)}.`;
+	    const matchLabel = highlighted.matches('h1, h2, h3, h4')
+	      ? sectionLabel(highlighted)
+	      : `section ${sectionLabel(highlighted)}`;
+	    status.textContent = `Match ${currentMatchIndex + 1} of ${textMatches.length}: ${matchLabel}.`;
     updateMatchButtons();
   }
 
-	  function runTextSearch(value) {
-    const terms = searchTerms(value);
-	    const matches = Array.from(document.querySelectorAll('.section-anchor')).filter((section) =>
-      sectionContains(section, terms)
-	    );
-
-    if (!matches.length) {
-      status.textContent = `No Part IX sections contain "${value}".`;
-      input.select();
-      return;
-    }
-
+	  function showMatches(matches, headingText, terms) {
     const heading = document.createElement('h2');
-    heading.textContent = `${matches.length} section${matches.length === 1 ? '' : 's'} containing "${value}"`;
+    heading.textContent = headingText;
     const list = document.createElement('ol');
 
     textMatches = matches;
@@ -526,6 +579,35 @@
     setActiveMatch(0);
 	  }
 
+	  function runTextSearch(value) {
+    const terms = searchTerms(value);
+      const normalized = value.trim().toLocaleLowerCase();
+      const structuralMatches = Array.from(document.querySelectorAll('main > h1[id], main > h2[id], main > h3[id]')).filter((heading) =>
+        headingKind(heading) !== 'section' && (() => {
+          const headingText = heading.textContent.trim().toLocaleLowerCase();
+          const isNumberedLabel = /^(?:division\s+[ivx]+|subpart\s+\d+)$/i.test(normalized);
+          return headingText.startsWith(normalized) && (!isNumberedLabel || !/[a-z0-9]/i.test(headingText.charAt(normalized.length)));
+        })()
+      );
+      if (structuralMatches.length) {
+        showMatches(structuralMatches, `${structuralMatches.length} Part IX heading${structuralMatches.length === 1 ? '' : 's'} matching "${value}"`, terms);
+        return;
+      }
+	    const matches = Array.from(document.querySelectorAll('.section-anchor')).filter((section) =>
+      sectionContains(section, terms)
+	    );
+
+    if (!matches.length) {
+      status.textContent = `No Part IX sections contain "${value}".`;
+      input.select();
+      return;
+    }
+
+      showMatches(matches, `${matches.length} section${matches.length === 1 ? '' : 's'} containing "${value}"`, terms);
+	  }
+
+  buildContents();
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     const value = input.value.trim();
@@ -536,17 +618,25 @@
       return;
     }
 		    const normalized = value.replace(/^section\s+/i, '');
-    const isSectionNumber = /^\d{3}(?:\.\d+)*$/.test(normalized);
+      const isSectionNumber = /^\d{3}(?:\.\d+)*(?:\.)?$/.test(normalized);
     const target = isSectionNumber ? document.getElementById(normalized) : null;
-		    if (isSectionNumber && !target) {
-      status.textContent = `No Part IX section found for ${value}.`;
-      input.select();
-      return;
-    }
-    if (!isSectionNumber) {
-	      runTextSearch(value);
-		      return;
-		    }
+      if (isSectionNumber && !target) {
+        const matches = Array.from(document.querySelectorAll('.section-anchor')).filter((section) =>
+          section.id.startsWith(normalized)
+        );
+        if (matches.length) {
+          const terms = [normalized];
+          showMatches(matches, `${matches.length} section${matches.length === 1 ? '' : 's'} matching section prefix "${normalized}"`, terms);
+          return;
+        }
+        status.textContent = `No Part IX section found for ${value}.`;
+        input.select();
+        return;
+      }
+      if (!isSectionNumber) {
+        runTextSearch(value);
+        return;
+      }
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     target.classList.add('target-highlight');
     highlighted = target;

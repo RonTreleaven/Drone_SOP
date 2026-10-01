@@ -1,5 +1,9 @@
 # Advanced RPAS Chat Quiz Ingest
 
+For recurring additional-question batches, start with `QUESTION_BATCH_LOG.md`. The shorthand request
+`Generate Additional Questions for our Adv Drone Quiz` means: generate a candidate pool, duplicate-screen
+against the live `data/questions.json`, merge only reviewed survivors, and update the log.
+
 Copy the `ingest` folder into:
 
 `C:\Users\Ron Treleaven\Drone_SOP\Advanced_RPAS_Study\`
@@ -43,6 +47,14 @@ Then merge:
 ```powershell
 python .\ingest\batch1\Merge_Batch1.py
 python .\ingest\batch2\Merge_Batch2.py
+```
+
+For new recurring batches, prefer the reusable merge helper instead of copying a prior
+batch-specific script:
+
+```powershell
+python .\ingest\merge_question_batch.py .\ingest\batch6\Batch6_candidate_pool.json --dry-run
+python .\ingest\merge_question_batch.py .\ingest\batch6\Batch6_candidate_pool.json
 ```
 
 Each real merge:

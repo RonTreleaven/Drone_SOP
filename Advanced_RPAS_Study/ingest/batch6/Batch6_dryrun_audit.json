@@ -1,0 +1,117 @@
+{
+  "date": "2026-10-01",
+  "batch": "Batch 6",
+  "threshold": 0.72,
+  "currentBankSize": 1125,
+  "candidatePool": 59,
+  "target": 50,
+  "selected": 50,
+  "selectedByCategory": {
+    "theory-of-flight": 5,
+    "visual-observers": 4,
+    "notams": 4,
+    "abnormal": 4,
+    "human-factors": 4,
+    "maintenance": 4,
+    "aircraft-systems": 4,
+    "safety": 4,
+    "aerodromes": 3,
+    "flight-planning": 3,
+    "radio": 3,
+    "airspace": 3,
+    "navigation": 3,
+    "weather": 1,
+    "regulations": 1
+  },
+  "shortfalls": {},
+  "selectedIds": [
+    "b6-theory-001",
+    "b6-theory-002",
+    "b6-theory-003",
+    "b6-theory-004",
+    "b6-theory-005",
+    "b6-vo-001",
+    "b6-vo-002",
+    "b6-vo-003",
+    "b6-vo-004",
+    "b6-notam-001",
+    "b6-notam-002",
+    "b6-notam-003",
+    "b6-notam-004",
+    "b6-abn-001",
+    "b6-abn-002",
+    "b6-abn-003",
+    "b6-abn-004",
+    "b6-hf-001",
+    "b6-hf-002",
+    "b6-hf-003",
+    "b6-hf-004",
+    "b6-maint-001",
+    "b6-maint-002",
+    "b6-maint-003",
+    "b6-maint-004",
+    "b6-sys-001",
+    "b6-sys-002",
+    "b6-sys-003",
+    "b6-sys-004",
+    "b6-safety-001",
+    "b6-safety-002",
+    "b6-safety-003",
+    "b6-safety-004",
+    "b6-aero-001",
+    "b6-aero-002",
+    "b6-aero-003",
+    "b6-fp-001",
+    "b6-fp-002",
+    "b6-fp-003",
+    "b6-radio-001",
+    "b6-radio-002",
+    "b6-radio-003",
+    "b6-air-001",
+    "b6-air-002",
+    "b6-air-003",
+    "b6-nav-001",
+    "b6-nav-002",
+    "b6-nav-003",
+    "b6-weather-001",
+    "b6-reg-001"
+  ],
+  "rejected": [
+    {
+      "id": "b6-theory-006",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b6-vo-005",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b6-notam-005",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b6-abn-005",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b6-safety-005",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b6-air-004",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b6-maint-005",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b6-sys-005",
+      "reason": "category quota filled"
+    },
+    {
+      "id": "b6-fp-004",
+      "reason": "category quota filled"
+    }
+  ]
+}
