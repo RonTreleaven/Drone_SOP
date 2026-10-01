@@ -9,21 +9,21 @@
     ]
   },
   {
-    "raw": "(U1673/26 NOTAMR U1581/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609291841 C) 2610162359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
-    "startValidity": "2026-09-29T18:41:00",
-    "endValidity": "2026-10-16T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925556, -97.261111"
-    ]
-  },
-  {
     "raw": "(U1674/26 NOTAMR U1580/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609291841 C) 2610162359\nE) OBST LGT U/S TOWER 495532N 0971541W (APRX 1.26NM NW AD) 62FT AGL, \n845FT AMSL.)",
     "startValidity": "2026-09-29T18:41:00",
     "endValidity": "2026-10-16T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.925556, -97.261389"
+    ]
+  },
+  {
+    "raw": "(U1673/26 NOTAMR U1581/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609291841 C) 2610162359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
+    "startValidity": "2026-09-29T18:41:00",
+    "endValidity": "2026-10-16T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.925556, -97.261111"
     ]
   },
   {
@@ -465,15 +465,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.971389, -96.912778"
-    ]
-  },
-  {
-    "raw": "(J5387/26 NOTAMN\nQ) CZWG/QOBCE/IV/M/AE/000/014/5007N09154W005\nA) CYXL B) 2608061543 C) 2610011600\nD) SR-SS\nE) MOBILE CRANE WITHIN 100FT RADIUS CENTRED ON 500655N 0915404W APRX \n2330FT BEYOND DTHR 16 AND 1150FT EAST RCL. 120FT AGL 1386FT AMSL. \nNOT LGTD, PAINTED.)",
-    "startValidity": "2026-08-06T15:43:00",
-    "endValidity": "2026-10-01T16:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "50.115278, -91.901111"
     ]
   },
   {
