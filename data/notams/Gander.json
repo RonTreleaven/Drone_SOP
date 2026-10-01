@@ -1,11 +1,11 @@
 [
   {
-    "raw": "(E6282/26 NOTAMR E6276/26\nQ) CZQX/QOBCE/IV/M/AE/000/010/5318N06032W005\nA) CYYR B) 2609302132 C) 2610011500\nE) CRANE 531747N 0603220W (APRX 4.3NM W AD (CYYR)). 130FT AGL 1000FT \nAMSL. NOT LGTD.)",
-    "startValidity": "2026-09-30T21:32:00",
-    "endValidity": "2026-10-01T15:00:00",
-    "q_code": "QOBCE",
+    "raw": "(V1266/26 NOTAMR V1089/26\nQ) CZQX/QOLAS/IV/M/AE/000/002/5124N05606W005\nA) CYAY B) 2609301025 C) 2612302359\nE) OBST LGT U/S ANTENNA 512342N 0560603W (APRX 4201FT WNW AD) 40FT \nAGL, 200FT AMSL.)",
+    "startValidity": "2026-09-30T10:25:00",
+    "endValidity": "2026-12-30T23:59:00",
+    "q_code": "QOLAS",
     "coordinates_dd": [
-      "53.296389, -60.538889"
+      "51.395000, -56.100833"
     ]
   },
   {
@@ -15,15 +15,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.950278, -54.559167"
-    ]
-  },
-  {
-    "raw": "(V1266/26 NOTAMR V1089/26\nQ) CZQX/QOLAS/IV/M/AE/000/002/5124N05606W005\nA) CYAY B) 2609301025 C) 2612302359\nE) OBST LGT U/S ANTENNA 512342N 0560603W (APRX 4201FT WNW AD) 40FT \nAGL, 200FT AMSL.)",
-    "startValidity": "2026-09-30T10:25:00",
-    "endValidity": "2026-12-30T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.395000, -56.100833"
     ]
   },
   {
