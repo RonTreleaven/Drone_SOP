@@ -135,15 +135,6 @@
     ]
   },
   {
-    "raw": "(U1664/26 NOTAMR U1656/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4914N08446W005\nA) CYHN B) 2609290620 C) 2612282100\nE) OBST LGT U/S TOWER 491400N 0844610W (APRX 2.5NM N AD) 299FT AGL, \n1415FT AMSL.)",
-    "startValidity": "2026-09-29T06:20:00",
-    "endValidity": "2026-12-28T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.233333, -84.769444"
-    ]
-  },
-  {
     "raw": "(U1661/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4430N07811W005\nA) CXXX B) 2609281650 C) 2612281600EST\nE) CBI3 BURLEIGH FALLS/BREEZE ISLAND (WATER)\nOBST LGT U/S TOWER 443023N 0781045W (APRX 4.8NM SW AD) 229FT AGL, \n1089FT AMSL.)",
     "startValidity": "2026-09-28T16:50:00",
     "endValidity": null,
@@ -198,21 +189,21 @@
     ]
   },
   {
-    "raw": "(U1652/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/014/4828N08127W002\nA) CZYZ B) 2609271040 C) 2611272359EST\nE) OBST LGT U/S TOWER 482756N 0812653W (APRX 6NM W TIMMINS (TIMMINS \nAND  DISTRICT HOSP) (HELI) AD (CTM6)) 355FT AGL, 1331FT AMSL.)",
-    "startValidity": "2026-09-27T10:40:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "48.465556, -81.448056"
-    ]
-  },
-  {
     "raw": "(U1653/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4358N07913W005\nA) CXXX B) 2609271040 C) 2611272359EST\nE) CNU8 TORONTO/MARKHAM \nOBST LGT U/S TOWER 435745N 0791253W (APRX 2.6NM ENE AD) 122FT \nAGL, 983FT AMSL.)",
     "startValidity": "2026-09-27T10:40:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.962500, -79.214722"
+    ]
+  },
+  {
+    "raw": "(U1652/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/014/4828N08127W002\nA) CZYZ B) 2609271040 C) 2611272359EST\nE) OBST LGT U/S TOWER 482756N 0812653W (APRX 6NM W TIMMINS (TIMMINS \nAND  DISTRICT HOSP) (HELI) AD (CTM6)) 355FT AGL, 1331FT AMSL.)",
+    "startValidity": "2026-09-27T10:40:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "48.465556, -81.448056"
     ]
   },
   {
@@ -1296,21 +1287,21 @@
     ]
   },
   {
-    "raw": "(U1356/26 NOTAMR U0788/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
-    "startValidity": "2026-08-03T13:32:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.907222, -79.371389"
-    ]
-  },
-  {
     "raw": "(U1355/26 NOTAMR U0790/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
     "startValidity": "2026-08-03T13:32:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.906667, -78.731389"
+    ]
+  },
+  {
+    "raw": "(U1356/26 NOTAMR U0788/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
+    "startValidity": "2026-08-03T13:32:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.907222, -79.371389"
     ]
   },
   {
