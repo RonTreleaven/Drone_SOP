@@ -109,7 +109,12 @@ if ($logStageFiles.Count -gt 0) {
 }
 
 # Do not stage the currently written push log; it is still being appended.
+# The push log is usually untracked, so git restore --staged would exit non-zero
+# and write to stderr, which terminates the script under ErrorActionPreference=Stop.
+$nativeErrPref = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
 git restore --staged -- $logPath 2>$null
+$ErrorActionPreference = $nativeErrPref
 
 $stagedDiff = git diff --cached --name-only
 if ($LASTEXITCODE -ne 0) {
