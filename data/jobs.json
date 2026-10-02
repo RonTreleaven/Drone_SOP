@@ -1,5 +1,23 @@
 [
   {
+    "title": "Staff UAS Flight Test Operator - 5793",
+    "company": "Shield AI",
+    "location": "San Diego, California",
+    "link": "https://jobs.lever.co/shieldai/3f8fce68-e07f-40af-a64e-1a78dbe98ffc",
+    "description": "Shield AI is a venture-backed defense-tech company with the mission of protecting service members and civilians with intelligent systems. Its products include Hivemind autonomy software, V-BAT and X-BAT aircraft, and Aechelon simulation and synthetic reality technologies. With offices and facilities across the U.S., Europe, the Middle East, and Asia-Pacific, Shield AIs technology actively supports operations worldwide. For more information, visit www.shield.ai. Follow Shield AI on LinkedIn, X, Instagram, and YouTube. The Staff UAS Flight Test Operator leads system-level flight test operations supporting Hivemind Mission Autonomy across small UAS and external platforms. As a member of the Hivemind Product Quality team, this role supports the Software Development Lifecycle (SDLC) for HivemindSDK by testing pre-release software and verifying its features, capabilities, and operational performance in representative laboratory and flight environments. The operator is responsible for the operational readiness, configuration, and safe operation of multi-rotor and fixed-wing UAS, payloads, ground control systems, and supporting test equipment; plans and conducts single- and multi-aircraft missions; supports fly-fix-fly campaigns; validates autonomy capabilities; identifies defects and usability issues; and provides actionable feedback to improve the quality and customer readiness of each release.",
+    "summary": "Shield AI is a venture-backed defense-tech company with the mission of protecting service members and civilians with intelligent systems. Its products include Hivemind autonomy software, V-BAT and X-BAT aircraft, and Aechelon simulation and synthetic reality technologies. With offices and facilities across the U.S., Europe, the Middle East, and Asia-Pacific, Shield AIs technology actively supports operations worldwide. For more information, visit www.shield.ai. Follow Shield AI on LinkedIn, X, Instagram, and YouTube. The Staff UAS Flight Test",
+    "date_posted": "09/14/2026",
+    "date_expires": "",
+    "category": "general",
+    "type": "unknown",
+    "source": "lever",
+    "query_family": "operations",
+    "matched_query": "drone pilot",
+    "confidence": 0.95,
+    "match_reason": "job-like URL; family terms: flight, operator, uas; drone terms: uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
+    "last_seen": "10/02/2026"
+  },
+  {
     "title": "unmanned aerial vehicle (UAV) technician",
     "company": "CTS - Canadian Technology Systems",
     "location": "Pointe-Claire (QC)",
@@ -15,7 +33,7 @@
     "matched_query": "photogrammetry drone",
     "confidence": 0.95,
     "match_reason": "job-like URL; drone terms: aerial, uav; job terms: apply, job; source=jobbank; query_family=mapping; drone term in title/company; core term in title; core drone/uav signal; technician override via uav/rpas context",
-    "last_seen": "10/01/2026"
+    "last_seen": "10/02/2026"
   },
   {
     "title": "drone pilot",
@@ -51,7 +69,7 @@
     "matched_query": "remote pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, pilot, uas; drone terms: drone, uas; job terms: apply, career, hiring, operator, pilot; source=greenhouse; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/01/2026"
+    "last_seen": "10/02/2026"
   },
   {
     "title": "Drone Operator (R5145)",
@@ -87,6 +105,6 @@
     "matched_query": "uas operator",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, uas; drone terms: uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/01/2026"
+    "last_seen": "10/02/2026"
   }
 ]
