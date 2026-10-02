@@ -24,6 +24,34 @@ function Write-Log {
     $line | Tee-Object -FilePath $logPath -Append
 }
 
+function Show-FailureToast {
+    param(
+        [Parameter(Mandatory = $true)][string]$Message
+    )
+    try {
+        [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null
+        [Windows.Data.Xml.Dom.XmlDocument, Windows.Data.Xml.Dom, ContentType = WindowsRuntime] | Out-Null
+        $appId = "Drone_SOP Airspace Refresh"
+        $escaped = [System.Security.SecurityElement]::Escape($Message)
+        $xml = New-Object Windows.Data.Xml.Dom.XmlDocument
+        $xml.LoadXml("<toast><visual><binding template='ToastGeneric'><text>Airspace refresh FAILED</text><text>$escaped</text></binding></visual></toast>")
+        $toast = [Windows.UI.Notifications.ToastNotification]::new($xml)
+        [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier($appId).Show($toast)
+    }
+    catch {
+        # Toast delivery is best-effort; never let it mask the real failure.
+        Write-Log "Toast notification failed: $($_.Exception.Message)"
+    }
+}
+
+# Any unhandled/terminating error anywhere in this script surfaces a Windows
+# toast so an unattended scheduled failure does not go unnoticed.
+trap {
+    Write-Log "Run failed: $($_.Exception.Message)"
+    Show-FailureToast -Message $_.Exception.Message
+    exit 1
+}
+
 Write-Log "Refresh-and-push run started."
 Write-Log "Repo root: $repoRoot"
 
