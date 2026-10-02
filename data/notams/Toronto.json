@@ -189,21 +189,21 @@
     ]
   },
   {
-    "raw": "(U1653/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4358N07913W005\nA) CXXX B) 2609271040 C) 2611272359EST\nE) CNU8 TORONTO/MARKHAM \nOBST LGT U/S TOWER 435745N 0791253W (APRX 2.6NM ENE AD) 122FT \nAGL, 983FT AMSL.)",
-    "startValidity": "2026-09-27T10:40:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.962500, -79.214722"
-    ]
-  },
-  {
     "raw": "(U1652/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/014/4828N08127W002\nA) CZYZ B) 2609271040 C) 2611272359EST\nE) OBST LGT U/S TOWER 482756N 0812653W (APRX 6NM W TIMMINS (TIMMINS \nAND  DISTRICT HOSP) (HELI) AD (CTM6)) 355FT AGL, 1331FT AMSL.)",
     "startValidity": "2026-09-27T10:40:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.465556, -81.448056"
+    ]
+  },
+  {
+    "raw": "(U1653/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4358N07913W005\nA) CXXX B) 2609271040 C) 2611272359EST\nE) CNU8 TORONTO/MARKHAM \nOBST LGT U/S TOWER 435745N 0791253W (APRX 2.6NM ENE AD) 122FT \nAGL, 983FT AMSL.)",
+    "startValidity": "2026-09-27T10:40:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.962500, -79.214722"
     ]
   },
   {
@@ -474,15 +474,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.289444, -76.480556"
-    ]
-  },
-  {
-    "raw": "(U1597/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4256N08108W005\nA) CXXX B) 2609161447 C) 2610012359\nE) CPW2 LONDON (VICTORIA HOSPITAL) (HELI)\nOBST LGT U/S TOWER 425627N 0810802W (APRX 4.2NM ESE AD) 499FT \nAGL, 1418FT AMSL.)",
-    "startValidity": "2026-09-16T14:47:00",
-    "endValidity": "2026-10-01T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "42.940833, -81.133889"
     ]
   },
   {
@@ -828,21 +819,21 @@
     ]
   },
   {
-    "raw": "(U1494/26 NOTAMR U1260/26\nQ) CZYZ/QOLAS/IV/M/E/000/012/4603N07728W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 460240N 0772804W (APRX 5NM SSE DEEP \nRIVER/ROLPH AD (CPH2)) 651FT AGL, 1188FT AMSL.)",
-    "startValidity": "2026-08-30T10:18:00",
-    "endValidity": "2026-10-14T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "46.044444, -77.467778"
-    ]
-  },
-  {
     "raw": "(U1495/26 NOTAMR U1261/26\nQ) CZYZ/QOLAS/IV/M/E/000/020/4327N08036W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 432700N 0803608W (APRX 8NM S ELMIRA AD (CNT6)) \n600FT AGL, 1902FT AMSL.)",
     "startValidity": "2026-08-30T10:18:00",
     "endValidity": "2026-10-14T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.450000, -80.602222"
+    ]
+  },
+  {
+    "raw": "(U1494/26 NOTAMR U1260/26\nQ) CZYZ/QOLAS/IV/M/E/000/012/4603N07728W002\nA) CZYZ B) 2608301018 C) 2610142359\nE) OBST LGT U/S TOWER 460240N 0772804W (APRX 5NM SSE DEEP \nRIVER/ROLPH AD (CPH2)) 651FT AGL, 1188FT AMSL.)",
+    "startValidity": "2026-08-30T10:18:00",
+    "endValidity": "2026-10-14T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "46.044444, -77.467778"
     ]
   },
   {
