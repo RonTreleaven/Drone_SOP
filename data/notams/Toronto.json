@@ -54,21 +54,21 @@
     ]
   },
   {
-    "raw": "(U1690/26 NOTAMR U1190/26\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4259N07943W005\nA) CXXX B) 2610021718 C) 2701021700EST\nE) CAF2 CAYUGA EAST \nOBST LGT U/S TOWER 425841N 0794259W (APRX 3.3NM E AD) 295FT AGL, \n906FT AMSL.)",
-    "startValidity": "2026-10-02T17:18:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "42.978056, -79.716389"
-    ]
-  },
-  {
     "raw": "(U1689/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4537N08023W005\nA) CXXX B) 2610021718 C) 2701021700EST\nE) CPB6 POINTE AU BARIL STATION (WATER)\nOBST LGT U/S TOWER 453655N 0802315W (APRX 4.5NM N AD) 361FT AGL, \n1017FT AMSL.)",
     "startValidity": "2026-10-02T17:18:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.615278, -80.387500"
+    ]
+  },
+  {
+    "raw": "(U1690/26 NOTAMR U1190/26\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4259N07943W005\nA) CXXX B) 2610021718 C) 2701021700EST\nE) CAF2 CAYUGA EAST \nOBST LGT U/S TOWER 425841N 0794259W (APRX 3.3NM E AD) 295FT AGL, \n906FT AMSL.)",
+    "startValidity": "2026-10-02T17:18:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "42.978056, -79.716389"
     ]
   },
   {
@@ -234,21 +234,21 @@
     ]
   },
   {
-    "raw": "(U1653/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4358N07913W005\nA) CXXX B) 2609271040 C) 2611272359EST\nE) CNU8 TORONTO/MARKHAM \nOBST LGT U/S TOWER 435745N 0791253W (APRX 2.6NM ENE AD) 122FT \nAGL, 983FT AMSL.)",
-    "startValidity": "2026-09-27T10:40:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.962500, -79.214722"
-    ]
-  },
-  {
     "raw": "(U1652/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/014/4828N08127W002\nA) CZYZ B) 2609271040 C) 2611272359EST\nE) OBST LGT U/S TOWER 482756N 0812653W (APRX 6NM W TIMMINS (TIMMINS \nAND  DISTRICT HOSP) (HELI) AD (CTM6)) 355FT AGL, 1331FT AMSL.)",
     "startValidity": "2026-09-27T10:40:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.465556, -81.448056"
+    ]
+  },
+  {
+    "raw": "(U1653/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4358N07913W005\nA) CXXX B) 2609271040 C) 2611272359EST\nE) CNU8 TORONTO/MARKHAM \nOBST LGT U/S TOWER 435745N 0791253W (APRX 2.6NM ENE AD) 122FT \nAGL, 983FT AMSL.)",
+    "startValidity": "2026-09-27T10:40:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.962500, -79.214722"
     ]
   },
   {
@@ -297,21 +297,21 @@
     ]
   },
   {
-    "raw": "(U1642/26 NOTAMR U1337/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4306N07905W005\nA) CXXX B) 2609251015 C) 2611252359\nE) CNG8 NIAGARA FALLS (GREATER NIAGARA GENERAL HOSP) (HELI)\nOBST LGT U/S TOWER 430618N 0790516W (APRX 1152FT ESE AD) 160FT \nAGL, 795FT AMSL.)",
-    "startValidity": "2026-09-25T10:15:00",
-    "endValidity": "2026-11-25T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.105000, -79.087778"
-    ]
-  },
-  {
     "raw": "(U1641/26 NOTAMR U1339/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4414N07823W005\nA) CYPQ B) 2609251015 C) 2611252359EST\nE) OBST LGT U/S TOWER 441353N 0782326W (APRX 1.18NM WNW AD) 122FT \nAGL, 775FT AMSL.)",
     "startValidity": "2026-09-25T10:15:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.231389, -78.390556"
+    ]
+  },
+  {
+    "raw": "(U1642/26 NOTAMR U1337/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4306N07905W005\nA) CXXX B) 2609251015 C) 2611252359\nE) CNG8 NIAGARA FALLS (GREATER NIAGARA GENERAL HOSP) (HELI)\nOBST LGT U/S TOWER 430618N 0790516W (APRX 1152FT ESE AD) 160FT \nAGL, 795FT AMSL.)",
+    "startValidity": "2026-09-25T10:15:00",
+    "endValidity": "2026-11-25T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.105000, -79.087778"
     ]
   },
   {
