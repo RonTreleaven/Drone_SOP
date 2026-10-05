@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Advanced RPAS Flash Cards</title>
+  <link rel="stylesheet" href="../assets/css/site-nav.css">
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5b6578;
+      --line: #d6dde8;
+      --panel: #f4f7fb;
+      --blue: #0b5ea8;
+      --head: #172b4d;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.45;
+    }
+
+    .top-nav,
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .top-nav { padding-top: 18px; }
+
+    main {
+      padding-top: 28px;
+      padding-bottom: 56px;
+    }
+
+    h1 { margin: 0 0 8px; font-size: 2rem; }
+
+    .meta { margin: 0 0 20px; color: var(--muted); }
+
+    /* Section tabs */
+    .section-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 8px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .section-tabs button {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--head);
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .section-tabs button:hover,
+    .section-tabs button:focus-visible {
+      border-color: var(--blue);
+      background: #eaf5ff;
+      outline: none;
+    }
+
+    .section-tabs button[aria-pressed="true"] {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    .section-title {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Card stage */
+    .stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .flashcard {
+      width: min(680px, 100%);
+      min-height: 320px;
+      perspective: 1200px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      text-align: left;
+    }
+
+    .flashcard-inner {
+      position: relative;
+      width: 100%;
+      min-height: 320px;
+      transition: transform 0.45s ease;
+      transform-style: preserve-3d;
+    }
+
+    .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      padding: 32px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .face.front { background: var(--panel); }
+
+    .face.back {
+      background: #eaf5ff;
+      border-color: #9ec9e8;
+      transform: rotateY(180deg);
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+
+    .face-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .face-text {
+      display: block;
+      font-size: 1.25rem;
+      color: var(--ink);
+    }
+
+    .face-text.topic {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--head);
+    }
+
+    .cite-line {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--blue);
+    }
+
+    .back-body {
+      display: block;
+      text-align: left;
+    }
+
+    /* CAR regulation boxes (match CARs_Part_IX_English.html provision styling) */
+    .car-box {
+      margin: 0 0 14px;
+      padding: 14px 16px;
+      border: 1px solid #e0d28a;
+      border-radius: 6px;
+      background: #fffbe0;
+      font-size: 0.92rem;
+    }
+
+    .car-context {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .car-text .provision-line { margin: 0.25rem 0; }
+    .car-text .label { color: #111; }
+    .car-text .subsection { margin-left: 1.2rem; }
+    .car-text .paragraph { margin-left: 2.2rem; }
+    .car-text .subparagraph { margin-left: 3.2rem; }
+    .car-text .clause { margin-left: 4.2rem; }
+
+    .car-links { margin-top: 10px; font-size: 0.82rem; }
+    .car-links a { color: var(--blue); }
+
+    .face .ref {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--blue);
+    }
+
+    .face .ref a { color: var(--blue); }
+
+    .hint { color: var(--muted); font-size: 0.85rem; margin: 0; }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .controls button {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--head);
+      padding: 10px 16px;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .controls button:hover,
+    .controls button:focus-visible {
+      border-color: var(--blue);
+      background: #eaf5ff;
+      outline: none;
+    }
+
+    .controls button.primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    .controls button.primary:hover,
+    .controls button.primary:focus-visible { background: #094e8a; }
+
+    .deck-status {
+      min-width: 120px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .empty-state {
+      width: min(680px, 100%);
+      padding: 48px 32px;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .load-error {
+      padding: 16px;
+      border: 1px solid #e3b3b3;
+      border-radius: 6px;
+      background: #fdf1f1;
+      color: #8a2c2c;
+    }
+  </style>
+</head>
+<body>
+  <nav class="top-nav shared-site-nav" aria-label="Site navigation">
+    <div class="nav-primary">
+      <a href="../index.html">Home</a>
+      <span class="nav-sep" aria-hidden="true">|</span>
+      <a href="AdvStudy.html">Advanced RPAS Study</a>
+      <span class="nav-sep" aria-hidden="true">|</span>
+      <a href="../tools.html">Tools</a>
+    </div>
+  </nav>
+
+  <main>
+    <h1>Advanced RPAS Flash Cards</h1>
+    <p class="meta">Curated study cards organized by TP 15263 knowledge section. Each session presents a fresh random order.</p>
+
+    <ul class="section-tabs" id="sectionTabs" aria-label="Study sections"></ul>
+    <p class="section-title" id="sectionTitle"></p>
+
+    <div class="stage" id="stage" hidden>
+      <div class="flashcard" id="flashcard" role="button" tabindex="0" aria-live="polite">
+        <div class="flashcard-inner">
+          <div class="face front">
+            <span class="face-label" id="frontLabel">Topic</span>
+            <span class="face-text topic" id="frontTopic"></span>
+            <span class="cite-line" id="frontCite"></span>
+          </div>
+          <div class="face back">
+            <span class="face-label" id="backLabel">Regulation text</span>
+            <div class="back-body" id="backContent"></div>
+            <span class="ref" id="backRef"></span>
+          </div>
+        </div>
+      </div>
+      <p class="hint">Click the card (or press Space) to reveal the regulation text.</p>
+
+      <div class="controls">
+        <button type="button" id="prevBtn">&larr; Previous</button>
+        <button type="button" id="flipBtn" class="primary">Flip</button>
+        <button type="button" id="nextBtn">Next &rarr;</button>
+        <button type="button" id="shuffleBtn">Shuffle deck</button>
+        <span class="deck-status" id="deckStatus"></span>
+      </div>
+    </div>
+
+    <div class="empty-state" id="emptyState" hidden>
+      <p>No cards yet for this section. Cards are curated in <code>data/flashcards.json</code>.</p>
+    </div>
+
+    <p class="load-error" id="loadError" hidden></p>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var tabsEl = document.getElementById('sectionTabs');
+      var titleEl = document.getElementById('sectionTitle');
+      var stageEl = document.getElementById('stage');
+      var emptyEl = document.getElementById('emptyState');
+      var errorEl = document.getElementById('loadError');
+      var cardEl = document.getElementById('flashcard');
+      var frontLabel = document.getElementById('frontLabel');
+      var frontTopic = document.getElementById('frontTopic');
+      var frontCite = document.getElementById('frontCite');
+      var backLabel = document.getElementById('backLabel');
+      var backContent = document.getElementById('backContent');
+      var backRef = document.getElementById('backRef');
+      var deckStatus = document.getElementById('deckStatus');
+
+      var deck = [];
+      var deckIndex = 0;
+      var currentSection = 1;
+      var data = null;
+      var carsDoc = null;
+      var carIndex = {};
+
+      function justiceUrl(id) {
+        return 'https://laws-lois.justice.gc.ca/eng/regulations/SOR-96-433/section-' + id + '.html';
+      }
+
+      function buildCarIndex() {
+        var lastH2 = '', lastH3 = '', lastH4 = '';
+        carsDoc.querySelectorAll('h2, h3, h4, .section-anchor').forEach(function (el) {
+          var tag = el.tagName;
+          if (tag === 'H2') { lastH2 = el.textContent.trim(); lastH3 = ''; lastH4 = ''; }
+          else if (tag === 'H3') { lastH3 = el.textContent.trim(); lastH4 = ''; }
+          else if (tag === 'H4') { lastH4 = el.textContent.trim(); }
+          else if (el.id) {
+            carIndex[el.id] = {
+              html: el.innerHTML,
+              context: [lastH2, lastH3, lastH4].filter(Boolean).join(' \u203a ')
+            };
+          }
+        });
+      }
+
+      function renderCarBox(id) {
+        var box = document.createElement('div');
+        box.className = 'car-box';
+        var entry = carIndex[id];
+        if (entry) {
+          if (entry.context) {
+            var ctx = document.createElement('div');
+            ctx.className = 'car-context';
+            ctx.textContent = entry.context;
+            box.appendChild(ctx);
+          }
+          var text = document.createElement('div');
+          text.className = 'car-text';
+          text.innerHTML = entry.html;
+          box.appendChild(text);
+          var links = document.createElement('div');
+          links.className = 'car-links';
+          links.innerHTML = '<a href="CARs_Part_IX_English.html#' + id + '" target="_blank" rel="noopener noreferrer">Open in CARs Part IX extract</a> &middot; <a href="' + justiceUrl(id) + '" target="_blank" rel="noopener noreferrer">Justice Laws</a>';
+          box.appendChild(links);
+        } else {
+          box.innerHTML = '<div class="car-text"><p class="provision-line"><strong class="label">' + id + '</strong> Not in the Part IX extract (outside Part IX).</p></div>' +
+            '<div class="car-links"><a href="' + justiceUrl(id) + '" target="_blank" rel="noopener noreferrer">View section ' + id + ' at Justice Laws</a></div>';
+        }
+        return box;
+      }
+
+      function renderCard() {
+        var card = deck[deckIndex];
+        cardEl.classList.remove('flipped');
+        backContent.innerHTML = '';
+        backRef.textContent = '';
+        if (card.topic) {
+          frontLabel.textContent = 'Topic';
+          backLabel.textContent = 'Regulation text';
+          frontTopic.textContent = card.topic;
+          frontCite.textContent = card.cite || '';
+          (card.sections || []).forEach(function (id) {
+            backContent.appendChild(renderCarBox(id));
+          });
+        } else {
+          frontLabel.textContent = 'Question';
+          backLabel.textContent = 'Answer';
+          frontTopic.textContent = card.front || '';
+          frontCite.textContent = '';
+          backContent.textContent = card.back || '';
+          if (card.ref) {
+            if (card.refUrl) {
+              var a = document.createElement('a');
+              a.href = card.refUrl;
+              a.target = '_blank';
+              a.rel = 'noopener noreferrer';
+              a.textContent = card.ref;
+              a.addEventListener('click', function (e) { e.stopPropagation(); });
+              backRef.appendChild(a);
+            } else {
+              backRef.textContent = card.ref;
+            }
+          }
+        }
+        deckStatus.textContent = 'Card ' + (deckIndex + 1) + ' of ' + deck.length;
+      }
+
+      function flip() {
+        if (!deck.length) return;
+        cardEl.classList.toggle('flipped');
+      }
+
+      function shuffle(arr) {
+        for (var i = arr.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+        }
+        return arr;
+      }
+
+      function nextCard() {
+        if (!deck.length) return;
+        deckIndex = (deckIndex + 1) % deck.length;
+        renderCard();
+      }
+
+      function prevCard() {
+        if (!deck.length) return;
+        deckIndex = (deckIndex - 1 + deck.length) % deck.length;
+        renderCard();
+      }
+
+      function shuffleDeck() {
+        if (!deck.length) return;
+        shuffle(deck);
+        deckIndex = 0;
+        renderCard();
+      }
+
+      function selectSection(n) {
+        currentSection = n;
+        var sec = data.sections.find(function (s) { return s.section === n; });
+        tabsEl.querySelectorAll('button').forEach(function (b) {
+          b.setAttribute('aria-pressed', String(Number(b.dataset.section) === n));
+        });
+        titleEl.textContent = 'Section ' + sec.section + ' - ' + sec.title;
+        if (sec.cards && sec.cards.length > 0) {
+          deck = shuffle(sec.cards.slice());
+          deckIndex = 0;
+          stageEl.hidden = false;
+          emptyEl.hidden = true;
+          renderCard();
+        } else {
+          deck = [];
+          stageEl.hidden = true;
+          emptyEl.hidden = false;
+        }
+      }
+
+      function buildTabs() {
+        data.sections.forEach(function (sec) {
+          var li = document.createElement('li');
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.dataset.section = sec.section;
+          b.textContent = 'S' + sec.section;
+          b.title = sec.title;
+          b.setAttribute('aria-pressed', 'false');
+          b.addEventListener('click', function () { selectSection(sec.section); });
+          li.appendChild(b);
+          tabsEl.appendChild(li);
+        });
+      }
+
+      cardEl.addEventListener('click', flip);
+      document.getElementById('flipBtn').addEventListener('click', flip);
+      document.getElementById('nextBtn').addEventListener('click', nextCard);
+      document.getElementById('prevBtn').addEventListener('click', prevCard);
+      document.getElementById('shuffleBtn').addEventListener('click', shuffleDeck);
+
+      document.addEventListener('keydown', function (e) {
+        if (stageEl.hidden) return;
+        if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+        if (e.key === ' ') { e.preventDefault(); flip(); }
+        else if (e.key === 'ArrowRight') { nextCard(); }
+        else if (e.key === 'ArrowLeft') { prevCard(); }
+      });
+
+      Promise.all([
+        fetch('data/flashcards.json').then(function (r) {
+          if (!r.ok) throw new Error('flashcards.json HTTP ' + r.status);
+          return r.json();
+        }),
+        fetch('CARs_Part_IX_English.html').then(function (r) {
+          if (!r.ok) throw new Error('CARs extract HTTP ' + r.status);
+          return r.text();
+        }).then(function (html) {
+          carsDoc = new DOMParser().parseFromString(html, 'text/html');
+          buildCarIndex();
+        })
+      ])
+        .then(function (results) {
+          data = results[0];
+          buildTabs();
+          selectSection(1);
+        })
+        .catch(function (err) {
+          errorEl.hidden = false;
+          errorEl.textContent = 'Could not load flash card data (' + err.message + '). This page must be served over HTTP - use start-server.cmd, not file://.';
+        });
+    })();
+  </script>
+</body>
+</html>

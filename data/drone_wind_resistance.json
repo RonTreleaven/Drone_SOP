@@ -38,7 +38,10 @@
       "oemWindKt": 21,
       "optimumSensorWidthMm": 9.6,
       "optimumFocalLengthMm": 6.72,
-      "optimumImageWidthPx": 4000
+      "optimumImageWidthPx": 4000,
+      "diagonalFovDeg": 82.1,
+      "hfovDeg": 69.6,
+      "vfovDeg": 55.1
     },
     {
       "model": "DJI Mini 5 Pro",
@@ -48,7 +51,10 @@
       "oemWindKt": 23.3,
       "optimumSensorWidthMm": 13.2,
       "optimumFocalLengthMm": 8.8,
-      "optimumImageWidthPx": 4096
+      "optimumImageWidthPx": 4096,
+      "diagonalFovDeg": 84,
+      "hfovDeg": 71.5,
+      "vfovDeg": 56.8
     },
     {
       "model": "DJI Air 2S",
@@ -68,7 +74,10 @@
       "oemWindKt": 23.3,
       "optimumSensorWidthMm": 9.6,
       "optimumFocalLengthMm": 6.72,
-      "optimumImageWidthPx": 4032
+      "optimumImageWidthPx": 4032,
+      "diagonalFovDeg": 82,
+      "hfovDeg": 69.6,
+      "vfovDeg": 55.1
     },
     {
       "model": "DJI Mavic 2 Pro",
@@ -78,7 +87,10 @@
       "oemWindKt": 20.5,
       "optimumSensorWidthMm": 13.2,
       "optimumFocalLengthMm": 10.26,
-      "optimumImageWidthPx": 5472
+      "optimumImageWidthPx": 5472,
+      "diagonalFovDeg": 77,
+      "hfovDeg": 67,
+      "vfovDeg": 47.6
     },
     {
       "model": "DJI Mavic 3 Classic",

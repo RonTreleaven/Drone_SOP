@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 2,
+  "updated": "2026-10-02",
+  "notes": "Curated flash cards for Advanced RPAS study, organized by TP 15263 sections 1-8. Topic cards: topic (front title), cite (citation line as displayed), sections (CAR section ids whose regulation text is rendered on the back, pulled live from CARs_Part_IX_English.html; non-Part-IX ids link out to Justice Laws). Legacy cards may use front/back/ref/refUrl instead.",
+  "sections": [
+    {
+      "section": 1,
+      "title": "Air Law, Air Traffic Rules and Procedures",
+      "cards": [
+        {
+          "topic": "Age Restrictions",
+          "cite": "CAR 901.54 / 901.63",
+          "sections": ["901.54", "901.63"]
+        },
+        {
+          "topic": "Airspace",
+          "cite": "CAR 901.14 / 601.62(a), 901.69(a)*, 901.71*",
+          "sections": ["901.14", "601.62", "901.69", "901.71"]
+        },
+        {
+          "topic": "Licensing and Training",
+          "cite": "CAR 901.55, 901.58*, 901.59* / 901.64, 901.67*, 901.68",
+          "sections": ["901.55", "901.58", "901.59", "901.64", "901.67", "901.68"]
+        }
+      ]
+    },
+    { "section": 2, "title": "RPAS Airframes, Powerplant, Propulsion and Systems", "cards": [] },
+    { "section": 3, "title": "Human Factors", "cards": [] },
+    { "section": 4, "title": "Meteorology", "cards": [] },
+    { "section": 5, "title": "Navigation", "cards": [] },
+    { "section": 6, "title": "Flight Operations", "cards": [] },
+    { "section": 7, "title": "Theory of Flight", "cards": [] },
+    { "section": 8, "title": "Radiotelephony", "cards": [] }
+  ]
+}

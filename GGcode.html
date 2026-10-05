@@ -1610,17 +1610,19 @@ body.map-immersive {
               </label>
               <label class="mission-setting mission-setting-wide" for="surveyCameraProfile">Survey Camera
                 <select id="surveyCameraProfile">
-                  <option value="mini4proWide" selected>DJI Mini 4 Pro Wide (84x63)</option>
-                  <option value="air3Wide">DJI Air 3 Wide (82x62)</option>
-                  <option value="mavic3eWide">DJI Mavic 3E Wide (84x63)</option>
+                  <option value="mini4proWide" selected>DJI Mini 4 Pro Wide (69.6x55.1)</option>
+                  <option value="mini5proWide">DJI Mini 5 Pro Wide (71.5x56.8)</option>
+                  <option value="air3Wide">DJI Air 3 Wide (69.6x55.1)</option>
+                  <option value="mavic3eWide">DJI Mavic 3E Wide (71.5x56.8)</option>
+                  <option value="mavic2proWide">DJI Mavic 2 Pro Wide (67.0x47.6)</option>
                   <option value="custom">Custom FOV</option>
                 </select>
               </label>
               <label class="mission-setting" for="surveyHfovDeg">HFOV(deg)
-                <input id="surveyHfovDeg" type="number" min="20" max="150" step="0.1" value="84" />
+                <input id="surveyHfovDeg" type="number" min="20" max="150" step="0.1" value="69.6" />
               </label>
               <label class="mission-setting" for="surveyVfovDeg">VFOV(deg)
-                <input id="surveyVfovDeg" type="number" min="15" max="120" step="0.1" value="63" />
+                <input id="surveyVfovDeg" type="number" min="15" max="120" step="0.1" value="55.1" />
               </label>
               <div class="route-status mission-settings-note" id="surveySpacingHint">Survey spacing preview: cross-track and along-track values are computed from altitude, overlaps, and camera FOV.</div>
               <div class="route-status mission-settings-note" id="missionPathSummary">Path estimate: generate or import a route to calculate distance and time.</div>
@@ -2158,10 +2160,12 @@ const AUTO_CLOSE_POLYGON_METERS = 16;
 const LIVE_DRAW_DUPLICATE_METERS = 1.2;
 const ROUTE_TOOLS_FLYOUT_STICKY_MS = 2000;
 const SURVEY_CAMERA_PROFILES = {
-  mini4proWide: { label: 'DJI Mini 4 Pro Wide', hfovDeg: 84, vfovDeg: 63 },
-  air3Wide: { label: 'DJI Air 3 Wide', hfovDeg: 82, vfovDeg: 62 },
-  mavic3eWide: { label: 'DJI Mavic 3E Wide', hfovDeg: 84, vfovDeg: 63 },
-  custom: { label: 'Custom FOV', hfovDeg: 84, vfovDeg: 63 }
+  mini4proWide: { label: 'DJI Mini 4 Pro Wide', hfovDeg: 69.6, vfovDeg: 55.1 },
+  mini5proWide: { label: 'DJI Mini 5 Pro Wide', hfovDeg: 71.5, vfovDeg: 56.8 },
+  air3Wide: { label: 'DJI Air 3 Wide', hfovDeg: 69.6, vfovDeg: 55.1 },
+  mavic3eWide: { label: 'DJI Mavic 3E Wide', hfovDeg: 71.5, vfovDeg: 56.8 },
+  mavic2proWide: { label: 'DJI Mavic 2 Pro Wide', hfovDeg: 67.0, vfovDeg: 47.6 },
+  custom: { label: 'Custom FOV', hfovDeg: 69.6, vfovDeg: 55.1 }
 };
 const PROFILE_STATE_KEY = 'dsop.profileState.v1';
 const PROFILE_SESSION_STATE_KEY = 'dsop.profileState.session.v1';
@@ -4385,8 +4389,8 @@ function computeSurveySpacingFromFov(heightMeters, frontOverlapPct, sideOverlapP
   const safeHeight = Number.isFinite(heightMeters) && heightMeters > 0 ? heightMeters : 60;
   const frontOverlap = Math.max(20, Math.min(95, Number(frontOverlapPct) || 75));
   const sideOverlap = Math.max(20, Math.min(95, Number(sideOverlapPct) || 70));
-  const safeHfov = Math.max(20, Math.min(150, Number(hfovDeg) || 84));
-  const safeVfov = Math.max(15, Math.min(120, Number(vfovDeg) || 63));
+  const safeHfov = Math.max(20, Math.min(150, Number(hfovDeg) || 69.6));
+  const safeVfov = Math.max(15, Math.min(120, Number(vfovDeg) || 55.1));
 
   const hfovRad = (safeHfov * Math.PI) / 180;
   const vfovRad = (safeVfov * Math.PI) / 180;
