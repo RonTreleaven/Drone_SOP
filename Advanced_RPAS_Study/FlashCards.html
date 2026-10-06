@@ -125,6 +125,17 @@
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     }
 
+    /* PC viewport: larger card so regulation text needs less scrolling */
+    @media (min-width: 900px) {
+      .flashcard { width: min(960px, 100%); min-height: clamp(420px, 62vh, 680px); }
+      .flashcard-inner { min-height: clamp(420px, 62vh, 680px); }
+      .face { padding: 40px 48px; }
+      .face-text.topic { font-size: 2.1rem; }
+      .cite-line { font-size: 1.2rem; }
+      .car-box { font-size: 1.02rem; padding: 16px 20px; }
+      .car-context { font-size: 0.82rem; }
+    }
+
     .face.front { background: var(--panel); }
 
     .face.back {
@@ -168,6 +179,55 @@
       text-align: left;
     }
 
+    /* Header row inside the regulation box: label + statute prev/next arrows */
+    .back-head {
+      position: sticky;
+      top: -32px;
+      margin: -32px -32px 0;
+      padding: 14px 32px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #eaf5ff;
+      z-index: 1;
+    }
+
+    .statute-nav { display: flex; align-items: center; gap: 8px; }
+
+    .statute-nav button {
+      width: 36px;
+      height: 32px;
+      border: 1px solid #9ec9e8;
+      border-radius: 6px;
+      background: #fff;
+      color: var(--head);
+      font-size: 1.3rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .statute-nav button:hover,
+    .statute-nav button:focus-visible {
+      border-color: var(--blue);
+      background: #dff0ff;
+      outline: none;
+    }
+
+    .statute-nav button:disabled { opacity: 0.4; cursor: default; }
+
+    .statute-count {
+      min-width: 130px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--head);
+    }
+
+    @media (min-width: 900px) {
+      .back-head { top: -40px; margin: -40px -48px 0; padding: 18px 48px 10px; }
+    }
+
     /* CAR regulation boxes (match CARs_Part_IX_English.html provision styling) */
     .car-box {
       margin: 0 0 14px;
@@ -196,6 +256,16 @@
 
     .car-links { margin-top: 10px; font-size: 0.82rem; }
     .car-links a { color: var(--blue); }
+
+    .car-text a.car-ref {
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 600;
+    }
+
+    .car-text a.car-ref:hover,
+    .car-text a.car-ref:focus-visible { background: #dff0ff; outline: none; }
 
     .face .ref {
       display: block;
@@ -295,7 +365,14 @@
             <span class="cite-line" id="frontCite"></span>
           </div>
           <div class="face back">
-            <span class="face-label" id="backLabel">Regulation text</span>
+            <div class="back-head">
+              <span class="face-label" id="backLabel">Regulation text</span>
+              <div class="statute-nav" id="statuteNav" hidden>
+                <button type="button" id="statutePrev" aria-label="Previous statute">&lsaquo;</button>
+                <span class="statute-count" id="statuteCount" aria-live="polite"></span>
+                <button type="button" id="statuteNext" aria-label="Next statute">&rsaquo;</button>
+              </div>
+            </div>
             <div class="back-body" id="backContent"></div>
             <span class="ref" id="backRef"></span>
           </div>
@@ -336,7 +413,13 @@
       var backContent = document.getElementById('backContent');
       var backRef = document.getElementById('backRef');
       var deckStatus = document.getElementById('deckStatus');
+      var statuteNav = document.getElementById('statuteNav');
+      var statuteCount = document.getElementById('statuteCount');
+      var statutePrevBtn = document.getElementById('statutePrev');
+      var statuteNextBtn = document.getElementById('statuteNext');
 
+      var statutes = [];
+      var statuteIndex = 0;
       var deck = [];
       var deckIndex = 0;
       var currentSection = 1;
@@ -364,6 +447,43 @@
         });
       }
 
+      var CAR_REF_RE = /(?<![\d.])(\d{3}\.\d{2,3})(?![\d.]*\d)((?:\(\d+\)|\([a-z]\)|\([ivx]+\))*)/g;
+
+      // Turn references like "subsection 901.71(1)" into links that open that section in a new tab.
+      function linkCarReferences(root, ownId) {
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (n) {
+            return n.parentNode.closest('a, strong, .label') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        var nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(function (node) {
+          var text = node.nodeValue;
+          CAR_REF_RE.lastIndex = 0;
+          if (!CAR_REF_RE.test(text)) return;
+          CAR_REF_RE.lastIndex = 0;
+          var frag = document.createDocumentFragment();
+          var last = 0, m;
+          while ((m = CAR_REF_RE.exec(text)) !== null) {
+            var id = m[1];
+            if (id === ownId || !carIndex[id]) continue;
+            frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+            var a = document.createElement('a');
+            a.className = 'car-ref';
+            a.href = 'CARs_Part_IX_English.html#' + id;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.title = 'Open CAR ' + id + ' in a new window';
+            a.textContent = m[0];
+            frag.appendChild(a);
+            last = m.index + m[0].length;
+          }
+          frag.appendChild(document.createTextNode(text.slice(last)));
+          node.parentNode.replaceChild(frag, node);
+        });
+      }
+
       function renderCarBox(id) {
         var box = document.createElement('div');
         box.className = 'car-box';
@@ -378,6 +498,7 @@
           var text = document.createElement('div');
           text.className = 'car-text';
           text.innerHTML = entry.html;
+          linkCarReferences(text, id);
           box.appendChild(text);
           var links = document.createElement('div');
           links.className = 'car-links';
@@ -390,19 +511,40 @@
         return box;
       }
 
+      function renderStatute() {
+        backContent.innerHTML = '';
+        var total = statutes.length;
+        statuteNav.hidden = total < 2;
+        if (!total) return;
+        backContent.appendChild(renderCarBox(statutes[statuteIndex]));
+        statuteCount.textContent = 'CAR ' + statutes[statuteIndex] + ' (' + (statuteIndex + 1) + ' of ' + total + ')';
+        statutePrevBtn.disabled = statuteIndex === 0;
+        statuteNextBtn.disabled = statuteIndex === total - 1;
+        cardEl.querySelector('.face.back').scrollTop = 0;
+      }
+
+      function stepStatute(delta) {
+        var next = statuteIndex + delta;
+        if (next < 0 || next >= statutes.length) return;
+        statuteIndex = next;
+        renderStatute();
+      }
+
       function renderCard() {
         var card = deck[deckIndex];
         cardEl.classList.remove('flipped');
         backContent.innerHTML = '';
         backRef.textContent = '';
+        statutes = [];
+        statuteIndex = 0;
+        statuteNav.hidden = true;
         if (card.topic) {
           frontLabel.textContent = 'Topic';
           backLabel.textContent = 'Regulation text';
           frontTopic.textContent = card.topic;
           frontCite.textContent = card.cite || '';
-          (card.sections || []).forEach(function (id) {
-            backContent.appendChild(renderCarBox(id));
-          });
+          statutes = (card.sections || []).slice();
+          renderStatute();
         } else {
           frontLabel.textContent = 'Question';
           backLabel.textContent = 'Answer';
@@ -493,7 +635,12 @@
         });
       }
 
-      cardEl.addEventListener('click', flip);
+      cardEl.addEventListener('click', function (e) {
+        if (e.target.closest && e.target.closest('a')) return;
+        flip();
+      });
+      statutePrevBtn.addEventListener('click', function (e) { e.stopPropagation(); stepStatute(-1); });
+      statuteNextBtn.addEventListener('click', function (e) { e.stopPropagation(); stepStatute(1); });
       document.getElementById('flipBtn').addEventListener('click', flip);
       document.getElementById('nextBtn').addEventListener('click', nextCard);
       document.getElementById('prevBtn').addEventListener('click', prevCard);
@@ -502,6 +649,7 @@
       document.addEventListener('keydown', function (e) {
         if (stageEl.hidden) return;
         if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+        if (e.target && e.target.closest && e.target.closest('.statute-nav') && e.key === ' ') return;
         if (e.key === ' ') { e.preventDefault(); flip(); }
         else if (e.key === 'ArrowRight') { nextCard(); }
         else if (e.key === 'ArrowLeft') { prevCard(); }
