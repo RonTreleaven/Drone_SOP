@@ -13,6 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@tmcw/togeojson@7.1.2/dist/togeojson.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>
+<script src="assets/js/mission-estimate.js"></script>
 
 <style>
 :root {
@@ -1565,7 +1566,7 @@ body.map-immersive {
           <label class="mission-setting tool-inline-setting" for="orbitRadiusMeters">Orbit Radius (m)
             <input id="orbitRadiusMeters" type="number" min="10" max="500" step="5" value="10" />
           </label>
-          <label class="mission-setting tool-inline-setting" for="orbitAltitudeMeters">Orbit Alt (m)
+          <label class="mission-setting tool-inline-setting" for="orbitAltitudeMeters" title="Height of the point the camera looks at, in metres AGL (above takeoff/ground level). Flight height is set by H in Global Config.">Orbit Focal Point (m AGL)
             <input id="orbitAltitudeMeters" type="number" min="-200" max="2000" step="1" value="2" />
           </label>
           <label class="mission-setting tool-inline-setting" for="orbitDirection">Orbit Dir
@@ -1574,6 +1575,7 @@ body.map-immersive {
               <option value="ccw" selected>CCW</option>
             </select>
           </label>
+          <div class="route-status mission-settings-note" id="missionEstimateBadge">Estimate: generate a route</div>
         </div>
         <div class="mission-settings-drawer route-tools-panel" id="missionSettingsDrawer">
           <div class="mission-settings-toolbar">
@@ -1587,7 +1589,7 @@ body.map-immersive {
               <span class="drawer-icon">&#9660;</span>
             </button>
             <div class="mission-section-body" id="missionGlobalSectionBody">
-              <label class="mission-setting" for="djiExecHeight">H(m)
+              <label class="mission-setting" for="djiExecHeight" title="Flight height of all waypoints in metres AGL (above takeoff point).">H(m AGL)
                 <input id="djiExecHeight" type="number" min="5" max="500" step="1" value="10" />
               </label>
               <label class="mission-setting" for="djiWaypointSpeed">Speed(m/s)
@@ -1602,6 +1604,21 @@ body.map-immersive {
               <label class="mission-setting" for="rthBufferMinutes">RTH Buffer(min)
                 <input id="rthBufferMinutes" type="number" min="0" max="30" step="0.5" value="2" />
               </label>
+              <label class="mission-setting" for="estBatteryType">Battery
+                <select id="estBatteryType">
+                  <option value="standard" selected>Standard (21 min)</option>
+                  <option value="plus">Plus (33 min)</option>
+                </select>
+              </label>
+              <label class="mission-setting" for="estWindMs">Wind(m/s)
+                <input id="estWindMs" type="number" min="0" max="20" step="0.5" value="0" />
+              </label>
+              <label class="mission-setting" for="estCautionPct" title="Warn when estimated battery use exceeds this percentage.">Caution(%)
+                <input id="estCautionPct" type="number" min="10" max="95" step="1" value="70" />
+              </label>
+              <label class="mission-setting" for="estReservePct" title="Minimum battery to keep on landing. The larger of this and the RTH buffer is used.">Reserve(%)
+                <input id="estReservePct" type="number" min="0" max="60" step="1" value="25" />
+              </label>
               <label class="mission-setting" for="frontOverlapPct">Front%
                 <input id="frontOverlapPct" type="number" min="20" max="95" step="1" value="75" />
               </label>
@@ -1611,10 +1628,10 @@ body.map-immersive {
               <label class="mission-setting mission-setting-wide" for="surveyCameraProfile">Survey Camera
                 <select id="surveyCameraProfile">
                   <option value="mini4proWide" selected>DJI Mini 4 Pro Wide (69.6x55.1)</option>
-                  <option value="mini5proWide">DJI Mini 5 Pro Wide (71.5x56.8)</option>
+                  <option value="mini5proWide">DJI Mini 5 Pro Wide (67.4x53.1)</option>
                   <option value="air3Wide">DJI Air 3 Wide (69.6x55.1)</option>
                   <option value="mavic3eWide">DJI Mavic 3E Wide (71.5x56.8)</option>
-                  <option value="mavic2proWide">DJI Mavic 2 Pro Wide (67.0x47.6)</option>
+                  <option value="mavic2proWide">DJI Mavic 2 Pro Wide (65.5x46.5)</option>
                   <option value="custom">Custom FOV</option>
                 </select>
               </label>
@@ -1997,6 +2014,14 @@ document.addEventListener('DOMContentLoaded', async function() {
   });
   document.getElementById('mappingPrecisionMode').addEventListener('change', updateMissionPathSummary);
   document.getElementById('rthBufferMinutes').addEventListener('input', updateMissionPathSummary);
+  ['estBatteryType', 'estWindMs', 'estCautionPct', 'estReservePct', 'djiFinishAction', 'djiHoverSeconds'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', updateMissionPathSummary);
+  });
+  ['djiTakePhotoEachWp', 'djiHoverAtWp'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('change', updateMissionPathSummary);
+  });
   document.getElementById('frontOverlapPct').addEventListener('input', () => {
     syncSurveySpacingPreview();
     evaluatePatternRegenerateWarning();
@@ -2161,10 +2186,10 @@ const LIVE_DRAW_DUPLICATE_METERS = 1.2;
 const ROUTE_TOOLS_FLYOUT_STICKY_MS = 2000;
 const SURVEY_CAMERA_PROFILES = {
   mini4proWide: { label: 'DJI Mini 4 Pro Wide', hfovDeg: 69.6, vfovDeg: 55.1 },
-  mini5proWide: { label: 'DJI Mini 5 Pro Wide', hfovDeg: 71.5, vfovDeg: 56.8 },
+  mini5proWide: { label: 'DJI Mini 5 Pro Wide', hfovDeg: 67.4, vfovDeg: 53.1 },
   air3Wide: { label: 'DJI Air 3 Wide', hfovDeg: 69.6, vfovDeg: 55.1 },
   mavic3eWide: { label: 'DJI Mavic 3E Wide', hfovDeg: 71.5, vfovDeg: 56.8 },
-  mavic2proWide: { label: 'DJI Mavic 2 Pro Wide', hfovDeg: 67.0, vfovDeg: 47.6 },
+  mavic2proWide: { label: 'DJI Mavic 2 Pro Wide', hfovDeg: 65.5, vfovDeg: 46.5 },
   custom: { label: 'Custom FOV', hfovDeg: 69.6, vfovDeg: 55.1 }
 };
 const PROFILE_STATE_KEY = 'dsop.profileState.v1';
@@ -2738,9 +2763,9 @@ function updateDrawShapeSummary() {
     const radius = Number.isFinite(rawRadius) && rawRadius >= 10 ? Math.round(rawRadius) : null;
     const orbitAlt = Math.round(getOrbitAltitudeMetersInput());
     if (radius) {
-      indicator.textContent = `Orbit | R=${radius} m | Alt=${orbitAlt} m | D=${radius * 2} m | Pattern: ${patternLabel}`;
+      indicator.textContent = `Orbit | R=${radius} m | Focal Pt=${orbitAlt} m AGL | D=${radius * 2} m | Pattern: ${patternLabel}`;
     } else {
-      indicator.textContent = `Orbit | R=set below | Alt=${orbitAlt} m | Pattern: ${patternLabel}`;
+      indicator.textContent = `Orbit | R=set below | Focal Pt=${orbitAlt} m AGL | Pattern: ${patternLabel}`;
     }
     updateMissionPathSummary();
     return;
@@ -4499,32 +4524,85 @@ function updateMissionPathSummary() {
 
   if (!Array.isArray(points) || points.length < 2) {
     summary.textContent = `Path estimate (${patternLabel}): generate or import a route to calculate distance/time | ${photoCadenceText}`;
+    const emptyBadge = document.getElementById('missionEstimateBadge');
+    if (emptyBadge) emptyBadge.textContent = 'Estimate: generate a route';
     return;
   }
 
   const finishAction = String(document.getElementById('djiFinishAction')?.value || 'goHome');
-  const configuredRthBufferMinutes = Number(document.getElementById('rthBufferMinutes')?.value);
   const distanceMeters = computePathDistanceMeters(points);
   const distanceKm = distanceMeters / 1000;
+  const badge = document.getElementById('missionEstimateBadge');
 
   if (!Number.isFinite(speed) || speed <= 0) {
     summary.textContent = `Path estimate (${patternLabel}): ${distanceMeters.toFixed(1)} m (${distanceKm.toFixed(2)} km). Enter valid speed to estimate time | ${photoCadenceText}`;
+    if (badge) badge.textContent = 'Estimate: enter a valid speed';
     return;
   }
 
-  const estimatedSeconds = distanceMeters / speed;
-  const pathMinutes = estimatedSeconds / 60;
-  const rthBufferMinutes = (finishAction === 'goHome' && Number.isFinite(configuredRthBufferMinutes) && configuredRthBufferMinutes > 0)
-    ? configuredRthBufferMinutes
-    : 0;
-  const totalMinutes = pathMinutes + rthBufferMinutes;
-
-  if (finishAction === 'goHome') {
-    summary.textContent = `Path estimate (${patternLabel}): ${distanceMeters.toFixed(1)} m (${distanceKm.toFixed(2)} km) | Path time @ ${speed.toFixed(1)} m/s: ${pathMinutes.toFixed(1)} min | RTH buffer: ${rthBufferMinutes.toFixed(1)} min | Total: ${totalMinutes.toFixed(1)} min | ${photoCadenceText}`;
+  const est = runMissionEstimate(points, finishAction);
+  if (!est) {
+    summary.textContent = `Path estimate (${patternLabel}): ${distanceMeters.toFixed(1)} m (${distanceKm.toFixed(2)} km) | ${photoCadenceText}`;
+    if (badge) badge.textContent = `Estimate: ${distanceMeters.toFixed(0)} m path`;
     return;
   }
 
-  summary.textContent = `Path estimate (${patternLabel}): ${distanceMeters.toFixed(1)} m (${distanceKm.toFixed(2)} km) | Path time @ ${speed.toFixed(1)} m/s: ${pathMinutes.toFixed(1)} min | Total: ${totalMinutes.toFixed(1)} min (RTH buffer not applied: End of Flight is not Return To Home) | ${photoCadenceText}`;
+  const fmt = window.MissionEstimate.fmtTime;
+  const b = est.battery;
+  const breakdown = est.parts
+    .filter((p) => p.sec >= 1 || p.distM >= 1)
+    .map((p) => `${p.label} ${p.distM.toFixed(0)} m / ${fmt(p.sec)}`)
+    .join('; ');
+  const orbitText = est.orbit
+    ? ` | Orbit R=${est.orbit.radiusM.toFixed(0)} m: circle ${est.orbit.circleLengthM.toFixed(0)} m vs ${est.orbit.polygonLengthM.toFixed(0)} m polygon`
+    : '';
+  const warnText = est.warnings.length ? ` | WARNING: ${est.warnings.join(' ')}` : '';
+
+  summary.textContent =
+    `Mission estimate (${patternLabel}, ${est.drone}): ${est.totalDistanceM.toFixed(0)} m (${(est.totalDistanceM / 1000).toFixed(2)} km) total | ` +
+    `Time ${fmt(est.totalSec)} (path only ${est.pathOnly.horizontalM.toFixed(0)} m, ${fmt(est.pathOnly.sec)}) | ` +
+    `Battery ${b.usedPct.toFixed(0)}% used of ${b.capacityMin} min (flight ${b.flightPct.toFixed(0)}% + wind ${b.windPct.toFixed(0)}%), ${b.remainingPct.toFixed(0)}% left vs ${b.requiredReservePct.toFixed(0)}% reserve (RTH buffer ${b.bufferPct.toFixed(0)}%)${orbitText} | ` +
+    `${photoCadenceText} | Breakdown: ${breakdown}${warnText}`;
+
+  if (badge) {
+    badge.textContent = `Est: ${(est.totalDistanceM / 1000).toFixed(2)} km | ${fmt(est.totalSec)} | Batt ${b.usedPct.toFixed(0)}%${est.warnings.length ? ' | CHECK WARNINGS' : ''}`;
+  }
+}
+
+function runMissionEstimate(points, finishAction) {
+  if (!window.MissionEstimate || !Array.isArray(points) || points.length < 2) return null;
+
+  const settings = getDJIMissionSettings();
+  const hoverSec = settings.takePhotoEachWp && settings.hoverAtWp ? settings.hoverSeconds : 0;
+  const waypoints = points.map((p) => {
+    const lat = typeof p.lat === 'function' ? p.lat() : Number(p.lat);
+    const lng = typeof p.lng === 'function' ? p.lng() : Number(p.lng);
+    return { lat, lng, heightM: settings.height, speedMs: settings.speed, hoverSec };
+  });
+
+  let home = null;
+  const pos = marker && marker.getPosition ? marker.getPosition() : null;
+  if (pos) home = { lat: pos.lat(), lng: pos.lng() };
+
+  const wind = Number(document.getElementById('estWindMs')?.value);
+  const rthBuffer = Number(document.getElementById('rthBufferMinutes')?.value);
+  const cautionPct = Number(document.getElementById('estCautionPct')?.value);
+  const reservePct = Number(document.getElementById('estReservePct')?.value);
+    return window.MissionEstimate.estimateMission(waypoints, {
+      home,
+      finishAction,
+      battery: document.getElementById('estBatteryType')?.value === 'plus' ? 'plus' : 'standard',
+      windMs: Number.isFinite(wind) && wind > 0 ? wind : 0,
+      contingencyMin: finishAction === 'goHome' && Number.isFinite(rthBuffer) && rthBuffer > 0 ? rthBuffer : 0,
+      cautionPct: Number.isFinite(cautionPct) && cautionPct > 0 ? cautionPct : 70,
+      reservePct: Number.isFinite(reservePct) && reservePct >= 0 ? reservePct : 25,
+      orthoPrecise: settings.mappingPrecisionMode === 'orthoPrecise',
+      stopTurnThresholdDeg: settings.stopTurnThresholdDeg
+    });
+  } catch (err) {
+    console.warn('Mission estimate failed', err);
+    return null;
+  }
 }
 
 function isSurveyPatternType(value) {
@@ -5757,7 +5835,7 @@ function buildDJITemplateKML(createTimeMs) {
       <wpml:templateId>0</wpml:templateId>
       <wpml:waylineCoordinateSysParam>
         <wpml:coordinateMode>WGS84</wpml:coordinateMode>
-        <wpml:heightMode>EGM96</wpml:heightMode>
+        <wpml:heightMode>relativeToStartPoint</wpml:heightMode>
         <wpml:globalShootHeight>${settings.height}</wpml:globalShootHeight>
         <wpml:positioningType>GPS</wpml:positioningType>
       </wpml:waylineCoordinateSysParam>
@@ -7733,6 +7811,7 @@ function updateMap(lat, lng) {
       persistPlanningMarkerState(draggedLat, draggedLng, "marker-drag");
       checkAirspace(draggedLat, draggedLng);
         refreshMissionRangeGuideIfVisible();
+      updateMissionPathSummary();
       const resultEl = document.getElementById('result');
       resultEl.innerHTML += `<br><em>Marker adjusted to:</em> ${draggedLat.toFixed(6)}, ${draggedLng.toFixed(6)}`;
     });
@@ -7742,6 +7821,7 @@ function updateMap(lat, lng) {
 
   map.setCenter(position);
   map.setZoom(14);
+  updateMissionPathSummary();
 }
 
 // -------------------------

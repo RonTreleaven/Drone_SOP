@@ -10,6 +10,16 @@ JOBS_JSON_PATH = DATA_DIR / "jobs.json"
 JOBS_REVIEW_CSV_PATH = DATA_DIR / "jobs_review.csv"
 JOBS_REVIEW_LATEST_CSV_PATH = DATA_DIR / "jobs_review_latest.csv"
 
+# Minimum seconds between requests per host, to avoid 429 rate limiting.
+REQUEST_DELAY_SECONDS = {
+    "www.simplyhired.ca": 2.0,
+    "ca.talent.com": 1.0,
+    "www.jobbank.gc.ca": 0.5,
+    "ca.jobs-bear.co": 0.5,
+}
+# Retries (with backoff) for 429/5xx responses.
+REQUEST_MAX_RETRIES = 3
+
 # Jobs not seen within this window (days) are pruned after each run.
 STALE_JOB_DAYS = 14
 

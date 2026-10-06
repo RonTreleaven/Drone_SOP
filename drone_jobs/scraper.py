@@ -1,10 +1,12 @@
 import argparse
 import json
 import re
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import quote_plus
 from urllib.parse import urljoin
+from urllib.parse import urlparse
 
 import feedparser
 import requests
@@ -22,6 +24,8 @@ try:
         LEVER_POSTINGS_API,
         LEVER_SITES,
         QUERY_FAMILIES,
+        REQUEST_DELAY_SECONDS,
+        REQUEST_MAX_RETRIES,
         REQUIRED_ROLE_TERMS_IN_TITLE,
         SIMPLYHIRED_SEARCH,
         STALE_JOB_DAYS,
@@ -42,6 +46,8 @@ except ImportError:  # pragma: no cover - script execution fallback
         LEVER_POSTINGS_API,
         LEVER_SITES,
         QUERY_FAMILIES,
+        REQUEST_DELAY_SECONDS,
+        REQUEST_MAX_RETRIES,
         REQUIRED_ROLE_TERMS_IN_TITLE,
         SIMPLYHIRED_SEARCH,
         STALE_JOB_DAYS,
@@ -135,14 +141,91 @@ def iter_query_pairs():
             yield family, query
 
 
+RETRYABLE_STATUS = {429, 500, 502, 503, 504}
+_last_request_at = {}
+_response_cache = {}
+_RESPONSE_CACHE_MAX = 200
+# Per-host counts used to decide whether a source was reachable this run.
+HOST_STATS = {}
+
+
+def _host_stats(host):
+    return HOST_STATS.setdefault(host, {"ok": 0, "failed": 0})
+
+
+def _throttle(host):
+    delay = REQUEST_DELAY_SECONDS.get(host, 0)
+    if delay:
+        wait = delay - (time.monotonic() - _last_request_at.get(host, 0))
+        if wait > 0:
+            time.sleep(wait)
+    _last_request_at[host] = time.monotonic()
+
+
+def _retry_wait(response, attempt):
+    retry_after = response.headers.get("Retry-After", "") if response is not None else ""
+    if retry_after.isdigit():
+        return min(int(retry_after), 60)
+    return min(5 * (2 ** attempt), 60)
+
+
 def fetch_url(url):
-    try:
-        response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=20)
-        response.raise_for_status()
+    host = urlparse(url).netloc
+    stats = _host_stats(host)
+
+    if url in _response_cache:
+        return _response_cache[url]
+
+    for attempt in range(REQUEST_MAX_RETRIES + 1):
+        _throttle(host)
+        response = None
+        try:
+            response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=20)
+            if response.status_code in RETRYABLE_STATUS and attempt < REQUEST_MAX_RETRIES:
+                wait = _retry_wait(response, attempt)
+                print(f"HTTP {response.status_code} for {url}; retrying in {wait}s")
+                time.sleep(wait)
+                continue
+            response.raise_for_status()
+        except requests.RequestException as exc:
+            status = getattr(getattr(exc, "response", None), "status_code", None)
+            if status is None and attempt < REQUEST_MAX_RETRIES:
+                time.sleep(_retry_wait(None, attempt))
+                continue
+            print("Request failed:", exc)
+            # A 404 is a definitive answer from a reachable host, not an outage.
+            if status != 404:
+                stats["failed"] += 1
+            return None
+
+        stats["ok"] += 1
+        if len(_response_cache) >= _RESPONSE_CACHE_MAX:
+            _response_cache.pop(next(iter(_response_cache)))
+        _response_cache[url] = response
         return response
-    except requests.RequestException as exc:
-        print("Request failed:", exc)
-        return None
+
+    return None
+
+
+def source_hosts(source):
+    templates = {
+        "indeed": INDEED_RSS,
+        "jobbank": JOBBANK_SEARCH,
+        "simplyhired": SIMPLYHIRED_SEARCH,
+        "talent": TALENT_SEARCH,
+        "jobs_bear": JOBS_BEAR_SEARCH,
+        "greenhouse": GREENHOUSE_JOBS_API,
+        "lever": LEVER_POSTINGS_API,
+    }
+    return {urlparse(templates[source]).netloc} if source in templates else set()
+
+
+def source_is_healthy(source):
+    """A source is healthy if its host answered and most requests succeeded."""
+    stats = [HOST_STATS.get(host, {"ok": 0, "failed": 0}) for host in source_hosts(source)]
+    ok = sum(item["ok"] for item in stats)
+    failed = sum(item["failed"] for item in stats)
+    return ok > 0 and ok >= failed
 
 
 def strip_tags(value):
@@ -996,11 +1079,9 @@ def write_daily_summary_report(summary, output_path=None):
 
 def run(reset=False, sources=None, no_write=False):
     init_db()
-    if reset and not no_write:
-        clear_jobs()
-        print("Cleared existing jobs table")
-    elif reset and no_write:
+    if reset and no_write:
         print("Ignoring --reset because --no-write was provided")
+        reset = False
 
     source_fetchers = {
         "indeed": fetch_indeed,
@@ -1025,16 +1106,30 @@ def run(reset=False, sources=None, no_write=False):
         collected.extend(source_fetchers[source]())
 
     jobs = dedupe_jobs(collected)
+    healthy_sources = [source for source in selected_sources if source_is_healthy(source)]
+    unhealthy_sources = [source for source in selected_sources if source not in healthy_sources]
+    if unhealthy_sources:
+        print("WARNING: sources unreachable/blocked this run (existing data kept):", ", ".join(unhealthy_sources))
+
     inserted = 0
     if no_write:
         print("Preview mode enabled: not writing to data/jobs.db")
     else:
+        if reset:
+            # Never wipe existing data unless this run produced replacements,
+            # and never wipe sources that were unreachable this run.
+            if jobs and healthy_sources:
+                clear_jobs(healthy_sources)
+                print("Cleared existing jobs for:", ", ".join(healthy_sources))
+            else:
+                print("WARNING: --reset skipped because the scrape returned no jobs; existing data kept")
         for job in jobs:
             inserted += insert_job(job)
 
     expired = 0
     if not no_write:
-        expired = expire_stale_jobs(STALE_JOB_DAYS)
+        # Only expire rows from sources we could actually reach, so an outage can't age data out.
+        expired = expire_stale_jobs(STALE_JOB_DAYS, healthy_sources)
         if expired:
             print(f"Expired {expired} stale jobs (not seen in {STALE_JOB_DAYS} days)")
 

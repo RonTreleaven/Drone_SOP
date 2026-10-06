@@ -736,6 +736,13 @@
       return range.minAlt.toFixed(1) + ' - ' + range.maxAlt.toFixed(1);
     }
 
+    function getSelectedVfovDeg() {
+      const select = document.getElementById('droneModel');
+      const model = select && droneDefaults.find((item) => item.model === select.value);
+      const vfov = model ? Number(model.vfovDeg) : NaN;
+      return Number.isFinite(vfov) && vfov > 0 ? vfov : 55.1;
+    }
+
     function renderAltitudeBandGuide(selectedModel) {
       const body = document.getElementById('altitudeBandsBody');
       const title = document.getElementById('altitudeBandModel');
@@ -839,7 +846,7 @@
       // Get user-selected speed and detail band
       const speedInput = Number(document.getElementById('speed').value);
       const detailBandValue = document.getElementById('detailBand').value;
-      let vfov = 63; // default VFOV
+      let vfov = getSelectedVfovDeg(); // per-drone VFOV from drone_wind_resistance.json
       let frontOverlap = 0.8; // default front overlap
       if (typeof frontOverlapOverride === 'number') {
         frontOverlap = frontOverlapOverride;
@@ -1005,16 +1012,13 @@
         general: { label: 'General', min: 3.0, max: 5.0 }
       };
       const selectedBand = bandTargets[detailBandValue] || bandTargets.general;
-      let vfov = 63;
+      let vfov = getSelectedVfovDeg();
       let frontOverlap = 0.8;
       if (detailBandValue === 'veryhigh') {
-        vfov = 63;
         frontOverlap = 0.85;
       } else if (detailBandValue === 'high') {
-        vfov = 63;
         frontOverlap = 0.8;
       } else if (detailBandValue === 'general') {
-        vfov = 63;
         frontOverlap = 0.75;
       }
 

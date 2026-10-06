@@ -61,18 +61,29 @@ def init_db():
     conn.close()
 
 
-def clear_jobs():
+def clear_jobs(sources=None):
     conn = _connect()
     c = conn.cursor()
-    c.execute("DELETE FROM jobs")
+    if sources:
+        c.execute(f"DELETE FROM jobs WHERE source IN ({','.join('?' * len(sources))})", list(sources))
+    else:
+        c.execute("DELETE FROM jobs")
     conn.commit()
     conn.close()
 
 
-def expire_stale_jobs(days: int) -> int:
+def expire_stale_jobs(days: int, sources=None) -> int:
+    """Delete jobs not seen within `days`; optionally only for the given sources."""
+    if sources is not None and not sources:
+        return 0
     conn = _connect()
     c = conn.cursor()
-    c.execute("DELETE FROM jobs WHERE last_seen < datetime('now', ?)", (f"-{days} days",))
+    query = "DELETE FROM jobs WHERE last_seen < datetime('now', ?)"
+    params = [f"-{days} days"]
+    if sources:
+        query += f" AND source IN ({','.join('?' * len(sources))})"
+        params.extend(sources)
+    c.execute(query, params)
     count = c.rowcount
     conn.commit()
     conn.close()
