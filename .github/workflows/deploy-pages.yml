@@ -150,7 +150,7 @@ jobs:
            cp Advanced_RPAS_Study/quiz.html Advanced_RPAS_Study/quiz_mtc.html Advanced_RPAS_Study/AdvStudy.html Advanced_RPAS_Study/KnowledgeRequirements.html Advanced_RPAS_Study/FlashCards.html Advanced_RPAS_Study/CARs_Part_IX_English.html _site/Advanced_RPAS_Study/
            cp -a Advanced_RPAS_Study/KnowledgeRequirements_assets/. _site/Advanced_RPAS_Study/KnowledgeRequirements_assets/
            cp Advanced_RPAS_Study/data/flashcards.json \
-           cp Advanced_RPAS_Study/data/questions.json \
+             Advanced_RPAS_Study/data/questions.json \
              Advanced_RPAS_Study/data/references.json \
              Advanced_RPAS_Study/data/~tmp40_categories.json \
              _site/Advanced_RPAS_Study/data/
