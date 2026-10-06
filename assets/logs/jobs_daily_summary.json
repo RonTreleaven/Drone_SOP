@@ -1,20 +1,22 @@
 {
   "average_confidence": 0.95,
   "by_query_family": {
+    "inspection": 1,
     "mapping": 1,
-    "operations": 12
+    "operations": 12,
+    "technical": 1
   },
   "by_source": {
     "greenhouse": 1,
     "jobbank": 1,
     "lever": 2,
-    "simplyhired": 9
+    "simplyhired": 11
   },
-  "collected_count": 29,
+  "collected_count": 43,
   "confidence_max": 0.95,
   "confidence_min": 0.95,
-  "deduped_count": 13,
-  "inserted_count": 9,
+  "deduped_count": 15,
+  "inserted_count": 2,
   "mode": "write",
   "selected_sources": [
     "jobbank",
@@ -24,6 +26,6 @@
     "greenhouse",
     "lever"
   ],
-  "timestamp": "2026-10-06T11:26:27.419630-04:00",
-  "total_jobs": 13
+  "timestamp": "2026-10-06T11:52:18.155475-04:00",
+  "total_jobs": 15
 }
