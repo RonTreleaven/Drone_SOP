@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updated": "2026-10-06",
+  "updated": "2026-10-01",
   "migrationNotes": [
     "Historical quiz questions from chat have not yet been normalized into this file.",
     "All 14 categories seeded with mixed easy/medium/hard/tricky questions (540 total as of 2026-08-29): regulations, airspace, aerodromes, notams, weather, visual-observers, human-factors, aircraft-systems, maintenance, abnormal, flight-planning, radio, navigation, safety.",
@@ -27,8 +27,7 @@
     "2026-09-22 LOCAL QUIZ REVIEW: approved sys-042; cleared flags ['needs-source-review']; reviewed sets [].",
     "2026-09-22 QUIZ REVIEW: applied review approvals to 2 questions using quiz-review-actions.json.",
     "2026-09-22 QUIZ REVIEW: applied review approvals to 3 questions using quiz-review-actions_1.json.",
-    "2026-10-01 BATCH 6: duplicate-screened ingest; 50 questions selected from 59 candidates.",
-    "2026-10-06 QUIZ REVIEW: applied review approvals to 15 questions using quiz-review-actions.json."
+    "2026-10-01 BATCH 6: duplicate-screened ingest; 50 questions selected from 59 candidates."
   ],
   "questions": [
     {
@@ -25848,10 +25847,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-002",
@@ -25882,10 +25878,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-003",
@@ -25916,10 +25909,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-004",
@@ -25950,10 +25940,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-005",
@@ -25984,10 +25971,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-006",
@@ -26018,10 +26002,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-007",
@@ -26052,10 +26033,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-regu-008",
@@ -26086,10 +26064,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-001",
@@ -26121,10 +26096,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-002",
@@ -26155,10 +26127,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-003",
@@ -26190,10 +26159,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-004",
@@ -26225,10 +26191,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-005",
@@ -26259,10 +26222,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-006",
@@ -26293,10 +26253,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-007",
@@ -26327,10 +26284,7 @@
         "type": "batch3-generated",
         "batch": "Batch 3"
       },
-      "examLevel": "advanced",
-      "reviewedSets": [
-        "todays-added"
-      ]
+      "examLevel": "advanced"
     },
     {
       "id": "b3-airs-008",

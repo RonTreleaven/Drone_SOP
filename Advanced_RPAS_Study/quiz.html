@@ -412,8 +412,10 @@ function selectedReviewLabels() {
 }
 
 function isTodaysAddedQuestion(q) {
-  const isBatch3 = String(q.id || "").startsWith("b3-") || String(q.origin || "").toLowerCase().includes("batch3");
-  return isBatch3 && !(q.reviewedSets || []).includes("todays-added");
+  const id = String(q.id || "");
+  const originType = String(q.origin?.type || q.origin || "").toLowerCase();
+  const isTodaysBatch = id.startsWith("b3-") || originType.includes("batch3") || id.startsWith("wb-") || originType === "workbook-ingest";
+  return isTodaysBatch && !(q.reviewedSets || []).includes("todays-added");
 }
 
 function todaysAddedOnly() {

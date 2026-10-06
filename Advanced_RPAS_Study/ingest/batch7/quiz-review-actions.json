@@ -1,0 +1,141 @@
+{
+  "generatedAt": "2026-10-06T17:01:27.508Z",
+  "note": "Apply these approvals to data/questions.json by removing listed reviewFlags and adding reviewedSets for each matching question.",
+  "approvals": [
+    {
+      "id": "b3-regu-001",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:56:49.860Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-regu-002",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:57:02.316Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-regu-003",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:57:20.351Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-regu-004",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:57:34.365Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-regu-005",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:57:51.737Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-regu-006",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:58:00.841Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-regu-007",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:58:20.268Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-regu-008",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:58:36.334Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-airs-001",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:58:46.445Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-airs-002",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:58:56.629Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-airs-003",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:59:06.785Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-airs-004",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:59:26.122Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-airs-005",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T16:59:38.436Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-airs-006",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T17:01:15.324Z",
+      "appliedLocally": false
+    },
+    {
+      "id": "b3-airs-007",
+      "clearedFlags": [],
+      "reviewedSets": [
+        "todays-added"
+      ],
+      "approvedAt": "2026-10-06T17:01:26.430Z",
+      "appliedLocally": false
+    }
+  ]
+}
