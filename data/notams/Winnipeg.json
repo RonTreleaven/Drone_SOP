@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(U1712/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/012/4944N09641W005\nA) CXXX B) 2610061546 C) 2612221800EST\nE) CHS6 STE-ANNE (HOSP) (HELI)\nOBST LGT U/S TOWER 494417N 0964101W (APRX 4.5NM NNW AD) 341FT \nAGL, 1152FT AMSL.)",
+    "startValidity": "2026-10-06T15:46:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.738056, -96.683611"
+    ]
+  },
+  {
+    "raw": "(P3322/26 NOTAMN\nQ) CZWG/QOBCE/IV/M/AE/000/012/4944N09641W005\nA) CXXX B) 2610061530 C) PERM\nE) CHS6 STE-ANNE (HOSP) (HELI)\nAMEND PUBLICATIONS: NEW TOWER 494417N 0964101W (APRX 4.5NM NNW AD \n(CHS6)). 341FT AGL 1152FT AMSL. LGTD, NOT PAINTED.)",
+    "startValidity": "2026-10-06T15:30:00",
+    "endValidity": null,
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "49.738056, -96.683611"
+    ]
+  },
+  {
     "raw": "(U1706/26 NOTAMR U1184/26\nQ) CZWG/QOLAS/IV/M/AE/000/015/4839N09318W005\nA) CXXX B) 2610051347 C) 2612311430EST\nE) CJM8 FORT FRANCES (WATER)\nOBST LGT U/S TOWER 483912N 0931744W (APRX 2.9NM ENE AD) 350FT \nAGL, 1471FT AMSL.)",
     "startValidity": "2026-10-05T13:47:00",
     "endValidity": null,
@@ -81,15 +99,6 @@
     ]
   },
   {
-    "raw": "(U1672/26 NOTAMR U1579/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609291841 C) 2610162359\nE) OBST LGT U/S TOWER 495533N 0971541W (APRX 1.27NM NW AD) 62FT AGL, \n846FT AMSL.)",
-    "startValidity": "2026-09-29T18:41:00",
-    "endValidity": "2026-10-16T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925833, -97.261389"
-    ]
-  },
-  {
     "raw": "(U1674/26 NOTAMR U1580/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609291841 C) 2610162359\nE) OBST LGT U/S TOWER 495532N 0971541W (APRX 1.26NM NW AD) 62FT AGL, \n845FT AMSL.)",
     "startValidity": "2026-09-29T18:41:00",
     "endValidity": "2026-10-16T23:59:00",
@@ -105,6 +114,15 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.925556, -97.261111"
+    ]
+  },
+  {
+    "raw": "(U1672/26 NOTAMR U1579/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609291841 C) 2610162359\nE) OBST LGT U/S TOWER 495533N 0971541W (APRX 1.27NM NW AD) 62FT AGL, \n846FT AMSL.)",
+    "startValidity": "2026-09-29T18:41:00",
+    "endValidity": "2026-10-16T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.925833, -97.261389"
     ]
   },
   {
