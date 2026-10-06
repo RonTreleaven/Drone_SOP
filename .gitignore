@@ -39,3 +39,5 @@ weather_station_code/*.csv
 weather_station_code/*.xlsx
 weather_station_code/*.gz
 weather_station_code/*cache*
+
+Advanced_RPAS_Study/docs/AdvancedWorkbook RPAS.pdf
