@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(J6998/26 NOTAMR J4997/26\nQ) CZWG/QOBCE/IV/M/AE/000/010/4826N08916W005\nA) CXXX B) 2610071404 C) 2701061600EST\nE) CTB2 THUNDER BAY (HEALTH SCIENCE CENTRE) (HELI)\nCRANE 482530N 0891612W (APRX 624FT N AD (CTB2)). 200FT AGL 910FT \nAMSL. NOT LGTD, PAINTED.)",
+    "startValidity": "2026-10-07T14:04:00",
+    "endValidity": null,
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "48.425000, -89.270000"
+    ]
+  },
+  {
     "raw": "(U1712/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/012/4944N09641W005\nA) CXXX B) 2610061546 C) 2612221800EST\nE) CHS6 STE-ANNE (HOSP) (HELI)\nOBST LGT U/S TOWER 494417N 0964101W (APRX 4.5NM NNW AD) 341FT \nAGL, 1152FT AMSL.)",
     "startValidity": "2026-10-06T15:46:00",
     "endValidity": null,
@@ -99,21 +108,21 @@
     ]
   },
   {
-    "raw": "(U1673/26 NOTAMR U1581/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609291841 C) 2610162359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
-    "startValidity": "2026-09-29T18:41:00",
-    "endValidity": "2026-10-16T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925556, -97.261111"
-    ]
-  },
-  {
     "raw": "(U1674/26 NOTAMR U1580/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609291841 C) 2610162359\nE) OBST LGT U/S TOWER 495532N 0971541W (APRX 1.26NM NW AD) 62FT AGL, \n845FT AMSL.)",
     "startValidity": "2026-09-29T18:41:00",
     "endValidity": "2026-10-16T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.925556, -97.261389"
+    ]
+  },
+  {
+    "raw": "(U1673/26 NOTAMR U1581/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609291841 C) 2610162359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
+    "startValidity": "2026-09-29T18:41:00",
+    "endValidity": "2026-10-16T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.925556, -97.261111"
     ]
   },
   {
@@ -546,15 +555,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.133056, -93.242222"
-    ]
-  },
-  {
-    "raw": "(J4997/26 NOTAMR J2805/26\nQ) CZWG/QOBCE/IV/M/AE/000/010/4826N08916W005\nA) CXXX B) 2607232300 C) 2610231500EST\nE) CTB2 THUNDER BAY (HEALTH SCIENCE CENTRE) (HELI)\nCRANE 482530N 0891612W (APRX 624FT N AD (CTB2)). 200FT AGL 910FT \nAMSL. NOT LGTD, PAINTED.)",
-    "startValidity": "2026-07-23T23:00:00",
-    "endValidity": null,
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "48.425000, -89.270000"
     ]
   },
   {
