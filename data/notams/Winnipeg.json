@@ -126,15 +126,6 @@
     ]
   },
   {
-    "raw": "(U1673/26 NOTAMR U1581/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609291841 C) 2610162359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
-    "startValidity": "2026-09-29T18:41:00",
-    "endValidity": "2026-10-16T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925556, -97.261111"
-    ]
-  },
-  {
     "raw": "(U1674/26 NOTAMR U1580/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609291841 C) 2610162359\nE) OBST LGT U/S TOWER 495532N 0971541W (APRX 1.26NM NW AD) 62FT AGL, \n845FT AMSL.)",
     "startValidity": "2026-09-29T18:41:00",
     "endValidity": "2026-10-16T23:59:00",
@@ -150,6 +141,15 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.925833, -97.261389"
+    ]
+  },
+  {
+    "raw": "(U1673/26 NOTAMR U1581/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2609291841 C) 2610162359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
+    "startValidity": "2026-09-29T18:41:00",
+    "endValidity": "2026-10-16T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.925556, -97.261111"
     ]
   },
   {
@@ -636,24 +636,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.425278, -90.250000"
-    ]
-  },
-  {
-    "raw": "(U1232/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/031/4907N10530W002\nA) CZWG B) 2607101706 C) 2610081800\nE) OBST LGT U/S TOWER 490636N 1052958W (APRX 8NM NW SCOBEY/SCOBEY \nBORDER STATION/EAST POPLAR INTL AD (K8U3)) 358FT AGL, 3018FT \nAMSL.)",
-    "startValidity": "2026-07-10T17:06:00",
-    "endValidity": "2026-10-08T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.110000, -105.499444"
-    ]
-  },
-  {
-    "raw": "(U1229/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/031/4907N10530W002\nA) CZWG B) 2607101512 C) 2610081800\nE) OBST LGT U/S TOWER 490636N 1052958W (APRX 8NM NW SCOBEY/SCOBEY \nBORDER STATION/EAST POPLAR INTL AD (K8U3)) 358FT AGL, 3018FT \nAMSL.)",
-    "startValidity": "2026-07-10T15:12:00",
-    "endValidity": "2026-10-08T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.110000, -105.499444"
     ]
   },
   {

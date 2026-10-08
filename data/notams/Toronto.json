@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(U1729/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4402N07921W005\nA) CXXX B) 2610081854 C) 2701071600\nE) CBB2 STOUFFVILLE \nOBST LGT U/S TOWER 440153N 0792054W (APRX 4.2NM NW AD) 400FT AGL, \n1493FT AMSL.)",
+    "startValidity": "2026-10-08T18:54:00",
+    "endValidity": "2027-01-07T16:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.031389, -79.348333"
+    ]
+  },
+  {
+    "raw": "(U1728/26 NOTAMR U1202/26\nQ) CZYZ/QOLAS/IV/M/E/000/012/4601N08123W002\nA) CZYZ B) 2610081720 C) 2612311800EST\nE) OBST LGT U/S TOWER 460053N 0812312W (APRX 5NM ENE KILLARNEY AD \n(CPT2)) 492FT AGL, 1168FT AMSL.)",
+    "startValidity": "2026-10-08T17:20:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "46.014722, -81.386667"
+    ]
+  },
+  {
     "raw": "(U1725/26 NOTAMR U1218/26\nQ) CZYZ/QOLAS/IV/M/AE/000/006/4526N07621W005\nA) CXXX B) 2610081554 C) 2610091600EST\nE) CNP3 ARNPRIOR \nOBST LGT U/S TOWER 452557N 0762129W (APRX 1.17NM NNE AD) 196FT \nAGL, 528FT AMSL.)",
     "startValidity": "2026-10-08T15:54:00",
     "endValidity": null,
@@ -15,24 +33,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "43.625833, -79.400000"
-    ]
-  },
-  {
-    "raw": "(U1721/26 NOTAMR U1219/26\nQ) CZYZ/QOLAS/IV/M/E/000/014/4906N08037W002\nA) CZYZ B) 2610071648 C) 2610081700EST\nE) OBST LGT U/S TOWER 490556N 0803645W (APRX 16NM ESE COCHRANE AD \n(CYCN)) 338FT AGL, 1365FT AMSL.)",
-    "startValidity": "2026-10-07T16:48:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.098889, -80.612500"
-    ]
-  },
-  {
-    "raw": "(U1720/26 NOTAMR U1220/26\nQ) CZYZ/QOLAS/IV/M/E/000/015/4942N08015W002\nA) CZYZ B) 2610071647 C) 2610081700EST\nE) OBST LGT U/S TOWER 494224N 0801511W (APRX 28NM SW DETOUR LAKE AD \n(CDT9)) 354FT AGL, 1404FT AMSL.)",
-    "startValidity": "2026-10-07T16:47:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.706667, -80.253056"
     ]
   },
   {
@@ -396,21 +396,21 @@
     ]
   },
   {
-    "raw": "(U1641/26 NOTAMR U1339/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4414N07823W005\nA) CYPQ B) 2609251015 C) 2611252359EST\nE) OBST LGT U/S TOWER 441353N 0782326W (APRX 1.18NM WNW AD) 122FT \nAGL, 775FT AMSL.)",
-    "startValidity": "2026-09-25T10:15:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.231389, -78.390556"
-    ]
-  },
-  {
     "raw": "(U1642/26 NOTAMR U1337/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4306N07905W005\nA) CXXX B) 2609251015 C) 2611252359\nE) CNG8 NIAGARA FALLS (GREATER NIAGARA GENERAL HOSP) (HELI)\nOBST LGT U/S TOWER 430618N 0790516W (APRX 1152FT ESE AD) 160FT \nAGL, 795FT AMSL.)",
     "startValidity": "2026-09-25T10:15:00",
     "endValidity": "2026-11-25T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.105000, -79.087778"
+    ]
+  },
+  {
+    "raw": "(U1641/26 NOTAMR U1339/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4414N07823W005\nA) CYPQ B) 2609251015 C) 2611252359EST\nE) OBST LGT U/S TOWER 441353N 0782326W (APRX 1.18NM WNW AD) 122FT \nAGL, 775FT AMSL.)",
+    "startValidity": "2026-09-25T10:15:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.231389, -78.390556"
     ]
   },
   {
@@ -621,21 +621,21 @@
     ]
   },
   {
-    "raw": "(P3102/26 NOTAMR P2044/26\nQ) CZYZ/QOBCE/IV/M/AE/000/008/4327N07946W005\nA) CXXX B) 2609141447 C) 2612142000EST\nE) CTM9 OAKVILLE (TRAFALGAR MEM HOSP) (HELI)\nCRANE 432658N 0794605W \n(APRX 1200FT WNW OAKVILLE (TRAFALGAR MEM HOSP) (HELI) (CTM9)). \n222FT AGL 747FT AMSL. LGTD.)",
-    "startValidity": "2026-09-14T14:47:00",
-    "endValidity": null,
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "43.449444, -79.768056"
-    ]
-  },
-  {
     "raw": "(P3103/26 NOTAMR P2043/26\nQ) CZYZ/QOBCE/IV/M/AE/000/008/4327N07946W005\nA) CXXX B) 2609141447 C) 2612142000EST\nE) CTM9 OAKVILLE (TRAFALGAR MEM HOSP) (HELI)\nCRANE 432655N 0794607W \n(APRX 1200FT W OAKVILLE (TRAFALGAR MEM HOSP) (HELI) (CTM9)\n182FT AGL 707FT AMSL. LGTD.)",
     "startValidity": "2026-09-14T14:47:00",
     "endValidity": null,
     "q_code": "QOBCE",
     "coordinates_dd": [
       "43.448611, -79.768611"
+    ]
+  },
+  {
+    "raw": "(P3102/26 NOTAMR P2044/26\nQ) CZYZ/QOBCE/IV/M/AE/000/008/4327N07946W005\nA) CXXX B) 2609141447 C) 2612142000EST\nE) CTM9 OAKVILLE (TRAFALGAR MEM HOSP) (HELI)\nCRANE 432658N 0794605W \n(APRX 1200FT WNW OAKVILLE (TRAFALGAR MEM HOSP) (HELI) (CTM9)). \n222FT AGL 747FT AMSL. LGTD.)",
+    "startValidity": "2026-09-14T14:47:00",
+    "endValidity": null,
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "43.449444, -79.768056"
     ]
   },
   {
@@ -1323,21 +1323,21 @@
     ]
   },
   {
-    "raw": "(U1355/26 NOTAMR U0790/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
-    "startValidity": "2026-08-03T13:32:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.906667, -78.731389"
-    ]
-  },
-  {
     "raw": "(U1356/26 NOTAMR U0788/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
     "startValidity": "2026-08-03T13:32:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.907222, -79.371389"
+    ]
+  },
+  {
+    "raw": "(U1355/26 NOTAMR U0790/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
+    "startValidity": "2026-08-03T13:32:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.906667, -78.731389"
     ]
   },
   {
@@ -1590,15 +1590,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.716944, -81.673333"
-    ]
-  },
-  {
-    "raw": "(U1202/26 NOTAMR U0695/26\nQ) CZYZ/QOLAS/IV/M/E/000/012/4601N08123W002\nA) CZYZ B) 2607081807 C) 2610081800EST\nE) OBST LGT U/S TOWER 460053N 0812312W (APRX 5NM ENE KILLARNEY AD \n(CPT2)) 492FT AGL, 1168FT AMSL.)",
-    "startValidity": "2026-07-08T18:07:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "46.014722, -81.386667"
     ]
   },
   {
