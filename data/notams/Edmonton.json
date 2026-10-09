@@ -9,15 +9,6 @@
     ]
   },
   {
-    "raw": "(I5767/26 NOTAMR I5703/26\nQ) CZEG/QOBCE/IV/M/AE/000/031/5211N11354W005\nA) CYQF B) 2610081738 C) 2610082359\nE) CRANE 521041N 1135351W APRX 630FT BEYOND DTHR 12 AND 30FT NE RCL. \n50FT AGL 3016FT AMSL. NOT LGTD, PAINTED.)",
-    "startValidity": "2026-10-08T17:38:00",
-    "endValidity": "2026-10-08T23:59:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "52.178056, -113.897500"
-    ]
-  },
-  {
     "raw": "(R0967/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/036/5321N11530W002\nA) CZEG B) 2610072144 C) 2701052359\nE) OBST LGT U/S TOWER 532103N 1153019W (APRX 15NM SSW WILDWOOD/LOCHE \nMIST FARMS AD (CJJ3)) 320FT AGL, 3568FT AMSL.)",
     "startValidity": "2026-10-07T21:44:00",
     "endValidity": "2027-01-05T23:59:00",
@@ -105,15 +96,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "53.762778, -112.786667"
-    ]
-  },
-  {
-    "raw": "(C4944/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/023/6042N13503W005\nA) CYXY B) 2610051500 C) 2610082359\nD) DAILY 1500-2359\nE) MOBILE CRANE WITHIN 100FT RADIUS CENTRED ON 604152N 1350241W APRX \n700FT BFR THR 32L AND 2250FT NE EXTENDED RCL. 100FT AGL 2210FT \nAMSL. NOT LGTD.)",
-    "startValidity": "2026-10-04T17:40:20.466",
-    "endValidity": "2026-10-08T23:59:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "60.697778, -135.044722"
     ]
   },
   {
@@ -474,15 +456,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.254722, -110.392778"
-    ]
-  },
-  {
-    "raw": "(C4541/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/037/5106N11359W005\nA) CYYC B) 2609171300 C) 2610090100\nE) CRANE 510606N 1135830W APRX 3120FT BFR THR 35R AND 3520FT EAST \nEXTENDED RCL. 120FT AGL 3681FT AMSL. LGTD, PAINTED.)",
-    "startValidity": "2026-09-16T20:41:58.016",
-    "endValidity": "2026-10-09T01:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "51.101667, -113.975000"
     ]
   },
   {
@@ -1125,21 +1098,21 @@
     ]
   },
   {
-    "raw": "(R0695/26 NOTAMR R0383/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
-    "startValidity": "2026-07-20T17:14:00",
-    "endValidity": "2026-10-20T17:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "56.386111, -111.272778"
-    ]
-  },
-  {
     "raw": "(U1272/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/029/5306N11010W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 530557N 1100955W (APRX 12NM SSW LLOYDMINSTER \n(HOSPITAL) (HELI) AD (CLH6)) 350FT AGL, 2830FT AMSL.)",
     "startValidity": "2026-07-20T17:14:00",
     "endValidity": "2026-10-20T17:00:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.099167, -110.165278"
+    ]
+  },
+  {
+    "raw": "(R0695/26 NOTAMR R0383/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2607201714 C) 2610201700\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
+    "startValidity": "2026-07-20T17:14:00",
+    "endValidity": "2026-10-20T17:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "56.386111, -111.272778"
     ]
   },
   {
@@ -1230,15 +1203,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "56.311944, -121.015000"
-    ]
-  },
-  {
-    "raw": "(R0645/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/025/5406N11023W002\nA) CZEG B) 2607100046 C) 2610082359\nE) OBST LGT U/S TOWER 540540N 1102327W (APRX 13NM SSW COLD \nLAKE/THREE BEARS LANDING AD (CTB8)) 400FT AGL, 2479FT AMSL.)",
-    "startValidity": "2026-07-10T00:46:00",
-    "endValidity": "2026-10-08T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "54.094444, -110.390833"
     ]
   },
   {
