@@ -69,6 +69,13 @@
       outline: none;
     }
 
+    .section-tabs button:disabled {
+      background: #eee;
+      border-color: #ddd;
+      color: #999;
+      cursor: not-allowed;
+    }
+
     .section-tabs button[aria-pressed="true"] {
       background: var(--blue);
       border-color: var(--blue);
@@ -626,9 +633,13 @@
           var b = document.createElement('button');
           b.type = 'button';
           b.dataset.section = sec.section;
-          b.textContent = 'S' + sec.section;
+          b.textContent = 'Section ' + sec.section;
           b.title = sec.title;
           b.setAttribute('aria-pressed', 'false');
+          if (!(sec.cards && sec.cards.length > 0)) {
+            b.disabled = true;
+            b.title = sec.title + ' (no cards yet)';
+          }
           b.addEventListener('click', function () { selectSection(sec.section); });
           li.appendChild(b);
           tabsEl.appendChild(li);
