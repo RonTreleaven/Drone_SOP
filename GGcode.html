@@ -4588,6 +4588,7 @@ function runMissionEstimate(points, finishAction) {
   const rthBuffer = Number(document.getElementById('rthBufferMinutes')?.value);
   const cautionPct = Number(document.getElementById('estCautionPct')?.value);
   const reservePct = Number(document.getElementById('estReservePct')?.value);
+  try {
     return window.MissionEstimate.estimateMission(waypoints, {
       home,
       finishAction,
