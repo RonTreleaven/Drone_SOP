@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(V1315/26 NOTAMR V0988/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4525N06333W005\nA) CXXX B) 2610101950 C) 2610132000EST\nE) CCQ3 DEBERT \nOBST LGT U/S ANTENNA 452522N 0633317W (APRX 3.9NM WNW AD) 246FT \nAGL, 377FT AMSL.)",
+    "startValidity": "2026-10-10T19:50:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.422778, -63.554722"
+    ]
+  },
+  {
     "raw": "(V1286/26 NOTAMR V1281/26\nQ) CZQM/QOLAS/IV/M/E/000/010/4511N06612W003\nA) CZQM B) 2610051420 C) 2612301500EST\nE) OBST LGT U/S WIND TURBINE GROUP WITHIN 3NM RADIUS CENTRED ON \n451042N 0661136W (APRX 9NM SW SAINT JOHN (SAINT JOHN REGIONAL \nHOSPITAL) (HELI) AD (CSN6)). 673FT AGL 964FT AMSL.)",
     "startValidity": "2026-10-05T14:20:00",
     "endValidity": null,
@@ -171,6 +180,15 @@
     ]
   },
   {
+    "raw": "(V1047/26 NOTAMR V0597/26\nQ) CZQM/QOLAS/IV/M/AE/000/005/4540N06125W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453935N 0612515W (APRX 2.2NM WNW AD) 391FT \nAGL, 426FT AMSL.)",
+    "startValidity": "2026-08-25T13:25:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.659722, -61.420833"
+    ]
+  },
+  {
     "raw": "(V1048/26 NOTAMR V0596/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4539N06126W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453914N 0612614W (APRX 2.9NM WNW AD) 391FT \nAGL, 398FT AMSL.)",
     "startValidity": "2026-08-25T13:25:00",
     "endValidity": null,
@@ -186,15 +204,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.647222, -61.455000"
-    ]
-  },
-  {
-    "raw": "(V1047/26 NOTAMR V0597/26\nQ) CZQM/QOLAS/IV/M/AE/000/005/4540N06125W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453935N 0612515W (APRX 2.2NM WNW AD) 391FT \nAGL, 426FT AMSL.)",
-    "startValidity": "2026-08-25T13:25:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.659722, -61.420833"
     ]
   },
   {
@@ -231,15 +240,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "44.988333, -64.900278"
-    ]
-  },
-  {
-    "raw": "(V0988/26 NOTAMR V0984/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4525N06333W005\nA) CXXX B) 2608101642 C) 2610102000EST\nE) CCQ3 DEBERT \nOBST LGT U/S ANTENNA 452522N 0633317W (APRX 3.9NM WNW AD) 246FT \nAGL, 377FT AMSL.)",
-    "startValidity": "2026-08-10T16:42:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.422778, -63.554722"
     ]
   },
   {
