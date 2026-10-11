@@ -1,5 +1,23 @@
 [
   {
+    "title": "Reality Capture / Drone Pilot",
+    "company": "EBC",
+    "location": "Toronto, Ontario, ca",
+    "link": "https://ca.talent.com/view?id=633718861946356225",
+    "description": "Job Offer Share the Offer Reality Capture / Drone Pilot EBC thinks outside the box and deploys all its know-how to carry out major infrastructure projects: bridges, roads, highways, tunnels, marine installations, wind farms, and hydroelectric projects. Our ability to meet deadlines and budgets as well as our vast expertise in the field allow us to actively participate in large-scale projects such as the Site C hydro-electric power station located near Fort St-John in British Columbia, the Samuel-De-Champlain Bridge, and the Reseau Express Metropolitain (REM). EBC is positioned as a true leader in this sector. Our range of specialized services has made our reputation in Canada. We are seeking a motivated Reality Capture / Drone Pilot to support surveying, engineering, infrastructure, and construction projects across Ontario. This position involves frequent travel to project sites to capture high-quality drone, imagery, LiDAR, and reality capture data. The successful candidate will operate UAV equipment safely, collect accurate field data, and assist with project documentation and deliverables. Specify the reference number 311-26 Toronto Mississauga Ontario Permanent Nothern Ontario North York Peterborough Apply Now Deadline 2026/09/21 Working at EBC means being part of a thriving company that operates in a variety of sectors across Canada. It also means working for a company concerned about the health and well-being of its employees by offering them a variety of actions and programs. Want to join forces with a talented and dynamic team? Are you looking for an enjoyable work environment with excellent working conditions? EBC is the ideal place to take on new challenges and advance your career. FULL_TIME",
+    "summary": "Job Offer Share the Offer Reality Capture / Drone Pilot EBC thinks outside the box and deploys all its know-how to carry out major infrastructure projects: bridges, roads, highways, tunnels, marine installations, wind farms, and hydroelectric projects. Our ability to meet deadlines and budgets as well as our vast expertise in the field allow us to actively participate in large-scale projects such as the Site C hydro-electric power station located near Fort St-John in British Columbia, the Samuel-De-Champlain Bridge, and the Reseau Express",
+    "date_posted": "08/22/2026",
+    "date_expires": "",
+    "category": "mapping",
+    "type": "unknown",
+    "source": "talent",
+    "query_family": "operations",
+    "matched_query": "drone pilot",
+    "confidence": 0.95,
+    "match_reason": "family terms: pilot, uav; drone terms: drone, lidar, uav; job terms: apply, career, job, pilot, survey; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
+    "last_seen": "10/11/2026"
+  },
+  {
     "title": "UAV Flight Controls Engineer (ArduPilot)",
     "company": "PrecisionAI",
     "location": "Calgary, AB, CA",
@@ -213,7 +231,7 @@
     "matched_query": "drone pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, uas; drone terms: uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/10/2026"
+    "last_seen": "10/11/2026"
   },
   {
     "title": "unmanned aerial vehicle (UAV) technician",
@@ -231,7 +249,7 @@
     "matched_query": "photogrammetry drone",
     "confidence": 0.95,
     "match_reason": "job-like URL; drone terms: aerial, uav; job terms: apply, job; source=jobbank; query_family=mapping; drone term in title/company; core term in title; core drone/uav signal; technician override via uav/rpas context",
-    "last_seen": "10/10/2026"
+    "last_seen": "10/11/2026"
   },
   {
     "title": "sUAS Flight Operator (FTC), Durham",
@@ -249,7 +267,7 @@
     "matched_query": "remote pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, pilot, uas; drone terms: drone, uas; job terms: apply, career, hiring, operator, pilot; source=greenhouse; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/10/2026"
+    "last_seen": "10/11/2026"
   },
   {
     "title": "UAS Operator & Flight Operations Technician (R5438)",
@@ -267,7 +285,7 @@
     "matched_query": "uas operator",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, uas; drone terms: uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/10/2026"
+    "last_seen": "10/11/2026"
   },
   {
     "title": "MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)",
@@ -285,6 +303,6 @@
     "matched_query": "rpas pilot",
     "confidence": 0.8,
     "match_reason": "family terms: flight, pilot, rpas; drone terms: rpas; job terms: career, job, pilot; source=talent; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/10/2026"
+    "last_seen": "10/11/2026"
   }
 ]
