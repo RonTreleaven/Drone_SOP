@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(C5232/26 NOTAMR C3070/26\nQ) CZEG/QOBCE/IV/M/AE/000/037/5102N11359W005\nA) CYYC B) 2610200113 C) 2610201800EST\nE) CRANE 510212N 1135910W (APRX 4.8NM SSE AD (CYYC)). 194FT AGL \n3685FT AMSL. LGTD, PAINTED.)",
+    "startValidity": "2026-10-20T01:13:00",
+    "endValidity": null,
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "51.036667, -113.986111"
+    ]
+  },
+  {
+    "raw": "(R0997/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/044/5230N11532W002\nA) CZEG B) 2610192113 C) 2701172359\nE) OBST LGT U/S TOWER 522941N 1153145W (APRX 8NM ENE SHUNDA (FIRE \nBASE) (HELI) AD (CDA7)) 350FT AGL, 4320FT AMSL.)",
+    "startValidity": "2026-10-19T21:13:00",
+    "endValidity": "2027-01-17T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.494722, -115.529167"
+    ]
+  },
+  {
     "raw": "(C5227/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/025/5317N11334W005\nA) CYEG B) 2610211300 C) 2610212359\nE) MOBILE CRANE WITHIN 200FT RADIUS CENTRED ON 531710N 1133409W APRX \n940FT BEYOND THR 30 AND 1110FT SW RCL. 99FT AGL 2468FT AMSL. NOT \nLGTD, NOT PAINTED.)",
     "startValidity": "2026-10-19T19:17:13.663",
     "endValidity": "2026-10-21T23:59:00",
@@ -105,15 +123,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "53.348889, -113.551667"
-    ]
-  },
-  {
-    "raw": "(R0981/26 NOTAMR R0915/26\nQ) CZEG/QOLAS/IV/M/AE/000/024/5400N11114W005\nA) CXXX B) 2610121650 C) 2611092359\nE) CTP5 ST. PAUL (ST. THERESE HEALTH CARE CENTRE) (HELI)\nOBST LGT U/S TOWER 535934N 1111342W (APRX 2.2NM ENE AD) 207FT \nAGL, 2313FT AMSL.)",
-    "startValidity": "2026-10-12T16:50:00",
-    "endValidity": "2026-11-09T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.992778, -111.228333"
     ]
   },
   {
@@ -1167,15 +1176,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "54.412222, -111.972778"
-    ]
-  },
-  {
-    "raw": "(C3070/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/037/5102N11359W005\nA) CYYC B) 2607231200 C) 2610192359EST\nE) CRANE 510212N 1135910W (APRX 4.8NM SSE AD (CYYC)). 194FT AGL \n3685FT AMSL. LGTD, PAINTED.)",
-    "startValidity": "2026-07-21T13:14:05.623",
-    "endValidity": null,
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "51.036667, -113.986111"
     ]
   },
   {
