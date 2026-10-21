@@ -39,8 +39,8 @@
     "category": "Airspace and restrictions",
     "sourcePage": 2,
     "sourcePanel": 3,
-    "image": "assets/img/control-zone-boundary-pattern.svg",
-    "interpretation": "Recognize the line type first: the circled boundary in the supplied Toronto chart consists of short separated segments with small perpendicular end-strokes, giving each dash a bracket-shaped or squared-off appearance. The illustration enlarges that pattern beside the original circled excerpt. Follow the boundary to its associated airspace label to establish the class, floor and ceiling. The pattern alone does not establish Class C; the Billy Bishop example is identified by its C label.",
+    "image": "assets/img/airspace-boundaries-v2.svg",
+    "interpretation": "Different boundary styles identify different airspace areas; read the associated label for the class, floor and ceiling. The original overview is retained above an added close-up of the bracketed dashed line circled in the user's Toronto chart. In that close-up, separated square-bracket segments have short end-strokes on the same side. The thin schematic keeps the near-vertical orientation of the source. See the next card for a larger actual-pixel view and the associated Billy Bishop label.",
     "rpasSignificance": "A boundary line does not tell you whether, or at what altitude, airspace applies. Check the label, adjacent text and the legend.",
     "references": [
       {
@@ -56,7 +56,7 @@
         "url": "https://www.navcanada.ca/en/aeronautical-information/visual-flight-rules-vfr-publications.aspx"
       }
     ],
-    "verificationStatus": "Line-pattern sample traced schematically from the user's annotated screenshot; its orientation and spacing are simplified. The original chart excerpt and red circle are preserved. Chart edition unknown; current legend conventions and operational limits have not been independently verified.",
+    "verificationStatus": "Original infographic retained as supplied; its other symbols and example limits remain unverified against the current legend. Added line detail uses actual screenshot pixels. The companion schematic matches the bracket orientation in that excerpt but simplifies spacing. Screenshot chart edition unknown.",
     "keywords": [
       "boundary",
       "control zone",
@@ -76,17 +76,17 @@
       "dashed",
       "end-strokes"
     ],
-    "sourceLabel": "User-annotated Toronto chart screenshot; enlarged boundary-pattern study example",
-    "imageAlt": "Enlarged bracket-shaped dashed boundary sample above the original chart excerpt, preserving the user's red circle around the line near Billy Bishop."
+    "sourceLabel": "Original infographic page 2, panel 3, supplemented with actual boundary detail from the user's Toronto chart screenshot",
+    "imageAlt": "Original airspace-boundaries overview retained, with a new inset of the actual circled bracketed boundary and a thin vertical matching schematic."
   },
   {
     "id": "class-c-control-zone-billy-bishop",
     "title": "Class C Control Zone — Billy Bishop",
     "category": "Airspace and restrictions",
-    "sourceLabel": "User-annotated Toronto chart screenshot; enlarged boundary-pattern study example",
-    "imageAlt": "Enlarged bracket-shaped dashed boundary sample above the original chart excerpt, preserving the user's red circle around the line near Billy Bishop.",
-    "image": "assets/img/control-zone-boundary-pattern.svg",
-    "interpretation": "Start with the circled bracket-shaped dashed boundary: notice its short segments, the small perpendicular end-strokes and the gaps between segments. Trace that boundary to the associated Billy Bishop label. A control zone is a type of airspace; C is its classification. In the supplied Billy Bishop screenshot, the lower part of the boxed stack reads 25 over SFC, with C beside the TWR frequencies (118.2 and 119.2): Class C from the surface to 2,500 ft ASL. Above it, the terminal portion reads 125 over ABV 25 with C beside TML 133.4: Class C above 2,500 ft ASL to 12,500 ft ASL in that depicted sector. Follow the associated boundary and label together; a Class C label alone does not identify a control zone.",
+    "sourceLabel": "User-annotated Toronto chart: original excerpt and actual-pixel enlargement, with a matching vertical schematic",
+    "imageAlt": "Original circled Billy Bishop chart excerpt and Class C label, next to an actual pixel enlargement of the near-vertical square-bracket boundary segments and a thin schematic opening to the right.",
+    "image": "assets/img/billy-bishop-boundary-v2.svg",
+    "interpretation": "Start with the circled bracket-shaped dashed boundary: notice its short segments, the short perpendicular end-strokes on the same side and the gaps between segments. The actual-pixel enlargement shows the original shape; the thin vertical schematic matches its orientation in this excerpt. Trace that boundary to the associated Billy Bishop label. A control zone is a type of airspace; C is its classification. In the supplied Billy Bishop screenshot, the lower part of the boxed stack reads 25 over SFC, with C beside the TWR frequencies (118.2 and 119.2): Class C from the surface to 2,500 ft ASL. Above it, the terminal portion reads 125 over ABV 25 with C beside TML 133.4: Class C above 2,500 ft ASL to 12,500 ft ASL in that depicted sector. Follow the associated boundary and label together; a Class C label alone does not identify a control zone.",
     "rpasSignificance": "The control-zone portion begins at the surface, so flying below 400 ft AGL does not place an RPAS below it. Read the SFC floor, the ASL limits and the applicable boundary together. Use current official airspace information and the required authorization for your operation; the displayed tower frequency is chart-reading context, not an RPAS authorization.",
     "references": [
       {
@@ -102,7 +102,7 @@
         "url": "https://mapviewer.fltplan.com/"
       }
     ],
-    "verificationStatus": "Concept checked against TC AIM RAC 2.7.3 and 2.8.3. Labels and frequencies transcribed from the user-supplied screenshot. Its chart edition/effective date is unknown; the excerpt is a study example and its operational currency has not been verified. Boundary-pattern sample is a schematic enlargement of the line in the user's annotated screenshot, not a substitute for the current chart legend.",
+    "verificationStatus": "Concept checked against TC AIM RAC 2.7.3 and 2.8.3. Labels and frequencies transcribed from the user-supplied screenshot. Its chart edition/effective date is unknown; the excerpt is a study example and its operational currency has not been verified. The circled boundary is shown as an actual-pixel enlargement alongside a thin, orientation-matched schematic. Schematic spacing is simplified; use the current chart legend to confirm the convention.",
     "keywords": [
       "class C",
       "control zone",
