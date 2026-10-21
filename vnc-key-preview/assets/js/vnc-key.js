@@ -123,9 +123,10 @@
     elements.viewer.hidden = false;
     elements.cardTitle.replaceChildren(createElement("span", "card-number", String(index + 1)), card.title);
     elements.category.textContent = card.category;
-    elements.sourceMeta.textContent = "Source: infographic page " + card.sourcePage + ", panel " + card.sourcePanel;
+    var sourceLabel = card.sourceLabel || "infographic page " + card.sourcePage + ", panel " + card.sourcePanel;
+    elements.sourceMeta.textContent = "Source: " + sourceLabel;
     elements.image.src = image;
-    elements.image.alt = card.title + " — panel " + card.sourcePanel + " from page " + card.sourcePage + " of the Drone_SOP VNC Quick Key infographic";
+    elements.image.alt = card.imageAlt || card.title + " — " + sourceLabel;
     elements.interpretation.textContent = card.interpretation;
     elements.significance.textContent = card.rpasSignificance;
     elements.verification.textContent = card.verificationStatus;
@@ -134,7 +135,7 @@
     elements.next.disabled = index === cards.length - 1;
     elements.fullImage.src = image;
     elements.fullImage.alt = elements.image.alt;
-    elements.imageCaption.textContent = card.title + " · page " + card.sourcePage + ", panel " + card.sourcePanel;
+    elements.imageCaption.textContent = card.title + " · " + sourceLabel;
     makeReferenceList(card.references);
     elements.layout.classList.add("showing-viewer");
     elements.layout.classList.toggle("mobile-viewing", window.matchMedia("(max-width: 800px)").matches);
@@ -250,8 +251,8 @@
         return response.json();
       })
       .then(function (data) {
-        if (!Array.isArray(data) || data.length !== 25) {
-          throw new Error("Expected 25 reference cards in " + DATA_URL);
+        if (!Array.isArray(data) || data.length === 0) {
+          throw new Error("Expected a non-empty reference card array in " + DATA_URL);
         }
         cards = data;
         buildToc("");

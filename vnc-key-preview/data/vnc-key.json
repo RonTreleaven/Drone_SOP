@@ -39,8 +39,8 @@
     "category": "Airspace and restrictions",
     "sourcePage": 2,
     "sourcePanel": 3,
-    "image": "assets/img/p2-panel3.jpg",
-    "interpretation": "Different line styles and colours identify different types of airspace: control zone, Class E transition area and terminal areas. Read the accompanying label for the class, floor and ceiling. The boundary line alone does not tell you the vertical limits.",
+    "image": "assets/img/airspace-boundaries-class-c.svg",
+    "interpretation": "Different line styles and colours identify different types of airspace: control zone, Class E transition area and terminal areas. Read the accompanying label for the class, floor and ceiling. The boundary line alone does not tell you the vertical limits. A control zone can be Class C as well as Class D; Class C is also used for terminal control areas. See the next card, “Class C Control Zone — Billy Bishop”, for a surface-based example.",
     "rpasSignificance": "A boundary line does not tell you whether, or at what altitude, airspace applies. Check the label, adjacent text and the legend.",
     "references": [
       {
@@ -52,7 +52,7 @@
         "url": "https://www.navcanada.ca/en/aeronautical-information/aip-canada-and-related-publications/aip-canada.aspx"
       }
     ],
-    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend.",
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend. Added Class C control-zone example is transcribed from the user-supplied Billy Bishop screenshot; its chart edition is unknown. See the next card for source details.",
     "keywords": [
       "boundary",
       "control zone",
@@ -60,7 +60,52 @@
       "class E",
       "terminal",
       "line style",
-      "airspace"
+      "airspace",
+      "class C",
+      "Billy Bishop",
+      "SFC"
+    ],
+    "sourceLabel": "Infographic page 2, panel 3, with an added Class C control-zone example",
+    "imageAlt": "Original airspace boundaries infographic with an added Billy Bishop Class C control-zone example: C, 25 over SFC, surface to 2,500 feet ASL in the supplied screenshot."
+  },
+  {
+    "id": "class-c-control-zone-billy-bishop",
+    "title": "Class C Control Zone — Billy Bishop",
+    "category": "Airspace and restrictions",
+    "sourceLabel": "User-supplied FltPlan chart screenshot; annotated study example",
+    "imageAlt": "Billy Bishop chart excerpt showing the control-zone boundary and stacked Class C label: 25 over SFC for the control zone, with ABV 25 above for terminal airspace. Chart edition is unknown.",
+    "image": "assets/img/class-c-control-zone-billy-bishop.svg",
+    "interpretation": "A control zone is a type of airspace; C is its classification. In the supplied Billy Bishop screenshot, the lower part of the boxed stack reads 25 over SFC, with C beside the TWR frequencies (118.2 and 119.2): Class C from the surface to 2,500 ft ASL. Above it, the terminal portion reads 125 over ABV 25 with C beside TML 133.4: Class C above 2,500 ft ASL to 12,500 ft ASL in that depicted sector. Follow the associated boundary and label together; a Class C label alone does not identify a control zone.",
+    "rpasSignificance": "The control-zone portion begins at the surface, so flying below 400 ft AGL does not place an RPAS below it. Read the SFC floor, the ASL limits and the applicable boundary together. Use current official airspace information and the required authorization for your operation; the displayed tower frequency is chart-reading context, not an RPAS authorization.",
+    "references": [
+      {
+        "label": "TC AIM RAC — 2.7.3 Control Zones and 2.8.3 Class C Airspace (2026-1)",
+        "url": "https://tc.canada.ca/sites/default/files/2026-03/aim-2026-1_rac_en.pdf"
+      },
+      {
+        "label": "NAV CANADA — AIP Canada and related publications (DAH)",
+        "url": "https://www.navcanada.ca/en/aeronautical-information/aip-canada.aspx"
+      },
+      {
+        "label": "FltPlan Map — source of the user-supplied screenshot",
+        "url": "https://mapviewer.fltplan.com/"
+      }
+    ],
+    "verificationStatus": "Concept checked against TC AIM RAC 2.7.3 and 2.8.3. Labels and frequencies transcribed from the user-supplied screenshot. Its chart edition/effective date is unknown; the excerpt is a study example and its operational currency has not been verified.",
+    "keywords": [
+      "class C",
+      "control zone",
+      "CZ",
+      "Billy Bishop",
+      "CYTZ",
+      "Toronto Island",
+      "SFC",
+      "25",
+      "2500",
+      "ABV",
+      "terminal",
+      "TWR",
+      "TML"
     ]
   },
   {
