@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b3558">
+  <title>Canadian VNC Quick Key for RPAS</title>
+  <link rel="stylesheet" href="../assets/css/site-nav.css">
+  <link rel="stylesheet" href="assets/css/vnc-key.css">
+  <script src="assets/js/vnc-key.js" defer></script>
+</head>
+<body>
+  <nav class="top-nav shared-site-nav" aria-label="Site navigation">
+    <div class="nav-primary">
+      <a href="../index.html">Home</a>
+      <span class="nav-sep" aria-hidden="true">|</span>
+      <a href="../tools.html">Tools</a>
+      <span class="nav-sep" aria-hidden="true">|</span>
+      <a href="../Advanced_RPAS_Study/AdvStudy.html">Advanced Study</a>
+    </div>
+  </nav>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="eyebrow">RPAS FIELD REFERENCE · DEVELOPMENT PREVIEW</p>
+      <h1>Canadian VNC Quick Key for RPAS</h1>
+      <p class="subtitle">Illustrated reference cards for Canadian drone pilots</p>
+      <p class="preview-note">
+        Development preview. Images are crops from the supplied infographic pages. Confirm chart symbology
+        and operational details against current official publications before flight.
+      </p>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div id="load-error" class="notice notice-error" role="alert" hidden></div>
+    <div id="app-status" class="sr-only" aria-live="polite"></div>
+
+    <div class="content-layout">
+      <section id="toc" class="toc-panel" aria-labelledby="toc-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">REFERENCE INDEX</p>
+            <h2 id="toc-title">Table of contents</h2>
+          </div>
+          <span id="toc-count" class="count-badge">Loading…</span>
+        </div>
+        <label class="search-label" for="topic-search">Search topics</label>
+        <div class="search-wrap">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input id="topic-search" type="search" placeholder="Try “airspace” or “MEF”" autocomplete="off">
+          <button id="clear-search" class="clear-search" type="button" aria-label="Clear search" hidden>×</button>
+        </div>
+        <p id="search-hint" class="search-hint">Search titles, categories, and card notes.</p>
+        <nav id="topic-list" class="topic-list" aria-label="Reference topics"></nav>
+        <p id="no-results" class="empty-state" hidden>No topics match that search.</p>
+      </section>
+
+      <section id="viewer" class="viewer-panel" aria-labelledby="card-title" hidden>
+        <div class="viewer-toolbar">
+          <button id="return-to-toc" class="text-button" type="button">
+            <span aria-hidden="true">←</span> Table of contents
+          </button>
+          <span id="card-position" class="position-badge" aria-live="polite"></span>
+        </div>
+        <article class="reference-card">
+          <div class="card-heading">
+            <p id="card-category" class="eyebrow"></p>
+            <h2 id="card-title"></h2>
+            <p id="source-meta" class="source-meta"></p>
+          </div>
+
+          <div class="illustration-frame">
+            <button id="image-enlarge" class="illustration-button" type="button" aria-label="Open illustration full size">
+              <img id="card-image" src="" alt="">
+              <span class="image-hint"><span aria-hidden="true">⤢</span> Tap to view full size</span>
+            </button>
+          </div>
+
+          <div class="card-copy">
+            <section class="copy-section">
+              <h3>Interpretation</h3>
+              <p id="card-interpretation"></p>
+            </section>
+            <section class="copy-section significance-section">
+              <h3>RPAS significance</h3>
+              <p id="card-significance"></p>
+            </section>
+            <section class="copy-section">
+              <h3>References</h3>
+              <ul id="card-references" class="reference-links"></ul>
+            </section>
+            <section class="verification-note" aria-labelledby="verification-title">
+              <h3 id="verification-title">Verification status</h3>
+              <p id="card-verification"></p>
+            </section>
+          </div>
+        </article>
+        <div class="card-navigation" aria-label="Card navigation">
+          <button id="previous-card" class="nav-button secondary" type="button">
+            <span aria-hidden="true">←</span><span>Previous</span>
+          </button>
+          <button id="next-card" class="nav-button primary" type="button">
+            <span>Next</span><span aria-hidden="true">→</span>
+          </button>
+        </div>
+        <p class="keyboard-hint">Tip: use ← and → arrow keys to move between cards.</p>
+      </section>
+    </div>
+    <footer class="page-footer">
+      <p>For reference only. A chart symbol does not by itself authorize RPAS operations.</p>
+    </footer>
+  </main>
+
+  <div id="image-dialog" class="image-dialog" role="dialog" aria-modal="true" aria-label="Full-size illustration" hidden>
+    <button id="close-image" class="dialog-close" type="button" aria-label="Close full-size image">×</button>
+    <img id="full-image" src="" alt="">
+    <p id="full-image-caption" class="dialog-caption"></p>
+  </div>
+</body>
+</html>

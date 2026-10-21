@@ -15837,3 +15837,167 @@ Could not write C:\Users\Ron Treleaven\Drone_SOP\data\jobs_review.csv (file may 
 [OK] Outputs: data\jobs.db, data\jobs.json, data\jobs_review.csv, data\jobs_review_latest.csv (fallback)
 [Mon 08/10/2026  6:31:37.19] Daily jobs refresh completed successfully
 
+==================================================
+[Mon 10/12/2026  7:30:02.55] Daily jobs refresh started
+From https://github.com/RonTreleaven/Drone_SOP
+   f95be50..93e64e9  main       -> origin/main
+Updating f95be50..93e64e9
+warning: in the working copy of 'assets/logs/jobs_refresh_daily.log', LF will be replaced by CRLF the next time Git touches it
+error: unable to unlink old 'assets/logs/jobs_refresh_daily.log': Invalid argument
+fatal: could not reset --hard
+Created autostash: e588ba4
+git pull --rebase --autostash failed with exit code 128
+At C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\sync_jobs_to_github.ps1:14 char:32
++ ... DE -ne 0) { throw "git $($args -join ' ') failed with exit code $LAST ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (git pull --reba...h exit code 128:String) [], RuntimeException
+    + FullyQualifiedErrorId : git pull --rebase --autostash failed with exit code 128
+ 
+[Mon 10/12/2026  7:30:04.26] Daily jobs refresh failed with exit code 
+
+==================================================
+[Tue 10/13/2026  7:30:01.78] Daily jobs refresh started
+From https://github.com/RonTreleaven/Drone_SOP
+   93e64e9..26c130b  main       -> origin/main
+Updating f95be50..26c130b
+warning: in the working copy of 'assets/logs/jobs_refresh_daily.log', LF will be replaced by CRLF the next time Git touches it
+error: unable to unlink old 'assets/logs/jobs_refresh_daily.log': Invalid argument
+fatal: could not reset --hard
+Created autostash: 3fa8358
+git pull --rebase --autostash failed with exit code 128
+At C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\sync_jobs_to_github.ps1:14 char:32
++ ... DE -ne 0) { throw "git $($args -join ' ') failed with exit code $LAST ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (git pull --reba...h exit code 128:String) [], RuntimeException
+    + FullyQualifiedErrorId : git pull --rebase --autostash failed with exit code 128
+ 
+[Tue 10/13/2026  7:30:03.71] Daily jobs refresh failed with exit code 
+
+==================================================
+[Wed 10/14/2026  7:30:01.78] Daily jobs refresh started
+From https://github.com/RonTreleaven/Drone_SOP
+   26c130b..e7fbab4  main       -> origin/main
+Updating f95be50..e7fbab4
+warning: in the working copy of 'assets/logs/jobs_refresh_daily.log', LF will be replaced by CRLF the next time Git touches it
+error: unable to unlink old 'assets/logs/jobs_refresh_daily.log': Invalid argument
+fatal: could not reset --hard
+Created autostash: d30a7bd
+git pull --rebase --autostash failed with exit code 128
+At C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\sync_jobs_to_github.ps1:14 char:32
++ ... DE -ne 0) { throw "git $($args -join ' ') failed with exit code $LAST ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (git pull --reba...h exit code 128:String) [], RuntimeException
+    + FullyQualifiedErrorId : git pull --rebase --autostash failed with exit code 128
+ 
+[Wed 10/14/2026  7:30:09.53] Daily jobs refresh failed with exit code 
+
+==================================================
+[Thu 10/15/2026  7:30:01.81] Daily jobs refresh started
+From https://github.com/RonTreleaven/Drone_SOP
+   e7fbab4..9751215  main       -> origin/main
+Updating f95be50..9751215
+warning: in the working copy of 'assets/logs/jobs_refresh_daily.log', LF will be replaced by CRLF the next time Git touches it
+error: unable to unlink old 'assets/logs/jobs_refresh_daily.log': Invalid argument
+fatal: could not reset --hard
+Created autostash: 5e63839
+git pull --rebase --autostash failed with exit code 128
+At C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\sync_jobs_to_github.ps1:14 char:32
++ ... DE -ne 0) { throw "git $($args -join ' ') failed with exit code $LAST ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (git pull --reba...h exit code 128:String) [], RuntimeException
+    + FullyQualifiedErrorId : git pull --rebase --autostash failed with exit code 128
+ 
+[Thu 10/15/2026  7:30:03.83] Daily jobs refresh failed with exit code 
+
+==================================================
+[Fri 10/16/2026  7:30:01.78] Daily jobs refresh started
+From https://github.com/RonTreleaven/Drone_SOP
+   9751215..95db567  main       -> origin/main
+Updating f95be50..95db567
+warning: in the working copy of 'assets/logs/jobs_refresh_daily.log', LF will be replaced by CRLF the next time Git touches it
+error: unable to unlink old 'assets/logs/jobs_refresh_daily.log': Invalid argument
+fatal: could not reset --hard
+Created autostash: b2b7a92
+git pull --rebase --autostash failed with exit code 128
+At C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\sync_jobs_to_github.ps1:14 char:32
++ ... DE -ne 0) { throw "git $($args -join ' ') failed with exit code $LAST ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (git pull --reba...h exit code 128:String) [], RuntimeException
+    + FullyQualifiedErrorId : git pull --rebase --autostash failed with exit code 128
+ 
+[Fri 10/16/2026  7:30:03.61] Daily jobs refresh failed with exit code 
+
+==================================================
+[Sat 10/17/2026  7:30:01.55] Daily jobs refresh started
+From https://github.com/RonTreleaven/Drone_SOP
+   95db567..035bba8  main       -> origin/main
+Updating f95be50..035bba8
+warning: in the working copy of 'assets/logs/jobs_refresh_daily.log', LF will be replaced by CRLF the next time Git touches it
+error: unable to unlink old 'assets/logs/jobs_refresh_daily.log': Invalid argument
+fatal: could not reset --hard
+Created autostash: bd319f2
+git pull --rebase --autostash failed with exit code 128
+At C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\sync_jobs_to_github.ps1:14 char:32
++ ... DE -ne 0) { throw "git $($args -join ' ') failed with exit code $LAST ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (git pull --reba...h exit code 128:String) [], RuntimeException
+    + FullyQualifiedErrorId : git pull --rebase --autostash failed with exit code 128
+ 
+[Sat 10/17/2026  7:30:03.51] Daily jobs refresh failed with exit code 
+
+==================================================
+[Sun 10/18/2026  7:30:01.58] Daily jobs refresh started
+From https://github.com/RonTreleaven/Drone_SOP
+   035bba8..29773b2  main       -> origin/main
+Updating f95be50..29773b2
+warning: in the working copy of 'assets/logs/jobs_refresh_daily.log', LF will be replaced by CRLF the next time Git touches it
+error: unable to unlink old 'assets/logs/jobs_refresh_daily.log': Invalid argument
+fatal: could not reset --hard
+Created autostash: f7ceed7
+git pull --rebase --autostash failed with exit code 128
+At C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\sync_jobs_to_github.ps1:14 char:32
++ ... DE -ne 0) { throw "git $($args -join ' ') failed with exit code $LAST ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (git pull --reba...h exit code 128:String) [], RuntimeException
+    + FullyQualifiedErrorId : git pull --rebase --autostash failed with exit code 128
+ 
+[Sun 10/18/2026  7:30:03.69] Daily jobs refresh failed with exit code 
+
+==================================================
+[Tue 10/20/2026  7:30:01.82] Daily jobs refresh started
+From https://github.com/RonTreleaven/Drone_SOP
+   29773b2..1493d49  main       -> origin/main
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Updating f95be50..1493d49
+warning: in the working copy of 'assets/logs/jobs_refresh_daily.log', LF will be replaced by CRLF the next time Git touches it
+error: unable to unlink old 'assets/logs/jobs_refresh_daily.log': Invalid argument
+fatal: could not reset --hard
+Created autostash: f2b544b
+git pull --rebase --autostash failed with exit code 128
+At C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\sync_jobs_to_github.ps1:14 char:32
++ ... DE -ne 0) { throw "git $($args -join ' ') failed with exit code $LAST ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (git pull --reba...h exit code 128:String) [], RuntimeException
+    + FullyQualifiedErrorId : git pull --rebase --autostash failed with exit code 128
+ 
+[Tue 10/20/2026  7:30:50.83] Daily jobs refresh failed with exit code 
+
+==================================================
+[Wed 10/21/2026  7:30:01.90] Daily jobs refresh started
+From https://github.com/RonTreleaven/Drone_SOP
+   1493d49..d080b96  main       -> origin/main
+Updating f95be50..d080b96
+warning: in the working copy of 'assets/logs/jobs_refresh_daily.log', LF will be replaced by CRLF the next time Git touches it
+error: unable to unlink old 'assets/logs/jobs_refresh_daily.log': Invalid argument
+fatal: could not reset --hard
+Created autostash: 616e9b6
+git pull --rebase --autostash failed with exit code 128
+At C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\sync_jobs_to_github.ps1:14 char:32
++ ... DE -ne 0) { throw "git $($args -join ' ') failed with exit code $LAST ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (git pull --reba...h exit code 128:String) [], RuntimeException
+    + FullyQualifiedErrorId : git pull --rebase --autostash failed with exit code 128
+ 
+[Wed 10/21/2026  7:30:03.59] Daily jobs refresh failed with exit code 
+

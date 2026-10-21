@@ -1,0 +1,747 @@
+[
+  {
+    "id": "p1-airspace-labels",
+    "title": "Airspace Labels and Floors",
+    "category": "Airspace and restrictions",
+    "sourcePage": 1,
+    "sourcePanel": 1,
+    "image": "assets/img/p1-panel1.jpg",
+    "interpretation": "A VNC airspace label is read as a stack: the upper limit in hundreds of feet ASL (125 = 12,500 ft), an optional terminal frequency box (TML 133.4), the airspace class (C), the lower limit (ABV 35 = above 3,500 ft ASL), a NO CONTACT requirement, the next class below (E), and a lower limit in AGL (7 AGL = 700 ft above ground). Always read the boundary and its label together.",
+    "rpasSignificance": "A flight below 400 ft AGL can still be inside controlled airspace. The label tells you the class and where it begins; the DAH, VNC legend and current NOTAMs determine what applies to your operation.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "NAV CANADA Designated Airspace Handbook (DAH)",
+        "url": "https://www.navcanada.ca/en/aeronautical-information/aip-canada-and-related-publications/aip-canada.aspx"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "airspace",
+      "label",
+      "floor",
+      "ceiling",
+      "ABV",
+      "AGL",
+      "ASL",
+      "class C",
+      "class E",
+      "TML",
+      "no contact"
+    ]
+  },
+  {
+    "id": "p2-airspace-boundaries",
+    "title": "Airspace Boundaries",
+    "category": "Airspace and restrictions",
+    "sourcePage": 2,
+    "sourcePanel": 3,
+    "image": "assets/img/p2-panel3.jpg",
+    "interpretation": "Different line styles and colours identify different types of airspace: control zone, Class E transition area and terminal areas. Read the accompanying label for the class, floor and ceiling. The boundary line alone does not tell you the vertical limits.",
+    "rpasSignificance": "A boundary line does not tell you whether, or at what altitude, airspace applies. Check the label, adjacent text and the legend.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "NAV CANADA Designated Airspace Handbook (DAH)",
+        "url": "https://www.navcanada.ca/en/aeronautical-information/aip-canada-and-related-publications/aip-canada.aspx"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "boundary",
+      "control zone",
+      "CZ",
+      "class E",
+      "terminal",
+      "line style",
+      "airspace"
+    ]
+  },
+  {
+    "id": "p2-class-f",
+    "title": "Special Use Airspace (Class F)",
+    "category": "Airspace and restrictions",
+    "sourcePage": 2,
+    "sourcePanel": 4,
+    "image": "assets/img/p2-panel4.jpg",
+    "interpretation": "Restricted (CYR), Advisory (CYA) and Danger (CYD) areas are shown as hatched areas with an identifier and a vertical limit. CYR is active at specific times and entry is prohibited when active. CYA indicates activity may be occurring; it is not a prohibition but increased caution is required. CYD contains activity dangerous to aircraft. Check NOTAMs for status and limits.",
+    "rpasSignificance": "Determine whether a Class F area applies to your location, altitude and time, and check NOTAMs and the DAH before flight.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "NAV CANADA Designated Airspace Handbook (DAH)",
+        "url": "https://www.navcanada.ca/en/aeronautical-information/aip-canada-and-related-publications/aip-canada.aspx"
+      },
+      {
+        "label": "NAV CANADA NOTAMs",
+        "url": "https://www.navcanada.ca/en/aeronautical-information/notams.aspx"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. CYR/CYA/CYD identifiers are consistent with reviewed NAV CANADA study references. Needs confirmation: this panel draws CYD in red, whereas page 3 panel 2 describes CYD as purple hatched.",
+    "keywords": [
+      "Class F",
+      "CYA",
+      "CYR",
+      "CYD",
+      "restricted",
+      "advisory",
+      "danger",
+      "special use"
+    ]
+  },
+  {
+    "id": "p3-boundary-styles",
+    "title": "Airspace Boundary Styles",
+    "category": "Airspace and restrictions",
+    "sourcePage": 3,
+    "sourcePanel": 1,
+    "image": "assets/img/p3-panel1.jpg",
+    "interpretation": "Different airspace classes use different boundary styles; always read the boundary together with the label. The panel shows a solid boundary for a control area (Class C), a dashed boundary for a terminal control area, a dotted boundary for a transition area, and a lighter style for a Class E transition, each with its label.",
+    "rpasSignificance": "Matching the line style and label to the airspace type tells you which airspace you are near or inside.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "NAV CANADA Designated Airspace Handbook (DAH)",
+        "url": "https://www.navcanada.ca/en/aeronautical-information/aip-canada-and-related-publications/aip-canada.aspx"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. The specific line-style assignments need confirmation against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "boundary",
+      "line style",
+      "control area",
+      "terminal control area",
+      "transition area",
+      "class E",
+      "CTA",
+      "TCA"
+    ]
+  },
+  {
+    "id": "p3-class-f",
+    "title": "Class F Special Use Airspace",
+    "category": "Airspace and restrictions",
+    "sourcePage": 3,
+    "sourcePanel": 2,
+    "image": "assets/img/p3-panel2.jpg",
+    "interpretation": "Restricted (CYR), Advisory (CYA) and Danger (CYD) areas have specific boundary styles and hatching. The panel describes CYR as red/magenta hatched with entry prohibited when active, CYA as blue hatched with activity such as air training, gliding or parachuting, and CYD as purple hatched with potentially hazardous activity. Read vertical limits and notes.",
+    "rpasSignificance": "Always read the vertical limits and notes for the specific area and check NOTAMs; do not rely on colour or hatching alone.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "NAV CANADA Designated Airspace Handbook (DAH)",
+        "url": "https://www.navcanada.ca/en/aeronautical-information/aip-canada-and-related-publications/aip-canada.aspx"
+      },
+      {
+        "label": "NAV CANADA NOTAMs",
+        "url": "https://www.navcanada.ca/en/aeronautical-information/notams.aspx"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Needs confirmation: CYD is drawn purple here but red on page 2 panel 4; confirm the correct colour/hatching in the current NAV CANADA VNC legend.",
+    "keywords": [
+      "Class F",
+      "CYA",
+      "CYR",
+      "CYD",
+      "hatched",
+      "restricted",
+      "advisory",
+      "danger"
+    ]
+  },
+  {
+    "id": "p1-aerodromes-heliports",
+    "title": "Aerodromes & Heliports",
+    "category": "Aerodromes and heliports",
+    "sourcePage": 1,
+    "sourcePanel": 2,
+    "image": "assets/img/p1-panel2.jpg",
+    "interpretation": "Aerodromes and heliports have their own symbols and labels. The runway symbol shows runway location and orientation; a solid circle with a runway marks a certified aerodrome, labelled with name, identifier and elevation in feet ASL; an H in a circle marks a heliport, which may be at a hospital or other facility.",
+    "rpasSignificance": "These symbols indicate nearby air traffic and possibly associated airspace and procedures. Be aware of helicopter traffic near heliports and hospitals.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "Canada Flight Supplement (CFS)",
+        "url": "https://products.navcanada.ca/shop-vfr/Canada-Flight-Supplement/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend and CFS.",
+    "keywords": [
+      "aerodrome",
+      "airport",
+      "heliport",
+      "runway",
+      "certified",
+      "hospital",
+      "CYKZ",
+      "CYTZ"
+    ]
+  },
+  {
+    "id": "p2-activity-alerts",
+    "title": "Activity Alerts",
+    "category": "Aerodromes and heliports",
+    "sourcePage": 2,
+    "sourcePanel": 5,
+    "image": "assets/img/p2-panel5.jpg",
+    "interpretation": "Activity alerts mark areas of known parachuting, glider or ultralight activity, each with a frequency. These activities often operate at low altitudes, sometimes well below 400 ft AGL, and may be seasonal or time-limited.",
+    "rpasSignificance": "These aircraft may be in the same low-level airspace as your drone. Check the chart label, NOTAMs and CFS, and watch for unexpected low-level aircraft.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "Canada Flight Supplement (CFS)",
+        "url": "https://products.navcanada.ca/shop-vfr/Canada-Flight-Supplement/"
+      },
+      {
+        "label": "NAV CANADA NOTAMs",
+        "url": "https://www.navcanada.ca/en/aeronautical-information/notams.aspx"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. The parachute, glider and ultralight symbols are not yet verified against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "activity",
+      "parachuting",
+      "glider",
+      "ultralight",
+      "low level",
+      "frequency"
+    ]
+  },
+  {
+    "id": "p2-aerodrome-details",
+    "title": "Aerodrome Details",
+    "category": "Aerodromes and heliports",
+    "sourcePage": 2,
+    "sourcePanel": 6,
+    "image": "assets/img/p2-panel6.jpg",
+    "interpretation": "The symbol shows aerodrome or heliport location and runway orientation. The label may include elevation (ft ASL), radio frequency, runway type and length, certified or registered status (e.g. (R)), and the name and identifier. Consult the CFS for procedures, circuit direction, services and hazards.",
+    "rpasSignificance": "Aerodrome proximity means aircraft movements; check the CFS for details before flying nearby.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "Canada Flight Supplement (CFS)",
+        "url": "https://products.navcanada.ca/shop-vfr/Canada-Flight-Supplement/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend and CFS.",
+    "keywords": [
+      "aerodrome",
+      "heliport",
+      "elevation",
+      "frequency",
+      "runway",
+      "registered",
+      "CFS"
+    ]
+  },
+  {
+    "id": "p3-water-aerodromes",
+    "title": "Water Aerodromes & Floatplane Context",
+    "category": "Aerodromes and heliports",
+    "sourcePage": 3,
+    "sourcePanel": 3,
+    "image": "assets/img/p3-panel3.jpg",
+    "interpretation": "Lakes, shorelines and water aerodromes are common on the VNC. A water aerodrome is shown with an anchor symbol and a label (e.g. Toronto Harbour, CNQ3, 128.8). The anchor symbol marks areas used by floatplanes.",
+    "rpasSignificance": "Expect low-level floatplane traffic near shorelines, bays and lakes, especially in summer, and include it in your situational awareness.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "Canada Flight Supplement (CFS)",
+        "url": "https://products.navcanada.ca/shop-vfr/Canada-Flight-Supplement/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. The water aerodrome symbol is not yet verified against the current NAV CANADA VNC legend and CFS.",
+    "keywords": [
+      "water aerodrome",
+      "floatplane",
+      "anchor",
+      "seaplane",
+      "lake",
+      "shoreline",
+      "CNQ3"
+    ]
+  },
+  {
+    "id": "p1-frequencies-information",
+    "title": "Frequencies & Information Boxes",
+    "category": "Communications, notes and cautions",
+    "sourcePage": 1,
+    "sourcePanel": 3,
+    "image": "assets/img/p1-panel3.jpg",
+    "interpretation": "A frequency box names one or more communication services and their frequencies (e.g. advisory, terminal or FSS) and is tied to the area it applies to by a leader line. An information box lists frequencies and other useful information (e.g. ATIS, UNICOM, GND); read it to learn what services are available in the area.",
+    "rpasSignificance": "Frequency and information boxes show which aviation services operate in the area. They are a cue to nearby aircraft activity, not a substitute for airspace checks or required coordination.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "Canada Flight Supplement (CFS)",
+        "url": "https://products.navcanada.ca/shop-vfr/Canada-Flight-Supplement/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "frequency",
+      "information box",
+      "ATIS",
+      "UNICOM",
+      "GND",
+      "FSS",
+      "advisory",
+      "communication"
+    ]
+  },
+  {
+    "id": "p3-navigation-aids",
+    "title": "Navigation Aids & Aviation Context",
+    "category": "Communications, notes and cautions",
+    "sourcePage": 3,
+    "sourcePanel": 4,
+    "image": "assets/img/p3-panel4.jpg",
+    "interpretation": "Navigation aids, frequencies and reporting points help with orientation and traffic awareness. The panel shows a VOR/VOR-DME (name, frequency, identifier), an NDB (name and frequency), a reporting point (named point such as Guelph Lake) and aerodrome information (name, identifier, frequency and elevation).",
+    "rpasSignificance": "These features show where crewed aircraft navigate and report positions, which helps you anticipate traffic near your operating area.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "Canada Flight Supplement (CFS)",
+        "url": "https://products.navcanada.ca/shop-vfr/Canada-Flight-Supplement/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. VOR, NDB and reporting-point symbols are not yet verified against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "VOR",
+      "VOR-DME",
+      "NDB",
+      "reporting point",
+      "navaid",
+      "frequency",
+      "aerodrome information"
+    ]
+  },
+  {
+    "id": "p3-caution-notes",
+    "title": "Caution Boxes & Chart Notes",
+    "category": "Communications, notes and cautions",
+    "sourcePage": 3,
+    "sourcePanel": 5,
+    "image": "assets/img/p3-panel5.jpg",
+    "interpretation": "VNC charts include notes and cautions that give operational context. A caution box identifies areas of increased traffic or other hazards, and you should follow the instructions in the note. An operational note provides a frequency, procedure or other important information (e.g. transponder, contact control).",
+    "rpasSignificance": "Notes can describe traffic or hazards that affect your operating area. Read them in full; they should not be ignored.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "NAV CANADA NOTAMs",
+        "url": "https://www.navcanada.ca/en/aeronautical-information/notams.aspx"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "caution",
+      "note",
+      "heavy traffic",
+      "operational note",
+      "contact control",
+      "transponder"
+    ]
+  },
+  {
+    "id": "p1-obstacles-elevations",
+    "title": "Obstacles & Spot Elevations",
+    "category": "Terrain, obstacles and elevation",
+    "sourcePage": 1,
+    "sourcePanel": 4,
+    "image": "assets/img/p1-panel4.jpg",
+    "interpretation": "Towers, masts, buildings and other tall objects are shown with a top elevation in feet ASL and, in brackets, the height above ground in feet AGL (918 with 300 in brackets). The building symbol is distinct from the tower/mast symbol. A spot elevation (a dot with a number) gives the terrain elevation in feet ASL at one point.",
+    "rpasSignificance": "The bracketed AGL value is the one to compare with your planned altitude. Spot elevations help you estimate ground height in the area.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "obstacle",
+      "tower",
+      "mast",
+      "building",
+      "spot elevation",
+      "ASL",
+      "AGL",
+      "height"
+    ]
+  },
+  {
+    "id": "p1-terrain-built-water",
+    "title": "Terrain, Built-up Areas & Water",
+    "category": "Terrain, obstacles and elevation",
+    "sourcePage": 1,
+    "sourcePanel": 5,
+    "image": "assets/img/p1-panel5.jpg",
+    "interpretation": "Built-up areas are shown in yellow and indicate cities, towns and populated areas. Water bodies (lakes, rivers, bays) are shown in blue and help identify shorelines; water aerodromes may also be labelled.",
+    "rpasSignificance": "Yellow areas suggest people may be present, which matters for site selection. Water features support visual navigation and shoreline identification.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "terrain",
+      "built-up",
+      "urban",
+      "yellow",
+      "water",
+      "blue",
+      "shoreline"
+    ]
+  },
+  {
+    "id": "p2-mef",
+    "title": "Maximum Elevation Figure (MEF)",
+    "category": "Terrain, obstacles and elevation",
+    "sourcePage": 2,
+    "sourcePanel": 1,
+    "image": "assets/img/p2-panel1.jpg",
+    "interpretation": "The MEF shows the highest feature within the quadrangle, including an allowance for uncharted objects. In the example, 12 with a small superscript 5 represents 1,250 ft ASL. It is not a ground elevation at your location.",
+    "rpasSignificance": "Use it to understand the highest possible feature in the area, not to judge terrain or obstacle clearance at your specific site.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend. Note: this page is headed \"Page 2 of 2 … for Drone Pilots\", unlike pages 1, 3 and 4 (\"of 4 … for RPAS\"); the source page numbering should be reconciled.",
+    "keywords": [
+      "MEF",
+      "maximum elevation figure",
+      "quadrangle",
+      "highest feature",
+      "ASL"
+    ]
+  },
+  {
+    "id": "p2-obstacles",
+    "title": "Obstacles",
+    "category": "Terrain, obstacles and elevation",
+    "sourcePage": 2,
+    "sourcePanel": 2,
+    "image": "assets/img/p2-panel2.jpg",
+    "interpretation": "The top number is the elevation of the top of the obstacle in feet ASL; the bracketed number is its height above ground in feet AGL (990 with 310 in brackets). Obstacles may include towers, masts, wind turbines, buildings and tanks. Guy wires may or may not be shown.",
+    "rpasSignificance": "Obstacles can sit within your operating height. Guy wires may not be charted, so keep clear margins and confirm on site.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "obstacle",
+      "tower",
+      "mast",
+      "wind turbine",
+      "tank",
+      "guy wires",
+      "AGL"
+    ]
+  },
+  {
+    "id": "p4-mef-vs-spot",
+    "title": "MEF vs Spot Elevation",
+    "category": "Terrain, obstacles and elevation",
+    "sourcePage": 4,
+    "sourcePanel": 5,
+    "image": "assets/img/p4-panel5.jpg",
+    "interpretation": "The MEF is a large number with a small superscript final digit (e.g. 1062 with a superscript 4). It represents the highest terrain elevation, in hundreds of feet ASL, within the quadrangle, includes a clearance allowance, and is not the elevation of a specific site. A spot elevation is a small black dot with an elevation (e.g. 954) giving the actual elevation in feet ASL of the mapped point.",
+    "rpasSignificance": "The MEF is a broad area figure and a spot elevation is a point value; neither guarantees obstacle clearance at your site.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Needs confirmation: the panel's explanation of how the MEF's last digit is read should be checked against the current VNC legend.",
+    "keywords": [
+      "MEF",
+      "spot elevation",
+      "quadrangle",
+      "superscript",
+      "elevation",
+      "ASL"
+    ]
+  },
+  {
+    "id": "p1-key-reminders",
+    "title": "Key Reminders",
+    "category": "Chart limits and reminders",
+    "sourcePage": 1,
+    "sourcePanel": 6,
+    "image": "assets/img/p1-panel6.jpg",
+    "interpretation": "Use the VNC together with official sources and good planning. Read the boundary and label together; consult the VNC legend, the CFS and NOTAMs; and conduct a site survey, since the chart shows a lot but not everything.",
+    "rpasSignificance": "Local hazards, people and recent changes may not be on the chart. Verify conditions on the ground before flying.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "NAV CANADA NOTAMs",
+        "url": "https://www.navcanada.ca/en/aeronautical-information/notams.aspx"
+      },
+      {
+        "label": "Transport Canada drone safety",
+        "url": "https://tc.canada.ca/en/aviation/drone-safety"
+      }
+    ],
+    "verificationStatus": "General planning reminders from the supplied Drone_SOP infographic; not chart symbology.",
+    "keywords": [
+      "reminder",
+      "site survey",
+      "legend",
+      "CFS",
+      "NOTAM",
+      "planning"
+    ]
+  },
+  {
+    "id": "p2-chart-limits",
+    "title": "Chart Limits",
+    "category": "Chart limits and reminders",
+    "sourcePage": 2,
+    "sourcePanel": 7,
+    "image": "assets/img/p2-panel7.jpg",
+    "interpretation": "The VNC scale is 1:500,000, so small details are not shown. Not every wire, mast, building or hazard is charted. Use a site survey to identify local obstacles and people, and check current charts, CFS, NOTAMs and VTA products as applicable.",
+    "rpasSignificance": "At low altitude the uncharted hazards are the ones most likely to matter. The chart supports planning; it does not replace a site survey.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "NAV CANADA aeronautical information",
+        "url": "https://www.navcanada.ca/en/aeronautical-information.aspx"
+      }
+    ],
+    "verificationStatus": "General guidance from the supplied Drone_SOP infographic; the 1:500,000 scale should be confirmed against the current VNC.",
+    "keywords": [
+      "chart limits",
+      "scale",
+      "1:500,000",
+      "not shown",
+      "wires",
+      "VTA",
+      "site survey"
+    ]
+  },
+  {
+    "id": "p3-chart-doesnt-show",
+    "title": "What the Chart Doesn't Show",
+    "category": "Chart limits and reminders",
+    "sourcePage": 3,
+    "sourcePanel": 6,
+    "image": "assets/img/p3-panel6.jpg",
+    "interpretation": "The VNC shows much but not everything. It does not show all wires, cranes, masts or towers, buildings or obstacles, people, vehicles or boats, or temporary hazards such as construction and events. Conditions can change, and a visual site survey is always required before flying.",
+    "rpasSignificance": "Missing detail is not evidence that an area is clear. A site survey is how you find what the chart omits.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "Transport Canada drone safety",
+        "url": "https://tc.canada.ca/en/aviation/drone-safety"
+      }
+    ],
+    "verificationStatus": "General guidance from the supplied Drone_SOP infographic; not chart symbology.",
+    "keywords": [
+      "limitations",
+      "not shown",
+      "wires",
+      "cranes",
+      "temporary hazards",
+      "site survey"
+    ]
+  },
+  {
+    "id": "p4-stacked-airspace-label",
+    "title": "Reading a Stacked Airspace Label",
+    "category": "Reading labels and identifiers",
+    "sourcePage": 4,
+    "sourcePanel": 1,
+    "image": "assets/img/p4-panel1.jpg",
+    "interpretation": "Line by line: 125 is the upper limit in hundreds of feet ASL (12,500 ft); TML 119.3 is the terminal frequency, if applicable; C is the class; ABV 35 means above 3,500 ft ASL; 35 is the lower limit in hundreds of feet ASL; E with NO CONTACT is the class and contact requirement; 7 AGL is a lower limit of 700 ft above ground. Read the entire label with the boundary line and class information.",
+    "rpasSignificance": "Decoding the stack tells you which airspace begins at which height, so you can compare it with your planned altitude and location.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "NAV CANADA Designated Airspace Handbook (DAH)",
+        "url": "https://www.navcanada.ca/en/aeronautical-information/aip-canada-and-related-publications/aip-canada.aspx"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "stacked label",
+      "airspace",
+      "upper limit",
+      "lower limit",
+      "ABV",
+      "AGL",
+      "TML",
+      "no contact"
+    ]
+  },
+  {
+    "id": "p4-aerodrome-label",
+    "title": "Reading an Aerodrome Label",
+    "category": "Reading labels and identifiers",
+    "sourcePage": 4,
+    "sourcePanel": 2,
+    "image": "assets/img/p4-panel2.jpg",
+    "interpretation": "Using Guelph Lake as the example: aerodrome name, certification/registration identifier (CNQ3), aerodrome elevation in feet ASL (1195), elevation of the longest runway (115), aerodrome frequency (132.0, A/G), runway orientation (11/29), and lighting and other information (Unlighted).",
+    "rpasSignificance": "The label identifies a source of aircraft traffic and its basic operating data. Use the CFS for current detail.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "Canada Flight Supplement (CFS)",
+        "url": "https://products.navcanada.ca/shop-vfr/Canada-Flight-Supplement/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Needs confirmation: the callout for the bracketed (115) is given as an AGL runway elevation; confirm its meaning against the current VNC legend.",
+    "keywords": [
+      "aerodrome label",
+      "CNQ3",
+      "elevation",
+      "frequency",
+      "A/G",
+      "runway",
+      "unlighted"
+    ]
+  },
+  {
+    "id": "p4-heliport-label",
+    "title": "Reading a Heliport or Hospital Heliport",
+    "category": "Reading labels and identifiers",
+    "sourcePage": 4,
+    "sourcePanel": 3,
+    "image": "assets/img/p4-panel3.jpg",
+    "interpretation": "Using Toronto Hospital as the example: the heliport symbol (H in a circle), heliport name, certification/registration (CBK4), heliport elevation in feet ASL (636), elevation of the landing area in feet AGL (206), and frequency if published (123.075).",
+    "rpasSignificance": "Heliports are often near hospitals, so expect low-level helicopter traffic in the area.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "Canada Flight Supplement (CFS)",
+        "url": "https://products.navcanada.ca/shop-vfr/Canada-Flight-Supplement/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Needs confirmation: the bracketed (206) is described as landing-area elevation AGL; confirm against the current VNC legend.",
+    "keywords": [
+      "heliport",
+      "hospital",
+      "CBK4",
+      "helicopter",
+      "elevation",
+      "frequency"
+    ]
+  },
+  {
+    "id": "p4-obstacle-label",
+    "title": "Reading an Obstacle Label",
+    "category": "Reading labels and identifiers",
+    "sourcePage": 4,
+    "sourcePanel": 4,
+    "image": "assets/img/p4-panel4.jpg",
+    "interpretation": "The top number is the obstacle top elevation in feet ASL (1233); the bracketed number is the height above ground in feet AGL (345). The symbol shows the obstacle type (tower/mast, or wind turbine), and lighting is shown when applicable (Lighted / Unlighted).",
+    "rpasSignificance": "Use the bracketed AGL height against your planned altitude, and note whether the obstacle is lit.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. The wind turbine symbol and lighting notation are not yet verified against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "obstacle label",
+      "tower",
+      "wind turbine",
+      "lighted",
+      "unlighted",
+      "ASL",
+      "AGL"
+    ]
+  },
+  {
+    "id": "p4-notes-frequencies-cautions",
+    "title": "Reading Notes, Frequency Boxes & Cautions",
+    "category": "Reading labels and identifiers",
+    "sourcePage": 4,
+    "sourcePanel": 6,
+    "image": "assets/img/p4-panel6.jpg",
+    "interpretation": "A caution/information note highlights hazards, procedures or important information that can affect your operation; read the full note. A frequency box identifies the local aviation communications environment (e.g. Control, ATIS, FSS), with frequencies in MHz. An operational note provides a requirement or procedure (e.g. transponder mandatory).",
+    "rpasSignificance": "These boxes can describe hazards, services and requirements for the area. Always read the notes in full.",
+    "references": [
+      {
+        "label": "NAV CANADA VNC and VTA charts",
+        "url": "https://products.navcanada.ca/shop-vfr/VFR-Navigation-Charts-VNC/"
+      },
+      {
+        "label": "Canada Flight Supplement (CFS)",
+        "url": "https://products.navcanada.ca/shop-vfr/Canada-Flight-Supplement/"
+      }
+    ],
+    "verificationStatus": "Illustration taken from the supplied Drone_SOP infographic. Not yet verified against the current NAV CANADA VNC legend.",
+    "keywords": [
+      "notes",
+      "frequency box",
+      "caution",
+      "operational note",
+      "transponder",
+      "ATIS",
+      "FSS"
+    ]
+  }
+]
