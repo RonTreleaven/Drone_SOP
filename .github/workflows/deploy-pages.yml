@@ -25,6 +25,7 @@ on:
       - "assets/Emergency/*.md"
       - "assets/pdf/MyFactSheet.pdf"
       - "sections/**"
+      - "vnc-key-preview/**"
       - "data/*.json"
       - "data/*.csv"
       - "data/*.geojson"
@@ -162,6 +163,9 @@ jobs:
              "Advanced_RPAS_Study/docs/TP15263_E_Knowledge-Requirements-Basic-Advanced.pdf" \
              _site/Advanced_RPAS_Study/docs/
 
+          # Canadian VNC Quick Key: publish the page, card data and all illustrations.
+          cp -a vnc-key-preview _site/
+
           # Disable Jekyll processing
           touch _site/.nojekyll
 
@@ -178,6 +182,22 @@ jobs:
           test -f _site/Advanced_RPAS_Study/data/flashcards.json
           test -f _site/Advanced_RPAS_Study/data/questions.json
           test -f _site/Advanced_RPAS_Study/data/references.json
+
+      - name: Verify VNC Quick Key artifact
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("_site/vnc-key-preview")
+          for relative in ("index.html", "assets/css/vnc-key.css", "assets/js/vnc-key.js", "data/vnc-key.json"):
+              assert (root / relative).is_file(), f"Missing VNC runtime file: {relative}"
+          cards = json.loads((root / "data/vnc-key.json").read_text(encoding="utf-8"))
+          assert cards, "VNC card data is empty"
+          for card in cards:
+              assert (root / card["image"]).is_file(), f"Missing illustration: {card['image']}"
+          print(f"Verified VNC page, runtime files and all {len(cards)} card illustrations.")
+          PY
 
       - name: Summarize site artifact
         run: |
