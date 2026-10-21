@@ -1,0 +1,80 @@
+name: Compare RPAS job collectors
+
+on:
+  pull_request:
+    paths:
+      - 'drone_jobs/**'
+      - '.github/workflows/compare-job-collectors.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout proposed collector
+        uses: actions/checkout@v4
+        with:
+          path: proposed
+
+      - name: Checkout production collector
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: baseline
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python requirements
+        run: python -m pip install -r proposed/drone_jobs/requirements.txt pytest
+
+      - name: Run matching regression tests
+        working-directory: proposed
+        run: python -m pytest drone_jobs/tests -q
+
+      - name: Run collectors without modifying production
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p comparison
+          for variant in baseline proposed; do
+            echo "Starting ${variant}"
+            start=$(date +%s)
+            (cd "$variant" && python drone_jobs/scraper.py --no-write --sources simplyhired,jobbank,talent) >"comparison/${variant}.log" 2>&1
+            status=$?
+            finish=$(date +%s)
+            printf "%s,%s,%s\n" "$variant" "$status" "$((finish-start))" >>comparison/runtimes.csv
+            echo "${variant}: exit ${status}, $((finish-start)) seconds"
+          done
+
+      - name: Summarize comparison
+        shell: bash
+        run: |
+          python - <<'PY'
+          import csv, pathlib, re
+          root = pathlib.Path('comparison')
+          rows = list(csv.reader((root/'runtimes.csv').open()))
+          output = ['# RPAS collector comparison', '', '| Version | Exit code | Runtime (seconds) | Accepted candidates in log |', '|---|---:|---:|---:|']
+          for variant, status, elapsed in rows:
+              content = (root/f'{variant}.log').read_text(errors='replace')
+              # Existing collector prints accepted job titles prefixed by ' - '.
+              accepted = sum(1 for line in content.splitlines() if line.startswith(' - '))
+              output.append(f'| {variant} | {status} | {elapsed} | {accepted} |')
+          output += ['', 'Counts represent accepted entries printed during collection, not deduplicated unique jobs.', 'Inspect the attached logs for source failures, repeated listings, and coverage.', 'The test is non-writing; production JSON, DB and live pages are unchanged.']
+          (root/'summary.md').write_text('\n'.join(output)+'\n')
+          print((root/'summary.md').read_text())
+          PY
+          cat comparison/summary.md >>"$GITHUB_STEP_SUMMARY"
+
+      - name: Upload comparison report and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rpas-job-collector-comparison
+          path: comparison/
