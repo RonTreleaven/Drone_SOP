@@ -126,3 +126,55 @@ def test_fetch_url_retries_429_then_succeeds(monkeypatch):
     monkeypatch.setattr(scraper, '_response_cache', {})
 
     assert scraper.fetch_url('https://example.test/x').status_code == 200
+
+
+def test_job_discovery_includes_rpas_and_visual_observer_searches():
+    from drone_jobs.config import QUERY_FAMILIES
+    assert "rpas" in QUERY_FAMILIES["operations"]
+    assert "rpas visual observer" in QUERY_FAMILIES["flight_support"]
+    assert "drone ground crew" in QUERY_FAMILIES["flight_support"]
+
+
+def test_visual_observer_with_explicit_rpas_duties_is_accepted():
+    from drone_jobs.scraper import evaluate_job_match
+    job = {
+        "title": "Visual Observer - Flight Operations",
+        "company": "Example Aviation",
+        "location": "Toronto, Ontario",
+        "description": "Support RPAS flight operations as the visual observer for drone pilots.",
+        "link": "https://example.com/jobs/observer",
+        "source": "simplyhired",
+        "query_family": "flight_support",
+    }
+    matched, _, _ = evaluate_job_match(job)
+    assert matched
+
+
+def test_non_drone_ground_crew_is_rejected():
+    from drone_jobs.scraper import evaluate_job_match
+    job = {
+        "title": "Ground Crew",
+        "company": "Airport Services",
+        "location": "Toronto, Ontario",
+        "description": "Load passenger baggage and support airline ramp operations.",
+        "link": "https://example.com/jobs/groundcrew",
+        "source": "simplyhired",
+        "query_family": "flight_support",
+    }
+    matched, _, _ = evaluate_job_match(job)
+    assert not matched
+
+
+def test_existing_drone_pilot_still_matches():
+    from drone_jobs.scraper import evaluate_job_match
+    job = {
+        "title": "Drone Pilot",
+        "company": "Example Surveys",
+        "location": "Canada",
+        "description": "Perform RPAS mapping and drone flights.",
+        "link": "https://example.com/jobs/pilot",
+        "source": "simplyhired",
+        "query_family": "operations",
+    }
+    matched, _, _ = evaluate_job_match(job)
+    assert matched
