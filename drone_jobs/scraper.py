@@ -572,7 +572,7 @@ def evaluate_job_match(job):
         "visual observer", "ground crew", "flight crew", "flight assistant",
     ))
     support_context = any(term in desc_text for term in CORE_DRONE_TERMS)
-    support_match = support_title and support_context and has_strong_drone_signal
+    support_match = support_title and support_context
 
     score = min(score, 0.95)
     score = max(0.0, score)
@@ -591,7 +591,7 @@ def evaluate_job_match(job):
         reasons.append("technician override via uav/rpas context")
 
     required_score = 0.55 if allow_technician_override else 0.62
-    is_match = (has_core_drone_in_title or support_match) and has_job_in_title and has_strong_drone_signal and has_job_anywhere and score >= required_score
+    is_match = (has_core_drone_in_title or support_match) and has_job_in_title and (has_strong_drone_signal or support_match) and has_job_anywhere and score >= required_score
 
     return is_match, round(score, 3), "; ".join(reasons)
 
