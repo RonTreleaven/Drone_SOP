@@ -1,5 +1,32 @@
 [
   {
+    "raw": "(U1804/26 NOTAMR U1693/26\nQ) CZWG/QOLAS/IV/M/E/000/012/5022N09756W002\nA) CZWG B) 2610221253 C) 2611281800EST\nE) OBST LGT U/S TOWER 502136N 0975625W (APRX 13NM WNW \nWOODLANDS/KENDALL FARM AD (CWL4)) 364FT AGL, 1180FT AMSL.)",
+    "startValidity": "2026-10-22T12:53:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.360000, -97.940278"
+    ]
+  },
+  {
+    "raw": "(U1803/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/012/5106N09947W002\nA) CZWG B) 2610221214 C) 2701211800EST\nE) OBST LGT U/S TOWER 510628N 0994715W (APRX 10NM E DAUPHIN (LT. COL \nW.G.(BILLY) BARKER, VC) AD (CYDN)) 305FT AGL, 1182FT AMSL.)",
+    "startValidity": "2026-10-22T12:14:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.107778, -99.787500"
+    ]
+  },
+  {
+    "raw": "(U1802/26 NOTAMN\nQ) CZWG/QOBCE/IV/M/E/000/012/5106N09947W002\nA) CZWG B) 2610221213 C) PERM\nE) AMEND PUBLICATIONS: NEW TOWER 510628N 0994715W (APRX 10NM E \nDAUPHIN (LT. COL W.G.(BILLY) BARKER, VC) AD (CYDN)). 305FT AGL \n1182FT AMSL. LGTD, NOT PAINTED.)",
+    "startValidity": "2026-10-22T12:13:00",
+    "endValidity": null,
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "51.107778, -99.787500"
+    ]
+  },
+  {
     "raw": "(D4643/26 NOTAMN\nQ) CZWG/QOBCE/IV/M/AE/000/020/5020N10533W005\nA) CYMJ B) 2610212201 C) 2610232359\nE) DRILL RIG 501937N 1053304W APRX 1550FT BEYOND THR 29R AND 870FT \nSOUTH RCL. 27FT AGL 1917FT AMSL.)",
     "startValidity": "2026-10-21T22:01:00",
     "endValidity": "2026-10-23T23:59:00",
@@ -312,15 +339,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.976389, -108.133611"
-    ]
-  },
-  {
-    "raw": "(U1693/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/012/5022N09756W002\nA) CZWG B) 2610021949 C) 2610301800\nE) OBST LGT U/S TOWER 502136N 0975625W (APRX 13NM WNW \nWOODLANDS/KENDALL FARM AD (CWL4)) 364FT AGL, 1180FT AMSL.)",
-    "startValidity": "2026-10-02T19:49:00",
-    "endValidity": "2026-10-30T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.360000, -97.940278"
     ]
   },
   {
