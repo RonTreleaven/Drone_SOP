@@ -9,30 +9,12 @@
     ]
   },
   {
-    "raw": "(I5978/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/037/5105N11409W005\nA) CXXX B) 2610211847 C) 2610212300\nE) CAC6 CALGARY (ALBERTA CHILDREN'S HOSP) (HELI)\nCRANE 510432N 1140848W (APRX 257FT E AD (CAC6)) 28FT AGL\n3699FT AMSL.)",
-    "startValidity": "2026-10-21T18:47:00",
-    "endValidity": "2026-10-21T23:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "51.075556, -114.146667"
-    ]
-  },
-  {
     "raw": "(I5975/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/020/5614N11727W005\nA) CYPE B) 2610221500 C) 2610221900\nE) CRANE 561345N 1172709W APRX 2120FT BEYOND THR 04 AND 1010FT NW \nRCL. 50FT AGL 1923FT AMSL.)",
     "startValidity": "2026-10-21T18:05:06.818",
     "endValidity": "2026-10-22T19:00:00",
     "q_code": "QOBCE",
     "coordinates_dd": [
       "56.229167, -117.452500"
-    ]
-  },
-  {
-    "raw": "(R1003/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/028/5936N13343W005\nA) CYSQ B) 2610202105 C) 2610222100\nE) OBST LGT U/S TOWER 593540N 1334309W (APRX 1.81NM WNW AD) 111FT \nAGL, 2712FT AMSL.)",
-    "startValidity": "2026-10-20T21:05:00",
-    "endValidity": "2026-10-22T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "59.594444, -133.719167"
     ]
   },
   {
@@ -96,15 +78,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "52.494722, -115.529167"
-    ]
-  },
-  {
-    "raw": "(C5227/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/025/5317N11334W005\nA) CYEG B) 2610211300 C) 2610212359\nE) MOBILE CRANE WITHIN 200FT RADIUS CENTRED ON 531710N 1133409W APRX \n940FT BEYOND THR 30 AND 1110FT SW RCL. 99FT AGL 2468FT AMSL. NOT \nLGTD, NOT PAINTED.)",
-    "startValidity": "2026-10-19T19:17:13.663",
-    "endValidity": "2026-10-21T23:59:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "53.286111, -113.569167"
     ]
   },
   {
