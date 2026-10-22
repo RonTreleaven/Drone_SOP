@@ -83,10 +83,10 @@
     "id": "class-c-control-zone-billy-bishop",
     "title": "Class C Control Zone — Billy Bishop",
     "category": "Airspace and restrictions",
-    "sourceLabel": "User-annotated Toronto chart: original excerpt and actual-pixel enlargement, with a matching vertical schematic",
-    "imageAlt": "Original circled Billy Bishop chart excerpt and Class C label, next to an actual pixel enlargement of the near-vertical square-bracket boundary segments and a thin schematic opening to the right.",
-    "image": "assets/img/billy-bishop-boundary-v2.svg",
-    "interpretation": "Start with the circled bracket-shaped dashed boundary: notice its short segments, the short perpendicular end-strokes on the same side and the gaps between segments. The actual-pixel enlargement shows the original shape; the thin vertical schematic matches its orientation in this excerpt. Trace that boundary to the associated Billy Bishop label. A control zone is a type of airspace; C is its classification. In the supplied Billy Bishop screenshot, the lower part of the boxed stack reads 25 over SFC, with C beside the TWR frequencies (118.2 and 119.2): Class C from the surface to 2,500 ft ASL. Above it, the terminal portion reads 125 over ABV 25 with C beside TML 133.4: Class C above 2,500 ft ASL to 12,500 ft ASL in that depicted sector. Follow the associated boundary and label together; a Class C label alone does not identify a control zone.",
+    "sourceLabel": "User-supplied Billy Bishop chart excerpt with connected stepped-line schematic",
+    "imageAlt": "Billy Bishop chart excerpt and enlargement of its circled boundary, beside a schematic drawn as one continuous connected vertical square-wave line.",
+    "image": "assets/img/billy-bishop-boundary-connected.png",
+    "interpretation": "Follow the boundary to its associated class and altitude label. The revised schematic is one connected stepped line, including the short strokes joining each step. In the supplied Billy Bishop chart, C identifies Class C and 25 over SFC indicates surface to 2,500 ft ASL. The terminal portion above reads 125 over ABV 25: above 2,500 ft ASL to 12,500 ft ASL in that depicted sector.",
     "rpasSignificance": "The control-zone portion begins at the surface, so flying below 400 ft AGL does not place an RPAS below it. Read the SFC floor, the ASL limits and the applicable boundary together. Use current official airspace information and the required authorization for your operation; the displayed tower frequency is chart-reading context, not an RPAS authorization.",
     "references": [
       {
@@ -102,7 +102,7 @@
         "url": "https://mapviewer.fltplan.com/"
       }
     ],
-    "verificationStatus": "Concept checked against TC AIM RAC 2.7.3 and 2.8.3. Labels and frequencies transcribed from the user-supplied screenshot. Its chart edition/effective date is unknown; the excerpt is a study example and its operational currency has not been verified. The circled boundary is shown as an actual-pixel enlargement alongside a thin, orientation-matched schematic. Schematic spacing is simplified; use the current chart legend to confirm the convention.",
+    "verificationStatus": "Chart imagery comes from the user's screenshot; its edition is unknown. Connected schematic spacing is simplified. Current operational limits have not been independently verified.",
     "keywords": [
       "class C",
       "control zone",
@@ -117,13 +117,13 @@
       "terminal",
       "TWR",
       "TML",
-      "bracket",
-      "bracketed",
       "squared off",
       "ticked",
-      "dash",
-      "dashed",
-      "line type"
+      "line type",
+      "connected",
+      "square wave",
+      "stepped",
+      "continuous"
     ]
   },
   {
