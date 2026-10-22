@@ -1,5 +1,23 @@
 [
   {
+    "title": "RPAS Pilot & Flight Operations Specialist",
+    "company": "National Research Council Canada",
+    "location": "Montreal, Quebec, ca",
+    "link": "https://ca.talent.com/view?id=642551074470431828",
+    "description": "Tenure: Term Duration: Until 31 March 2028 Language Requirements: English or French Work arrangements: Due to the nature of the work and operational requirements, this position may be eligible for a limited hybrid work arrangement (combination of working onsite and telework). Discover the possible Anything is possible at the NRC, named in 2026 one of Canadas Top Employers for Young People, Top Employer in the National Capital Region and Forbes Canadas Best Employers! As Canadas largest research and innovation organization, our world-renowned research pushes the boundaries of science and engineering to make the impossible, possible. Every day we explore new ideas through innovative research and help companies discover possibilities that impact Canadas future and the world. At the NRC, youll also discover new possibilities. Our supportive workplace fosters a culture of creativity, welcoming fresh perspectives and innovation at all levels. We value teamwork. Youll collaborate across multiple fields and with the brightest minds to find creative solutions. Most importantly, youll discover whats possible within you as you grow, make valuable contributions and progress in your professional journey. From ground-breaking discoveries to a life-changing career, discover your possible at the NRC. Defence Industrial Strategy The NRC has an important role within the Government of Canada's Defence Industrial Strategy, accelerating research and innovation, and helping Canadian businesses develop leading-edge technologies for civilian and military use. With expertise across fields such as transportation, quantum science, medical countermeasures and advanced manufacturing, the NRC is hiring to drive the development of national sovereign defence capabilities. The following role will support the NRCs contributions to defence priorities. The role We are looking for an RPAS Pilot - Flight Operations Specialist to support advanced research and development and join the Remotely Piloted Aircraft Systems (RPAS) and RPAS Traffic Management (RTM) team within the Centre for Drone Innovation (CDI) in Mirabel. The new CDI is part of the Aerospace Research Centres Drone and Flight Autonomy Lab. It will strengthen Canadas ability to research, develop, test and validate advanced drone technologies. The successful candidate would be someone who shares our core values of Integrity, Excellence, Respect, and Creativity. Working with a multidisciplinary team of engineers, technicians and researchers, the RPAS Pilot will support experimental aircraft integration, flighttest campaigns and operational demonstrations. The role includes responsibility for operational planning, flight safety, regulatory compliance and coordination of flight activities supporting research and technology development. The role will contribute to the safe and efficient operation of experimental RPAS platforms while supporting research activities in autonomy, sensor integration, communications and mission systems. Screening criteria Applicants must demonstrate within the content of their application that they meet the following screening criteria in order to be given further consideration as candidates: Education College diploma or bachelors degree in aviation, aerospace technologies, robotics, engineering or a related discipline. For information on certificates and diplomas issued abroad, please see Degree equivalency Certifications Valid Transport Canada Advanced RPAS Pilot Certificate; A Private Pilot License (PPL) or Glider Pilot License (GPL) and/or Commercial Pilot License (CPL) would be considered an asset . Experience Significant experience operating remotely piloted aircraft systems in operational, research or testing environments; Experience planning and executing aviation or RPAS flight operations including mission planning and operational risk management; Experience coordinating aviation operations with engineering or research teams in multidisciplinary technical environments; and Experience developing operational procedures, flight test plans or aviation safety documentation Experience listed below would be considered an asset, but not mandatory to the position: Experience supporting experimental aircraft development or technology demonstrations; Experience conducting operations in controlled airspace and/or beyond visual line of sight (BVLOS); Experience supporting flight test engineering activities; Experience operating military RPAS; Battlefield experience. Condition of employment Secret clearance A thorough security clearance process will be applied. For a Secret Clearance, verification of background information over a period of 10 years is required. Individuals must have lived in Canada for a sufficient period of time to enable the security screening process. Language requirements English or French Information on language requirements and self-assessment tests Assessment criteria Candidates will be assessed on the basis of the following criteria: Technical competencies Ability to remotely pilot, follow flight test plans and operate various types of RPAS, including fixed-wing, helicopter and multi-copter platforms to gather experimental flight data for validation and demonstrate novel applications; Ability to adapt to unpredictable circumstances and complete the mission safely; Knowledge of RPAS flight operations, aviation safety practices and operational risk management; Knowledge of Canadian Aviation Regulations (CARs) and regulatory frameworks governing RPAS operations; Ability to plan and execute safe flight operations of experimental RPAS; Ability to coordinate complex operational activities involving multidisciplinary engineering teams; Understanding of aviation operational procedures, including hybrid airspace coordination with RPAS and civilian and/or military aircraft, mission planning and safety documentation; and Knowledge of (FAA), and/or European Union Aviation Safety Agency (EASA), or other international governing bodies regulations governing RPAS operation would be an asset . Behavioural competencies Technology extension - Results orientation (Level 2) Technology extension - Conceptual and analytical ability (Level 2) Technology extension - Teamwork (Level 2) Technology extension - Client focus (Level 2) Technology extension - Communication (Level 2) Competency Profile(s) For this position, the NRC will evaluate candidates using the following competency profile: Technology Extension View all competency profiles Compensation From $99,281 to $117,859 per annum. NRC employees enjoy a wide-range of competitive benefits including a robust pension plan, comprehensive health and dental coverage, disability and life insurance, office closure at the end of December, and additional supports to enhance your well-being throughout your career and beyond. FULL_TIME",
+    "summary": "Tenure: Term Duration: Until 31 March 2028 Language Requirements: English or French Work arrangements: Due to the nature of the work and operational requirements, this position may be eligible for a limited hybrid work arrangement (combination of working onsite and telework). Discover the possible Anything is possible at the NRC, named in 2026 one of Canadas Top Employers for Young People, Top Employer in the National Capital Region and Forbes Canadas Best Employers! As Canadas largest research and innovation organization, our world-renowned",
+    "date_posted": "10/20/2026",
+    "date_expires": "",
+    "category": "general",
+    "type": "unknown",
+    "source": "talent",
+    "query_family": "operations",
+    "matched_query": "rpas pilot",
+    "confidence": 0.95,
+    "match_reason": "family terms: flight, pilot, rpas; drone terms: drone, rpas; job terms: career, hiring, pilot; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
+    "last_seen": "10/22/2026"
+  },
+  {
     "title": "Reality Capture / Drone Pilot",
     "company": "EBC",
     "location": "Toronto, Ontario, ca",
@@ -15,7 +33,7 @@
     "matched_query": "drone pilot",
     "confidence": 0.95,
     "match_reason": "family terms: pilot, uav; drone terms: drone, lidar, uav; job terms: apply, career, job, pilot, survey; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/20/2026"
+    "last_seen": "10/22/2026"
   },
   {
     "title": "UAV Flight Controls Engineer (ArduPilot)",
@@ -231,7 +249,7 @@
     "matched_query": "drone pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, uas; drone terms: uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/20/2026"
+    "last_seen": "10/22/2026"
   },
   {
     "title": "unmanned aerial vehicle (UAV) technician",
@@ -249,7 +267,7 @@
     "matched_query": "photogrammetry drone",
     "confidence": 0.95,
     "match_reason": "job-like URL; drone terms: aerial, uav; job terms: apply, job; source=jobbank; query_family=mapping; drone term in title/company; core term in title; core drone/uav signal; technician override via uav/rpas context",
-    "last_seen": "10/20/2026"
+    "last_seen": "10/22/2026"
   },
   {
     "title": "sUAS Flight Operator (FTC), Durham",
@@ -267,7 +285,7 @@
     "matched_query": "remote pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, pilot, uas; drone terms: drone, uas; job terms: apply, career, hiring, operator, pilot; source=greenhouse; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/20/2026"
+    "last_seen": "10/22/2026"
   },
   {
     "title": "UAS Operator & Flight Operations Technician (R5438)",
@@ -285,7 +303,7 @@
     "matched_query": "uas operator",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, uas; drone terms: uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/20/2026"
+    "last_seen": "10/22/2026"
   },
   {
     "title": "MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)",
@@ -303,6 +321,6 @@
     "matched_query": "rpas pilot",
     "confidence": 0.8,
     "match_reason": "family terms: flight, pilot, rpas; drone terms: rpas; job terms: career, job, pilot; source=talent; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/18/2026"
+    "last_seen": "10/22/2026"
   }
 ]
