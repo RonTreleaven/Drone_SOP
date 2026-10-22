@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(C5294/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/025/5318N11334W005\nA) CYEG B) 2610241300 C) 2610242000\nE) CRANE 531756N 1133347W APRX 3300FT BEYOND THR 30 AND 3130FT NE \nRCL. 92FT AGL 2460FT AMSL. NOT LGTD, NOT PAINTED.)",
+    "startValidity": "2026-10-22T19:49:56.547",
+    "endValidity": "2026-10-24T20:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "53.298889, -113.563056"
+    ]
+  },
+  {
+    "raw": "(R1007/26 NOTAMR R0706/26\nQ) CZEG/QOLAS/IV/M/E/000/026/5421N11201W002\nA) CZEG B) 2610221810 C) 2610231330EST\nE) OBST LGT U/S TOWER 542106N 1120128W (APRX 21NM NNE SMOKY LAKE \n(GEORGE MCDOUGALL HEALTH CENTRE) (HELI) AD (CGM2)) 350FT AGL, \n2550FT AMSL.)",
+    "startValidity": "2026-10-22T18:10:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "54.351667, -112.024444"
+    ]
+  },
+  {
     "raw": "(R1006/26 NOTAMR R0916/26\nQ) CZEG/QOLAS/IV/M/AE/000/024/5340N11351W005\nA) CZVL B) 2610221559 C) 2611212359\nE) OBST LGT U/S TOWER 534023N 1135036W (APRX 2612FT NE AD) 50FT AGL, \n2301FT AMSL.)",
     "startValidity": "2026-10-22T15:59:00",
     "endValidity": "2026-11-21T23:59:00",
@@ -24,15 +42,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "52.616389, -114.647500"
-    ]
-  },
-  {
-    "raw": "(I5975/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/020/5614N11727W005\nA) CYPE B) 2610221500 C) 2610221900\nE) CRANE 561345N 1172709W APRX 2120FT BEYOND THR 04 AND 1010FT NW \nRCL. 50FT AGL 1923FT AMSL.)",
-    "startValidity": "2026-10-21T18:05:06.818",
-    "endValidity": "2026-10-22T19:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "56.229167, -117.452500"
     ]
   },
   {
@@ -63,21 +72,21 @@
     ]
   },
   {
-    "raw": "(U1791/26 NOTAMR U1273/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
-    "startValidity": "2026-10-20T14:51:00",
-    "endValidity": "2027-01-18T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.480833, -109.194167"
-    ]
-  },
-  {
     "raw": "(R1000/26 NOTAMR R0695/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
     "startValidity": "2026-10-20T14:51:00",
     "endValidity": "2027-01-18T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "56.386111, -111.272778"
+    ]
+  },
+  {
+    "raw": "(U1791/26 NOTAMR U1273/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
+    "startValidity": "2026-10-20T14:51:00",
+    "endValidity": "2027-01-18T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.480833, -109.194167"
     ]
   },
   {
@@ -1203,15 +1212,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.350278, -115.505556"
-    ]
-  },
-  {
-    "raw": "(R0706/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/026/5421N11201W002\nA) CZEG B) 2607231317 C) 2610221330EST\nE) OBST LGT U/S TOWER 542106N 1120128W (APRX 21NM NNE SMOKY LAKE \n(GEORGE MCDOUGALL HEALTH CENTRE) (HELI) AD (CGM2)) 350FT AGL, \n2550FT AMSL.)",
-    "startValidity": "2026-07-23T13:17:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "54.351667, -112.024444"
     ]
   },
   {
