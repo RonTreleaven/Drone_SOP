@@ -99,21 +99,21 @@
     ]
   },
   {
-    "raw": "(U1791/26 NOTAMR U1273/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
-    "startValidity": "2026-10-20T14:51:00",
-    "endValidity": "2027-01-18T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.480833, -109.194167"
-    ]
-  },
-  {
     "raw": "(R1000/26 NOTAMR R0695/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
     "startValidity": "2026-10-20T14:51:00",
     "endValidity": "2027-01-18T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "56.386111, -111.272778"
+    ]
+  },
+  {
+    "raw": "(U1791/26 NOTAMR U1273/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
+    "startValidity": "2026-10-20T14:51:00",
+    "endValidity": "2027-01-18T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.480833, -109.194167"
     ]
   },
   {
@@ -720,21 +720,21 @@
     ]
   },
   {
-    "raw": "(R0881/26 NOTAMR R0560/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5335N11425W002\nA) CZEG B) 2609141703 C) 2612132359\nE) OBST LGT U/S TOWER 533503N 1142516W (APRX 13NM W STONY PLAIN \n(STONY FIELD) AD (CSP3)) 404FT AGL, 2926FT AMSL.)",
-    "startValidity": "2026-09-14T17:03:00",
-    "endValidity": "2026-12-13T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.584167, -114.421111"
-    ]
-  },
-  {
     "raw": "(R0880/26 NOTAMR R0559/26\nQ) CZEG/QOLAS/IV/M/E/000/024/5512N11226W002\nA) CZEG B) 2609141703 C) 2612132359\nE) OBST LGT U/S TOWER 551153N 1122551W (APRX 29NM E CALLING LAKE AD \n(CFK4)) 400FT AGL, 2367FT AMSL.)",
     "startValidity": "2026-09-14T17:03:00",
     "endValidity": "2026-12-13T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "55.198056, -112.430833"
+    ]
+  },
+  {
+    "raw": "(R0881/26 NOTAMR R0560/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5335N11425W002\nA) CZEG B) 2609141703 C) 2612132359\nE) OBST LGT U/S TOWER 533503N 1142516W (APRX 13NM W STONY PLAIN \n(STONY FIELD) AD (CSP3)) 404FT AGL, 2926FT AMSL.)",
+    "startValidity": "2026-09-14T17:03:00",
+    "endValidity": "2026-12-13T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "53.584167, -114.421111"
     ]
   },
   {
@@ -1194,24 +1194,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "52.276389, -113.690556"
-    ]
-  },
-  {
-    "raw": "(R0715/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/025/5521N11556W002\nA) CZEG B) 2607271018 C) 2610231800\nE) OBST LGT U/S TOWER 552047N 1155533W (APRX 19NM E HIGH PRAIRIE AD \n(CZHP)) 350FT AGL, 2450FT AMSL.)",
-    "startValidity": "2026-07-27T10:18:00",
-    "endValidity": "2026-10-23T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.346389, -115.925833"
-    ]
-  },
-  {
-    "raw": "(R0714/26 NOTAMR R0498/26\nQ) CZEG/QOLAS/IV/M/E/000/027/5353N11324W002\nA) CZEG B) 2607270930 C) 2610231800\nE) OBST LGT U/S TOWER 535311N 1132414W (APRX 6NM NE \nEDMONTON/MORINVILLE (MIKE'S FIELD) AD (CMN6)) 348FT AGL, 2627FT \nAMSL.)",
-    "startValidity": "2026-07-27T09:30:00",
-    "endValidity": "2026-10-23T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.886389, -113.403889"
     ]
   },
   {
