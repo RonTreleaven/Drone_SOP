@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RPAS Flight Time Planner | Drone SOP</title>
+<link rel="stylesheet" href="assets/css/site-nav.css"><script src="assets/js/site-nav.js" defer></script>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#19314a;background:#eef5f8}*{box-sizing:border-box}body{margin:0}.wrap{max-width:880px;margin:auto;padding:16px}.shared-site-nav{margin-bottom:16px}.panel{background:white;border:1px solid #cadbe5;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 4px 14px #17334a0b}h1{font-size:clamp(1.4rem,4vw,2rem);margin:8px 0}h2{font-size:1.1rem;margin:0 0 12px}p{line-height:1.5;color:#455d6e}label{display:block;font-size:.86rem;font-weight:650;margin-bottom:5px}input,select,button{font:inherit}input,select{width:100%;padding:11px;border:1px solid #a8bfcc;border-radius:9px;background:white;min-height:44px}.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}.switches{display:flex;gap:8px;flex-wrap:wrap}.switches label{margin:0;flex:1;text-align:center;min-width:78px}.switches input{position:absolute;opacity:0;width:1px}.switches span{display:block;padding:12px;border:1px solid #a8bfcc;border-radius:9px;cursor:pointer}.switches input:checked+span{background:#0f6d5a;color:white;border-color:#0f6d5a}.switches input:focus-visible+span{outline:3px solid #4f9ee5}.metricgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px}.metric{background:#f3f9fc;border:1px solid #d0e1ea;border-radius:10px;padding:14px}.metric small{display:block;color:#516b7b}.metric strong{font-size:1.7rem;font-variant-numeric:tabular-nums}.note{font-size:.86rem}.alert{color:#9b2828;font-weight:bold}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:10px 5px;border-bottom:1px solid #dfebf0}td:last-child{text-align:right;font-variant-numeric:tabular-nums}.buttons{display:flex;gap:10px;flex-wrap:wrap}button{padding:11px 15px;border:1px solid #0f6d5a;background:#0f6d5a;color:white;border-radius:9px;cursor:pointer}.secondary{background:white;color:#0f6d5a}@media(max-width:440px){.panel{padding:13px}.metric strong{font-size:1.4rem}}@media print{.shared-site-nav,.buttons{display:none!important}body{background:white}.panel{box-shadow:none}}
+</style></head><body><main class="wrap">
+<nav class="shared-site-nav" data-nav-variant="utility" data-show-home="true" data-back-fallback="tools.html"></nav>
+<h1>RPAS Flight Time Planner</h1><p>Estimate straight-line flight time using aircraft airspeed and forecast along-track wind. Designed for desktop and mobile pre-flight planning.</p>
+<section class="panel"><h2>Aircraft &amp; flight mode</h2><div class="fields">
+<div><label for="drone">Aircraft</label><select id="drone">
+<option value="mini5">DJI Mini 5 Pro</option><option value="mini4">DJI Mini 4 Pro</option><option value="mini3">DJI Mini 3</option><option value="mini3pro">DJI Mini 3 Pro</option><option value="mavic2">DJI Mavic 2 Pro</option><option value="custom">Custom aircraft</option></select></div>
+<div><label for="speed">Airspeed (m/s) — editable</label><input type="number" id="speed" min="0.1" max="100" step=".1" value="18.5"></div></div>
+<p class="note">Flight mode (speed presets are planning assumptions, not certified performance limits; confirm aircraft firmware, battery, region and controller settings):</p>
+<div class="switches" role="group" aria-label="Flight mode"><label><input type="radio" name="mode" value="cine"><span>Cine / Tripod</span></label><label><input type="radio" name="mode" value="normal"><span>Normal / P</span></label><label><input type="radio" name="mode" value="sport" checked><span>Sport</span></label></div>
+<p class="note" id="presetNote" aria-live="polite"></p></section>
+<section class="panel"><h2>Mission &amp; wind</h2><div class="fields">
+<div><label for="distance">One-way distance</label><input id="distance" type="number" value="1" min=".001" max="10000" step=".1"></div>
+<div><label for="units">Distance unit</label><select id="units"><option value="nm">NM (1,852 m)</option><option value="m">Metres</option><option value="km">Kilometres</option></select></div>
+<div><label for="wind">Wind speed (knots)</label><input id="wind" type="number" min="0" max="150" step=".5" value="5"></div>
+<div><label for="windAngle">Wind relative to outbound track</label><select id="windAngle"><option value="0">Headwind</option><option value="45">45° off head</option><option value="90">Crosswind</option><option value="135">45° off tail</option><option value="180">Tailwind</option></select></div>
+<div><label for="reserve">Time allowance (%)</label><input id="reserve" type="number" min="0" max="200" value="20" step="5"></div>
+<div><label for="legs">Trip</label><select id="legs"><option value="return">Out and back</option><option value="oneway">One way</option></select></div></div>
+<p class="note">Wind is assumed constant and horizontal; the aircraft maintains selected true airspeed and corrects for crosswind. Time allowance adds a planning margin to travel time; it is not a battery-energy calculation.</p></section>
+<section class="panel"><h2>Estimated flight plan</h2><div id="warning" class="alert" role="status"></div>
+<div class="metricgrid"><div class="metric"><small>Outbound</small><strong id="out">—</strong></div><div class="metric"><small>Return</small><strong id="back">—</strong></div><div class="metric"><small>Total travel</small><strong id="total">—</strong></div><div class="metric"><small>With allowance</small><strong id="allow">—</strong></div></div>
+<table><tbody><tr><th>One-way distance</th><td id="distanceOut">—</td></tr><tr><th>Outbound groundspeed</th><td id="outGs">—</td></tr><tr><th>Return groundspeed</th><td id="backGs">—</td></tr><tr><th>Wind</th><td id="windOut">—</td></tr></tbody></table>
+<p class="note">This is not a battery endurance or legal flight-range assessment. Check wind at flight altitude, gusts, terrain, VLOS/EVLOS, airspace, obstacles, battery SOC, temperature, flight reserves and return-to-home settings. Crosswinds exceeding available airspeed make the specified track impossible.</p>
+<div class="buttons"><button type="button" id="copy">Copy plan</button><button type="button" id="print" class="secondary">Print</button><button type="button" id="reset" class="secondary">Reset</button></div><p id="copyStatus" aria-live="polite"></p></section>
+</main><script>
+(function(){
+'use strict';
+const presets={
+mini5:{sport:18,normal:12,cine:6,notes:'Mini 5 Pro: Sport 18 m/s standard-battery published maximum; Normal/Cine illustrative editable starting values. 18.5 m/s may be entered manually.'},
+mini4:{sport:16,normal:12,cine:12,notes:'Mini 4 Pro: manufacturer maximum horizontal speed values; Cine smooths control response.'},
+mini3:{sport:16,normal:10,cine:6,notes:'Mini 3: manufacturer maximum horizontal speed values.'},
+mini3pro:{sport:16,normal:10,cine:6,notes:'Mini 3 Pro: manufacturer maximum horizontal speed values.'},
+mavic2:{sport:20,normal:14,cine:1,notes:'Mavic 2 Pro: P mode is Normal equivalent; Tripod mode is Cine equivalent. P-mode 14 m/s is an indicative upper speed.'},
+custom:{sport:10,normal:7,cine:3,notes:'Custom example speeds: enter aircraft-specific values before planning.'}};
+const $=id=>document.getElementById(id);
+const numeric=id=>Number($(id).value);
+const mode=()=>document.querySelector('input[name=mode]:checked').value;
+const clock=s=>{if(!Number.isFinite(s))return '—'; const v=Math.round(s);return Math.floor(v/3600)? Math.floor(v/3600)+'h '+String(Math.floor(v%3600/60)).padStart(2,'0')+'m '+String(v%60).padStart(2,'0')+'s':Math.floor(v/60)+'m '+String(v%60).padStart(2,'0')+'s'};
+function updatePreset(){let item=presets[$('drone').value];$('speed').value=item[mode()];$('presetNote').textContent=item.notes;calc()}
+function calc(){
+ const v=numeric('speed'),windKt=numeric('wind'),d=numeric('distance')*({nm:1852,m:1,km:1000}[$('units').value]),margin=numeric('reserve'),rad=numeric('windAngle')*Math.PI/180,w=windKt*0.514444;
+ let error='';
+ if(!Number.isFinite(v)||v<=0||!Number.isFinite(d)||d<=0||!Number.isFinite(windKt)||windKt<0||!Number.isFinite(margin)||margin<0)error='Enter valid positive distance and airspeed, nonnegative wind and allowance.';
+ const cross=w*Math.sin(rad),along=w*Math.cos(rad);
+ if(!error&&Math.abs(cross)>=v)error='Crosswind equals or exceeds selected airspeed: cannot maintain the intended straight track.';
+ const effective=error?NaN:Math.sqrt(v*v-cross*cross);
+ const outward=effective-along,home=effective+along;
+ if(!error&&(outward<=0||($('legs').value==='return'&&home<=0)))error='Wind prevents progress along one leg at the selected airspeed.';
+ const tOut=error?NaN:d/outward,tBack=error||$('legs').value==='oneway'?NaN:d/home;
+ const total=tOut+(Number.isFinite(tBack)?tBack:0);
+ $('warning').textContent=error;$('out').textContent=clock(tOut);$('back').textContent=$('legs').value==='return'?clock(tBack):'N/A';$('total').textContent=clock(total);$('allow').textContent=clock(total*(1+margin/100));
+ $('distanceOut').textContent=Number.isFinite(d)?d.toFixed(0)+' m / '+(d/1852).toFixed(2)+' NM':'—';
+ $('outGs').textContent=Number.isFinite(tOut)?outward.toFixed(2)+' m/s':'—';
+ $('backGs').textContent=$('legs').value==='oneway'?'N/A':Number.isFinite(tBack)?home.toFixed(2)+' m/s':'—';
+ $('windOut').textContent=windKt+' kt / '+w.toFixed(2)+' m/s';
+}
+document.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',el.id==='drone'||el.name==='mode'?updatePreset:calc));
+$('reset').addEventListener('click',()=>{$('drone').value='mini5';document.querySelector('input[name=mode][value=sport]').checked=true;$('distance').value=1;$('units').value='nm';$('wind').value=5;$('windAngle').value=0;$('reserve').value=20;$('legs').value='return';updatePreset()});
+$('print').addEventListener('click',()=>window.print());
+$('copy').addEventListener('click',async()=>{let message='RPAS Flight Time Planner\nAircraft: '+$('drone').selectedOptions[0].text+'\nMode: '+mode()+'\nAirspeed: '+$('speed').value+' m/s\nDistance: '+$('distanceOut').textContent+'\nWind: '+$('windOut').textContent+'\nOutbound: '+$('out').textContent+'\nReturn: '+$('back').textContent+'\nTravel: '+$('total').textContent+'\nWith allowance: '+$('allow').textContent+'\nPlanning estimate only.';try{await navigator.clipboard.writeText(message);$('copyStatus').textContent='Plan copied.'}catch(e){$('copyStatus').textContent='Clipboard unavailable; use Print instead.'}});
+updatePreset();
+})();
+</script></body></html>
