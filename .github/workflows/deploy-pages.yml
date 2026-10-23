@@ -169,6 +169,7 @@ jobs:
           # Disable Jekyll processing
           touch _site/.nojekyll
 
+          test -f _site/flight-plan-estimator.html
           test -f _site/index.html
           test -f _site/JobBoard.html
           test -f _site/data/jobs.json
