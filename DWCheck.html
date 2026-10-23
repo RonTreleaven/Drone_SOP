@@ -1304,7 +1304,7 @@ margin-top:7px;
 <button id="completeBtn" type="button" onclick="markWeatherCheckComplete()">Save Weather Check</button>
 </div>
 
-<div id="errorBanner" class="error-banner"></div>
+<div class="panel compact-panel" style="margin:12px 0"><label for="weatherLocationMode"><strong>Weather assessment location</strong></label><select id="weatherLocationMode" style="max-width:100%;min-height:42px"><option value="actual">Actual / saved pilot location</option><option value="planned">Planned route centre (from Flight Plan Estimator)</option></select><div id="plannedLocationState" class="subtle" style="margin-top:8px">Checking for a planned route location…</div><p class="subtle">The selected coordinates determine the local weather forecast. The METAR remains an observation at the ICAO aerodrome entered above.</p></div><div id="errorBanner" class="error-banner"></div>
 
 <div id="loadingWrap" class="loading-wrap" aria-live="polite">
 <div class="spinner" aria-hidden="true"></div>
@@ -2421,10 +2421,10 @@ clearOpenMeteo()
 setLoading(true,"Checking METAR and geomagnetic conditions...")
 try{
 
-const knownPilot = getKnownPilotLocation()
+const knownPilot = getWeatherAssessmentLocation()
 if(!knownPilot || isPilotLocationUndefined(knownPilot.lat,knownPilot.lon)){
 renderCurrentLocationDetails("0.000000, 0.000000","0\u00B00'0.0\"N, 0\u00B00'0.0\"E")
-showError("Pilot location not defined. Click Get/Update Pilot Location first, then run Fetch Weather/Risk Assessment.")
+showError("Selected weather assessment location is not defined. Choose a saved pilot location or import a KML route in Flight Plan Estimator.")
 return
 }
 
@@ -2759,6 +2759,10 @@ return Math.abs(Number(lat)) < 0.000001 && Math.abs(Number(lon)) < 0.000001
 }
 
 
+function getPlannedRouteLocation(){try{const data=JSON.parse(localStorage.getItem('dsop.plannedRouteLocation.v1')||'null');if(!data)return null;const lat=Number(data.lat),lon=Number(data.lon);if(!Number.isFinite(lat)||!Number.isFinite(lon)||Math.abs(lat)>90||Math.abs(lon)>180)return null;return {lat,lon}}catch(e){return null}}
+function getWeatherAssessmentLocation(){const mode=document.getElementById('weatherLocationMode')?.value||'actual';return mode==='planned'?getPlannedRouteLocation():getKnownPilotLocation()}
+function renderPlannedLocationState(){const p=getPlannedRouteLocation(),actual=getKnownPilotLocation(),el=document.getElementById('plannedLocationState');if(!el)return;el.textContent='Planned route: '+(p?p.lat.toFixed(6)+', '+p.lon.toFixed(6):'not available — import a KML in Flight Plan Estimator')+' • saved pilot: '+(actual?actual.lat.toFixed(6)+', '+actual.lon.toFixed(6):'not set');}
+document.addEventListener('DOMContentLoaded',()=>{document.getElementById('weatherLocationMode')?.addEventListener('change',renderPlannedLocationState);renderPlannedLocationState()});
 function getKnownPilotLocation(){
 const fromDD = parseLatLonText(localStorage.getItem("pilotLocationDD") || "")
 
