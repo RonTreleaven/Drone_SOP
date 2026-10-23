@@ -101,6 +101,6 @@ $('savedWeather').addEventListener('click',()=>{
  calc();
 });
 $('usePilotCoordinates').addEventListener('change',()=>{$('pilotLocationState').textContent=($('usePilotCoordinates').checked?'Forecast target: saved pilot location. ':'Forecast target: KML route centre. ')+(pilot?'Pilot: '+pilot.lat.toFixed(6)+', '+pilot.lon.toFixed(6):'No pilot location saved.')});
-let dt=new Date(Date.now()+60*60*1000);dt.setMinutes(0);$('flightTime').value=[dt.getFullYear(),String(dt.getMonth()+1).padStart(2,'0'),String(dt.getDate()).padStart(2,'0')].join('-')+'T'+String(dt.getHours()).padStart(2,'0')+':00';draw();showDistance();showEstimatedLocation();refreshMode();$('scriptStatus').textContent='Script status: initialized ✓. File input and calculations are enabled.';calc();
+let dt=new Date(Date.now()+60*60*1000);dt.setMinutes(0);$('flightTime').value=[dt.getFullYear(),String(dt.getMonth()+1).padStart(2,'0'),String(dt.getDate()).padStart(2,'0')].join('-')+'T'+String(dt.getHours()).padStart(2,'0')+':00';draw();showDistance();showEstimatedLocation();refreshMode();$('scriptStatus').textContent='Script status: initialized ✓. File input and calculations are enabled.';calc();setMapProvider();
 })();
 </script></body></html>
