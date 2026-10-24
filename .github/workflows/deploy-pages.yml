@@ -171,6 +171,7 @@ jobs:
 
           test -f _site/flight-plan-estimator.html
           test -f _site/index.html
+          test -f _site/guided-site-survey.html
           test -f _site/JobBoard.html
           test -f _site/data/jobs.json
           test -f _site/Advanced_RPAS_Study/quiz.html
