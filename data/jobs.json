@@ -1,5 +1,23 @@
 [
   {
+    "title": "Commercial Drone Pilot and Surveyor",
+    "company": "Kieswetter Excavating",
+    "location": "Saint Clements, Ontario, ca",
+    "link": "https://ca.talent.com/view?id=642902859438230819",
+    "description": "Commercial Drone Pilot & Surveyor About Us: Kieswetter Excavating is a fourth-generation, family-owned heavy civil contractor, and were approaching our 100th year in 2027. We specialize in excavating, site grading, site servicing, sewer and watermain, earthwork, concrete, demolition, and aggregates. Our people work on projects across Southwestern Ontario and take pride in doing the job right and going home safe. The Role: Were looking for a Drone Pilot & Surveyor to join our survey team. Youll split your time between the field and the office. Youll capture aerial data, produce accurate site models and quantities, and provide construction layout so our crews can build with confidence. What Youll Do: Plan and fly commercial drones for site progress, topographic mapping, stockpile and earthwork volumes, and as-built documentation. Process aerial data into various reports. Set and maintain survey control, and provide construction layout (grades, offsets, stakeout) for sewer, watermain, grading, and concrete work, ect. Collect as-built data and prepare records for project closeout. Work with project managers, estimators, and site supervisors to deliver accurate, timely data. Maintain survey and drone equipment, flight logs, and calibration records. What You Bring: Valid Transport Canada RPAS Pilot Certificate, Advanced Operations. Experience with GNSS/GPS rovers and total stations. Experience processing drone data. A diploma or degree in surveying, geomatics, civil engineering technology, or a related field, or equivalent hands-on experience. Familiarity with heavy civil construction, especially earthwork and underground servicing. Strong attention to detail and comfort working outdoors in all seasons. Valid drivers licence and a clean driving record. Nice to Have: Experience with machine control data prep. OLS licence or progress toward a designation (OLS, C.E.T., or similar). Experience RTK/PPK drone workflows. Previous experience in a contractor-side survey role. What We Offer: Competitive pay and group benefits / RRSP matching. A stable, long-standing, family-owned company with a strong safety focus. Modern equipment and technology. Training and room to grow. FULL_TIME",
+    "summary": "Commercial Drone Pilot & Surveyor About Us: Kieswetter Excavating is a fourth-generation, family-owned heavy civil contractor, and were approaching our 100th year in 2027. We specialize in excavating, site grading, site servicing, sewer and watermain, earthwork, concrete, demolition, and aggregates. Our people work on projects across Southwestern Ontario and take pride in doing the job right and going home safe. The Role: Were looking for a Drone Pilot & Surveyor to join our survey team. Youll split your time between the field and the office.",
+    "date_posted": "10/23/2026",
+    "date_expires": "",
+    "category": "mapping",
+    "type": "contract",
+    "source": "talent",
+    "query_family": "operations",
+    "matched_query": "drone pilot",
+    "confidence": 0.95,
+    "match_reason": "family terms: flight, pilot, rpas; drone terms: aerial, drone, rpas; job terms: job, pilot, survey, surveyor; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
+    "last_seen": "10/24/2026"
+  },
+  {
     "title": "RPAS Pilot & Flight Operations Specialist",
     "company": "National Research Council Canada",
     "location": "Montreal, Quebec, ca",
@@ -15,7 +33,7 @@
     "matched_query": "rpas pilot",
     "confidence": 0.95,
     "match_reason": "family terms: flight, pilot, rpas; drone terms: drone, rpas; job terms: career, hiring, pilot; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/23/2026"
+    "last_seen": "10/24/2026"
   },
   {
     "title": "Reality Capture / Drone Pilot",
@@ -33,7 +51,7 @@
     "matched_query": "drone pilot",
     "confidence": 0.95,
     "match_reason": "family terms: pilot, uav; drone terms: drone, lidar, uav; job terms: apply, career, job, pilot, survey; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/23/2026"
+    "last_seen": "10/24/2026"
   },
   {
     "title": "UAV Flight Controls Engineer (ArduPilot)",
@@ -249,7 +267,7 @@
     "matched_query": "drone pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, uas; drone terms: uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/23/2026"
+    "last_seen": "10/24/2026"
   },
   {
     "title": "unmanned aerial vehicle (UAV) technician",
@@ -267,7 +285,7 @@
     "matched_query": "photogrammetry drone",
     "confidence": 0.95,
     "match_reason": "job-like URL; drone terms: aerial, uav; job terms: apply, job; source=jobbank; query_family=mapping; drone term in title/company; core term in title; core drone/uav signal; technician override via uav/rpas context",
-    "last_seen": "10/23/2026"
+    "last_seen": "10/24/2026"
   },
   {
     "title": "sUAS Flight Operator (FTC), Durham",
@@ -285,7 +303,7 @@
     "matched_query": "remote pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, pilot, uas; drone terms: drone, uas; job terms: apply, career, hiring, operator, pilot; source=greenhouse; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/23/2026"
+    "last_seen": "10/24/2026"
   },
   {
     "title": "UAS Operator & Flight Operations Technician (R5438)",
@@ -303,7 +321,7 @@
     "matched_query": "uas operator",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, uas; drone terms: uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/23/2026"
+    "last_seen": "10/24/2026"
   },
   {
     "title": "MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)",
@@ -321,6 +339,6 @@
     "matched_query": "rpas pilot",
     "confidence": 0.8,
     "match_reason": "family terms: flight, pilot, rpas; drone terms: rpas; job terms: career, job, pilot; source=talent; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "10/23/2026"
+    "last_seen": "10/24/2026"
   }
 ]
