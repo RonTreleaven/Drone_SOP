@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updated": "2026-10-06",
+  "updated": "2026-10-25",
   "migrationNotes": [
     "Historical quiz questions from chat have not yet been normalized into this file.",
     "All 14 categories seeded with mixed easy/medium/hard/tricky questions (540 total as of 2026-08-29): regulations, airspace, aerodromes, notams, weather, visual-observers, human-factors, aircraft-systems, maintenance, abnormal, flight-planning, radio, navigation, safety.",
@@ -28,7 +28,8 @@
     "2026-09-22 QUIZ REVIEW: applied review approvals to 2 questions using quiz-review-actions.json.",
     "2026-09-22 QUIZ REVIEW: applied review approvals to 3 questions using quiz-review-actions_1.json.",
     "2026-10-01 BATCH 6: duplicate-screened ingest; 50 questions selected from 59 candidates.",
-    "2026-10-06 QUIZ REVIEW: applied review approvals to 15 questions using quiz-review-actions.json."
+    "2026-10-06 QUIZ REVIEW: applied review approvals to 15 questions using quiz-review-actions.json.",
+    "2026-10-25 BATCH 8: duplicate-screened reinforcement ingest; 100 questions selected from 100 candidates."
   ],
   "questions": [
     {
@@ -33798,8 +33799,4708 @@
         "sourceFile": "docs/AdvancedWorkbook RPAS.pdf",
         "sourceQuestion": "Q22"
       }
+    },
+    {
+      "id": "b8-weather-001",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "Your SOP requires a ceiling of at least 1,500 ft. The airport observation contains SCT008 BKN020 OVC040. Which go/no-go reading is correct?",
+      "choices": [
+        "The ceiling is 800 ft AGL, so the minimum fails",
+        "The ceiling is 4,000 ft AGL",
+        "No ceiling is reported",
+        "The ceiling is 2,000 ft AGL, so this numerical minimum is met"
+      ],
+      "answerIndex": 3,
+      "rationale": "The ceiling is 2,000 ft AGL, so this numerical minimum is met A ceiling is the lowest BKN, OVC or vertical-visibility layer; SCT does not constitute a ceiling.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-002",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "At a field elevation of 620 ft ASL, the METAR sky group is VV003. What ceiling should be used for local RPAS planning?",
+      "choices": [
+        "620 ft AGL",
+        "No ceiling because the sky is obscured",
+        "300 ft AGL (approximately 920 ft ASL)",
+        "3,000 ft AGL"
+      ],
+      "answerIndex": 2,
+      "rationale": "300 ft AGL (approximately 920 ft ASL) VV003 is vertical visibility of 300 ft above the reporting site and constitutes a ceiling.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-003",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "The sequence FEW004 SCT009 OVC015 appears in a METAR. Which layer determines the ceiling?",
+      "choices": [
+        "All three layers average to 933 ft",
+        "OVC015, giving a 1,500 ft AGL ceiling",
+        "FEW004, giving a 400 ft ceiling",
+        "SCT009, giving a 900 ft ceiling"
+      ],
+      "answerIndex": 1,
+      "rationale": "OVC015, giving a 1,500 ft AGL ceiling Only a BKN, OVC or VV layer establishes the reported ceiling.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-004",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A METAR shows BKN/// below OVC025. What is the safest interpretation for a planned launch?",
+      "choices": [
+        "A broken layer exists at an unknown height; resolve the missing height rather than treating 2,500 ft as the ceiling",
+        "The ceiling is automatically 2,500 ft",
+        "BKN/// means no broken cloud exists",
+        "The ceiling is zero feet"
+      ],
+      "answerIndex": 0,
+      "rationale": "A broken layer exists at an unknown height; resolve the missing height rather than treating 2,500 ft as the ceiling Slashes mean the element could not be determined; an unknown lower broken layer cannot be ignored.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-005",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A station reports SKC, but a low stratus deck is visibly approaching the operating area. Which fact controls the go/no-go decision?",
+      "choices": [
+        "SKC guarantees no cloud for one hour",
+        "Only the launch-point sky matters",
+        "The flight must proceed because SKC is official",
+        "Current and expected conditions over the whole operational volume, not the METAR code alone"
+      ],
+      "answerIndex": 3,
+      "rationale": "Current and expected conditions over the whole operational volume, not the METAR code alone CAR 901.34 requires conditions that permit VLOS and safe operation throughout the flight; observations are inputs, not guarantees.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-006",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A METAR has FEW006 BKN012, and the operator's minimum ceiling is 1,200 ft. Is the numerical ceiling minimum met exactly?",
+      "choices": [
+        "No—the minimum is exclusive and requires more than 1,200 ft",
+        "Yes—and no further weather assessment is needed",
+        "Yes—the reported ceiling is exactly 1,200 ft, but all other limits and trends still require assessment",
+        "No—any cloud at 600 ft makes the ceiling 600 ft"
+      ],
+      "answerIndex": 2,
+      "rationale": "Yes—the reported ceiling is exactly 1,200 ft, but all other limits and trends still require assessment BKN012 is the ceiling and an inclusive minimum of 1,200 ft is met at equality unless the procedure says 'greater than'.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-007",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "Successive reports are BKN030, BKN018 and BKN010 at 30-minute intervals, while the TAF still forecasts BKN025. What is the strongest planning signal?",
+      "choices": [
+        "Only the first METAR matters",
+        "The observed ceiling is deteriorating faster than forecast, so reassess or delay rather than relying on the older forecast",
+        "The TAF overrides every METAR",
+        "The ceiling trend is improving"
+      ],
+      "answerIndex": 1,
+      "rationale": "The observed ceiling is deteriorating faster than forecast, so reassess or delay rather than relying on the older forecast Actual trend data can show that forecast timing or magnitude is no longer representative.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-008",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A TAF group reads TEMPO 2514/2518 2SM -RA BKN008. A 90-minute mission is planned from 1530Z. What should be assumed?",
+      "choices": [
+        "Temporary 2 SM visibility and an 800 ft ceiling may occur during the mission window",
+        "TEMPO conditions cannot affect RPAS",
+        "The change starts only at 1800Z",
+        "BKN008 means 8,000 ft"
+      ],
+      "answerIndex": 0,
+      "rationale": "Temporary 2 SM visibility and an 800 ft ceiling may occur during the mission window The mission lies inside the TEMPO interval, which must be considered in operational minima and contingencies.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-009",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "Surface wind is 21012G24KT and the route's return leg is toward 210°. Which endurance concern is most important?",
+      "choices": [
+        "The return leg will always have a 12 kt tailwind",
+        "Only the mean wind affects energy use",
+        "Gusts cannot affect multirotor endurance",
+        "The return leg may face a 24 kt headwind component during gusts, so reserve and an early turn point are needed"
+      ],
+      "answerIndex": 3,
+      "rationale": "The return leg may face a 24 kt headwind component during gusts, so reserve and an early turn point are needed Plan against the adverse wind component and variability, not merely the steady value.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-010",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "An RPA cruises at 15 m/s in still air. Wind is 5 m/s directly outbound, and the one-way distance is 3 km. Approximately how long is the round trip?",
+      "choices": [
+        "About 10 minutes",
+        "About 15 minutes",
+        "About 7.5 minutes",
+        "Exactly 5 minutes"
+      ],
+      "answerIndex": 2,
+      "rationale": "About 7.5 minutes Groundspeed is 20 m/s outbound (150 s) and 10 m/s inbound (300 s), totalling 450 s or 7.5 minutes.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-011",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A westbound leg is 6 km. The RPA's still-air speed is 18 m/s and wind is 6 m/s from the west. What minimum time should be budgeted for that leg, before reserve?",
+      "choices": [
+        "1,000 seconds",
+        "500 seconds (about 8 min 20 s)",
+        "250 seconds",
+        "333 seconds"
+      ],
+      "answerIndex": 1,
+      "rationale": "500 seconds (about 8 min 20 s) A wind from the west is a headwind westbound, so groundspeed is 12 m/s and time is 6,000/12 = 500 seconds.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-012",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "Temperature is 7°C and dew point is 6°C at sunset with light wind. What change deserves the greatest attention?",
+      "choices": [
+        "Fog or very low cloud may form as the temperature-dew-point spread closes",
+        "Density altitude will immediately double",
+        "A thunderstorm is certain",
+        "The wind must increase above 30 kt"
+      ],
+      "answerIndex": 0,
+      "rationale": "Fog or very low cloud may form as the temperature-dew-point spread closes A one-degree spread near sunset indicates air close to saturation; local cooling can sharply reduce visibility.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-013",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A sheltered urban launch has acceptable airport wind data, but rooftop flags show strong, irregular reversals. What should the pilot infer?",
+      "choices": [
+        "The flags prove the airport METAR is invalid everywhere",
+        "Wind reversals eliminate gust risk",
+        "Only fixed-wing RPA are affected",
+        "Buildings are creating local turbulence and channelled flow not represented by the airport observation"
+      ],
+      "answerIndex": 3,
+      "rationale": "Buildings are creating local turbulence and channelled flow not represented by the airport observation TC AIM RPA 3.2.22.10 warns that urban terrain can produce localized turbulence and wind patterns.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-014",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "Battery performance data were obtained at 20°C, but launch temperature is -15°C. Which planning adjustment is most defensible?",
+      "choices": [
+        "Ignore temperature if voltage is normal before launch",
+        "Heat the battery in flight by hovering until nearly depleted",
+        "Use cold-temperature performance guidance and a larger energy reserve; do not assume warm-weather endurance",
+        "Cold always increases usable battery capacity"
+      ],
+      "answerIndex": 2,
+      "rationale": "Use cold-temperature performance guidance and a larger energy reserve; do not assume warm-weather endurance Low temperature can reduce available capacity and voltage under load, shortening usable endurance.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-015",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "Freezing drizzle is reported in the intended altitude band and the RPAS is not approved for icing. What is the compliant decision?",
+      "choices": [
+        "Use extra battery power as an icing approval",
+        "Do not conduct the flight in those forecast or reported icing conditions",
+        "Fly below 400 ft because CAR 901.35 then does not apply",
+        "Proceed if propellers are plastic"
+      ],
+      "answerIndex": 1,
+      "rationale": "Do not conduct the flight in those forecast or reported icing conditions CAR 901.35 prohibits flight in forecast or reported icing unless the applicable conditions for icing operation are met.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-016",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A route moves from a high-pressure area toward lower pressure with no pressure-setting correction. What is the classic altitude hazard?",
+      "choices": [
+        "True altitude can be lower than indicated",
+        "True altitude must be higher than indicated",
+        "Pressure has no relationship to altitude",
+        "Only groundspeed is affected"
+      ],
+      "answerIndex": 0,
+      "rationale": "True altitude can be lower than indicated The 'high to low, look out below' principle matters when relating indicated altitude to obstacle clearance.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-017",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "A 20 kt wind crosses a tree line perpendicular to the planned low-level track. Where should the greatest mechanical-turbulence margin be expected?",
+      "choices": [
+        "Only directly upwind of the trees",
+        "Exactly at the METAR sensor",
+        "Mechanical turbulence occurs only above cloud",
+        "Downwind of the tree line, especially close to and below the obstacle height multiple affected by the wake"
+      ],
+      "answerIndex": 3,
+      "rationale": "Downwind of the tree line, especially close to and below the obstacle height multiple affected by the wake Rough terrain and obstacles create eddies on their lee side; small RPA can encounter abrupt control and power demands.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-018",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "The camera view remains steady while telemetry shows rapid attitude corrections and power spikes. What weather hazard may the stabilization be masking?",
+      "choices": [
+        "A loss of all wind",
+        "A ceiling increase",
+        "Significant turbulence or gust loading",
+        "A guaranteed compass calibration error"
+      ],
+      "answerIndex": 2,
+      "rationale": "Significant turbulence or gust loading Flight-control stabilization can conceal the aircraft's workload from the video image; telemetry and power trends reveal reduced margin.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-019",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "Reported visibility is 6 SM, but sun glare prevents the crew from reliably seeing the RPA at the planned range. May the pilot rely on the METAR value?",
+      "choices": [
+        "Only an observer may consider glare",
+        "No—actual ability to maintain required visual contact governs; reduce range, reposition, or stop",
+        "Yes—6 SM automatically proves VLOS",
+        "Yes—glare affects only cameras"
+      ],
+      "answerIndex": 1,
+      "rationale": "No—actual ability to maintain required visual contact governs; reduce range, reposition, or stop Meteorological visibility does not guarantee that a small aircraft remains discernible against the actual background and lighting.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-weather-020",
+      "category": "weather",
+      "difficulty": "hard",
+      "question": "Wildfire smoke reduces contrast while the official station still reports 10 SM. The observer intermittently loses the RPA against the haze. What is required?",
+      "choices": [
+        "Shorten or terminate the operation because the required visual contact is not being maintained",
+        "Continue until the station reports below 3 SM",
+        "Switch to FPV and ignore outside visibility",
+        "Climb above 400 ft to improve contrast"
+      ],
+      "answerIndex": 0,
+      "rationale": "Shorten or terminate the operation because the required visual contact is not being maintained On-site VLOS and hazard detection take precedence over a distant or lagging observation.",
+      "source": "TP 15263 Section 4; TC AIM MET 8 and RPA 3.2.22",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "4",
+          "sectionTitle": "Meteorology",
+          "topic": "Aviation weather interpretation",
+          "objective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision."
+        },
+        {
+          "source": "TC AIM",
+          "section": "MET 8 and RPA 3.2.22",
+          "topic": "Aviation weather interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "4",
+      "knowledgeArea": "Meteorology",
+      "knowledgeTopic": "Aviation weather interpretation",
+      "learningObjective": "Interpret current and forecast weather and apply it to an Advanced VLOS/EVLOS go/no-go decision.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-001",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "The Item Q geographical reference ends 4713N07326W011. What does 011 mean?",
+      "choices": [
+        "An 11 km diameter",
+        "An upper limit of 1,100 ft",
+        "The eleventh day of validity",
+        "An 11 NM radius of influence around the rounded centre coordinates"
+      ],
+      "answerIndex": 3,
+      "rationale": "An 11 NM radius of influence around the rounded centre coordinates CNOP 4.4.10 defines the last three figures as a radius in whole nautical miles.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-002",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A NOTAM's actual area extends 10.2 NM from its rounded Q-line centre. What radius is encoded under CNOP rules?",
+      "choices": [
+        "102, because tenths are retained",
+        "005, because every NOTAM uses 5 NM",
+        "011, because the radius is rounded up to the next whole nautical mile",
+        "010, because normal rounding applies"
+      ],
+      "answerIndex": 2,
+      "rationale": "011, because the radius is rounded up to the next whole nautical mile The radius must encompass the total area of influence; 10.2 NM becomes 011.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-003",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "True coordinates round to a different whole minute, moving the Q-line centre enough that radius 001 would miss part of the area. What correction does CNOP describe?",
+      "choices": [
+        "Leave the radius unchanged because Item Q is decorative",
+        "Increase the Q-line radius, commonly from 001 to 002 in the illustrated case",
+        "Reduce the radius to zero",
+        "Change the radius unit to kilometres"
+      ],
+      "answerIndex": 1,
+      "rationale": "Increase the Q-line radius, commonly from 001 to 002 in the illustrated case The Q-line must still retrieve the whole influence area after coordinate rounding.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-004",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "For a navigation warning, Item F is 1,380 ft AMSL. What lower qualifier is used in Item Q?",
+      "choices": [
+        "013",
+        "014",
+        "138",
+        "001"
+      ],
+      "answerIndex": 0,
+      "rationale": "013 CNOP requires the lower limit to be rounded down to the nearest 100 ft; 1,380 ft becomes 1,300 ft, encoded 013.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-005",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "Activity tops at 3,150 ft AMSL in Item G of a navigation-warning NOTAM. Which Q-line rounding result protects the full vertical volume?",
+      "choices": [
+        "Use 031",
+        "Use 315",
+        "Use 003",
+        "Use upper qualifier 032"
+      ],
+      "answerIndex": 3,
+      "rationale": "Use upper qualifier 032 CNOP requires the upper limit to be rounded up to the nearest 100 ft; 3,150 ft becomes 3,200 ft, encoded 032.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-006",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A Q-line has lower/upper qualifiers 000/999. Which interpretation is safest?",
+      "choices": [
+        "It is automatically cancelled",
+        "It applies only to helicopters",
+        "The qualifier spans surface through above 99,900 ft or uses default full vertical coverage; read Item E and any F/G details",
+        "It affects exactly 0 to 999 ft AGL"
+      ],
+      "answerIndex": 2,
+      "rationale": "The qualifier spans surface through above 99,900 ft or uses default full vertical coverage; read Item E and any F/G details CNOP uses 000 for surface and 999 when the upper limit exceeds 99,900 ft or for specified defaults.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-007",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "Item Q uses scope A. What vertical qualifiers does CNOP normally apply?",
+      "choices": [
+        "The pilot chooses them",
+        "000/999",
+        "The runway elevation divided by 100",
+        "Always 000/004"
+      ],
+      "answerIndex": 1,
+      "rationale": "000/999 For aerodrome-only scope A, CNOP applies default 000/999 qualifiers.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-008",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "The Q-line circle overlaps the contingency volume, but Item E precisely describes a polygon that does not. Which geometry should govern the detailed operational interpretation?",
+      "choices": [
+        "Use Item E's precise description while recognizing the Q-line circle is a briefing/retrieval envelope",
+        "Treat every point in the Q-line circle as the exact legal polygon",
+        "Ignore Item E",
+        "Average the circle and polygon"
+      ],
+      "answerIndex": 0,
+      "rationale": "Use Item E's precise description while recognizing the Q-line circle is a briefing/retrieval envelope The Q-line geographical reference is designed for association and retrieval; detailed text or coordinates may define the actual affected area more precisely.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-009",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A Q-line centre is shown only to whole minutes. Why is a route calculated 0.1 NM outside the displayed radius not automatically clear?",
+      "choices": [
+        "The radius is measured in statute miles",
+        "Whole-minute coordinates are exact to one metre",
+        "NOTAM radii never apply to RPA",
+        "Coordinate rounding and route/position uncertainty require margin and review of Item E"
+      ],
+      "answerIndex": 3,
+      "rationale": "Coordinate rounding and route/position uncertainty require margin and review of Item E CNOP explicitly adjusts radii when rounding the centre could otherwise omit part of the influence area.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-010",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A NOTAM is valid 251300Z to 251700Z; the local zone is EDT (UTC−4). What local active window applies?",
+      "choices": [
+        "1700 to 2100 EDT",
+        "0100 to 0500 EDT on the 26th",
+        "0900 to 1300 EDT on the 25th",
+        "1300 to 1700 EDT"
+      ],
+      "answerIndex": 2,
+      "rationale": "0900 to 1300 EDT on the 25th Subtract four hours from UTC while daylight time is in effect.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-011",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A NOTAM's daily schedule is 1200-1600, and Items B/C span three days. When is the NOTAM active?",
+      "choices": [
+        "Only when ATC verbally activates it",
+        "Only during 1200-1600 on each applicable day within the B/C validity period",
+        "Continuously for all three days",
+        "Only on the first day"
+      ],
+      "answerIndex": 1,
+      "rationale": "Only during 1200-1600 on each applicable day within the B/C validity period The validity dates and daily schedule must be read together.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-012",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A replacement NOTAM (NOTAMR) is issued for one in yesterday's briefing. Which record should be used for today's flight?",
+      "choices": [
+        "The replacement NOTAM and a fresh current briefing",
+        "The older NOTAM because it was seen first",
+        "Both as independent restrictions forever",
+        "Neither until a NOTAMC appears"
+      ],
+      "answerIndex": 0,
+      "rationale": "The replacement NOTAM and a fresh current briefing NOTAMR replaces the referenced notice; current data is required for the planned operation.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-013",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "Item A contains CXXX and Item E begins with CCK2 ST. JOHN'S (HELI). Why is CXXX used?",
+      "choices": [
+        "CXXX means the heliport is closed permanently",
+        "All heliport NOTAMs use CXXX",
+        "The FIR is unknown",
+        "The aerodrome identifier is alphanumeric rather than a four-letter location indicator, so the actual identifier/name appears in Item E"
+      ],
+      "answerIndex": 3,
+      "rationale": "The aerodrome identifier is alphanumeric rather than a four-letter location indicator, so the actual identifier/name appears in Item E CNOP 4.4.13 prescribes CXXX for three-letter/one-number aerodrome identifiers and puts the identifier and full name first in Item E.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-014",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "The Q-line FIR qualifier is CZYZ, while Item A lists a single four-letter aerodrome. What relationship should hold?",
+      "choices": [
+        "Item A and the FIR are unrelated",
+        "The pilot may substitute any nearby FIR",
+        "The aerodrome must be situated within the FIR identified in Item Q",
+        "The aerodrome must be outside that FIR"
+      ],
+      "answerIndex": 2,
+      "rationale": "The aerodrome must be situated within the FIR identified in Item Q CNOP 4.4.13 links a single aerodrome in Item A to the FIR qualifier.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-notams-015",
+      "category": "notams",
+      "difficulty": "hard",
+      "question": "A NOTAM briefing filter uses a planned point but omits the 6 NM diversion/contingency area. What is the planning defect?",
+      "choices": [
+        "A larger briefing area is prohibited",
+        "The retrieval geography does not cover the full operational volume and may miss relevant NOTAMs",
+        "None—NOTAMs apply only at launch",
+        "The filter should include only destination airports"
+      ],
+      "answerIndex": 1,
+      "rationale": "The retrieval geography does not cover the full operational volume and may miss relevant NOTAMs CAR 901.27 and the CNOP retrieval geometry support checking all planned and contingency geography.",
+      "source": "TP 15263 Section 6; NAV CANADA CNOP V12 4.4 — NOTAM Item Q qualifiers",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-cnop-v12"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "sectionTitle": "Flight operations",
+          "topic": "NOTAM Q-line and operational interpretation",
+          "objective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume."
+        },
+        {
+          "source": "NAV CANADA CNOP V12",
+          "section": "4.4 — NOTAM Item Q qualifiers",
+          "topic": "NOTAM Q-line and operational interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "NOTAM Q-line and operational interpretation",
+      "learningObjective": "Interpret NOTAM qualifiers, geography, timing and detailed text for the complete operational volume.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-001",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A small RPA is 200 ft horizontally from a 260 ft building. Without an SFOC or controlled-airspace altitude authorization, may it use the building exception to fly 80 ft above the roof?",
+      "choices": [
+        "Yes—200 ft exactly qualifies",
+        "Yes—any building within 400 ft qualifies",
+        "No—flight above any roof is prohibited",
+        "No—the exception requires the RPA to be less than 200 ft horizontally from the building"
+      ],
+      "answerIndex": 3,
+      "rationale": "No—the exception requires the RPA to be less than 200 ft horizontally from the building CAR 901.25(1)(b) uses the exclusive boundary 'less than 200 feet'.",
+      "source": "TP 15263 Section 1; CARs 901.25",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.25",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-002",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "The same RPA is 199 ft horizontally from that building and 100 ft above its roof. Is the altitude boundary itself met?",
+      "choices": [
+        "No—the allowance is only 30 ft",
+        "Yes—even if 250 ft horizontally away",
+        "Yes—CAR 901.25 permits up to 100 ft above when the aircraft is less than 200 ft horizontally away",
+        "No—100 ft exactly is prohibited"
+      ],
+      "answerIndex": 2,
+      "rationale": "Yes—CAR 901.25 permits up to 100 ft above when the aircraft is less than 200 ft horizontally away The vertical limit is 'not greater than' 100 ft; equality is permitted while the horizontal condition is exclusive.",
+      "source": "TP 15263 Section 1; CARs 901.25",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.25",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-003",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A pilot plans 401 ft AGL in uncontrolled airspace, clear of structures. Which authority is normally needed?",
+      "choices": [
+        "No additional authority for one extra foot",
+        "An SFOC-RPAS under section 903.03",
+        "Only an Advanced certificate",
+        "Only landowner consent"
+      ],
+      "answerIndex": 1,
+      "rationale": "An SFOC-RPAS under section 903.03 CAR 901.25 caps the normal operation at 400 ft AGL and permits higher flight under an SFOC, subject to the controlled-airspace provision.",
+      "source": "TP 15263 Section 1; CARs 901.25",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.25",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-004",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "ATC authorizes an Advanced operation in controlled airspace to 600 ft AGL. Does CAR 901.25 automatically invalidate that altitude?",
+      "choices": [
+        "No—CAR 901.71(2) allows altitude above 901.25 limits when the ATS provider's authorization expressly permits it",
+        "Yes—ATC can never authorize above 400 ft",
+        "No—an Advanced certificate alone removes every altitude limit",
+        "Only a visual observer may approve it"
+      ],
+      "answerIndex": 0,
+      "rationale": "No—CAR 901.71(2) allows altitude above 901.25 limits when the ATS provider's authorization expressly permits it The controlled-airspace authorization must actually include the higher altitude and remain otherwise compliant.",
+      "source": "TP 15263 Section 1; CARs 901.71(2)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.71(2)",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-005",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A small RPA conducting ordinary VLOS is exactly 100 ft horizontally from an uninvolved person. Is CAR 901.26(a)'s prohibition triggered?",
+      "choices": [
+        "Yes—100 ft is always prohibited",
+        "No—distance rules never apply vertically",
+        "Yes—unless the person signs a waiver",
+        "No—the prohibition is at a distance of less than 100 ft; exactly 100 ft is outside that prohibition"
+      ],
+      "answerIndex": 3,
+      "rationale": "No—the prohibition is at a distance of less than 100 ft; exactly 100 ft is outside that prohibition The exact wording is 'less than 100 feet', measured horizontally and at any altitude.",
+      "source": "TP 15263 Section 1; CARs 901.26(a)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.26(a)",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-006",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "For an eligible declared small RPA in Advanced VLOS, a bystander is exactly 5 m away horizontally. Which declared-operation band applies?",
+      "choices": [
+        "The ordinary 30 m-or-more band",
+        "No declaration is ever required at 5 m",
+        "The 5 m-to-under-30 m band, because the under-5 m band starts only below 5 m",
+        "The less-than-5 m band"
+      ],
+      "answerIndex": 2,
+      "rationale": "The 5 m-to-under-30 m band, because the under-5 m band starts only below 5 m CAR 901.69(b) is less than 30 m but not less than 5 m; equality at 5 m belongs in that band.",
+      "source": "TP 15263 Section 1; CARs 901.69(b)–(c)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.69(b)–(c)",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-007",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "The owner logs pilot/crew names and flight time for a flight on October 25, 2026. Until when must that flight record be retained at minimum?",
+      "choices": [
+        "Only until the next flight",
+        "For 12 months after the day it was created",
+        "For 24 months",
+        "For 6 months"
+      ],
+      "answerIndex": 1,
+      "rationale": "For 12 months after the day it was created CAR 901.48(2)(a) sets 12 months for flight and crew records.",
+      "source": "TP 15263 Section 1; CARs 901.48",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.48",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-008",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A propeller repair is recorded on October 25, 2026. What minimum retention period applies to that maintenance record?",
+      "choices": [
+        "24 months after the day the record was created",
+        "12 months",
+        "90 days",
+        "Until the battery is replaced"
+      ],
+      "answerIndex": 0,
+      "rationale": "24 months after the day the record was created CAR 901.48(2)(b) applies 24 months to mandatory action, maintenance, modification and repair records.",
+      "source": "TP 15263 Section 1; CARs 901.48",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.48",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-009",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "An owner sells the RPAS eleven months after a logged motor modification. What must accompany the transfer?",
+      "choices": [
+        "Only the registration number",
+        "Only flight/crew records",
+        "No records because ownership changed",
+        "All maintenance/modification/repair records required by CAR 901.48(1)(b)"
+      ],
+      "answerIndex": 3,
+      "rationale": "All maintenance/modification/repair records required by CAR 901.48(1)(b) CAR 901.48(3) requires the owner to deliver the maintenance-related records to the new owner at transfer.",
+      "source": "TP 15263 Section 1; CARs 901.48(3)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.48(3)",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-010",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A pilot completed a recurrent training activity 23 months and 30 days before a proposed flight. Is the 24-month recency window met?",
+      "choices": [
+        "Yes even without a completion date",
+        "No—only a new flight review can restore recency",
+        "Yes, provided the activity qualifies under Standard 921 and proof is retained",
+        "No—the limit is exactly 23 months"
+      ],
+      "answerIndex": 2,
+      "rationale": "Yes, provided the activity qualifies under Standard 921 and proof is retained CAR 901.56 looks back within the 24 months preceding the flight and allows specified recurrent-training activities.",
+      "source": "TP 15263 Section 1; CARs 901.56",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.56",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-011",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "How long must a pilot retain the record of an examination, flight review or qualifying recurrent training used for recency?",
+      "choices": [
+        "Only until the next flight",
+        "At least 24 months after completion",
+        "12 months",
+        "Five years"
+      ],
+      "answerIndex": 1,
+      "rationale": "At least 24 months after completion CAR 901.56(2) sets the pilot's record-retention requirement.",
+      "source": "TP 15263 Section 1; CARs 901.56(2)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.56(2)",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-012",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "A site survey checked airspace and weather but omitted wires and the contingency landing route. Is it complete under CAR 901.27?",
+      "choices": [
+        "No—the survey must address relevant obstacles and the operational volume, including approach/recovery and contingency considerations",
+        "Yes—only airspace and weather are mandatory",
+        "Yes if the launch point is clear",
+        "No because every survey must be filed with Transport Canada"
+      ],
+      "answerIndex": 0,
+      "rationale": "No—the survey must address relevant obstacles and the operational volume, including approach/recovery and contingency considerations CAR 901.27 expressly includes routes, obstacles, weather, aerodromes and applicable person-distance factors.",
+      "source": "TP 15263 Section 1; CARs 901.27",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.27",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-013",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "The RPAS manual cannot be accessed because the tablet containing it has failed before launch. May the pilot rely on memory?",
+      "choices": [
+        "Yes for flights under 10 minutes",
+        "Yes if the pilot owns the aircraft",
+        "Only the observer needs the manual",
+        "No—the applicable operating manuals must be immediately available to crew members"
+      ],
+      "answerIndex": 3,
+      "rationale": "No—the applicable operating manuals must be immediately available to crew members CAR 901.30 requires the manuals to be immediately available to crew members.",
+      "source": "TP 15263 Section 1; CARs 901.30",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.30",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-014",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "During a controlled-airspace flight, ATC issues an instruction that conflicts with the original survey route but remains within the authorization. What must the pilot do?",
+      "choices": [
+        "Comply only if a visual observer agrees",
+        "Land immediately without transmitting",
+        "Comply with the ATC instruction, unless safety requires emergency action and appropriate communication",
+        "Ignore it because the original route controls"
+      ],
+      "answerIndex": 2,
+      "rationale": "Comply with the ATC instruction, unless safety requires emergency action and appropriate communication CAR 901.72 requires compliance with ATC instructions directed at the pilot.",
+      "source": "TP 15263 Section 1; CARs 901.72",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.72",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-regulations-015",
+      "category": "regulations",
+      "difficulty": "hard",
+      "question": "The ATS authorization was approved, but the pilot left the authorization document at the office and cannot access it electronically. Can the controlled-airspace operation begin?",
+      "choices": [
+        "Only the owner needs access",
+        "No—the authorization must be easily accessible to the pilot during the operation",
+        "Yes—the approval number can be recalled later",
+        "Yes if the flight is below 100 ft"
+      ],
+      "answerIndex": 1,
+      "rationale": "No—the authorization must be easily accessible to the pilot during the operation CAR 901.71(3) imposes the accessibility requirement.",
+      "source": "TP 15263 Section 1; CARs 901.71(3)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "sectionTitle": "Air law, air traffic rules and procedures",
+          "topic": "Part IX exact boundaries and records",
+          "objective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX."
+        },
+        {
+          "source": "CARs",
+          "section": "901.71(3)",
+          "topic": "Part IX exact boundaries and records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Part IX exact boundaries and records",
+      "learningObjective": "Apply the exact inclusive/exclusive wording and record obligations in CARs Part IX.",
+      "reviewFlags": [
+        "reinforcement-batch",
+        "source-verified-2026-10-25"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-aerodromes-001",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A survey polygon reaches 2.9 NM from an airport centre. The pilot is Advanced and the aircraft is eligible, but the airport's RPAS procedure has not been obtained. What is missing?",
+      "choices": [
+        "Nothing—the certificate is sufficient",
+        "Only a call after landing",
+        "A promise to remain below 100 ft",
+        "The flight must be conducted in accordance with the established procedure applicable to that airport"
+      ],
+      "answerIndex": 3,
+      "rationale": "The flight must be conducted in accordance with the established procedure applicable to that airport Inside 3 NM, the certificate alone is not enough; the applicable established procedure is required.",
+      "source": "TP 15263; CARs 901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Airport, heliport and aerodrome procedures",
+          "objective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries."
+        },
+        {
+          "source": "CARs",
+          "section": "901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+          "topic": "Airport, heliport and aerodrome procedures"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Airport, heliport and aerodrome procedures",
+      "learningObjective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-aerodromes-002",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "An Advanced VLOS flight is exactly 3.0 NM from the centre of an airport. Does the CAR 901.73 distance trigger apply solely because of that distance?",
+      "choices": [
+        "Yes—every airport has a 5 NM RPAS circle",
+        "No—and no aerodrome assessment is needed",
+        "No—the restriction says less than 3 NM, though traffic-pattern interference and other requirements still apply",
+        "Yes—3 NM is included"
+      ],
+      "answerIndex": 2,
+      "rationale": "No—the restriction says less than 3 NM, though traffic-pattern interference and other requirements still apply The boundary is exclusive, but CAR 901.47(1), airspace and site-survey duties remain.",
+      "source": "TP 15263; CARs 901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Airport, heliport and aerodrome procedures",
+          "objective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries."
+        },
+        {
+          "source": "CARs",
+          "section": "901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+          "topic": "Airport, heliport and aerodrome procedures"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Airport, heliport and aerodrome procedures",
+      "learningObjective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-aerodromes-003",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A mission is 0.8 NM from a heliport centre. Which threshold and procedure are relevant?",
+      "choices": [
+        "No special consideration because heliports lack traffic patterns",
+        "The 1 NM heliport threshold and the established procedure applicable to that heliport",
+        "The 3 NM airport threshold only",
+        "A universal 5 NM heliport ban"
+      ],
+      "answerIndex": 1,
+      "rationale": "The 1 NM heliport threshold and the established procedure applicable to that heliport CAR 901.73 separately sets less than 1 NM for heliports.",
+      "source": "TP 15263; CARs 901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Airport, heliport and aerodrome procedures",
+          "objective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries."
+        },
+        {
+          "source": "CARs",
+          "section": "901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+          "topic": "Airport, heliport and aerodrome procedures"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Airport, heliport and aerodrome procedures",
+      "learningObjective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-aerodromes-004",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A mission is exactly 1.0 NM from a heliport centre. Which statement is precise?",
+      "choices": [
+        "It is not 'less than one nautical mile,' but the pilot must still avoid interference and assess traffic",
+        "It is automatically prohibited",
+        "It is automatically authorized in controlled airspace",
+        "The airport 3 NM threshold replaces the heliport threshold"
+      ],
+      "answerIndex": 0,
+      "rationale": "It is not 'less than one nautical mile,' but the pilot must still avoid interference and assess traffic Equality is outside the distance trigger; it does not remove broader safety and authorization obligations.",
+      "source": "TP 15263; CARs 901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Airport, heliport and aerodrome procedures",
+          "objective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries."
+        },
+        {
+          "source": "CARs",
+          "section": "901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+          "topic": "Airport, heliport and aerodrome procedures"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Airport, heliport and aerodrome procedures",
+      "learningObjective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-aerodromes-005",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A registered aerodrome listed in the CFS is neither an airport nor a heliport. Which rule still clearly applies nearby?",
+      "choices": [
+        "The 3 NM airport procedure always applies",
+        "No Part IX aerodrome rule applies",
+        "Only aircraft above 400 ft must assess it",
+        "Do not operate in a manner that could interfere with aircraft in its established traffic pattern"
+      ],
+      "answerIndex": 3,
+      "rationale": "Do not operate in a manner that could interfere with aircraft in its established traffic pattern CAR 901.47(1) protects the established traffic pattern of aerodromes listed in the CFS or WAS.",
+      "source": "TP 15263; CARs 901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Airport, heliport and aerodrome procedures",
+          "objective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries."
+        },
+        {
+          "source": "CARs",
+          "section": "901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+          "topic": "Airport, heliport and aerodrome procedures"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Airport, heliport and aerodrome procedures",
+      "learningObjective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-aerodromes-006",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A pilot finds no control zone around a nearby uncontrolled airport. Does that eliminate the established-procedure requirement inside 3 NM?",
+      "choices": [
+        "Yes if no tower is open",
+        "No, because every airport is Class C",
+        "No—airspace classification and the airport-distance/established-procedure rule are separate checks",
+        "Yes—only controlled airports count"
+      ],
+      "answerIndex": 2,
+      "rationale": "No—airspace classification and the airport-distance/established-procedure rule are separate checks An uncontrolled-airspace location can still be within the CAR 901.73 airport radius.",
+      "source": "TP 15263; CARs 901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Airport, heliport and aerodrome procedures",
+          "objective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries."
+        },
+        {
+          "source": "CARs",
+          "section": "901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+          "topic": "Airport, heliport and aerodrome procedures"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Airport, heliport and aerodrome procedures",
+      "learningObjective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-aerodromes-007",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "The RPA launch is 3.4 NM from an airport centre, but the planned track reaches 2.7 NM. Which distance matters?",
+      "choices": [
+        "The airport boundary fence",
+        "The aircraft's closest planned/contingency position, so the established procedure is required for the portion inside 3 NM",
+        "Only the launch point",
+        "Only the control station"
+      ],
+      "answerIndex": 1,
+      "rationale": "The aircraft's closest planned/contingency position, so the established procedure is required for the portion inside 3 NM CAR 901.73 refers to the remotely piloted aircraft's distance, not merely the launch site.",
+      "source": "TP 15263; CARs 901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Airport, heliport and aerodrome procedures",
+          "objective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries."
+        },
+        {
+          "source": "CARs",
+          "section": "901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+          "topic": "Airport, heliport and aerodrome procedures"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Airport, heliport and aerodrome procedures",
+      "learningObjective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-aerodromes-008",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A hospital heliport procedure specifies a call before operating inside 1 NM. The pilot cannot establish the required contact. What is the correct choice?",
+      "choices": [
+        "Do not conduct the operation inside 1 NM unless the applicable procedure's conditions can be met",
+        "Proceed because a call attempt is enough",
+        "Proceed below rooftop height",
+        "Replace the procedure with a NOTAM check"
+      ],
+      "answerIndex": 0,
+      "rationale": "Do not conduct the operation inside 1 NM unless the applicable procedure's conditions can be met The operation must be conducted in accordance with the applicable established procedure.",
+      "source": "TP 15263; CARs 901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Airport, heliport and aerodrome procedures",
+          "objective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries."
+        },
+        {
+          "source": "CARs",
+          "section": "901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+          "topic": "Airport, heliport and aerodrome procedures"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Airport, heliport and aerodrome procedures",
+      "learningObjective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-aerodromes-009",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "A NOTAM closes a runway, but helicopter traffic continues at the aerodrome. May the pilot assume the traffic pattern is inactive?",
+      "choices": [
+        "Yes—one closed runway closes all aircraft activity",
+        "Yes if the RPA stays below 400 ft",
+        "Only fixed-wing RPA must care",
+        "No—review all current activity and avoid interference; a runway closure does not prove the aerodrome is traffic-free"
+      ],
+      "answerIndex": 3,
+      "rationale": "No—review all current activity and avoid interference; a runway closure does not prove the aerodrome is traffic-free Site survey and current aeronautical information must account for remaining aircraft operations.",
+      "source": "TP 15263; CARs 901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Airport, heliport and aerodrome procedures",
+          "objective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries."
+        },
+        {
+          "source": "CARs",
+          "section": "901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+          "topic": "Airport, heliport and aerodrome procedures"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Airport, heliport and aerodrome procedures",
+      "learningObjective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-aerodromes-010",
+      "category": "aerodromes",
+      "difficulty": "hard",
+      "question": "An aerodrome is operated under the authority of the Minister of National Defence. The RPA would fly 2.99 NM from its centre. What additional authority is required?",
+      "choices": [
+        "Only the civilian airport established procedure",
+        "None because the distance is nearly 3 NM",
+        "Authorization from the Department of National Defence",
+        "Only municipal permission"
+      ],
+      "answerIndex": 2,
+      "rationale": "Authorization from the Department of National Defence CAR 901.47(4) applies at less than 3 NM and specifically requires DND authorization.",
+      "source": "TP 15263; CARs 901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Airport, heliport and aerodrome procedures",
+          "objective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries."
+        },
+        {
+          "source": "CARs",
+          "section": "901.47 and 901.73; TC AIM RPA 3.2.35 and 3.4.1.3",
+          "topic": "Airport, heliport and aerodrome procedures"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Airport, heliport and aerodrome procedures",
+      "learningObjective": "Distinguish airport, heliport and other aerodrome rules and apply their exact distance boundaries.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-airspace-001",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "A VNC depicts CYA123(T) from the surface to 2,500 ft ASL during published times. What is the best first interpretation?",
+      "choices": [
+        "It is a Class C control zone",
+        "It is prohibited airspace at all times",
+        "The (T) means transponder-only",
+        "It is Class F advisory airspace for training activity; review its status and avoid participating activity unless safe coordination is established"
+      ],
+      "answerIndex": 3,
+      "rationale": "It is Class F advisory airspace for training activity; review its status and avoid participating activity unless safe coordination is established CYA identifies advisory airspace and the suffix describes the activity; its published dimensions and times matter.",
+      "source": "TP 15263; DAH / TC AIM DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "topic": "Controlled and Class F airspace interpretation",
+          "objective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs."
+        },
+        {
+          "source": "DAH / TC AIM",
+          "section": "DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+          "topic": "Controlled and Class F airspace interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Controlled and Class F airspace interpretation",
+      "learningObjective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-airspace-002",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "A planned route crosses an active CYR. What is the essential distinction from a CYA?",
+      "choices": [
+        "There is no operational difference",
+        "CYR applies only above 18,000 ft",
+        "Entry into active restricted airspace requires the permission specified for that CYR; advisory airspace does not create the same blanket entry prohibition",
+        "CYA always requires military clearance but CYR never does"
+      ],
+      "answerIndex": 2,
+      "rationale": "Entry into active restricted airspace requires the permission specified for that CYR; advisory airspace does not create the same blanket entry prohibition Restricted Class F protects hazardous or sensitive activity with controlled access.",
+      "source": "TP 15263; DAH / TC AIM DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "topic": "Controlled and Class F airspace interpretation",
+          "objective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs."
+        },
+        {
+          "source": "DAH / TC AIM",
+          "section": "DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+          "topic": "Controlled and Class F airspace interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Controlled and Class F airspace interpretation",
+      "learningObjective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-airspace-003",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "Why should a pilot consult the current DAH rather than infer a Class F area's limits from its map symbol alone?",
+      "choices": [
+        "Class F dimensions are identical nationwide",
+        "The DAH provides the legal lateral/vertical dimensions, active times and controlling/using agency details",
+        "The DAH is only historical",
+        "Map symbols contain every temporary change"
+      ],
+      "answerIndex": 1,
+      "rationale": "The DAH provides the legal lateral/vertical dimensions, active times and controlling/using agency details Charts aid depiction; the DAH is the detailed source for designated airspace.",
+      "source": "TP 15263; DAH / TC AIM DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "topic": "Controlled and Class F airspace interpretation",
+          "objective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs."
+        },
+        {
+          "source": "DAH / TC AIM",
+          "section": "DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+          "topic": "Controlled and Class F airspace interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Controlled and Class F airspace interpretation",
+      "learningObjective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-airspace-004",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "A Class F area is published SFC to 4,500 ft ASL over terrain at 1,200 ft ASL. Is a 300 ft AGL RPA necessarily below it?",
+      "choices": [
+        "No—the Class F begins at the surface, so the RPA is vertically inside if laterally within it",
+        "Yes—4,500 ft is the lower limit",
+        "Yes—Class F never reaches the ground",
+        "Only airports can have surface airspace"
+      ],
+      "answerIndex": 0,
+      "rationale": "No—the Class F begins at the surface, so the RPA is vertically inside if laterally within it SFC is the lower limit; converting the upper ASL limit is irrelevant to whether a low-level flight enters.",
+      "source": "TP 15263; DAH / TC AIM DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "topic": "Controlled and Class F airspace interpretation",
+          "objective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs."
+        },
+        {
+          "source": "DAH / TC AIM",
+          "section": "DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+          "topic": "Controlled and Class F airspace interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Controlled and Class F airspace interpretation",
+      "learningObjective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-airspace-005",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "A DAH entry has a 2,500 ft ASL floor; terrain beneath the route is 2,300 ft ASL and the RPA is planned at 300 ft AGL. What is the vertical result?",
+      "choices": [
+        "It remains at 300 ft ASL",
+        "It is automatically below the airspace because it is under 400 ft AGL",
+        "Terrain elevation is subtracted from AGL",
+        "The RPA would be about 2,600 ft ASL and therefore above the 2,500 ft floor"
+      ],
+      "answerIndex": 3,
+      "rationale": "The RPA would be about 2,600 ft ASL and therefore above the 2,500 ft floor Airspace limits in ASL must be compared with aircraft altitude in the same datum.",
+      "source": "TP 15263; DAH / TC AIM DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "topic": "Controlled and Class F airspace interpretation",
+          "objective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs."
+        },
+        {
+          "source": "DAH / TC AIM",
+          "section": "DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+          "topic": "Controlled and Class F airspace interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Controlled and Class F airspace interpretation",
+      "learningObjective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-airspace-006",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "A control zone is Class D to 2300 local and Class E afterward. An RPA launch is at 2310. What must the pilot determine?",
+      "choices": [
+        "It becomes Class G automatically",
+        "Time-varying classification never affects RPAS",
+        "The airspace's current classification and the authorization requirements applicable at 2310, using current publications/NOTAMs",
+        "It remains Class D forever"
+      ],
+      "answerIndex": 2,
+      "rationale": "The airspace's current classification and the authorization requirements applicable at 2310, using current publications/NOTAMs Some zones change classification when the ATS unit closes; current status controls.",
+      "source": "TP 15263; DAH / TC AIM DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "topic": "Controlled and Class F airspace interpretation",
+          "objective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs."
+        },
+        {
+          "source": "DAH / TC AIM",
+          "section": "DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+          "topic": "Controlled and Class F airspace interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Controlled and Class F airspace interpretation",
+      "learningObjective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-airspace-007",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "A mandatory frequency area is drawn around an uncontrolled aerodrome. Does the MF designation itself make the airspace controlled?",
+      "choices": [
+        "No—and radio procedures may be ignored",
+        "No—an MF area can exist in uncontrolled airspace; the communication and aerodrome procedures still matter",
+        "Yes—every MF area is Class C",
+        "Yes—every frequency creates controlled airspace"
+      ],
+      "answerIndex": 1,
+      "rationale": "No—an MF area can exist in uncontrolled airspace; the communication and aerodrome procedures still matter Airspace class and radio/operational designations are distinct concepts.",
+      "source": "TP 15263; DAH / TC AIM DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "topic": "Controlled and Class F airspace interpretation",
+          "objective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs."
+        },
+        {
+          "source": "DAH / TC AIM",
+          "section": "DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+          "topic": "Controlled and Class F airspace interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Controlled and Class F airspace interpretation",
+      "learningObjective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-airspace-008",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "An ATS authorization covers a rectangle to 300 ft AGL, but the contingency climb is programmed to 350 ft AGL. What is wrong?",
+      "choices": [
+        "The contingency profile exceeds the authorized vertical boundary and must be changed or re-authorized",
+        "Nothing—contingencies are outside authorizations",
+        "Only the nominal route must fit",
+        "AGL limits are optional in controlled airspace"
+      ],
+      "answerIndex": 0,
+      "rationale": "The contingency profile exceeds the authorized vertical boundary and must be changed or re-authorized CAR 901.71 authorizations include vertical and horizontal boundaries and lost-link procedures.",
+      "source": "TP 15263; DAH / TC AIM DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "topic": "Controlled and Class F airspace interpretation",
+          "objective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs."
+        },
+        {
+          "source": "DAH / TC AIM",
+          "section": "DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+          "topic": "Controlled and Class F airspace interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Controlled and Class F airspace interpretation",
+      "learningObjective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-airspace-009",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "The RPA is in Class G, but a nearby Class E transition area begins at 700 ft AGL. At 300 ft AGL, what is the correct conclusion?",
+      "choices": [
+        "It is inside Class E because Class E always starts at the surface",
+        "Class G means no aviation rules apply",
+        "The transition area converts the ground to Class C",
+        "The aircraft is below that Class E floor, but all other aerodrome, NOTAM and safety rules still apply"
+      ],
+      "answerIndex": 3,
+      "rationale": "The aircraft is below that Class E floor, but all other aerodrome, NOTAM and safety rules still apply The published floor determines the vertical boundary; uncontrolled does not mean unregulated.",
+      "source": "TP 15263; DAH / TC AIM DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "topic": "Controlled and Class F airspace interpretation",
+          "objective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs."
+        },
+        {
+          "source": "DAH / TC AIM",
+          "section": "DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+          "topic": "Controlled and Class F airspace interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Controlled and Class F airspace interpretation",
+      "learningObjective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-airspace-010",
+      "category": "airspace",
+      "difficulty": "hard",
+      "question": "A short-duration Class F restriction is announced by NOTAM before the next 56-day chart cycle. May the pilot ignore it because it is absent from the paper VNC?",
+      "choices": [
+        "Yes below 400 ft",
+        "Only IFR pilots use Class F NOTAMs",
+        "No—current NOTAM information can establish or change short-duration designated airspace and must be applied",
+        "Yes—the paper chart always overrides NOTAMs"
+      ],
+      "answerIndex": 2,
+      "rationale": "No—current NOTAM information can establish or change short-duration designated airspace and must be applied The DAH notes short-duration Class F designations may be approved by NOTAM when publication timing is insufficient.",
+      "source": "TP 15263; DAH / TC AIM DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-navcanada-dah"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "1",
+          "topic": "Controlled and Class F airspace interpretation",
+          "objective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs."
+        },
+        {
+          "source": "DAH / TC AIM",
+          "section": "DAH 1.0; TC AIM RAC 2.8 and RPA 3.2.3",
+          "topic": "Controlled and Class F airspace interpretation"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "1",
+      "knowledgeArea": "Air law, air traffic rules and procedures",
+      "knowledgeTopic": "Controlled and Class F airspace interpretation",
+      "learningObjective": "Interpret current lateral, vertical and temporal airspace limits using the DAH, charts and NOTAMs.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-visual-observers-001",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "During EVLOS, the RPA is 1.8 NM from the pilot but 2.1 NM from the assigned visual observer. Is the geometry compliant?",
+      "choices": [
+        "Yes—only the pilot distance counts",
+        "Yes—2 NM is merely advisory",
+        "No—EVLOS is limited to 1 NM",
+        "No—the RPA must remain not more than 2 NM from the pilot, control station and visual observer"
+      ],
+      "answerIndex": 3,
+      "rationale": "No—the RPA must remain not more than 2 NM from the pilot, control station and visual observer CAR 901.74(1)(b) applies the 2 NM maximum to all three reference points.",
+      "source": "TP 15263 Section 6; CARs 901.74–901.75",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "EVLOS visual observer qualifications and geometry",
+          "objective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.74–901.75",
+          "topic": "EVLOS visual observer qualifications and geometry"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "EVLOS visual observer qualifications and geometry",
+      "learningObjective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-visual-observers-002",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "The RPA is exactly 2.0 NM from the pilot, control station and observer. Does the distance wording permit equality?",
+      "choices": [
+        "Only in Class G",
+        "Only if the observer uses binoculars",
+        "Yes—'not more than two nautical miles' includes exactly 2.0 NM",
+        "No—the rule says less than 2 NM"
+      ],
+      "answerIndex": 2,
+      "rationale": "Yes—'not more than two nautical miles' includes exactly 2.0 NM This is an inclusive maximum, unlike a 'less than' boundary.",
+      "source": "TP 15263 Section 6; CARs 901.74–901.75",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "EVLOS visual observer qualifications and geometry",
+          "objective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.74–901.75",
+          "topic": "EVLOS visual observer qualifications and geometry"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "EVLOS visual observer qualifications and geometry",
+      "learningObjective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-visual-observers-003",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "An EVLOS observer holds no RPAS pilot certificate but has extensive aviation experience. May that person perform the regulated observer duty?",
+      "choices": [
+        "Only a radio licence is required",
+        "No—the observer must hold one of the RPAS pilot certificates listed in CAR 901.75(a)",
+        "Yes—experience substitutes for the certificate",
+        "Yes if within 1 NM"
+      ],
+      "answerIndex": 1,
+      "rationale": "No—the observer must hold one of the RPAS pilot certificates listed in CAR 901.75(a) CAR 901.75(a) specifies the accepted pilot certificates.",
+      "source": "TP 15263 Section 6; CARs 901.74–901.75",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "EVLOS visual observer qualifications and geometry",
+          "objective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.74–901.75",
+          "topic": "EVLOS visual observer qualifications and geometry"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "EVLOS visual observer qualifications and geometry",
+      "learningObjective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-visual-observers-004",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "An observer uses binoculars continuously to watch the relevant airspace. Does that satisfy the EVLOS visual-contact requirement?",
+      "choices": [
+        "No—the observer must maintain unaided visual contact with the operating airspace",
+        "Yes—any optical aid is mandatory",
+        "Yes if the binoculars are stabilized",
+        "No—observers must watch only the control screen"
+      ],
+      "answerIndex": 0,
+      "rationale": "No—the observer must maintain unaided visual contact with the operating airspace CAR 901.75(b) expressly uses 'unaided visual contact'.",
+      "source": "TP 15263 Section 6; CARs 901.74–901.75",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "EVLOS visual observer qualifications and geometry",
+          "objective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.74–901.75",
+          "topic": "EVLOS visual observer qualifications and geometry"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "EVLOS visual observer qualifications and geometry",
+      "learningObjective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-visual-observers-005",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "A ridge blocks the observer's view of a helicopter route through the operating airspace, although the observer can see the RPA. What is the defect?",
+      "choices": [
+        "None—seeing the RPA alone is sufficient",
+        "The ridge counts as a sheltered operation",
+        "The pilot's map replaces the blocked view",
+        "The observer cannot adequately monitor the airspace for conflicting traffic and hazards"
+      ],
+      "answerIndex": 3,
+      "rationale": "The observer cannot adequately monitor the airspace for conflicting traffic and hazards EVLOS observer placement must support traffic detection in the airspace used by the RPA.",
+      "source": "TP 15263 Section 6; CARs 901.74–901.75",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "EVLOS visual observer qualifications and geometry",
+          "objective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.74–901.75",
+          "topic": "EVLOS visual observer qualifications and geometry"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "EVLOS visual observer qualifications and geometry",
+      "learningObjective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-visual-observers-006",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "Two observers hand off coverage, but radio contact fails during the overlap. What should the pilot do?",
+      "choices": [
+        "Continue because observers are optional after launch",
+        "Increase altitude until both radios recover",
+        "Do not continue beyond the coverage that can be positively confirmed; execute the briefed contingency",
+        "Assume the second observer has visual contact"
+      ],
+      "answerIndex": 2,
+      "rationale": "Do not continue beyond the coverage that can be positively confirmed; execute the briefed contingency Effective EVLOS depends on reliable, timely coordination and confirmed coverage.",
+      "source": "TP 15263 Section 6; CARs 901.74–901.75",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "EVLOS visual observer qualifications and geometry",
+          "objective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.74–901.75",
+          "topic": "EVLOS visual observer qualifications and geometry"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "EVLOS visual observer qualifications and geometry",
+      "learningObjective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-visual-observers-007",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "At launch, the pilot and control station are at the designated recovery site. The pilot relocates and then attempts the landing from the new location. Is that consistent with CAR 901.74(1)(a)?",
+      "choices": [
+        "Yes because location matters only at launch",
+        "No—the pilot and control station must be at the site set aside for landing or recovery at the time of that activity",
+        "Yes—only the observer must be at the recovery site",
+        "Yes if the aircraft is automated"
+      ],
+      "answerIndex": 1,
+      "rationale": "No—the pilot and control station must be at the site set aside for landing or recovery at the time of that activity The regulation anchors the pilot and control station at the set-aside site during take-off, launch, landing and recovery.",
+      "source": "TP 15263 Section 6; CARs 901.74–901.75",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "EVLOS visual observer qualifications and geometry",
+          "objective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.74–901.75",
+          "topic": "EVLOS visual observer qualifications and geometry"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "EVLOS visual observer qualifications and geometry",
+      "learningObjective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-visual-observers-008",
+      "category": "visual-observers",
+      "difficulty": "hard",
+      "question": "An EVLOS route passes 30 m from an uninvolved person. Is the person-distance minimum met exactly?",
+      "choices": [
+        "Yes—CAR 901.74 requires at least 100 ft (30 m), so equality meets the minimum",
+        "No—it requires more than 30 m",
+        "No—it requires 500 ft",
+        "Yes only if the person is indoors"
+      ],
+      "answerIndex": 0,
+      "rationale": "Yes—CAR 901.74 requires at least 100 ft (30 m), so equality meets the minimum 'At least' is inclusive, but the pilot must account for position uncertainty and actual horizontal distance.",
+      "source": "TP 15263 Section 6; CARs 901.74–901.75",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "EVLOS visual observer qualifications and geometry",
+          "objective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.74–901.75",
+          "topic": "EVLOS visual observer qualifications and geometry"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "EVLOS visual observer qualifications and geometry",
+      "learningObjective": "Apply EVLOS observer qualification, unaided-view, communication and exact-distance requirements.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-abnormal-001",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "Command link is lost and the preprogrammed return track is likely to enter controlled airspace. What notification is required?",
+      "choices": [
+        "Wait until it actually crosses the boundary",
+        "Notify only the equipment manufacturer",
+        "No notification is needed if return-to-home is active",
+        "Notify the appropriate ATS unit immediately because the uncontrolled aircraft is likely to enter controlled airspace"
+      ],
+      "answerIndex": 3,
+      "rationale": "Notify the appropriate ATS unit immediately because the uncontrolled aircraft is likely to enter controlled airspace CAR 901.15 covers both actual and likely inadvertent entry while the aircraft is no longer under control.",
+      "source": "TP 15263 Section 6; CARs 901.15",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Abnormal, emergency and occurrence response",
+          "objective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.15",
+          "topic": "Abnormal, emergency and occurrence response"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Abnormal, emergency and occurrence response",
+      "learningObjective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-abnormal-002",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "The RPA loses link but follows its planned return profile predictably. Is that automatically a 'fly-away' under the CAR definition?",
+      "choices": [
+        "No—link loss is never reportable",
+        "Yes only below 400 ft",
+        "No—a fly-away also involves the aircraft no longer following preprogrammed procedures or otherwise operating predictably/planned",
+        "Yes—every link loss is a fly-away"
+      ],
+      "answerIndex": 2,
+      "rationale": "No—a fly-away also involves the aircraft no longer following preprogrammed procedures or otherwise operating predictably/planned A lost C2 link and a fly-away are related but distinct abnormal conditions.",
+      "source": "TP 15263 Section 6; CARs 900.01 and 901.23",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Abnormal, emergency and occurrence response",
+          "objective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "900.01 and 901.23",
+          "topic": "Abnormal, emergency and occurrence response"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Abnormal, emergency and occurrence response",
+      "learningObjective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-abnormal-003",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "A firmware update changes the lost-link altitude, but the crew briefs yesterday's value. Which regulatory control failed?",
+      "choices": [
+        "Firmware cannot affect procedures",
+        "The emergency procedures were not updated/reviewed to reflect the system's current manufacturer instructions",
+        "None—briefings never include lost link",
+        "Only ATC must know the value"
+      ],
+      "answerIndex": 1,
+      "rationale": "The emergency procedures were not updated/reviewed to reflect the system's current manufacturer instructions CAR 901.23 requires procedures that reflect applicable instructions and are reviewed by each crew member before flight.",
+      "source": "TP 15263 Section 6; CARs 901.23",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Abnormal, emergency and occurrence response",
+          "objective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.23",
+          "topic": "Abnormal, emergency and occurrence response"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Abnormal, emergency and occurrence response",
+      "learningObjective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-abnormal-004",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "After a brief excursion outside the authorized horizontal boundary, control is restored and no damage occurs. May routine operations continue immediately?",
+      "choices": [
+        "No—cease operations until the cause is analysed and corrective action mitigates recurrence",
+        "Yes because the aircraft returned",
+        "Yes if the excursion lasted under one minute",
+        "Only the observer must stop"
+      ],
+      "answerIndex": 0,
+      "rationale": "No—cease operations until the cause is analysed and corrective action mitigates recurrence CAR 901.49(1)(d) includes any time the aircraft is not kept within horizontal boundaries or altitude limits.",
+      "source": "TP 15263 Section 6; CARs 901.49",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Abnormal, emergency and occurrence response",
+          "objective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.49",
+          "topic": "Abnormal, emergency and occurrence response"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Abnormal, emergency and occurrence response",
+      "learningObjective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-abnormal-005",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "A propeller clips a bystander's coat without injury. Which CAR 901.49 trigger applies?",
+      "choices": [
+        "None because no medical attention was needed",
+        "Only a maintenance log entry is required",
+        "It applies only if the coat is damaged",
+        "Unintended contact between the aircraft and a person, requiring operations to cease pending analysis and corrective action"
+      ],
+      "answerIndex": 3,
+      "rationale": "Unintended contact between the aircraft and a person, requiring operations to cease pending analysis and corrective action Unintended contact is a separate trigger from injury requiring medical attention.",
+      "source": "TP 15263 Section 6; CARs 901.49(1)(b)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Abnormal, emergency and occurrence response",
+          "objective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.49(1)(b)",
+          "topic": "Abnormal, emergency and occurrence response"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Abnormal, emergency and occurrence response",
+      "learningObjective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-abnormal-006",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "A hard landing cracks an arm and changes vibration levels, but the RPA can still take off. What is the proper next step?",
+      "choices": [
+        "Fly once more to confirm the crack",
+        "Delete the warning and reduce payload",
+        "Cease operations; analyse the unanticipated damage and correct the recurrence risk before further flight",
+        "Continue because takeoff is possible"
+      ],
+      "answerIndex": 2,
+      "rationale": "Cease operations; analyse the unanticipated damage and correct the recurrence risk before further flight Damage adversely affecting performance or flight characteristics triggers CAR 901.49 and also raises serviceability concerns.",
+      "source": "TP 15263 Section 6; CARs 901.49(1)(c)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Abnormal, emergency and occurrence response",
+          "objective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.49(1)(c)",
+          "topic": "Abnormal, emergency and occurrence response"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Abnormal, emergency and occurrence response",
+      "learningObjective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-abnormal-007",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "After a fly-away analysis is completed, how long must the pilot keep the analysis record?",
+      "choices": [
+        "Indefinitely",
+        "12 months after the record is created",
+        "24 months",
+        "30 days"
+      ],
+      "answerIndex": 1,
+      "rationale": "12 months after the record is created CAR 901.49(2) sets a 12-month retention period for occurrence analyses.",
+      "source": "TP 15263 Section 6; CARs 901.49(2)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Abnormal, emergency and occurrence response",
+          "objective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.49(2)",
+          "topic": "Abnormal, emergency and occurrence response"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Abnormal, emergency and occurrence response",
+      "learningObjective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-abnormal-008",
+      "category": "abnormal",
+      "difficulty": "hard",
+      "question": "The primary control station fails, and the emergency procedure requires transfer to a backup unit. The backup was not installed for this flight. What is the core pre-flight failure?",
+      "choices": [
+        "A system element required by the established procedure was not installed and serviceable",
+        "None—the procedure can be ignored during an emergency",
+        "Only the battery record matters",
+        "A backup is required for every RPAS regardless of procedure"
+      ],
+      "answerIndex": 0,
+      "rationale": "A system element required by the established procedure was not installed and serviceable CAR 901.29(c) requires equipment/system elements required by regulations or applicable instructions to be installed and serviceable.",
+      "source": "TP 15263 Section 6; CARs 901.23 and 901.29",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "6",
+          "topic": "Abnormal, emergency and occurrence response",
+          "objective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.23 and 901.29",
+          "topic": "Abnormal, emergency and occurrence response"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "6",
+      "knowledgeArea": "Flight operations",
+      "knowledgeTopic": "Abnormal, emergency and occurrence response",
+      "learningObjective": "Apply lost-link, fly-away, occurrence and corrective-action procedures to realistic Advanced operations.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-maintenance-001",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "A manufacturer publishes a mandatory motor inspection before the next flight. The aircraft appears normal. May it launch first and be inspected afterward?",
+      "choices": [
+        "Yes if the pilot hovers briefly",
+        "Yes if the flight is in Class G",
+        "Only the owner decides whether an action is mandatory",
+        "No—all mandatory actions must be completed in accordance with the applicable instructions before take-off or launch"
+      ],
+      "answerIndex": 3,
+      "rationale": "No—all mandatory actions must be completed in accordance with the applicable instructions before take-off or launch CAR 901.29(b) makes completion of mandatory actions a launch prerequisite.",
+      "source": "TP 15263; CARs / TC AIM 901.29",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "topic": "Serviceability, modification and maintenance records",
+          "objective": "Decide whether the RPAS is serviceable and document/report maintenance correctly."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.29",
+          "topic": "Serviceability, modification and maintenance records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Serviceability, modification and maintenance records",
+      "learningObjective": "Decide whether the RPAS is serviceable and document/report maintenance correctly.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-maintenance-002",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "A declared RPAS used for close-to-person Advanced operations receives a non-manufacturer payload mount. What must be established before using it for the declared operation?",
+      "choices": [
+        "The pilot certificate approves the modification",
+        "Only the payload weight needs recording",
+        "The system must continue to meet the applicable Standard 922 technical requirements and the modification must follow applicable instructions",
+        "Any payload mount is automatically acceptable below 400 ft"
+      ],
+      "answerIndex": 2,
+      "rationale": "The system must continue to meet the applicable Standard 922 technical requirements and the modification must follow applicable instructions CAR 901.70 controls modifications to systems used for the operations described in 901.69.",
+      "source": "TP 15263; CARs / TC AIM 901.70",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "topic": "Serviceability, modification and maintenance records",
+          "objective": "Decide whether the RPAS is serviceable and document/report maintenance correctly."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.70",
+          "topic": "Serviceability, modification and maintenance records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Serviceability, modification and maintenance records",
+      "learningObjective": "Decide whether the RPAS is serviceable and document/report maintenance correctly.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-maintenance-003",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "A pre-flight check finds one anti-collision light intermittent for a night mission. The rest of the RPAS is serviceable. What is the decision?",
+      "choices": [
+        "Operate only above 300 ft",
+        "Do not launch until equipment required for the operation is serviceable",
+        "Launch because one light is enough",
+        "Disable all lights"
+      ],
+      "answerIndex": 1,
+      "rationale": "Do not launch until equipment required for the operation is serviceable CAR 901.29(c) covers equipment required by regulation or instructions; night lighting cannot be treated as optional when required.",
+      "source": "TP 15263; CARs / TC AIM 901.29 and 901.39",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "topic": "Serviceability, modification and maintenance records",
+          "objective": "Decide whether the RPAS is serviceable and document/report maintenance correctly."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.29 and 901.39",
+          "topic": "Serviceability, modification and maintenance records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Serviceability, modification and maintenance records",
+      "learningObjective": "Decide whether the RPAS is serviceable and document/report maintenance correctly.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-maintenance-004",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "A battery pack has a new dent after transport but passes a voltage check. What is the best serviceability response?",
+      "choices": [
+        "Quarantine and assess it under manufacturer instructions before flight; voltage alone does not establish serviceability",
+        "Use it until capacity falls below 50%",
+        "Puncture the casing to relieve pressure",
+        "Ignore physical damage if cells balance"
+      ],
+      "answerIndex": 0,
+      "rationale": "Quarantine and assess it under manufacturer instructions before flight; voltage alone does not establish serviceability Pre-flight inspection and serviceability decisions must consider physical condition and applicable battery instructions.",
+      "source": "TP 15263; CARs / TC AIM 901.28–901.29; TC AIM RPA 3.2.17.5",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "topic": "Serviceability, modification and maintenance records",
+          "objective": "Decide whether the RPAS is serviceable and document/report maintenance correctly."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.28–901.29; TC AIM RPA 3.2.17.5",
+          "topic": "Serviceability, modification and maintenance records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Serviceability, modification and maintenance records",
+      "learningObjective": "Decide whether the RPAS is serviceable and document/report maintenance correctly.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-maintenance-005",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "A reportable service difficulty is discovered on a model with an accepted safety assurance declaration. To whom must the pilot report it?",
+      "choices": [
+        "Only to the local police",
+        "Only to NAV CANADA",
+        "No report is required unless there is a crash",
+        "To the person who made the declaration, as soon as feasible"
+      ],
+      "answerIndex": 3,
+      "rationale": "To the person who made the declaration, as soon as feasible CAR 901.51 creates this model-specific reporting obligation.",
+      "source": "TP 15263; CARs / TC AIM 901.51",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "topic": "Serviceability, modification and maintenance records",
+          "objective": "Decide whether the RPAS is serviceable and document/report maintenance correctly."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.51",
+          "topic": "Serviceability, modification and maintenance records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Serviceability, modification and maintenance records",
+      "learningObjective": "Decide whether the RPAS is serviceable and document/report maintenance correctly.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-maintenance-006",
+      "category": "maintenance",
+      "difficulty": "hard",
+      "question": "A repair record says only 'fixed drone.' Which required detail is clearly missing?",
+      "choices": [
+        "Every observer's certificate number",
+        "The nearest airport elevation",
+        "The particulars of the maintenance/repair, including who performed it and when",
+        "The day's METAR"
+      ],
+      "answerIndex": 2,
+      "rationale": "The particulars of the maintenance/repair, including who performed it and when CAR 901.48 requires names, dates and particulars; modifications also require manufacturer/model/part descriptions and applicable instructions.",
+      "source": "TP 15263; CARs / TC AIM 901.48(1)(b)",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-justice-cars"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "2",
+          "topic": "Serviceability, modification and maintenance records",
+          "objective": "Decide whether the RPAS is serviceable and document/report maintenance correctly."
+        },
+        {
+          "source": "CARs / TC AIM",
+          "section": "901.48(1)(b)",
+          "topic": "Serviceability, modification and maintenance records"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "2",
+      "knowledgeArea": "RPA airframes, power plants, propulsion and systems",
+      "knowledgeTopic": "Serviceability, modification and maintenance records",
+      "learningObjective": "Decide whether the RPAS is serviceable and document/report maintenance correctly.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-human-factors-001",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "The pilot slept four hours, is taking a sedating antihistamine and feels pressure to finish a paid job. What is the correct fitness decision?",
+      "choices": [
+        "Fly if the observer feels alert",
+        "Fly only in automated mode",
+        "Drink coffee and omit the medication from the briefing",
+        "Do not fly; fatigue, medication effects and external pressure create unacceptable impairment risk"
+      ],
+      "answerIndex": 3,
+      "rationale": "Do not fly; fatigue, medication effects and external pressure create unacceptable impairment risk CAR 901.19 prohibits acting as crew when fatigue or another likely condition makes the person unfit, and sound decision-making resists external pressure.",
+      "source": "TP 15263; TP 15263 / TC AIM CAR 901.19; TC AIM RPA 3.2.7",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "topic": "Crew fitness and decision-making",
+          "objective": "Recognize impairment, bias and communication failures and apply conservative crew-resource management."
+        },
+        {
+          "source": "TP 15263 / TC AIM",
+          "section": "CAR 901.19; TC AIM RPA 3.2.7",
+          "topic": "Crew fitness and decision-making"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "3",
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Crew fitness and decision-making",
+      "learningObjective": "Recognize impairment, bias and communication failures and apply conservative crew-resource management.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-human-factors-002",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "A pilot rejects worsening-weather cues because 'the last five missions here were fine.' Which bias is most evident?",
+      "choices": [
+        "The startle effect only",
+        "Spatial disorientation",
+        "Normalization of deviance/confirmation bias that discounts current contrary evidence",
+        "A correct use of experience"
+      ],
+      "answerIndex": 2,
+      "rationale": "Normalization of deviance/confirmation bias that discounts current contrary evidence Past success does not validate today's conditions; objective triggers and cross-checks counter biased continuation.",
+      "source": "TP 15263; TP 15263 / TC AIM CAR 901.19; TC AIM RPA 3.2.7",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "topic": "Crew fitness and decision-making",
+          "objective": "Recognize impairment, bias and communication failures and apply conservative crew-resource management."
+        },
+        {
+          "source": "TP 15263 / TC AIM",
+          "section": "CAR 901.19; TC AIM RPA 3.2.7",
+          "topic": "Crew fitness and decision-making"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "3",
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Crew fitness and decision-making",
+      "learningObjective": "Recognize impairment, bias and communication failures and apply conservative crew-resource management.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-human-factors-003",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "During a complex approach, the observer gives a long non-urgent equipment update while traffic appears. What crew-resource principle should be applied?",
+      "choices": [
+        "Have both people transmit simultaneously",
+        "Use concise priority calls and let safety-critical traffic information interrupt lower-priority discussion",
+        "Ban all observer speech during flight",
+        "Finish every checklist sentence before mentioning traffic"
+      ],
+      "answerIndex": 1,
+      "rationale": "Use concise priority calls and let safety-critical traffic information interrupt lower-priority discussion Standardized, prioritized communication protects attention and shared situational awareness.",
+      "source": "TP 15263; TP 15263 / TC AIM CAR 901.19; TC AIM RPA 3.2.7",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "topic": "Crew fitness and decision-making",
+          "objective": "Recognize impairment, bias and communication failures and apply conservative crew-resource management."
+        },
+        {
+          "source": "TP 15263 / TC AIM",
+          "section": "CAR 901.19; TC AIM RPA 3.2.7",
+          "topic": "Crew fitness and decision-making"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "3",
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Crew fitness and decision-making",
+      "learningObjective": "Recognize impairment, bias and communication failures and apply conservative crew-resource management.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-human-factors-004",
+      "category": "human-factors",
+      "difficulty": "hard",
+      "question": "The pilot has made several small control-input errors but insists on continuing because landing would delay the client. What is the best crew response?",
+      "choices": [
+        "Call the pre-briefed stop/transfer trigger and recover before performance degrades further",
+        "Wait for a major error",
+        "Hide the errors from the client",
+        "Increase mission speed"
+      ],
+      "answerIndex": 0,
+      "rationale": "Call the pre-briefed stop/transfer trigger and recover before performance degrades further Predefined intervention criteria reduce authority gradient and plan-continuation bias.",
+      "source": "TP 15263; TP 15263 / TC AIM CAR 901.19; TC AIM RPA 3.2.7",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "3",
+          "topic": "Crew fitness and decision-making",
+          "objective": "Recognize impairment, bias and communication failures and apply conservative crew-resource management."
+        },
+        {
+          "source": "TP 15263 / TC AIM",
+          "section": "CAR 901.19; TC AIM RPA 3.2.7",
+          "topic": "Crew fitness and decision-making"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "3",
+      "knowledgeArea": "Human factors",
+      "knowledgeTopic": "Crew fitness and decision-making",
+      "learningObjective": "Recognize impairment, bias and communication failures and apply conservative crew-resource management.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-navigation-001",
+      "category": "navigation",
+      "difficulty": "hard",
+      "question": "A charted obstacle is 1,850 ft ASL. Terrain at launch is 1,100 ft ASL, and the RPA is planned at 400 ft AGL from launch. Ignoring terrain variation, what vertical clearance remains?",
+      "choices": [
+        "750 ft",
+        "1,450 ft",
+        "No clearance can be calculated",
+        "350 ft"
+      ],
+      "answerIndex": 3,
+      "rationale": "350 ft The RPA altitude is about 1,500 ft ASL; 1,850 − 1,500 = 350 ft.",
+      "source": "TP 15263; TP 15263 / TC AIM Navigation and flight planning",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "5",
+          "topic": "Navigation calculations and altitude references",
+          "objective": "Perform supplied-data distance, time, heading and altitude calculations without mixing units or datums."
+        },
+        {
+          "source": "TP 15263 / TC AIM",
+          "section": "Navigation and flight planning",
+          "topic": "Navigation calculations and altitude references"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "5",
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Navigation calculations and altitude references",
+      "learningObjective": "Perform supplied-data distance, time, heading and altitude calculations without mixing units or datums.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-navigation-002",
+      "category": "navigation",
+      "difficulty": "hard",
+      "question": "A waypoint is 2.4 NM from launch. Using 1 NM = 1.852 km, approximately how far is that in kilometres?",
+      "choices": [
+        "3.70 km",
+        "5.56 km",
+        "4.44 km",
+        "2.96 km"
+      ],
+      "answerIndex": 2,
+      "rationale": "4.44 km 2.4 × 1.852 = 4.4448 km.",
+      "source": "TP 15263; TP 15263 / TC AIM Navigation and flight planning",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "5",
+          "topic": "Navigation calculations and altitude references",
+          "objective": "Perform supplied-data distance, time, heading and altitude calculations without mixing units or datums."
+        },
+        {
+          "source": "TP 15263 / TC AIM",
+          "section": "Navigation and flight planning",
+          "topic": "Navigation calculations and altitude references"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "5",
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Navigation calculations and altitude references",
+      "learningObjective": "Perform supplied-data distance, time, heading and altitude calculations without mixing units or datums.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-navigation-003",
+      "category": "navigation",
+      "difficulty": "hard",
+      "question": "The desired true track is 090°, variation is 12°W, and wind correction is 5° left. What approximate magnetic heading results?",
+      "choices": [
+        "107°M",
+        "097°M",
+        "073°M",
+        "083°M"
+      ],
+      "answerIndex": 1,
+      "rationale": "097°M A 5° left correction gives 085°T; for west variation add 12°, yielding 097°M.",
+      "source": "TP 15263; TP 15263 / TC AIM Navigation and flight planning",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "5",
+          "topic": "Navigation calculations and altitude references",
+          "objective": "Perform supplied-data distance, time, heading and altitude calculations without mixing units or datums."
+        },
+        {
+          "source": "TP 15263 / TC AIM",
+          "section": "Navigation and flight planning",
+          "topic": "Navigation calculations and altitude references"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "5",
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Navigation calculations and altitude references",
+      "learningObjective": "Perform supplied-data distance, time, heading and altitude calculations without mixing units or datums.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
+    },
+    {
+      "id": "b8-navigation-004",
+      "category": "navigation",
+      "difficulty": "hard",
+      "question": "A map scale is 1:500,000. Two points are 3.6 cm apart on the chart. What ground distance is represented?",
+      "choices": [
+        "18 km",
+        "1.8 km",
+        "36 km",
+        "180 km"
+      ],
+      "answerIndex": 0,
+      "rationale": "18 km At 1:500,000, 1 cm represents 5 km; 3.6 cm represents 18 km.",
+      "source": "TP 15263; TP 15263 / TC AIM Navigation and flight planning",
+      "sourceRefs": [
+        "ref-tp-15263",
+        "ref-tc-aim-full"
+      ],
+      "exactRefs": [
+        {
+          "source": "TP 15263",
+          "section": "5",
+          "topic": "Navigation calculations and altitude references",
+          "objective": "Perform supplied-data distance, time, heading and altitude calculations without mixing units or datums."
+        },
+        {
+          "source": "TP 15263 / TC AIM",
+          "section": "Navigation and flight planning",
+          "topic": "Navigation calculations and altitude references"
+        }
+      ],
+      "lastVerified": "2026-10-25",
+      "examScope": "core-advanced",
+      "examLevel": "advanced",
+      "tp15263Section": "5",
+      "knowledgeArea": "Navigation",
+      "knowledgeTopic": "Navigation calculations and altitude references",
+      "learningObjective": "Perform supplied-data distance, time, heading and altitude calculations without mixing units or datums.",
+      "reviewFlags": [
+        "reinforcement-batch"
+      ],
+      "origin": {
+        "type": "batch8-reinforcement",
+        "batch": "Batch 8"
+      }
     }
   ],
-  "totalQuestions": 1217,
+  "totalQuestions": 1317,
   "lastUpdated": "2026-10-06"
 }
