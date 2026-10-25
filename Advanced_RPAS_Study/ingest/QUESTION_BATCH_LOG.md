@@ -212,3 +212,14 @@ Prioritize scenario-driven questions on:
 - Remaining concerns:
   - No unresolved source/scope concerns identified in this merge.
   - Existing unrelated local change remains: `Advanced_RPAS_Study/CARs_Part_IX_English.html`.
+
+
+### Batch 8 Reinforcement Merge - 2026-10-25
+
+- Request: generate and integrate 100 additional questions, avoiding the live bank and emphasizing recorded weak areas.
+- Selected after standard duplicate screening at threshold 0.72: 100/100; final near-duplicate rejections: 0.
+- Live bank after integration: 1,317 questions (`updated`: 2026-10-25).
+- Mix: weather 20; NOTAMs 15; regulations 15; aerodromes 10; airspace 10; visual observers 8; abnormal 8; maintenance 6; human factors 4; navigation 4.
+- Reinforcement focus: METAR ceilings, NOTAM Q-line geography/radius, inclusive/exclusive boundaries, airport versus heliport procedures, Class F, EVLOS observers and record retention.
+- Verified 2026-10-25 against CARs Part IX, TP 15263, TC AIM 2026-2, NAV CANADA CNOP V12 and the DAH effective 2026-09-03.
+- Validation: unique IDs/stems, four unique choices, valid answer indexes, resolved sourceRefs, exactRefs present and no Level 1 Complex material in the new default-pool questions.

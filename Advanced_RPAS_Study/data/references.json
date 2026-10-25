@@ -41,7 +41,7 @@
   },
   {
     "id": "ref-tc-aim-rpa-2026-1",
-    "title": "TC AIM 2026-1 \u2014 RPA chapter",
+    "title": "TC AIM 2026-1 — RPA chapter",
     "organization": "Transport Canada",
     "url": "https://tc.canada.ca/sites/default/files/2026-03/aim-2026-1_rpa_en.pdf",
     "localCopy": "docs/aim-2026-1_rpa_en_March 19_2026 .pdf",
@@ -113,8 +113,8 @@
     "type": "Official study/operational reference",
     "authority": "Official guidance",
     "use": "Full AIM (GEN, AGA, COM, MET, RAC, AIR, SAR, RPA and other chapters); RPA chapter already held locally, other chapters available for airspace/navigation/weather categories.",
-    "notes": "Chapter PDFs are split by section (e.g. aim-2026-1_rac_en.pdf for rules of the air, aim-2026-1_met_en.pdf for weather). Only the RPA chapter has been downloaded locally so far.",
-    "lastVerified": "2026-08-29"
+    "notes": "Current issue verified as AIM 2026-2, effective October 1, 2026; chapter links on the stable page point to the current PDFs.",
+    "lastVerified": "2026-10-25"
   },
   {
     "id": "ref-tp-12863",
@@ -161,7 +161,7 @@
     "type": "Official commercial product catalogue",
     "authority": "Official",
     "use": "Source for navigation/chart-reading questions (VNC/VTA symbology, CFS aerodrome data).",
-    "notes": "General catalogue/purchase page for the paid chart products (VNC/VTA/CFS/CWAS) \u2014 no local copy held. The Designated Airspace Handbook is NOT a paid product and now has its own entry (ref-navcanada-dah) with a free current-issue PDF.",
+    "notes": "General catalogue/purchase page for the paid chart products (VNC/VTA/CFS/CWAS) — no local copy held. The Designated Airspace Handbook is NOT a paid product and now has its own entry (ref-navcanada-dah) with a free current-issue PDF.",
     "lastVerified": "2026-08-31"
   },
   {
@@ -190,17 +190,17 @@
   },
   {
     "id": "ref-navcanada-dah",
-    "title": "Designated Airspace Handbook (DAH) \u2014 current issue",
+    "title": "Designated Airspace Handbook (DAH) — current issue",
     "organization": "NAV CANADA",
     "url": "https://www.navcanada.ca/en/aeronautical-information/operational-guides.aspx",
-    "pdfUrl": "https://www.navcanada.ca/en/dah20260709.pdf",
+    "pdfUrl": "https://www.navcanada.ca/en/dah20260903.pdf",
     "localCopy": "docs/NAVCANADA_DAH_current_20260709.pdf",
     "category": "Navigation / Charts",
     "type": "Official reference (free PDF)",
     "authority": "Official",
-    "use": "Authoritative boundaries, altitudes, times of use and controlling/using agency for every named Class F Restricted (CYR), Advisory (CYA) and Danger (CYD) area \u2014 the actual document CARs 601.02/601.04/900.07 point to.",
-    "notes": "Free current-issue PDF, effective 2026-07-09 (posted until its next expiry; the 'next issue' link on the operational-guides page updates automatically \u2014 re-check periodically and re-download, since this localCopy will go stale). A derived lookup index (241 area codes \u2192 page number/snippet) was extracted to docs/DAH_area_index.json to speed up finding a specific CYR/CYA/CYD entry without re-scanning the full 216-page PDF.",
-    "lastVerified": "2026-08-31"
+    "use": "Authoritative boundaries, altitudes, times of use and controlling/using agency for every named Class F Restricted (CYR), Advisory (CYA) and Danger (CYD) area — the actual document CARs 601.02/601.04/900.07 point to.",
+    "notes": "Current online issue verified effective 2026-09-03. The retained local copy and derived index are from the prior issue.",
+    "lastVerified": "2026-10-25"
   },
   {
     "id": "ref-navcanada-vfr-phraseology",
@@ -217,7 +217,7 @@
   },
   {
     "id": "ref-ac-107-002",
-    "title": "Advisory Circular AC 107-002 \u2014 Safety Management System Development Guide for Smaller Aviation Organizations",
+    "title": "Advisory Circular AC 107-002 — Safety Management System Development Guide for Smaller Aviation Organizations",
     "organization": "Transport Canada",
     "url": "https://tc.canada.ca/en/aviation/reference-centre/advisory-circulars/advisory-circular-ac-no-107-002",
     "pdfUrl": "https://tc.canada.ca/sites/default/files/migrated/ac_107_002_issue_2.pdf",
@@ -230,7 +230,7 @@
   },
   {
     "id": "ref-ac-903-001",
-    "title": "Advisory Circular AC 903-001 \u2014 Remotely Piloted Aircraft Systems Operational Risk Assessment",
+    "title": "Advisory Circular AC 903-001 — Remotely Piloted Aircraft Systems Operational Risk Assessment",
     "organization": "Transport Canada",
     "url": "https://tc.canada.ca/en/aviation/reference-centre/advisory-circulars#900-series",
     "category": "Safety Management",
@@ -239,5 +239,29 @@
     "use": "Source for operational risk assessment concepts referenced in the safety quiz category.",
     "notes": "Listed under the 900-series advisory circulars page; no standalone URL confirmed.",
     "lastVerified": "2026-08-31"
+  },
+  {
+    "id": "ref-tc-aim-rpa-2026-2",
+    "title": "TC AIM 2026-2 — RPA chapter",
+    "organization": "Transport Canada",
+    "url": "https://tc.canada.ca/sites/default/files/2026-10/aim-2026-2_rpa_en.pdf",
+    "category": "Study Guide",
+    "type": "Official study/operational reference",
+    "authority": "Official guidance",
+    "use": "Current operational explanation and context for CARs Part IX, effective October 1, 2026.",
+    "notes": "Current RPA chapter used to verify Batch 8 questions.",
+    "lastVerified": "2026-10-25"
+  },
+  {
+    "id": "ref-navcanada-cnop-v12",
+    "title": "Canadian NOTAM Operating Procedures (CNOP) Version 12",
+    "organization": "NAV CANADA",
+    "url": "https://www.navcanada.ca/en/comms/_localized-assets/guides/cnop/cnop-v12-04172026.pdf",
+    "category": "NOTAM / Aeronautical Information",
+    "type": "Official operating procedures",
+    "authority": "Official",
+    "use": "Authoritative Canadian NOTAM Item Q qualifier, geographical-reference, radius, vertical-limit and item-format procedures.",
+    "notes": "Version 12 effective May 14, 2026. Version 13 was not effective until October 29, 2026.",
+    "lastVerified": "2026-10-25"
   }
 ]
