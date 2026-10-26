@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(U1829/26 NOTAMR U1315/26\nQ) CZWG/QOLAS/IV/M/E/000/017/4948N09403W002\nA) CZWG B) 2610261723 C) 2701252359EST\nE) OBST LGT U/S TOWER 494739N 0940241W (APRX 12NM E KENORA AD \n(CYQK)) 290FT AGL, 1698FT AMSL.)",
+    "startValidity": "2026-10-26T17:23:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.794167, -94.044722"
+    ]
+  },
+  {
+    "raw": "(U1828/26 NOTAMR U1314/26\nQ) CZWG/QOLAS/IV/M/E/000/018/5008N09315W002\nA) CZWG B) 2610261723 C) 2701251800EST\nE) OBST LGT U/S TOWER 500759N 0931432W (APRX 16NM NNE VERMILION BAY \n(WATER) AD (CKH6)) 351FT AGL, 1792FT AMSL.)",
+    "startValidity": "2026-10-26T17:23:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.133056, -93.242222"
+    ]
+  },
+  {
     "raw": "(J7481/26 NOTAMN\nQ) CZWG/QOBCE/IV/M/AE/000/021/5024N10440W005\nA) CYQR B) 2610281430 C) 2610282100\nE) CRANE WITHIN 164FT RADIUS CENTRED ON 502424N 1043957W APRX 2240FT \nBFR THR 31 AND 1.2NM SW EXTENDED RCL. 197FT AGL 2087FT AMSL. NOT \nLGTD, NOT PAINTED.)",
     "startValidity": "2026-10-26T11:18:27.557",
     "endValidity": "2026-10-28T21:00:00",
@@ -753,24 +771,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.945556, -102.982778"
-    ]
-  },
-  {
-    "raw": "(U1315/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/017/4948N09403W002\nA) CZWG B) 2607271846 C) 2610262359EST\nE) OBST LGT U/S TOWER 494739N 0940241W (APRX 12NM E KENORA AD \n(CYQK)) 290FT AGL, 1698FT AMSL.)",
-    "startValidity": "2026-07-27T18:46:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.794167, -94.044722"
-    ]
-  },
-  {
-    "raw": "(U1314/26 NOTAMR U0739/26\nQ) CZWG/QOLAS/IV/M/E/000/018/5008N09315W002\nA) CZWG B) 2607271718 C) 2610261800EST\nE) OBST LGT U/S TOWER 500759N 0931432W (APRX 16NM NNE VERMILION BAY \n(WATER) AD (CKH6)) 351FT AGL, 1792FT AMSL.)",
-    "startValidity": "2026-07-27T17:18:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.133056, -93.242222"
     ]
   },
   {
