@@ -864,21 +864,21 @@
     ]
   },
   {
-    "raw": "(U1653/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4358N07913W005\nA) CXXX B) 2609271040 C) 2611272359EST\nE) CNU8 TORONTO/MARKHAM \nOBST LGT U/S TOWER 435745N 0791253W (APRX 2.6NM ENE AD) 122FT \nAGL, 983FT AMSL.)",
-    "startValidity": "2026-09-27T10:40:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.962500, -79.214722"
-    ]
-  },
-  {
     "raw": "(U1652/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/014/4828N08127W002\nA) CZYZ B) 2609271040 C) 2611272359EST\nE) OBST LGT U/S TOWER 482756N 0812653W (APRX 6NM W TIMMINS (TIMMINS \nAND  DISTRICT HOSP) (HELI) AD (CTM6)) 355FT AGL, 1331FT AMSL.)",
     "startValidity": "2026-09-27T10:40:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.465556, -81.448056"
+    ]
+  },
+  {
+    "raw": "(U1653/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4358N07913W005\nA) CXXX B) 2609271040 C) 2611272359EST\nE) CNU8 TORONTO/MARKHAM \nOBST LGT U/S TOWER 435745N 0791253W (APRX 2.6NM ENE AD) 122FT \nAGL, 983FT AMSL.)",
+    "startValidity": "2026-09-27T10:40:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.962500, -79.214722"
     ]
   },
   {
@@ -900,21 +900,21 @@
     ]
   },
   {
-    "raw": "(U1642/26 NOTAMR U1337/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4306N07905W005\nA) CXXX B) 2609251015 C) 2611252359\nE) CNG8 NIAGARA FALLS (GREATER NIAGARA GENERAL HOSP) (HELI)\nOBST LGT U/S TOWER 430618N 0790516W (APRX 1152FT ESE AD) 160FT \nAGL, 795FT AMSL.)",
-    "startValidity": "2026-09-25T10:15:00",
-    "endValidity": "2026-11-25T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.105000, -79.087778"
-    ]
-  },
-  {
     "raw": "(U1641/26 NOTAMR U1339/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4414N07823W005\nA) CYPQ B) 2609251015 C) 2611252359EST\nE) OBST LGT U/S TOWER 441353N 0782326W (APRX 1.18NM WNW AD) 122FT \nAGL, 775FT AMSL.)",
     "startValidity": "2026-09-25T10:15:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.231389, -78.390556"
+    ]
+  },
+  {
+    "raw": "(U1642/26 NOTAMR U1337/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4306N07905W005\nA) CXXX B) 2609251015 C) 2611252359\nE) CNG8 NIAGARA FALLS (GREATER NIAGARA GENERAL HOSP) (HELI)\nOBST LGT U/S TOWER 430618N 0790516W (APRX 1152FT ESE AD) 160FT \nAGL, 795FT AMSL.)",
+    "startValidity": "2026-09-25T10:15:00",
+    "endValidity": "2026-11-25T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.105000, -79.087778"
     ]
   },
   {
@@ -1629,21 +1629,21 @@
     ]
   },
   {
-    "raw": "(U1356/26 NOTAMR U0788/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
-    "startValidity": "2026-08-03T13:32:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.907222, -79.371389"
-    ]
-  },
-  {
     "raw": "(U1355/26 NOTAMR U0790/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
     "startValidity": "2026-08-03T13:32:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.906667, -78.731389"
+    ]
+  },
+  {
+    "raw": "(U1356/26 NOTAMR U0788/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2608031332 C) 2611021600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
+    "startValidity": "2026-08-03T13:32:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.907222, -79.371389"
     ]
   },
   {
