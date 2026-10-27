@@ -139,6 +139,12 @@ input {
   color: #2F5496;
   font-weight: bold;
 }
+.dms-panel { margin-top: 18px; border-top: 1px solid #ddd; padding-top: 12px; }
+.dms-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; }
+.dms-grid .dms-label { grid-column:1 / -1; font-weight:700; margin-top:8px; }
+.dms-grid label { font-size:0.78em; font-weight:600; min-width:0; }
+.dms-grid input,.dms-grid select { box-sizing:border-box; width:100%; margin-top:5px; padding:9px 4px; font-size:16px; min-width:0; height:44px; border:1px solid #ccc; border-radius:4px; background:#fff; }
+@media(max-width:420px) { .card { margin:12px; padding:16px; } .dms-grid { gap:5px; } .dms-grid label { font-size:0.70em; } }
 </style>
 </head>
 
@@ -160,9 +166,27 @@ input {
 
 <p><strong>E) Section</strong> — DMS coordinates</p>
 
-<input id="notam" placeholder="435636N 0785747W">
+<input id="notam" aria-label="DMS latitude and longitude" placeholder="43 36 29.66 N, 79 32 51 W">
+<p style="font-size:0.85em;color:#555;margin:6px 0">Enter spaced DMS or compact NOTAM coordinates (e.g. 435636N 0785747W).</p>
 
 <button class="btn btn-primary" onclick="convert()">Convert E)</button>
+
+<div class="dms-panel">
+<p><strong>Or enter each DMS component</strong></p>
+<div class="dms-grid">
+  <div class="dms-label">Latitude</div>
+  <label>Degrees<input id="latDeg" type="number" min="0" max="90" step="1" placeholder="43"></label>
+  <label>Minutes<input id="latMin" type="number" min="0" max="59" step="1" placeholder="36"></label>
+  <label>Seconds<input id="latSec" type="number" min="0" max="59.999999" step="any" placeholder="29.66"></label>
+  <label>Direction<select id="latHemi"><option value="N">N</option><option value="S">S</option></select></label>
+  <div class="dms-label">Longitude</div>
+  <label>Degrees<input id="lonDeg" type="number" min="0" max="180" step="1" placeholder="79"></label>
+  <label>Minutes<input id="lonMin" type="number" min="0" max="59" step="1" placeholder="32"></label>
+  <label>Seconds<input id="lonSec" type="number" min="0" max="59.999999" step="any" placeholder="51"></label>
+  <label>Direction<select id="lonHemi"><option value="W">W</option><option value="E">E</option></select></label>
+</div>
+<button class="btn btn-primary" onclick="convertComponents()">Convert DMS fields</button>
+</div>
 
 <hr class="divider">
 
@@ -191,12 +215,26 @@ function convert(skipClipboard) {
 
     let input = document.getElementById("notam").value.trim();
 
-    let regex = /(\d{2})(\d{2})(\d{2})([NS])\s*(\d{3})(\d{2})(\d{2})([EW])/;
+    // Preserve compact NOTAM format, and accept human-readable DMS without symbols.
+    // Standard degree / prime symbols and keyboard quotes are optional.
+    const compact = input.toUpperCase().match(/^(\d{2})(\d{2})(\d{2})([NS])\s*,?\s*(\d{3})(\d{2})(\d{2})([EW])$/);
+    const spaced = input.toUpperCase()
+        .replace(/[°º′’'″”"]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .match(/^(\d{1,2}) (\d{1,2}) (\d{1,2}(?:\.\d+)?)\s*([NS])\s*,?\s*(\d{1,3}) (\d{1,2}) (\d{1,2}(?:\.\d+)?)\s*([EW])$/);
+    const match = compact || spaced;
 
-    let match = input.match(regex);
-
-    if (!match) {
-        document.getElementById("output").innerHTML = "Invalid format";
+    const link = document.getElementById("mapLink");
+    if (!match ||
+        +match[1] > 90 || +match[2] >= 60 || +match[3] >= 60 ||
+        +match[5] > 180 || +match[6] >= 60 || +match[7] >= 60 ||
+        (+match[1] === 90 && (+match[2] !== 0 || +match[3] !== 0)) ||
+        (+match[5] === 180 && (+match[6] !== 0 || +match[7] !== 0))) {
+        document.getElementById("output").textContent =
+            "Invalid DMS coordinates. Example: 43 36 29.66 N, 79 32 51 W";
+        link.removeAttribute("href");
+        link.textContent = "";
         return;
     }
 
@@ -208,13 +246,40 @@ function convert(skipClipboard) {
 
     document.getElementById("output").innerHTML = "<strong>Lat/Lon:</strong> " + result;
 
-    let link = document.getElementById("mapLink");
     link.href = gmaps;
     link.innerHTML = "View on Google Maps";
 
     if (!skipClipboard && navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(result).catch(() => {});
     }
+}
+
+function convertComponents() {
+    const get = id => document.getElementById(id).value.trim();
+    const parts = ["latDeg","latMin","latSec","lonDeg","lonMin","lonSec"].map(get);
+    const link = document.getElementById("mapLink");
+    const values = parts.map(Number);
+    const valid = parts.every(v => v !== "" && Number.isFinite(Number(v))) &&
+        values.every(v => v >= 0) &&
+        Number.isInteger(values[0]) && Number.isInteger(values[1]) &&
+        Number.isInteger(values[3]) && Number.isInteger(values[4]) &&
+        values[0] <= 90 && values[3] <= 180 &&
+        values[1] < 60 && values[2] < 60 &&
+        values[4] < 60 && values[5] < 60 &&
+        (values[0] !== 90 || (values[1] === 0 && values[2] === 0)) &&
+        (values[3] !== 180 || (values[4] === 0 && values[5] === 0));
+    if (!valid) {
+        document.getElementById("output").textContent = "Enter valid degrees, minutes (0–59), and seconds (0–<60) for both coordinates.";
+        link.removeAttribute("href"); link.textContent = "";
+        return;
+    }
+    const lat = dmsToDD(values[0],values[1],values[2],get("latHemi"));
+    const lon = dmsToDD(values[3],values[4],values[5],get("lonHemi"));
+    const result = lat.toFixed(6) + ", " + lon.toFixed(6);
+    document.getElementById("output").innerHTML = "<strong>Lat/Lon:</strong> " + result;
+    link.href = "https://www.google.com/maps?q=" + result;
+    link.textContent = "View on Google Maps";
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(result).catch(() => {});
 }
 
 function convertQ(skipClipboard) {
@@ -258,6 +323,9 @@ function convertQ(skipClipboard) {
 function clearFields() {
     document.getElementById("notam").value = "";
     document.getElementById("notamQ").value = "";
+    ["latDeg","latMin","latSec","lonDeg","lonMin","lonSec"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("latHemi").value = "N";
+    document.getElementById("lonHemi").value = "W";
     document.getElementById("output").innerHTML = "";
     let link = document.getElementById("mapLink");
     link.href = "";
