@@ -85,8 +85,16 @@ DRONE_CONTEXT_PHRASES = [
     "aerial survey",
     "drone inspection",
     "drone mapping",
+    "rpas visual observer",
+    "drone visual observer",
+    "uav visual observer",
+    "rpas flight operations",
+    "drone show",
 ]
 JOB_WEIGHTS = {
+    "visual observer": 0.25,
+    "ground crew": 0.20,
+    "flight crew": 0.20,
     "pilot": 0.25,
     "operator": 0.20,
     "inspector": 0.20,
@@ -120,6 +128,7 @@ SOURCE_WEIGHTS = {
 }
 FAMILY_SIGNAL_TERMS = {
     "operations": ["pilot", "operator", "flight", "uas", "uav", "rpas"],
+    "flight_support": ["visual observer", "observer", "ground crew", "flight crew", "flight assistant", "flight operations"],
     "mapping": ["survey", "mapping", "photogrammetry", "lidar", "gis", "geospatial"],
     "inspection": ["inspection", "inspector", "tower", "roof", "utility", "powerline"],
     "media": ["videographer", "photographer", "cinema", "media", "content"],
@@ -557,6 +566,13 @@ def evaluate_job_match(job):
     allow_technician_override = has_technician_title and has_uav_rpas_context
     has_job_in_title = has_role_term_in_title or allow_technician_override
     has_job_anywhere = bool(matched_job)
+    # A visual observer or flight-support title may omit "drone" while the
+    # actual position description explicitly identifies RPAS/UAV operations.
+    support_title = any(role in title_text for role in (
+        "visual observer", "ground crew", "flight crew", "flight assistant",
+    ))
+    support_context = any(term in desc_text for term in CORE_DRONE_TERMS)
+    support_match = support_title and support_context
 
     score = min(score, 0.95)
     score = max(0.0, score)
@@ -575,9 +591,7 @@ def evaluate_job_match(job):
         reasons.append("technician override via uav/rpas context")
 
     required_score = 0.55 if allow_technician_override else 0.62
-    is_match = has_core_drone_in_title and has_job_in_title and has_strong_drone_signal and has_job_anywhere and score >= required_score
-    if not has_job_in_title and source in {"simplyhired", "talent"}:
-        is_match = is_match and score >= 0.72
+    is_match = (has_core_drone_in_title or support_match) and has_job_in_title and (has_strong_drone_signal or support_match) and has_job_anywhere and score >= required_score
 
     return is_match, round(score, 3), "; ".join(reasons)
 

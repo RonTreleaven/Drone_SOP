@@ -28,8 +28,18 @@ QUERY_FAMILIES = {
         "drone pilot",
         "uav operator",
         "rpas pilot",
+        "rpas",
+        "uav pilot",
         "remote pilot",
         "uas operator",
+    ],
+    "flight_support": [
+        "rpas visual observer",
+        "drone visual observer",
+        "uav visual observer",
+        "drone ground crew",
+        "drone show crew",
+        "rpas flight operations",
     ],
     "mapping": [
         "drone survey",
@@ -37,6 +47,7 @@ QUERY_FAMILIES = {
         "lidar drone",
         "geospatial drone",
         "uav mapping",
+        "drone reality capture",
     ],
     "inspection": [
         "drone inspection",
@@ -75,6 +86,10 @@ REQUIRED_ROLE_TERMS_IN_TITLE = [
     "videographer",
     "engineer",
     "specialist",
+    "visual observer",
+    "ground crew",
+    "flight crew",
+    "flight assistant",
 ]
 
 # Flattened list kept for compatibility with any existing imports.
