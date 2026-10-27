@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U1832/26 NOTAMR U1822/26\nQ) CZWG/QOLAS/IV/M/AE/000/020/5005N09202W005\nA) CXXX B) 2610270612 C) 2701262100\nE) CKA6 SIOUX LOOKOUT/PELICAN LAKE (WATER)\nOBST LGT U/S TOWER 500431N 0920140W (APRX 4.6NM W AD) 575FT AGL, \n1925FT AMSL.)",
+    "startValidity": "2026-10-27T06:12:00",
+    "endValidity": "2027-01-26T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.075278, -92.027778"
+    ]
+  },
+  {
     "raw": "(U1829/26 NOTAMR U1315/26\nQ) CZWG/QOLAS/IV/M/E/000/017/4948N09403W002\nA) CZWG B) 2610261723 C) 2701252359EST\nE) OBST LGT U/S TOWER 494739N 0940241W (APRX 12NM E KENORA AD \n(CYQK)) 290FT AGL, 1698FT AMSL.)",
     "startValidity": "2026-10-26T17:23:00",
     "endValidity": null,
@@ -42,15 +51,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.390000, -105.926944"
-    ]
-  },
-  {
-    "raw": "(U1822/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/020/5005N09202W005\nA) CXXX B) 2610251350 C) 2610272100\nE) CKA6 SIOUX LOOKOUT/PELICAN LAKE (WATER)\nOBST LGT U/S TOWER 500431N 0920140W (APRX 4.6NM W AD) 575FT AGL, \n1925FT AMSL.)",
-    "startValidity": "2026-10-25T13:50:00",
-    "endValidity": "2026-10-27T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.075278, -92.027778"
     ]
   },
   {
@@ -171,21 +171,21 @@
     ]
   },
   {
-    "raw": "(U1788/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/011/5011N09657W005\nA) CXXX B) 2610191652 C) 2701191640\nE) CKL2 SELKIRK \nOBST LGT U/S TOWER 501124N 0965729W (APRX 3.5NM WNW AD) 351FT \nAGL, 1099FT AMSL.)",
-    "startValidity": "2026-10-19T16:52:00",
-    "endValidity": "2027-01-19T16:40:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.190000, -96.958056"
-    ]
-  },
-  {
     "raw": "(U1787/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/012/4959N09719W002\nA) CZWG B) 2610191652 C) 2701191640\nE) OBST LGT U/S TOWER 495910N 0971911W (APRX 6NM NW WINNIPEG/JAMES \nARMSTRONG RICHARDSON INTL AD (CYWG)) 352FT AGL, 1139FT AMSL.)",
     "startValidity": "2026-10-19T16:52:00",
     "endValidity": "2027-01-19T16:40:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.986111, -97.319722"
+    ]
+  },
+  {
+    "raw": "(U1788/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/011/5011N09657W005\nA) CXXX B) 2610191652 C) 2701191640\nE) CKL2 SELKIRK \nOBST LGT U/S TOWER 501124N 0965729W (APRX 3.5NM WNW AD) 351FT \nAGL, 1099FT AMSL.)",
+    "startValidity": "2026-10-19T16:52:00",
+    "endValidity": "2027-01-19T16:40:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.190000, -96.958056"
     ]
   },
   {
