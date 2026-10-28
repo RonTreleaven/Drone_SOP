@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R1027/26 NOTAMR R0827/26\nQ) CZEG/QOLAS/IV/M/E/000/048/5117N11430W002\nA) CZEG B) 2610272009 C) 2612312359\nE) OBST LGT U/S TOWER 511644N 1142945W (APRX 9NM SE BOTTREL/ANCHOR 9 \nRANCH AD (CBR9)) 427FT AGL, 4754FT AMSL.)",
+    "startValidity": "2026-10-27T20:09:00",
+    "endValidity": "2026-12-31T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.278889, -114.495833"
+    ]
+  },
+  {
     "raw": "(R1026/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/031/5400N11049W002\nA) CZEG B) 2610272004 C) 2610311800\nE) OBST LGT U/S TOWER 540002N 1104915W (APRX 7NM NNW ELK POINT AD \n(CEJ6)) 400FT AGL, 3100FT AMSL.)",
     "startValidity": "2026-10-27T20:04:00",
     "endValidity": "2026-10-31T18:00:00",
@@ -711,21 +720,21 @@
     ]
   },
   {
-    "raw": "(R0880/26 NOTAMR R0559/26\nQ) CZEG/QOLAS/IV/M/E/000/024/5512N11226W002\nA) CZEG B) 2609141703 C) 2612132359\nE) OBST LGT U/S TOWER 551153N 1122551W (APRX 29NM E CALLING LAKE AD \n(CFK4)) 400FT AGL, 2367FT AMSL.)",
-    "startValidity": "2026-09-14T17:03:00",
-    "endValidity": "2026-12-13T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.198056, -112.430833"
-    ]
-  },
-  {
     "raw": "(R0881/26 NOTAMR R0560/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5335N11425W002\nA) CZEG B) 2609141703 C) 2612132359\nE) OBST LGT U/S TOWER 533503N 1142516W (APRX 13NM W STONY PLAIN \n(STONY FIELD) AD (CSP3)) 404FT AGL, 2926FT AMSL.)",
     "startValidity": "2026-09-14T17:03:00",
     "endValidity": "2026-12-13T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.584167, -114.421111"
+    ]
+  },
+  {
+    "raw": "(R0880/26 NOTAMR R0559/26\nQ) CZEG/QOLAS/IV/M/E/000/024/5512N11226W002\nA) CZEG B) 2609141703 C) 2612132359\nE) OBST LGT U/S TOWER 551153N 1122551W (APRX 29NM E CALLING LAKE AD \n(CFK4)) 400FT AGL, 2367FT AMSL.)",
+    "startValidity": "2026-09-14T17:03:00",
+    "endValidity": "2026-12-13T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "55.198056, -112.430833"
     ]
   },
   {
@@ -915,15 +924,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "51.711111, -109.192222"
-    ]
-  },
-  {
-    "raw": "(R0827/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/048/5117N11430W002\nA) CZEG B) 2609022046 C) 2610302300\nE) OBST LGT U/S TOWER 511644N 1142945W (APRX 9NM SE BOTTREL/ANCHOR 9 \nRANCH AD (CBR9)) 427FT AGL, 4754FT AMSL.)",
-    "startValidity": "2026-09-02T20:46:00",
-    "endValidity": "2026-10-30T23:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.278889, -114.495833"
     ]
   },
   {
