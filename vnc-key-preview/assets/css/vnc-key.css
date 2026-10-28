@@ -8,8 +8,6 @@
   --line: #d6e3ec;
   --surface: #fff;
   --page: #f3f7fa;
-  --warning: #80510a;
-  --warning-bg: #fff6df;
   --shadow: 0 12px 32px rgba(17, 54, 80, 0.09);
 }
 
@@ -227,7 +225,6 @@ h1 {
 .illustration-frame {
   position: relative;
   display: grid;
-  aspect-ratio: 6 / 5;
   width: 100%;
   overflow: hidden;
   place-items: center;
@@ -239,7 +236,7 @@ h1 {
   position: relative;
   display: grid;
   width: 100%;
-  height: 100%;
+  height: auto;
   padding: 0;
   border: 0;
   background: transparent;
@@ -250,7 +247,7 @@ h1 {
 .illustration-button img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: contain;
 }
 .card-number, .topic-number {
@@ -266,9 +263,8 @@ h1 {
   text-align: center;
 }
 .image-hint {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
+  justify-self: end;
+  margin: 8px 10px;
   padding: 5px 9px;
   border: 1px solid #c7d9e5;
   border-radius: 999px;
@@ -283,24 +279,12 @@ h1 {
   gap: 18px 22px;
   padding-top: 21px;
 }
-.copy-section h3, .verification-note h3 {
+.copy-section h3 {
   margin: 0 0 5px;
   color: #16476a;
   font-size: 0.93rem;
 }
-.copy-section p, .verification-note p { margin: 0; color: #3e5668; font-size: 0.9rem; }
-.reference-links { margin: 0; padding-left: 19px; }
-.reference-links li + li { margin-top: 3px; }
-.reference-links a { color: #075d94; font-size: 0.87rem; text-underline-offset: 2px; }
-.reference-links a:hover { color: #063f65; }
-.verification-note {
-  padding: 12px 14px;
-  border: 1px solid #ead8a8;
-  border-radius: 8px;
-  background: var(--warning-bg);
-}
-.verification-note h3 { color: #704808; }
-.verification-note p { color: #654e24; font-size: 0.84rem; }
+.copy-section p { margin: 0; color: #3e5668; font-size: 0.9rem; }
 .card-navigation {
   position: sticky;
   z-index: 2;

@@ -22,8 +22,6 @@
     image: document.getElementById("card-image"),
     interpretation: document.getElementById("card-interpretation"),
     significance: document.getElementById("card-significance"),
-    references: document.getElementById("card-references"),
-    verification: document.getElementById("card-verification"),
     position: document.getElementById("card-position"),
     previous: document.getElementById("previous-card"),
     next: document.getElementById("next-card"),
@@ -100,20 +98,6 @@
     elements.clearSearch.hidden = !elements.search.value;
   }
 
-  function makeReferenceList(references) {
-    elements.references.replaceChildren();
-    references.forEach(function (reference) {
-      var item = document.createElement("li");
-      var link = document.createElement("a");
-      link.href = reference.url;
-      link.textContent = reference.label;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      item.appendChild(link);
-      elements.references.appendChild(item);
-    });
-  }
-
   function selectCard(index, updateHash) {
     if (index < 0 || index >= cards.length) return;
     activeCardIndex = index;
@@ -129,14 +113,12 @@
     elements.image.alt = card.imageAlt || card.title + " — " + sourceLabel;
     elements.interpretation.textContent = card.interpretation;
     elements.significance.textContent = card.rpasSignificance;
-    elements.verification.textContent = card.verificationStatus;
     elements.position.textContent = (index + 1) + " / " + cards.length;
     elements.previous.disabled = index === 0;
     elements.next.disabled = index === cards.length - 1;
     elements.fullImage.src = image;
     elements.fullImage.alt = elements.image.alt;
     elements.imageCaption.textContent = card.title + " · " + sourceLabel;
-    makeReferenceList(card.references);
     elements.layout.classList.add("showing-viewer");
     elements.layout.classList.toggle("mobile-viewing", window.matchMedia("(max-width: 800px)").matches);
     elements.toc.hidden = false;
