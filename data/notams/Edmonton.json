@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R1030/26 NOTAMR R1029/26\nQ) CZEG/QOLAS/IV/M/E/000/018/5839N12241W002\nA) CZEG B) 2610282106 C) 2611182359\nE) OBST LGT U/S TOWER 583910N 1224119W (APRX 10NM SE FORT \nNELSON/GORDON FIELD AD (CBL3)) 350FT AGL, 1780FT AMSL.)",
+    "startValidity": "2026-10-28T21:06:00",
+    "endValidity": "2026-11-18T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "58.652778, -122.688611"
+    ]
+  },
+  {
     "raw": "(R1027/26 NOTAMR R0827/26\nQ) CZEG/QOLAS/IV/M/E/000/048/5117N11430W002\nA) CZEG B) 2610272009 C) 2612312359\nE) OBST LGT U/S TOWER 511644N 1142945W (APRX 9NM SE BOTTREL/ANCHOR 9 \nRANCH AD (CBR9)) 427FT AGL, 4754FT AMSL.)",
     "startValidity": "2026-10-27T20:09:00",
     "endValidity": "2026-12-31T23:59:00",
@@ -42,15 +51,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.424722, -110.476389"
-    ]
-  },
-  {
-    "raw": "(C5406/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/025/5318N11334W005\nA) CYEG B) 2610281300 C) 2610282300\nE) CRANE 531800N 1133351W APRX 3750FT BEYOND THR 30 AND 3250FT NE \nRCL. 99FT AGL 2464FT AMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-10-27T15:09:54.555",
-    "endValidity": "2026-10-28T23:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "53.300000, -113.564167"
     ]
   },
   {
@@ -135,21 +135,21 @@
     ]
   },
   {
-    "raw": "(R1000/26 NOTAMR R0695/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
-    "startValidity": "2026-10-20T14:51:00",
-    "endValidity": "2027-01-18T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "56.386111, -111.272778"
-    ]
-  },
-  {
     "raw": "(U1791/26 NOTAMR U1273/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
     "startValidity": "2026-10-20T14:51:00",
     "endValidity": "2027-01-18T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.480833, -109.194167"
+    ]
+  },
+  {
+    "raw": "(R1000/26 NOTAMR R0695/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
+    "startValidity": "2026-10-20T14:51:00",
+    "endValidity": "2027-01-18T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "56.386111, -111.272778"
     ]
   },
   {
@@ -213,15 +213,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "55.353333, -110.633889"
-    ]
-  },
-  {
-    "raw": "(C5148/26 NOTAMN\nQ) CZEG/QOBTT/IV/BO/AE/000/040/5107N11401W030\nA) CYYC B) 2610151242 C) 2610282359\nE) TRIGGER NOTAM - AIP SUP 104/2026 WEF 15 OCT 2026. \nCRANES - WITHIN 30 NAUTICAL MILES OF CALGARY / YYC CALGARY INTL \nAIRPORT (CYYC)",
-    "startValidity": "2026-10-15T12:42:00",
-    "endValidity": "2026-10-28T23:59:00",
-    "q_code": "QOBTT",
-    "coordinates_dd": [
-      "51.116667, -114.016667"
     ]
   },
   {
@@ -720,21 +711,21 @@
     ]
   },
   {
-    "raw": "(R0880/26 NOTAMR R0559/26\nQ) CZEG/QOLAS/IV/M/E/000/024/5512N11226W002\nA) CZEG B) 2609141703 C) 2612132359\nE) OBST LGT U/S TOWER 551153N 1122551W (APRX 29NM E CALLING LAKE AD \n(CFK4)) 400FT AGL, 2367FT AMSL.)",
-    "startValidity": "2026-09-14T17:03:00",
-    "endValidity": "2026-12-13T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.198056, -112.430833"
-    ]
-  },
-  {
     "raw": "(R0881/26 NOTAMR R0560/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5335N11425W002\nA) CZEG B) 2609141703 C) 2612132359\nE) OBST LGT U/S TOWER 533503N 1142516W (APRX 13NM W STONY PLAIN \n(STONY FIELD) AD (CSP3)) 404FT AGL, 2926FT AMSL.)",
     "startValidity": "2026-09-14T17:03:00",
     "endValidity": "2026-12-13T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "53.584167, -114.421111"
+    ]
+  },
+  {
+    "raw": "(R0880/26 NOTAMR R0559/26\nQ) CZEG/QOLAS/IV/M/E/000/024/5512N11226W002\nA) CZEG B) 2609141703 C) 2612132359\nE) OBST LGT U/S TOWER 551153N 1122551W (APRX 29NM E CALLING LAKE AD \n(CFK4)) 400FT AGL, 2367FT AMSL.)",
+    "startValidity": "2026-09-14T17:03:00",
+    "endValidity": "2026-12-13T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "55.198056, -112.430833"
     ]
   },
   {
