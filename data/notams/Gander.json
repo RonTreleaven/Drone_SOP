@@ -52,14 +52,5 @@
     "coordinates_dd": [
       "47.507778, -53.724722"
     ]
-  },
-  {
-    "raw": "(V0510/26 NOTAMN\nQ) CZQX/QOBCE/IV/M/E/000/014/4827N05702W002\nA) CZQX B) 2605041754 C) PERM\nE) AMEND PUBLICATIONS: NEW QUARRY WITHIN 656FT RADIUS CENTRED ON \n482656N 0570142W (APRX 42NM SSE SOUTH BROOK (WATER) AD (CCT5)). \n492FT AGL 1345FT AMSL.)",
-    "startValidity": "2026-05-04T17:54:00",
-    "endValidity": null,
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "48.448889, -57.028333"
-    ]
   }
 ]
