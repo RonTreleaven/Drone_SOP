@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(R1032/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/033/5140N11327W002\nA) CZEG B) 2610292145 C) 2612132359\nE) OBST LGT U/S TOWER 514004N 1132659W (APRX 8NM WSW THREE HILLS \n(HOSPITAL) (HELI) AD (CFA8)) 197FT AGL, 3248FT AMSL.)",
+    "startValidity": "2026-10-29T21:45:00",
+    "endValidity": "2026-12-13T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.667778, -113.449722"
+    ]
+  },
+  {
     "raw": "(I6174/26 NOTAMR I5162/26\nQ) CZEG/QOBCE/IV/M/AE/000/004/6906N10506W005\nA) CYCB B) 2610291644 C) 2612181530\nE) CRANE 690629N 1050621W APRX 670FT BFR THR 31 AND 2520FT NE \nEXTENDED RCL. 180FT AGL 315FT AMSL. NOT LGTD, PAINTED.)",
     "startValidity": "2026-10-29T16:44:00",
     "endValidity": "2026-12-18T15:30:00",
@@ -33,15 +42,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "54.000556, -110.820833"
-    ]
-  },
-  {
-    "raw": "(C5411/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/025/5317N11334W005\nA) CYEG B) 2610291300 C) 2610292359\nE) CRANE 531708N 1133407W APRX 710FT BEYOND THR 30 AND 1170FT SW \nRCL. 100FT AGL 2469FT AMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-10-27T19:53:09.037",
-    "endValidity": "2026-10-29T23:59:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "53.285556, -113.568611"
     ]
   },
   {
@@ -1149,15 +1149,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "55.542778, -119.192222"
-    ]
-  },
-  {
-    "raw": "(R0727/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/026/5543N12009W005\nA) CYDQ B) 2607312135 C) 2610292100\nE) OBST LGT U/S TOWER 554324N 1200847W (APRX 1.67NM ESE AD) 144FT \nAGL, 2552FT AMSL.)",
-    "startValidity": "2026-07-31T21:35:00",
-    "endValidity": "2026-10-29T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.723333, -120.146389"
     ]
   },
   {
