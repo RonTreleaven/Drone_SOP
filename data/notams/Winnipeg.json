@@ -81,21 +81,21 @@
     ]
   },
   {
-    "raw": "(U1829/26 NOTAMR U1315/26\nQ) CZWG/QOLAS/IV/M/E/000/017/4948N09403W002\nA) CZWG B) 2610261723 C) 2701252359EST\nE) OBST LGT U/S TOWER 494739N 0940241W (APRX 12NM E KENORA AD \n(CYQK)) 290FT AGL, 1698FT AMSL.)",
-    "startValidity": "2026-10-26T17:23:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.794167, -94.044722"
-    ]
-  },
-  {
     "raw": "(U1828/26 NOTAMR U1314/26\nQ) CZWG/QOLAS/IV/M/E/000/018/5008N09315W002\nA) CZWG B) 2610261723 C) 2701251800EST\nE) OBST LGT U/S TOWER 500759N 0931432W (APRX 16NM NNE VERMILION BAY \n(WATER) AD (CKH6)) 351FT AGL, 1792FT AMSL.)",
     "startValidity": "2026-10-26T17:23:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.133056, -93.242222"
+    ]
+  },
+  {
+    "raw": "(U1829/26 NOTAMR U1315/26\nQ) CZWG/QOLAS/IV/M/E/000/017/4948N09403W002\nA) CZWG B) 2610261723 C) 2701252359EST\nE) OBST LGT U/S TOWER 494739N 0940241W (APRX 12NM E KENORA AD \n(CYQK)) 290FT AGL, 1698FT AMSL.)",
+    "startValidity": "2026-10-26T17:23:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.794167, -94.044722"
     ]
   },
   {

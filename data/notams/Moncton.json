@@ -1,20 +1,20 @@
 [
   {
-    "raw": "(V1444/26 NOTAMR V0931/26\nQ) CZQM/QOLAS/IV/M/AE/000/001/4552N06632W005\nA) CYFC B) 2610301315 C) 2701292359EST\nE) OBST LGT U/S ANTENNA 455152N 0663213W (APRX 1620FT SSW AD) 33FT \nAGL, 94FT AMSL.)",
-    "startValidity": "2026-10-30T13:15:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.864444, -66.536944"
-    ]
-  },
-  {
     "raw": "(V1445/26 NOTAMR V0930/26\nQ) CZQM/QOLAS/IV/M/AE/000/003/4618N06307W005\nA) CYYG B) 2610301315 C) 2701292359EST\nE) OBST LGT U/S ANTENNA 461752N 0630711W (APRX 2861FT NNE AD) 39FT \nAGL, 206FT AMSL.)",
     "startValidity": "2026-10-30T13:15:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "46.297778, -63.119722"
+    ]
+  },
+  {
+    "raw": "(V1444/26 NOTAMR V0931/26\nQ) CZQM/QOLAS/IV/M/AE/000/001/4552N06632W005\nA) CYFC B) 2610301315 C) 2701292359EST\nE) OBST LGT U/S ANTENNA 455152N 0663213W (APRX 1620FT SSW AD) 33FT \nAGL, 94FT AMSL.)",
+    "startValidity": "2026-10-30T13:15:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.864444, -66.536944"
     ]
   },
   {
@@ -225,6 +225,15 @@
     ]
   },
   {
+    "raw": "(V1047/26 NOTAMR V0597/26\nQ) CZQM/QOLAS/IV/M/AE/000/005/4540N06125W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453935N 0612515W (APRX 2.2NM WNW AD) 391FT \nAGL, 426FT AMSL.)",
+    "startValidity": "2026-08-25T13:25:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.659722, -61.420833"
+    ]
+  },
+  {
     "raw": "(V1049/26 NOTAMR V0598/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
     "startValidity": "2026-08-25T13:25:00",
     "endValidity": null,
@@ -243,12 +252,12 @@
     ]
   },
   {
-    "raw": "(V1047/26 NOTAMR V0597/26\nQ) CZQM/QOLAS/IV/M/AE/000/005/4540N06125W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453935N 0612515W (APRX 2.2NM WNW AD) 391FT \nAGL, 426FT AMSL.)",
-    "startValidity": "2026-08-25T13:25:00",
+    "raw": "(V1043/26 NOTAMR V1037/26\nQ) CZQM/QOLAS/IV/M/E/000/017/4529N06614W002\nA) CZQM B) 2608241434 C) 2611231500EST\nE) OBST LGT U/S TOWER 452841N 0661404W (APRX 12NM NNW SAINT JOHN \n(SAINT JOHN REGIONAL HOSPITAL) (HELI) AD (CSN6)) 180FT AGL, \n1640FT AMSL.)",
+    "startValidity": "2026-08-24T14:34:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
-      "45.659722, -61.420833"
+      "45.478056, -66.234444"
     ]
   },
   {
@@ -258,15 +267,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.573889, -66.378889"
-    ]
-  },
-  {
-    "raw": "(V1043/26 NOTAMR V1037/26\nQ) CZQM/QOLAS/IV/M/E/000/017/4529N06614W002\nA) CZQM B) 2608241434 C) 2611231500EST\nE) OBST LGT U/S TOWER 452841N 0661404W (APRX 12NM NNW SAINT JOHN \n(SAINT JOHN REGIONAL HOSPITAL) (HELI) AD (CSN6)) 180FT AGL, \n1640FT AMSL.)",
-    "startValidity": "2026-08-24T14:34:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.478056, -66.234444"
     ]
   },
   {

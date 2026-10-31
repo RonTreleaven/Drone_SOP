@@ -1,5 +1,32 @@
 [
   {
+    "raw": "(C5490/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/019/5425N11016W005\nA) CYOD B) 2611021400 C) 2611042200\nD) DAILY 1400-2200\nE) CRANE 542448N 1101551W APRX 990FT BEYOND THR 22 AND 2180FT NW \nRCL. 100FT AGL 1876FT AMSL. NOT LGTD, NOT PAINTED.)",
+    "startValidity": "2026-10-31T15:03:25.318",
+    "endValidity": "2026-11-04T22:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "54.413333, -110.264167"
+    ]
+  },
+  {
+    "raw": "(R1036/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/002/6248N09205W005\nA) CYRT B) 2610311329 C) 2611022100\nE) OBST LGT U/S TOWER 624826N 0920435W (APRX 1.07NM ESE AD) 100FT \nAGL, 182FT AMSL.)",
+    "startValidity": "2026-10-31T13:29:00",
+    "endValidity": "2026-11-02T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "62.807222, -92.076389"
+    ]
+  },
+  {
+    "raw": "(R1035/26 NOTAMR R0838/26\nQ) CZEG/QOLAS/IV/M/E/000/025/5500N11148W002\nA) CZEG B) 2610311138 C) 2612312300\nE) OBST LGT U/S TOWER 545959N 1114818W (APRX 16NM NNE LAC LA BICHE \nAD (CYLB)) 321FT AGL, 2425FT AMSL.)",
+    "startValidity": "2026-10-31T11:38:00",
+    "endValidity": "2026-12-31T23:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "54.999722, -111.805000"
+    ]
+  },
+  {
     "raw": "(R1033/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5109N11407W005\nA) CYYC B) 2610310826 C) 2701302359\nE) OBST LGT U/S TOWER 510927N 1140715W (APRX 4.6NM WNW AD) 98FT AGL, \n3688FT AMSL.)",
     "startValidity": "2026-10-31T08:26:00",
     "endValidity": "2027-01-30T23:59:00",
@@ -906,15 +933,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "54.379444, -110.058333"
-    ]
-  },
-  {
-    "raw": "(R0838/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/025/5500N11148W002\nA) CZEG B) 2609050504 C) 2611052300\nE) OBST LGT U/S TOWER 545959N 1114818W (APRX 16NM NNE LAC LA BICHE \nAD (CYLB)) 321FT AGL, 2425FT AMSL.)",
-    "startValidity": "2026-09-05T05:04:00",
-    "endValidity": "2026-11-05T23:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "54.999722, -111.805000"
     ]
   },
   {
