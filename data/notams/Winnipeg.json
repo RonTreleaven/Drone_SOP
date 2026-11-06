@@ -126,21 +126,21 @@
     ]
   },
   {
-    "raw": "(U1828/26 NOTAMR U1314/26\nQ) CZWG/QOLAS/IV/M/E/000/018/5008N09315W002\nA) CZWG B) 2610261723 C) 2701251800EST\nE) OBST LGT U/S TOWER 500759N 0931432W (APRX 16NM NNE VERMILION BAY \n(WATER) AD (CKH6)) 351FT AGL, 1792FT AMSL.)",
-    "startValidity": "2026-10-26T17:23:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.133056, -93.242222"
-    ]
-  },
-  {
     "raw": "(U1829/26 NOTAMR U1315/26\nQ) CZWG/QOLAS/IV/M/E/000/017/4948N09403W002\nA) CZWG B) 2610261723 C) 2701252359EST\nE) OBST LGT U/S TOWER 494739N 0940241W (APRX 12NM E KENORA AD \n(CYQK)) 290FT AGL, 1698FT AMSL.)",
     "startValidity": "2026-10-26T17:23:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.794167, -94.044722"
+    ]
+  },
+  {
+    "raw": "(U1828/26 NOTAMR U1314/26\nQ) CZWG/QOLAS/IV/M/E/000/018/5008N09315W002\nA) CZWG B) 2610261723 C) 2701251800EST\nE) OBST LGT U/S TOWER 500759N 0931432W (APRX 16NM NNE VERMILION BAY \n(WATER) AD (CKH6)) 351FT AGL, 1792FT AMSL.)",
+    "startValidity": "2026-10-26T17:23:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.133056, -93.242222"
     ]
   },
   {
@@ -330,33 +330,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "49.914444, -98.266944"
-    ]
-  },
-  {
-    "raw": "(U1758/26 NOTAMR U1674/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2610131549 C) 2611062359\nE) OBST LGT U/S TOWER 495532N 0971541W (APRX 1.26NM NW AD) 62FT AGL, \n845FT AMSL.)",
-    "startValidity": "2026-10-13T15:49:00",
-    "endValidity": "2026-11-06T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925556, -97.261389"
-    ]
-  },
-  {
-    "raw": "(U1757/26 NOTAMR U1673/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2610131547 C) 2611062359\nE) OBST LGT U/S TOWER 495532N 0971540W (APRX 1.25NM NW AD) 88FT AGL, \n871FT AMSL.)",
-    "startValidity": "2026-10-13T15:47:00",
-    "endValidity": "2026-11-06T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925556, -97.261111"
-    ]
-  },
-  {
-    "raw": "(U1756/26 NOTAMR U1672/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4956N09716W005\nA) CYWG B) 2610131543 C) 2611062359\nE) OBST LGT U/S TOWER 495533N 0971541W (APRX 1.27NM NW AD) 62FT AGL, \n846FT AMSL.)",
-    "startValidity": "2026-10-13T15:43:00",
-    "endValidity": "2026-11-06T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.925833, -97.261389"
     ]
   },
   {
@@ -807,15 +780,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.393333, -103.040556"
-    ]
-  },
-  {
-    "raw": "(U1385/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/031/5012N10722W002\nA) CZWG B) 2608090313 C) 2611061800\nE) OBST LGT U/S TOWER 501205N 1072204W (APRX 11NM NNW POVERTY VALLEY \nAD (CPV9)) 351FT AGL, 3031FT AMSL.)",
-    "startValidity": "2026-08-09T03:13:00",
-    "endValidity": "2026-11-06T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.201389, -107.367778"
     ]
   },
   {
