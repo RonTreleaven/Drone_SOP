@@ -1125,21 +1125,21 @@
     ]
   },
   {
-    "raw": "(U1641/26 NOTAMR U1339/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4414N07823W005\nA) CYPQ B) 2609251015 C) 2611252359EST\nE) OBST LGT U/S TOWER 441353N 0782326W (APRX 1.18NM WNW AD) 122FT \nAGL, 775FT AMSL.)",
-    "startValidity": "2026-09-25T10:15:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.231389, -78.390556"
-    ]
-  },
-  {
     "raw": "(U1642/26 NOTAMR U1337/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4306N07905W005\nA) CXXX B) 2609251015 C) 2611252359\nE) CNG8 NIAGARA FALLS (GREATER NIAGARA GENERAL HOSP) (HELI)\nOBST LGT U/S TOWER 430618N 0790516W (APRX 1152FT ESE AD) 160FT \nAGL, 795FT AMSL.)",
     "startValidity": "2026-09-25T10:15:00",
     "endValidity": "2026-11-25T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.105000, -79.087778"
+    ]
+  },
+  {
+    "raw": "(U1641/26 NOTAMR U1339/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4414N07823W005\nA) CYPQ B) 2609251015 C) 2611252359EST\nE) OBST LGT U/S TOWER 441353N 0782326W (APRX 1.18NM WNW AD) 122FT \nAGL, 775FT AMSL.)",
+    "startValidity": "2026-09-25T10:15:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.231389, -78.390556"
     ]
   },
   {
