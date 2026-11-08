@@ -1,20 +1,20 @@
 [
   {
+    "raw": "(R1065/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/003/7442N09453W005\nA) CYRB B) 2611080839 C) 2702072100\nE) OBST LGT U/S TOWER 744155N 0945258W (APRX 1.76NM SE AD) 87FT AGL, \n228FT AMSL.)",
+    "startValidity": "2026-11-08T08:39:00",
+    "endValidity": "2027-02-07T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "74.698611, -94.882778"
+    ]
+  },
+  {
     "raw": "(I6384/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/022/5321N11052W005\nA) CXXX B) 2611091300 C) 2611102359\nE) CVH2 VERMILION HEALTH CENTRE (HELI)\nCRANE 532121N 1105219W (APRX 77FT SW AD (CVH2)). 120FT AGL 2144FT \nAMSL. LGTD.)",
     "startValidity": "2026-11-07T17:07:10.165",
     "endValidity": "2026-11-10T23:59:00",
     "q_code": "QOBCE",
     "coordinates_dd": [
       "53.355833, -110.871944"
-    ]
-  },
-  {
-    "raw": "(R1060/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/046/5512N12051W005\nA) CZEG B) 2611071054 C) 2611072300\nE) OBST LGT U/S WIND FARM WITHIN RADIUS 5NM CENTRE 551153N 1205042W \n(APRX 11NM N TUMBLER RIDGE AD (CBX7)). 472FT AGL 4593FT AMSL.)",
-    "startValidity": "2026-11-07T10:54:00",
-    "endValidity": "2026-11-07T23:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.198056, -120.845000"
     ]
   },
   {
@@ -324,21 +324,21 @@
     ]
   },
   {
-    "raw": "(R1000/26 NOTAMR R0695/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
-    "startValidity": "2026-10-20T14:51:00",
-    "endValidity": "2027-01-18T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "56.386111, -111.272778"
-    ]
-  },
-  {
     "raw": "(U1791/26 NOTAMR U1273/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
     "startValidity": "2026-10-20T14:51:00",
     "endValidity": "2027-01-18T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.480833, -109.194167"
+    ]
+  },
+  {
+    "raw": "(R1000/26 NOTAMR R0695/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
+    "startValidity": "2026-10-20T14:51:00",
+    "endValidity": "2027-01-18T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "56.386111, -111.272778"
     ]
   },
   {
