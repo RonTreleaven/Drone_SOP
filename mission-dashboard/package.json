@@ -1,0 +1,9 @@
+{
+  "name": "drone-sop-mission-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "vite build --base=./" },
+  "dependencies": { "lucide-react": "1.31.0", "react": "19.2.6", "react-dom": "19.2.6" },
+  "devDependencies": { "vite": "8.0.13" }
+}
