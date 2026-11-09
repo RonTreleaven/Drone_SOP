@@ -1,5 +1,32 @@
 [
   {
+    "raw": "(D5000/26 NOTAMN\nQ) CZWG/QOBCE/IV/M/AE/000/020/5020N10533W005\nA) CYMJ B) 2611101400 C) 2611101600\nE) CRANE 502011N 1053306W APRX 390FT BFR THR 21 AND 1200FT NW \nEXTENDED RCL. 100FT AGL 1992FT AMSL.)",
+    "startValidity": "2026-11-09T19:54:47.355",
+    "endValidity": "2026-11-10T16:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "50.336389, -105.551667"
+    ]
+  },
+  {
+    "raw": "(J7868/26 NOTAMR J7781/26\nQ) CZWG/QOBCE/IV/M/AE/000/016/4953N10053W005\nA) CYVD B) 2611091700 C) 2611112300\nE) RIG 495241N 1005318W APRX 3200FT BFR THR 26 AND 90FT SOUTH \nEXTENDED RCL. 83FT AGL 1535FT AMSL. LGTD, PAINTED.)",
+    "startValidity": "2026-11-09T17:00:00",
+    "endValidity": "2026-11-11T23:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "49.878056, -100.888333"
+    ]
+  },
+  {
+    "raw": "(U1904/26 NOTAMR U1394/26\nQ) CZWG/QOLAS/IV/M/AE/000/011/4953N09739W005\nA) CXXX B) 2611091638 C) 2702082359\nE) CKA8 ST. FRANCOIS XAVIER \nOBST LGT U/S TOWER 495302N 0973832W (APRX 4.4NM SW AD) 230FT AGL, \n1019FT AMSL.)",
+    "startValidity": "2026-11-09T16:38:00",
+    "endValidity": "2027-02-08T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.883889, -97.642222"
+    ]
+  },
+  {
     "raw": "(U1900/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/024/5113N10244W002\nA) CZWG B) 2611090914 C) 2611112100\nE) OBST LGT U/S TOWER 511233N 1024359W (APRX 11NM WSW YORKTON \nREGIONAL AD (CYQV)) 616FT AGL, 2334FT AMSL.)",
     "startValidity": "2026-11-09T09:14:00",
     "endValidity": "2026-11-11T21:00:00",
@@ -15,15 +42,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "50.336389, -105.551667"
-    ]
-  },
-  {
-    "raw": "(J7781/26 NOTAMR J7728/26\nQ) CZWG/QOBCE/IV/M/AE/000/016/4953N10053W005\nA) CYVD B) 2611051918 C) 2611092300\nE) RIG 495241N 1005318W APRX 3200FT BFR THR 26 AND 90FT SOUTH \nEXTENDED RCL. 83FT AGL 1535FT AMSL. LGTD, PAINTED.)",
-    "startValidity": "2026-11-05T19:18:00",
-    "endValidity": "2026-11-09T23:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "49.878056, -100.888333"
     ]
   },
   {
@@ -342,21 +360,21 @@
     ]
   },
   {
-    "raw": "(U1753/26 NOTAMR U1746/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2610131317 C) 2701101400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
-    "startValidity": "2026-10-13T13:17:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.959167, -91.303889"
-    ]
-  },
-  {
     "raw": "(U1754/26 NOTAMR U1747/26\nQ) CZWG/QOLAS/IV/M/AE/000/015/5126N09015W005\nA) CYPL B) 2610131317 C) 2701101400EST\nE) OBST LGT U/S TOWER 512531N 0901500W (APRX 1.87NM SW AD) 104FT \nAGL, 1410FT AMSL.)",
     "startValidity": "2026-10-13T13:17:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.425278, -90.250000"
+    ]
+  },
+  {
+    "raw": "(U1753/26 NOTAMR U1746/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2610131317 C) 2701101400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
+    "startValidity": "2026-10-13T13:17:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.959167, -91.303889"
     ]
   },
   {
@@ -753,24 +771,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.900000, -97.216667"
-    ]
-  },
-  {
-    "raw": "(U1394/26 NOTAMR U0827/26\nQ) CZWG/QOLAS/IV/M/AE/000/011/4953N09739W005\nA) CXXX B) 2608101353 C) 2611092359\nE) CKA8 ST. FRANCOIS XAVIER \nOBST LGT U/S TOWER 495302N 0973832W (APRX 4.4NM SW AD) 230FT AGL, \n1019FT AMSL.)",
-    "startValidity": "2026-08-10T13:53:00",
-    "endValidity": "2026-11-09T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.883889, -97.642222"
-    ]
-  },
-  {
-    "raw": "(U1388/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/026/5024N10302W005\nA) CXXX B) 2608092156 C) 2611091800\nE) CKU6 GRENFELL \nOBST LGT U/S TOWER 502336N 1030226W (APRX 4.3NM WSW AD) 350FT \nAGL, 2550FT AMSL.)",
-    "startValidity": "2026-08-09T21:56:00",
-    "endValidity": "2026-11-09T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.393333, -103.040556"
     ]
   },
   {
