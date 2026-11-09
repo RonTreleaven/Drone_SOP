@@ -26,6 +26,7 @@ on:
       - "assets/pdf/MyFactSheet.pdf"
       - "sections/**"
       - "vnc-key-preview/**"
+      - "mission-dashboard/**"
       - "data/*.json"
       - "data/*.csv"
       - "data/*.geojson"
@@ -83,6 +84,19 @@ jobs:
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+
+      - name: Set up Node for the mission dashboard
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: mission-dashboard/package-lock.json
+
+      - name: Build mission dashboard
+        working-directory: mission-dashboard
+        run: |
+          npm ci
+          npm run build
 
       - name: Build site artifact
         run: |
@@ -166,10 +180,17 @@ jobs:
           # Canadian VNC Quick Key: publish the page, card data and all illustrations.
           cp -a vnc-key-preview _site/
 
+          # Publish the mission dashboard and its relative runtime assets.
+          mkdir -p _site/mission-dashboard
+          cp -a mission-dashboard/dist/. _site/mission-dashboard/
+
           # Disable Jekyll processing
           touch _site/.nojekyll
 
           test -f _site/flight-plan-estimator.html
+          test -f _site/mission-dashboard/index.html
+          compgen -G '_site/mission-dashboard/assets/*.js' >/dev/null
+          compgen -G '_site/mission-dashboard/assets/*.css' >/dev/null
           test -f _site/index.html
           test -f _site/guided-site-survey.html
           test -f _site/JobBoard.html
