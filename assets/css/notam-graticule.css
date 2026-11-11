@@ -1,0 +1,8 @@
+.gr-ctl a{display:flex;align-items:center;justify-content:center;width:34px;height:34px;color:#888;background:#fff;font:600 10px Arial,sans-serif;text-decoration:none;}
+.gr-ctl a.gr-on{color:#4a0d36;background:#f3e6ee;}
+.gr-ctl a.gr-pilot.gr-on{color:#ff2d95;background:#ffe6f2;}
+.gr-ctl a.gr-scale{height:24px;color:#4a0d36;font-size:8px;letter-spacing:-.3px;padding:0;white-space:nowrap;overflow:hidden;}
+.gr-canvas{position:absolute;left:0;top:0;pointer-events:none;}
+.pilot-coordinates{line-height:1.55;}
+.pilot-coordinates .pilot-heading{font-weight:600;margin-bottom:3px;}
+.pilot-coordinates .pilot-coordinate{white-space:nowrap;}
