@@ -16001,3 +16001,22 @@ At C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\sync_jobs_to_github.ps1:14 char:3
  
 [Wed 10/21/2026  7:30:03.59] Daily jobs refresh failed with exit code 
 
+==================================================
+[Sun 10/25/2026  7:30:08.32] Daily jobs refresh started
+From https://github.com/RonTreleaven/Drone_SOP
+   6957a74..7e426ba  main       -> origin/main
+ * [new branch]      feature/drone-flight-time-planner-20261023 -> origin/feature/drone-flight-time-planner-20261023
+Updating 6957a74..7e426ba
+warning: in the working copy of 'assets/logs/jobs_refresh_daily.log', LF will be replaced by CRLF the next time Git touches it
+error: unable to unlink old 'assets/logs/jobs_refresh_daily.log': Invalid argument
+fatal: could not reset --hard
+Created autostash: b32816e
+git pull --rebase --autostash failed with exit code 128
+At C:\Users\Ron Treleaven\Drone_SOP\drone_jobs\sync_jobs_to_github.ps1:14 char:32
++ ... DE -ne 0) { throw "git $($args -join ' ') failed with exit code $LAST ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (git pull --reba...h exit code 128:String) [], RuntimeException
+    + FullyQualifiedErrorId : git pull --rebase --autostash failed with exit code 128
+ 
+[Sun 10/25/2026  7:30:11.07] Daily jobs refresh failed with exit code 
+
