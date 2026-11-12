@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(U1919/26 NOTAMR U1426/26\nQ) CZWG/QOLAS/IV/M/E/000/035/5141N10841W002\nA) CZWG B) 2611121644 C) 2702101800\nE) OBST LGT U/S TOWER 514046N 1084127W (APRX 21NM NE KINDERSLEY \nREGIONAL AD (CYKY)) 1076FT AGL, 3451FT AMSL.)",
+    "startValidity": "2026-11-12T16:44:00",
+    "endValidity": "2027-02-10T18:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.679444, -108.690833"
+    ]
+  },
+  {
     "raw": "(U1918/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/013/4940N09626W002\nA) CZWG B) 2611121523 C) 2702031800EST\nE) OBST LGT U/S TOWER 493931N 0962608W (APRX 8NM E STE-ANNE (HOSP) \n(HELI) AD (CHS6)) 300FT AGL, 1237FT AMSL.)",
     "startValidity": "2026-11-12T15:23:00",
     "endValidity": null,
@@ -396,6 +405,15 @@
     ]
   },
   {
+    "raw": "(U1753/26 NOTAMR U1746/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2610131317 C) 2701101400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
+    "startValidity": "2026-10-13T13:17:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.959167, -91.303889"
+    ]
+  },
+  {
     "raw": "(U1754/26 NOTAMR U1747/26\nQ) CZWG/QOLAS/IV/M/AE/000/015/5126N09015W005\nA) CYPL B) 2610131317 C) 2701101400EST\nE) OBST LGT U/S TOWER 512531N 0901500W (APRX 1.87NM SW AD) 104FT \nAGL, 1410FT AMSL.)",
     "startValidity": "2026-10-13T13:17:00",
     "endValidity": null,
@@ -411,15 +429,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "52.467222, -92.960833"
-    ]
-  },
-  {
-    "raw": "(U1753/26 NOTAMR U1746/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2610131317 C) 2701101400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
-    "startValidity": "2026-10-13T13:17:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.959167, -91.303889"
     ]
   },
   {
@@ -789,24 +798,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.338889, -107.790000"
-    ]
-  },
-  {
-    "raw": "(U1426/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/035/5141N10841W002\nA) CZWG B) 2608142103 C) 2611131800\nE) OBST LGT U/S TOWER 514046N 1084127W (APRX 21NM NE KINDERSLEY \nREGIONAL AD (CYKY)) 1076FT AGL, 3451FT AMSL.)",
-    "startValidity": "2026-08-14T21:03:00",
-    "endValidity": "2026-11-13T18:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.679444, -108.690833"
-    ]
-  },
-  {
-    "raw": "(U1425/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/010/4954N09713W005\nA) CYWG B) 2608141640 C) 2611121630\nE) OBST LGT U/S TOWER 495400N 0971300W (APRX 1.08NM ESE AD) 141FT \nAGL, 922FT AMSL.)",
-    "startValidity": "2026-08-14T16:40:00",
-    "endValidity": "2026-11-12T16:30:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.900000, -97.216667"
     ]
   },
   {
