@@ -143,11 +143,11 @@ function initNotamGraticule(map, pilotMarker) {
 
   function fmtDMS(valDeg, isLat) {
     var hemi = isLat ? (valDeg >= 0 ? 'N' : 'S') : (valDeg >= 0 ? 'E' : 'W');
-    var tenths = Math.round(Math.abs(valDeg) * 36000);
-    var d = Math.floor(tenths / 36000);
-    var m = Math.floor((tenths % 36000) / 600);
-    var s = (tenths % 600) / 10;
-    return d + '\u00B0 ' + m + '\u2032 ' + s.toFixed(1) + '\u2033 ' + hemi;
+    var totalSeconds = Math.round(Math.abs(valDeg) * 3600);
+    var d = Math.floor(totalSeconds / 3600);
+    var m = Math.floor((totalSeconds % 3600) / 60);
+    var s = totalSeconds % 60;
+    return d + '\u00B0 ' + (m < 10 ? '0' : '') + m + '\u2032 ' + (s < 10 ? '0' : '') + s + '\u2033 ' + hemi;
   }
 
   window.pilotPopupHtml = function (ll) {

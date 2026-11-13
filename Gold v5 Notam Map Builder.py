@@ -1308,23 +1308,67 @@ window.onload = function() {{
       return isValidPilotLocation(ll) && !isZeroPilotLocation(ll);
   }}
 
+  function parseLinkedLatLonFromParams(params) {{
+      if (!params) {{
+          return null;
+      }}
+      var latRaw = params.get('lat') || params.get('latitude');
+      var lonRaw = params.get('lon') || params.get('lng') || params.get('longitude');
+      if (latRaw == null || lonRaw == null) {{
+          return null;
+      }}
+      var lat = Number(latRaw);
+      var lon = Number(lonRaw);
+      if (!isFinite(lat) || !isFinite(lon)) {{
+          return null;
+      }}
+      if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {{
+          return null;
+      }}
+      return L.latLng(lat, lon);
+  }}
+
+  function getLinkedPilotLocationFromQuery() {{
+      try {{
+          var params = new URLSearchParams(window.location.search || '');
+          return parseLinkedLatLonFromParams(params);
+      }} catch (err) {{
+          return null;
+      }}
+  }}
+
+  function hasLinkedObstacleIntent(params) {{
+      if (!params) {{
+          return false;
+      }}
+      var explicit = (params.get('obstacle') || params.get('target') || '').trim().toLowerCase();
+      if (/^(1|true|yes|on|obstacle)$/.test(explicit)) {{
+          return true;
+      }}
+      var markerKeys = ['markers', 'marker', 'm'];
+      for (var i = 0; i < markerKeys.length; i++) {{
+          if ((params.getAll(markerKeys[i]) || []).length > 0) {{
+              return true;
+          }}
+      }}
+      return false;
+  }}
+
+  function arePilotLocationsEquivalent(a, b) {{
+      if (!isValidPilotLocation(a) || !isValidPilotLocation(b)) {{
+          return false;
+      }}
+      return Math.abs(Number(a.lat) - Number(b.lat)) < 0.0000005 &&
+          Math.abs(Number(a.lng) - Number(b.lng)) < 0.0000005;
+  }}
+
   function getLinkedObstacleFromQuery() {{
       try {{
           var params = new URLSearchParams(window.location.search || '');
-          var latRaw = params.get('lat') || params.get('latitude');
-          var lonRaw = params.get('lon') || params.get('lng') || params.get('longitude');
-          if (latRaw == null || lonRaw == null) {{
+          if (!hasLinkedObstacleIntent(params)) {{
               return null;
           }}
-          var lat = Number(latRaw);
-          var lon = Number(lonRaw);
-          if (!isFinite(lat) || !isFinite(lon)) {{
-              return null;
-          }}
-          if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {{
-              return null;
-          }}
-          return L.latLng(lat, lon);
+          return parseLinkedLatLonFromParams(params);
       }} catch (err) {{
           return null;
       }}
@@ -2727,12 +2771,14 @@ window.onload = function() {{
       appendLinkedSetToCountText();
   }}
 
-  function applyPilotLocation(ll, shouldCenter) {{
+  function applyPilotLocation(ll, shouldCenter, persistToStorage) {{
       marker.setLatLng(ll).openPopup();
       c1.setLatLng(ll); c3.setLatLng(ll); c100.setLatLng(ll);
       c1Touch.setLatLng(ll); c3Touch.setLatLng(ll); c100Touch.setLatLng(ll);
       marker.setPopupContent(window.pilotPopupHtml(ll));
-      savePilotLocationToStorage(ll, 'notams-map');
+      if (persistToStorage !== false) {{
+          savePilotLocationToStorage(ll, 'notams-map');
+      }}
       if (shouldCenter) {{
           centerMapToPilotRadius();
       }}
@@ -3494,7 +3540,9 @@ window.onload = function() {{
 
     var startupPilotLocation = marker.getLatLng();
     var queryPilotLocation = getPilotLocationFromQuery();
+    var linkedPilotLocation = getLinkedPilotLocationFromQuery();
     var restoredPilotLocation = getStoredPilotLocation();
+    var persistStartupPilotLocation = true;
     linkedRealtimeNotams = getLinkedRealtimeNotamsFromQuery();
         if (!linkedRealtimeNotams.length) {{
             linkedRealtimeNotams = getStartupLiveNotamsFromCache();
@@ -3503,6 +3551,22 @@ window.onload = function() {{
 
         if (queryPilotLocation) {{
             startupPilotLocation = queryPilotLocation;
+        }} else if (linkedPilotLocation) {{
+            startupPilotLocation = linkedPilotLocation;
+            if (restoredPilotLocation && hasUsablePilotLocation(restoredPilotLocation)) {{
+                if (arePilotLocationsEquivalent(restoredPilotLocation, linkedPilotLocation)) {{
+                    persistStartupPilotLocation = false;
+                }} else {{
+                    var linkedText = formatCoord(linkedPilotLocation.lat) + ', ' + formatCoord(linkedPilotLocation.lng);
+                    var promptText = 'This link opens a planned flight at ' + linkedText.replace(/-/g, '\u2212') + '. Update your saved pilot location?\\n\\n' +
+                        'OK = Update saved location\\n' +
+                        'Cancel = Use for this visit';
+                    var shouldPersist = window.confirm(promptText);
+                    persistStartupPilotLocation = !!shouldPersist;
+                }}
+            }} else {{
+                persistStartupPilotLocation = false;
+            }}
         }} else if (restoredPilotLocation) {{
             startupPilotLocation = restoredPilotLocation;
     }}
@@ -3523,7 +3587,7 @@ window.onload = function() {{
 
     var startupLocationMissing = !hasUsablePilotLocation(startupPilotLocation);
 
-    applyPilotLocation(startupPilotLocation, !startupLocationMissing);
+    applyPilotLocation(startupPilotLocation, !startupLocationMissing, persistStartupPilotLocation);
     applyAirportDefaultsFromLocation(startupPilotLocation);
     if (!linkedRealtimeMode) {{
             renderLinkedObstacleBatchMarkers();
