@@ -3373,7 +3373,9 @@ window.onload = function() {
 
     // Control Zone polygons (real geometry, lazy-loaded from OpenAIP CA airspace export)
     (function buildControlZoneLayer() {
+        // DAH gold file carries CYR/CYD/CYA designations (raw OpenAIP export does not), matching CZMiniMap
         var CZ_SOURCES = [
+            'data/airspace/dah_gold_airspace.geojson',
             'data/airspace/_sources/ca_asp.geojson',
             'data/airspace/Control_ca_asp.geojson',
             'data/airspace/ca_asp_restricted.geojson',
@@ -3386,7 +3388,7 @@ window.onload = function() {
             C: { label: 'Class C Control Zones', color: '#6a1b9a', fillOpacity: 0.10 },
             D: { label: 'Class D Control Zones', color: '#c62828', fillOpacity: 0.10 },
             E: { label: 'Class E Surface/Low-Level', color: '#00897b', fillOpacity: 0.08 },
-            F: { label: 'Class F Control/Related', color: '#ef6c00', fillOpacity: 0.10 },
+            F: { label: 'Class F - MOA & ADIZ', color: '#ef6c00', fillOpacity: 0.10 },
             R: { label: 'Class F - Restricted or Danger (CYR/CYD)', color: '#c62828', fillOpacity: 0.12 },
             FA: { label: 'Class F - Advisory (CYA)', color: '#fb8c00', fillOpacity: 0.10 }
         };
@@ -3477,8 +3479,8 @@ window.onload = function() {
             var p = (feature && feature.properties) || {};
             var name = p.name || 'Control Zone';
             var cls = getFeatureClassLetter(feature);
-            var lower = p.lowerLimit && isFinite(p.lowerLimit.value) ? (p.lowerLimit.value + ' ft') : 'n/a';
-            var upper = p.upperLimit && isFinite(p.upperLimit.value) ? (p.upperLimit.value + ' ft') : 'n/a';
+            var lower = p.lowerLimit && isFinite(p.lowerLimit.value) ? (p.lowerLimit.value + ' ft') : (p.lower || 'n/a');
+            var upper = p.upperLimit && isFinite(p.upperLimit.value) ? (p.upperLimit.value + ' ft') : (p.upper || 'n/a');
             return '<div class="notam-popup"><div class="notam-title">' + escapeHtml(name) + '</div>' +
                 '<div><span class="notam-label">Class:</span> ' + escapeHtml(cls) + '</div>' +
                 '<div><span class="notam-label">Lower:</span> ' + escapeHtml(String(lower)) + '</div>' +
