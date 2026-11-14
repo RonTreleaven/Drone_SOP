@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(J7951/26 NOTAMN\nQ) CZYZ/QOBCE/IV/M/AE/000/011/4342N07945W005\nA) CXXX B) 2611132037 C) PERM\nE) CPA5 TORONTO/TARTEN (HELI)\nAMEND PUBLICATIONS: NEW BUILDING 434149N 0794448W (APRX 4.6NM NW \nAD (CPA5)). 336FT AGL 1063FT AMSL. NOT LGTD, NOT PAINTED.)",
+    "startValidity": "2026-11-13T20:37:00",
+    "endValidity": null,
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "43.696944, -79.746667"
+    ]
+  },
+  {
+    "raw": "(U1930/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/022/4406N08018W005\nA) CZYZ B) 2611132022 C) 2611152359\nE) OBST LGT U/S WIND FARM WITHIN RADIUS 4.4NM CENTRE 440534N \n0801823W (APRX 4.8NM S DUNDALK (TRIPP FIELD) AD (CTF4)). 475FT \nAGL 2101FT AMSL.)",
+    "startValidity": "2026-11-13T20:22:00",
+    "endValidity": "2026-11-15T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.092778, -80.306389"
+    ]
+  },
+  {
     "raw": "(U1928/26 NOTAMR U1888/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4417N07626W005\nA) CXXX B) 2611131744 C) 2611271800EST\nE) CPJ7 KINGSTON (GENERAL HOSP) (HELI)\nOBST LGT U/S TOWER 441724N 0762559W (APRX 4.8NM NE AD) 300FT AGL, \n705FT AMSL.)",
     "startValidity": "2026-11-13T17:44:00",
     "endValidity": null,
@@ -15,15 +33,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.963333, -77.996389"
-    ]
-  },
-  {
-    "raw": "(D5085/26 NOTAMR D5039/26\nQ) CZYZ/QOBCE/IV/M/AE/000/010/4302N08109W005\nA) CYXU B) 2611131546 C) 2611132130\nE) CRANE 430147N 0810920W APRX 1620FT BEYOND THR 09 AND 3390FT SOUTH \nRCL. 100FT AGL 1000FT AMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-11-13T15:46:00",
-    "endValidity": "2026-11-13T21:30:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "43.029722, -81.155556"
     ]
   },
   {
@@ -159,15 +168,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "43.880000, -78.700556"
-    ]
-  },
-  {
-    "raw": "(J7863/26 NOTAMN\nQ) CZYZ/QOBCE/IV/M/AE/000/013/4622N07924W005\nA) CYYB B) 2611101300 C) 2611132130\nD) DAILY 1300-2130\nE) MOBILE CRANE WITHIN RADIUS 400FT CENTRE 462200N 0792416W APRX \n80FT BFR THR 26 AND 910FT SOUTH EXTENDED RCL. 35FT AGL 1236FT \nAMSL. NOT LGTD.)",
-    "startValidity": "2026-11-09T15:48:27.575",
-    "endValidity": "2026-11-13T21:30:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "46.366667, -79.404444"
     ]
   },
   {
@@ -333,21 +333,21 @@
     ]
   },
   {
-    "raw": "(U1870/26 NOTAMR U1356/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2611021534 C) 2702011600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
-    "startValidity": "2026-11-02T15:34:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.907222, -79.371389"
-    ]
-  },
-  {
     "raw": "(U1869/26 NOTAMR U1355/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2611021534 C) 2702011600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
     "startValidity": "2026-11-02T15:34:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.906667, -78.731389"
+    ]
+  },
+  {
+    "raw": "(U1870/26 NOTAMR U1356/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2611021534 C) 2702011600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
+    "startValidity": "2026-11-02T15:34:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.907222, -79.371389"
     ]
   },
   {
@@ -1080,21 +1080,21 @@
     ]
   },
   {
-    "raw": "(U1689/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4537N08023W005\nA) CXXX B) 2610021718 C) 2701021700EST\nE) CPB6 POINTE AU BARIL STATION (WATER)\nOBST LGT U/S TOWER 453655N 0802315W (APRX 4.5NM N AD) 361FT AGL, \n1017FT AMSL.)",
-    "startValidity": "2026-10-02T17:18:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.615278, -80.387500"
-    ]
-  },
-  {
     "raw": "(U1690/26 NOTAMR U1190/26\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4259N07943W005\nA) CXXX B) 2610021718 C) 2701021700EST\nE) CAF2 CAYUGA EAST \nOBST LGT U/S TOWER 425841N 0794259W (APRX 3.3NM E AD) 295FT AGL, \n906FT AMSL.)",
     "startValidity": "2026-10-02T17:18:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "42.978056, -79.716389"
+    ]
+  },
+  {
+    "raw": "(U1689/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4537N08023W005\nA) CXXX B) 2610021718 C) 2701021700EST\nE) CPB6 POINTE AU BARIL STATION (WATER)\nOBST LGT U/S TOWER 453655N 0802315W (APRX 4.5NM N AD) 361FT AGL, \n1017FT AMSL.)",
+    "startValidity": "2026-10-02T17:18:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.615278, -80.387500"
     ]
   },
   {
@@ -1206,21 +1206,21 @@
     ]
   },
   {
-    "raw": "(U1641/26 NOTAMR U1339/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4414N07823W005\nA) CYPQ B) 2609251015 C) 2611252359EST\nE) OBST LGT U/S TOWER 441353N 0782326W (APRX 1.18NM WNW AD) 122FT \nAGL, 775FT AMSL.)",
-    "startValidity": "2026-09-25T10:15:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.231389, -78.390556"
-    ]
-  },
-  {
     "raw": "(U1642/26 NOTAMR U1337/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4306N07905W005\nA) CXXX B) 2609251015 C) 2611252359\nE) CNG8 NIAGARA FALLS (GREATER NIAGARA GENERAL HOSP) (HELI)\nOBST LGT U/S TOWER 430618N 0790516W (APRX 1152FT ESE AD) 160FT \nAGL, 795FT AMSL.)",
     "startValidity": "2026-09-25T10:15:00",
     "endValidity": "2026-11-25T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.105000, -79.087778"
+    ]
+  },
+  {
+    "raw": "(U1641/26 NOTAMR U1339/26\nQ) CZYZ/QOLAS/IV/M/AE/000/008/4414N07823W005\nA) CYPQ B) 2609251015 C) 2611252359EST\nE) OBST LGT U/S TOWER 441353N 0782326W (APRX 1.18NM WNW AD) 122FT \nAGL, 775FT AMSL.)",
+    "startValidity": "2026-09-25T10:15:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.231389, -78.390556"
     ]
   },
   {
@@ -1410,15 +1410,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "46.508611, -84.327500"
-    ]
-  },
-  {
-    "raw": "(V1175/26 NOTAMN\nQ) CZUL/QOLAS/IV/M/E/000/008/4517N07549W002\nA) CZUL B) 2609130757 C) 2611132359\nE) OBST LGT U/S TOWER 451643N 0754838W (APRX 7NM W \nOTTAWA/MACDONALD-CARTIER INTL AD (CYOW)) 323FT AGL, 712FT AMSL.\n\nFR:\nOBST LGT U/S TOUR 451643N 0754838W (APRX 7NM W AD \nOTTAWA/MACDONALD-CARTIER INTL (CYOW)) 323FT AGL, 712FT AMSL.)",
-    "startValidity": "2026-09-13T07:57:00",
-    "endValidity": "2026-11-13T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.278611, -75.810556"
     ]
   },
   {
