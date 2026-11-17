@@ -1,5 +1,32 @@
 [
   {
+    "raw": "(R1084/26 NOTAMR R0901/26\nQ) CZEG/QOLAS/IV/M/E/000/027/5237N11049W002\nA) CZEG B) 2611171515 C) 2702072000\nE) OBST LGT U/S TOWER 523712N 1104907W (APRX 11NM SSE WAINWRIGHT AD \n(CYWV)) 349FT AGL, 2625FT AMSL.)",
+    "startValidity": "2026-11-17T15:15:00",
+    "endValidity": "2027-02-07T20:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.620000, -110.818611"
+    ]
+  },
+  {
+    "raw": "(R1083/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/025/5435N11049W002\nA) CZEG B) 2611171458 C) 2702151800\nE) OBST LGT U/S TOWER 543448N 1104839W (APRX 17NM NNW BONNYVILLE AD \n(CYBF)) 350FT AGL, 2423FT AMSL.)",
+    "startValidity": "2026-11-17T14:58:00",
+    "endValidity": "2027-02-15T18:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "54.580000, -110.810833"
+    ]
+  },
+  {
+    "raw": "(R1081/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/037/5110N11358W005\nA) CYYC B) 2611171305 C) 2702072359\nE) OBST LGT U/S TOWER 511028N 1135751W (APRX 4.2NM NNE AD) 100FT \nAGL, 3696FT AMSL.)",
+    "startValidity": "2026-11-17T13:05:00",
+    "endValidity": "2027-02-07T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.174444, -113.964167"
+    ]
+  },
+  {
     "raw": "(R1080/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/022/5413N10902W002\nA) CZEG B) 2611161622 C) 2702121800\nE) OBST LGT U/S TOWER 541301N 1090148W (APRX 12NM N LOON LAKE AD \n(CJW3)) 464FT AGL, 2193FT AMSL.)",
     "startValidity": "2026-11-16T16:22:00",
     "endValidity": "2027-02-12T18:00:00",
@@ -852,15 +879,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "54.236944, -111.748889"
-    ]
-  },
-  {
-    "raw": "(R0901/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/027/5237N11049W002\nA) CZEG B) 2609181628 C) 2612172000\nE) OBST LGT U/S TOWER 523712N 1104907W (APRX 11NM SSE WAINWRIGHT AD \n(CYWV)) 349FT AGL, 2625FT AMSL.)",
-    "startValidity": "2026-09-18T16:28:00",
-    "endValidity": "2026-12-17T20:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.620000, -110.818611"
     ]
   },
   {
