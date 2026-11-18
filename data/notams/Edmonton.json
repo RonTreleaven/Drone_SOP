@@ -423,21 +423,21 @@
     ]
   },
   {
-    "raw": "(R1000/26 NOTAMR R0695/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
-    "startValidity": "2026-10-20T14:51:00",
-    "endValidity": "2027-01-18T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "56.386111, -111.272778"
-    ]
-  },
-  {
     "raw": "(U1791/26 NOTAMR U1273/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
     "startValidity": "2026-10-20T14:51:00",
     "endValidity": "2027-01-18T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.480833, -109.194167"
+    ]
+  },
+  {
+    "raw": "(R1000/26 NOTAMR R0695/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
+    "startValidity": "2026-10-20T14:51:00",
+    "endValidity": "2027-01-18T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "56.386111, -111.272778"
     ]
   },
   {
@@ -627,15 +627,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "57.201111, -112.902222"
-    ]
-  },
-  {
-    "raw": "(R0956/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/035/5041N11227W002\nA) CZEG B) 2610030836 C) 2611172359\nE) OBST LGT U/S TOWER 504122N 1122713W (APRX 6NM SSE BASSANO (HEALTH \nCENTRE) (HELI) AD (CBL4)) 665FT AGL, 3401FT AMSL.)",
-    "startValidity": "2026-10-03T08:36:00",
-    "endValidity": "2026-11-17T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.689444, -112.453611"
     ]
   },
   {
@@ -1275,15 +1266,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "67.428333, -134.862500"
-    ]
-  },
-  {
-    "raw": "(C3825/26 NOTAMR C1946/26\nQ) CZEG/QOBCE/IV/M/AE/000/020/5424N11017W005\nA) CYOD B) 2608191836 C) 2611172359\nE) MOBILE CRANES WITHIN 1NM RADIUS CENTRED ON 542427N 1101653W APRX \n3060FT BEYOND THR 04 AND 2630FT NW RCL. 210FT AGL 1978FT AMSL. \nLGTD, NOT PAINTED.)",
-    "startValidity": "2026-08-19T18:36:00",
-    "endValidity": "2026-11-17T23:59:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "54.407500, -110.281389"
     ]
   },
   {
