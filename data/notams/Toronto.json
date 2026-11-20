@@ -1,5 +1,23 @@
 [
   {
+    "raw": "(U1964/26 NOTAMR U1456/26\nQ) CZYZ/QOLAS/IV/M/E/000/013/4918N08211W002\nA) CZYZ B) 2611200548 C) 2702172100\nE) OBST LGT U/S TOWER 491747N 0821110W (APRX 13NM SE KAPUSKASING AD \n(CYYU)) 467FT AGL, 1267FT AMSL.)",
+    "startValidity": "2026-11-20T05:48:00",
+    "endValidity": "2027-02-17T21:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "49.296389, -82.186111"
+    ]
+  },
+  {
+    "raw": "(U1963/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4524N07637W005\nA) CXXX B) 2611192354 C) 2702182300EST\nE) CNL6 RENFREW/HURDS LAKE (WATER)\nOBST LGT U/S TOWER 452356N 0763633W (APRX 1.68NM ESE AD) 315FT \nAGL, 1025FT AMSL.)",
+    "startValidity": "2026-11-19T23:54:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.398889, -76.609167"
+    ]
+  },
+  {
     "raw": "(U1961/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/018/4749N08136W002\nA) CZYZ B) 2611191909 C) 2611212100\nE) OBST LGT U/S TOWER 474846N 0813540W (APRX 31NM NNE BREBEUF \nLAKE/THE BEUF (WATER) AD (CBR4)) 400FT AGL, 1800FT AMSL.)",
     "startValidity": "2026-11-19T19:09:00",
     "endValidity": "2026-11-21T21:00:00",
@@ -33,15 +51,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "43.835278, -79.018611"
-    ]
-  },
-  {
-    "raw": "(J8033/26 NOTAMN\nQ) CZYZ/QOBCE/IV/M/AE/000/006/4355N07854W005\nA) CYOO B) 2611191230 C) 2611192100\nE) MOBILE CRANE WITHIN RADIUS 45FT CENTRE 435515N 0785418W APRX \n190FT BEYOND DTHR 12 AND 1330FT SW RCL. 70FT AGL 508FT AMSL. NOT \nLGTD, NOT PAINTED.)",
-    "startValidity": "2026-11-17T21:31:25.887",
-    "endValidity": "2026-11-19T21:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "43.920833, -78.905000"
     ]
   },
   {
@@ -1233,21 +1242,21 @@
     ]
   },
   {
-    "raw": "(U1653/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4358N07913W005\nA) CXXX B) 2609271040 C) 2611272359EST\nE) CNU8 TORONTO/MARKHAM \nOBST LGT U/S TOWER 435745N 0791253W (APRX 2.6NM ENE AD) 122FT \nAGL, 983FT AMSL.)",
-    "startValidity": "2026-09-27T10:40:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "43.962500, -79.214722"
-    ]
-  },
-  {
     "raw": "(U1652/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/014/4828N08127W002\nA) CZYZ B) 2609271040 C) 2611272359EST\nE) OBST LGT U/S TOWER 482756N 0812653W (APRX 6NM W TIMMINS (TIMMINS \nAND  DISTRICT HOSP) (HELI) AD (CTM6)) 355FT AGL, 1331FT AMSL.)",
     "startValidity": "2026-09-27T10:40:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "48.465556, -81.448056"
+    ]
+  },
+  {
+    "raw": "(U1653/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4358N07913W005\nA) CXXX B) 2609271040 C) 2611272359EST\nE) CNU8 TORONTO/MARKHAM \nOBST LGT U/S TOWER 435745N 0791253W (APRX 2.6NM ENE AD) 122FT \nAGL, 983FT AMSL.)",
+    "startValidity": "2026-09-27T10:40:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.962500, -79.214722"
     ]
   },
   {
@@ -1329,15 +1338,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.130833, -80.310000"
-    ]
-  },
-  {
-    "raw": "(U1613/26 NOTAMR U1300/26\nQ) CZYZ/QOLAS/IV/M/E/000/015/4405N07835W002\nA) CZYZ B) 2609190539 C) 2611192359EST\nE) OBST LGT U/S TOWER 440515N 0783523W (APRX 6NM NE ORONO/HAWKEFIELD \nAD (CHF4)) 285FT AGL, 1429FT AMSL.)",
-    "startValidity": "2026-09-19T05:39:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.087500, -78.589722"
     ]
   },
   {
@@ -1581,15 +1581,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.454722, -79.575556"
-    ]
-  },
-  {
-    "raw": "(U1456/26 NOTAMR U1449/26\nQ) CZYZ/QOLAS/IV/M/E/000/013/4918N08211W002\nA) CZYZ B) 2608210708 C) 2611202100\nE) OBST LGT U/S TOWER 491747N 0821110W (APRX 13NM SE KAPUSKASING AD \n(CYYU)) 467FT AGL, 1267FT AMSL.)",
-    "startValidity": "2026-08-21T07:08:00",
-    "endValidity": "2026-11-20T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.296389, -82.186111"
     ]
   },
   {
