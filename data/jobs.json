@@ -1,5 +1,23 @@
 [
   {
+    "title": "UAV Modeling & Simulation Engineer",
+    "company": "Shearwater Aerospace",
+    "location": "Montreal, Quebec, ca",
+    "link": "https://ca.talent.com/view?id=607351693525198715",
+    "description": "We're Building Autonomous Flight Intelligence Drones that think for themselves. Not pre-programmed routes-true autonomy where aircraft make intelligent decisions onboard, adapting to weather, obstacles, and airspace in real-time without human intervention. We're building weather-aware flight optimization that delivers outcome-driven autonomy for the real world-increasing mission success by extending range, endurance, safety, and reliability. You'll build the simulation engine that makes this possible. The Opportunity You'll join as a founding engineer on our simulation platform., designing and building the flight simulation platform that powers both our autonomous planning stack and operator decision support. Working with our CTO, you'll architect a custom-built sim framework from the ground up-one that real aircraft and real operators will trust to make real flight decisions. What You'll Own Own the simulation engine end-to-end: design and build custom components where fidelity demands it, integrate and orchestrate existing frameworks where they earn their place Build the simulation as a dual-purpose platform: a development and validation backbone for the planning stack, and an operator-facing decision support tool Establish simulation fidelity standards - knowing when \"good enough\" is and when it isn't Integrate meteorological and environmental data into live sim scenarios Architect the sim to evolve alongside increasing vehicle complexity and operational demands Why this matters: Our planners are only as trustworthy as the models they're built against. Operators make go/no-go decisions based on what the sim tells them. Your work directly determines whether our autonomy stack is grounded in physical reality - and whether operators trust it enough to deploy. You Might Be a Fit If... You build sims that get trusted, not just demoed. You've built simulation systems that real teams relied on - for validation, for decisions, for understanding failure modes. You know the difference between a sim that looks right and one that is right, and you've had to defend that line under pressure. Your code is production-grade, not prototype-grade. Simulation work at Shearwater isn't research infrastructure - it runs in production and operators depend on it. You write clean, maintainable, performant code. You think about architecture, not just correctness. Strong software engineering is non-negotiable here. You think from first principles. You're building custom - not configuring an existing framework. You can reason from physics and system behavior up to implementation decisions, and you know when to simplify a model and when simplification breaks validity. You understand flight well enough to model it faithfully. You don't need a pilot's license, but you need to know what matters in a flight mechanics model, what the planning stack actually needs from the sim, and what an operator needs to see to make a confident decision. You're comfortable with ambiguity. The sim requirements will evolve as the platform matures. You ask sharp questions, propose solutions, and deliver incrementally rather than waiting for perfect specs. Technical Foundation We're Looking For Simulation engineering: Demonstrated experience building simulation systems - flight, robotics, physics, or similar domains Strong numerical methods and mathematical modeling fundamentals Ability to design for fidelity and performance - knowing the trade-off and navigating it deliberately Experience integrating real-world data sources (meteorological, sensor, environmental) into simulation environments Software engineering - this is the bar: Strong C++ and/or Python - you write code others want to maintain Systems-level thinking: performance, memory, concurrency where it matters Software architecture fundamentals: clean interfaces, testable components, extensible design Experience with real-time or high-frequency simulation loops is a strong plus Domain knowledge: Working knowledge of flight mechanics - aerodynamics, kinematics, environmental disturbances Familiarity with UAV systems, autonomous platforms, or aerospace simulation is a strong plus Experience with meteorological data formats (NetCDF, GRIB, HRRR) is a bonus Infrastructure: Comfortable with cloud infrastructure (GCP preferred), Docker, Git Experience designing APIs or interfaces that expose sim state to external consumers (planners, UIs) Nice to have: Robotics simulation background (ROS, Gazebo, or similar) Experience building operator-facing tools or visualization layers Degree in Engineering, Physics, Computer Science, or related field - but we'll prioritize what you've built over credentials What We Offer Equity ownership - You're building foundational systems. You should own a meaningful piece of what we're creating. Architectural influence - This isn't \"implement the spec.\" You'll define what flight simulation looks like at Shearwater alongside the CTO. Hybrid flexibility - Work where you're most productive. We're in Montreal but value focus time and thoughtful collaboration over face-time. Direct impact - The sim you build runs in the planning loop and in front of operators making real mission decisions. You'll see your work shape how autonomous flight gets trusted and deployed. Strong fundamentals in simulation or systems engineering but don't check every box? We want to hear from you. We value first-principles thinking and engineering craft over credential collection. OTHER",
+    "summary": "We're Building Autonomous Flight Intelligence Drones that think for themselves. Not pre-programmed routes-true autonomy where aircraft make intelligent decisions onboard, adapting to weather, obstacles, and airspace in real-time without human intervention. We're building weather-aware flight optimization that delivers outcome-driven autonomy for the real world-increasing mission success by extending range, endurance, safety, and reliability. You'll build the simulation engine that makes this possible. The Opportunity You'll join as a founding",
+    "date_posted": "11/21/2026",
+    "date_expires": "",
+    "category": "general",
+    "type": "unknown",
+    "source": "talent",
+    "query_family": "operations",
+    "matched_query": "uav operator",
+    "confidence": 0.95,
+    "match_reason": "family terms: flight, operator, pilot, uav; drone terms: drone, uav; job terms: operator, pilot; source=talent; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
+    "last_seen": "11/21/2026"
+  },
+  {
     "title": "Commercial Drone Pilot and Surveyor",
     "company": "Kieswetter Excavating",
     "location": "Saint Clements, Ontario, ca",
@@ -15,7 +33,7 @@
     "matched_query": "drone pilot",
     "confidence": 0.95,
     "match_reason": "family terms: flight, pilot, rpas; drone terms: aerial, drone, rpas; job terms: job, pilot, survey, surveyor; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/20/2026"
+    "last_seen": "11/21/2026"
   },
   {
     "title": "Reality Capture / Drone Pilot",
@@ -33,7 +51,7 @@
     "matched_query": "drone pilot",
     "confidence": 0.95,
     "match_reason": "family terms: pilot, uav; drone terms: drone, lidar, uav; job terms: apply, career, job, pilot, survey; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/20/2026"
+    "last_seen": "11/21/2026"
   },
   {
     "title": "UAV Flight Controls Engineer (ArduPilot)",
@@ -285,7 +303,7 @@
     "matched_query": "remote pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, pilot, uas; drone terms: drone, uas; job terms: apply, career, hiring, operator, pilot; source=greenhouse; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/20/2026"
+    "last_seen": "11/21/2026"
   },
   {
     "title": "UAS Operator & Flight Operations Technician (R5438)",
@@ -321,6 +339,6 @@
     "matched_query": "rpas pilot",
     "confidence": 0.8,
     "match_reason": "family terms: flight, pilot, rpas; drone terms: rpas; job terms: career, job, pilot; source=talent; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/20/2026"
+    "last_seen": "11/21/2026"
   }
 ]
