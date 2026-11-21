@@ -99,15 +99,6 @@
     ]
   },
   {
-    "raw": "(I6501/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/036/4931N11503W005\nA) CXXX B) 2611161600 C) 2611210100\nD) NOV 16 1600-0100, NOV 17-20 1300-0100\nE) CBP3 FERNIE (ELK VALLEY HOSPITAL) (HELI)\nCRANE 493044N 1150324W (APRX 267FT SSW AD (CBP3)). 200FT AGL \n3514FT AMSL. LGTD, PAINTED.)",
-    "startValidity": "2026-11-16T15:06:32.879",
-    "endValidity": "2026-11-21T01:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "49.512222, -115.056667"
-    ]
-  },
-  {
     "raw": "(R1079/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/E/000/031/5306N11359W002\nA) CZEG B) 2611161245 C) PERM\nE) AMEND PUBLICATIONS: NEW TOWER 530622N 1135924W (APRX 8NM WSW \nCALMAR/WIZARD LAKE AD (CWL3)). 305FT AGL 3018FT AMSL. NOT LGTD, \nNOT PAINTED.)",
     "startValidity": "2026-11-16T12:45:00",
     "endValidity": null,
@@ -123,15 +114,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "55.068889, -117.262778"
-    ]
-  },
-  {
-    "raw": "(I6479/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/024/5341N11329W005\nA) CYED B) 2611161530 C) 2611202100\nE) ANTENNA 534101N 1132916W (APRX 5899FT NW AD (CYED)). 100FT AGL \n2357FT AMSL. NOT LGTD.)",
-    "startValidity": "2026-11-13T19:51:44.871",
-    "endValidity": "2026-11-20T21:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "53.683611, -113.487778"
     ]
   },
   {
@@ -195,15 +177,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.072778, -114.260278"
-    ]
-  },
-  {
-    "raw": "(I6352/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/004/6819N13327W005\nA) CYEV B) 2611091300 C) 2611210100\nE) DRILLING RIGS WITHIN RADIUS 3406FT CENTRE 681837N 1332703W APRX \n1530FT BFR THR 24 AND 2050FT NW EXTENDED RCL. 23FT AGL 316FT \nAMSL. NOT LGTD, NOT PAINTED.)",
-    "startValidity": "2026-11-06T13:49:48.953",
-    "endValidity": "2026-11-21T01:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "68.310278, -133.450833"
     ]
   },
   {
@@ -459,21 +432,21 @@
     ]
   },
   {
-    "raw": "(U1791/26 NOTAMR U1273/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
-    "startValidity": "2026-10-20T14:51:00",
-    "endValidity": "2027-01-18T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.480833, -109.194167"
-    ]
-  },
-  {
     "raw": "(R1000/26 NOTAMR R0695/26\nQ) CZEG/QOLAS/IV/M/E/000/030/5623N11116W002\nA) CZEG B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 562310N 1111622W (APRX 11NM WSW ANZAC (LONG \nLAKE) (HELI) AD (CNZ2)) 415FT AGL, 2902FT AMSL.)",
     "startValidity": "2026-10-20T14:51:00",
     "endValidity": "2027-01-18T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "56.386111, -111.272778"
+    ]
+  },
+  {
+    "raw": "(U1791/26 NOTAMR U1273/26\nQ) CZWG/QOLAS/IV/M/AE/000/026/5129N10912W005\nA) CYKY B) 2610201451 C) 2701182359\nE) OBST LGT U/S TOWER 512851N 1091139W (APRX 2.1NM S AD) 351FT AGL, \n2575FT AMSL.)",
+    "startValidity": "2026-10-20T14:51:00",
+    "endValidity": "2027-01-18T23:59:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.480833, -109.194167"
     ]
   },
   {
@@ -852,33 +825,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "52.260556, -113.818889"
-    ]
-  },
-  {
-    "raw": "(R0908/26 NOTAMR R0712/26\nQ) CZEG/QOLAS/IV/M/AE/000/030/5032N11155W005\nA) CXXX B) 2609201101 C) 2611202359\nE) CFV8 BROOKS(COMMUNITY HEALTH CENTRE) (HELI)\nOBST LGT U/S TOWER 503134N 1115436W (APRX 2.7NM S AD) 362FT AGL, \n2962FT AMSL.)",
-    "startValidity": "2026-09-20T11:01:00",
-    "endValidity": "2026-11-20T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.526111, -111.910000"
-    ]
-  },
-  {
-    "raw": "(R0907/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/023/5509N11846W005\nA) CXXX B) 2609201007 C) 2611202359\nE) CGP4 GRANDE PRAIRIE (REGIONAL HOSP) (HELI)\nOBST LGT U/S TOWER 550902N 1184618W (APRX 2.5NM ESE AD) 138FT \nAGL, 2294FT AMSL.)",
-    "startValidity": "2026-09-20T10:07:00",
-    "endValidity": "2026-11-20T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "55.150556, -118.771667"
-    ]
-  },
-  {
-    "raw": "(R0906/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/036/5337N11624W005\nA) CYET B) 2609200807 C) 2611202359\nE) OBST LGT U/S TOWER 533638N 1162427W (APRX 2.8NM NNE AD) 379FT \nAGL, 3533FT AMSL.)",
-    "startValidity": "2026-09-20T08:07:00",
-    "endValidity": "2026-11-20T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "53.610556, -116.407500"
     ]
   },
   {

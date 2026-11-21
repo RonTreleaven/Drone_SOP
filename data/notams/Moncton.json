@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(E7361/26 NOTAMR E7359/26\nQ) CZQM/QOBCE/IV/M/AE/000/002/4459N06454W005\nA) CYZX B) 2611202314 C) 2702192100EST\nE) CRANE 445852N 0645418W APRX 970FT BEYOND THR 30 AND 1060FT NE \nRCL. 102FT AGL 194FT AMSL. NOT LGTD.)",
+    "startValidity": "2026-11-20T23:14:00",
+    "endValidity": null,
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "44.981111, -64.905000"
+    ]
+  },
+  {
     "raw": "(E7356/26 NOTAMN\nQ) CZQM/QOBCE/IV/M/AE/000/006/4453N06331W005\nA) CYHZ B) 2611202101 C) 2611302100\nE) MOBILE CRANE WITHIN RADIUS 66FT CENTRE 445314N 0633052W APRX \n2000FT BEYOND THR 14 AND 1490FT SW RCL. 112FT AGL 555FT AMSL. \nLGTD, NOT PAINTED.)",
     "startValidity": "2026-11-20T19:57:07.153",
     "endValidity": "2026-11-30T21:00:00",
@@ -33,15 +42,6 @@
     "q_code": "QOBCE",
     "coordinates_dd": [
       "44.988333, -64.900278"
-    ]
-  },
-  {
-    "raw": "(E7238/26 NOTAMR E5389/26\nQ) CZQM/QOBCE/IV/M/AE/000/003/4459N06454W005\nA) CYZX B) 2611171343 C) 2611202100EST\nE) CRANE 445852N 0645418W APRX 970FT BEYOND THR 30 AND 1060FT NE \nRCL. 165FT AGL 257FT AMSL. NOT LGTD.)",
-    "startValidity": "2026-11-17T13:43:00",
-    "endValidity": null,
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "44.981111, -64.905000"
     ]
   },
   {
@@ -279,6 +279,15 @@
     ]
   },
   {
+    "raw": "(V1049/26 NOTAMR V0598/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
+    "startValidity": "2026-08-25T13:25:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.647222, -61.455000"
+    ]
+  },
+  {
     "raw": "(V1048/26 NOTAMR V0596/26\nQ) CZQM/QOLAS/IV/M/AE/000/004/4539N06126W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453914N 0612614W (APRX 2.9NM WNW AD) 391FT \nAGL, 398FT AMSL.)",
     "startValidity": "2026-08-25T13:25:00",
     "endValidity": null,
@@ -297,12 +306,12 @@
     ]
   },
   {
-    "raw": "(V1049/26 NOTAMR V0598/26\nQ) CZQM/QOLAS/IV/M/AE/000/006/4539N06127W005\nA) CYPD B) 2608251325 C) 2611241400EST\nE) OBST LGT U/S TOWER 453850N 0612718W (APRX 3.7NM W AD) 86FT AGL, \n562FT AMSL.)",
-    "startValidity": "2026-08-25T13:25:00",
+    "raw": "(V1042/26 NOTAMR V1036/26\nQ) CZQM/QOLAS/IV/M/E/000/006/4534N06623W002\nA) CZQM B) 2608241434 C) 2611231500EST\nE) OBST LGT U/S TOWER 453426N 0662244W (APRX 16NM S GAGETOWN (HELI) \nAD (CYCX)) 180FT AGL, 558FT AMSL.)",
+    "startValidity": "2026-08-24T14:34:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
-      "45.647222, -61.455000"
+      "45.573889, -66.378889"
     ]
   },
   {
@@ -312,15 +321,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "45.478056, -66.234444"
-    ]
-  },
-  {
-    "raw": "(V1042/26 NOTAMR V1036/26\nQ) CZQM/QOLAS/IV/M/E/000/006/4534N06623W002\nA) CZQM B) 2608241434 C) 2611231500EST\nE) OBST LGT U/S TOWER 453426N 0662244W (APRX 16NM S GAGETOWN (HELI) \nAD (CYCX)) 180FT AGL, 558FT AMSL.)",
-    "startValidity": "2026-08-24T14:34:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.573889, -66.378889"
     ]
   },
   {
