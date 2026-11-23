@@ -1,5 +1,32 @@
 [
   {
+    "raw": "(P3768/26 NOTAMN\nQ) CZYZ/QOBCE/IV/M/AE/000/007/4546N07706W005\nA) CXXX B) 2611231400 C) 2611232000\nE) CNG5 PEMBROKE (REGIONAL HOSPITAL) (HELI)\nMOBILE CRANE WITHIN RADIUS 110FT CENTRE 454553N 0770619W (APRX \n3NM S AD (CNG5)). 110FT AGL 606FT AMSL.)",
+    "startValidity": "2026-11-23T02:04:35.380",
+    "endValidity": "2026-11-23T20:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "45.764722, -77.105278"
+    ]
+  },
+  {
+    "raw": "(U1977/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/013/4325N08137W007\nA) CZYZ B) 2611250100 C) 2612250100\nE) OBST LGT U/S WIND FARM WITHIN RADIUS 6NM CENTRE 432516N 0813717W \n(APRX 6NM NW SEXSMITH/EXETER AD (CSX7)). 426FT AGL 1286FT AMSL.)",
+    "startValidity": "2026-11-23T00:40:48.203",
+    "endValidity": "2026-12-25T01:00:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "43.421111, -81.621389"
+    ]
+  },
+  {
+    "raw": "(U1975/26 NOTAMR U1974/26\nQ) CZYZ/QOLAS/IV/M/AE/000/009/4409N07642W005\nA) CYGK B) 2611222008 C) 2611262359EST\nE) OBST LGT U/S WIND FARM WITHIN RADIUS 3.2NM CENTRE 440911N \n0764151W (APRX 6NM WSW AD (CYGK)). 508FT AGL 809FT AMSL.)",
+    "startValidity": "2026-11-22T20:08:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.153056, -76.697500"
+    ]
+  },
+  {
     "raw": "(U1973/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/013/4446N07959W005\nA) CXXX B) 2611211651 C) 2702192359EST\nE) CTA7 TOANCHE AQUADROME (WATER)\nOBST LGT U/S TOWER 444604N 0795923W (APRX 3NM SW AD) 275FT AGL, \n1300FT AMSL.)",
     "startValidity": "2026-11-21T16:51:00",
     "endValidity": null,
@@ -141,15 +168,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "46.225000, -79.352778"
-    ]
-  },
-  {
-    "raw": "(U1941/26 NOTAMR U1936/26\nQ) CZYZ/QOLAS/IV/M/AE/000/009/4409N07642W005\nA) CYGK B) 2611170216 C) 2611231600EST\nE) OBST LGT U/S WIND FARM WITHIN RADIUS 3.2NM CENTRE 440911N \n0764151W (APRX 6NM WSW AD (CYGK)). 508FT AGL 809FT AMSL.)",
-    "startValidity": "2026-11-17T02:16:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.153056, -76.697500"
     ]
   },
   {
@@ -450,21 +468,21 @@
     ]
   },
   {
-    "raw": "(U1870/26 NOTAMR U1356/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2611021534 C) 2702011600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
-    "startValidity": "2026-11-02T15:34:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "44.907222, -79.371389"
-    ]
-  },
-  {
     "raw": "(U1869/26 NOTAMR U1355/26\nQ) CZYZ/QOLAS/IV/M/AE/000/015/4454N07844W005\nA) CXXX B) 2611021534 C) 2702011600EST\nE) CMI2 MINDEN (HOSPITAL) (HELI)\nOBST LGT U/S TOWER 445424N 0784353W (APRX 1.09NM SSW AD) 362FT \nAGL, 1425FT AMSL.)",
     "startValidity": "2026-11-02T15:34:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.906667, -78.731389"
+    ]
+  },
+  {
+    "raw": "(U1870/26 NOTAMR U1356/26\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4454N07922W005\nA) CXXX B) 2611021534 C) 2702011600EST\nE) CYN6 MUSKOKA BAY/GRAVENHURST (WATER)\nOBST LGT U/S TOWER 445426N 0792217W (APRX 2.6NM SSE AD) 230FT \nAGL, 1093FT AMSL.)",
+    "startValidity": "2026-11-02T15:34:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "44.907222, -79.371389"
     ]
   },
   {
@@ -1152,21 +1170,21 @@
     ]
   },
   {
-    "raw": "(U1689/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4537N08023W005\nA) CXXX B) 2610021718 C) 2701021700EST\nE) CPB6 POINTE AU BARIL STATION (WATER)\nOBST LGT U/S TOWER 453655N 0802315W (APRX 4.5NM N AD) 361FT AGL, \n1017FT AMSL.)",
-    "startValidity": "2026-10-02T17:18:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.615278, -80.387500"
-    ]
-  },
-  {
     "raw": "(U1690/26 NOTAMR U1190/26\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4259N07943W005\nA) CXXX B) 2610021718 C) 2701021700EST\nE) CAF2 CAYUGA EAST \nOBST LGT U/S TOWER 425841N 0794259W (APRX 3.3NM E AD) 295FT AGL, \n906FT AMSL.)",
     "startValidity": "2026-10-02T17:18:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "42.978056, -79.716389"
+    ]
+  },
+  {
+    "raw": "(U1689/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/011/4537N08023W005\nA) CXXX B) 2610021718 C) 2701021700EST\nE) CPB6 POINTE AU BARIL STATION (WATER)\nOBST LGT U/S TOWER 453655N 0802315W (APRX 4.5NM N AD) 361FT AGL, \n1017FT AMSL.)",
+    "startValidity": "2026-10-02T17:18:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.615278, -80.387500"
     ]
   },
   {
@@ -1260,21 +1278,21 @@
     ]
   },
   {
-    "raw": "(U1652/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/014/4828N08127W002\nA) CZYZ B) 2609271040 C) 2611272359EST\nE) OBST LGT U/S TOWER 482756N 0812653W (APRX 6NM W TIMMINS (TIMMINS \nAND  DISTRICT HOSP) (HELI) AD (CTM6)) 355FT AGL, 1331FT AMSL.)",
-    "startValidity": "2026-09-27T10:40:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "48.465556, -81.448056"
-    ]
-  },
-  {
     "raw": "(U1653/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/AE/000/010/4358N07913W005\nA) CXXX B) 2609271040 C) 2611272359EST\nE) CNU8 TORONTO/MARKHAM \nOBST LGT U/S TOWER 435745N 0791253W (APRX 2.6NM ENE AD) 122FT \nAGL, 983FT AMSL.)",
     "startValidity": "2026-09-27T10:40:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "43.962500, -79.214722"
+    ]
+  },
+  {
+    "raw": "(U1652/26 NOTAMN\nQ) CZYZ/QOLAS/IV/M/E/000/014/4828N08127W002\nA) CZYZ B) 2609271040 C) 2611272359EST\nE) OBST LGT U/S TOWER 482756N 0812653W (APRX 6NM W TIMMINS (TIMMINS \nAND  DISTRICT HOSP) (HELI) AD (CTM6)) 355FT AGL, 1331FT AMSL.)",
+    "startValidity": "2026-09-27T10:40:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "48.465556, -81.448056"
     ]
   },
   {
