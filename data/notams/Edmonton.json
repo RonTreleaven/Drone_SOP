@@ -1,20 +1,20 @@
 [
   {
+    "raw": "(I6651/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/036/4931N11503W005\nA) CXXX B) 2611241300 C) 2612050100\nD) NOV 24-27 1300-0100, NOV 30-DEC 04 1300-0100\nE) CBP3 FERNIE (ELK VALLEY HOSPITAL) (HELI)\nCRANE 493044N 1150323W (APRX 244FT S AD (CBP3)). 200FT AGL 3514FT \nAMSL. LGTD, PAINTED.)",
+    "startValidity": "2026-11-24T02:14:03.284",
+    "endValidity": "2026-12-05T01:00:00",
+    "q_code": "QOBCE",
+    "coordinates_dd": [
+      "49.512222, -115.056389"
+    ]
+  },
+  {
     "raw": "(R1108/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/AE/000/014/5715N11124W005\nA) CXXX B) 2611231738 C) 2702211700EST\nE) CAL4 FORT MACKAY/ALBIAN \nOBST LGT U/S TOWER 571447N 1112354W (APRX 1.51NM NNE AD) 340FT \nAGL, 1344FT AMSL.)",
     "startValidity": "2026-11-23T17:38:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "57.246389, -111.398333"
-    ]
-  },
-  {
-    "raw": "(I6639/26 NOTAMN\nQ) CZEG/QOBCE/IV/M/AE/000/036/4931N11503W005\nA) CXXX B) 2611231730 C) 2611240100\nE) CBP3 FERNIE (ELK VALLEY HOSPITAL) (HELI)\nCRANE 493044N 1150324W (APRX 267FT SSW AD (CBP3)). 200FT AGL \n3514FT AMSL. LGTD, PAINTED.)",
-    "startValidity": "2026-11-23T17:18:56.895",
-    "endValidity": "2026-11-24T01:00:00",
-    "q_code": "QOBCE",
-    "coordinates_dd": [
-      "49.512222, -115.056667"
     ]
   },
   {
@@ -1266,15 +1266,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.909167, -112.719722"
-    ]
-  },
-  {
-    "raw": "(R0793/26 NOTAMN\nQ) CZEG/QOLAS/IV/M/E/000/036/5154N11416W002\nA) CZEG B) 2608241536 C) 2611232359\nE) OBST LGT U/S TOWER 515351N 1141547W (APRX 8NM NW OLDS (HOSP AND \nCARE CENTRE) (HELI) AD (CFU9)) 350FT AGL, 3549FT AMSL.)",
-    "startValidity": "2026-08-24T15:36:00",
-    "endValidity": "2026-11-23T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.897500, -114.263056"
     ]
   },
   {
