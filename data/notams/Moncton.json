@@ -1,5 +1,14 @@
 [
   {
+    "raw": "(V1564/26 NOTAMR V1053/26\nQ) CZQM/QOLAS/IV/M/AE/000/007/4504N06327W005\nA) CXXX B) 2611250113 C) 2611262300EST\nE) CSU4 SHUBENACADIE (HELI)\nOBST LGT U/S TOWER 450424N 0632633W (APRX 2.3NM WSW AD) 400FT \nAGL, 610FT AMSL.)",
+    "startValidity": "2026-11-25T01:13:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.073333, -63.442500"
+    ]
+  },
+  {
     "raw": "(V1562/26 NOTAMN\nQ) CZQM/QOBCE/IV/M/E/000/016/4749N06615W002\nA) CZQM B) 2611260400 C) PERM\nE) AMEND PUBLICATION: MET TOWER 474901N 0661504W (APRX 11NM S CHARLO \nAD (CYCL)). 292FT AGL 1519FT AMSL. NOT LGTD, PAINTED.\n\nFR:\nMODIFIER PUBLICATIONS: MET TOUR 474901N 0661504W (APRX 11NM S AD \nCHARLO (CYCL)). 292FT AGL 1519FT AMSL. NON LGTD, PEINTE.)",
     "startValidity": "2026-11-24T16:53:44.954",
     "endValidity": null,
@@ -162,21 +171,21 @@
     ]
   },
   {
-    "raw": "(V1444/26 NOTAMR V0931/26\nQ) CZQM/QOLAS/IV/M/AE/000/001/4552N06632W005\nA) CYFC B) 2610301315 C) 2701292359EST\nE) OBST LGT U/S ANTENNA 455152N 0663213W (APRX 1620FT SSW AD) 33FT \nAGL, 94FT AMSL.)",
-    "startValidity": "2026-10-30T13:15:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.864444, -66.536944"
-    ]
-  },
-  {
     "raw": "(V1445/26 NOTAMR V0930/26\nQ) CZQM/QOLAS/IV/M/AE/000/003/4618N06307W005\nA) CYYG B) 2610301315 C) 2701292359EST\nE) OBST LGT U/S ANTENNA 461752N 0630711W (APRX 2861FT NNE AD) 39FT \nAGL, 206FT AMSL.)",
     "startValidity": "2026-10-30T13:15:00",
     "endValidity": null,
     "q_code": "QOLAS",
     "coordinates_dd": [
       "46.297778, -63.119722"
+    ]
+  },
+  {
+    "raw": "(V1444/26 NOTAMR V0931/26\nQ) CZQM/QOLAS/IV/M/AE/000/001/4552N06632W005\nA) CYFC B) 2610301315 C) 2701292359EST\nE) OBST LGT U/S ANTENNA 455152N 0663213W (APRX 1620FT SSW AD) 33FT \nAGL, 94FT AMSL.)",
+    "startValidity": "2026-10-30T13:15:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "45.864444, -66.536944"
     ]
   },
   {
@@ -330,15 +339,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "44.650833, -63.657778"
-    ]
-  },
-  {
-    "raw": "(V1053/26 NOTAMR V0606/26\nQ) CZQM/QOLAS/IV/M/AE/000/007/4504N06327W005\nA) CXXX B) 2608252215 C) 2611242300EST\nE) CSU4 SHUBENACADIE (HELI)\nOBST LGT U/S TOWER 450424N 0632633W (APRX 2.3NM WSW AD) 400FT \nAGL, 610FT AMSL.)",
-    "startValidity": "2026-08-25T22:15:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "45.073333, -63.442500"
     ]
   },
   {
