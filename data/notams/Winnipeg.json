@@ -1,11 +1,11 @@
 [
   {
-    "raw": "(U1991/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/022/5031N10102W002\nA) CZWG B) 2611252001 C) 2702251945\nE) OBST LGT U/S TOWER 503118N 1010214W (APRX 17NM W SHOAL LAKE AD \n(CKL5)) 377FT AGL, 2170FT AMSL.)",
-    "startValidity": "2026-11-25T20:01:00",
-    "endValidity": "2027-02-25T19:45:00",
+    "raw": "(U1997/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/013/5015N09557W005\nA) CXXX B) 2611260907 C) 2701102359\nE) CJS9 LAC DU BONNET (NORTH) (WATER)\nOBST LGT U/S TOWER 501506N 0955726W (APRX 2.5NM SE AD) 425FT AGL, \n1294FT AMSL.)",
+    "startValidity": "2026-11-26T09:07:00",
+    "endValidity": "2027-01-10T23:59:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
-      "50.521667, -101.037222"
+      "50.251667, -95.957222"
     ]
   },
   {
@@ -15,6 +15,15 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "50.794722, -99.484444"
+    ]
+  },
+  {
+    "raw": "(U1991/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/022/5031N10102W002\nA) CZWG B) 2611252001 C) 2702251945\nE) OBST LGT U/S TOWER 503118N 1010214W (APRX 17NM W SHOAL LAKE AD \n(CKL5)) 377FT AGL, 2170FT AMSL.)",
+    "startValidity": "2026-11-25T20:01:00",
+    "endValidity": "2027-02-25T19:45:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.521667, -101.037222"
     ]
   },
   {
@@ -195,15 +204,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.883889, -97.642222"
-    ]
-  },
-  {
-    "raw": "(U1866/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/037/4949N10241W002\nA) CZWG B) 2611021500 C) 2702012100\nE) OBST LGT U/S TOWER 494837N 1024114W (APRX 12NM N KISBEY/BRIGDEN \nFIELD AD (CBR3)) 1000FT AGL, 3628FT AMSL.)",
-    "startValidity": "2026-11-02T15:00:00",
-    "endValidity": "2027-02-01T21:00:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.810278, -102.687222"
     ]
   },
   {
@@ -405,21 +405,21 @@
     ]
   },
   {
-    "raw": "(U1788/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/011/5011N09657W005\nA) CXXX B) 2610191652 C) 2701191640\nE) CKL2 SELKIRK \nOBST LGT U/S TOWER 501124N 0965729W (APRX 3.5NM WNW AD) 351FT \nAGL, 1099FT AMSL.)",
-    "startValidity": "2026-10-19T16:52:00",
-    "endValidity": "2027-01-19T16:40:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "50.190000, -96.958056"
-    ]
-  },
-  {
     "raw": "(U1787/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/E/000/012/4959N09719W002\nA) CZWG B) 2610191652 C) 2701191640\nE) OBST LGT U/S TOWER 495910N 0971911W (APRX 6NM NW WINNIPEG/JAMES \nARMSTRONG RICHARDSON INTL AD (CYWG)) 352FT AGL, 1139FT AMSL.)",
     "startValidity": "2026-10-19T16:52:00",
     "endValidity": "2027-01-19T16:40:00",
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.986111, -97.319722"
+    ]
+  },
+  {
+    "raw": "(U1788/26 NOTAMN\nQ) CZWG/QOLAS/IV/M/AE/000/011/5011N09657W005\nA) CXXX B) 2610191652 C) 2701191640\nE) CKL2 SELKIRK \nOBST LGT U/S TOWER 501124N 0965729W (APRX 3.5NM WNW AD) 351FT \nAGL, 1099FT AMSL.)",
+    "startValidity": "2026-10-19T16:52:00",
+    "endValidity": "2027-01-19T16:40:00",
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "50.190000, -96.958056"
     ]
   },
   {
@@ -468,15 +468,6 @@
     ]
   },
   {
-    "raw": "(U1753/26 NOTAMR U1746/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2610131317 C) 2701101400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
-    "startValidity": "2026-10-13T13:17:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "52.959167, -91.303889"
-    ]
-  },
-  {
     "raw": "(J7109/26 NOTAMR J7092/26\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2610131317 C) 2701101400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
     "startValidity": "2026-10-13T13:17:00",
     "endValidity": null,
@@ -492,6 +483,15 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "51.425278, -90.250000"
+    ]
+  },
+  {
+    "raw": "(U1753/26 NOTAMR U1746/26\nQ) CZWG/QOLAS/IV/M/AE/000/012/5258N09118W005\nA) CZRJ B) 2610131317 C) 2701101400EST\nE) OBST LGT U/S MULTIPLE TOWERS WITHIN 464FT RADIUS CENTRED ON \n525733N 0911814W (APRX 5992FT NNE AD (CZRJ)). 113FT AGL 1119FT \nAMSL.)",
+    "startValidity": "2026-10-13T13:17:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "52.959167, -91.303889"
     ]
   },
   {
