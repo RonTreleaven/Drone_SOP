@@ -459,21 +459,21 @@
     ]
   },
   {
-    "raw": "(U1754/26 NOTAMR U1747/26\nQ) CZWG/QOLAS/IV/M/AE/000/015/5126N09015W005\nA) CYPL B) 2610131317 C) 2701101400EST\nE) OBST LGT U/S TOWER 512531N 0901500W (APRX 1.87NM SW AD) 104FT \nAGL, 1410FT AMSL.)",
-    "startValidity": "2026-10-13T13:17:00",
-    "endValidity": null,
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "51.425278, -90.250000"
-    ]
-  },
-  {
     "raw": "(J7109/26 NOTAMR J7092/26\nQ) CZWG/QOBCE/IV/M/AE/000/013/5228N09258W005\nA) CXXX B) 2610131317 C) 2701101400EST\nE) CKQ3 NORTH SPIRIT LAKE \nTOWER 522802N 0925739W APRX 5260FT BFR THR 31 AND 5000FT SW \nEXTENDED RCL. 117FT AGL 1230FT AMSL. NOT LGTD, NOT PAINTED.)",
     "startValidity": "2026-10-13T13:17:00",
     "endValidity": null,
     "q_code": "QOBCE",
     "coordinates_dd": [
       "52.467222, -92.960833"
+    ]
+  },
+  {
+    "raw": "(U1754/26 NOTAMR U1747/26\nQ) CZWG/QOLAS/IV/M/AE/000/015/5126N09015W005\nA) CYPL B) 2610131317 C) 2701101400EST\nE) OBST LGT U/S TOWER 512531N 0901500W (APRX 1.87NM SW AD) 104FT \nAGL, 1410FT AMSL.)",
+    "startValidity": "2026-10-13T13:17:00",
+    "endValidity": null,
+    "q_code": "QOLAS",
+    "coordinates_dd": [
+      "51.425278, -90.250000"
     ]
   },
   {
@@ -744,15 +744,6 @@
     "q_code": "QOLAS",
     "coordinates_dd": [
       "49.403333, -88.112222"
-    ]
-  },
-  {
-    "raw": "(U1488/26 NOTAMR U0944/26\nQ) CZWG/QOLAS/IV/M/AE/000/009/4955N09715W005\nA) CYWG B) 2608281332 C) 2611272359\nE) OBST LGT U/S BUILDING 495525N 0971455W (APRX 5409FT NNW AD) 112FT \nAGL, 892FT AMSL.)",
-    "startValidity": "2026-08-28T13:32:00",
-    "endValidity": "2026-11-27T23:59:00",
-    "q_code": "QOLAS",
-    "coordinates_dd": [
-      "49.923611, -97.248611"
     ]
   },
   {
