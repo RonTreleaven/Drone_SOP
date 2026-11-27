@@ -15,7 +15,7 @@
     "matched_query": "photogrammetry drone",
     "confidence": 0.95,
     "match_reason": "job-like URL; drone terms: aerial, uav; job terms: apply, job; source=jobbank; query_family=mapping; drone term in title/company; core term in title; core drone/uav signal; technician override via uav/rpas context",
-    "last_seen": "11/26/2026"
+    "last_seen": "11/27/2026"
   },
   {
     "title": "Senior Software Engineer - Drone Control & Simulation (Defense and Dual-Use)",
@@ -33,7 +33,7 @@
     "matched_query": "rpas",
     "confidence": 0.95,
     "match_reason": "family terms: flight, operator, pilot, rpas; drone terms: drone, lidar, rpas; job terms: operator, pilot; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/26/2026"
+    "last_seen": "11/27/2026"
   },
   {
     "title": "UAV Modeling & Simulation Engineer",
@@ -51,7 +51,7 @@
     "matched_query": "uav operator",
     "confidence": 0.95,
     "match_reason": "family terms: flight, operator, pilot, uav; drone terms: drone, uav; job terms: operator, pilot; source=talent; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/26/2026"
+    "last_seen": "11/27/2026"
   },
   {
     "title": "UAV Modeling & Simulation Engineer",
@@ -69,7 +69,7 @@
     "matched_query": "uav operator",
     "confidence": 0.95,
     "match_reason": "family terms: flight, operator, pilot, uav; drone terms: drone, uav; job terms: operator, pilot; source=talent; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/26/2026"
+    "last_seen": "11/27/2026"
   },
   {
     "title": "Commercial Drone Pilot and Surveyor",
@@ -105,7 +105,7 @@
     "matched_query": "drone pilot",
     "confidence": 0.95,
     "match_reason": "family terms: pilot, uav; drone terms: drone, lidar, uav; job terms: apply, career, job, pilot, survey; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/26/2026"
+    "last_seen": "11/27/2026"
   },
   {
     "title": "UAV Flight Controls Engineer (ArduPilot)",
@@ -306,24 +306,6 @@
     "last_seen": "10/06/2026"
   },
   {
-    "title": "Staff UAS Flight Test Operator - 5793",
-    "company": "Shield AI",
-    "location": "San Diego, California",
-    "link": "https://jobs.lever.co/shieldai/3f8fce68-e07f-40af-a64e-1a78dbe98ffc",
-    "description": "Shield AI is a venture-backed defense-tech company with the mission of protecting service members and civilians with intelligent systems. Its products include Hivemind autonomy software, V-BAT and X-BAT aircraft, and Aechelon simulation and synthetic reality technologies. With offices and facilities across the U.S., Europe, the Middle East, and Asia-Pacific, Shield AIs technology actively supports operations worldwide. For more information, visit www.shield.ai. Follow Shield AI on LinkedIn, X, Instagram, and YouTube. The Staff UAS Flight Test Operator leads system-level flight test operations supporting Hivemind Mission Autonomy across small UAS and external platforms. As a member of the Hivemind Product Quality team, this role supports the Software Development Lifecycle (SDLC) for HivemindSDK by testing pre-release software and verifying its features, capabilities, and operational performance in representative laboratory and flight environments. The operator is responsible for the operational readiness, configuration, and safe operation of multi-rotor and fixed-wing UAS, payloads, ground control systems, and supporting test equipment; plans and conducts single- and multi-aircraft missions; supports fly-fix-fly campaigns; validates autonomy capabilities; identifies defects and usability issues; and provides actionable feedback to improve the quality and customer readiness of each release.",
-    "summary": "Shield AI is a venture-backed defense-tech company with the mission of protecting service members and civilians with intelligent systems. Its products include Hivemind autonomy software, V-BAT and X-BAT aircraft, and Aechelon simulation and synthetic reality technologies. With offices and facilities across the U.S., Europe, the Middle East, and Asia-Pacific, Shield AIs technology actively supports operations worldwide. For more information, visit www.shield.ai. Follow Shield AI on LinkedIn, X, Instagram, and YouTube. The Staff UAS Flight Test",
-    "date_posted": "09/14/2026",
-    "date_expires": "",
-    "category": "general",
-    "type": "unknown",
-    "source": "lever",
-    "query_family": "operations",
-    "matched_query": "drone pilot",
-    "confidence": 0.95,
-    "match_reason": "job-like URL; family terms: flight, operator, uas; drone terms: uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/13/2026"
-  },
-  {
     "title": "unmanned aerial vehicle (UAV) technician",
     "company": "CTS - Canadian Technology Systems",
     "location": "Pointe-Claire (QC)",
@@ -357,25 +339,7 @@
     "matched_query": "remote pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, pilot, uas; drone terms: drone, uas; job terms: apply, career, hiring, operator, pilot; source=greenhouse; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/26/2026"
-  },
-  {
-    "title": "UAS Operator & Flight Operations Technician (R5438)",
-    "company": "Shield AI",
-    "location": "Lviv",
-    "link": "https://jobs.lever.co/shieldai/70f28ba1-aac2-4911-8253-fe86e1e0242a",
-    "description": "Shield AI is a venture-backed defense-tech company with the mission of protecting service members and civilians with intelligent systems. Its products include Hivemind autonomy software, V-BAT and X-BAT aircraft, and Aechelon simulation and synthetic reality technologies. With offices and facilities across the U.S., Europe, the Middle East, and Asia-Pacific, Shield AIs technology actively supports operations worldwide. For more information, visit www.shield.ai. Follow Shield AI on LinkedIn, X, Instagram, and YouTube. Job Description: Shield AIs mission is to protect service members and civilians with intelligent systems. We are seeking a UAS Operator & Flight Operations Technician to support autonomous aircraft testing, demonstrations, and flight operations in Ukraine. This is a highly hands-on, field-focused role supporting fixed-wing and multirotor unmanned aircraft systems in simulation, ground testing, and live flight environments. The ideal candidate is comfortable operating in dynamic field conditions, troubleshooting hardware and operational issues, and supporting autonomous flight testing activities with a strong safety mindset. This role will primarily support operations in the Lviv region, with occasional travel to other locations within Ukraine for demonstrations, testing, and operational support activities.",
-    "summary": "Shield AI is a venture-backed defense-tech company with the mission of protecting service members and civilians with intelligent systems. Its products include Hivemind autonomy software, V-BAT and X-BAT aircraft, and Aechelon simulation and synthetic reality technologies. With offices and facilities across the U.S., Europe, the Middle East, and Asia-Pacific, Shield AIs technology actively supports operations worldwide. For more information, visit www.shield.ai. Follow Shield AI on LinkedIn, X, Instagram, and YouTube. Job Description: Shield",
-    "date_posted": "08/04/2026",
-    "date_expires": "",
-    "category": "general",
-    "type": "unknown",
-    "source": "lever",
-    "query_family": "operations",
-    "matched_query": "uas operator",
-    "confidence": 0.95,
-    "match_reason": "job-like URL; family terms: flight, operator, uas; drone terms: uas; job terms: job, operator; source=lever; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/13/2026"
+    "last_seen": "11/27/2026"
   },
   {
     "title": "MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)",
@@ -393,6 +357,6 @@
     "matched_query": "rpas pilot",
     "confidence": 0.8,
     "match_reason": "family terms: flight, pilot, rpas; drone terms: rpas; job terms: career, job, pilot; source=talent; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/26/2026"
+    "last_seen": "11/27/2026"
   }
 ]
