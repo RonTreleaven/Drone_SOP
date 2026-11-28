@@ -15,7 +15,7 @@
     "matched_query": "photogrammetry drone",
     "confidence": 0.95,
     "match_reason": "job-like URL; drone terms: aerial, uav; job terms: apply, job; source=jobbank; query_family=mapping; drone term in title/company; core term in title; core drone/uav signal; technician override via uav/rpas context",
-    "last_seen": "11/27/2026"
+    "last_seen": "11/28/2026"
   },
   {
     "title": "Senior Software Engineer - Drone Control & Simulation (Defense and Dual-Use)",
@@ -33,7 +33,7 @@
     "matched_query": "rpas",
     "confidence": 0.95,
     "match_reason": "family terms: flight, operator, pilot, rpas; drone terms: drone, lidar, rpas; job terms: operator, pilot; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/27/2026"
+    "last_seen": "11/28/2026"
   },
   {
     "title": "UAV Modeling & Simulation Engineer",
@@ -69,7 +69,7 @@
     "matched_query": "uav operator",
     "confidence": 0.95,
     "match_reason": "family terms: flight, operator, pilot, uav; drone terms: drone, uav; job terms: operator, pilot; source=talent; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/27/2026"
+    "last_seen": "11/28/2026"
   },
   {
     "title": "Commercial Drone Pilot and Surveyor",
@@ -105,7 +105,7 @@
     "matched_query": "drone pilot",
     "confidence": 0.95,
     "match_reason": "family terms: pilot, uav; drone terms: drone, lidar, uav; job terms: apply, career, job, pilot, survey; source=talent; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/27/2026"
+    "last_seen": "11/28/2026"
   },
   {
     "title": "UAV Flight Controls Engineer (ArduPilot)",
@@ -339,7 +339,7 @@
     "matched_query": "remote pilot",
     "confidence": 0.95,
     "match_reason": "job-like URL; family terms: flight, operator, pilot, uas; drone terms: drone, uas; job terms: apply, career, hiring, operator, pilot; source=greenhouse; query_family=operations; drone context phrase; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/27/2026"
+    "last_seen": "11/28/2026"
   },
   {
     "title": "MQ-9B RPAS Aircraft Maintenance Engineer (Evergreen)",
@@ -357,6 +357,6 @@
     "matched_query": "rpas pilot",
     "confidence": 0.8,
     "match_reason": "family terms: flight, pilot, rpas; drone terms: rpas; job terms: career, job, pilot; source=talent; query_family=operations; drone term in title/company; core term in title; core drone/uav signal; required role term in title",
-    "last_seen": "11/27/2026"
+    "last_seen": "11/28/2026"
   }
 ]
